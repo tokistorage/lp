@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ニュースレター Vol.1 No.1 創刊号 | トキストレージ</title>
+    <meta name="description" content="トキストレージ ニュースレター創刊号。声を国家の永久保存記録にする唯一の無料・デジタル完結の手段。国立国会図書館への納本ニュースレター。">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Shippori+Mincho:wght@400;500;600;700&family=Zen+Kaku+Gothic+New:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --toki-blue: #2563EB;
+            --toki-blue-dark: #1D4ED8;
+            --toki-blue-pale: #EFF6FF;
+            --bg-white: #FFFFFF;
+            --bg-section: #DBEAFE;
+            --text-primary: #1E293B;
+            --text-secondary: #475569;
+            --text-muted: #94A3B8;
+            --border: #E2E8F0;
+            --font-display: 'Shippori Mincho', serif;
+            --font-body: 'Zen Kaku Gothic New', sans-serif;
+        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        html { scroll-behavior: smooth; }
+        body { font-family: var(--font-body); font-weight: 400; background: var(--bg-white); color: var(--text-primary); line-height: 2; font-size: 16px; }
+        .article-nav { position: fixed; top: 0; left: 0; right: 0; z-index: 1000; background: rgba(255,255,255,0.95); backdrop-filter: blur(12px); border-bottom: 1px solid var(--border); padding: 0.6rem 1.2rem; display: flex; align-items: center; justify-content: space-between; }
+        .article-nav .nav-brand { font-family: var(--font-display); font-size: 0.9rem; font-weight: 600; color: var(--toki-blue); text-decoration: none; }
+        .article-nav .nav-right { display: flex; align-items: center; gap: 1rem; }
+        .article-nav .nav-label { font-size: 0.6rem; color: var(--text-muted); letter-spacing: 0.08em; }
+        .article-nav .lang-switch { font-size: 0.75rem; color: var(--toki-blue); text-decoration: none; padding: 0.3rem 0.6rem; border: 1px solid var(--toki-blue); border-radius: 4px; }
+        .article-nav .lang-switch:hover { background: var(--toki-blue); color: #fff; }
+        .article-container { max-width: 680px; margin: 0 auto; padding: 7rem 2rem 4rem; }
+        .article-header { margin-bottom: 3rem; padding-bottom: 2rem; border-bottom: 1px solid var(--border); }
+        .article-category { font-size: 0.7rem; color: var(--toki-blue); letter-spacing: 0.15em; margin-bottom: 1rem; }
+        .article-header h1 { font-family: var(--font-display); font-size: 1.8rem; font-weight: 600; line-height: 1.5; margin-bottom: 1rem; }
+        .article-subtitle { font-size: 0.95rem; color: var(--text-secondary); line-height: 1.8; }
+        .article-meta { display: flex; flex-wrap: wrap; gap: 1.5rem; font-size: 0.8rem; color: var(--text-muted); margin-top: 1rem; }
+        .article-meta span { display: flex; align-items: center; gap: 0.3rem; }
+        .article-content h2 { font-family: var(--font-display); font-size: 1.25rem; font-weight: 600; margin: 3rem 0 1.5rem; padding-bottom: 0.5rem; border-bottom: 1px solid var(--border); }
+        .article-content h3 { font-family: var(--font-display); font-size: 1.1rem; font-weight: 500; margin: 2rem 0 1rem; }
+        .article-content p { margin-bottom: 1.5rem; text-align: justify; }
+        .article-content blockquote { margin: 2rem 0; padding: 1.5rem 2rem; background: var(--bg-section); border-left: 3px solid var(--toki-blue); font-style: italic; }
+        .article-content ul { margin: 1.5rem 0; padding-left: 1.5rem; }
+        .article-content li { margin-bottom: 0.75rem; }
+        .key-point { background: var(--toki-blue-pale); padding: 1.5rem 2rem; border-radius: 8px; margin: 2rem 0; }
+        .key-point p { margin-bottom: 0; font-size: 0.95rem; }
+        .core-message { background: linear-gradient(135deg, var(--toki-blue-pale) 0%, #DBEAFE 100%); border-left: 4px solid var(--toki-blue); padding: 1.2rem 1.5rem; margin: 0 0 1.5rem 0; border-radius: 0 8px 8px 0; font-size: 0.95rem; line-height: 1.8; }
+
+        .flow-diagram { display: flex; align-items: center; justify-content: center; gap: 0.5rem; flex-wrap: wrap; margin: 2rem 0; padding: 1.5rem; background: var(--toki-blue-pale); border-radius: 12px; }
+        .flow-step { text-align: center; padding: 0.5rem 1rem; }
+        .flow-icon { font-size: 1.5rem; margin-bottom: 0.25rem; }
+        .flow-label { font-size: 0.85rem; font-weight: 500; }
+        .flow-arrow { font-size: 1.2rem; color: var(--toki-blue); font-weight: bold; }
+
+        .layer-table { width: 100%; border-collapse: collapse; margin: 1.5rem 0; font-size: 0.9rem; }
+        .layer-table th { background: var(--toki-blue); color: #fff; padding: 0.6rem 1rem; text-align: left; font-weight: 500; font-size: 0.85rem; }
+        .layer-table td { padding: 0.6rem 1rem; border-bottom: 1px solid var(--border); }
+        .layer-table tr:nth-child(even) { background: var(--toki-blue-pale); }
+
+        .pdf-download { margin: 3rem 0; padding: 2rem; background: var(--toki-blue-pale); border: 2px solid var(--toki-blue); border-radius: 12px; text-align: center; }
+        .pdf-download h3 { font-family: var(--font-display); font-size: 1.1rem; margin-bottom: 0.5rem; color: var(--text-primary); }
+        .pdf-download p { font-size: 0.9rem; color: var(--text-secondary); margin-bottom: 1rem; }
+        .pdf-download a { display: inline-block; background: var(--toki-blue); color: #fff; padding: 0.75rem 2rem; border-radius: 8px; text-decoration: none; font-weight: 500; transition: background 0.2s; }
+        .pdf-download a:hover { background: var(--toki-blue-dark); }
+
+        .article-footer { margin-top: 4rem; padding-top: 2rem; border-top: 1px solid var(--border); text-align: center; }
+        .article-footer p { font-size: 0.8rem; color: var(--text-muted); margin-bottom: 1rem; }
+        .article-footer a { color: var(--toki-blue); text-decoration: none; }
+        @media (max-width: 768px) {
+            .article-container { padding: 6rem 1.2rem 3rem; }
+            .article-header h1 { font-size: 1.5rem; }
+            .article-nav .nav-label { display: none; }
+            .flow-diagram { gap: 0.25rem; }
+            .flow-step { padding: 0.3rem 0.5rem; }
+        }
+        @media print { .article-nav { display: none; } .article-container { padding-top: 2rem; } .pdf-download { display: none; } }
+    </style>
+    <link rel="stylesheet" href="contact-form.css">
+</head>
+<body>
+
+<nav class="article-nav">
+    <a href="newsletters.html" class="nav-brand">ニュースレター</a>
+    <div class="nav-right">
+        <span class="nav-label">Vol. 1 ── 創刊号</span>
+        <a href="newsletter-2026-01-en.html" class="lang-switch">EN</a>
+    </div>
+</nav>
+
+<main class="article-container">
+    <header class="article-header">
+        <p class="article-category">ニュースレター ── 第1巻 第1号（通巻第1号）</p>
+        <h1>創刊号<br>── 声を、国家の永久保存記録にする</h1>
+        <p class="article-subtitle">
+            トキストレージ ニュースレター創刊。<br>
+            国立国会図書館法に基づき納本される逐次刊行物として、<br>
+            存在証明の民主化を記録していきます。
+        </p>
+        <div class="article-meta">
+            <span>2026年2月</span>
+            <span>Vol.1 No.1</span>
+            <span>Serial #00001</span>
+        </div>
+    </header>
+
+    <article class="article-content">
+        <div class="core-message">
+            <strong>このニュースレターの意義：</strong>本誌は国立国会図書館に納本される逐次刊行物です。広報ではなく、「声を国家永久保存にする唯一の無料・デジタル完結の手段」の実際の媒体であり、本誌自体が存在証明です。
+        </div>
+
+        <h2>1. 発刊にあたって</h2>
+        <p>「私が存在した」ことを永久に残す——それは長い間、歴史に名を刻める特権階級だけのものでした。王侯貴族、偉人、有名人。普通の人の存在は、3世代で忘れ去られます。</p>
+        <p>あなたの曾祖父母の名前を、言えますか？</p>
+        <p>トキストレージは「存在証明の民主化」を使命に掲げ、すべての人の声と存在を国家永久保存にする手段を提供します。このニュースレターは、その活動記録であり、同時にそれ自体が国立国会図書館に永久保存される「存在証明」です。</p>
+
+        <h2>2. トキストレージとは</h2>
+        <h3>ミッション：記憶の不平等に挑む</h3>
+        <p>トキストレージは、物理・国家・民間の<strong>三層分散保管</strong>によって、あなたの存在証明を永続化するサービスです。2026年2月、個人事業として創業しました。</p>
+
+        <h3>三層分散保管アーキテクチャ</h3>
+        <table class="layer-table">
+            <thead>
+                <tr><th>層</th><th>媒体</th><th>特徴</th></tr>
+            </thead>
+            <tbody>
+                <tr><td><strong>物理層</strong></td><td>石英ガラス／UV耐性ラミネート</td><td>電源・サーバー不要。手元に届き、触れられる</td></tr>
+                <tr><td><strong>国家層</strong></td><td>国立国会図書館（法定納本）</td><td>国の法制度による制度的永久保存</td></tr>
+                <tr><td><strong>民間層</strong></td><td>GitHub（Arctic Code Vault）</td><td>世界中に分散＋北極圏アーカイブ</td></tr>
+            </tbody>
+        </table>
+        <p>この設計は、データ保全の世界標準<strong>「3-2-1ルール」</strong>——3つのコピー、2種類の媒体、1つはオフサイト——を満たします。単一障害点がなく、どれかひとつが残れば、存在証明は失われません。</p>
+
+        <h2>3. 技術概要：声を国家の永久保存記録にする</h2>
+
+        <div class="flow-diagram">
+            <div class="flow-step">
+                <div class="flow-icon">&#x1F3A4;</div>
+                <div class="flow-label">あなたの声</div>
+            </div>
+            <div class="flow-arrow">&rarr;</div>
+            <div class="flow-step">
+                <div class="flow-icon">&#x1F4F1;</div>
+                <div class="flow-label">音声QRコード</div>
+            </div>
+            <div class="flow-arrow">&rarr;</div>
+            <div class="flow-step">
+                <div class="flow-icon">&#x1F4C4;</div>
+                <div class="flow-label">PDF化</div>
+            </div>
+            <div class="flow-arrow">&rarr;</div>
+            <div class="flow-step">
+                <div class="flow-icon">&#x1F3DB;</div>
+                <div class="flow-label">国会図書館に納本</div>
+            </div>
+        </div>
+
+        <p>音声は本来、再生機器やサーバーがなければ消えてしまう揮発性の高いメディアです。トキストレージは、<strong>国際特許出願中の独自データ圧縮技術</strong>により、データサイズ制約の多いQRコードの仕様内でより多くの声を記録。音声をQRコードに変換し、PDFに埋め込み、ニュースレター（本誌）として国立国会図書館に納本します。</p>
+
+        <h3>なぜ、この方法しかないのか</h3>
+        <p>国立国会図書館のオンライン資料収集（国立国会図書館法 第25条の4）が受け付けるフォーマットは<strong>PDF・EPUB・DAISYの3種のみ</strong>。MP3やWAVなどの音声ファイルは「図書又は逐次刊行物に相当するもの」に該当せず、制度上、納本できません。</p>
+        <p>物理メディア（CD/DVD）に焼いて納本する方法はありますが、製造費・郵送費がかかり、デジタルで完結しません。</p>
+
+        <div class="key-point">
+            <p>音声→QRコード→PDF→ニュースレター（逐次刊行物）という変換は、<strong>無料・デジタル完結・可逆的（元の音声に復元可能）・制度的に適格——この4条件をすべて満たす唯一の方法</strong>です。</p>
+        </div>
+
+        <h2>4. このニュースレター自体が存在証明</h2>
+        <p>ここに重要な自己言及があります。このPDFは、国立国会図書館に納本されます。つまり、今あなたが読んでいるこのページの内容自体が、制度的に永久保存される「存在証明」です。</p>
+        <p>トキストレージのニュースレターは、単なる広報ではありません。顧客の声（音声QRコード）を掲載し、それを国家保存に届ける「媒体」であると同時に、トキストレージという事業そのものの存在証明でもあります。</p>
+
+        <h2>5. 今後の予定</h2>
+        <p>次号以降、以下の内容を予定しています：</p>
+        <ul>
+            <li>ご利用者さまの声（許諾をいただいた音声QRコードの掲載）</li>
+            <li>技術アップデート（圧縮率の改善、新フォーマット対応等）</li>
+            <li>QRコードサンプル（スマートフォンで読み取り、再生体験が可能）</li>
+            <li>分散保管の進捗報告（佐渡・マウイの物理保管拠点の状況）</li>
+            <li>パートナー・協賛者のご紹介</li>
+        </ul>
+
+        <div class="pdf-download">
+            <h3>献本PDF をダウンロード</h3>
+            <p>国立国会図書館に納本されるPDF版（奥付・表紙付き）</p>
+            <a href="newsletter/2026-01.pdf" download>PDF をダウンロード</a>
+        </div>
+    </article>
+
+    <footer class="article-footer">
+        <p><a href="newsletters.html">&larr; ニュースレター一覧に戻る</a></p>
+        <p><a href="index.html">トキストレージ トップページ</a></p>
+        <p>&copy; 2026 トキストレージ / TokiStorage</p>
+    </footer>
+</main>
+
+<script src="contact-form.js"></script>
+<script src="tracker.js"></script>
+</body>
+</html>

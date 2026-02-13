@@ -1,0 +1,333 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Newsletter | TokiStorage</title>
+    <meta name="description" content="TokiStorage Newsletter archive. A serial publication deposited with Japan's National Diet Library under the National Diet Library Law. Documenting the mission to make voice a permanent national record.">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Shippori+Mincho:wght@400;500;600;700&family=Zen+Kaku+Gothic+New:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="index.css">
+    <link rel="stylesheet" href="contact-form.css">
+    <style>
+        .newsletters-page {
+            max-width: 1100px;
+            margin: 0 auto;
+            padding: 2rem;
+            padding-top: 6rem;
+        }
+
+        .newsletters-header {
+            text-align: center;
+            margin-bottom: 3rem;
+        }
+
+        .newsletters-header h1 {
+            font-family: 'Shippori Mincho', serif;
+            font-size: 2.2rem;
+            color: #1e293b;
+            margin-bottom: 1rem;
+        }
+
+        .newsletters-header .lead {
+            font-size: 1.1rem;
+            color: #64748b;
+            max-width: 640px;
+            margin: 0 auto;
+            line-height: 1.8;
+        }
+
+        .pub-meta {
+            background: #f8fafc;
+            border: 1px solid #e2e8f0;
+            border-radius: 12px;
+            padding: 2rem;
+            margin-bottom: 3rem;
+        }
+
+        .pub-meta h2 {
+            font-family: 'Shippori Mincho', serif;
+            font-size: 1.3rem;
+            color: #1e293b;
+            margin-bottom: 1.5rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .pub-meta h2::before {
+            content: '';
+            width: 4px;
+            height: 1.5rem;
+            background: #2563EB;
+            border-radius: 2px;
+        }
+
+        .meta-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 1rem;
+        }
+
+        .meta-item {
+            display: flex;
+            gap: 0.75rem;
+        }
+
+        .meta-label {
+            font-size: 0.8rem;
+            color: #94a3b8;
+            min-width: 6.5rem;
+            flex-shrink: 0;
+        }
+
+        .meta-value {
+            font-size: 0.9rem;
+            color: #1e293b;
+        }
+
+        .ndl-context {
+            background: #eff6ff;
+            border-left: 4px solid #2563EB;
+            border-radius: 0 8px 8px 0;
+            padding: 1rem 1.5rem;
+            margin-top: 1.5rem;
+            font-size: 0.85rem;
+            color: #475569;
+            line-height: 1.8;
+        }
+
+        .newsletters-section {
+            margin-bottom: 4rem;
+        }
+
+        .newsletters-section h2 {
+            font-family: 'Shippori Mincho', serif;
+            font-size: 1.5rem;
+            color: #1e293b;
+            margin-bottom: 1.5rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .newsletters-section h2::before {
+            content: '';
+            width: 4px;
+            height: 1.5rem;
+            background: #2563EB;
+            border-radius: 2px;
+        }
+
+        .newsletter-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+            gap: 1.5rem;
+        }
+
+        .newsletter-card {
+            background: #fff;
+            border: 1px solid #e2e8f0;
+            border-radius: 12px;
+            padding: 1.5rem;
+            transition: all 0.2s ease;
+            display: flex;
+            flex-direction: column;
+            text-decoration: none;
+            color: inherit;
+            cursor: pointer;
+        }
+
+        .newsletter-card:hover {
+            border-color: #2563EB;
+            box-shadow: 0 4px 20px rgba(37, 99, 235, 0.1);
+        }
+
+        .card-vol {
+            font-size: 0.75rem;
+            color: #2563EB;
+            font-weight: 600;
+            letter-spacing: 0.1em;
+            margin-bottom: 0.5rem;
+        }
+
+        .card-date {
+            font-size: 0.8rem;
+            color: #94a3b8;
+            margin-bottom: 0.75rem;
+        }
+
+        .newsletter-card h3 {
+            font-family: 'Shippori Mincho', serif;
+            font-size: 1.15rem;
+            color: #1e293b;
+            margin-bottom: 0.5rem;
+        }
+
+        .newsletter-card p {
+            font-size: 0.9rem;
+            color: #64748b;
+            line-height: 1.7;
+            flex: 1;
+        }
+
+        .card-actions {
+            display: flex;
+            gap: 1rem;
+            margin-top: 1rem;
+            align-items: center;
+        }
+
+        .card-read {
+            color: #2563EB;
+            font-size: 0.85rem;
+            display: flex;
+            align-items: center;
+            gap: 0.3rem;
+        }
+
+        .card-read::after {
+            content: '\2192';
+        }
+
+        .card-pdf {
+            font-size: 0.8rem;
+            color: #94a3b8;
+            text-decoration: none;
+            padding: 0.2rem 0.6rem;
+            border: 1px solid #e2e8f0;
+            border-radius: 4px;
+            transition: all 0.2s;
+        }
+
+        .card-pdf:hover {
+            color: #2563EB;
+            border-color: #2563EB;
+        }
+
+        .newsletters-footer {
+            text-align: center;
+            padding: 3rem 0;
+            border-top: 1px solid #e2e8f0;
+        }
+
+        .newsletters-footer a {
+            color: #2563EB;
+            text-decoration: none;
+            margin: 0 1rem;
+            font-size: 0.9rem;
+        }
+
+        .newsletters-footer a:hover {
+            text-decoration: underline;
+        }
+
+        .newsletters-footer p {
+            font-size: 0.8rem;
+            color: #94a3b8;
+            margin-top: 1.5rem;
+        }
+
+        @media (max-width: 768px) {
+            .newsletters-page { padding-top: 5rem; }
+            .newsletters-header h1 { font-size: 1.8rem; }
+            .meta-grid { grid-template-columns: 1fr; }
+        }
+    </style>
+</head>
+<body>
+
+<nav class="toki-nav">
+    <a href="index-en.html" class="nav-logo">TokiStorage</a>
+    <div class="nav-links">
+        <a href="index-en.html#how">How It Works</a>
+        <a href="index-en.html#pricing">Pricing</a>
+        <a href="details-en.html">Learn More</a>
+        <a href="newsletters.html" class="lang-switch" aria-label="日本語に切替">JA</a>
+    </div>
+    <button class="nav-toggle" aria-label="Menu">
+        <span></span><span></span><span></span>
+    </button>
+</nav>
+
+<div class="newsletters-page">
+
+    <header class="newsletters-header">
+        <h1>Newsletter</h1>
+        <p class="lead">A serial publication deposited with Japan's National Diet Library.<br>Documenting TokiStorage's mission to make voice a permanent national record.</p>
+    </header>
+
+    <!-- Publication Metadata -->
+    <section class="pub-meta">
+        <h2>Publication Details</h2>
+        <div class="meta-grid">
+            <div class="meta-item">
+                <span class="meta-label">Title</span>
+                <span class="meta-value">TokiStorage Newsletter</span>
+            </div>
+            <div class="meta-item">
+                <span class="meta-label">Japanese Title</span>
+                <span class="meta-value">トキストレージ ニュースレター</span>
+            </div>
+            <div class="meta-item">
+                <span class="meta-label">Publisher</span>
+                <span class="meta-value">TokiStorage (Takuya Sato)</span>
+            </div>
+            <div class="meta-item">
+                <span class="meta-label">Frequency</span>
+                <span class="meta-value">Irregular (multiple issues per year)</span>
+            </div>
+            <div class="meta-item">
+                <span class="meta-label">Deposited with</span>
+                <span class="meta-value">National Diet Library of Japan</span>
+            </div>
+            <div class="meta-item">
+                <span class="meta-label">Format</span>
+                <span class="meta-value">PDF (online material)</span>
+            </div>
+            <div class="meta-item">
+                <span class="meta-label">Legal basis</span>
+                <span class="meta-value">National Diet Library Law, Art. 25 &amp; 25-4</span>
+            </div>
+            <div class="meta-item">
+                <span class="meta-label">Inaugural</span>
+                <span class="meta-value">February 2026</span>
+            </div>
+        </div>
+        <div class="ndl-context">
+            <strong>About the NDL:</strong> The National Diet Library is Japan's equivalent of the U.S. Library of Congress. Under the National Diet Library Law, publishers must deposit copies of their publications, which are then permanently preserved as part of Japan's national heritage. Our numbering system is designed for 1,000+ years of continuous publication.
+        </div>
+    </section>
+
+    <!-- Archive Grid -->
+    <section class="newsletters-section">
+        <h2>Archive</h2>
+
+        <div class="newsletter-grid">
+            <a href="newsletter-2026-01-en.html" class="newsletter-card">
+                <div class="card-vol">VOL.1 NO.1 — SERIAL #00001</div>
+                <div class="card-date">February 2026</div>
+                <h3>Inaugural Issue &mdash; Making Voice a Permanent National Record</h3>
+                <p>The founding issue of the TokiStorage Newsletter. Democratizing proof of existence, three-layer distributed architecture, the voice-to-QR-to-PDF-to-NDL pipeline, and why this newsletter itself is proof of existence.</p>
+                <div class="card-actions">
+                    <span class="card-read">Read more</span>
+                    <span class="card-pdf" onclick="event.preventDefault(); event.stopPropagation(); window.location.href='newsletter/2026-01.pdf';">PDF</span>
+                </div>
+            </a>
+        </div>
+    </section>
+
+    <footer class="newsletters-footer">
+        <a href="index-en.html">&larr; TokiStorage Home</a>
+        <a href="#contact">Contact</a>
+        <p>&copy; 2026 TokiStorage. All rights reserved.</p>
+    </footer>
+
+</div>
+
+<script src="index.js" defer></script>
+<script src="contact-form.js"></script>
+<script src="tracker.js"></script>
+</body>
+</html>

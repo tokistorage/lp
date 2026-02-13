@@ -1,0 +1,340 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ニュースレター | トキストレージ</title>
+    <meta name="description" content="トキストレージ ニュースレター一覧。国立国会図書館法に基づき納本される逐次刊行物。声を国家の永久保存記録にする活動の記録。">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Shippori+Mincho:wght@400;500;600;700&family=Zen+Kaku+Gothic+New:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="index.css">
+    <link rel="stylesheet" href="contact-form.css">
+    <style>
+        .newsletters-page {
+            max-width: 1100px;
+            margin: 0 auto;
+            padding: 2rem;
+            padding-top: 6rem;
+        }
+
+        .newsletters-header {
+            text-align: center;
+            margin-bottom: 3rem;
+        }
+
+        .newsletters-header h1 {
+            font-family: 'Shippori Mincho', serif;
+            font-size: 2.2rem;
+            color: #1e293b;
+            margin-bottom: 1rem;
+        }
+
+        .newsletters-header .lead {
+            font-size: 1.1rem;
+            color: #64748b;
+            max-width: 600px;
+            margin: 0 auto;
+            line-height: 1.8;
+        }
+
+        /* Publication metadata */
+        .pub-meta {
+            background: #f8fafc;
+            border: 1px solid #e2e8f0;
+            border-radius: 12px;
+            padding: 2rem;
+            margin-bottom: 3rem;
+        }
+
+        .pub-meta h2 {
+            font-family: 'Shippori Mincho', serif;
+            font-size: 1.3rem;
+            color: #1e293b;
+            margin-bottom: 1.5rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .pub-meta h2::before {
+            content: '';
+            width: 4px;
+            height: 1.5rem;
+            background: #2563EB;
+            border-radius: 2px;
+        }
+
+        .meta-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 1rem;
+        }
+
+        .meta-item {
+            display: flex;
+            gap: 0.75rem;
+        }
+
+        .meta-label {
+            font-size: 0.8rem;
+            color: #94a3b8;
+            min-width: 5rem;
+            flex-shrink: 0;
+        }
+
+        .meta-value {
+            font-size: 0.9rem;
+            color: #1e293b;
+        }
+
+        /* Numbering info */
+        .numbering-info {
+            background: #eff6ff;
+            border-left: 4px solid #2563EB;
+            border-radius: 0 8px 8px 0;
+            padding: 1rem 1.5rem;
+            margin-top: 1.5rem;
+            font-size: 0.85rem;
+            color: #475569;
+            line-height: 1.8;
+        }
+
+        /* Section */
+        .newsletters-section {
+            margin-bottom: 4rem;
+        }
+
+        .newsletters-section h2 {
+            font-family: 'Shippori Mincho', serif;
+            font-size: 1.5rem;
+            color: #1e293b;
+            margin-bottom: 1.5rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .newsletters-section h2::before {
+            content: '';
+            width: 4px;
+            height: 1.5rem;
+            background: #2563EB;
+            border-radius: 2px;
+        }
+
+        /* Card grid */
+        .newsletter-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+            gap: 1.5rem;
+        }
+
+        .newsletter-card {
+            background: #fff;
+            border: 1px solid #e2e8f0;
+            border-radius: 12px;
+            padding: 1.5rem;
+            transition: all 0.2s ease;
+            display: flex;
+            flex-direction: column;
+            text-decoration: none;
+            color: inherit;
+            cursor: pointer;
+        }
+
+        .newsletter-card:hover {
+            border-color: #2563EB;
+            box-shadow: 0 4px 20px rgba(37, 99, 235, 0.1);
+        }
+
+        .card-vol {
+            font-size: 0.75rem;
+            color: #2563EB;
+            font-weight: 600;
+            letter-spacing: 0.1em;
+            margin-bottom: 0.5rem;
+        }
+
+        .card-date {
+            font-size: 0.8rem;
+            color: #94a3b8;
+            margin-bottom: 0.75rem;
+        }
+
+        .newsletter-card h3 {
+            font-family: 'Shippori Mincho', serif;
+            font-size: 1.15rem;
+            color: #1e293b;
+            margin-bottom: 0.5rem;
+        }
+
+        .newsletter-card p {
+            font-size: 0.9rem;
+            color: #64748b;
+            line-height: 1.7;
+            flex: 1;
+        }
+
+        .card-actions {
+            display: flex;
+            gap: 1rem;
+            margin-top: 1rem;
+            align-items: center;
+        }
+
+        .card-read {
+            color: #2563EB;
+            font-size: 0.85rem;
+            display: flex;
+            align-items: center;
+            gap: 0.3rem;
+        }
+
+        .card-read::after {
+            content: '\2192';
+        }
+
+        .card-pdf {
+            font-size: 0.8rem;
+            color: #94a3b8;
+            text-decoration: none;
+            padding: 0.2rem 0.6rem;
+            border: 1px solid #e2e8f0;
+            border-radius: 4px;
+            transition: all 0.2s;
+        }
+
+        .card-pdf:hover {
+            color: #2563EB;
+            border-color: #2563EB;
+        }
+
+        /* Footer nav */
+        .newsletters-footer {
+            text-align: center;
+            padding: 3rem 0;
+            border-top: 1px solid #e2e8f0;
+        }
+
+        .newsletters-footer a {
+            color: #2563EB;
+            text-decoration: none;
+            margin: 0 1rem;
+            font-size: 0.9rem;
+        }
+
+        .newsletters-footer a:hover {
+            text-decoration: underline;
+        }
+
+        .newsletters-footer p {
+            font-size: 0.8rem;
+            color: #94a3b8;
+            margin-top: 1.5rem;
+        }
+
+        @media (max-width: 768px) {
+            .newsletters-page { padding-top: 5rem; }
+            .newsletters-header h1 { font-size: 1.8rem; }
+            .meta-grid { grid-template-columns: 1fr; }
+        }
+    </style>
+</head>
+<body>
+
+<nav class="toki-nav">
+    <a href="index.html" class="nav-logo">トキストレージ</a>
+    <div class="nav-links">
+        <a href="index.html#how">仕組み</a>
+        <a href="index.html#pricing">料金</a>
+        <a href="details.html">詳しく知る</a>
+        <a href="newsletters-en.html" class="lang-switch" aria-label="Switch to English">EN</a>
+    </div>
+    <button class="nav-toggle" aria-label="メニュー">
+        <span></span><span></span><span></span>
+    </button>
+</nav>
+
+<div class="newsletters-page">
+
+    <header class="newsletters-header">
+        <h1>ニュースレター</h1>
+        <p class="lead">国立国会図書館に納本される逐次刊行物。<br>声を国家の永久保存記録にする活動の記録です。</p>
+    </header>
+
+    <!-- Publication Metadata -->
+    <section class="pub-meta">
+        <h2>刊行情報</h2>
+        <div class="meta-grid">
+            <div class="meta-item">
+                <span class="meta-label">刊行物名</span>
+                <span class="meta-value">トキストレージ ニュースレター</span>
+            </div>
+            <div class="meta-item">
+                <span class="meta-label">英題</span>
+                <span class="meta-value">TokiStorage Newsletter</span>
+            </div>
+            <div class="meta-item">
+                <span class="meta-label">発行者</span>
+                <span class="meta-value">TokiStorage（佐藤卓也）</span>
+            </div>
+            <div class="meta-item">
+                <span class="meta-label">刊行頻度</span>
+                <span class="meta-value">不定期（年複数回）</span>
+            </div>
+            <div class="meta-item">
+                <span class="meta-label">納本先</span>
+                <span class="meta-value">国立国会図書館</span>
+            </div>
+            <div class="meta-item">
+                <span class="meta-label">フォーマット</span>
+                <span class="meta-value">PDF（電子書籍等）</span>
+            </div>
+            <div class="meta-item">
+                <span class="meta-label">根拠法</span>
+                <span class="meta-value">国立国会図書館法 第25条・第25条の4</span>
+            </div>
+            <div class="meta-item">
+                <span class="meta-label">創刊</span>
+                <span class="meta-value">2026年2月（令和8年）</span>
+            </div>
+        </div>
+        <div class="numbering-info">
+            <strong>採番体系：</strong>1000年以上の継続発行を想定。巻（Volume）＝創刊年からの年数、号（Number）＝年内連番、通巻（Serial）＝全号通し番号（5桁）。ファイル名はYYYY-NN形式。
+        </div>
+    </section>
+
+    <!-- Back-Number Grid -->
+    <section class="newsletters-section">
+        <h2>バックナンバー</h2>
+
+        <div class="newsletter-grid">
+            <a href="newsletter-2026-01.html" class="newsletter-card">
+                <div class="card-vol">VOL.1 NO.1 — SERIAL #00001</div>
+                <div class="card-date">2026年2月</div>
+                <h3>創刊号 ── 声を、国家の永久保存記録にする</h3>
+                <p>トキストレージ ニュースレター創刊。存在証明の民主化、三層分散保管アーキテクチャ、声→QRコード→PDF→国会図書館のパイプライン、そしてこのニュースレター自体が存在証明であること。</p>
+                <div class="card-actions">
+                    <span class="card-read">詳しく読む</span>
+                    <span class="card-pdf" onclick="event.preventDefault(); event.stopPropagation(); window.location.href='newsletter/2026-01.pdf';">PDF</span>
+                </div>
+            </a>
+
+            <!-- Future issues will be added here as new cards -->
+        </div>
+    </section>
+
+    <footer class="newsletters-footer">
+        <a href="index.html">&larr; トキストレージ トップ</a>
+        <a href="#contact">お問い合わせ</a>
+        <p>&copy; 2026 トキストレージ / TokiStorage</p>
+    </footer>
+
+</div>
+
+<script src="index.js" defer></script>
+<script src="contact-form.js"></script>
+<script src="tracker.js"></script>
+</body>
+</html>
