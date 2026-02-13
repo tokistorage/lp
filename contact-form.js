@@ -1,10 +1,9 @@
 /**
  * TokiStorage Contact Form
- * LINE/Calendlyリンクをインターセプトし、モーダルフォームで送信
+ * LINE/Calendlyリンクを置換し、モーダルフォームで送信
  * Google Apps Script経由でメール送信 + スプレッドシート記録
  */
 (function() {
-    // Google Apps Script Web App URL（デプロイ後に差し替え）
     var API_URL = 'https://script.google.com/macros/s/AKfycbxT4qDzuqokRgHTdD9mgdANkUz_zsLuezd2yAfa_YiU6F9jfXhjWkWo3DV4niWUP366/exec';
 
     var isEn = document.documentElement.lang === 'en';
@@ -21,8 +20,24 @@
         errorTitle:  isEn ? 'Send Failed'                    : '送信に失敗しました',
         errorMsg:    isEn ? 'Please try again later.'        : 'もう一度お試しください。',
         close:       isEn ? 'Close'                          : '閉じる',
-        placeholder: isEn ? 'Please tell us what you\'d like to discuss.' : 'ご相談内容をお書きください。'
+        placeholder: isEn ? 'Please tell us what you\'d like to discuss.' : 'ご相談内容をお書きください。',
+        cta:         isEn ? 'Contact Us'                     : 'お問い合わせ'
     };
+
+    // Collect device/browser info
+    function getDeviceInfo() {
+        var ua = navigator.userAgent;
+        var isMobile = /Mobi|Android|iPhone|iPad|iPod/i.test(ua);
+        return {
+            device: isMobile ? 'mobile' : 'desktop',
+            screen: screen.width + 'x' + screen.height,
+            viewport: window.innerWidth + 'x' + window.innerHeight,
+            ua: ua,
+            lang: navigator.language || '',
+            referrer: document.referrer || '',
+            timezone: Intl.DateTimeFormat().resolvedOptions().timeZone || ''
+        };
+    }
 
     function buildModal() {
         var overlay = document.createElement('div');
@@ -69,7 +84,6 @@
         return overlay;
     }
 
-    // Extract context from LINE URL parameter
     function extractContext(href) {
         try {
             var url = new URL(href);
@@ -81,12 +95,22 @@
         return document.title;
     }
 
+    // Mail SVG icon
+    var mailIcon = '<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/></svg>';
+
     function init() {
-        // Intercept both LINE and Calendly links
         var ctaLinks = document.querySelectorAll(
             'a[href*="line.me/R/oaMessage"], a[href*="calendly.com"]'
         );
         if (ctaLinks.length === 0) return;
+
+        // Replace button text/appearance (remove LINE/Calendly branding)
+        ctaLinks.forEach(function(link) {
+            link.removeAttribute('target');
+            link.removeAttribute('rel');
+            link.href = '#contact';
+            link.innerHTML = mailIcon + ' ' + t.cta;
+        });
 
         var overlay = buildModal();
         var form = document.getElementById('contactForm');
@@ -117,16 +141,13 @@
             document.body.style.overflow = '';
         }
 
-        // Intercept CTA links
         ctaLinks.forEach(function(link) {
             link.addEventListener('click', function(e) {
                 e.preventDefault();
-                var href = this.getAttribute('href');
-                openModal(extractContext(href));
+                openModal(document.title);
             });
         });
 
-        // Close handlers
         closeBtn.addEventListener('click', closeModal);
         overlay.addEventListener('click', function(e) {
             if (e.target === overlay) closeModal();
@@ -142,7 +163,6 @@
             submitBtn.textContent = t.submit;
         });
 
-        // Form submission via Google Apps Script
         form.addEventListener('submit', function(e) {
             e.preventDefault();
             if (form.querySelector('input[name="botcheck"]').value) return;
@@ -150,12 +170,20 @@
             submitBtn.disabled = true;
             submitBtn.textContent = t.sending;
 
+            var device = getDeviceInfo();
             var payload = {
                 name: form.querySelector('input[name="name"]').value,
                 contact: form.querySelector('input[name="contact"]').value,
                 message: form.querySelector('textarea[name="message"]').value,
                 page: document.title,
-                url: window.location.href
+                url: window.location.href,
+                device: device.device,
+                screen: device.screen,
+                viewport: device.viewport,
+                ua: device.ua,
+                lang: device.lang,
+                referrer: device.referrer,
+                timezone: device.timezone
             };
 
             fetch(API_URL, {
