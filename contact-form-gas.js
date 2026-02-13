@@ -20,7 +20,7 @@ function doPost(e) {
 
     // スプレッドシート記録（失敗してもメールは送る）
     try {
-      var ss = SpreadsheetApp.getActiveSpreadsheet();
+      var ss = SpreadsheetApp.openById('1lxrf5hLebwaUqt6WxeIjvVYUEYZntV9Kj-TrVzfkl0A');
       if (ss) {
         var sheet = ss.getActiveSheet();
         if (sheet.getLastRow() === 0) {
