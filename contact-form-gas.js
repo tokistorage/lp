@@ -9,17 +9,21 @@
  * 5. デプロイ > 新しいデプロイ > ウェブアプリ
  *    - 実行者: 自分
  *    - アクセス: 全員
- * 6. デプロイURLをコピーし、contact-form.js の GAS_WEB_APP_URL を差し替え
+ * 6. デプロイURLをコピーし、contact-form.js の API_URL を差し替え
  */
 
-var NOTIFY_EMAIL = 'business@satotakuya.jp';
+var NOTIFY_EMAIL = 'tokistorage1000@gmail.com';
 
 function doPost(e) {
   var sheet = SpreadsheetApp.getActiveSpreadsheet().getActiveSheet();
 
   // ヘッダー行がなければ作成
   if (sheet.getLastRow() === 0) {
-    sheet.appendRow(['日時', '名前', '連絡先', 'メッセージ', 'ページ', 'URL', 'ステータス']);
+    sheet.appendRow([
+      '日時', '名前', '連絡先', 'メッセージ', 'ページ', 'URL',
+      'デバイス', '画面', 'ビューポート', 'UA', '言語', 'リファラー', 'タイムゾーン',
+      'ステータス'
+    ]);
   }
 
   try {
@@ -33,6 +37,13 @@ function doPost(e) {
       data.message || '',
       data.page || '',
       data.url || '',
+      data.device || '',
+      data.screen || '',
+      data.viewport || '',
+      data.ua || '',
+      data.lang || '',
+      data.referrer || '',
+      data.timezone || '',
       'OK'
     ]);
 
@@ -42,7 +53,15 @@ function doPost(e) {
              + '連絡先: ' + (data.contact || '') + '\n'
              + 'メッセージ:\n' + (data.message || '') + '\n\n'
              + 'ページ: ' + (data.page || '') + '\n'
-             + 'URL: ' + (data.url || '') + '\n'
+             + 'URL: ' + (data.url || '') + '\n\n'
+             + '--- デバイス情報 ---\n'
+             + 'デバイス: ' + (data.device || '') + '\n'
+             + '画面: ' + (data.screen || '') + '\n'
+             + 'ビューポート: ' + (data.viewport || '') + '\n'
+             + '言語: ' + (data.lang || '') + '\n'
+             + 'リファラー: ' + (data.referrer || '') + '\n'
+             + 'タイムゾーン: ' + (data.timezone || '') + '\n'
+             + 'UA: ' + (data.ua || '') + '\n'
              + '日時: ' + new Date().toLocaleString('ja-JP');
 
     MailApp.sendEmail(NOTIFY_EMAIL, subject, body);
@@ -52,15 +71,11 @@ function doPost(e) {
       .setMimeType(ContentService.MimeType.JSON);
 
   } catch (err) {
-    // エラーもシートに記録（デバッグ用）
     sheet.appendRow([
-      new Date(),
-      'ERROR',
-      err.toString(),
+      new Date(), 'ERROR', err.toString(),
       e.postData ? e.postData.contents : 'no postData',
       e.postData ? e.postData.type : 'no type',
-      '',
-      'ERROR'
+      '', '', '', '', '', '', '', '', 'ERROR'
     ]);
 
     return ContentService
@@ -69,7 +84,6 @@ function doPost(e) {
   }
 }
 
-// GET リクエスト（テスト用）
 function doGet() {
   return ContentService
     .createTextOutput(JSON.stringify({ status: 'ok', message: 'TokiStorage Contact Form API' }))
