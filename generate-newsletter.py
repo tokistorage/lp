@@ -68,8 +68,8 @@ PUBLICATION_NAME = "TokiStorage Newsletter"
 PUBLICATION_NAME_JA = "トキストレージ ニュースレター"
 PUBLISHER = "TokiStorage（佐藤卓也）"
 PUBLISHER_ADDRESS = "〒279-0014 千葉県浦安市明海2-11-13"
-PUBLISHER_URL = "https://tokistorage.com"
-PUBLISHER_EMAIL = "hello@tokistorage.com"
+PUBLISHER_URL = "https://tokistorage.github.io/lp/"
+PUBLISHER_EMAIL = "tokistorage1000@gmail.com"
 
 
 # ── PDF Class ──────────────────────────────────────────────────────────
