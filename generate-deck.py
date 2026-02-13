@@ -59,7 +59,7 @@ FONT_JP = "IPAPGothic"
 FONT_EN = "Calibri"
 
 OUT_DIR = os.path.dirname(os.path.abspath(__file__))
-ICON_PATH = os.path.join(OUT_DIR, "asset", "tokistorage-icon-circle.png")
+ICON_PATH = os.path.join(OUT_DIR, "asset", "tokistorage-icon-white-bg.png")
 
 
 # ── Helpers ────────────────────────────────────────────────────────────
@@ -968,7 +968,7 @@ def convert_to_pdf(pptx_path):
     env = os.environ.copy()
     env["HOME"] = "/tmp"
     result = subprocess.run(
-        ["libreoffice", "--headless", "--convert-to", "pdf", "--outdir", out_dir, pptx_path],
+        ["soffice", "--headless", "--convert-to", "pdf", "--outdir", out_dir, pptx_path],
         capture_output=True, text=True, timeout=120, env=env
     )
     if result.returncode != 0:
