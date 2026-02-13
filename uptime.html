@@ -1,0 +1,258 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>稼働率と外部依存——千年保存のインフラ設計 | トキストレージ</title>
+    <meta name="robots" content="noindex, nofollow">
+    <meta name="description" content="SLA 99.9%でも千年で稼働日数はゼロに近づく。外部サービスへの依存を排除し、障害モードを分離するトキストレージのインフラ設計思想。">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Shippori+Mincho:wght@400;500;600;700&family=Zen+Kaku+Gothic+New:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="contact-form.css">
+    <style>
+        :root {
+            --toki-slate: #334155;
+            --toki-slate-dark: #1E293B;
+            --toki-slate-pale: #F1F5F9;
+            --accent-green: #10B981;
+            --accent-red: #EF4444;
+            --bg-white: #FFFFFF;
+            --bg-section: #E2E8F0;
+            --text-primary: #1E293B;
+            --text-secondary: #475569;
+            --text-muted: #94A3B8;
+            --border: #E2E8F0;
+            --font-display: 'Shippori Mincho', serif;
+            --font-body: 'Zen Kaku Gothic New', sans-serif;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        html { scroll-behavior: smooth; }
+        body { font-family: var(--font-body); font-weight: 400; background: var(--bg-white); color: var(--text-primary); line-height: 2; font-size: 16px; }
+        .article-nav { position: fixed; top: 0; left: 0; right: 0; z-index: 1000; background: rgba(255,255,255,0.95); backdrop-filter: blur(12px); border-bottom: 1px solid var(--border); padding: 0.6rem 1.2rem; display: flex; align-items: center; justify-content: space-between; }
+        .article-nav .nav-brand { font-family: var(--font-display); font-size: 0.9rem; font-weight: 600; color: var(--toki-slate); text-decoration: none; }
+        .article-nav .nav-right { display: flex; align-items: center; gap: 1rem; }
+        .article-nav .nav-label { font-size: 0.6rem; color: var(--text-muted); letter-spacing: 0.08em; }
+        .article-nav .lang-switch { font-size: 0.75rem; color: var(--toki-slate); text-decoration: none; padding: 0.3rem 0.6rem; border: 1px solid var(--toki-slate); border-radius: 4px; }
+        .article-nav .lang-switch:hover { background: var(--toki-slate); color: #fff; }
+        .article-container { max-width: 680px; margin: 0 auto; padding: 7rem 2rem 4rem; }
+        .article-header { margin-bottom: 3rem; padding-bottom: 2rem; border-bottom: 1px solid var(--border); }
+        .article-category { font-size: 0.7rem; color: var(--toki-slate); letter-spacing: 0.15em; margin-bottom: 1rem; }
+        .article-header h1 { font-family: var(--font-display); font-size: 1.8rem; font-weight: 600; line-height: 1.5; margin-bottom: 1rem; }
+        .article-subtitle { font-size: 0.95rem; color: var(--text-secondary); line-height: 1.8; }
+        .article-content h2 { font-family: var(--font-display); font-size: 1.25rem; font-weight: 600; margin: 3rem 0 1.5rem; padding-bottom: 0.5rem; border-bottom: 1px solid var(--border); }
+        .article-content h3 { font-family: var(--font-display); font-size: 1.1rem; font-weight: 500; margin: 2rem 0 1rem; }
+        .article-content p { margin-bottom: 1.5rem; text-align: justify; }
+        .article-content blockquote { margin: 2rem 0; padding: 1.5rem 2rem; background: var(--toki-slate-pale); border-left: 3px solid var(--toki-slate); font-style: italic; }
+        .article-content blockquote cite { display: block; font-size: 0.85rem; color: var(--text-muted); font-style: normal; margin-top: 0.5rem; }
+        .article-content ul, .article-content ol { margin: 1.5rem 0; padding-left: 1.5rem; }
+        .article-content li { margin-bottom: 0.75rem; }
+        .key-point { background: var(--toki-slate-pale); padding: 1.5rem 2rem; border-radius: 8px; margin: 2rem 0; }
+        .key-point p { margin-bottom: 0; font-size: 0.95rem; }
+        .core-message { background: linear-gradient(135deg, var(--toki-slate-pale) 0%, var(--bg-section) 100%); border-left: 4px solid var(--toki-slate); padding: 1.2rem 1.5rem; margin: 0 0 1.5rem 0; border-radius: 0 8px 8px 0; font-size: 0.95rem; line-height: 1.8; }
+        .disclaimer { font-size: 0.8rem; color: var(--text-muted); margin-bottom: 2rem; padding-bottom: 1rem; border-bottom: 1px solid var(--border); }
+        .sla-table { width: 100%; border-collapse: collapse; margin: 1.5rem 0; font-size: 0.9rem; }
+        .sla-table th, .sla-table td { padding: 0.6rem 1rem; border: 1px solid var(--border); text-align: left; }
+        .sla-table th { background: var(--toki-slate-pale); font-weight: 600; font-size: 0.8rem; }
+        .sla-table td:last-child { text-align: right; }
+        .references { margin-top: 4rem; padding-top: 2rem; border-top: 1px solid var(--border); }
+        .references h2 { font-size: 1rem; margin-bottom: 1.5rem; }
+        .references ul { list-style: none; padding: 0; }
+        .references li { font-size: 0.85rem; color: var(--text-secondary); margin-bottom: 0.75rem; padding-left: 1.5rem; text-indent: -1.5rem; }
+        .article-footer { margin-top: 4rem; padding-top: 2rem; border-top: 1px solid var(--border); text-align: center; }
+        .article-footer p { font-size: 0.8rem; color: var(--text-muted); margin-bottom: 1rem; }
+        .article-footer a { color: var(--toki-slate); text-decoration: none; }
+        @media (max-width: 768px) { .article-container { padding: 6rem 1.2rem 3rem; } .article-header h1 { font-size: 1.5rem; } .article-nav .nav-label { display: none; } .sla-table { font-size: 0.8rem; } .sla-table th, .sla-table td { padding: 0.4rem 0.6rem; } }
+        @media print { .article-nav { display: none; } .article-container { padding-top: 2rem; } }
+    </style>
+</head>
+<body>
+
+<nav class="article-nav">
+    <a href="index.html" class="nav-brand">トキストレージ</a>
+    <div class="nav-right">
+        <span class="nav-label">稼働率と外部依存</span>
+        <a href="uptime-en.html" class="lang-switch">EN</a>
+    </div>
+</nav>
+
+<main class="article-container">
+    <header class="article-header">
+        <p class="article-category">エッセイ——技術設計</p>
+        <h1>稼働率と外部依存<br>——千年保存に外部サービスは使えない</h1>
+        <p class="article-subtitle">
+            SLA 99.9%は「年間8.7時間の停止」を意味する。<br>
+            千年スケールでは、あらゆる外部依存がいつか必ず断線する。<br>
+            問い合わせフォームひとつの設計にも、その思想は貫かれている。
+        </p>
+    </header>
+
+    <article class="article-content">
+        <div class="core-message">
+            <strong>この記事で言いたいこと：</strong>外部サービスへの依存は、短期では便利だが長期では必ず障害点になる。千年保存を設計するなら、すべての外部依存の障害モードを分離し、単一障害点をゼロにする必要がある。
+        </div>
+        <p class="disclaimer">※本稿はトキストレージの設計思想を解説するエッセイです。特定のサービスを批判する意図はありません。</p>
+
+        <h2>1. 99.9%の幻想</h2>
+
+        <p>クラウドサービスの営業資料には「SLA 99.9%」「99.99%」といった数字が並ぶ。一見すると盤石に見える。しかし、これを時間に換算すると景色が変わる。</p>
+
+        <table class="sla-table">
+            <thead>
+                <tr><th>SLA</th><th>年間停止時間</th><th>10年累計</th><th>100年累計</th></tr>
+            </thead>
+            <tbody>
+                <tr><td>99%</td><td>3.65日</td><td>36.5日</td><td>365日（1年）</td></tr>
+                <tr><td>99.9%</td><td>8.7時間</td><td>87時間</td><td>36.5日</td></tr>
+                <tr><td>99.99%</td><td>52.6分</td><td>8.7時間</td><td>3.65日</td></tr>
+                <tr><td>99.999%</td><td>5.26分</td><td>52.6分</td><td>8.7時間</td></tr>
+            </tbody>
+        </table>
+
+        <p>99.9%を「ほぼ完璧」と思う人は多い。しかし100年では36.5日——つまり丸1ヶ月以上、サービスが停止する計算になる。そして、これは「そのサービスが100年存続する」という前提での話だ。</p>
+
+        <div class="key-point">
+            <p>SLAは稼働率の約束であって、存続の約束ではない。100年後にそのサービスが存在しているかどうかは、SLAの保証範囲外である。</p>
+        </div>
+
+        <h2>2. 外部依存の連鎖</h2>
+
+        <p>現代のWebサービスは、驚くほど多くの外部依存を抱えている。典型的な構成を見てみよう。</p>
+
+        <ul>
+            <li><strong>ホスティング</strong>：AWS / GCP / Azure</li>
+            <li><strong>ドメイン</strong>：レジストラ（年次更新が必要）</li>
+            <li><strong>SSL証明書</strong>：認証局</li>
+            <li><strong>メール送信</strong>：SendGrid / Mailgun</li>
+            <li><strong>決済</strong>：Stripe / PayPal</li>
+            <li><strong>認証</strong>：Auth0 / Firebase Auth</li>
+            <li><strong>チャット</strong>：LINE API / Intercom</li>
+            <li><strong>予約</strong>：Calendly / STORES</li>
+        </ul>
+
+        <p>これらのサービスがひとつでも停止すれば、ユーザー体験のどこかが壊れる。そして10年以内にサービスを終了するSaaS企業は珍しくない。Googleですら、Google+、Google Reader、Hangoutsなど数えきれないプロダクトを終了してきた。</p>
+
+        <h3>依存の連鎖は確率的に破綻する</h3>
+
+        <p>5つの外部サービスにそれぞれ99.9%の稼働率があるとする。すべてが同時に稼働している確率は：</p>
+
+        <blockquote>
+            <p>0.999 × 0.999 × 0.999 × 0.999 × 0.999 = 0.995 = 99.5%</p>
+            <cite>——年間停止時間は43.8時間（約1.8日）に膨張する</cite>
+        </blockquote>
+
+        <p>外部依存が増えるほど、システム全体の稼働率は指数関数的に低下する。これは理論ではなく算数だ。</p>
+
+        <h2>3. トキストレージの設計原則</h2>
+
+        <p>千年スケールでは、あらゆる外部サービスが消滅し得る。この前提に立つと、設計原則は明確になる。</p>
+
+        <h3>原則1：外部依存を最小化する</h3>
+
+        <p>トキストレージの三層分散保管は、三つの層がそれぞれ独立して存続する設計になっている。</p>
+
+        <ul>
+            <li><strong>物理層</strong>（石英ガラス / ラミネート）——電源もサーバーも不要。人間の目とスマホカメラがあれば読める</li>
+            <li><strong>国家層</strong>（国立国会図書館 法定納本）——法律が存続する限り消えない。サーバー代も不要</li>
+            <li><strong>民間層</strong>（GitHub / Arctic Code Vault）——分散型ホスティング。北極圏に物理複製</li>
+        </ul>
+
+        <p>物理層はそもそもサービスではない。国家層は法律に基づく制度であり、企業の事業判断では廃止できない。民間層だけがサービスだが、GitHubが消えても他の二層が残る。</p>
+
+        <h3>原則2：障害モードを分離する</h3>
+
+        <p>三層の障害モードは互いに無関係だ。</p>
+
+        <ul>
+            <li>石英ガラスが物理的に割れる事象</li>
+            <li>国会図書館法が廃止される事象</li>
+            <li>GitHubが事業を終了する事象</li>
+        </ul>
+
+        <p>これらは同時に起こらない。地震でガラスが割れても、法律は変わらない。企業が倒産しても、図書館は閉じない。障害モードが独立しているからこそ、全滅の確率は限りなくゼロに近づく。</p>
+
+        <h3>原則3：フォールバックを設計する</h3>
+
+        <p>これはインフラだけの話ではない。日常の接点ひとつにも同じ原則が貫かれる。</p>
+
+        <p>たとえば、問い合わせフォーム。トキストレージはかつてLINE公式アカウントとCalendlyを使っていた。しかし、これには構造的な問題があった。</p>
+
+        <ul>
+            <li><strong>LINE</strong>——PCではLINEのWebサイトにリダイレクトされ、離脱が発生する。メッセージングアプリのAPIであり、SLAは公開されていない</li>
+            <li><strong>Calendly</strong>——スタートアップSaaSであり、事業継続の保証は限定的。予約という機能に対して重すぎる外部依存</li>
+        </ul>
+
+        <p>現在は、静的JavaScriptフォーム＋Google Apps Scriptに移行した。フォームのUI自体は静的ファイルであり、GitHub Pages上で動作する。GASが停止しても、フォームは表示され、フォールバックとしてメールアドレスが直接表示される。</p>
+
+        <div class="key-point">
+            <p>正常系：フォーム送信 → GAS → メール通知＋スプレッドシート記録<br>
+            異常系：GAS障害 → エラー画面にメールアドレスを直接表示 → コピペ or mailtoで連絡可能<br><br>
+            外部依存（GAS）が落ちても、連絡手段が完全に断絶しない。これがフォールバック設計。</p>
+        </div>
+
+        <h2>4. SLAの正しい読み方</h2>
+
+        <p>SLAを評価するとき、数字だけを見てはいけない。以下を確認する必要がある。</p>
+
+        <ol>
+            <li><strong>対象範囲</strong>——何が保証されているのか。「サーバーの稼働」と「API応答」は別物</li>
+            <li><strong>補償内容</strong>——SLA違反時にどうなるか。多くはサービスクレジット（利用料の返金）であり、データ損失の補償ではない</li>
+            <li><strong>存続前提</strong>——そのSLAは「サービスが存続する限り」という暗黙の前提がある。サービス終了時にSLAは消滅する</li>
+            <li><strong>依存連鎖</strong>——そのサービス自体が依存している外部サービスは何か。依存先のSLA違反は、あなたのSLA計算に含まれていない</li>
+        </ol>
+
+        <h2>5. Google Workspace——現実的な選択</h2>
+
+        <p>トキストレージが問い合わせフォームのバックエンドにGoogle Apps Scriptを選んだのには理由がある。</p>
+
+        <ul>
+            <li><strong>SLA 99.9%</strong>——Google Workspaceとして公式に保証</li>
+            <li><strong>インフラ規模</strong>——Gmail障害が起きれば世界中がニュースにする。つまり障害検知が事実上無料</li>
+            <li><strong>無料枠</strong>——GAS実行、Gmail送信、スプレッドシート記録のすべてが無料枠内で完結</li>
+            <li><strong>月間制限なし</strong>——Web3Formsの月250通制限と異なり、GASのメール送信は日100通（個人アカウント）</li>
+        </ul>
+
+        <p>しかし、ここでも原則は同じだ。Googleに依存しきるのではなく、Googleが落ちたときのフォールバック（メールアドレスの直接表示）を用意する。外部依存を完全にゼロにはできないが、障害時の代替手段を必ず設計する。</p>
+
+        <h2>6. 千年設計の静かな基準</h2>
+
+        <p>結局のところ、千年保存の設計思想とは「いつか必ず壊れる」という前提から始まる。</p>
+
+        <p>サーバーはいつか停止する。企業はいつか消滅する。法律ですら改正される可能性がある。だからこそ、ひとつの層が壊れても他の層が残る設計にする。ひとつのサービスが落ちても連絡手段が断絶しない設計にする。</p>
+
+        <blockquote>
+            <p>"Everything fails, all the time."</p>
+            <cite>——Werner Vogels, CTO of Amazon Web Services</cite>
+        </blockquote>
+
+        <p>AWSのCTO自身が認めている。すべてはいつか壊れる。この事実を受け入れたうえで、壊れてもなお機能する設計をすること。それが、千年スケールのインフラ設計であり、トキストレージの全レイヤーに通底する思想だ。</p>
+
+        <div class="key-point">
+            <p>稼働率は信頼の指標ではあるが、存続の保証ではない。千年先を見据えるなら、問うべきは「どれだけ落ちないか」ではなく「落ちたとき、何が残るか」である。</p>
+        </div>
+
+        <section class="references">
+            <h2>参考文献</h2>
+            <ul>
+                <li>Google Workspace Service Level Agreement — https://workspace.google.com/terms/sla.html</li>
+                <li>US-CERT: Data Backup Options — 3-2-1 Backup Rule (2012)</li>
+                <li>Werner Vogels, "Everything Fails All the Time" — AWS re:Invent Keynote</li>
+                <li>Killed by Google — https://killedbygoogle.com/ — Googleが終了したサービス一覧</li>
+                <li>国立国会図書館法（昭和23年法律第5号）——法定納本制度</li>
+                <li>GitHub Arctic Code Vault — https://archiveprogram.github.com/</li>
+            </ul>
+        </section>
+    </article>
+
+    <footer class="article-footer">
+        <p>トキストレージ——千年先へ届ける存在証明</p>
+        <p id="essay-nav-links"></p>
+        <p style="margin-top: 2rem; font-size: 0.75rem;">&copy; 2026 TokiStorage</p>
+    </footer>
+</main>
+
+<script src="essay-nav.js?v=20260213"></script>
+<script src="contact-form.js"></script>
+</body>
+</html>

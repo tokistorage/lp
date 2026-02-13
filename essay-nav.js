@@ -78,6 +78,7 @@
     { id: 'deposition', ja: '金属蒸着', en: 'Deposition' },
     { id: 'voice-future', ja: '音声復元', en: 'Voice Restoration' },
     { id: 'backup-rule', ja: '3-2-1ルール', en: '3-2-1 Backup Rule' },
+    { id: 'uptime', ja: '稼働率と外部依存', en: 'Uptime & Dependencies' },
 
     // ── メタ視点 ──
     { id: 'erasure', ja: '残さない選択', en: 'Choosing Not to Leave Behind' }
