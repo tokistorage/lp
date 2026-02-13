@@ -1,0 +1,760 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" type="image/png" sizes="32x32" href="asset/favicon-32.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="asset/apple-touch-icon.png">
+    <title>タイムレスコーチ認定プログラム | トキストレージ</title>
+    <meta name="robots" content="noindex, nofollow">
+    <meta name="description" content="タイムレスコンサルティングを提供できる認定コーチになる。未来の自分との対話を通じて、ブレない軸を言語化し永続化する——その対話を、あなたの地域で届けませんか。永続認定 ¥55,500。">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Shippori+Mincho:wght@400;500;600;700&family=Zen+Kaku+Gothic+New:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --toki-blue: #2563EB;
+            --toki-blue-light: #3B82F6;
+            --toki-blue-dark: #1D4ED8;
+            --toki-blue-pale: #EFF6FF;
+            --toki-blue-glow: rgba(37, 99, 235, 0.12);
+            --toki-gold: #C9A962;
+            --toki-gold-pale: #FDF8E8;
+            --emerald: #16A34A;
+            --emerald-pale: #F0FDF4;
+            --bg-white: #FFFFFF;
+            --bg-page: #F8FAFC;
+            --bg-section: #F1F5F9;
+            --bg-card: #FFFFFF;
+            --text-primary: #1E293B;
+            --text-secondary: #475569;
+            --text-muted: #94A3B8;
+            --text-dim: #CBD5E1;
+            --border: #E2E8F0;
+            --border-light: #F1F5F9;
+            --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.05);
+            --shadow-md: 0 4px 16px rgba(0, 0, 0, 0.06);
+            --font-display: 'Shippori Mincho', serif;
+            --font-body: 'Zen Kaku Gothic New', sans-serif;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        html { scroll-behavior: smooth; }
+
+        body {
+            font-family: var(--font-body);
+            font-weight: 400;
+            background: var(--bg-white);
+            color: var(--text-primary);
+            line-height: 1.9;
+            font-size: 16px;
+        }
+
+        /* Navigation */
+        .pp-nav {
+            position: fixed;
+            top: 0; left: 0; right: 0;
+            z-index: 1000;
+            background: rgba(255,255,255,0.95);
+            backdrop-filter: blur(12px);
+            border-bottom: 1px solid var(--border);
+            padding: 0.6rem 1.2rem;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+        .pp-nav .nav-brand {
+            font-family: var(--font-display);
+            font-size: 0.9rem;
+            font-weight: 600;
+            color: var(--toki-blue);
+            text-decoration: none;
+        }
+        .pp-nav .nav-right {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+        .pp-nav .nav-label {
+            font-size: 0.6rem;
+            color: var(--text-muted);
+            letter-spacing: 0.08em;
+        }
+
+        /* Hero */
+        .tc-hero {
+            padding: 8rem 2rem 5rem;
+            text-align: center;
+            background: linear-gradient(180deg, var(--text-primary) 0%, #1a2744 60%, #0f172a 100%);
+            color: #fff;
+        }
+        .tc-hero-label {
+            font-size: 0.7rem;
+            letter-spacing: 0.25em;
+            color: var(--toki-gold);
+            margin-bottom: 2rem;
+        }
+        .tc-hero h1 {
+            font-family: var(--font-display);
+            font-size: 2.2rem;
+            font-weight: 700;
+            line-height: 1.6;
+            margin-bottom: 1.5rem;
+        }
+        .tc-hero-sub {
+            font-size: 1rem;
+            color: var(--text-muted);
+            max-width: 560px;
+            margin: 0 auto;
+            line-height: 2;
+        }
+        .tc-hero-sub strong {
+            color: var(--toki-gold);
+        }
+
+        /* Section */
+        .pp-section {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 4rem 2rem;
+        }
+        .pp-section-title {
+            font-family: var(--font-display);
+            font-size: 1.4rem;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+            color: var(--text-primary);
+        }
+        .pp-section-sub {
+            font-size: 0.9rem;
+            color: var(--text-secondary);
+            margin-bottom: 2.5rem;
+        }
+        .pp-section-border {
+            border-top: 1px solid var(--border);
+        }
+
+        /* Quote block */
+        .quote-block {
+            background: var(--toki-blue-pale);
+            border-left: 4px solid var(--toki-blue);
+            border-radius: 0 12px 12px 0;
+            padding: 1.5rem 2rem;
+            margin-bottom: 2rem;
+        }
+        .quote-block p {
+            font-family: var(--font-display);
+            font-size: 1.1rem;
+            font-weight: 500;
+            color: var(--text-primary);
+            line-height: 1.8;
+        }
+
+        /* Role grid */
+        .role-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+        }
+        .role-card {
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 1.5rem;
+        }
+        .role-num {
+            font-family: var(--font-display);
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: var(--toki-blue);
+            opacity: 0.25;
+            margin-bottom: 0.3rem;
+        }
+        .role-card h4 {
+            font-family: var(--font-display);
+            font-size: 0.95rem;
+            font-weight: 600;
+            color: var(--text-primary);
+            margin-bottom: 0.5rem;
+        }
+        .role-card p {
+            font-size: 0.85rem;
+            color: var(--text-secondary);
+            line-height: 1.7;
+        }
+
+        /* Audience cards */
+        .audience-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 1rem;
+        }
+        .audience-card {
+            background: var(--bg-section);
+            border-radius: 10px;
+            padding: 1.2rem;
+            text-align: center;
+        }
+        .audience-icon {
+            font-size: 1.5rem;
+            margin-bottom: 0.5rem;
+        }
+        .audience-card h4 {
+            font-family: var(--font-display);
+            font-size: 0.85rem;
+            font-weight: 600;
+            color: var(--text-primary);
+            margin-bottom: 0.3rem;
+        }
+        .audience-card p {
+            font-size: 0.75rem;
+            color: var(--text-secondary);
+            line-height: 1.6;
+        }
+
+        /* Deliverables */
+        .deliverable-list {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+        }
+        .deliverable-item {
+            display: flex;
+            align-items: flex-start;
+            gap: 1rem;
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 1.2rem 1.5rem;
+        }
+        .deliverable-icon {
+            flex-shrink: 0;
+            width: 2.5rem;
+            height: 2.5rem;
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.2rem;
+        }
+        .deliverable-icon.blue { background: var(--toki-blue-pale); }
+        .deliverable-icon.gold { background: var(--toki-gold-pale); }
+        .deliverable-icon.green { background: var(--emerald-pale); }
+        .deliverable-body h4 {
+            font-family: var(--font-display);
+            font-size: 0.95rem;
+            font-weight: 600;
+            color: var(--text-primary);
+            margin-bottom: 0.2rem;
+        }
+        .deliverable-body p {
+            font-size: 0.85rem;
+            color: var(--text-secondary);
+            line-height: 1.7;
+        }
+
+        /* Pricing */
+        .pricing-card {
+            border: 2px solid var(--toki-gold);
+            border-radius: 16px;
+            padding: 2.5rem;
+            text-align: center;
+            max-width: 480px;
+            margin: 0 auto;
+        }
+        .pricing-badge {
+            display: inline-block;
+            font-size: 0.7rem;
+            letter-spacing: 0.15em;
+            color: var(--toki-gold);
+            border: 1px solid var(--toki-gold);
+            padding: 0.2rem 0.8rem;
+            border-radius: 4px;
+            margin-bottom: 1rem;
+        }
+        .pricing-card h3 {
+            font-family: var(--font-display);
+            font-size: 1.2rem;
+            font-weight: 600;
+            margin-bottom: 1rem;
+        }
+        .pricing-amount {
+            font-family: var(--font-display);
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: var(--toki-blue);
+            margin-bottom: 0.3rem;
+        }
+        .pricing-unit {
+            font-size: 0.85rem;
+            color: var(--text-muted);
+            margin-bottom: 1.5rem;
+        }
+        .pricing-features {
+            list-style: none;
+            padding: 0;
+            text-align: left;
+            margin-bottom: 1.5rem;
+        }
+        .pricing-features li {
+            font-size: 0.85rem;
+            color: var(--text-secondary);
+            padding: 0.4rem 0;
+            padding-left: 1.5rem;
+            position: relative;
+        }
+        .pricing-features li::before {
+            content: "\2713";
+            position: absolute;
+            left: 0;
+            color: var(--emerald);
+            font-weight: 700;
+        }
+        .pricing-note {
+            font-size: 0.8rem;
+            color: var(--text-muted);
+            margin-top: 1rem;
+        }
+
+        /* Process steps */
+        .process-list {
+            display: flex;
+            flex-direction: column;
+            gap: 1.5rem;
+        }
+        .process-item {
+            display: flex;
+            align-items: flex-start;
+            gap: 1.5rem;
+        }
+        .process-num {
+            flex-shrink: 0;
+            width: 3rem;
+            height: 3rem;
+            border-radius: 50%;
+            background: var(--toki-blue);
+            color: #fff;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-family: var(--font-display);
+            font-size: 0.9rem;
+            font-weight: 700;
+        }
+        .process-body h4 {
+            font-family: var(--font-display);
+            font-size: 1rem;
+            font-weight: 600;
+            color: var(--text-primary);
+            margin-bottom: 0.3rem;
+        }
+        .process-body p {
+            font-size: 0.85rem;
+            color: var(--text-secondary);
+            line-height: 1.7;
+        }
+
+        /* Highlight box */
+        .highlight-box {
+            background: var(--toki-blue-pale);
+            border-radius: 12px;
+            padding: 2rem;
+            text-align: center;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        .highlight-box h3 {
+            font-family: var(--font-display);
+            font-size: 1.1rem;
+            font-weight: 600;
+            margin-bottom: 1rem;
+        }
+        .highlight-box p {
+            font-size: 0.9rem;
+            color: var(--text-secondary);
+            line-height: 1.9;
+        }
+
+        /* FAQ */
+        .faq-item {
+            border-bottom: 1px solid var(--border);
+            padding: 1rem 0;
+        }
+        .faq-item summary {
+            font-family: var(--font-display);
+            font-size: 0.95rem;
+            font-weight: 600;
+            cursor: pointer;
+            padding: 0.5rem 0;
+            color: var(--text-primary);
+        }
+        .faq-item summary:hover {
+            color: var(--toki-blue);
+        }
+        .faq-answer {
+            padding: 0.5rem 0 1rem;
+            font-size: 0.85rem;
+            color: var(--text-secondary);
+            line-height: 1.8;
+        }
+
+        /* CTA */
+        .pp-cta {
+            background: var(--text-primary);
+            color: #fff;
+            text-align: center;
+            padding: 4rem 2rem;
+        }
+        .pp-cta h2 {
+            font-family: var(--font-display);
+            font-size: 1.5rem;
+            font-weight: 600;
+            margin-bottom: 1rem;
+        }
+        .pp-cta p {
+            font-size: 0.9rem;
+            color: var(--text-muted);
+            max-width: 500px;
+            margin: 0 auto 2rem;
+            line-height: 1.8;
+        }
+        .pp-cta-links {
+            display: flex;
+            justify-content: center;
+            gap: 1.5rem;
+            flex-wrap: wrap;
+        }
+        .pp-cta-links a {
+            color: var(--toki-gold);
+            text-decoration: none;
+            font-size: 0.85rem;
+            padding: 0.5rem 1.2rem;
+            border: 1px solid var(--toki-gold);
+            border-radius: 6px;
+            transition: background 0.2s;
+        }
+        .pp-cta-links a:hover {
+            background: var(--toki-gold);
+            color: var(--text-primary);
+        }
+
+        /* Footer */
+        .pp-footer {
+            text-align: center;
+            padding: 2rem;
+            border-top: 1px solid var(--border);
+        }
+        .pp-footer p {
+            font-size: 0.75rem;
+            color: var(--text-muted);
+        }
+        .pp-footer a {
+            color: var(--toki-blue);
+            text-decoration: none;
+        }
+
+        @media (max-width: 768px) {
+            .tc-hero { padding: 6rem 1.2rem 3rem; }
+            .tc-hero h1 { font-size: 1.5rem; }
+            .pp-section { padding: 3rem 1.2rem; }
+            .role-grid { grid-template-columns: 1fr; }
+            .audience-grid { grid-template-columns: 1fr; }
+            .process-item { flex-direction: column; gap: 1rem; }
+            .process-num { width: auto; height: auto; padding: 0.5rem 1rem; border-radius: 6px; }
+            .pp-nav .nav-label { display: none; }
+        }
+
+        @media print {
+            .pp-nav { display: none; }
+            .tc-hero { padding-top: 2rem; }
+        }
+    </style>
+    <link rel="stylesheet" href="contact-form.css">
+    <meta property="og:image" content="https://tokistorage.github.io/lp/asset/tokistorage-icon-512.png">
+    <meta property="og:image:width" content="512">
+    <meta property="og:image:height" content="512">
+</head>
+<body>
+
+<nav class="pp-nav">
+    <a href="index.html" class="nav-brand">トキストレージ</a>
+    <div class="nav-right">
+        <span class="nav-label">TIMELESS COACH</span>
+    </div>
+</nav>
+
+<!-- Hero -->
+<header class="tc-hero">
+    <p class="tc-hero-label">TIMELESS COACH CERTIFICATION</p>
+    <img src="asset/tokistorage-icon-512-white-bg.png" alt="TokiStorage" width="72" height="72" style="display:block;margin:0 auto 1rem;border-radius:12px;">
+    <h1>未来の自分との対話を、<br>あなたの地域で届ける。</h1>
+    <p class="tc-hero-sub">
+        タイムレスコンサルティングを提供できる<strong>認定コーチ</strong>になる。<br>
+        「未来の自分は、今のあなたに何を言いますか」<br>
+        ——この問いを、あなたが届ける側に。
+    </p>
+</header>
+
+<!-- What is a Timeless Coach -->
+<section class="pp-section">
+    <h2 class="pp-section-title">タイムレスコーチとは</h2>
+    <p class="pp-section-sub">問いを立て、軸を引き出し、永続化まで伴走する認定者</p>
+
+    <div class="quote-block">
+        <p>タイムレスコーチは「教える人」ではありません。<br>「未来の自分は何を言うか」という問いを立て、<br>対話を通じてブレない軸を引き出し、<br>三層に永続化するまでを伴走する人です。</p>
+    </div>
+
+    <div class="role-grid">
+        <div class="role-card">
+            <div class="role-num">01</div>
+            <h4>未来の自分との対話を導く</h4>
+            <p>9領域の思想フレームワークを用いて、クライアントの内面にある「未来の自分の声」を引き出す対話を設計・実施します。</p>
+        </div>
+        <div class="role-card">
+            <div class="role-num">02</div>
+            <h4>ブレない軸を言語化する</h4>
+            <p>対話から浮かんだ言葉を、クライアントの人生の文脈とともに構造化。千年先まで届く「ブレない軸」として言語化します。</p>
+        </div>
+        <div class="role-card">
+            <div class="role-num">03</div>
+            <h4>三層永続化への橋渡し</h4>
+            <p>言語化された軸をトキストレージの三層分散保管（物理×国家×民間）に格納するプロセスを、クライアントとともに進めます。</p>
+        </div>
+        <div class="role-card">
+            <div class="role-num">04</div>
+            <h4>地域で「問い」を届ける</h4>
+            <p>あなたの地域、あなたのコミュニティで、タイムレスコンサルティングを提供。未来の自分との対話を、より多くの人に届けます。</p>
+        </div>
+    </div>
+</section>
+
+<!-- Who This Is For -->
+<section class="pp-section pp-section-border">
+    <h2 class="pp-section-title">こんな方にお届けしたい</h2>
+    <p class="pp-section-sub">対話の専門性と、人の人生に向き合う覚悟を持つ方へ</p>
+
+    <div class="audience-grid">
+        <div class="audience-card">
+            <div class="audience-icon">&#x1F4AC;</div>
+            <h4>コーチ・カウンセラー</h4>
+            <p>既存の対話スキルに「永続化」という新しい軸を加え、クライアントへの提供価値を根本から変えたい</p>
+        </div>
+        <div class="audience-card">
+            <div class="audience-icon">&#x1F3AF;</div>
+            <h4>キャリアコンサルタント</h4>
+            <p>転職・独立の相談を「ブレない軸の言語化」に昇華し、一過性ではないキャリア支援を提供したい</p>
+        </div>
+        <div class="audience-card">
+            <div class="audience-icon">&#x26E9;</div>
+            <h4>宗教者・僧侶</h4>
+            <p>法話や対話を通じて向き合ってきた「生きる意味」の問いに、永続記録という新しい形を加えたい</p>
+        </div>
+        <div class="audience-card">
+            <div class="audience-icon">&#x1F4D6;</div>
+            <h4>教育者・研究者</h4>
+            <p>学生や後進に「問いを立てる力」を伝え、その問いと軸を千年先に届ける経験を共有したい</p>
+        </div>
+        <div class="audience-card">
+            <div class="audience-icon">&#x1F4BC;</div>
+            <h4>FP・士業</h4>
+            <p>財産の継承だけでなく「生き方の軸」の継承まで提供できる、唯一無二のサービスを加えたい</p>
+        </div>
+        <div class="audience-card">
+            <div class="audience-icon">&#x1F30F;</div>
+            <h4>地域リーダー</h4>
+            <p>まちの精神、創設の志を言語化し、人の寿命を超えて残す活動を自分の地域から始めたい</p>
+        </div>
+    </div>
+</section>
+
+<!-- What You Get -->
+<section class="pp-section pp-section-border">
+    <h2 class="pp-section-title">認定で得られるもの</h2>
+    <p class="pp-section-sub">思想体系、対話メソッド、技術連携、コミュニティ——すべてをお渡しします</p>
+
+    <div class="deliverable-list">
+        <div class="deliverable-item">
+            <div class="deliverable-icon blue">&#x1F4D6;</div>
+            <div class="deliverable-body">
+                <h4>思想フレームワーク体系</h4>
+                <p>心理学・哲学・宗教・経済・AI・宇宙——9領域70以上のエッセイから構築された思想体系へのアクセス。クライアントの人生のどんな文脈にも対応できる知的基盤。</p>
+            </div>
+        </div>
+        <div class="deliverable-item">
+            <div class="deliverable-icon blue">&#x1F5E3;</div>
+            <div class="deliverable-body">
+                <h4>対話メソッド</h4>
+                <p>「未来の自分は、今の自分に何を言うか」を軸とした対話の設計法。問いの立て方、沈黙の扱い方、軸の言語化への導き方。初回対話から軸の完成までの全プロセス。</p>
+            </div>
+        </div>
+        <div class="deliverable-item">
+            <div class="deliverable-icon gold">&#x1F48E;</div>
+            <div class="deliverable-body">
+                <h4>トキストレージ連携権</h4>
+                <p>クライアントの軸と存在証明を三層分散保管（石英ガラス×国立国会図書館×GitHub）に格納する権利。コーチ経由での発注・納品フローを提供。</p>
+            </div>
+        </div>
+        <div class="deliverable-item">
+            <div class="deliverable-icon green">&#x1F465;</div>
+            <div class="deliverable-body">
+                <h4>タイムレスコーチ・コミュニティ</h4>
+                <p>認定コーチ同士がつながるオンラインコミュニティ。対話事例の共有、思想の深化、実践知の蓄積。孤独な実践ではなく、共に深め合う場。</p>
+            </div>
+        </div>
+        <div class="deliverable-item">
+            <div class="deliverable-icon blue">&#x1F3C5;</div>
+            <div class="deliverable-body">
+                <h4>永続認定証</h4>
+                <p>あなたの認定そのものを三層に永続化。石英ガラスに刻まれた認定証は、あなたが「問いを立てる人」であることの存在証明になります。</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Pricing -->
+<section class="pp-section pp-section-border">
+    <h2 class="pp-section-title">認定プラン</h2>
+    <p class="pp-section-sub">一度の認定で、永続的に活動できます</p>
+
+    <div class="pricing-card">
+        <div class="pricing-badge">PERMANENT CERTIFICATION</div>
+        <h3>タイムレスコーチ永続認定</h3>
+        <div class="pricing-amount">&yen;55,500</div>
+        <div class="pricing-unit">税込・永続認定（更新費用なし）</div>
+        <ul class="pricing-features">
+            <li>思想フレームワーク体系（70+エッセイ）へのアクセス</li>
+            <li>対話メソッド（設計法・進行法・言語化法）</li>
+            <li>トキストレージ三層保管の連携権</li>
+            <li>タイムレスコーチ・コミュニティ参加権</li>
+            <li>代表との1on1研修（オンライン2時間）</li>
+            <li>永続認定証（三層分散保管）</li>
+            <li>公式サイトへの認定コーチ掲載</li>
+        </ul>
+        <p class="pricing-note">月額費用・ロイヤリティは一切ありません。<br>クライアントへの価格設定はコーチの自由です。</p>
+    </div>
+</section>
+
+<!-- Process -->
+<section class="pp-section pp-section-border">
+    <h2 class="pp-section-title">認定までの流れ</h2>
+    <p class="pp-section-sub">お問い合わせから認定まで、対話を通じて進みます</p>
+
+    <div class="process-list">
+        <div class="process-item">
+            <span class="process-num">01</span>
+            <div class="process-body">
+                <h4>お問い合わせ</h4>
+                <p>まずはお気軽にご連絡ください。タイムレスコーチに関心を持った理由、ご自身のバックグラウンド、届けたい対象について聴かせていただきます。</p>
+            </div>
+        </div>
+        <div class="process-item">
+            <span class="process-num">02</span>
+            <div class="process-body">
+                <h4>対話（90分）</h4>
+                <p>代表との対話を通じて、あなた自身の「ブレない軸」を言語化するプロセスを体験していただきます。タイムレスコンサルティングそのものを、まずあなたが受ける。これが最も重要なステップです。</p>
+            </div>
+        </div>
+        <div class="process-item">
+            <span class="process-num">03</span>
+            <div class="process-body">
+                <h4>研修（2時間）</h4>
+                <p>思想フレームワークの全体像、対話メソッドの実践、トキストレージ連携の手順を学びます。「教え方」ではなく「問いの立て方」を身につけます。</p>
+            </div>
+        </div>
+        <div class="process-item">
+            <span class="process-num">04</span>
+            <div class="process-body">
+                <h4>認定・永続化</h4>
+                <p>認定証を三層に永続化。あなたの軸とコーチとしての存在証明が、石英ガラス・国立国会図書館・GitHubに格納されます。</p>
+            </div>
+        </div>
+        <div class="process-item">
+            <span class="process-num">05</span>
+            <div class="process-body">
+                <h4>活動開始</h4>
+                <p>あなたの地域、あなたのコミュニティで、タイムレスコンサルティングの提供を開始。コーチコミュニティの仲間とともに、実践を深めていきます。</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Philosophy -->
+<section class="pp-section">
+    <div class="highlight-box">
+        <h3>コーチは「教える人」ではなく「問いを立てる人」</h3>
+        <p>タイムレスコーチに必要なのは、知識の量ではありません。<br>「未来の自分は、今のあなたに何を言いますか」——<br>この問いを、相手の人生の文脈に合わせて投げかける力です。<br>答えはクライアントの中にしかない。<br>コーチは、その答えが言葉になるまで待てる人です。</p>
+    </div>
+</section>
+
+<!-- FAQ -->
+<section class="pp-section pp-section-border">
+    <h2 class="pp-section-title">よくある質問</h2>
+    <p class="pp-section-sub"></p>
+
+    <details class="faq-item">
+        <summary>コーチングや心理学の資格は必要ですか？</summary>
+        <div class="faq-answer">特定の資格は必須ではありません。ただし、対話を通じて人の人生に向き合うことへの覚悟は必要です。認定プロセスの中で、まずあなた自身がタイムレスコンサルティングを体験していただきます。その体験を通じて、ご自身の適性を確認していただけます。</div>
+    </details>
+
+    <details class="faq-item">
+        <summary>クライアントへの価格は自分で決められますか？</summary>
+        <div class="faq-answer">はい、クライアントへの価格設定は完全にコーチの自由です。ロイヤリティや手数料は一切いただきません。ただし、トキストレージへの格納費用（三層分散保管）は別途、トキストレージの料金体系に基づきます。</div>
+    </details>
+
+    <details class="faq-item">
+        <summary>活動範囲に制限はありますか？</summary>
+        <div class="faq-answer">地理的な制限はありません。対面でもオンラインでも、国内でも海外でも活動できます。あなたが届けたい場所が、活動の場です。</div>
+    </details>
+
+    <details class="faq-item">
+        <summary>認定の更新は必要ですか？</summary>
+        <div class="faq-answer">必要ありません。永続認定です。あなたの認定証そのものが三層に永続化されます。更新費用も、年会費も、一切ありません。</div>
+    </details>
+
+    <details class="faq-item">
+        <summary>すでにコーチングやカウンセリングの事業をしています。併用できますか？</summary>
+        <div class="faq-answer">もちろんです。既存のサービスに「ブレない軸の永続化」を加えることで、提供価値が根本から変わります。既存クライアントへの新しいオプションとして、あるいは新規サービスの核として活用できます。</div>
+    </details>
+
+    <details class="faq-item">
+        <summary>どんなサポートが受けられますか？</summary>
+        <div class="faq-answer">認定後はタイムレスコーチ・コミュニティに参加できます。対話事例の共有、困ったときの相談、思想の深化をコーチ同士で行います。代表への直接相談も可能です。</div>
+    </details>
+</section>
+
+<!-- CTA -->
+<section class="pp-cta">
+    <h2>「問いを届ける側」になりませんか。</h2>
+    <p>
+        「未来の自分は、今のあなたに何を言いますか」<br>
+        この問いを、あなたの大切な人に届けたいと思ったら。<br>
+        まずは、お話しましょう。
+    </p>
+    <div style="margin-bottom: 2rem;">
+        <a href="#contact" style="display:inline-flex; align-items:center; gap:0.5rem; padding:0.85rem 2.5rem; background:var(--toki-blue); color:#fff; border-radius:0.4rem; font-size:1rem; font-weight:500; text-decoration:none;">お問い合わせ</a>
+    </div>
+    <p style="font-size: 0.8rem; color: var(--text-muted); margin-bottom: 1.5rem;">無理な勧誘は一切しません。</p>
+    <div class="pp-cta-links">
+        <a href="client-proposal.html">タイムレスコンサルティングとは</a>
+        <a href="index.html">トキストレージについて</a>
+        <a href="usecases.html">200+のユースケースを見る</a>
+    </div>
+</section>
+
+<!-- Disclaimer -->
+<section class="pp-section" style="padding-bottom: 2rem;">
+    <div style="border-top: 1px solid var(--border); padding-top: 2rem;">
+        <p style="font-size: 0.7rem; color: var(--text-muted); margin-top: 1rem;">&copy; 2026 TokiStorage / 佐藤卓也. All rights reserved.</p>
+    </div>
+</section>
+
+<!-- Footer -->
+<footer class="pp-footer" style="padding: 2.5rem 2rem;">
+    <p id="essay-nav-links"></p>
+    <p style="margin-top: 1rem;">TokiStorage</p>
+</footer>
+
+<script src="contact-form.js"></script>
+<script src="essay-nav.js?v=20260213"></script>
+<script src="tracker.js"></script>
+</body>
+</html>
