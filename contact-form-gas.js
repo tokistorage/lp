@@ -5,47 +5,51 @@
  * 1. Google Sheets で新規スプレッドシートを作成
  * 2. 拡張機能 > Apps Script を開く
  * 3. このコードを貼り付けて保存
- * 4. NOTIFY_EMAIL を自分のメールアドレスに変更
- * 5. デプロイ > 新しいデプロイ > ウェブアプリ
+ * 4. デプロイ > 新しいデプロイ > ウェブアプリ
  *    - 実行者: 自分
  *    - アクセス: 全員
- * 6. デプロイURLをコピーし、contact-form.js の API_URL を差し替え
+ * 5. デプロイURLをコピーし、contact-form.js の API_URL を差し替え
  */
 
 var NOTIFY_EMAIL = 'tokistorage1000@gmail.com';
 
 function doPost(e) {
-  var sheet = SpreadsheetApp.getActiveSpreadsheet().getActiveSheet();
-
-  // ヘッダー行がなければ作成
-  if (sheet.getLastRow() === 0) {
-    sheet.appendRow([
-      '日時', '名前', '連絡先', 'メッセージ', 'ページ', 'URL',
-      'デバイス', '画面', 'ビューポート', 'UA', '言語', 'リファラー', 'タイムゾーン',
-      'ステータス'
-    ]);
-  }
-
   try {
     var raw = e.postData.contents;
     var data = JSON.parse(raw);
 
-    sheet.appendRow([
-      new Date(),
-      data.name || '',
-      data.contact || '',
-      data.message || '',
-      data.page || '',
-      data.url || '',
-      data.device || '',
-      data.screen || '',
-      data.viewport || '',
-      data.ua || '',
-      data.lang || '',
-      data.referrer || '',
-      data.timezone || '',
-      'OK'
-    ]);
+    // スプレッドシート記録（失敗してもメールは送る）
+    try {
+      var ss = SpreadsheetApp.getActiveSpreadsheet();
+      if (ss) {
+        var sheet = ss.getActiveSheet();
+        if (sheet.getLastRow() === 0) {
+          sheet.appendRow([
+            '日時', '名前', '連絡先', 'メッセージ', 'ページ', 'URL',
+            'デバイス', '画面', 'ビューポート', 'UA', '言語', 'リファラー', 'タイムゾーン',
+            'ステータス'
+          ]);
+        }
+        sheet.appendRow([
+          new Date(),
+          data.name || '',
+          data.contact || '',
+          data.message || '',
+          data.page || '',
+          data.url || '',
+          data.device || '',
+          data.screen || '',
+          data.viewport || '',
+          data.ua || '',
+          data.lang || '',
+          data.referrer || '',
+          data.timezone || '',
+          'OK'
+        ]);
+      }
+    } catch (sheetErr) {
+      // シート書き込み失敗してもメールは送る
+    }
 
     // メール通知
     var subject = 'TokiStorage お問い合わせ: ' + (data.name || '名前なし');
@@ -71,13 +75,6 @@ function doPost(e) {
       .setMimeType(ContentService.MimeType.JSON);
 
   } catch (err) {
-    sheet.appendRow([
-      new Date(), 'ERROR', err.toString(),
-      e.postData ? e.postData.contents : 'no postData',
-      e.postData ? e.postData.type : 'no type',
-      '', '', '', '', '', '', '', '', 'ERROR'
-    ]);
-
     return ContentService
       .createTextOutput(JSON.stringify({ success: false, error: err.toString() }))
       .setMimeType(ContentService.MimeType.JSON);
