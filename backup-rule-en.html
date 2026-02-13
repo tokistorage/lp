@@ -1,0 +1,554 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>The 3-2-1 Rule — The Global Standard for Data Protection and Proof of Existence | TokiStorage</title>
+    <meta name="robots" content="noindex, nofollow">
+    <meta name="description" content="What is the 3-2-1 backup rule, the golden standard for data protection? How does TokiStorage's three-layer distributed storage naturally implement this principle? Exploring the intersection of data preservation and proof of existence.">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Shippori+Mincho:wght@400;500;600;700&family=Zen+Kaku+Gothic+New:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --toki-blue: #1E40AF;
+            --toki-blue-dark: #1E3A5F;
+            --toki-blue-pale: #EFF6FF;
+            --accent-blue: #3B82F6;
+            --bg-white: #FFFFFF;
+            --bg-section: #DBEAFE;
+            --text-primary: #1E293B;
+            --text-secondary: #475569;
+            --text-muted: #94A3B8;
+            --border: #E2E8F0;
+            --font-display: 'Shippori Mincho', serif;
+            --font-body: 'Zen Kaku Gothic New', sans-serif;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        html { scroll-behavior: smooth; }
+
+        body {
+            font-family: var(--font-body);
+            font-weight: 400;
+            background: var(--bg-white);
+            color: var(--text-primary);
+            line-height: 2;
+            font-size: 16px;
+        }
+
+        /* Navigation */
+        .article-nav {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 1000;
+            background: rgba(255,255,255,0.95);
+            backdrop-filter: blur(12px);
+            border-bottom: 1px solid var(--border);
+            padding: 0.6rem 1.2rem;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 1rem;
+        }
+        .article-nav .nav-brand {
+            font-family: var(--font-display);
+            font-size: 0.9rem;
+            font-weight: 600;
+            color: var(--toki-blue);
+            text-decoration: none;
+            white-space: nowrap;
+        }
+        .article-nav .nav-right {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+        .article-nav .nav-label {
+            font-size: 0.6rem;
+            color: var(--text-muted);
+            letter-spacing: 0.08em;
+        }
+        .article-nav .lang-switch {
+            font-size: 0.75rem;
+            color: var(--toki-blue);
+            text-decoration: none;
+            padding: 0.3rem 0.6rem;
+            border: 1px solid var(--toki-blue);
+            border-radius: 4px;
+        }
+        .article-nav .lang-switch:hover {
+            background: var(--toki-blue);
+            color: #fff;
+        }
+
+        /* Article Container */
+        .article-container {
+            max-width: 680px;
+            margin: 0 auto;
+            padding: 7rem 2rem 4rem;
+        }
+
+        /* Article Header */
+        .article-header {
+            margin-bottom: 3rem;
+            padding-bottom: 2rem;
+            border-bottom: 1px solid var(--border);
+        }
+        .article-category {
+            font-size: 0.7rem;
+            color: var(--toki-blue);
+            letter-spacing: 0.15em;
+            margin-bottom: 1rem;
+        }
+        .article-header h1 {
+            font-family: var(--font-display);
+            font-size: 1.8rem;
+            font-weight: 700;
+            line-height: 1.5;
+            margin-bottom: 1.5rem;
+        }
+        .article-subtitle {
+            font-size: 0.95rem;
+            color: var(--text-secondary);
+            line-height: 1.9;
+        }
+
+        /* Article Content */
+        .article-content h2 {
+            font-family: var(--font-display);
+            font-size: 1.3rem;
+            font-weight: 600;
+            margin: 3rem 0 1.5rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 2px solid var(--toki-blue-pale);
+        }
+        .article-content h3 {
+            font-family: var(--font-display);
+            font-size: 1.1rem;
+            font-weight: 600;
+            margin: 2rem 0 1rem;
+            color: var(--toki-blue-dark);
+        }
+        .article-content p {
+            margin-bottom: 1.5rem;
+        }
+        .article-content blockquote {
+            border-left: 3px solid var(--toki-blue);
+            padding-left: 1.5rem;
+            margin: 2rem 0;
+            font-family: var(--font-display);
+            color: var(--text-secondary);
+        }
+        .article-content blockquote cite {
+            display: block;
+            font-size: 0.85rem;
+            margin-top: 0.75rem;
+            font-style: normal;
+            color: var(--text-muted);
+        }
+        .article-content ul {
+            margin: 1.5rem 0;
+            padding-left: 1.5rem;
+        }
+        .article-content li {
+            margin-bottom: 0.75rem;
+        }
+
+        /* Core Message */
+        .core-message {
+            background: var(--toki-blue-pale);
+            border-left: 4px solid var(--toki-blue);
+            padding: 1.5rem;
+            margin: 2rem 0;
+            font-size: 0.95rem;
+        }
+
+        /* Key Point */
+        .key-point {
+            background: linear-gradient(135deg, var(--toki-blue-pale) 0%, #fff 100%);
+            border: 1px solid var(--accent-blue);
+            border-radius: 8px;
+            padding: 1.5rem;
+            margin: 2rem 0;
+            text-align: center;
+        }
+        .key-point p {
+            font-family: var(--font-display);
+            font-size: 1.1rem;
+            color: var(--toki-blue-dark);
+            margin: 0;
+        }
+
+        /* Stat Box */
+        .stat-box {
+            display: flex;
+            align-items: baseline;
+            gap: 0.5rem;
+            margin: 1.5rem 0;
+            padding: 1rem;
+            background: var(--toki-blue-pale);
+            border-radius: 8px;
+        }
+        .stat-box .number {
+            font-family: var(--font-display);
+            font-size: 2rem;
+            font-weight: 600;
+            color: var(--toki-blue);
+        }
+        .stat-box .unit {
+            font-size: 0.9rem;
+            color: var(--text-secondary);
+        }
+
+        /* Rule Box */
+        .rule-box {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 1rem;
+            margin: 2rem 0;
+        }
+        .rule-item {
+            background: var(--toki-blue-pale);
+            border: 1px solid var(--bg-section);
+            border-radius: 8px;
+            padding: 1.2rem;
+            text-align: center;
+        }
+        .rule-item .rule-number {
+            font-family: var(--font-display);
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: var(--toki-blue);
+            line-height: 1.2;
+        }
+        .rule-item .rule-label {
+            font-size: 0.85rem;
+            color: var(--text-secondary);
+            margin-top: 0.3rem;
+        }
+
+        /* Mapping Table */
+        .mapping-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 2rem 0;
+            font-size: 0.9rem;
+        }
+        .mapping-table th {
+            background: var(--toki-blue);
+            color: #fff;
+            padding: 0.8rem 1rem;
+            text-align: left;
+            font-weight: 500;
+        }
+        .mapping-table td {
+            padding: 0.8rem 1rem;
+            border-bottom: 1px solid var(--border);
+        }
+        .mapping-table tr:nth-child(even) td {
+            background: var(--toki-blue-pale);
+        }
+
+        /* Disclaimer */
+        .disclaimer {
+            font-size: 0.8rem;
+            color: var(--text-muted);
+            font-style: italic;
+            margin-bottom: 2rem;
+        }
+
+        /* Footer */
+        .article-footer {
+            margin-top: 4rem;
+            padding-top: 2rem;
+            border-top: 1px solid var(--border);
+            text-align: center;
+        }
+        .article-footer p {
+            font-size: 0.8rem;
+            color: var(--text-muted);
+            margin-bottom: 1rem;
+        }
+        .article-footer a {
+            color: var(--toki-blue);
+            text-decoration: none;
+        }
+        .article-footer a:hover {
+            text-decoration: underline;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .article-container { padding: 6rem 1.2rem 3rem; }
+            .article-header h1 { font-size: 1.5rem; }
+            .article-nav .nav-label { display: none; }
+            .rule-box { grid-template-columns: 1fr; }
+        }
+
+        @media print {
+            .article-nav { display: none; }
+            .article-container { padding-top: 2rem; }
+        }
+    </style>
+</head>
+<body>
+
+<nav class="article-nav">
+    <a href="index-en.html" class="nav-brand">TokiStorage</a>
+    <div class="nav-right">
+        <span class="nav-label">TECHNOLOGY & DESIGN / BACKUP STRATEGY</span>
+        <a href="backup-rule.html" class="lang-switch">JA</a>
+    </div>
+</nav>
+
+<main class="article-container">
+
+    <header class="article-header">
+        <p class="article-category">ESSAY — TECHNOLOGY & DESIGN</p>
+        <h1>The 3-2-1 Rule — The Global Standard for Data Protection and Proof of Existence</h1>
+        <p class="article-subtitle">
+            Why has the "3-2-1 rule" survived for half a century as the golden standard of data backup?<br>
+            How does it align with TokiStorage's three-layer distributed storage? Exploring the intersection of data preservation and proof of existence.
+        </p>
+    </header>
+
+    <article class="article-content">
+
+        <div class="core-message">
+            <strong>The point of this essay:</strong> The "3-2-1 rule" is the global standard for data backup, a principle proven over half a century. TokiStorage's three-layer distributed storage extends this principle from "data protection" to "proof of existence."
+        </div>
+
+        <p class="disclaimer">* This essay is a reflection on the design philosophy of data preservation.</p>
+
+
+        <h2>1. What is the 3-2-1 Rule?</h2>
+
+        <p>The "3-2-1 rule" is the most fundamental principle in data backup.</p>
+
+        <div class="rule-box">
+            <div class="rule-item">
+                <div class="rule-number">3</div>
+                <div class="rule-label">Copies of your data</div>
+            </div>
+            <div class="rule-item">
+                <div class="rule-number">2</div>
+                <div class="rule-label">Different media types</div>
+            </div>
+            <div class="rule-item">
+                <div class="rule-number">1</div>
+                <div class="rule-label">Copy stored offsite</div>
+            </div>
+        </div>
+
+        <p>Keep at least <strong>3</strong> copies of your data, on at least <strong>2</strong> different types of media, with at least <strong>1</strong> stored in a physically separate location.</p>
+
+        <p>That's it. Simple, yet following this principle alone dramatically reduces the risk of data loss.</p>
+
+        <h3>Why "3"?</h3>
+
+        <p>With only one copy, a single disk failure means losing everything. Two copies feel safer, but both can be destroyed by the same disaster. Three copies exponentially reduce the probability of total loss.</p>
+
+        <div class="stat-box">
+            <span class="number">1/1,000,000</span>
+            <span class="unit">— Probability of three independent media failing simultaneously (assuming 1% annual failure rate each)</span>
+        </div>
+
+        <p>In probabilistic terms, adding independent points of failure improves overall reliability multiplicatively.</p>
+
+        <h3>Why "2 types"?</h3>
+
+        <p>Identical media share identical weaknesses. Three hard drives from the same batch can fail from the same manufacturing defect or firmware bug. Three cloud services from the same provider can go down simultaneously from a single outage.</p>
+
+        <p>Combining different media types — say, hard drives and tape, or cloud and optical disc — eliminates "common mode failures." This is the engineering principle of <strong>diversity redundancy</strong>.</p>
+
+        <h3>Why "1 offsite"?</h3>
+
+        <p>If all backups sit in the same building, a single fire, earthquake, or flood wipes out everything. Storing at least one copy at a physically distant location distributes geographic risk.</p>
+
+        <p>After the collapse of the World Trade Center on September 11, 2001, many companies learned this lesson the hard way. Those that kept both servers and backups in the towers lost literally everything.</p>
+
+
+        <h2>2. Origins and Evolution</h2>
+
+        <p>The popularization of the 3-2-1 rule is often traced to photographer Peter Krogh's 2005 book, <em>The DAM Book: Digital Asset Management for Photographers</em>. He codified this principle as a strategy for preserving digital photographs.</p>
+
+        <blockquote>
+            "There are two kinds of people: those who have lost data, and those who will."
+            <cite>— Peter Krogh</cite>
+        </blockquote>
+
+        <p>However, the essence of this principle — redundancy, diversity, geographic distribution — existed long before Krogh's book.</p>
+
+        <h3>Redundancy since antiquity</h3>
+
+        <p>Egyptian pharaohs inscribed important records in multiple temples. The Rosetta Stone was discovered precisely because the same decree had been placed in several locations.</p>
+
+        <p>Medieval monks hand-copied manuscripts and distributed them across multiple monasteries. Before the printing press, this was humanity's "backup strategy."</p>
+
+        <p>The "3-2-1" formulation is modern, but the underlying idea — preserve what matters through multiple methods, in multiple places — is as old as civilization itself.</p>
+
+        <h3>Modern extension: 3-2-1-1-0</h3>
+
+        <p>In recent years, the 3-2-1 rule has been extended to "3-2-1-1-0":</p>
+
+        <ul>
+            <li><strong>3</strong> copies</li>
+            <li><strong>2</strong> different media types</li>
+            <li><strong>1</strong> offsite</li>
+            <li><strong>1</strong> air-gapped or immutable copy</li>
+            <li><strong>0</strong> errors (regular restore verification)</li>
+        </ul>
+
+        <p>As ransomware threats escalate, the importance of maintaining a backup that cannot be accessed online has become widely recognized. Data laser-inscribed on quartz glass is, by definition, an immutable, air-gapped backup.</p>
+
+
+        <h2>3. TokiStorage and the 3-2-1 Rule</h2>
+
+        <p>TokiStorage's three-layer distributed storage naturally implements the 3-2-1 rule. It wasn't deliberately modeled on this principle — rather, the relentless pursuit of "reliably preserving records" converged on the same architecture.</p>
+
+        <table class="mapping-table">
+            <tr>
+                <th>3-2-1 Rule</th>
+                <th>TokiStorage Implementation</th>
+            </tr>
+            <tr>
+                <td><strong>3</strong> copies</td>
+                <td>Physical layer, National layer, Private layer</td>
+            </tr>
+            <tr>
+                <td><strong>2</strong> different media</td>
+                <td>Physical artifact (quartz glass / laminate), institution (National Diet Library), digital infrastructure (GitHub)</td>
+            </tr>
+            <tr>
+                <td><strong>1</strong> offsite</td>
+                <td>National Diet Library (Tokyo) and GitHub (US data centers) are both offsite</td>
+            </tr>
+        </table>
+
+        <h3>Physical layer — Quartz glass / UV laminate</h3>
+
+        <p>QR codes are laser-inscribed onto quartz glass. No electricity needed, no servers needed, no internet needed. A thousand years from now, simply holding a smartphone over it will access the data.</p>
+
+        <p>This simultaneously satisfies the "air-gap" requirement of 3-2-1-1-0. Because it is not connected to any network, tampering through ransomware or cyberattack is physically impossible.</p>
+
+        <h3>National layer — National Diet Library</h3>
+
+        <p>QR codes are embedded in PDFs formatted as periodic newsletters and deposited with Japan's National Diet Library. This leverages the legal deposit system mandated by the National Diet Library Act — preserved as long as the nation endures.</p>
+
+        <p>Here, the "medium" is not a physical disk but the legal system itself. Entrusting data to the social infrastructure of law is a preservation strategy that transcends hardware lifespans.</p>
+
+        <h3>Private layer — GitHub</h3>
+
+        <p>Data is stored as repositories on the world's largest code hosting platform. Git's distributed version control replicates data across servers worldwide.</p>
+
+        <p>GitHub, operated by Microsoft, also preserves code in Arctic permafrost through its Arctic Code Vault project. The economic rationality of a private corporation and the public spirit of the open-source community together sustain the survival of data.</p>
+
+        <div class="key-point">
+            <p>Physical law. National institution. Economic rationality.<br>Three independent forces, each protecting your data.<br>Even if one disappears, the other two carry the record forward.</p>
+        </div>
+
+
+        <h2>4. Why "Different Media Types" Matter</h2>
+
+        <p>The heart of the 3-2-1 rule lies in "2 different media types." Three copies on the same kind of medium can all fall together.</p>
+
+        <h3>The homogeneity trap</h3>
+
+        <p>In 2021, a fire destroyed OVHcloud's data center in France. Despite having backups distributed across multiple servers, some customers lost everything because all copies resided in the same building. They had "3 copies" but neglected "2 media types" and "1 offsite."</p>
+
+        <p>Amazon's cloud service (AWS) offers multiple availability zones, but all run on Amazon's software stack. A software-level bug can affect every zone simultaneously.</p>
+
+        <h3>TokiStorage's diversity</h3>
+
+        <p>TokiStorage's three layers have fundamentally different failure modes:</p>
+
+        <ul>
+            <li><strong>Physical layer</strong> threats — physical destruction (dropping, fire, theft)</li>
+            <li><strong>National layer</strong> threats — changes in legislation, dissolution of the state</li>
+            <li><strong>Private layer</strong> threats — corporate bankruptcy, service termination</li>
+        </ul>
+
+        <p>The event of quartz glass shattering, the event of the National Diet Library Act being repealed, and the event of GitHub shutting down are independent of each other. This is the essence of "diversity redundancy." Unless all three failures occur simultaneously, the data survives.</p>
+
+
+        <h2>5. The Philosophy of Backup — Why Do We Preserve?</h2>
+
+        <p>The 3-2-1 rule is a technical principle, but behind it lies a universal question:</p>
+
+        <p><strong>Why do people try to preserve data?</strong></p>
+
+        <p>For businesses, it's about continuity and legal compliance. But when an individual backs up their smartphone photos, the motivation is far more fundamental.</p>
+
+        <h3>The fragility of memory</h3>
+
+        <p>Human memory is astonishingly unstable. Cognitive psychology research shows that we don't "recall" past events — we "reconstruct" them each time. Memories shift, distort, and sometimes vanish entirely.</p>
+
+        <p>Photos and videos function as an "external backup" for this fragile memory. A loved one's voice, a child's smile, a landscape that no longer exists — losing these is tantamount to losing the memories themselves.</p>
+
+        <h3>Backup as proof of existence</h3>
+
+        <p>The essence of data backup is "being able to restore when something goes wrong." But look deeper, and it's also about "not erasing the evidence that someone was here."</p>
+
+        <p>Businesses back up data so their enterprise continues to exist. Individuals back up photos so the proof that a moment existed endures.</p>
+
+        <p>TokiStorage explicitly defines this backup motivation as "proof of existence" and extends it to a 1,000-year timescale. It connects the technical framework of the 3-2-1 rule to the existential human desire to persist.</p>
+
+        <div class="key-point">
+            <p>Backup is resistance against disappearance.<br>To protect data is to protect existence itself.</p>
+        </div>
+
+
+        <h2>6. The Aesthetics of Redundancy</h2>
+
+        <p>In engineering, "redundant" is sometimes pejorative. Code redundancy should be eliminated. But in system design, redundancy is the very source of reliability.</p>
+
+        <h3>Redundancy in nature</h3>
+
+        <p>Biology is a master of redundancy. Humans have two kidneys. DNA repair mechanisms are layered many times over. Plants scatter thousands of seeds, designed so that just one needs to sprout.</p>
+
+        <p>Evolution doesn't penalize the "extra." On the contrary, species lacking redundancy are extinguished by the first unexpected event.</p>
+
+        <h3>The Shikinen Sengu of Ise Grand Shrine</h3>
+
+        <p>Japan offers another elegant example of redundancy. The Shikinen Sengu at Ise Grand Shrine rebuilds the shrine every 20 years. The moment when the old shrine and the new stand side by side could be called "architectural backup."</p>
+
+        <p>Deliberately creating "one more" to pass skills and memory to the next generation — this concept is essentially the same as the 3-2-1 rule's "third copy."</p>
+
+        <h3>"Extra" saves the world</h3>
+
+        <p>What the 3-2-1 rule teaches is that "just enough" isn't enough. One is precarious. Two is insufficient. Only with three can you breathe easy.</p>
+
+        <p>TokiStorage's three-layer distributed storage applies this "aesthetics of the extra" to proof of existence. The physical layer alone might suffice. Adding the national layer adds confidence. But it's the third — the private layer — that finally lets us say, "even if any one disappears, it's fine."</p>
+
+
+        <h2>Conclusion — Principles Transcend Time</h2>
+
+        <p>The 3-2-1 rule is not tied to any specific technology. Whether hard drives, tape, cloud, or quartz glass, the principle remains unchanged.</p>
+
+        <p>Because it is not a principle about technology. It is a <strong>principle about not losing</strong>.</p>
+
+        <p>Three copies. Two media types. One offsite.</p>
+
+        <p>Follow this principle, and your data survives fire, bankruptcy, and regime change.</p>
+
+        <p>TokiStorage implements this principle not on an 80-year scale, but a 1,000-year one. Physical law, national institution, and economic rationality — three independent forces continue to guard your proof of existence.</p>
+
+        <div class="key-point">
+            <p>The 3-2-1 rule is not data insurance.<br>It is a design philosophy for permanence.<br>And TokiStorage extends it to 1,000 years of proof of existence.</p>
+        </div>
+
+    </article>
+
+    <footer class="article-footer">
+        <p id="essay-nav-links"></p>
+        <p style="margin-top: 2rem; font-size: 0.75rem;">&copy; 2026 TokiStorage</p>
+    </footer>
+
+</main>
+
+<script src="essay-nav.js?v=20260213"></script>
+</body>
+</html>
