@@ -1,0 +1,519 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Founder Profile | Takuya Sato | TokiStorage</title>
+    <meta name="description" content="Profile of Takuya Sato, founder of TokiStorage. With over 20 years of engineering experience including semiconductor manufacturing equipment development, he works to democratize proof of existence.">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Shippori+Mincho:wght@400;500;600;700&family=Zen+Kaku+Gothic+New:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="index.css">
+    <style>
+        /* Profile page styles */
+        .profile-page {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 2rem;
+            padding-top: 5rem;
+            background: #fff;
+        }
+
+        .profile-header {
+            display: flex;
+            gap: 2rem;
+            align-items: flex-start;
+            margin-bottom: 2rem;
+            padding-bottom: 1.5rem;
+            border-bottom: 2px solid var(--toki-blue, #2563EB);
+        }
+
+        .profile-photo {
+            width: 160px;
+            height: 200px;
+            object-fit: cover;
+            border-radius: 4px;
+            flex-shrink: 0;
+        }
+
+        .profile-intro {
+            flex: 1;
+        }
+
+        .profile-name {
+            font-family: 'Shippori Mincho', serif;
+            font-size: 1.8rem;
+            font-weight: 700;
+            margin: 0 0 0.3rem 0;
+            color: #1e293b;
+        }
+
+        .profile-name-kana {
+            font-size: 0.9rem;
+            color: #64748b;
+            margin-bottom: 0.8rem;
+        }
+
+        .profile-title {
+            font-size: 1rem;
+            color: var(--toki-blue, #2563EB);
+            font-weight: 500;
+            margin-bottom: 1rem;
+            line-height: 1.6;
+        }
+
+        .profile-mission {
+            font-family: 'Shippori Mincho', serif;
+            font-size: 1.1rem;
+            color: #334155;
+            border-left: 3px solid var(--toki-blue, #2563EB);
+            padding-left: 1rem;
+            margin: 0;
+            line-height: 1.8;
+        }
+
+        .profile-section {
+            margin-bottom: 1.5rem;
+        }
+
+        .profile-section h2 {
+            font-family: 'Shippori Mincho', serif;
+            font-size: 1.1rem;
+            color: #1e293b;
+            border-bottom: 1px solid #e2e8f0;
+            padding-bottom: 0.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .profile-list {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        .profile-list li {
+            padding: 0.4rem 0;
+            padding-left: 1.5rem;
+            position: relative;
+            font-size: 0.95rem;
+            line-height: 1.6;
+        }
+
+        .profile-list li::before {
+            content: "●";
+            position: absolute;
+            left: 0;
+            color: var(--toki-blue, #2563EB);
+            font-size: 0.5rem;
+            top: 0.7rem;
+        }
+
+        .profile-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1.5rem;
+        }
+
+        .dedication-box {
+            background: #f8fafc;
+            border: 1px solid #e2e8f0;
+            border-radius: 8px;
+            padding: 1rem 1.2rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .dedication-box h3 {
+            font-size: 0.9rem;
+            color: var(--toki-blue, #2563EB);
+            margin: 0 0 0.8rem 0;
+            font-weight: 600;
+        }
+
+        .dedication-item {
+            margin-bottom: 0.6rem;
+            font-size: 0.9rem;
+        }
+
+        .dedication-item:last-child {
+            margin-bottom: 0;
+        }
+
+        .dedication-item strong {
+            color: #1e293b;
+        }
+
+        .dedication-item span {
+            color: #64748b;
+            font-size: 0.85rem;
+        }
+
+        .contact-box {
+            background: #f1f5f9;
+            border-radius: 8px;
+            padding: 1rem 1.2rem;
+            margin-top: 1.5rem;
+        }
+
+        .contact-box h3 {
+            font-size: 0.95rem;
+            color: #1e293b;
+            margin: 0 0 0.8rem 0;
+        }
+
+        .contact-info {
+            font-size: 0.9rem;
+            line-height: 1.8;
+        }
+
+        .contact-info p {
+            margin: 0.3rem 0;
+        }
+
+        .profile-footer {
+            text-align: center;
+            margin-top: 2rem;
+            padding-top: 1rem;
+            border-top: 1px solid #e2e8f0;
+            font-size: 0.85rem;
+            color: #64748b;
+        }
+
+        /* Print styles - compact A4 layout */
+        @media print {
+            * {
+                -webkit-print-color-adjust: exact !important;
+                print-color-adjust: exact !important;
+            }
+
+            body {
+                font-size: 11pt;
+                line-height: 1.25;
+                margin: 0;
+                padding: 0;
+            }
+
+            .toki-nav,
+            .nav-toggle,
+            .profile-footer {
+                display: none !important;
+            }
+
+            .profile-page {
+                max-width: 100%;
+                padding: 0.4rem;
+                padding-top: 0.3rem;
+                margin: 0;
+                box-sizing: border-box;
+            }
+
+            .profile-header {
+                display: flex !important;
+                flex-direction: row !important;
+                align-items: flex-start !important;
+                text-align: left !important;
+                gap: 0.8rem;
+                margin-bottom: 0.3rem;
+                padding: 0.3rem;
+                padding-bottom: 0.3rem;
+                border-bottom: 1px solid #333;
+            }
+
+            .profile-photo {
+                width: 90px;
+                height: 113px;
+                flex-shrink: 0;
+            }
+
+            .profile-intro {
+                flex: 1;
+                text-align: left !important;
+            }
+
+            .profile-name {
+                font-size: 18pt;
+                margin-bottom: 0;
+            }
+
+            .profile-name-kana {
+                font-size: 9pt;
+                margin-bottom: 0.1rem;
+            }
+
+            .profile-title {
+                font-size: 10pt;
+                margin-bottom: 0.1rem;
+                line-height: 1.25;
+            }
+
+            .profile-mission {
+                font-size: 10pt;
+                line-height: 1.3;
+                padding: 0.3rem 0.6rem;
+                border: 1px solid #666;
+                border-left: none;
+                border-right: none;
+                margin: 0.25rem 0 0.3rem 0;
+                text-align: center;
+                background: none;
+            }
+
+            .dedication-box {
+                padding: 0.15rem 0;
+                margin: 0.15rem 0 0.2rem;
+                background: none !important;
+            }
+
+            .dedication-box h3 {
+                font-size: 11pt;
+                margin: 0 0 0.1rem 0;
+                padding: 0;
+                color: #333;
+                text-align: left;
+            }
+
+            .dedication-box h3::before {
+                content: "■ ";
+                color: #333;
+            }
+
+            .dedication-item {
+                font-size: 9pt;
+                margin-bottom: 0;
+                line-height: 1.2;
+            }
+
+            .dedication-item span {
+                font-size: 8pt;
+                color: #666;
+            }
+
+            .dedication-item br {
+                display: none;
+            }
+
+            .profile-section {
+                margin: 0.2rem 0 0.1rem;
+                padding: 0;
+            }
+
+            .profile-section h2 {
+                font-size: 11pt;
+                padding: 0;
+                margin: 0 0 0.05rem 0;
+                border-bottom: none;
+                color: #333;
+                text-align: left;
+            }
+
+            .profile-section h2::before {
+                content: "■ ";
+                color: #333;
+            }
+
+            .profile-list {
+                margin: 0 !important;
+                padding: 0 !important;
+            }
+
+            .profile-list li {
+                padding: 0 !important;
+                padding-left: 0 !important;
+                margin-left: 0 !important;
+                font-size: 10pt;
+                line-height: 1.2;
+            }
+
+            .profile-list li::before {
+                content: "・";
+                position: static;
+                color: #333;
+                font-size: 10pt;
+            }
+
+            .profile-grid {
+                display: block;
+                margin: 0 !important;
+                padding: 0 !important;
+                gap: 0 !important;
+            }
+
+            .profile-grid .profile-section {
+                margin: 0.2rem 0 0.1rem !important;
+                padding: 0 !important;
+            }
+
+            .contact-box {
+                padding: 0.15rem 0;
+                margin: 0.2rem 0 0;
+                border-top: 1px solid #333;
+                background: none;
+            }
+
+            .contact-box h3 {
+                display: none;
+            }
+
+            .contact-info {
+                font-size: 9pt;
+                line-height: 1.3;
+                display: flex;
+                justify-content: space-between;
+                flex-wrap: wrap;
+            }
+
+            .contact-info p {
+                margin: 0;
+            }
+
+            @page {
+                margin: 5mm;
+                size: A4;
+            }
+        }
+
+        /* Mobile responsive */
+        @media (max-width: 600px) {
+            .profile-header {
+                flex-direction: column;
+                align-items: center;
+                text-align: center;
+            }
+
+            .profile-mission {
+                border-left: none;
+                border-top: 3px solid var(--toki-blue, #2563EB);
+                padding-left: 0;
+                padding-top: 1rem;
+            }
+
+            .profile-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+
+<!-- Navigation -->
+<nav class="toki-nav">
+    <a href="index-en.html" class="nav-logo">TokiStorage</a>
+    <div class="nav-links">
+        <a href="index-en.html#personas">For You</a>
+        <a href="index-en.html#solution">Features</a>
+        <a href="index-en.html#pricing">Pricing</a>
+        <a href="index-en.html#faq">FAQ</a>
+        <a href="index-en.html#cta" class="nav-cta">Free Consultation</a>
+        <a href="profile.html" class="lang-switch" aria-label="日本語に切り替え">JA</a>
+    </div>
+    <button class="nav-toggle" aria-label="Menu">
+        <span></span><span></span><span></span>
+    </button>
+</nav>
+
+<main class="profile-page">
+    <!-- Header: Photo, Name, Mission -->
+    <header class="profile-header">
+        <img src="asset/IMG_4310-2.jpeg" alt="Takuya Sato" class="profile-photo">
+        <div class="profile-intro">
+            <h1 class="profile-name">Takuya Sato</h1>
+            <p class="profile-name-kana">佐藤 卓也</p>
+            <p class="profile-title">
+                Founder, TokiStorage (Registered Sole Proprietorship)<br>
+                Founder, SoulCarrier "Resonance Circle"
+            </p>
+            <p class="profile-mission">
+                "Recording and passing down existence is not a privilege — it is a right for everyone."<br>
+                Challenging the inequality of memory, delivering proof of existence for the next thousand years.
+            </p>
+        </div>
+    </header>
+
+    <!-- Dedication Records -->
+    <div class="dedication-box">
+        <h3>Dedications to Sacred Sites</h3>
+        <div class="dedication-item">
+            <strong>Ise Grand Shrine Shikinen Sengu</strong> <span>(2026, founder's name)</span><br>
+            <span>Name inscribed in the 1,300-year tradition of "rebuilding and succession every 20 years"</span>
+        </div>
+        <div class="dedication-item">
+            <strong>Enryaku-ji Konpon Chudo, Mt. Hiei</strong> <span>(2026, founder's name)</span><br>
+            <span>Perpetual inscription in the restoration project of the main hall, home to the "eternal flame" that has burned for 1,200 years</span>
+        </div>
+    </div>
+
+    <!-- Career & Achievements -->
+    <div class="profile-grid">
+        <section class="profile-section">
+            <h2>Career & Technical Expertise</h2>
+            <ul class="profile-list">
+                <li>Former Big Four consulting firm and major manufacturers</li>
+                <li>Developed electronic application systems for the Ministry of Justice (Japan)</li>
+                <li>20+ years of experience in DX, AI, and cutting-edge technology</li>
+                <li>International project experience across the Asia-Pacific region</li>
+                <li>Independently developed quartz glass engraving & QR code technology</li>
+            </ul>
+        </section>
+
+        <section class="profile-section">
+            <h2>Awards & Media</h2>
+            <ul class="profile-list">
+                <li>World Blockchain Summit Top 10 Project Leaders Award</li>
+                <li>Forbes JAPAN contributor</li>
+                <li>Featured in Phoenix FM (international media)</li>
+                <li>4,000+ followers on business social networks</li>
+            </ul>
+        </section>
+    </div>
+
+    <div class="profile-grid">
+        <section class="profile-section">
+            <h2>Community & Social Activities</h2>
+            <ul class="profile-list">
+                <li>President, Timeless Town Shin-Urayasu HOA (2 years, ~250 households)</li>
+                <li>Japanese American remains repatriation support (since 2025)</li>
+                <li>Surveyed 5,000 gravestones on foot in Gunma Prefecture</li>
+                <li>Cemetery caretaker activities on Maui Island (half the year on-site)</li>
+            </ul>
+        </section>
+
+        <section class="profile-section">
+            <h2>Locations</h2>
+            <ul class="profile-list">
+                <li>Current: 2-11-13 Akemi, Urayasu, Chiba, Japan</li>
+                <li>Spring 2026: Establishing new base in Sado City</li>
+                <li>Maui Island (Hawaii): Cemetery caretaker activities</li>
+            </ul>
+        </section>
+    </div>
+
+    <section class="profile-section">
+        <h2>Origin Story</h2>
+        <ul class="profile-list">
+            <li>Creating a "portable grave" for beloved dog Pearl (2007-2025) became the origin of proof of existence</li>
+            <li>Moved to Urayasu after the 2011 Great East Japan Earthquake and served as HOA president</li>
+            <li>Encountered "forgotten Japanese immigrant graves" in Lahaina, Maui, and began remains repatriation activities</li>
+            <li>Advocates not just "reclaiming forgotten existence" but "systems to never be forgotten in the first place"</li>
+        </ul>
+    </section>
+
+    <!-- Contact -->
+    <div class="contact-box">
+        <h3>Contact</h3>
+        <div class="contact-info">
+            <p><strong>TokiStorage</strong></p>
+            <p>2-11-13 Akemi, Urayasu, Chiba 279-0014, Japan</p>
+            <p>Sole proprietorship filed Feb 11, 2026 (Ichikawa Tax Office) / Blue return registered</p>
+            <p>Website: bit.ly/soapfo</p>
+        </div>
+    </div>
+
+    <footer class="profile-footer">
+        <p>This document can be printed from the <a href="index-en.html">TokiStorage official website</a></p>
+        <p><span class="footer-sub-links"><a href="../index.html">SoulCarrier Resonance Circle</a> (<a href="../movement/Membership_Guide_EN.pdf">Enrollment</a> / <a href="../movement/BasicAgreement.pdf">Agreement</a> / <a href="../movement/Bylaws_EN.pdf">Bylaws</a>)</span></p>
+        <p>&copy; TokiStorage</p>
+    </footer>
+</main>
+
+<script src="index.js"></script>
+</body>
+</html>

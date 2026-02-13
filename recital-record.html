@@ -1,0 +1,480 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>発表会の記録と親心 | トキストレージ</title>
+    <meta name="robots" content="noindex, nofollow">
+    <meta name="description" content="子どもの発表会を記録したいという普遍的な親の願い。声を永続させる技術は、愛から生まれる。">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Shippori+Mincho:wght@400;500;600;700&family=Zen+Kaku+Gothic+New:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --toki-cyan: #0891B2;
+            --toki-cyan-dark: #0E7490;
+            --toki-cyan-pale: #ECFEFF;
+            --accent-teal: #14B8A6;
+            --bg-white: #FFFFFF;
+            --bg-section: #CFFAFE;
+            --text-primary: #1E293B;
+            --text-secondary: #475569;
+            --text-muted: #94A3B8;
+            --border: #E2E8F0;
+            --font-display: 'Shippori Mincho', serif;
+            --font-body: 'Zen Kaku Gothic New', sans-serif;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        html { scroll-behavior: smooth; }
+
+        body {
+            font-family: var(--font-body);
+            font-weight: 400;
+            background: var(--bg-white);
+            color: var(--text-primary);
+            line-height: 2;
+            font-size: 16px;
+        }
+
+        /* Navigation */
+        .article-nav {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 1000;
+            background: rgba(255,255,255,0.95);
+            backdrop-filter: blur(12px);
+            border-bottom: 1px solid var(--border);
+            padding: 0.6rem 1.2rem;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 1rem;
+        }
+        .article-nav .nav-brand {
+            font-family: var(--font-display);
+            font-size: 0.9rem;
+            font-weight: 600;
+            color: var(--toki-cyan);
+            text-decoration: none;
+            white-space: nowrap;
+        }
+        .article-nav .nav-right {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+        .article-nav .nav-label {
+            font-size: 0.6rem;
+            color: var(--text-muted);
+            letter-spacing: 0.08em;
+        }
+        .article-nav .lang-switch {
+            font-size: 0.75rem;
+            color: var(--toki-cyan);
+            text-decoration: none;
+            padding: 0.3rem 0.6rem;
+            border: 1px solid var(--toki-cyan);
+            border-radius: 4px;
+        }
+        .article-nav .lang-switch:hover {
+            background: var(--toki-cyan);
+            color: #fff;
+        }
+
+        /* Article Container */
+        .article-container {
+            max-width: 680px;
+            margin: 0 auto;
+            padding: 7rem 2rem 4rem;
+        }
+
+        /* Article Header */
+        .article-header {
+            margin-bottom: 3rem;
+            padding-bottom: 2rem;
+            border-bottom: 1px solid var(--border);
+        }
+        .article-category {
+            font-size: 0.7rem;
+            color: var(--toki-cyan);
+            letter-spacing: 0.15em;
+            margin-bottom: 1rem;
+        }
+        .article-header h1 {
+            font-family: var(--font-display);
+            font-size: 1.8rem;
+            font-weight: 700;
+            line-height: 1.5;
+            margin-bottom: 1.5rem;
+        }
+        .article-subtitle {
+            font-size: 0.95rem;
+            color: var(--text-secondary);
+            line-height: 1.9;
+        }
+
+        /* Article Content */
+        .article-content h2 {
+            font-family: var(--font-display);
+            font-size: 1.3rem;
+            font-weight: 600;
+            margin: 3rem 0 1.5rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 2px solid var(--toki-cyan-pale);
+        }
+        .article-content h3 {
+            font-family: var(--font-display);
+            font-size: 1.1rem;
+            font-weight: 600;
+            margin: 2rem 0 1rem;
+            color: var(--toki-cyan-dark);
+        }
+        .article-content p {
+            margin-bottom: 1.5rem;
+        }
+        .article-content blockquote {
+            border-left: 3px solid var(--toki-cyan);
+            padding-left: 1.5rem;
+            margin: 2rem 0;
+            font-family: var(--font-display);
+            color: var(--text-secondary);
+        }
+        .article-content blockquote cite {
+            display: block;
+            font-size: 0.85rem;
+            margin-top: 0.75rem;
+            font-style: normal;
+            color: var(--text-muted);
+        }
+        .article-content ul, .article-content ol {
+            margin: 1.5rem 0;
+            padding-left: 1.5rem;
+        }
+        .article-content li {
+            margin-bottom: 0.75rem;
+        }
+
+        /* Core Message */
+        .core-message {
+            background: var(--toki-cyan-pale);
+            border-left: 4px solid var(--toki-cyan);
+            padding: 1.5rem;
+            margin: 2rem 0;
+            font-size: 0.95rem;
+        }
+
+        /* Key Point */
+        .key-point {
+            background: linear-gradient(135deg, var(--toki-cyan-pale) 0%, #fff 100%);
+            border: 1px solid var(--toki-cyan);
+            border-radius: 8px;
+            padding: 1.5rem;
+            margin: 2rem 0;
+            text-align: center;
+        }
+        .key-point p {
+            font-family: var(--font-display);
+            font-size: 1.1rem;
+            color: var(--toki-cyan-dark);
+            margin: 0;
+        }
+
+        /* Scene Box */
+        .scene-box {
+            background: linear-gradient(135deg, #FEF3C7 0%, #FFFBEB 100%);
+            border-radius: 12px;
+            padding: 2rem;
+            margin: 2rem 0;
+            font-family: var(--font-display);
+        }
+        .scene-box p {
+            font-size: 0.95rem;
+            margin-bottom: 0.75rem;
+            color: var(--text-secondary);
+        }
+        .scene-box p:last-child {
+            margin-bottom: 0;
+        }
+
+        /* Stat Box */
+        .stat-box {
+            display: flex;
+            align-items: baseline;
+            gap: 0.5rem;
+            margin: 1.5rem 0;
+            padding: 1rem;
+            background: var(--toki-cyan-pale);
+            border-radius: 8px;
+        }
+        .stat-box .number {
+            font-family: var(--font-display);
+            font-size: 2rem;
+            font-weight: 600;
+            color: var(--toki-cyan);
+        }
+        .stat-box .unit {
+            font-size: 0.9rem;
+            color: var(--text-secondary);
+        }
+
+        /* Footer */
+        .article-footer {
+            margin-top: 4rem;
+            padding-top: 2rem;
+            border-top: 1px solid var(--border);
+            text-align: center;
+        }
+        .article-footer p {
+            font-size: 0.8rem;
+            color: var(--text-muted);
+            margin-bottom: 1rem;
+        }
+        .article-footer a {
+            color: var(--toki-cyan);
+            text-decoration: none;
+        }
+        .article-footer a:hover {
+            text-decoration: underline;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .article-container { padding: 6rem 1.2rem 3rem; }
+            .article-header h1 { font-size: 1.5rem; }
+            .article-nav .nav-label { display: none; }
+        }
+
+        @media print {
+            .article-nav { display: none; }
+            .article-container { padding-top: 2rem; }
+        }
+    </style>
+</head>
+<body>
+
+<nav class="article-nav">
+    <a href="index.html" class="nav-brand">トキストレージ</a>
+    <div class="nav-right">
+        <span class="nav-label">家族・継承 / FAMILY</span>
+        <a href="recital-record-en.html" class="lang-switch">EN</a>
+    </div>
+</nav>
+
+<main class="article-container">
+
+    <header class="article-header">
+        <p class="article-category">ESSAY — 家族・継承</p>
+        <h1>発表会の記録と親心</h1>
+        <p class="article-subtitle">
+            子どもの発表会を記録したいという普遍的な親の願い。<br>
+            なぜ私たちは、その一瞬を残そうとするのか。
+        </p>
+    </header>
+
+    <article class="article-content">
+
+        <div class="core-message">
+            <strong>この記事で言いたいこと：</strong>発表会でスマホを構える親たちの姿は、人類普遍の「成長の記録を残したい」という願いの現代的な表れである。声を残す技術は、この愛情から生まれた。
+        </div>
+
+        <h2>1. ある光景</h2>
+
+        <div class="scene-box">
+            <p>幼稚園の発表会。</p>
+            <p>客席の親たちが一斉にスマートフォンを掲げる。</p>
+            <p>小さな画面越しに、わが子を探す目。</p>
+            <p>「ちゃんと撮れてるかな」——そんな不安を抱えながら、それでもシャッターを押し続ける。</p>
+            <p>終演後、すぐに動画を確認する。「撮れてた」という安堵。「ブレてた」という落胆。</p>
+        </div>
+
+        <p>この光景は、世界中どこでも見られる。文化も言語も超えて、親は子どもの姿を記録しようとする。</p>
+
+        <p>なぜだろうか。</p>
+
+
+        <h2>2. なぜ記録するのか</h2>
+
+        <h3>成長は不可逆である</h3>
+
+        <p>子どもは、二度と同じ姿を見せない。</p>
+
+        <p>今日の5歳は、明日には5歳と1日になる。今日のたどたどしい歌声は、来年にはもう少し上手になっている。そして、それを「成長」と呼んで喜ぶ一方で、親はどこかで「あの頃」を惜しんでいる。</p>
+
+        <p>記録とは、不可逆な時間への抵抗である。</p>
+
+        <h3>「見せたい」という願い</h3>
+
+        <p>記録には、もうひとつの動機がある。「誰かに見せたい」という願いだ。</p>
+
+        <p>来られなかった祖父母に。遠くに住む親戚に。そして——まだ存在しない未来の誰かに。</p>
+
+        <p>「この子が大きくなったとき、見せてあげたい」</p>
+        <p>「この子の子どもに、親の幼い頃を見せてあげたい」</p>
+
+        <p>記録は、時間を超えた贈り物である。</p>
+
+        <h3>存在の証明</h3>
+
+        <p>より根源的には、記録は「存在の証明」である。</p>
+
+        <p>「この子がここにいた」「この瞬間があった」——それを形にして残したい。親が子の発表会を記録するのは、単なる思い出づくりではない。かけがえのない存在を、時間の中に刻みつける行為なのだ。</p>
+
+
+        <h2>3. 記録の脆弱性</h2>
+
+        <p>しかし、私たちの記録は驚くほど脆い。</p>
+
+        <h3>デジタルの儚さ</h3>
+
+        <p>スマートフォンで撮影した動画。どこに保存されているだろうか。</p>
+
+        <ul>
+            <li><strong>端末本体</strong>——機種変更で移行を忘れる、故障で消失</li>
+            <li><strong>クラウド</strong>——サービス終了、アカウント凍結、料金未払い</li>
+            <li><strong>外付けHDD</strong>——物理的故障、接続規格の変化</li>
+            <li><strong>DVD/Blu-ray</strong>——再生機器の消滅、ディスク劣化</li>
+        </ul>
+
+        <p>10年前に撮った動画を、今すぐ再生できるだろうか。多くの人は、「どこにあるかわからない」と答えるだろう。</p>
+
+        <h3>形式の陳腐化</h3>
+
+        <p>仮にデータが残っていても、再生できるとは限らない。</p>
+
+        <p>VHSテープを再生できる家庭は、今どれだけあるだろうか。8mmフィルムは？　カセットテープは？</p>
+
+        <p>デジタルデータも同様だ。20年後、今のファイル形式が読めるという保証はない。</p>
+
+        <div class="stat-box">
+            <span class="number">10</span>
+            <span class="unit">年——デジタル記録の実質的な「安全期間」の目安</span>
+        </div>
+
+        <p>子どもの成長記録を「孫に見せたい」と思うなら、50年以上の保存が必要だ。しかし、現在の一般的な記録方法では、それは保証されない。</p>
+
+
+        <h2>4. 声を残すということ</h2>
+
+        <p>記録の中でも、「声」は特別な意味を持つ。</p>
+
+        <h3>顔は残る、声は消える</h3>
+
+        <p>写真は、ほとんどの家庭にある。古いアルバムを開けば、祖父母の若い頃、曽祖父母の姿を見ることができる。</p>
+
+        <p>しかし、声はどうか。</p>
+
+        <p>曽祖父母の声を聴いたことがある人は、ほとんどいないだろう。録音技術が普及したのは、たかだか数十年前のことだ。それ以前の人々の声は、永遠に失われている。</p>
+
+        <h3>声の持つ情報量</h3>
+
+        <p>声には、文字や写真では伝わらない情報が詰まっている。</p>
+
+        <ul>
+            <li><strong>音色</strong>——高い、低い、かすれている、透き通っている</li>
+            <li><strong>抑揚</strong>——感情の起伏、話し方の癖</li>
+            <li><strong>間</strong>——呼吸のリズム、沈黙の長さ</li>
+            <li><strong>言葉遣い</strong>——方言、口癖、世代特有の表現</li>
+        </ul>
+
+        <p>写真が「姿」を残すなら、声は「人となり」を残す。</p>
+
+        <h3>幼い声の特別さ</h3>
+
+        <p>子どもの声は、特に儚い。</p>
+
+        <p>高くて甘い幼児の声。言葉を覚えたての舌足らずな発音。歌を一生懸命歌う、少しずれたリズム。</p>
+
+        <p>それらは数年で消えてしまう。成長とともに声変わりし、発音は正確になり、歌も上手になる。「成長」は喜ばしいことだが、幼い頃の声は二度と戻らない。</p>
+
+        <div class="key-point">
+            <p>声は、成長とともに失われる<br>最も儚い記録対象である。</p>
+        </div>
+
+
+        <h2>5. 技術が応える</h2>
+
+        <p>この「声を残したい」という願いに、技術は応えられるか。</p>
+
+        <h3>音声QRコード</h3>
+
+        <p>私たちは、QRコードに音声を直接埋め込む技術を開発した。Opusコーデックと独自の圧縮技術により、約30秒の音声をQRコードに格納できる。</p>
+
+        <p>30秒あれば、発表会で歌った歌のワンフレーズを残せる。「ママ、パパ、見てね」という呼びかけを残せる。幼い声を、そのまま残せる。</p>
+
+        <h3>石英ガラスへの記録</h3>
+
+        <p>そのQRコードを、石英ガラスに刻む。石英ガラスは1000年以上の耐久性を持つ。熱にも、水にも、紫外線にも強い。</p>
+
+        <p>デジタルデータの儚さを超えて、声を物理的に永続させる。</p>
+
+        <h3>再生の仕組み</h3>
+
+        <p>1000年後の人々は、このQRコードをどうやって読むのか。</p>
+
+        <p>QRコードは国際規格（ISO/IEC 18004）として標準化されている。規格書が残っていれば、未来の技術者は読み取り方を再現できる。そして石英ガラス自体に、規格の説明を刻むこともできる。</p>
+
+        <p>「自己完結した記録」——これが、トキストレージの目指す姿である。</p>
+
+
+        <h2>6. 技術の原動力は愛である</h2>
+
+        <p>発表会でスマホを構える親たちと、1000年残る記録技術。一見、かけ離れているように見える。</p>
+
+        <p>しかし、根底にあるものは同じだ。</p>
+
+        <h3>愛が技術を生む</h3>
+
+        <p>「この子の声を残したい」</p>
+        <p>「この子が大きくなったとき、幼い頃の自分の声を聴かせてあげたい」</p>
+        <p>「この子の子どもに、親の幼い頃を伝えたい」</p>
+
+        <p>技術は、こうした願いから生まれる。需要があるから供給があるのではない。愛があるから、技術が生まれるのだ。</p>
+
+        <h3>普遍的な願い</h3>
+
+        <p>子どもの成長を記録したいという願いは、人類普遍のものだ。洞窟壁画に手形を残した先史時代の親も、写真館で家族写真を撮った明治の親も、スマホで動画を撮る令和の親も、同じ願いを持っている。</p>
+
+        <p>技術は変わる。願いは変わらない。</p>
+
+        <div class="key-point">
+            <p>1000年の技術は、<br>1000年の愛情を届けるためにある。</p>
+        </div>
+
+
+        <h2>結論——1000年後の発表会</h2>
+
+        <p>1000年後。</p>
+
+        <p>ある家族が、古い石英ガラスのプレートを手にしている。表面には、QRコードが刻まれている。</p>
+
+        <p>スマートフォンをかざすと、幼い声が流れ始める。</p>
+
+        <p>「きらきらひかる、おそらのほしよ——」</p>
+
+        <p>たどたどしい歌声。少しリズムがずれている。でも一生懸命。</p>
+
+        <p>それを聴いた子どもが尋ねる。「これ、誰？」</p>
+
+        <p>親が答える。「あなたのご先祖様だよ。1000年前の発表会で歌った声」</p>
+
+        <p>子どもは不思議そうな顔をして、もう一度聴く。そしてこう言う。</p>
+
+        <p>「わたしも残したい」</p>
+
+        <p>——その連鎖こそが、発表会を記録する親心の、本当の意味である。</p>
+
+    </article>
+
+    <footer class="article-footer">
+        <p id="essay-nav-links"></p>
+        <p style="margin-top: 2rem; font-size: 0.75rem;">&copy; 2026 TokiStorage</p>
+    </footer>
+
+</main>
+
+<script src="essay-nav.js?v=20260209"></script>
+</body>
+</html>

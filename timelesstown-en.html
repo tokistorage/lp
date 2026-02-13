@@ -1,0 +1,548 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>To the Residents of Timeless Town Shin-Urayasu | Takuya Sato</title>
+    <meta name="robots" content="noindex, nofollow">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Shippori+Mincho:wght@400;500;600;700&family=Zen+Kaku+Gothic+New:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --toki-blue: #2563EB;
+            --toki-blue-light: #3B82F6;
+            --toki-blue-dark: #1D4ED8;
+            --toki-blue-pale: #EFF6FF;
+            --gold: #C9A962;
+            --bg-white: #FFFFFF;
+            --bg-page: #F8FAFC;
+            --bg-section: #F1F5F9;
+            --text-primary: #1E293B;
+            --text-secondary: #475569;
+            --text-muted: #94A3B8;
+            --border: #E2E8F0;
+            --shadow-sm: 0 1px 2px rgba(0,0,0,0.05);
+            --shadow-md: 0 4px 16px rgba(0,0,0,0.06);
+            --font-display: 'Shippori Mincho', serif;
+            --font-body: 'Zen Kaku Gothic New', sans-serif;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        html { scroll-behavior: smooth; }
+
+        body {
+            font-family: var(--font-body);
+            font-weight: 400;
+            background: var(--bg-white);
+            color: var(--text-primary);
+            line-height: 1.9;
+            font-size: 16px;
+        }
+
+        /* ---- Header ---- */
+        .tt-header {
+            background: var(--bg-page);
+            border-bottom: 1px solid var(--border);
+            padding: 3rem 2rem 2.5rem;
+            text-align: center;
+        }
+        .tt-header-inner {
+            max-width: 640px;
+            margin: 0 auto;
+        }
+        .tt-date {
+            font-size: 0.8rem;
+            color: var(--text-muted);
+            letter-spacing: 0.08em;
+            margin-bottom: 1.5rem;
+        }
+        .tt-header h1 {
+            font-family: var(--font-display);
+            font-size: 1.6rem;
+            font-weight: 600;
+            line-height: 1.6;
+            color: var(--text-primary);
+            margin-bottom: 1rem;
+        }
+        .tt-from {
+            font-family: var(--font-display);
+            font-size: 0.95rem;
+            color: var(--text-secondary);
+            line-height: 1.8;
+        }
+        .tt-lang-switch {
+            margin-top: 1rem;
+        }
+        .tt-lang-switch a {
+            display: inline-block;
+            padding: 0.3rem 0.8rem;
+            font-size: 0.8rem;
+            color: var(--toki-blue);
+            border: 1px solid var(--toki-blue);
+            border-radius: 4px;
+            text-decoration: none;
+        }
+        .tt-lang-switch a:hover {
+            background: var(--toki-blue-pale);
+        }
+
+        /* ---- Main Content ---- */
+        .tt-main {
+            max-width: 640px;
+            margin: 0 auto;
+            padding: 3rem 2rem 4rem;
+        }
+
+        .tt-section {
+            margin-bottom: 3.5rem;
+        }
+        .tt-section h2 {
+            font-family: var(--font-display);
+            font-size: 1.15rem;
+            font-weight: 600;
+            color: var(--text-primary);
+            margin-bottom: 1rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 1px solid var(--border);
+        }
+        .tt-section p {
+            font-size: 0.9rem;
+            color: var(--text-secondary);
+            margin-bottom: 1rem;
+            line-height: 2;
+        }
+        .tt-section p:last-child {
+            margin-bottom: 0;
+        }
+
+        /* ---- Greeting ---- */
+        .tt-greeting {
+            font-family: var(--font-display);
+            font-size: 0.95rem;
+            color: var(--text-primary);
+            line-height: 2.2;
+            margin-bottom: 3.5rem;
+        }
+        .tt-author-photo {
+            text-align: center;
+            margin: 0 0 1.5rem;
+        }
+        .tt-author-photo img {
+            width: 120px;
+            height: 120px;
+            border-radius: 50%;
+            object-fit: cover;
+            box-shadow: var(--shadow-md);
+        }
+
+        /* ---- Soap Section ---- */
+        .tt-soap-photo {
+            text-align: center;
+            margin: 1.5rem 0;
+        }
+        .tt-soap-photo img {
+            width: 220px;
+            max-width: 50%;
+            height: auto;
+            border-radius: 0.8rem;
+            box-shadow: var(--shadow-sm);
+        }
+        .tt-soap-photo figcaption {
+            font-size: 0.75rem;
+            color: var(--text-muted);
+            margin-top: 0.5rem;
+        }
+
+        /* ---- Toki Photos ---- */
+        .tt-toki-photos {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 0.8rem;
+            margin: 1.5rem 0;
+        }
+        .tt-toki-photos .tt-soap-photo {
+            margin: 0;
+        }
+        .tt-toki-photos .tt-soap-photo img {
+            width: 100%;
+            max-width: 100%;
+            aspect-ratio: 1;
+            object-fit: cover;
+        }
+        @media (max-width: 520px) {
+            .tt-toki-photos { grid-template-columns: 1fr; }
+        }
+
+        /* ---- Episode Box ---- */
+        .tt-episode {
+            background: linear-gradient(135deg, #FAFAFA 0%, #F5F5F5 100%);
+            border-left: 3px solid var(--text-muted);
+            border-radius: 0 0.8rem 0.8rem 0;
+            padding: 1.5rem 1.8rem;
+            margin: 2rem 0;
+        }
+        .tt-episode p {
+            font-size: 0.88rem;
+            color: var(--text-secondary);
+            line-height: 1.9;
+            margin-bottom: 0.8rem;
+        }
+        .tt-episode p:last-child {
+            margin-bottom: 0;
+        }
+        .tt-episode-insight {
+            font-family: var(--font-display);
+            font-weight: 500;
+            color: var(--text-primary) !important;
+            margin-top: 1rem !important;
+            padding-top: 0.8rem;
+            border-top: 1px solid var(--border);
+        }
+
+        /* ---- Bridge (soap → toki) ---- */
+        .tt-bridge {
+            background: var(--bg-page);
+            border: 1px solid var(--border);
+            border-radius: 1rem;
+            padding: 2rem;
+            margin: 2rem 0;
+            text-align: center;
+        }
+        .tt-bridge p {
+            font-family: var(--font-display);
+            font-size: 1rem;
+            color: var(--text-primary);
+            line-height: 2;
+            margin-bottom: 0;
+        }
+        .tt-bridge .bridge-accent {
+            color: var(--toki-blue);
+            font-weight: 600;
+        }
+
+        /* ---- Toki Intro ---- */
+        .tt-toki-features {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 1rem;
+            margin: 1.5rem 0;
+        }
+        .tt-feature {
+            background: var(--bg-page);
+            border: 1px solid var(--border);
+            border-radius: 0.8rem;
+            padding: 1.2rem 1rem;
+            text-align: center;
+        }
+        .tt-feature .f-number {
+            font-family: var(--font-display);
+            font-size: 1.6rem;
+            font-weight: 700;
+            color: var(--toki-blue);
+        }
+        .tt-feature .f-unit {
+            font-size: 0.85rem;
+            color: var(--text-secondary);
+        }
+        .tt-feature .f-label {
+            font-size: 0.75rem;
+            color: var(--text-muted);
+            margin-top: 0.2rem;
+        }
+
+        /* ---- Monitor Section ---- */
+        .tt-monitor {
+            background: linear-gradient(135deg, var(--toki-blue-pale) 0%, #fff 100%);
+            border: 2px solid var(--toki-blue);
+            border-radius: 1rem;
+            padding: 2.5rem 2rem;
+            margin: 2rem 0;
+        }
+        .tt-monitor h2 {
+            font-family: var(--font-display);
+            font-size: 1.15rem;
+            font-weight: 600;
+            color: var(--toki-blue-dark);
+            margin-bottom: 1rem;
+            padding-bottom: 0;
+            border-bottom: none;
+        }
+        .tt-monitor p {
+            font-size: 0.9rem;
+            color: var(--text-secondary);
+            margin-bottom: 1rem;
+            line-height: 2;
+        }
+        .tt-monitor-details {
+            background: var(--bg-white);
+            border: 1px solid var(--border);
+            border-radius: 0.6rem;
+            padding: 1.2rem 1.5rem;
+            margin: 1.2rem 0;
+        }
+        .tt-monitor-details dt {
+            font-size: 0.78rem;
+            color: var(--text-muted);
+            font-weight: 600;
+            letter-spacing: 0.05em;
+            margin-top: 0.8rem;
+        }
+        .tt-monitor-details dt:first-child {
+            margin-top: 0;
+        }
+        .tt-monitor-details dd {
+            font-size: 0.88rem;
+            color: var(--text-primary);
+            margin-left: 0;
+            margin-bottom: 0.2rem;
+        }
+        .tt-monitor-note {
+            font-size: 0.8rem !important;
+            color: var(--text-muted) !important;
+            font-style: italic;
+        }
+
+        /* ---- Highlight Box ---- */
+        .tt-highlight {
+            background: linear-gradient(135deg, #FEF9E7 0%, #FFF8E1 100%);
+            border: 2px solid var(--gold);
+            border-radius: 0.8rem;
+            padding: 1.5rem;
+            margin: 1.5rem 0;
+            text-align: center;
+        }
+        .tt-highlight-title {
+            font-family: var(--font-display);
+            font-size: 1.1rem;
+            font-weight: 600;
+            color: var(--text-primary);
+            margin-bottom: 0.5rem;
+        }
+        .tt-highlight p {
+            font-size: 0.88rem;
+            color: var(--text-secondary);
+            margin-bottom: 0;
+            line-height: 1.8;
+        }
+        .tt-highlight-note {
+            font-size: 0.78rem !important;
+            color: var(--text-muted) !important;
+            margin-top: 0.8rem !important;
+        }
+
+        /* ---- CTA ---- */
+        .tt-cta {
+            text-align: center;
+            margin-top: 2rem;
+        }
+        .tt-cta-btn {
+            display: inline-block;
+            background: var(--toki-blue);
+            color: #fff;
+            padding: 0.8rem 2.5rem;
+            border-radius: 0.5rem;
+            text-decoration: none;
+            font-size: 0.9rem;
+            font-weight: 500;
+            transition: background 0.3s ease;
+        }
+        .tt-cta-btn:hover {
+            background: var(--toki-blue-dark);
+        }
+        .tt-cta-sub {
+            font-size: 0.78rem;
+            color: var(--text-muted);
+            margin-top: 0.6rem;
+        }
+
+        /* ---- Links ---- */
+        .tt-links {
+            margin-top: 3rem;
+            padding-top: 2rem;
+            border-top: 1px solid var(--border);
+            text-align: center;
+        }
+        .tt-links a {
+            display: inline-block;
+            color: var(--toki-blue);
+            text-decoration: none;
+            font-size: 0.85rem;
+            margin: 0.3rem 1rem;
+        }
+        .tt-links a:hover {
+            text-decoration: underline;
+        }
+
+        /* ---- Footer ---- */
+        .tt-footer {
+            text-align: center;
+            padding: 2rem;
+            font-size: 0.75rem;
+            color: var(--text-muted);
+            border-top: 1px solid var(--border);
+        }
+
+        /* ---- Responsive ---- */
+        @media (max-width: 520px) {
+            .tt-header { padding: 2rem 1.2rem; }
+            .tt-header h1 { font-size: 1.3rem; }
+            .tt-main { padding: 2rem 1.2rem 3rem; }
+            .tt-toki-features { grid-template-columns: 1fr; }
+            .tt-monitor { padding: 2rem 1.5rem; }
+        }
+    </style>
+</head>
+<body>
+
+<header class="tt-header">
+    <div class="tt-header-inner">
+        <p class="tt-date">February 4, 2026 (Wed) — Risshun (First Day of Spring)</p>
+        <h1>To the Residents of<br>Timeless Town Shin-Urayasu</h1>
+        <p class="tt-from">
+            HOA President, Timeless Town Shin-Urayasu<br>
+            Takuya Sato
+        </p>
+        <div class="tt-lang-switch">
+            <a href="timelesstown.html">日本語版を見る</a>
+        </div>
+    </div>
+</header>
+
+<main class="tt-main">
+
+    <!-- ① Message from the HOA President -->
+    <div class="tt-greeting">
+        <figure class="tt-author-photo">
+            <img src="asset/sato-family.jpg" alt="The Sato Family" loading="lazy" width="400" height="400">
+        </figure>
+        <p>Thank you for your support throughout my two-year term.</p>
+        <p>I accepted this role with the goal of "HOA Digital Transformation," entrusted by the previous president. Thanks to the support of all residents, we were able to continue traditions like the Halloween event, introduce LINE Works for the association, organize bus tours, and participate in nearby festivals — creating opportunities for our community to grow closer.</p>
+        <p>However, early in my second term, I discovered that my family's ancestral graves are on Maui Island, Hawaii. This suddenly required me to travel back and forth internationally for cemetery caretaking duties. As a result, there were aspects of management that did not go as smoothly as I would have liked — this is my main regret from my term.</p>
+        <p>Yet through this experience of tending graves, I came to reconsider what a community should be, and found myself confronting questions of life and death from many perspectives. I wanted to share the lessons I learned with all of you, which is why I've decided to distribute Pearl Soap to everyone.</p>
+        <p>This spring, I will be establishing a new base in Sado City, Niigata Prefecture. I hope to maintain my connection with Timeless Town. These two years here have been an irreplaceable time for me.</p>
+        <p>For the remainder of my term, I will continue working on pending coordination with local government and transitioning to the next president. We are still looking for the next HOA president — if you are interested in running, please feel free to reach out.</p>
+    </div>
+
+    <!-- ② About Pearl Soap -->
+    <div class="tt-section">
+        <h2>About Pearl Soap</h2>
+
+        <figure class="tt-soap-photo">
+            <img src="asset/pearl-soap-v2.jpg" alt="Pearl Soap" loading="lazy" width="960" height="960">
+            <figcaption>Handmade paw-pad soap</figcaption>
+        </figure>
+
+        <p>Pearl Soap is a handmade soap named after "Pearl," the beloved dog who lived with our family from 2007. After Pearl passed away in 2025, I wanted to express my feeling of "Thank you for being here" in a tangible form.</p>
+        <p>Every time you hold the paw-shaped soap in your hand, you're reminded that a precious being "was here." I make these wanting to deliver those small, everyday moments of remembrance.</p>
+        <p>Cemetery caretaking in Maui, saying goodbye to my beloved dog — over these two years, I've been constantly thinking about "preserving existence." The residents of Timeless Town are the first people I wanted to share these feelings with.</p>
+        <p>This is not a product for sale. It's a gift for those I'm connected to.</p>
+    </div>
+
+    <!-- Episode: Things that disappear vs. Things that remain -->
+    <div class="tt-episode">
+        <p>The other day, I went to a kids' event with my daughter.</p>
+        <p>On the way home, she was carrying a paper hat and a mini balloon. She was thrilled with both. But by the time we got home, the balloon had deflated, and by the next morning, everything was in the trash.</p>
+        <p>That same day, my daughter had given a Pearl Soap to someone she met at the event.</p>
+        <p>Corporate giveaways are fun in the moment. But they disappear quickly.<br>A handmade soap stays with you until it's used up. And through the QR code, it connects you to the story of the person who made it.</p>
+        <p class="tt-episode-insight">The same "gift" — but some become memories,<br>and some just disappear.</p>
+    </div>
+
+    <!-- ③ Bridge: soap → proof of existence -->
+    <div class="tt-bridge">
+        <p>Soap, once used, disappears.</p>
+        <p>But the fact that you were here,<br>the fact that you cared for someone —<br><span class="bridge-accent">that doesn't have to disappear.</span></p>
+    </div>
+
+    <!-- ④ Introduction to TokiStorage -->
+    <div class="tt-section">
+        <h2>Proof of Existence Engraved in Quartz Glass — For 1,000 Years</h2>
+
+        <p>Through my cemetery caretaking in Maui, one question emerged: Gravestones weather away, and cloud services disappear when they shut down. Is there truly a way to preserve proof that someone important existed? From that question, "TokiStorage" was born — a proof-of-existence service that engraves names, photos, and messages in quartz glass.</p>
+
+        <div class="tt-toki-photos">
+            <figure class="tt-soap-photo">
+                <img src="asset/product-hero.jpg" alt="TokiStorage product" loading="lazy" width="960" height="720">
+            </figure>
+            <figure class="tt-soap-photo">
+                <img src="asset/qr-scan.jpg" alt="Scanning QR code with smartphone" loading="lazy" width="720" height="720">
+            </figure>
+            <figure class="tt-soap-photo">
+                <img src="asset/kamon-engraving.jpg" alt="Family crest engraved on glass plate" loading="lazy" width="720" height="720">
+            </figure>
+        </div>
+
+        <div class="tt-toki-features">
+            <div class="tt-feature">
+                <div class="f-number">1,000<span class="f-unit"> years</span></div>
+                <div class="f-label">Physical preservation</div>
+            </div>
+            <div class="tt-feature">
+                <div class="f-number">$0</div>
+                <div class="f-label">Maintenance cost</div>
+            </div>
+            <div class="tt-feature">
+                <div class="f-number">1<span class="f-unit"> plate</span></div>
+                <div class="f-label">Minimum order</div>
+            </div>
+        </div>
+
+        <p>No servers, no power required. A QR code is engraved in quartz glass — just scan it with your smartphone to retrieve the records. Once created, you don't need to do anything else. No monthly fees, zero maintenance costs.</p>
+        <p>Over 20 years of engineering career including semiconductor manufacturing equipment development — I've applied that technology to "personal proof of existence." That's TokiStorage.</p>
+    </div>
+
+    <!-- ⑤ Monitor Program -->
+    <div class="tt-monitor">
+        <h2>Free Monitor Program</h2>
+
+        <p>After the soap, there's something else I'd like to share with the residents of Timeless Town.</p>
+        <p>I would like to offer TokiStorage for free to <strong>approximately 10 households</strong> who are interested. This is my final gift as your HOA president.</p>
+
+        <dl class="tt-monitor-details">
+            <dt>Eligibility</dt>
+            <dd>Residents of Timeless Town Shin-Urayasu (per household)</dd>
+
+            <dt>What's included</dt>
+            <dd>Complete production set (quartz glass plate, QR code engraving, dedicated case)</dd>
+
+            <dt>Cost</dt>
+            <dd>Free</dd>
+
+            <dt>Capacity</dt>
+            <dd>Approximately 10 households (please feel free to inquire)</dd>
+
+            <dt>What we ask</dt>
+            <dd>Please share your honest feedback after receiving the finished product</dd>
+        </dl>
+
+        <div class="tt-highlight">
+            <p class="tt-highlight-title">From Timeless Town — A Truly "Timeless" Record</p>
+            <p>Names and feedback from monitor participants will be featured in the inaugural issue of our newsletter, which will be permanently archived at the National Diet Library and other symbolic institutions. I would be honored to share this commemoration with the residents of Timeless Town.</p>
+            <p class="tt-highlight-note">* We will consult with you beforehand about whether and how your information will be published.</p>
+        </div>
+
+        <p>"What would it feel like to have my name preserved for a thousand years?" "I'd like to engrave my parent's name." "I'm honestly not sure what this is, but I'm curious." — Any reason is welcome.</p>
+
+        <p class="tt-monitor-note">* Feedback may be used for service improvement or testimonials (anonymous or named, according to your preference).</p>
+
+        <div class="tt-cta">
+            <a href="https://calendly.com/pearlmemorial/pearlmemorialsession" class="tt-cta-btn" target="_blank" rel="noopener">Schedule a Consultation</a>
+            <p class="tt-cta-sub">30-minute online consultation, or feel free to speak with me directly</p>
+        </div>
+    </div>
+
+    <!-- Links -->
+    <div class="tt-links">
+        <a href="index-en.html">Learn more about TokiStorage</a>
+        <a href="pearl-soap-en.html">Pearl Soap details</a>
+    </div>
+
+</main>
+
+<footer class="tt-footer">
+    <p>TokiStorage / Takuya Sato</p>
+    <p>&copy; 2026 All rights reserved.</p>
+</footer>
+
+</body>
+</html>

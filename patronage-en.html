@@ -1,0 +1,753 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Patronage | Delivering Millennium Memories to Society</title>
+    <meta name="robots" content="noindex, nofollow">
+    <meta name="description" content="Democratize proof of existence. Join the mission to preserve memories for a thousand years. TokiStorage Patronage Program.">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --toki-blue: #2563EB;
+            --toki-blue-light: #3B82F6;
+            --toki-blue-dark: #1D4ED8;
+            --toki-blue-pale: #EFF6FF;
+            --toki-blue-glow: rgba(37, 99, 235, 0.12);
+            --gold: #C9A962;
+            --gold-pale: #FDF8E8;
+            --emerald: #16A34A;
+            --emerald-dark: #15803D;
+            --emerald-pale: #F0FDF4;
+            --blue-pale: #EFF6FF;
+            --bg-white: #FFFFFF;
+            --bg-page: #F8FAFC;
+            --bg-section: #F1F5F9;
+            --bg-card: #FFFFFF;
+            --text-primary: #1E293B;
+            --text-secondary: #475569;
+            --text-muted: #94A3B8;
+            --text-dim: #CBD5E1;
+            --border: #E2E8F0;
+            --border-light: #F1F5F9;
+            --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.05);
+            --shadow-md: 0 4px 16px rgba(0, 0, 0, 0.06);
+            --font-display: 'Inter', sans-serif;
+            --font-body: 'Inter', sans-serif;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        html { scroll-behavior: smooth; }
+
+        body {
+            font-family: var(--font-body);
+            font-weight: 400;
+            background: var(--bg-white);
+            color: var(--text-primary);
+            line-height: 1.9;
+            font-size: 16px;
+        }
+
+        .pp-nav {
+            position: fixed;
+            top: 0; left: 0; right: 0;
+            z-index: 1000;
+            background: rgba(255,255,255,0.95);
+            backdrop-filter: blur(12px);
+            border-bottom: 1px solid var(--border);
+            padding: 0.6rem 1.2rem;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+        .pp-nav .nav-brand {
+            font-size: 0.9rem;
+            font-weight: 600;
+            color: var(--emerald);
+            text-decoration: none;
+        }
+        .pp-nav .nav-right {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+        .pp-nav .nav-label {
+            font-size: 0.6rem;
+            color: var(--text-muted);
+            letter-spacing: 0.08em;
+        }
+        .pp-nav .lang-switch {
+            font-size: 0.75rem;
+            color: var(--emerald);
+            text-decoration: none;
+            padding: 0.3rem 0.6rem;
+            border: 1px solid var(--emerald);
+            border-radius: 4px;
+        }
+        .pp-nav .lang-switch:hover {
+            background: var(--emerald);
+            color: #fff;
+        }
+
+        .pt-hero {
+            padding: 8rem 2rem 5rem;
+            text-align: center;
+            background: linear-gradient(180deg, #0f2818 0%, #132f1e 60%, #0a1f10 100%);
+            color: #fff;
+        }
+        .pt-hero-label {
+            font-size: 0.7rem;
+            letter-spacing: 0.25em;
+            color: var(--emerald);
+            margin-bottom: 2rem;
+        }
+        .pt-hero h1 {
+            font-size: 2.2rem;
+            font-weight: 700;
+            line-height: 1.4;
+            margin-bottom: 1.5rem;
+        }
+        .pt-hero-sub {
+            font-size: 1rem;
+            color: var(--text-muted);
+            max-width: 560px;
+            margin: 0 auto;
+            line-height: 2;
+        }
+        .pt-hero-sub strong {
+            color: var(--emerald);
+        }
+
+        .pp-section {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 4rem 2rem;
+        }
+        .pp-section-title {
+            font-size: 1.4rem;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+            color: var(--text-primary);
+        }
+        .pp-section-sub {
+            font-size: 0.9rem;
+            color: var(--text-secondary);
+            margin-bottom: 2.5rem;
+        }
+        .pp-section-border {
+            border-top: 1px solid var(--border);
+        }
+
+        .insight-card {
+            background: var(--bg-section);
+            border-radius: 12px;
+            padding: 2rem;
+            margin-bottom: 1.5rem;
+        }
+        .insight-card h3 {
+            font-size: 1.05rem;
+            font-weight: 600;
+            color: var(--text-primary);
+            margin-bottom: 0.75rem;
+        }
+        .insight-card p {
+            font-size: 0.9rem;
+            color: var(--text-secondary);
+        }
+
+        .quote-block {
+            background: var(--emerald-pale);
+            border-left: 4px solid var(--emerald);
+            border-radius: 0 12px 12px 0;
+            padding: 1.5rem 2rem;
+            margin-bottom: 2rem;
+        }
+        .quote-block p {
+            font-size: 1.1rem;
+            font-weight: 500;
+            color: var(--text-primary);
+            line-height: 1.8;
+        }
+
+        .impact-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+        }
+        .impact-card {
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 1.5rem;
+        }
+        .impact-num {
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: var(--emerald);
+            opacity: 0.3;
+            margin-bottom: 0.3rem;
+        }
+        .impact-card h4 {
+            font-size: 0.95rem;
+            font-weight: 600;
+            color: var(--text-primary);
+            margin-bottom: 0.5rem;
+        }
+        .impact-card p {
+            font-size: 0.85rem;
+            color: var(--text-secondary);
+            line-height: 1.7;
+        }
+
+        /* Comparison grid */
+        .compare-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 1rem;
+        }
+        .compare-card {
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 1.5rem;
+            position: relative;
+        }
+        .compare-card.is-patron {
+            border-color: var(--emerald);
+            background: var(--emerald-pale);
+        }
+        .compare-label {
+            font-size: 0.6rem;
+            letter-spacing: 0.15em;
+            font-weight: 700;
+            color: var(--text-muted);
+            margin-bottom: 0.6rem;
+        }
+        .compare-card.is-patron .compare-label {
+            color: var(--emerald);
+        }
+        .compare-card h4 {
+            font-size: 0.95rem;
+            font-weight: 600;
+            color: var(--text-primary);
+            margin-bottom: 0.5rem;
+        }
+        .compare-card p {
+            font-size: 0.8rem;
+            color: var(--text-secondary);
+            line-height: 1.7;
+        }
+        .compare-row {
+            display: flex;
+            align-items: baseline;
+            gap: 0.5rem;
+            margin-top: 0.6rem;
+        }
+        .compare-key {
+            font-size: 0.7rem;
+            color: var(--text-muted);
+            white-space: nowrap;
+            min-width: 3.5rem;
+        }
+        .compare-val {
+            font-size: 0.8rem;
+            color: var(--text-primary);
+            font-weight: 500;
+        }
+        .compare-note {
+            font-size: 0.7rem;
+            color: var(--text-muted);
+            margin-top: 0.8rem;
+            padding-top: 0.6rem;
+            border-top: 1px solid var(--border-light);
+            line-height: 1.5;
+        }
+
+        /* Patron core */
+        .patron-core {
+            background: var(--emerald-pale);
+            border-radius: 12px;
+            padding: 1.5rem 2rem;
+            border-left: 4px solid var(--emerald);
+        }
+        .patron-core h4 {
+            font-size: 0.95rem;
+            font-weight: 600;
+            color: var(--text-primary);
+            margin-bottom: 0.75rem;
+        }
+        .patron-core-list {
+            list-style: none;
+            padding: 0;
+        }
+        .patron-core-list li {
+            font-size: 0.85rem;
+            color: var(--text-secondary);
+            padding: 0.3rem 0;
+            padding-left: 1.2rem;
+            position: relative;
+        }
+        .patron-core-list li::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 0.7rem;
+            width: 6px;
+            height: 6px;
+            border-radius: 50%;
+            background: var(--emerald);
+            opacity: 0.5;
+        }
+
+        .receive-list {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+        }
+        .receive-item {
+            display: flex;
+            align-items: flex-start;
+            gap: 1rem;
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 1.2rem 1.5rem;
+        }
+        .receive-icon {
+            flex-shrink: 0;
+            width: 2.5rem;
+            height: 2.5rem;
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.2rem;
+        }
+        .receive-icon.green { background: var(--emerald-pale); }
+        .receive-icon.blue { background: var(--toki-blue-pale); }
+        .receive-icon.gold { background: var(--gold-pale); }
+        .receive-body h4 {
+            font-size: 0.95rem;
+            font-weight: 600;
+            color: var(--text-primary);
+            margin-bottom: 0.2rem;
+        }
+        .receive-body p {
+            font-size: 0.85rem;
+            color: var(--text-secondary);
+            line-height: 1.7;
+        }
+
+        .founder-section {
+            background: var(--bg-section);
+            border-radius: 12px;
+            padding: 2rem;
+            display: flex;
+            gap: 1.5rem;
+            align-items: flex-start;
+        }
+        .founder-body h4 {
+            font-size: 1rem;
+            font-weight: 600;
+            color: var(--text-primary);
+            margin-bottom: 0.3rem;
+        }
+        .founder-body p {
+            font-size: 0.85rem;
+            color: var(--text-secondary);
+            line-height: 1.7;
+        }
+        .founder-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.4rem;
+            margin-top: 0.75rem;
+        }
+        .founder-tag {
+            font-size: 0.65rem;
+            padding: 0.2rem 0.6rem;
+            background: var(--bg-white);
+            border: 1px solid var(--border);
+            border-radius: 4px;
+            color: var(--text-secondary);
+        }
+        .founder-story {
+            margin-top: 1.2rem;
+            padding: 1rem 1.2rem;
+            background: var(--emerald-pale);
+            border-left: 4px solid var(--emerald);
+            border-radius: 6px;
+            font-size: 0.85rem;
+            line-height: 1.8;
+            color: var(--text-primary);
+        }
+
+        .pp-cta {
+            background: var(--text-primary);
+            color: #fff;
+            text-align: center;
+            padding: 4rem 2rem;
+        }
+        .pp-cta h2 {
+            font-size: 1.5rem;
+            font-weight: 600;
+            margin-bottom: 1rem;
+        }
+        .pp-cta p {
+            font-size: 0.9rem;
+            color: var(--text-muted);
+            max-width: 500px;
+            margin: 0 auto 2rem;
+            line-height: 1.8;
+        }
+        .pp-cta-links {
+            display: flex;
+            justify-content: center;
+            gap: 1.5rem;
+            flex-wrap: wrap;
+        }
+        .pp-cta-links a {
+            color: var(--emerald);
+            text-decoration: none;
+            font-size: 0.85rem;
+            padding: 0.5rem 1.2rem;
+            border: 1px solid var(--emerald);
+            border-radius: 6px;
+            transition: background 0.2s;
+        }
+        .pp-cta-links a:hover {
+            background: var(--emerald);
+            color: #fff;
+        }
+
+        .pp-footer {
+            text-align: center;
+            padding: 2rem;
+            border-top: 1px solid var(--border);
+        }
+        .pp-footer p {
+            font-size: 0.75rem;
+            color: var(--text-muted);
+        }
+        .pp-footer a {
+            color: var(--toki-blue);
+            text-decoration: none;
+        }
+
+        @media (max-width: 768px) {
+            .pt-hero { padding: 6rem 1.2rem 3rem; }
+            .pt-hero h1 { font-size: 1.5rem; }
+            .pp-section { padding: 3rem 1.2rem; }
+            .impact-grid { grid-template-columns: 1fr; }
+            .compare-grid { grid-template-columns: 1fr; }
+            .founder-section { flex-direction: column; }
+            .pp-nav .nav-label { display: none; }
+        }
+
+        @media print {
+            .pp-nav { display: none; }
+            .pt-hero { padding-top: 2rem; }
+        }
+    </style>
+</head>
+<body>
+
+<nav class="pp-nav">
+    <a href="index-en.html" class="nav-brand">TokiStorage</a>
+    <div class="nav-right">
+        <span class="nav-label">PATRONAGE</span>
+        <a href="patronage.html" class="lang-switch">JA</a>
+    </div>
+</nav>
+
+<!-- Hero -->
+<header class="pt-hero">
+    <p class="pt-hero-label">PATRONAGE</p>
+    <h1>Deliver millennium memories<br>to society.</h1>
+    <p class="pt-hero-sub">
+        Proof of existence should not be a privilege.<br>
+        Everyone deserves to be remembered.<br>
+        Join the <strong>mission itself</strong>.
+    </p>
+</header>
+
+<!-- Why Patronage -->
+<section class="pp-section">
+    <h2 class="pp-section-title">Why patronage</h2>
+    <p class="pp-section-sub">Not an investment. Not a donation. A third way to participate.</p>
+
+    <div class="insight-card">
+        <h3>We have seen memories disappear.</h3>
+        <p>Through SoulCarrier's work &mdash; finding burial destinations, surveying unclaimed graves &mdash; we have walked to and read over 10,000 headstones across Japan and abroad, one by one, with our own feet and eyes. Headstones inscribed only with "Unknown" broke our hearts. Not even a name remains. Lives weathered away into nothing. Memories vanish if left alone. TokiStorage was born to change that reality.</p>
+    </div>
+    <div class="insight-card">
+        <h3>Proof of existence must not remain a privilege.</h3>
+        <p>The technology to preserve memories in quartz glass for a thousand years is ready. But we cannot let it remain a service only for the wealthy. The unclaimed dead, communities that lost their records in disasters, people who pass without a voice &mdash; everyone deserves to leave proof they existed.</p>
+    </div>
+    <div class="insight-card">
+        <h3>Supporting the mission becomes your own proof of existence.</h3>
+        <p>Patronage is neither investment nor charity. Your name and intention are inscribed in the millennium archive as part of this mission. When the activity you supported endures for a thousand years, that itself becomes your proof of existence.</p>
+    </div>
+</section>
+
+<!-- Comparison -->
+<section class="pp-section pp-section-border">
+    <h2 class="pp-section-title">Four ways to relate</h2>
+    <p class="pp-section-sub">Your relationship with TokiStorage can take many forms</p>
+
+    <div class="compare-grid">
+        <div class="compare-card">
+            <div class="compare-label">INVESTOR</div>
+            <h4>Bet on the business</h4>
+            <p>Evaluate a venture and participate in its growth through capital investment.</p>
+            <div class="compare-row">
+                <span class="compare-key">Motive</span>
+                <span class="compare-val">Business growth &amp; financial return</span>
+            </div>
+            <div class="compare-row">
+                <span class="compare-key">Relation</span>
+                <span class="compare-val">Investor / Equity holder</span>
+            </div>
+            <p class="compare-note">* TokiStorage does not currently accept investment</p>
+        </div>
+
+        <div class="compare-card">
+            <div class="compare-label">PARTNER</div>
+            <h4>Co-create business opportunity</h4>
+            <p>Consulting firms and advisors who introduce TokiStorage to their own clients.</p>
+            <div class="compare-row">
+                <span class="compare-key">Motive</span>
+                <span class="compare-val">Business collaboration &amp; mutual value</span>
+            </div>
+            <div class="compare-row">
+                <span class="compare-key">Relation</span>
+                <span class="compare-val">Business alliance</span>
+            </div>
+        </div>
+
+        <div class="compare-card">
+            <div class="compare-label">CLIENT</div>
+            <h4>Entrust your own proof of existence</h4>
+            <p>Through Timeless Consulting, preserve your story or the memory of someone you love for a thousand years.</p>
+            <div class="compare-row">
+                <span class="compare-key">Motive</span>
+                <span class="compare-val">Personal or family legacy</span>
+            </div>
+            <div class="compare-row">
+                <span class="compare-key">Relation</span>
+                <span class="compare-val">Service user</span>
+            </div>
+        </div>
+
+        <div class="compare-card is-patron">
+            <div class="compare-label">PATRON</div>
+            <h4>Participate in the mission itself</h4>
+            <p>Support the work of delivering proof of existence to society. That support itself becomes your proof of existence.</p>
+            <div class="compare-row">
+                <span class="compare-key">Motive</span>
+                <span class="compare-val">Resonance with the mission</span>
+            </div>
+            <div class="compare-row">
+                <span class="compare-key">Relation</span>
+                <span class="compare-val">Mission participant</span>
+            </div>
+        </div>
+    </div>
+
+    <p style="font-size: 0.8rem; color: var(--text-muted); margin-top: 1.5rem; line-height: 1.7;">These are not mutually exclusive. You can be a client and a patron. A partner and a patron. The roles overlap naturally.</p>
+</section>
+
+<!-- Vision -->
+<section class="pp-section pp-section-border">
+    <h2 class="pp-section-title">Vision</h2>
+    <p class="pp-section-sub">Four domains where your support makes an impact</p>
+
+    <div class="quote-block">
+        <p>We want to change a society where memories disappear.<br>We want to deliver as many "proofs of existence" as possible to a thousand years from now.</p>
+    </div>
+
+    <div class="impact-grid">
+        <div class="impact-card">
+            <div class="impact-num">01</div>
+            <h4>Unclaimed Graves Project</h4>
+            <p>Researching and recording the names and stories of those who rest in unclaimed graves. Inscribing them in quartz glass. Connecting the forgotten to someone a thousand years from now.</p>
+        </div>
+        <div class="impact-card">
+            <div class="impact-num">02</div>
+            <h4>Community Archives</h4>
+            <p>Festivals fading away, dialects disappearing, disaster lessons forgotten. Supporting projects that preserve community memory for a millennium.</p>
+        </div>
+        <div class="impact-card">
+            <div class="impact-num">03</div>
+            <h4>Education &amp; Research Archives</h4>
+            <p>Mentor-student narratives, discovery contexts, intellectual lineage. Building millennium-scale knowledge heritage independent of institutions or platforms.</p>
+        </div>
+        <div class="impact-card">
+            <div class="impact-num">04</div>
+            <h4>Democratizing the Technology</h4>
+            <p>Advancing R&amp;D to make quartz glass inscription accessible to more people. Reducing cost and broadening access to proof of existence.</p>
+        </div>
+    </div>
+</section>
+
+<!-- How to Participate -->
+<section class="pp-section pp-section-border">
+    <h2 class="pp-section-title">Ways to participate</h2>
+    <p class="pp-section-sub">Let's figure out the right shape together</p>
+
+    <p style="font-size: 0.9rem; color: var(--text-secondary); margin-bottom: 2rem; line-height: 1.9;">There is no fixed formula for patronage. The amount, the shape of involvement &mdash; we figure it out together through conversation. What matters is the intention: "I want to support this mission."</p>
+
+    <div class="patron-core">
+        <h4>Every patron receives</h4>
+        <ul class="patron-core-list">
+            <li>Inscription in the millennium archive &mdash; your name and intention join the thousand-year record</li>
+            <li>Mission progress updates &mdash; as milestones are reached, we share what memories were saved</li>
+            <li>Freedom to adjust or pause anytime &mdash; continue at your own pace, without pressure</li>
+        </ul>
+    </div>
+
+    <div style="margin-top: 2rem; padding: 1.5rem 2rem; background: var(--bg-section); border-radius: 12px;">
+        <p style="font-size: 0.85rem; color: var(--text-secondary); line-height: 1.8;">No complex contracts. No legal paperwork. No equity structures. All it takes is your intention to support this mission. You can become a patron today.</p>
+    </div>
+</section>
+<section class="pp-section pp-section-border">
+    <h2 class="pp-section-title">What patrons receive</h2>
+    <p class="pp-section-sub">The return on patronage is not financial</p>
+
+    <div class="receive-list">
+        <div class="receive-item">
+            <div class="receive-icon green">&#x1F48E;</div>
+            <div class="receive-body">
+                <h4>Inscription in the millennium archive</h4>
+                <p>Your name and the intention behind your support are inscribed in quartz glass. A thousand years from now, someone will encounter you as a person who supported this mission. That becomes part of your story.</p>
+            </div>
+        </div>
+        <div class="receive-item">
+            <div class="receive-icon blue">&#x1F4AC;</div>
+            <div class="receive-body">
+                <h4>Mission progress updates</h4>
+                <p>As the work moves forward, we'll share what's happening &mdash; which memories were saved, which milestones were reached. Not on a fixed schedule, but when there's something worth telling.</p>
+            </div>
+        </div>
+        <div class="receive-item">
+            <div class="receive-icon green">&#x2728;</div>
+            <div class="receive-body">
+                <h4>Your own proof of existence</h4>
+                <p>Supporting the mission is itself your proof of existence. "This person supported the mission to deliver millennium memories to society" &mdash; that is your story, delivered to the future.</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Practical / Tax -->
+<section class="pp-section pp-section-border">
+    <h2 class="pp-section-title">For corporate &amp; institutional patrons</h2>
+    <p class="pp-section-sub">Practical considerations for your finance team</p>
+
+    <div style="display: flex; flex-direction: column; gap: 1rem;">
+        <div class="insight-card" style="margin-bottom: 0;">
+            <h3>Processed like any other sponsorship or patronage</h3>
+            <p>TokiStorage Patronage follows the same structure as cultural and social sponsorships &mdash; arts festival sponsorships, cultural heritage preservation, and nonprofit partnerships. Your finance team can process it within existing frameworks.</p>
+        </div>
+        <div class="insight-card" style="margin-bottom: 0;">
+            <h3>Typical accounting treatment</h3>
+            <p>Often classifiable as <strong>sponsorship fees or marketing/CSR expenses</strong>. The patronage includes tangible deliverables: patron recognition and inscription in the millennium archive, supporting business expense treatment. Please confirm specifics with your tax advisor.</p>
+        </div>
+        <div class="insight-card" style="margin-bottom: 0;">
+            <h3>Qualified Invoice (インボイス) status</h3>
+            <p>TokiStorage is currently a tax-exempt business and does not issue Qualified Invoices under Japan's invoice system. Under transitional measures, <strong>80% of consumption tax is creditable through September 2026</strong>, and 50% through September 2029. Note that full expense deduction (損金算入) is available regardless of invoice status. We will consider registering as a Qualified Invoice Issuer in response to patron needs.</p>
+        </div>
+        <div class="insight-card" style="margin-bottom: 0;">
+            <h3>Documentation provided</h3>
+            <p>We issue a sponsorship agreement, invoices, and receipts in standard business formats. Your accounting department can process them directly.</p>
+            <div style="display: flex; flex-wrap: wrap; gap: 0.5rem; margin-top: 1rem;">
+                <a href="patronage-template-agreement.pdf" target="_blank" style="font-size: 0.75rem; padding: 0.4rem 0.8rem; border: 1px solid var(--border); border-radius: 6px; color: var(--text-secondary); text-decoration: none; display: inline-flex; align-items: center; gap: 0.3rem; transition: background 0.2s;">&#x1F4C4; Agreement (Sample)</a>
+                <a href="patronage-template-invoice.pdf" target="_blank" style="font-size: 0.75rem; padding: 0.4rem 0.8rem; border: 1px solid var(--border); border-radius: 6px; color: var(--text-secondary); text-decoration: none; display: inline-flex; align-items: center; gap: 0.3rem; transition: background 0.2s;">&#x1F4C4; Invoice (Sample)</a>
+                <a href="patronage-template-receipt.pdf" target="_blank" style="font-size: 0.75rem; padding: 0.4rem 0.8rem; border: 1px solid var(--border); border-radius: 6px; color: var(--text-secondary); text-decoration: none; display: inline-flex; align-items: center; gap: 0.3rem; transition: background 0.2s;">&#x1F4C4; Receipt (Sample)</a>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Founder -->
+<section class="pp-section pp-section-border">
+    <h2 class="pp-section-title">About the founder</h2>
+    <p class="pp-section-sub">Why this mission began</p>
+
+    <div class="founder-section">
+        <img src="asset/IMG_4310-2.jpeg" alt="Takuya Sato" style="flex-shrink:0; width:4.5rem; height:4.5rem; border-radius:50%; object-fit:cover;">
+        <div class="founder-body">
+            <h4>Takuya Sato &mdash; Founder, TokiStorage (Registered Sole Proprietorship)</h4>
+            <p>Former Big Four consultant &mdash; understands executive dialogue and strategic thinking from the inside. 20+ years in semiconductor manufacturing engineering. Former president of Timeless Town Shin-Urayasu residents' association (250 households, cradle-to-grave community). Through SoulCarrier's work with unclaimed graves and bone repatriation, witnessed firsthand how memories vanish &mdash; and conceived TokiStorage. Validated off-grid, institution-free 1,000-year design through real-world testing in Maui and Lake Yamanakako. Author of 70+ philosophical essays exploring proof of existence across 9 intellectual domains.</p>
+            <div class="founder-tags">
+                <span class="founder-tag">Big Four Alumni</span>
+                <span class="founder-tag">Semiconductor engineering 20+ yrs</span>
+                <span class="founder-tag">Community president (250 households)</span>
+                <span class="founder-tag">SoulCarrier founder</span>
+                <span class="founder-tag">70+ philosophical essays</span>
+                <span class="founder-tag">Off-grid validated</span>
+                <span class="founder-tag">Relocating to Sado Island (Spring 2026)</span>
+            </div>
+            <div class="founder-story">
+                I visited Pearl Harbor with my family, carrying a plate inscribed with a voice QR code of our prayers for peace&mdash;alongside the remains of our beloved dog, Pearl. That's when it hit me: wishes that transcend time transform into something greater&mdash;love, peace, hope. I want to share that transformation with as many people as possible. Through TokiStorage, I hope to walk that journey across time together with you.
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- CTA / Next Steps -->
+<section class="pp-cta">
+    <h2>Let's have a casual conversation.</h2>
+    <p style="font-size: 0.9rem; color: var(--text-muted); max-width: 500px; margin: 0 auto 2rem; line-height: 1.8;">No formalities needed. Interest in the mission is all it takes.</p>
+    <div style="max-width: 560px; margin: 0 auto 2.5rem; text-align: left;">
+        <div style="display: flex; align-items: flex-start; gap: 1rem; margin-bottom: 1.5rem;">
+            <span style="flex-shrink:0; width:2rem; height:2rem; border-radius:50%; background:var(--emerald); color:#fff; display:flex; align-items:center; justify-content:center; font-size:0.8rem; font-weight:700;">01</span>
+            <div><strong style="color:#fff;">Have a chat (30 min)</strong><br><span style="color:var(--text-muted); font-size:0.85rem;">We'll share where things stand and what resonates with you</span></div>
+        </div>
+        <div style="display: flex; align-items: flex-start; gap: 1rem; margin-bottom: 1.5rem;">
+            <span style="flex-shrink:0; width:2rem; height:2rem; border-radius:50%; background:var(--emerald); color:#fff; display:flex; align-items:center; justify-content:center; font-size:0.8rem; font-weight:700;">02</span>
+            <div><strong style="color:#fff;">Start participating</strong><br><span style="color:var(--text-muted); font-size:0.85rem;">Begin at your own pace. Amounts and arrangements can change anytime</span></div>
+        </div>
+        <div style="display: flex; align-items: flex-start; gap: 1rem;">
+            <span style="flex-shrink:0; width:2rem; height:2rem; border-radius:50%; background:var(--emerald); color:#fff; display:flex; align-items:center; justify-content:center; font-size:0.8rem; font-weight:700;">03</span>
+            <div><strong style="color:#fff;">Get inscribed in the millennium archive</strong><br><span style="color:var(--text-muted); font-size:0.85rem;">Your name and intention join the thousand-year record</span></div>
+        </div>
+    </div>
+    <p style="font-size: 0.85rem; color: var(--text-muted); margin-bottom: 2rem;">Takuya Sato &mdash; Founder, TokiStorage<br><span style="font-size: 0.75rem;">Sole proprietorship filed Feb 11, 2026 (Ichikawa Tax Office) / Blue return registered</span></p>
+    <div class="pp-cta-links">
+        <a href="index-en.html">About TokiStorage</a>
+        <a href="client-proposal-en.html">Client Proposal</a>
+        <a href="partnership-en.html">Partnership Proposal</a>
+    </div>
+</section>
+
+<!-- Disclaimer -->
+<section class="pp-section" style="padding-bottom: 2rem;">
+    <div style="border-top: 1px solid var(--border); padding-top: 2rem;">
+        <h3 style="font-size: 0.85rem; color: var(--text-muted); font-weight: 600; margin-bottom: 1rem;">Confidential / Disclaimer</h3>
+        <p style="font-size: 0.75rem; color: var(--text-muted); line-height: 1.8;">
+            This document has been prepared by TokiStorage (Takuya Sato) for the purpose of introducing the Patronage Program. The information contained herein reflects current views and plans and does not constitute a guarantee of accuracy, completeness, or future outcomes. Patronage differs from investment or donation and does not guarantee financial returns.
+        </p>
+        <p style="font-size: 0.7rem; color: var(--text-muted); margin-top: 1rem;">&copy; 2026 TokiStorage / Takuya Sato. All rights reserved.</p>
+    </div>
+</section>
+
+<!-- Footer -->
+<footer class="pp-footer" style="padding: 2.5rem 2rem;">
+    <div style="display: flex; justify-content: center; gap: 1.5rem; flex-wrap: wrap; margin-bottom: 1rem;">
+        <a href="index-en.html">TokiStorage</a>
+        <a href="pearl-soap-en.html">Pearl Soap</a>
+        <a href="../index.html">SoulCarrier</a>
+        <a href="ambassador-en.html">Ambassador</a>
+        <a href="usecases-en.html">Use Cases</a>
+        <a href="infographic-en.html">Ecosystem Overview</a>
+        <a href="partnership-en.html">Partnership Proposal</a>
+        <a href="client-proposal-en.html">Client Proposal</a>
+        <a href="government-proposal-en.html">Government Proposal</a>
+        <a href="pitch-deck-en.html">Investor Deck</a>
+    </div>
+    <p>TokiStorage | <a href="patronage.html">Japanese Version</a></p>
+</footer>
+
+</body>
+</html>

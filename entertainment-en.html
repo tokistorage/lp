@@ -1,0 +1,622 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Entertainment and Proof of Existence — Fandom, SNS, and Virtual Worlds | TokiStorage</title>
+    <meta name="robots" content="noindex, nofollow">
+    <meta name="description" content="Entertainment is a contemporary manifestation of the desire to 'leave existence behind.' Oshi culture, SNS, games, metaverse—examining the limitations and possibilities of platform-dependent proof of existence.">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Shippori+Mincho:wght@400;500;600;700&family=Zen+Kaku+Gothic+New:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --toki-pink: #DB2777;
+            --toki-pink-dark: #BE185D;
+            --toki-pink-pale: #FDF2F8;
+            --accent-rose: #F43F5E;
+            --bg-white: #FFFFFF;
+            --bg-section: #FDF2F8;
+            --text-primary: #1E293B;
+            --text-secondary: #475569;
+            --text-muted: #94A3B8;
+            --border: #E2E8F0;
+            --font-display: 'Shippori Mincho', serif;
+            --font-body: 'Zen Kaku Gothic New', sans-serif;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        html { scroll-behavior: smooth; }
+
+        body {
+            font-family: var(--font-body);
+            font-weight: 400;
+            background: var(--bg-white);
+            color: var(--text-primary);
+            line-height: 2;
+            font-size: 16px;
+        }
+
+        /* Navigation */
+        .article-nav {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 1000;
+            background: rgba(255,255,255,0.95);
+            backdrop-filter: blur(12px);
+            border-bottom: 1px solid var(--border);
+            padding: 0.6rem 1.2rem;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 1rem;
+        }
+        .article-nav .nav-brand {
+            font-family: var(--font-display);
+            font-size: 0.9rem;
+            font-weight: 600;
+            color: var(--toki-pink);
+            text-decoration: none;
+            white-space: nowrap;
+        }
+        .article-nav .nav-right {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+        .article-nav .nav-label {
+            font-size: 0.6rem;
+            color: var(--text-muted);
+            letter-spacing: 0.08em;
+        }
+        .article-nav .lang-switch {
+            font-size: 0.75rem;
+            color: var(--toki-pink);
+            text-decoration: none;
+            padding: 0.3rem 0.6rem;
+            border: 1px solid var(--toki-pink);
+            border-radius: 4px;
+        }
+        .article-nav .lang-switch:hover {
+            background: var(--toki-pink);
+            color: #fff;
+        }
+
+        /* Article Container */
+        .article-container {
+            max-width: 680px;
+            margin: 0 auto;
+            padding: 7rem 2rem 4rem;
+        }
+
+        /* Article Header */
+        .article-header {
+            margin-bottom: 3rem;
+            padding-bottom: 2rem;
+            border-bottom: 1px solid var(--border);
+        }
+        .article-category {
+            font-size: 0.7rem;
+            color: var(--toki-pink);
+            letter-spacing: 0.15em;
+            margin-bottom: 1rem;
+        }
+        .article-header h1 {
+            font-family: var(--font-display);
+            font-size: 1.8rem;
+            font-weight: 600;
+            line-height: 1.5;
+            margin-bottom: 1rem;
+        }
+        .article-subtitle {
+            font-size: 0.95rem;
+            color: var(--text-secondary);
+            line-height: 1.8;
+        }
+
+        /* Article Content */
+        .article-content h2 {
+            font-family: var(--font-display);
+            font-size: 1.25rem;
+            font-weight: 600;
+            margin: 3rem 0 1.5rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 1px solid var(--border);
+        }
+        .article-content h3 {
+            font-family: var(--font-display);
+            font-size: 1.1rem;
+            font-weight: 500;
+            margin: 2rem 0 1rem;
+            color: var(--text-primary);
+        }
+        .article-content p {
+            margin-bottom: 1.5rem;
+            text-align: justify;
+        }
+        .article-content blockquote {
+            margin: 2rem 0;
+            padding: 1.5rem 2rem;
+            background: var(--bg-section);
+            border-left: 3px solid var(--toki-pink);
+            font-style: italic;
+        }
+        .article-content blockquote p {
+            margin-bottom: 0.5rem;
+        }
+        .article-content blockquote cite {
+            display: block;
+            font-size: 0.85rem;
+            color: var(--text-muted);
+            font-style: normal;
+            margin-top: 0.5rem;
+        }
+        .article-content ul, .article-content ol {
+            margin: 1.5rem 0;
+            padding-left: 1.5rem;
+        }
+        .article-content li {
+            margin-bottom: 0.75rem;
+        }
+
+        /* Key Point Box */
+        .key-point {
+            background: var(--toki-pink-pale);
+            padding: 1.5rem 2rem;
+            border-radius: 8px;
+            margin: 2rem 0;
+        }
+        .key-point p {
+            margin-bottom: 0;
+            font-size: 0.95rem;
+        }
+
+        /* Core Message */
+        .core-message {
+            background: linear-gradient(135deg, var(--toki-pink-pale) 0%, #FCE7F3 100%);
+            border-left: 4px solid var(--toki-pink);
+            padding: 1.2rem 1.5rem;
+            margin: 0 0 1.5rem 0;
+            border-radius: 0 8px 8px 0;
+            font-size: 0.95rem;
+            line-height: 1.8;
+        }
+        .disclaimer {
+            font-size: 0.8rem;
+            color: var(--text-muted);
+            margin-bottom: 2rem;
+            padding-bottom: 1rem;
+            border-bottom: 1px solid var(--border);
+        }
+
+        /* Comparison Table */
+        .comparison-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 2rem 0;
+            font-size: 0.9rem;
+        }
+        .comparison-table th,
+        .comparison-table td {
+            padding: 1rem;
+            text-align: left;
+            border-bottom: 1px solid var(--border);
+        }
+        .comparison-table th {
+            background: var(--bg-section);
+            font-weight: 500;
+            width: 50%;
+        }
+        .comparison-table td {
+            vertical-align: top;
+        }
+
+        /* References */
+        .references {
+            margin-top: 4rem;
+            padding-top: 2rem;
+            border-top: 1px solid var(--border);
+        }
+        .references h2 {
+            font-size: 1rem;
+            margin-bottom: 1.5rem;
+        }
+        .references ul {
+            list-style: none;
+            padding: 0;
+        }
+        .references li {
+            font-size: 0.85rem;
+            color: var(--text-secondary);
+            margin-bottom: 0.75rem;
+            padding-left: 1.5rem;
+            text-indent: -1.5rem;
+        }
+
+        /* Footer */
+        .article-footer {
+            margin-top: 4rem;
+            padding-top: 2rem;
+            border-top: 1px solid var(--border);
+            text-align: center;
+        }
+        .article-footer p {
+            font-size: 0.8rem;
+            color: var(--text-muted);
+            margin-bottom: 1rem;
+        }
+        .article-footer a {
+            color: var(--toki-pink);
+            text-decoration: none;
+        }
+        .article-footer a:hover {
+            text-decoration: underline;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .article-container { padding: 6rem 1.2rem 3rem; }
+            .article-header h1 { font-size: 1.5rem; }
+            .article-nav .nav-label { display: none; }
+            .comparison-table { font-size: 0.8rem; }
+            .comparison-table th,
+            .comparison-table td { padding: 0.75rem; }
+        }
+
+        @media print {
+            .article-nav { display: none; }
+            .article-container { padding-top: 2rem; }
+        }
+    </style>
+</head>
+<body>
+
+<nav class="article-nav">
+    <a href="index.html" class="nav-brand">TokiStorage</a>
+    <div class="nav-right">
+        <span class="nav-label">MEDIA CULTURE STUDIES</span>
+        <a href="entertainment.html" class="lang-switch">JP</a>
+    </div>
+</nav>
+
+<main class="article-container">
+
+    <header class="article-header">
+        <p class="article-category">ESSAY — MEDIA AND THE DESIRE FOR RECOGNITION</p>
+        <h1>Entertainment and Proof of Existence<br>— Fandom, SNS, and Virtual Worlds</h1>
+        <p class="article-subtitle">
+            The number of likes, follower counts, game rankings, votes for your favorite idol.<br>
+            Modern people attempt to "prove their existence" through entertainment. This essay examines that desire and its limitations.
+        </p>
+    </header>
+
+    <article class="article-content">
+
+        <div class="core-message">
+            <strong>Key Message:</strong> Entertainment is a contemporary manifestation of the desire to "leave existence behind." However, records that depend on platforms disappear along with those platforms.
+        </div>
+
+        <p class="disclaimer">Disclaimer: This essay is an academic analysis and does not criticize or endorse any specific platform or content.</p>
+
+        <h2>1. Entertainment as an Expression of "Leaving One's Mark"</h2>
+
+        <p>Since ancient times, humans have desired to "leave their mark." Cave paintings, epitaphs, literary works, art—all of these are attempts to leave evidence that "I existed here."</p>
+
+        <p>In <em>Homo Ludens</em>, Johan Huizinga positioned play as a fundamental element of human culture. Play is not mere entertainment but an act that creates social meaning.</p>
+
+        <blockquote>
+            <p>"Play is older than culture, for culture, however inadequately defined, always presupposes human society, and animals have not waited for man to teach them their playing."</p>
+            <cite>— Johan Huizinga, <em>Homo Ludens</em></cite>
+        </blockquote>
+
+        <p>Modern entertainment exists on this continuum. Games, social media, video streaming—these are contemporary forms of "play" that simultaneously serve as venues for self-expression and proof of existence.</p>
+
+        <h3>Expression and Existence</h3>
+
+        <p>Uploading videos to YouTube, performing dances on TikTok, posting photos on Instagram—these acts are not mere self-display. They are declarations of existence: "I am here" and "This is who I am."</p>
+
+        <p>In the past, only a privileged few had venues for expression. Authors who could publish books, painters who could hold exhibitions, actors who could take the stage. Digital technology, however, has given everyone a "venue for expression."</p>
+
+        <div class="key-point">
+            <p>Participation in entertainment has become the most accessible form of proof of existence in the modern era. Anyone with a smartphone can broadcast to the world: "I am here."</p>
+        </div>
+
+
+        <h2>2. Fandom Culture and Self-Projection</h2>
+
+        <p>In an era where the Japanese word "oshi" (one's favorite idol or celebrity whom one passionately supports) has entered everyday vocabulary, fandom culture is deeply connected to proof of existence.</p>
+
+        <h3>Projecting Oneself onto One's Oshi</h3>
+
+        <p>Idols, VTubers, athletes, actors—people rejoice in their "oshi's" success as if it were their own and feel their oshi's sorrow as their own. This psychological identification transcends being a mere "fan."</p>
+
+        <p>Fans vote to support their oshi's activities, purchase merchandise, and participate in live streams. Through these acts, fans become "part of" their oshi's story. If the oshi succeeds, it becomes proof that the fan's existence held meaning.</p>
+
+        <blockquote>
+            <p>"My oshi is my reason for living" and "I can keep going because my oshi exists"—such expressions demonstrate how attachment to one's oshi is deeply intertwined with finding meaning in one's own existence.</p>
+        </blockquote>
+
+        <h3>Fan Communities as Places of Belonging</h3>
+
+        <p>Fandoms form communities of those who share the same oshi. Through this common thread of "oshi," individuals find belonging in a group.</p>
+
+        <ul>
+            <li><strong>Anonymity and Belonging</strong>: One can be recognized as a companion through a fan name without revealing one's real name</li>
+            <li><strong>Contribution and Recognition</strong>: Drawing fan art, compiling information, translating—contributions grant existential value</li>
+            <li><strong>Collective Identity</strong>: As a "fan of X," one becomes part of a collective existence transcending the individual</li>
+        </ul>
+
+        <p>But what happens to the "traces of existence" built within that community when the oshi retires, when the group disbands, when the fandom ends?</p>
+
+
+        <h2>3. The Desire for Recognition on SNS, YouTube, and TikTok</h2>
+
+        <p>Jean Baudrillard depicted modern society as a world of "simulacra and simulation." The boundary between signs and reality becomes blurred, and signs themselves constitute reality—social media perfectly embodies this situation.</p>
+
+        <blockquote>
+            <p>"In the world of simulacra, the original no longer exists. Everything is a copy of a copy, a play of signs."</p>
+            <cite>— Summarizing Jean Baudrillard, <em>Simulacra and Simulation</em></cite>
+        </blockquote>
+
+        <h3>Quantified Existence</h3>
+
+        <p>On social media, existence is quantified. Follower counts, like counts, view counts, comment counts—these metrics become the standard for measuring one's "presence."</p>
+
+        <table class="comparison-table">
+            <tr>
+                <th>When Numbers Are High</th>
+                <th>When Numbers Are Low</th>
+            </tr>
+            <tr>
+                <td>Recognized as an "influencer"</td>
+                <td>Feeling of "being seen by no one"</td>
+            </tr>
+            <tr>
+                <td>Statements carry influence</td>
+                <td>Statements don't reach anyone</td>
+            </tr>
+            <tr>
+                <td>Existence is affirmed</td>
+                <td>Feeling that existence is negated</td>
+            </tr>
+            <tr>
+                <td>Desire for recognition is satisfied</td>
+                <td>Desire for recognition remains unfulfilled</td>
+            </tr>
+        </table>
+
+        <p>This structure makes proof of existence completely dependent on recognition from others. One's existential value is measured by the number of followers and likes. When these decrease, one feels that their existential value has also diminished.</p>
+
+        <h3>Going Viral: A Momentary Proof of Existence</h3>
+
+        <p>The phenomenon of "going viral"—when a post suddenly spreads and is seen by tens or hundreds of thousands of people. It is a momentary "explosion of existence." However, virality doesn't last. The next day, another post goes viral, and your post is forgotten.</p>
+
+        <p>TikTok's algorithm accelerates this phenomenon. An unknown user might suddenly go viral, while a popular creator's post might gain no traction at all. Proof of existence is subject to the invisible force of algorithms.</p>
+
+        <div class="key-point">
+            <p>Proof of existence on social media is inherently ephemeral. Posts flow away, followers change, and platforms themselves can disappear. The validation of "likes" vanishes like digital bubbles.</p>
+        </div>
+
+
+        <h2>4. Proof of Existence in Games and Virtual Worlds</h2>
+
+        <p>Online games and virtual worlds provide "venues for proof of existence" separate from the real world.</p>
+
+        <h3>Avatars as Alter Egos</h3>
+
+        <p>In games, players control avatars (alter egos). Avatars can possess appearances, abilities, and social status different from one's real self.</p>
+
+        <ul>
+            <li><strong>Freedom of Appearance</strong>: Choosing appearances impossible in reality</li>
+            <li><strong>Freedom of Ability</strong>: Gaining powers one doesn't possess in reality</li>
+            <li><strong>Freedom of Social Status</strong>: Achieving status unobtainable in reality</li>
+        </ul>
+
+        <p>This is the experience of existing as "another self." Those not recognized in the real world can become heroes in the game world. It functions as a "substitute for proof of existence."</p>
+
+        <h3>In-Game Achievements and Records</h3>
+
+        <p>Many games have achievement systems, rankings, and titles. These are mechanisms that inscribe the player's "traces of existence" within the game.</p>
+
+        <ul>
+            <li><strong>Achievements (Trophies)</strong>: Proof of meeting specific conditions</li>
+            <li><strong>Rankings</strong>: One's position compared to other players</li>
+            <li><strong>Titles</strong>: Designations earned through achievements</li>
+            <li><strong>Collections</strong>: Records of gathered items</li>
+        </ul>
+
+        <p>However, when a game's service ends, all these records disappear.</p>
+
+        <h3>Service Termination as "Death"</h3>
+
+        <p>Online games have lifespans. For various reasons—company circumstances, profitability, technological obsolescence—services end. When that happens, characters built over thousands of hours, achievements, and human relationships all vanish.</p>
+
+        <blockquote>
+            <p>Service termination is "the end of the world" for the game world, and for players who existed there, it represents "another kind of death."</p>
+        </blockquote>
+
+
+        <h2>5. The Metaverse and Digital Selves</h2>
+
+        <p>The metaverse attempts to elevate proof of existence in virtual worlds to a new level.</p>
+
+        <h3>The Promise of Persistent Virtual Worlds</h3>
+
+        <p>The metaverse concept aims for "persistent virtual worlds." A continuous virtual space that doesn't end like a game. There, avatars as alter egos can continue to exist over the long term—at least, that's what's promised.</p>
+
+        <ul>
+            <li><strong>Digital Asset Ownership</strong>: Ownership of land and items within virtual spaces through NFTs</li>
+            <li><strong>Persistent Identity</strong>: Avatars usable across platforms</li>
+            <li><strong>Economic Activity</strong>: Work and income within virtual spaces</li>
+        </ul>
+
+        <h3>The Uncertainty of the Metaverse</h3>
+
+        <p>However, the metaverse also cannot escape platform dependency.</p>
+
+        <ul>
+            <li><strong>Corporate Survival</strong>: If the company operating the metaverse goes bankrupt, that world disappears</li>
+            <li><strong>Technological Change</strong>: If current technology becomes obsolete, data compatibility is lost</li>
+            <li><strong>Regulatory Changes</strong>: The possibility that virtual assets become worthless due to legal regulations</li>
+            <li><strong>Shifts in Social Interest</strong>: If interest in the metaverse wanes, it becomes depopulated</li>
+        </ul>
+
+        <p>The promise of "persistent virtual worlds" remains, for now, just a promise. Entrusting one's proof of existence to the metaverse means betting on the perpetuity of corporations and technology.</p>
+
+
+        <h2>6. Consumption vs. Creation — The Difference as Proof of Existence</h2>
+
+        <p>Engagement with entertainment can be broadly divided into "consumption" and "creation." The two differ in nature as forms of proof of existence.</p>
+
+        <h3>Existing as a Consumer</h3>
+
+        <p>Watching content, playing games, supporting one's oshi—these are primarily "consumptive" forms of engagement.</p>
+
+        <ul>
+            <li><strong>Traces</strong>: Viewing history, purchase history, login records</li>
+            <li><strong>Visibility</strong>: Basically invisible to others</li>
+            <li><strong>Persistence</strong>: Dependent on platforms</li>
+            <li><strong>Uniqueness</strong>: Difficult to distinguish from others consuming the same content</li>
+        </ul>
+
+        <h3>Existing as a Creator</h3>
+
+        <p>Making videos, drawing fan art, writing novels, developing games—these are "creative" forms of engagement.</p>
+
+        <ul>
+            <li><strong>Traces</strong>: The works themselves</li>
+            <li><strong>Visibility</strong>: Visible to others when published</li>
+            <li><strong>Persistence</strong>: If works are saved, they can survive platform disappearance</li>
+            <li><strong>Uniqueness</strong>: Distinguishable as one's own unique expression</li>
+        </ul>
+
+        <table class="comparison-table">
+            <tr>
+                <th>Engagement as Consumption</th>
+                <th>Engagement as Creation</th>
+            </tr>
+            <tr>
+                <td>Recorded as history</td>
+                <td>Remains as works</td>
+            </tr>
+            <tr>
+                <td>Meaningful only within platforms</td>
+                <td>Can have meaning beyond platforms</td>
+            </tr>
+            <tr>
+                <td>Interchangeable with other consumers</td>
+                <td>Becomes a unique existence as a creator</td>
+            </tr>
+            <tr>
+                <td>Passive proof of existence</td>
+                <td>Active proof of existence</td>
+            </tr>
+        </table>
+
+        <div class="key-point">
+            <p>Consumption can prove "I was there" but is insufficient to show "who I am." Creation is an act of giving form to one's unique existence and can serve as a stronger proof of existence.</p>
+        </div>
+
+
+        <h2>7. TokiStorage's Position — Beyond Ephemeral Digital</h2>
+
+        <p>The analysis above reveals the structural fragility of proof of existence in digital entertainment.</p>
+
+        <h3>Platform Lifespans</h3>
+
+        <p>The lifespans of digital platforms are surprisingly short.</p>
+
+        <ul>
+            <li><strong>MySpace</strong>: Once the largest social network, now nearly forgotten</li>
+            <li><strong>Vine</strong>: Pioneer of short-form video, service ended in 2017</li>
+            <li><strong>Google+</strong>: Google's large-scale social network, ended in 2019</li>
+            <li><strong>Mixi</strong>: Once Japan's largest social network, now has lost its influence</li>
+            <li><strong>Countless Online Games</strong>: Many titles end service every year</li>
+        </ul>
+
+        <p>Much of the "records of existence" accumulated on these platforms—posts, comments, profiles, achievements—disappeared along with the platforms.</p>
+
+        <h3>The Significance of Physical Records</h3>
+
+        <p>TokiStorage can be positioned as one response to this problem.</p>
+
+        <ul>
+            <li><strong>Platform Independence</strong>: Not dependent on the survival of any specific company or service</li>
+            <li><strong>Physical Durability</strong>: Preservation for over 1,000 years using quartz glass</li>
+            <li><strong>Standardized Data Formats</strong>: Formats that can adapt to technological change</li>
+            <li><strong>Active Recording</strong>: Recording content you choose yourself, not consumption history</li>
+        </ul>
+
+        <p>Keeping social media posts, game achievements, and feelings for one's oshi only within digital platforms is like building castles in the sand. When the tide recedes, everything washes away.</p>
+
+        <h3>Preserving Creation</h3>
+
+        <p>There is the option of preserving the self expressed through entertainment in physical form.</p>
+
+        <ul>
+            <li>Novels and essays you've written</li>
+            <li>Illustrations and fan art you've drawn</li>
+            <li>Music you've composed</li>
+            <li>Writings expressing your feelings for your oshi</li>
+            <li>Diaries recording memories from games</li>
+        </ul>
+
+        <p>These can remain even after platforms disappear. They are proof of existence based not on the number of likes but on the essence of "what you expressed."</p>
+
+        <div class="key-point">
+            <p>Entertainment enriches life. However, there is no need to confine the recognition and achievements gained there solely within ephemeral digital spaces. There is the choice to preserve expressions meaningful to you in physical form.</p>
+        </div>
+
+
+        <h2>Conclusion — Play and Eternity</h2>
+
+        <p>As Huizinga pointed out, play lies at the root of human culture. Enjoying entertainment is a natural human desire.</p>
+
+        <p>At the same time, humans also possess a desire for "eternity"—the wish to leave proof that they existed across time. These two desires are not necessarily contradictory.</p>
+
+        <p>The problem is that modern digital entertainment makes proof of existence overly dependent on "recognition" and "platforms." Follower counts, like counts, rankings—these are proofs of existence based on recognition from others, and they disappear when platforms disappear.</p>
+
+        <p>For more enduring proof of existence, the following perspectives may be valuable.</p>
+
+        <ul>
+            <li><strong>From Consumption to Creation</strong>: Not just passively consuming but actively creating</li>
+            <li><strong>From Recognition to Expression</strong>: Valuing one's own expression rather than depending on others' evaluations</li>
+            <li><strong>From Digital to Physical</strong>: Preserving not just digitally but in physical form as well</li>
+        </ul>
+
+        <p>Entertainment is meant to be enjoyed. When we reconceive the expressions, emotions, and connections born from that enjoyment not merely as "things that flow away" but as "things to preserve," new possibilities for proof of existence emerge.</p>
+
+        <blockquote>
+            <p>Likes may disappear, but what you expressed can remain. Platforms may end, but your story can continue.</p>
+        </blockquote>
+
+        <p>Transcending the ephemerality of digital—leaving traces of one's existence. This is a new form of proof of existence in the age of entertainment.</p>
+
+
+        <section class="references">
+            <h2>References</h2>
+            <ul>
+                <li>Baudrillard, J. (1981). <em>Simulacres et Simulation.</em> Galilee.</li>
+                <li>Huizinga, J. (1938). <em>Homo Ludens: A Study of the Play-Element in Culture.</em> Beacon Press.</li>
+                <li>Jenkins, H. (2006). <em>Convergence Culture: Where Old and New Media Collide.</em> NYU Press.</li>
+                <li>Turkle, S. (2011). <em>Alone Together: Why We Expect More from Technology and Less from Each Other.</em> Basic Books.</li>
+                <li>Castells, M. (2009). <em>Communication Power.</em> Oxford University Press.</li>
+                <li>Boellstorff, T. (2008). <em>Coming of Age in Second Life: An Anthropologist Explores the Virtually Human.</em> Princeton University Press.</li>
+                <li>Massanari, A. (2017). "#Gamergate and The Fappening: How Reddit's algorithm, governance, and culture support toxic technocultures." <em>New Media & Society</em>, 19(3), 329-346.</li>
+            </ul>
+        </section>
+
+    </article>
+
+    <footer class="article-footer">
+        <p id="essay-nav-links"></p>
+        <p style="margin-top: 2rem; font-size: 0.75rem;">&copy; 2026 TokiStorage</p>
+    </footer>
+
+</main>
+
+<script src="essay-nav.js?v=20260209"></script>
+</body>
+</html>

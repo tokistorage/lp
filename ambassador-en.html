@@ -1,0 +1,746 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Certified Ambassador Program | Pearl Soap Workshop | TokiStorage</title>
+    <meta name="description" content="Pearl Soap Workshop Certified Ambassador Program. With an equipment kit, operations manual, community access, and personal support, you can host workshops in your area.">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Shippori+Mincho:wght@400;500;600;700&family=Zen+Kaku+Gothic+New:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="index.css">
+    <style>
+        .ambassador-page { padding: 6rem 2rem 4rem; }
+        .ambassador-inner { max-width: 760px; margin: 0 auto; }
+        .ambassador-inner h1 {
+            font-family: var(--font-display);
+            font-size: 1.8rem;
+            font-weight: 600;
+            color: var(--text-primary);
+            margin-bottom: 0.3rem;
+            text-align: center;
+        }
+        .ambassador-tagline {
+            text-align: center;
+            font-family: var(--font-display);
+            font-size: 0.92rem;
+            color: var(--text-secondary);
+            margin-bottom: 2.5rem;
+            line-height: 1.8;
+        }
+        .ambassador-section {
+            margin-bottom: 3rem;
+        }
+        .ambassador-section h2 {
+            font-family: var(--font-display);
+            font-size: 1.15rem;
+            font-weight: 600;
+            color: var(--text-primary);
+            margin-bottom: 1rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 2px solid var(--toki-gold);
+        }
+        .ambassador-section p,
+        .ambassador-section li {
+            font-size: 0.88rem;
+            color: var(--text-secondary);
+            line-height: 1.9;
+        }
+        .ambassador-lead {
+            background: var(--bg-page);
+            border: 1px solid var(--border);
+            border-radius: 1rem;
+            padding: 2rem;
+            margin-bottom: 3rem;
+        }
+        .ambassador-lead p {
+            font-size: 0.9rem;
+            color: var(--text-secondary);
+            line-height: 2;
+            margin-bottom: 0.8rem;
+        }
+        .ambassador-lead p:last-child { margin-bottom: 0; }
+
+        /* Persona cards */
+        .persona-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 1.2rem;
+            margin-top: 1.5rem;
+        }
+        .persona-item {
+            background: var(--bg-page);
+            border: 1px solid var(--border);
+            border-radius: 0.8rem;
+            padding: 1.5rem;
+        }
+        .persona-item h3 {
+            font-family: var(--font-display);
+            font-size: 0.95rem;
+            font-weight: 600;
+            color: var(--toki-gold);
+            margin-bottom: 0.6rem;
+        }
+        .persona-item p {
+            font-size: 0.85rem;
+            color: var(--text-secondary);
+            line-height: 1.8;
+        }
+
+        /* Offering cards */
+        .offering-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1.2rem;
+            margin-top: 1.5rem;
+        }
+        .offering-card {
+            background: var(--bg-page);
+            border: 1px solid var(--border);
+            border-radius: 0.8rem;
+            padding: 1.5rem;
+            text-align: center;
+        }
+        .offering-icon {
+            font-size: 1.6rem;
+            margin-bottom: 0.6rem;
+        }
+        .offering-card h3 {
+            font-family: var(--font-display);
+            font-size: 0.95rem;
+            font-weight: 600;
+            color: var(--text-primary);
+            margin-bottom: 0.5rem;
+        }
+        .offering-card p {
+            font-size: 0.82rem;
+            color: var(--text-secondary);
+            line-height: 1.7;
+        }
+
+        /* Kit list */
+        .kit-list {
+            list-style: none;
+            padding: 0;
+            margin: 1.5rem 0;
+        }
+        .kit-list li {
+            background: var(--bg-page);
+            border-left: 4px solid var(--toki-gold);
+            padding: 1.2rem 1.5rem;
+            margin-bottom: 1rem;
+            border-radius: 0 0.5rem 0.5rem 0;
+        }
+        .kit-list li h4 {
+            font-family: var(--font-display);
+            font-size: 0.95rem;
+            font-weight: 600;
+            color: var(--text-primary);
+            margin-bottom: 0.4rem;
+        }
+        .kit-list li p {
+            font-size: 0.85rem;
+            margin: 0;
+        }
+
+        /* Plan cards */
+        .plan-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 1.5rem;
+            margin-top: 1.5rem;
+        }
+        .plan-card {
+            background: var(--bg-page);
+            border: 1px solid var(--border);
+            border-radius: 1rem;
+            padding: 2rem;
+            position: relative;
+        }
+        .plan-card.recommended {
+            border-color: var(--toki-gold);
+            box-shadow: 0 4px 20px rgba(201, 169, 98, 0.15);
+        }
+        .plan-badge {
+            position: absolute;
+            top: -0.7rem;
+            left: 50%;
+            transform: translateX(-50%);
+            background: var(--toki-gold);
+            color: #fff;
+            font-size: 0.72rem;
+            font-weight: 600;
+            padding: 0.25rem 1rem;
+            border-radius: 1rem;
+            white-space: nowrap;
+        }
+        .plan-card h3 {
+            font-family: var(--font-display);
+            font-size: 1.05rem;
+            font-weight: 600;
+            color: var(--text-primary);
+            margin-bottom: 0.5rem;
+            text-align: center;
+        }
+        .plan-price {
+            text-align: center;
+            margin-bottom: 1rem;
+            padding-bottom: 1rem;
+            border-bottom: 1px solid var(--border);
+        }
+        .plan-price .amount {
+            font-family: var(--font-display);
+            font-size: 1.6rem;
+            font-weight: 700;
+            color: var(--toki-gold);
+        }
+        .plan-price .unit {
+            font-size: 0.78rem;
+            color: var(--text-muted);
+        }
+        .plan-features {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+        .plan-features li {
+            font-size: 0.84rem;
+            color: var(--text-secondary);
+            line-height: 1.7;
+            padding: 0.3rem 0;
+            padding-left: 1.2rem;
+            position: relative;
+        }
+        .plan-features li::before {
+            content: "\2713";
+            position: absolute;
+            left: 0;
+            color: var(--toki-gold);
+            font-weight: 700;
+        }
+
+        /* Steps */
+        .step-timeline {
+            position: relative;
+            padding-left: 2rem;
+            margin: 1.5rem 0;
+        }
+        .step-timeline::before {
+            content: "";
+            position: absolute;
+            left: 0.7rem;
+            top: 0.5rem;
+            bottom: 0.5rem;
+            width: 2px;
+            background: linear-gradient(to bottom, var(--toki-gold), var(--toki-blue));
+            border-radius: 1px;
+        }
+        .step-item {
+            position: relative;
+            margin-bottom: 1.5rem;
+            padding: 1rem 1.2rem;
+            background: var(--bg-page);
+            border: 1px solid var(--border);
+            border-radius: 0.6rem;
+        }
+        .step-item:last-child { margin-bottom: 0; }
+        .step-item::before {
+            content: "";
+            position: absolute;
+            left: -1.55rem;
+            top: 1.2rem;
+            width: 0.7rem;
+            height: 0.7rem;
+            background: var(--toki-gold);
+            border-radius: 50%;
+            border: 2px solid #fff;
+            box-shadow: 0 0 0 2px var(--toki-gold);
+        }
+        .step-label {
+            font-size: 0.75rem;
+            color: var(--toki-gold);
+            font-weight: 600;
+            margin-bottom: 0.3rem;
+        }
+        .step-item h4 {
+            font-family: var(--font-display);
+            font-size: 0.92rem;
+            font-weight: 600;
+            color: var(--text-primary);
+            margin-bottom: 0.3rem;
+        }
+        .step-item p {
+            font-size: 0.82rem;
+            color: var(--text-secondary);
+            line-height: 1.7;
+            margin: 0;
+        }
+
+        /* FAQ */
+        .amb-faq-item {
+            border-bottom: 1px solid var(--border);
+            padding: 1rem 0;
+        }
+        .amb-faq-item summary {
+            font-family: var(--font-display);
+            font-size: 0.92rem;
+            font-weight: 600;
+            color: var(--text-primary);
+            cursor: pointer;
+            list-style: none;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .amb-faq-item summary::-webkit-details-marker { display: none; }
+        .amb-faq-item summary::after {
+            content: "+";
+            font-size: 1.2rem;
+            color: var(--toki-gold);
+            transition: transform 0.3s ease;
+        }
+        .amb-faq-item[open] summary::after {
+            content: "\2212";
+        }
+        .amb-faq-item .amb-faq-answer {
+            font-size: 0.85rem;
+            color: var(--text-secondary);
+            line-height: 1.8;
+            padding-top: 0.8rem;
+            max-height: none;
+            overflow: visible;
+        }
+
+        /* Highlight box */
+        .highlight-box {
+            background: var(--toki-gold-pale);
+            border: 1px solid var(--toki-gold);
+            border-radius: 1rem;
+            padding: 2rem;
+            margin: 2rem 0;
+            text-align: center;
+        }
+        .highlight-box h3 {
+            font-family: var(--font-display);
+            font-size: 1rem;
+            font-weight: 600;
+            color: var(--text-primary);
+            margin-bottom: 0.8rem;
+        }
+        .highlight-box p {
+            font-size: 0.88rem;
+            color: var(--text-secondary);
+            line-height: 1.8;
+        }
+
+        /* CTA */
+        .ambassador-cta {
+            text-align: center;
+            margin-top: 3rem;
+            padding: 2rem;
+            background: var(--toki-gold-pale);
+            border: 1px solid var(--toki-gold);
+            border-radius: 1rem;
+        }
+        .ambassador-cta h3 {
+            font-family: var(--font-display);
+            font-size: 1rem;
+            color: var(--text-primary);
+            margin-bottom: 0.8rem;
+        }
+        .ambassador-cta p {
+            font-size: 0.85rem;
+            color: var(--text-secondary);
+            margin-bottom: 1.2rem;
+        }
+        .ambassador-cta a.cta-button {
+            display: inline-block;
+            background: #06C755;
+            color: #fff;
+            padding: 0.8rem 2rem;
+            border-radius: 0.5rem;
+            text-decoration: none;
+            font-size: 0.9rem;
+            font-weight: 500;
+            transition: background 0.3s ease;
+        }
+        .ambassador-cta a.cta-button:hover { background: #05a847; }
+
+        .ambassador-back {
+            text-align: center;
+            margin-top: 2.5rem;
+        }
+        .ambassador-back a {
+            color: var(--toki-blue);
+            text-decoration: none;
+            font-size: 0.85rem;
+            margin: 0 0.8rem;
+        }
+        .ambassador-back a:hover { text-decoration: underline; }
+
+        /* Supplementary note */
+        .ambassador-note {
+            background: var(--bg-page);
+            border: 1px solid var(--border);
+            border-radius: 0.8rem;
+            padding: 1.2rem 1.5rem;
+            margin: 1.5rem 0;
+            font-size: 0.82rem;
+            color: var(--text-muted);
+            line-height: 1.8;
+        }
+    </style>
+</head>
+<body>
+
+<nav class="toki-nav">
+    <span class="nav-logo"><a href="index-en.html">TokiStorage</a> / <a href="pearl-soap-en.html">Pearl Soap</a> / <a href="workshop-en.html">Workshop</a> / Ambassador</span>
+</nav>
+
+<main class="ambassador-page">
+    <div class="ambassador-inner">
+        <h1>Certified Ambassador Program</h1>
+        <p class="ambassador-tagline">
+            Become someone who delivers "Thank you for being here."<br>
+            Host Pearl Soap Workshops in your community.
+        </p>
+
+        <div class="ambassador-lead">
+            <p>We want to bring the Pearl Soap Workshop experience to as many people as possible. But on our own, there are only so many places we can reach.</p>
+            <p>That is why we are looking for partners to help us spread the joy.</p>
+            <p>Certified Ambassadors are authorized to host Pearl Soap Workshops in their own communities. We provide everything you need: an equipment kit, operations manual, community access, and personal support. You are not a "teacher" but a "co-creator" -- someone who shares the joy of making alongside participants.</p>
+        </div>
+
+        <!-- Perfect for you if... -->
+        <section class="ambassador-section">
+            <h2>Perfect for you if...</h2>
+            <div class="persona-grid">
+                <div class="persona-item">
+                    <h3>Childcare &amp; Education Professionals</h3>
+                    <p>Looking for hands-on programs at community centers, after-school care, or PTA events. A workshop that nurtures self-esteem is a perfect fit for educational settings.</p>
+                </div>
+                <div class="persona-item">
+                    <h3>Community Organizers</h3>
+                    <p>Planning events for neighborhood associations, local councils, or community halls. An activity everyone can enjoy -- young and old -- to strengthen local bonds.</p>
+                </div>
+                <div class="persona-item">
+                    <h3>Hotel &amp; Ryokan Activity Coordinators</h3>
+                    <p>Looking to add a guest experience program. The workshop takes just 60 minutes and produces a take-home souvenir, directly boosting guest satisfaction.</p>
+                </div>
+                <div class="persona-item">
+                    <h3>Welfare &amp; Care Facility Staff</h3>
+                    <p>Seeking recreational activities for the elderly. Working with your hands stimulates the brain, and the joy of gifting a finished soap to family is deeply rewarding.</p>
+                </div>
+                <div class="persona-item">
+                    <h3>Cafe &amp; Boutique Owners</h3>
+                    <p>Want to host workshops as customer engagement events. Combining tea time with soap-making creates a unique experience that attracts new visitors.</p>
+                </div>
+                <div class="persona-item">
+                    <h3>Anyone Ready to Start Something New</h3>
+                    <p>No special qualifications needed. If you love seeing people smile and enjoy making things by hand, that is enough. With our manual and support, even first-timers can feel confident.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- What ambassadors receive -->
+        <section class="ambassador-section">
+            <h2>What ambassadors receive</h2>
+            <p>To ease any worry about whether you can do this, we have prepared everything you need.</p>
+
+            <div class="offering-grid">
+                <div class="offering-card">
+                    <div class="offering-icon">&#x1F9F0;</div>
+                    <h3>Equipment Kit</h3>
+                    <p>Soap base, molds, heating equipment (indoor &amp; outdoor), colorants, essential oils, label maker, packaging materials, and more. Everything to get started right away.</p>
+                </div>
+                <div class="offering-card">
+                    <div class="offering-icon">&#x1F4D6;</div>
+                    <h3>Operations Manual</h3>
+                    <p>Step-by-step guides from setup to cleanup, sample participant dialogue, and a troubleshooting reference. Video tutorials included.</p>
+                </div>
+                <div class="offering-card">
+                    <div class="offering-icon">&#x1F465;</div>
+                    <h3>Ambassador Community</h3>
+                    <p>An online community connecting ambassadors nationwide. Share know-how, event reports, and tips for improvement.</p>
+                </div>
+                <div class="offering-card">
+                    <div class="offering-icon">&#x1F4AC;</div>
+                    <h3>Personal Support</h3>
+                    <p>Headquarters walks alongside you for your first event. Pre-event consultation, live online support on the day, and a post-event review.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Equipment kit contents -->
+        <section class="ambassador-section">
+            <h2>Equipment kit contents</h2>
+            <p>A starter kit for hosting workshops with up to 10 participants. Consumables can be reordered separately.</p>
+
+            <ul class="kit-list">
+                <li>
+                    <h4>Soap Base (MP Soap)</h4>
+                    <p>A glycerin-enriched melt-and-pour soap base. Gentle on skin and safe for children to use. Initial supply for 10 participants included.</p>
+                </li>
+                <li>
+                    <h4>Paw-Print Mold (Silicone)</h4>
+                    <p>The iconic paw-shaped silicone mold that is Pearl Soap's signature. Reusable and easy to maintain.</p>
+                </li>
+                <li>
+                    <h4>Heating Equipment (Indoor &amp; Outdoor)</h4>
+                    <p><strong>Indoor:</strong> Multi-kettle, heat-resistant container, thermometer, and stirring spatula.<br><strong>Outdoor:</strong> Iwatani cassette stove/burner, heat-resistant container, thermometer, and stirring spatula.<br>Safety gloves and apron also included.</p>
+                </li>
+                <li>
+                    <h4>Colorants &amp; Essential Oil</h4>
+                    <p>Food-grade colorants and coconut essential oil — Pearl Soap's signature scent.</p>
+                </li>
+                <li>
+                    <h4>Label Maker &amp; Tape</h4>
+                    <p>A label maker with dedicated tape for printing original Pearl Soap labels on-site. Label each finished soap right at the workshop.</p>
+                </li>
+                <li>
+                    <h4>Packaging Materials</h4>
+                    <p>OPP bags, organza drawstring pouches, and Pearl Soap label stickers. Finished products are gift-ready for participants to take home.</p>
+                </li>
+                <li>
+                    <h4>Operations Tools</h4>
+                    <p>Participant instruction sheets, sign-in sheet template, and venue setup guide.</p>
+                </li>
+            </ul>
+
+            <div class="ambassador-note">
+                Consumables (soap base, colorants, essential oil, label tape, packaging materials) can be reordered at special ambassador pricing. You are also free to source your own materials.
+            </div>
+        </section>
+
+        <!-- Operations manual -->
+        <section class="ambassador-section">
+            <h2>Operations manual</h2>
+            <p>Every detail is documented so that "I have never done this before" transforms into "I can do this."</p>
+
+            <ul class="kit-list">
+                <li>
+                    <h4>Pre-Event Preparation Manual</h4>
+                    <p>Venue selection, required space and facilities checklist, and material preparation. A schedule from two weeks before through the morning of the event.</p>
+                </li>
+                <li>
+                    <h4>Day-of Facilitation Manual</h4>
+                    <p>The 60-minute time breakdown, sample dialogue for each segment, and a participant explanation script. Includes a "Storytelling Guide" for sharing the Pearl Soap origin story.</p>
+                </li>
+                <li>
+                    <h4>Video Tutorials</h4>
+                    <p>Step-by-step video guides covering how to melt the soap, coloring techniques, pouring into molds, and more.</p>
+                </li>
+                <li>
+                    <h4>Troubleshooting Guide</h4>
+                    <p>"It won't harden," "Air bubbles appeared," "The colors mixed" -- a Q&amp;A of common issues and on-the-spot solutions.</p>
+                </li>
+                <li>
+                    <h4>Post-Event Review Sheet</h4>
+                    <p>A template for recording participant reactions, areas for improvement, and lessons for next time. Share within the community to build collective knowledge.</p>
+                </li>
+            </ul>
+        </section>
+
+        <!-- Ambassador plans -->
+        <section class="ambassador-section">
+            <h2>Ambassador plans</h2>
+            <p>Two plans to match your activity style.</p>
+
+            <div class="plan-grid">
+                <div class="plan-card recommended">
+                    <div class="plan-badge">Recommended</div>
+                    <h3>Standard Plan</h3>
+                    <div class="plan-price">
+                        <span class="amount">¥55,000</span><br>
+                        <span class="unit">One-time fee (tax included)</span>
+                    </div>
+                    <ul class="plan-features">
+                        <li>Equipment starter kit (for 10 participants)</li>
+                        <li>Operations manual (printed + digital)</li>
+                        <li>Full access to video tutorials</li>
+                        <li>Ambassador community membership</li>
+                        <li>Online support for your first event</li>
+                        <li>Ambassador pricing on consumables</li>
+                        <li>Certified Ambassador certificate</li>
+                    </ul>
+                </div>
+                <div class="plan-card">
+                    <h3>Premium Plan</h3>
+                    <div class="plan-price">
+                        <span class="amount">¥110,000</span><br>
+                        <span class="unit">One-time fee (tax included)</span>
+                    </div>
+                    <ul class="plan-features">
+                        <li>Everything in the Standard Plan</li>
+                        <li>Expanded equipment kit (for 20 participants)</li>
+                        <li>In-person or online training with the founder (2 hours)</li>
+                        <li>Custom label design creation</li>
+                        <li>Priority personal consultation for one year (up to once a month)</li>
+                        <li>Featured listing on the official website</li>
+                        <li>20% discount on TokiStorage personal plan</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="ambassador-note">
+                There are no monthly fees or royalties. All revenue from your events is yours. You are free to decide whether to include material costs in participation fees or charge separately.
+            </div>
+        </section>
+
+        <!-- Steps to your first workshop -->
+        <section class="ambassador-section">
+            <h2>Steps to your first workshop</h2>
+            <p>From initial inquiry to your first event, you can get started in as little as two weeks.</p>
+
+            <div class="step-timeline">
+                <div class="step-item">
+                    <div class="step-label">Step 1</div>
+                    <h4>Inquiry &amp; Consultation</h4>
+                    <p>Contact us via LINE or email. We will ask about your region, target audience, and planned frequency, then recommend the best plan for you.</p>
+                </div>
+                <div class="step-item">
+                    <div class="step-label">Step 2</div>
+                    <h4>Sign Up &amp; Kit Delivery</h4>
+                    <p>Once you choose a plan and sign up, we ship your equipment kit and manual. You can start preparing the day it arrives.</p>
+                </div>
+                <div class="step-item">
+                    <div class="step-label">Step 3</div>
+                    <h4>Preparation &amp; Practice</h4>
+                    <p>Follow the manual and videos to make your first soap yourself. If anything is unclear, reach out through the community or personal support.</p>
+                </div>
+                <div class="step-item">
+                    <div class="step-label">Step 4</div>
+                    <h4>First Event (with support)</h4>
+                    <p>Headquarters provides live online support during your first workshop. If you feel uncertain about anything, we are there in real time.</p>
+                </div>
+                <div class="step-item">
+                    <div class="step-label">Step 5</div>
+                    <h4>Review &amp; Improve</h4>
+                    <p>After the event, fill out the review sheet. A brief feedback session with headquarters helps you refine your approach for next time.</p>
+                </div>
+                <div class="step-item">
+                    <div class="step-label">Step 6 ~</div>
+                    <h4>Independent Activity</h4>
+                    <p>From the second event onward, host at your own pace. Exchange ideas with other ambassadors in the community and expand your reach.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Philosophy -->
+        <div class="highlight-box">
+            <h3>An ambassador is not a "teacher" but a "companion"</h3>
+            <p>No special skills are required to host a Pearl Soap Workshop.<br>What matters is the willingness to enjoy creating together.<br>Work alongside participants, share in the joy, and experience "Thank you for being here" together.<br>That is the ambassador's role.</p>
+        </div>
+
+        <!-- FAQ -->
+        <section class="ambassador-section">
+            <h2>FAQ</h2>
+
+            <details class="amb-faq-item">
+                <summary>Can I do this even if I have never made soap before?</summary>
+                <div class="amb-faq-answer">Yes, absolutely. Pearl Soap uses a simple melt-and-pour method with MP soap base. After watching the video tutorials and practicing once or twice, you will get the hang of it quickly. Headquarters provides live online support for your first event, so there is nothing to worry about.</div>
+            </details>
+
+            <details class="amb-faq-item">
+                <summary>Are there monthly fees or royalties?</summary>
+                <div class="amb-faq-answer">No. There are no monthly fees or royalties of any kind. You only pay the one-time initial fee. Participation fees and all revenue from your events are entirely yours.</div>
+            </details>
+
+            <details class="amb-faq-item">
+                <summary>How much should I charge participants?</summary>
+                <div class="amb-faq-answer">You are free to set your own pricing. Material cost per person is approximately ¥500-800. Most ambassadors charge ¥1,500-3,000 after adding venue costs and a margin. Some choose to host free community events.</div>
+            </details>
+
+            <details class="amb-faq-item">
+                <summary>What kind of venue do I need?</summary>
+                <div class="amb-faq-answer">Both indoor and outdoor venues work. Running water and power outlets are not required. <strong>Indoor:</strong> Community halls, cafes, schools, event spaces, hotel rooms, and more. Even indoor spaces without power outlets work fine with a portable power station. <strong>Outdoor:</strong> Festivals, markets, and community fairs are all great options. The cassette stove handles heating without any power source, and adding a generator or portable power station enables stable, extended operation.</div>
+            </details>
+
+            <details class="amb-faq-item">
+                <summary>What is the minimum number of participants?</summary>
+                <div class="amb-faq-answer">You can host a workshop with as few as 2-3 people. We recommend starting small (around 5 participants) for your first event. As you gain experience, you can comfortably handle groups of 10-20.</div>
+            </details>
+
+            <details class="amb-faq-item">
+                <summary>What if I want to stop being an ambassador?</summary>
+                <div class="amb-faq-answer">You are free to step down at any time. There are no cancellation fees whatsoever. The equipment remains yours, so you can continue making soap for personal enjoyment.</div>
+            </details>
+
+            <details class="amb-faq-item">
+                <summary>How do I source materials?</summary>
+                <div class="amb-faq-answer">You can order consumables from headquarters at special ambassador pricing. Of course, you are also welcome to source equivalent materials on your own. A list of recommended products is included in the manual.</div>
+            </details>
+
+            <details class="amb-faq-item">
+                <summary>Can I operate outside Japan?</summary>
+                <div class="amb-faq-answer">Yes, international activity is welcome. We already have an ambassador active in Hawaii. English-language manuals are available for overseas use. Shipping costs for the equipment kit will be quoted separately.</div>
+            </details>
+        </section>
+
+        <!-- CTA -->
+        <div class="ambassador-cta">
+            <h3>Interested in becoming an ambassador?</h3>
+            <p>"Can I really do this?" "I would like to learn more."<br>Feel free to reach out. There is absolutely no pressure.</p>
+            <a href="https://line.me/R/oaMessage/@897glsbz/?Pearl%20Soap%E3%82%A2%E3%83%B3%E3%83%90%E3%82%B5%E3%83%80%E3%83%BC%E3%83%97%E3%83%AD%E3%82%B0%E3%83%A9%E3%83%A0%E3%81%AB%E3%81%A4%E3%81%84%E3%81%A6%E7%9B%B8%E8%AB%87%E3%81%97%E3%81%9F%E3%81%84%E3%81%A7%E3%81%99" target="_blank" rel="noopener" class="cta-button">Chat with us on LINE</a>
+        </div>
+
+        <div class="ambassador-back">
+            <a href="workshop-en.html">&larr; Workshop</a>
+            <a href="pearl-soap-en.html">Pearl Soap</a>
+            <a href="index-en.html">TokiStorage &rarr;</a>
+        </div>
+    </div>
+</main>
+
+<footer class="toki-footer">
+    <div class="footer-inner">
+        <div class="footer-brand">
+            <h3>TokiStorage</h3>
+            <p>Eternal memorial engraved in quartz glass.<br>No server, no maintenance.<br>Proof of existence, delivered a thousand years forward.</p>
+        </div>
+        <div class="footer-links-group">
+            <h4>Links</h4>
+            <a href="index-en.html">About TokiStorage</a>
+            <a href="index-en.html#pricing">Pricing</a>
+            <a href="index-en.html#faq">FAQ</a>
+            <a href="index-en.html#cta">Contact</a>
+            <a href="pitch-deck-en.html">Investor Deck</a>
+            <a href="legacy-en.html">1000-Year Design Philosophy</a>
+            <a href="kids-en.html">For Kids</a>
+            <a href="infographic-en.html">Ecosystem Overview</a>
+        </div>
+        <div class="footer-links-group">
+            <h4>Proposals</h4>
+            <a href="partnership-en.html">Partnership Proposal</a>
+            <a href="client-proposal-en.html">Client Proposal</a>
+            <a href="government-proposal-en.html">Government Proposal</a>
+            <a href="patronage-en.html">Patronage</a>
+        </div>
+        <div class="footer-links-group">
+            <h4>Related</h4>
+            <span class="footer-sub-links"><a href="../index.html">SoulCarrier Resonance Circle</a> (<a href="../movement/Membership_Guide_EN.pdf">Enrollment</a> / <a href="../movement/BasicAgreement.pdf">Agreement</a> / <a href="../movement/Bylaws_EN.pdf">Bylaws</a>)</span>
+            <span class="footer-sub-links"><a href="pearl-soap-en.html">Pearl Soap</a> (<a href="how-to-make-en.html">How to Make</a> / <a href="workshop-en.html">Workshop</a> / <a href="ambassador-en.html">Ambassador</a> / <a href="100-scenes-en.html">100 Scenes</a>)</span>
+            <span class="footer-sub-links"><a href="workaway-en.html">Workaway Consulting</a> (<a href="workaway-proposal-en.html">Proposal</a>)</span>
+            <a href="offgrid-en.html">Off-Grid Consulting</a>
+            <a href="https://voice-memorial-qr.onrender.com/" target="_blank" rel="noopener">Voice QR Tech Demo</a>
+        </div>
+        <div class="footer-links-group">
+            <h4>Legal</h4>
+            <a href="tokushoho-en.html">Specified Commercial Transactions Act</a>
+            <a href="privacy-en.html">Privacy Policy</a>
+        </div>
+        <div class="footer-links-group">
+            <h4>Company</h4>
+            <p class="footer-company">TokiStorage<br>Takuya Sato<br>2-11-13 Akemi, Urayasu, Chiba 279-0014, Japan<br>(Relocating to Sado City, spring 2026)</p>
+            <a href="https://www.linkedin.com/in/satotakuya" target="_blank" rel="noopener"><svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" style="vertical-align:-2px;margin-right:4px"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 01-2.063-2.065 2.064 2.064 0 112.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg>satotakuya</a>
+            <a href="https://x.com/tokistorage" target="_blank" rel="noopener"><svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" style="vertical-align:-2px;margin-right:4px"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>@tokistorage</a>
+        </div>
+    </div>
+    <div class="footer-bottom">
+        <p class="footer-disclaimer">*TokiStorage is a record preservation product. It is not a substitute for a cemetery or gravestone under the Graveyard and Burial Act. "1,000 years" is a theoretical value based on quartz glass material properties, not a product warranty period. Pearl Soap is not for sale.</p>
+        <p>&copy; 2026 TokiStorage / TokiStorage All rights reserved.</p>
+    </div>
+</footer>
+
+</body>
+</html>

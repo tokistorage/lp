@@ -1,0 +1,457 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>向いていない方へ — あなたが不快にならないために | トキストレージ</title>
+    <meta name="description" content="トキストレージが明確に「向いていない」と考える4つのタイプ。無理に勧めることはしません。">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Shippori+Mincho:wght@400;500;600;700&family=Zen+Kaku+Gothic+New:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --toki-blue: #2563EB;
+            --toki-blue-dark: #1D4ED8;
+            --toki-blue-pale: #EFF6FF;
+            --bg-white: #FFFFFF;
+            --bg-section: #F8FAFC;
+            --bg-warm: #FFFBF5;
+            --text-primary: #1E293B;
+            --text-secondary: #475569;
+            --text-muted: #94A3B8;
+            --border: #E2E8F0;
+            --amber: #D97706;
+            --amber-pale: #FEF3C7;
+            --amber-border: #F59E0B;
+            --green: #059669;
+            --green-pale: #ECFDF5;
+            --font-display: 'Shippori Mincho', serif;
+            --font-body: 'Zen Kaku Gothic New', sans-serif;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        html { scroll-behavior: smooth; }
+
+        body {
+            font-family: var(--font-body);
+            font-weight: 400;
+            background: var(--bg-white);
+            color: var(--text-primary);
+            line-height: 2;
+            font-size: 16px;
+        }
+
+        /* Navigation */
+        .article-nav {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 1000;
+            background: rgba(255,255,255,0.95);
+            backdrop-filter: blur(12px);
+            border-bottom: 1px solid var(--border);
+            padding: 0.6rem 1.2rem;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 1rem;
+        }
+        .article-nav .nav-brand {
+            font-family: var(--font-display);
+            font-size: 0.9rem;
+            font-weight: 600;
+            color: var(--toki-blue);
+            text-decoration: none;
+            white-space: nowrap;
+        }
+        .article-nav .nav-right {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+        .article-nav .nav-label {
+            font-size: 0.6rem;
+            color: var(--text-muted);
+            letter-spacing: 0.08em;
+        }
+        .article-nav .lang-switch {
+            font-size: 0.75rem;
+            color: var(--toki-blue);
+            text-decoration: none;
+            padding: 0.3rem 0.6rem;
+            border: 1px solid var(--toki-blue);
+            border-radius: 4px;
+        }
+        .article-nav .lang-switch:hover {
+            background: var(--toki-blue);
+            color: #fff;
+        }
+        .nav-back {
+            font-size: 0.75rem;
+            color: var(--text-secondary);
+            text-decoration: none;
+        }
+        .nav-back:hover {
+            color: var(--toki-blue);
+        }
+
+        /* Article Container */
+        .article-container {
+            max-width: 720px;
+            margin: 0 auto;
+            padding: 7rem 2rem 4rem;
+        }
+
+        /* Article Header */
+        .article-header {
+            margin-bottom: 3rem;
+            padding-bottom: 2rem;
+            border-bottom: 1px solid var(--border);
+        }
+        .article-category {
+            font-size: 0.7rem;
+            color: var(--amber);
+            letter-spacing: 0.15em;
+            margin-bottom: 1rem;
+        }
+        .article-header h1 {
+            font-family: var(--font-display);
+            font-size: 1.8rem;
+            font-weight: 700;
+            line-height: 1.5;
+            margin-bottom: 1rem;
+        }
+        .article-subtitle {
+            font-size: 1rem;
+            color: var(--text-secondary);
+            margin-bottom: 1.5rem;
+        }
+
+        /* Article Body */
+        .article-body h2 {
+            font-family: var(--font-display);
+            font-size: 1.3rem;
+            font-weight: 600;
+            margin: 3rem 0 1.5rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 1px solid var(--border);
+        }
+        .article-body h3 {
+            font-family: var(--font-display);
+            font-size: 1.1rem;
+            font-weight: 600;
+            margin: 2rem 0 1rem;
+            color: var(--text-primary);
+        }
+        .article-body p {
+            margin-bottom: 1.5rem;
+            text-align: justify;
+        }
+        .article-body strong {
+            font-weight: 600;
+        }
+        .article-body ul, .article-body ol {
+            margin: 0 0 1.5rem 1.5rem;
+        }
+        .article-body li {
+            margin-bottom: 0.5rem;
+        }
+
+        /* Concern Box */
+        .concern-box {
+            background: var(--bg-warm);
+            border: 1px solid #F3E8D0;
+            border-radius: 8px;
+            padding: 1.5rem 2rem;
+            margin: 2rem 0;
+        }
+        .concern-label {
+            font-size: 0.7rem;
+            font-weight: 600;
+            color: var(--amber);
+            letter-spacing: 0.1em;
+            margin-bottom: 0.5rem;
+        }
+        .concern-box blockquote {
+            font-family: var(--font-display);
+            font-size: 1.05rem;
+            font-style: italic;
+            color: var(--text-primary);
+            border: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        /* Answer Box */
+        .answer-box {
+            background: var(--green-pale);
+            border-left: 3px solid var(--green);
+            padding: 1.5rem 2rem;
+            margin: 1rem 0 2rem;
+            border-radius: 0 8px 8px 0;
+        }
+        .answer-label {
+            font-size: 0.7rem;
+            font-weight: 600;
+            color: var(--green);
+            letter-spacing: 0.1em;
+            margin-bottom: 0.5rem;
+        }
+        .answer-box p {
+            margin-bottom: 0.8rem;
+        }
+        .answer-box p:last-child {
+            margin-bottom: 0;
+        }
+
+        /* Promise Box */
+        .promise-box {
+            background: var(--toki-blue-pale);
+            border: 2px solid var(--toki-blue);
+            border-radius: 8px;
+            padding: 2rem;
+            margin: 2rem 0;
+            text-align: center;
+        }
+        .promise-box h3 {
+            color: var(--toki-blue);
+            margin-top: 0;
+        }
+        .promise-box p {
+            text-align: center;
+        }
+
+        /* Verify Box */
+        .verify-box {
+            background: var(--bg-section);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            padding: 1.5rem 2rem;
+            margin: 2rem 0;
+        }
+        .verify-box h3 {
+            font-size: 1rem;
+            margin-top: 0;
+        }
+        .verify-box a {
+            color: var(--toki-blue);
+        }
+
+        /* Footer nav */
+        .article-footer {
+            margin-top: 4rem;
+            padding-top: 2rem;
+            border-top: 1px solid var(--border);
+        }
+        .article-footer-links {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1rem;
+            justify-content: center;
+            margin-top: 1rem;
+        }
+        .article-footer-links a {
+            color: var(--toki-blue);
+            text-decoration: none;
+            font-size: 0.85rem;
+            padding: 0.4rem 1rem;
+            border: 1px solid var(--border);
+            border-radius: 6px;
+        }
+        .article-footer-links a:hover {
+            background: var(--toki-blue-pale);
+            border-color: var(--toki-blue);
+        }
+
+        /* Structural label */
+        .structural-note {
+            display: inline-block;
+            font-size: 0.7rem;
+            background: var(--amber-pale);
+            color: var(--amber);
+            padding: 0.15rem 0.5rem;
+            border-radius: 3px;
+            font-weight: 600;
+            letter-spacing: 0.05em;
+            margin-left: 0.3rem;
+            vertical-align: middle;
+        }
+
+        /* Blockquote */
+        .article-body blockquote {
+            background: var(--bg-section);
+            border-left: 3px solid var(--toki-blue);
+            padding: 1.2rem 1.5rem;
+            margin: 2rem 0;
+            font-style: italic;
+        }
+        .article-body blockquote p {
+            margin-bottom: 0.5rem;
+        }
+        .article-body blockquote p:last-child {
+            margin-bottom: 0;
+        }
+
+        /* Responsive */
+        @media (max-width: 600px) {
+            .article-container {
+                padding: 5rem 1.2rem 3rem;
+            }
+            .article-header h1 {
+                font-size: 1.4rem;
+            }
+            .concern-box, .answer-box, .promise-box, .verify-box {
+                padding: 1.2rem;
+            }
+        }
+    </style>
+</head>
+<body>
+
+<nav class="article-nav">
+    <a href="index.html" class="nav-brand">トキストレージ</a>
+    <div class="nav-right">
+        <a href="transparency.html" class="nav-back">透明性ページへ</a>
+        <a href="not-for-you-en.html" class="lang-switch" aria-label="Switch to English">EN</a>
+    </div>
+</nav>
+
+<article class="article-container">
+    <header class="article-header">
+        <p class="article-category">TRANSPARENCY</p>
+        <h1>向いていない方へ</h1>
+        <p class="article-subtitle">このプロジェクトは、すべての人のためではありません。<br>無理に合わないものを勧めることは、誠実さの対極です。</p>
+    </header>
+
+    <div class="article-body">
+
+        <p>多くのサービスは「誰にでも合います」と言います。私たちは逆のことをします。</p>
+
+        <p>トキストレージには、明確に「向いていない方」がいます。それを隠して契約していただいても、お互いにとって不幸な結果になるだけです。向いていない人に買ってもらうことは、私たちにとっても不幸です。</p>
+
+        <p>以下に、私たちが考える「このプロジェクトに向いていない4つのタイプ」を正直に記します。これは排除ではなく、敬意です。あなたの時間とお金と感情を、合わない場所に使ってほしくないのです。</p>
+
+        <!-- ======================================= -->
+        <h2>1. 「お客様」として扱われたい方</h2>
+
+        <div class="concern-box">
+            <p class="concern-label">ミスマッチの本質</p>
+            <blockquote>「高いお金を払うのだから、会社が永続的に管理・保証してほしい」</blockquote>
+        </div>
+
+        <div class="answer-box">
+            <p class="answer-label">正直にお伝えすると</p>
+            <p>トキストレージの思想の根幹は<strong>「依存ゼロ」</strong>です。会社が潰れても、石英ガラスとGitHubと国会図書館があれば、残された人が自分で記録を管理できる——そのDIY精神（自律分散型）がこのプロジェクトの前提にあります。</p>
+            <p>「年会費を払うから全部やってほしい」「一度預けたら一切関わりたくない」というお気持ちはよく分かります。そしてそれは、従来の霊園型サービスが長年応えてきた、とても自然な期待です。ただ、私たちの仕組みはその期待に応えられる設計になっていません。</p>
+            <p>だからこそ、以下の選択肢をお伝えしたいのです。いずれも「管理を安心して任せられる」という点で、私たちより優れた仕組みです：</p>
+            <ul>
+                <li><strong>永代供養付き霊園</strong>——管理費の支払いが途絶えても、寺院や霊園が継続的に供養してくれます</li>
+                <li><strong>樹木葬</strong>——自然に還る形で、管理の負担を最小限にできます</li>
+                <li><strong>海洋散骨</strong>——物理的な管理対象そのものをなくす選択です</li>
+            </ul>
+            <p>これらの選択肢が「劣っている」とは一切思いません。大切にしたいものの形が、少し違うだけなのだと思います。</p>
+        </div>
+
+        <!-- ======================================= -->
+        <h2>2. 「死」と「カネ」を分けたい方</h2>
+
+        <div class="concern-box">
+            <p class="concern-label">ミスマッチの本質</p>
+            <blockquote>「人の死や思い出をビジネスの利益にするなんて不謹慎だ」</blockquote>
+        </div>
+
+        <div class="answer-box">
+            <p class="answer-label">正直にお伝えすると</p>
+            <p>私たちは事業として持続可能な利益を目指しています。それを隠しません。</p>
+            <p><a href="transparency.html">透明性ページ</a>でも「死×商業は構造的に緊張を孕む」と正面から認めています。葬儀業界も、墓石業界も、保険業界も、この緊張の中で事業を営んでいます。私たちも同じです。</p>
+            <p>あなたが支払ったお金は、運営を維持し、保管インフラを発展させ、新たな保管拠点を確保することに使われます。それによって、次の誰かの記憶も守られる。この循環を「面白いな」と感じてくださる方もいれば、「やっぱりそこが引っかかる」という方もいらっしゃると思います。</p>
+            <p><strong>どちらの感覚も自然なものです。</strong>「死と商売は分けるべきだ」という考えには、深い敬意があります。ただ、その感覚をお持ちの方にとっては、私たちとの関わりがかえって心の負担になってしまうかもしれません。それは私たちにとっても、本意ではありません。</p>
+        </div>
+
+        <!-- ======================================= -->
+        <h2>3. 「静かな祈り」だけが欲しい方</h2>
+
+        <div class="concern-box">
+            <p class="concern-label">ミスマッチの本質</p>
+            <blockquote>「おじいちゃんの生きた証を残したいだけなのに、壮大な思想はいらない」</blockquote>
+        </div>
+
+        <div class="answer-box">
+            <p class="answer-label">正直にお伝えすると</p>
+            <p>このプロジェクトには、個人の追悼を超えた哲学的・文明的な文脈があります。保管場所の選定基準や長期構想には、「未来の知性への橋渡し」という思想が含まれています。</p>
+            <p>それは、このプロジェクトの原動力であり、私たちにとって切り離せない部分です。「思想はいいから、とにかくシンプルに保管だけしてほしい」というお気持ちもよく分かるのですが、その期待にお応えできる仕組みにはなっていません。</p>
+            <p>静かに、個人的に、シンプルに追悼したい——その願いは、とても美しいものです。そしてその願いに寄り添う方法は、たくさんあります：</p>
+            <ul>
+                <li><strong>手元供養</strong>——自宅で、自分だけの方法で、大切な人を偲べます</li>
+                <li><strong>散骨</strong>——自然に還す、静かで個人的な儀式です</li>
+                <li><strong>樹木葬</strong>——木の下で、時間とともに自然と一体になる形です</li>
+            </ul>
+            <p>私たちの思想を押し付けるつもりはありません。もし合わないと感じたとしても、それはとても自然なことです。どちらが正しいという話ではなく、大切にしたいものの形がそれぞれ違う、ということなのだと思います。</p>
+        </div>
+
+        <!-- ======================================= -->
+        <h2>4. 感動の勢いで申し込もうとしている方</h2>
+
+        <div class="concern-box">
+            <p class="concern-label">お願い</p>
+            <blockquote>「今すぐ欲しい！」——その気持ちはわかります。でも、待ってください。</blockquote>
+        </div>
+
+        <div class="answer-box">
+            <p class="answer-label">私たちからのお願い</p>
+            <p>感動した直後の判断は、熱が冷めたあとに後悔に変わることがあります。私たちのストーリーや理念に心を動かされたのなら、それはとても嬉しいことです。しかし、その感動を「今すぐ決済」に変えることは、私たちが最も避けたいことでもあります。</p>
+            <p><strong>一晩寝かせてください。</strong>翌朝も気になるなら、それは衝動ではなく関心です。</p>
+            <p><strong>周りの人に話してみてください。</strong>「こんなプロジェクトがあるんだけど、どう思う？」と。説明しにくければ——「大切な人の記憶を石英ガラスに封じて1000年残すプロジェクト」で伝わります。周りの反応を聞くことで、自分の気持ちがより明確になります。</p>
+            <p><strong>このプロジェクトは明日もあります。急がなくて大丈夫です。</strong>私たちは「今だけ」「限定」「あと何名」といった煽りを使いません。あなたが十分に考え、納得したうえで来てくださること——それが私たちにとっても最良の出発点です。</p>
+        </div>
+
+        <!-- ======================================= -->
+        <h2>向いていない人の共通点</h2>
+
+        <div class="promise-box">
+            <h3>「信じさせてほしい」</h3>
+            <p style="text-align:left;">
+                「会社が倒産しないと信じさせてほしい」<br>
+                「純粋な善意だと信じさせてほしい」<br>
+                「普通のお墓と同じだと信じさせてほしい」
+            </p>
+            <p style="text-align:left; margin-top: 1.5rem;">
+                私たちはこれらの「信じたい」という気持ちに対して、<strong>「信じなくていいので、ご自分の目で確かめてください」</strong>と言い続けます。
+            </p>
+            <p style="text-align:left;">
+                この態度に「ちょっと突き放されている」と感じる方もいらっしゃると思います。その感覚も、大切にしてください。<br>
+                もしこの態度に「なんか、正直だな」と感じてくださったなら——きっと良い関係が築けると思います。
+            </p>
+        </div>
+
+        <!-- ======================================= -->
+        <h2>それでも気になる方へ</h2>
+
+        <p>向いていないかもしれない——でも気になる。そういう方こそ、以下のページを読んでみてください。判断材料はすべて公開しています。</p>
+
+        <div class="article-footer-links" style="margin: 2rem 0;">
+            <a href="transparency.html">疑ってください（10の懸念への回答）</a>
+            <a href="index.html#pricing">料金プラン（内訳つき）</a>
+            <a href="index.html#faq">よくある質問</a>
+            <a href="profile.html">代表プロフィール</a>
+        </div>
+
+    </div>
+
+    <footer class="article-footer">
+        <p style="text-align:center; font-size: 0.85rem; color: var(--text-muted);">このページは、あなたに誠実でありたいから書きました。</p>
+        <div class="article-footer-links">
+            <a href="transparency.html">疑ってください</a>
+            <a href="index.html">トキストレージ トップ</a>
+            <a href="index.html#pricing">料金プラン</a>
+            <a href="profile.html">代表プロフィール</a>
+        </div>
+        <p id="essay-nav-links" style="font-size: 0.8rem; margin-top: 2rem; line-height: 2;"></p>
+        <p style="margin-top: 2rem; font-size: 0.75rem; color: var(--text-muted);">&copy; 2026 TokiStorage</p>
+    </footer>
+</article>
+
+<script src="essay-nav.js?v=20260211"></script>
+</body>
+</html>

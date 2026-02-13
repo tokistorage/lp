@@ -1,0 +1,1835 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TokiStorage | Investor Pitch Deck</title>
+    <meta name="robots" content="noindex, nofollow">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Shippori+Mincho:wght@400;500;600;700&family=Zen+Kaku+Gothic+New:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --toki-blue: #2563EB;
+            --toki-blue-light: #3B82F6;
+            --toki-blue-dark: #1D4ED8;
+            --toki-blue-pale: #EFF6FF;
+            --toki-accent: #7EB8C9;
+            --gold: #C9A962;
+            --bg-white: #FFFFFF;
+            --bg-page: #F8FAFC;
+            --bg-section: #F1F5F9;
+            --text-primary: #1E293B;
+            --text-secondary: #475569;
+            --text-muted: #94A3B8;
+            --border: #E2E8F0;
+            --shadow-sm: 0 1px 2px rgba(0,0,0,0.05);
+            --shadow-md: 0 4px 16px rgba(0,0,0,0.06);
+            --shadow-lg: 0 10px 40px rgba(0,0,0,0.08);
+            --font-display: 'Shippori Mincho', serif;
+            --font-body: 'Zen Kaku Gothic New', sans-serif;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        html { scroll-behavior: smooth; }
+
+        body {
+            font-family: var(--font-body);
+            font-weight: 400;
+            background: var(--bg-white);
+            color: var(--text-primary);
+            line-height: 1.8;
+            font-size: 16px;
+        }
+
+        /* ---- Navigation ---- */
+        .pitch-nav {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 1000;
+            background: rgba(255,255,255,0.95);
+            backdrop-filter: blur(12px);
+            border-bottom: 1px solid var(--border);
+            padding: 0.8rem 2rem;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+        .pitch-nav .nav-brand {
+            font-family: var(--font-display);
+            font-size: 1rem;
+            font-weight: 600;
+            color: var(--toki-blue);
+            text-decoration: none;
+            white-space: nowrap;
+        }
+        .pitch-nav .nav-label {
+            font-size: 0.75rem;
+            color: var(--text-secondary);
+            letter-spacing: 0.1em;
+            text-align: right;
+        }
+
+        /* ---- Slide System ---- */
+        .slide {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 6rem 2rem 4rem;
+        }
+        .slide:nth-child(even):not(.cover-slide):not(.cta-slide) {
+            background: var(--bg-page);
+        }
+        .slide-inner {
+            max-width: 960px;
+            width: 100%;
+        }
+        .slide-number {
+            font-family: var(--font-body);
+            font-size: 0.7rem;
+            color: var(--text-secondary);
+            letter-spacing: 0.15em;
+            text-transform: uppercase;
+            margin-bottom: 1rem;
+        }
+        .slide h2 {
+            font-family: var(--font-display);
+            font-size: 2.2rem;
+            font-weight: 700;
+            color: var(--text-primary);
+            margin-bottom: 0.5rem;
+            line-height: 1.4;
+        }
+        .slide h3 {
+            font-family: var(--font-display);
+            font-size: 1.4rem;
+            font-weight: 600;
+            color: var(--text-primary);
+            margin-bottom: 0.8rem;
+        }
+        .slide-lead {
+            font-size: 1.05rem;
+            color: var(--text-secondary);
+            margin-bottom: 2.5rem;
+            max-width: 700px;
+        }
+
+        /* ---- Cover Slide ---- */
+        .cover-slide {
+            background: linear-gradient(135deg, #1E293B 0%, #0F172A 100%);
+            color: #fff;
+            text-align: center;
+        }
+        .cover-slide .slide-inner {
+            max-width: 800px;
+        }
+        .cover-tagline {
+            font-family: var(--font-display);
+            font-size: 1rem;
+            color: var(--toki-accent);
+            letter-spacing: 0.2em;
+            margin-bottom: 1.5rem;
+        }
+        .cover-slide h1 {
+            font-family: var(--font-display);
+            font-size: 3.5rem;
+            font-weight: 700;
+            margin-bottom: 0.8rem;
+            background: linear-gradient(135deg, #fff 0%, var(--toki-accent) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        .cover-subtitle {
+            font-family: var(--font-display);
+            font-size: 1.3rem;
+            color: rgba(255,255,255,0.7);
+            margin-bottom: 3rem;
+        }
+        .cover-meta {
+            font-size: 0.85rem;
+            color: rgba(255,255,255,0.7);
+            line-height: 2;
+        }
+        .cover-meta strong {
+            color: rgba(255,255,255,0.9);
+        }
+        .cover-confidential {
+            display: inline-block;
+            margin-top: 2rem;
+            padding: 0.4rem 1.2rem;
+            border: 1px solid rgba(255,255,255,0.3);
+            border-radius: 4px;
+            font-size: 0.7rem;
+            color: rgba(255,255,255,0.6);
+            letter-spacing: 0.15em;
+        }
+
+        /* ---- Stat Cards ---- */
+        .stat-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1.5rem;
+            margin: 2rem 0;
+        }
+        .stat-card {
+            background: var(--bg-white);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 1.5rem;
+            text-align: center;
+        }
+        .stat-card .stat-number {
+            font-family: var(--font-display);
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: var(--toki-blue);
+        }
+        .stat-card .stat-unit {
+            font-size: 1rem;
+            color: var(--text-secondary);
+        }
+        .stat-card .stat-label {
+            font-size: 0.8rem;
+            color: var(--text-secondary);
+            margin-top: 0.3rem;
+        }
+
+        /* ---- Problem Cards ---- */
+        .problem-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 1.5rem;
+            margin: 2rem 0;
+        }
+        .problem-card {
+            background: var(--bg-white);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 2rem 1.5rem;
+        }
+        .problem-card .p-icon {
+            font-size: 2rem;
+            margin-bottom: 0.8rem;
+        }
+        .problem-card h4 {
+            font-family: var(--font-display);
+            font-size: 1.1rem;
+            margin-bottom: 0.5rem;
+        }
+        .problem-card p {
+            font-size: 0.9rem;
+            color: var(--text-secondary);
+        }
+
+        /* ---- Solution Box ---- */
+        .solution-equation {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 1.5rem;
+            margin: 2.5rem 0;
+            flex-wrap: wrap;
+        }
+        .solution-box {
+            background: var(--bg-white);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 1.5rem 2rem;
+            text-align: center;
+            flex: 1;
+            min-width: 180px;
+        }
+        .solution-box .s-icon {
+            font-size: 2rem;
+            margin-bottom: 0.5rem;
+        }
+        .solution-box h4 {
+            font-family: var(--font-display);
+            font-size: 1.1rem;
+        }
+        .solution-box p {
+            font-size: 0.85rem;
+            color: var(--text-secondary);
+        }
+        .solution-operator {
+            font-family: var(--font-display);
+            font-size: 2rem;
+            color: var(--text-muted);
+        }
+        .solution-result {
+            background: var(--toki-blue);
+            color: #fff;
+            border: none;
+        }
+        .solution-result h4, .solution-result p {
+            color: #fff;
+        }
+
+        /* ---- Market ---- */
+        .market-layers {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 1.5rem;
+            margin: 2rem 0;
+        }
+        .market-layer {
+            background: var(--bg-white);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 2rem 1.5rem;
+            text-align: center;
+        }
+        .market-layer .m-size {
+            font-family: var(--font-display);
+            font-size: 2rem;
+            font-weight: 700;
+            color: var(--toki-blue);
+        }
+        .market-layer .m-label {
+            font-size: 0.75rem;
+            color: var(--text-secondary);
+            font-weight: 600;
+            letter-spacing: 0.1em;
+            margin-bottom: 0.5rem;
+        }
+        .market-layer h4 {
+            font-family: var(--font-display);
+            font-size: 1rem;
+            margin: 0.5rem 0 0.3rem;
+        }
+        .market-layer p {
+            font-size: 0.85rem;
+            color: var(--text-secondary);
+        }
+
+        /* ---- Comparison Table ---- */
+        .comp-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 2rem 0;
+            font-size: 0.85rem;
+        }
+        .comp-table th, .comp-table td {
+            padding: 0.8rem 1rem;
+            text-align: left;
+            border-bottom: 1px solid var(--border);
+        }
+        .comp-table th {
+            background: var(--bg-section);
+            font-weight: 600;
+            font-size: 0.75rem;
+            color: var(--text-secondary);
+            letter-spacing: 0.05em;
+        }
+        .comp-table .highlight {
+            background: var(--toki-blue-pale);
+            font-weight: 600;
+        }
+        .check { color: #16A34A; }
+        .cross { color: #DC2626; }
+
+        /* ---- Business Model ---- */
+        .bm-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 1.5rem;
+            margin: 2rem 0;
+        }
+        .bm-card {
+            background: var(--bg-white);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 1.8rem;
+        }
+        .bm-card h4 {
+            font-family: var(--font-display);
+            font-size: 1.1rem;
+            margin-bottom: 0.5rem;
+        }
+        .bm-card .bm-price {
+            font-family: var(--font-display);
+            font-size: 1.6rem;
+            font-weight: 700;
+            color: var(--toki-blue);
+            margin-bottom: 0.3rem;
+        }
+        .bm-card p, .bm-card li {
+            font-size: 0.85rem;
+            color: var(--text-secondary);
+        }
+        .bm-card ul {
+            list-style: none;
+            margin-top: 0.5rem;
+        }
+        .bm-card ul li::before {
+            content: "- ";
+            color: var(--toki-blue);
+        }
+
+        /* ---- Traction ---- */
+        .traction-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 1.5rem;
+            margin: 2rem 0;
+        }
+        .traction-item {
+            background: var(--bg-white);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 1.5rem;
+        }
+        .traction-item .t-year {
+            font-size: 0.7rem;
+            color: var(--toki-blue);
+            font-weight: 700;
+            letter-spacing: 0.1em;
+        }
+        .traction-item h4 {
+            font-family: var(--font-display);
+            font-size: 1rem;
+            margin: 0.3rem 0;
+        }
+        .traction-item p {
+            font-size: 0.85rem;
+            color: var(--text-secondary);
+        }
+
+        /* ---- Moat ---- */
+        .moat-list {
+            list-style: none;
+            margin: 2rem 0;
+        }
+        .moat-list li {
+            display: flex;
+            gap: 1rem;
+            align-items: flex-start;
+            padding: 1.2rem 0;
+            border-bottom: 1px solid var(--border);
+        }
+        .moat-list .moat-num {
+            font-family: var(--font-display);
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--toki-blue);
+            min-width: 2rem;
+        }
+        .moat-list h4 {
+            font-family: var(--font-display);
+            font-size: 1rem;
+            margin-bottom: 0.2rem;
+        }
+        .moat-list p {
+            font-size: 0.85rem;
+            color: var(--text-secondary);
+        }
+
+        /* ---- Roadmap ---- */
+        .roadmap {
+            position: relative;
+            margin: 2rem 0;
+            padding-left: 2rem;
+            border-left: 2px solid var(--border);
+        }
+        .roadmap-item {
+            position: relative;
+            padding: 1rem 0 2rem 1.5rem;
+        }
+        .roadmap-item::before {
+            content: '';
+            position: absolute;
+            left: -2.55rem;
+            top: 1.3rem;
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            background: var(--toki-blue);
+            border: 2px solid var(--bg-white);
+        }
+        .roadmap-item.future::before {
+            background: var(--border);
+        }
+        .roadmap-item .r-date {
+            font-size: 0.7rem;
+            color: var(--toki-blue);
+            font-weight: 700;
+            letter-spacing: 0.1em;
+        }
+        .roadmap-item.future .r-date {
+            color: var(--text-muted);
+        }
+        .roadmap-item h4 {
+            font-family: var(--font-display);
+            font-size: 1rem;
+            margin: 0.2rem 0;
+        }
+        .roadmap-item p {
+            font-size: 0.85rem;
+            color: var(--text-secondary);
+        }
+
+        /* ---- Team ---- */
+        .team-profile {
+            display: flex;
+            gap: 2rem;
+            align-items: flex-start;
+            margin: 2rem 0;
+        }
+        .team-info {
+            flex: 1;
+        }
+        .team-info h4 {
+            font-family: var(--font-display);
+            font-size: 1.3rem;
+            margin-bottom: 0.2rem;
+        }
+        .team-info .team-title {
+            font-size: 0.85rem;
+            color: var(--toki-blue);
+            margin-bottom: 1rem;
+        }
+        .team-info p, .team-info li {
+            font-size: 0.9rem;
+            color: var(--text-secondary);
+        }
+        .team-info ul {
+            list-style: none;
+            margin-top: 0.8rem;
+        }
+        .team-info ul li {
+            padding: 0.2rem 0;
+        }
+        .team-info ul li::before {
+            content: "- ";
+            color: var(--toki-blue);
+        }
+
+        /* ---- Financial ---- */
+        .fin-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 2rem 0;
+            font-size: 0.85rem;
+        }
+        .fin-table th, .fin-table td {
+            padding: 0.8rem 1rem;
+            text-align: right;
+            border-bottom: 1px solid var(--border);
+        }
+        .fin-table th:first-child, .fin-table td:first-child {
+            text-align: left;
+        }
+        .fin-table th {
+            background: var(--bg-section);
+            font-weight: 600;
+            font-size: 0.75rem;
+            color: var(--text-secondary);
+        }
+        .fin-table .total-row {
+            font-weight: 700;
+            border-top: 2px solid var(--text-primary);
+        }
+
+        /* ---- Use of Funds ---- */
+        .funds-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1.2rem;
+            margin: 2rem 0;
+        }
+        .fund-item {
+            background: var(--bg-white);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 1.5rem;
+            text-align: center;
+        }
+        .fund-item .fund-pct {
+            font-family: var(--font-display);
+            font-size: 2rem;
+            font-weight: 700;
+            color: var(--toki-blue);
+        }
+        .fund-item h4 {
+            font-family: var(--font-display);
+            font-size: 0.95rem;
+            margin: 0.3rem 0;
+        }
+        .fund-item p {
+            font-size: 0.8rem;
+            color: var(--text-secondary);
+        }
+
+        /* ---- CTA Slide ---- */
+        .cta-slide {
+            background: linear-gradient(135deg, var(--toki-blue-dark) 0%, var(--toki-blue) 100%);
+            color: #fff;
+            text-align: center;
+        }
+        .cta-slide .slide-number {
+            color: rgba(255,255,255,0.6);
+        }
+        .cta-slide h2 {
+            color: #fff;
+            font-size: 2.5rem;
+        }
+        .cta-slide .slide-lead {
+            color: rgba(255,255,255,0.85);
+            margin: 1rem auto 2rem;
+        }
+        .cta-contact {
+            display: inline-block;
+            margin-top: 1rem;
+            padding: 1rem 3rem;
+            background: rgba(255,255,255,0.15);
+            border: 1px solid rgba(255,255,255,0.35);
+            border-radius: 8px;
+            color: #fff;
+            font-family: var(--font-display);
+            font-size: 1rem;
+            line-height: 2;
+        }
+        .cta-details {
+            margin-top: 2rem;
+            font-size: 0.85rem;
+            color: rgba(255,255,255,0.75);
+            line-height: 2;
+        }
+        .cta-details strong {
+            color: rgba(255,255,255,0.9);
+        }
+
+        /* ---- Question Comparison ---- */
+        .question-compare {
+            max-width: 620px;
+            margin: 2rem auto;
+            text-align: left;
+        }
+        .question-compare-label {
+            font-size: 0.75rem;
+            letter-spacing: 0.08em;
+            color: rgba(255,255,255,0.55);
+            margin-bottom: 0.8rem;
+            font-family: var(--font-body);
+        }
+        .question-row {
+            display: flex;
+            align-items: baseline;
+            gap: 0.8rem;
+            padding: 0.55rem 0;
+            border-bottom: 1px solid rgba(255,255,255,0.1);
+            font-size: 0.85rem;
+            line-height: 1.6;
+        }
+        .question-row:last-child {
+            border-bottom: none;
+        }
+        .question-row .q-company {
+            flex-shrink: 0;
+            width: 100px;
+            color: rgba(255,255,255,0.5);
+            font-size: 0.75rem;
+            font-family: var(--font-body);
+        }
+        .question-row .q-text {
+            color: rgba(255,255,255,0.75);
+            font-family: var(--font-display);
+        }
+        .question-row.q-highlight {
+            padding: 0.7rem 0.8rem;
+            margin-top: 0.3rem;
+            background: rgba(255,255,255,0.08);
+            border-radius: 6px;
+            border-bottom: none;
+        }
+        .question-row.q-highlight .q-company {
+            color: rgba(255,255,255,0.8);
+            font-weight: 500;
+        }
+        .question-row.q-highlight .q-text {
+            color: #fff;
+            font-weight: 600;
+        }
+
+        /* ---- Key Point Box ---- */
+        .key-point {
+            background: var(--toki-blue-pale);
+            border-left: 4px solid var(--toki-blue);
+            padding: 1.2rem 1.5rem;
+            margin: 1.5rem 0;
+            border-radius: 0 8px 8px 0;
+        }
+        .key-point p {
+            font-size: 0.9rem;
+            color: var(--text-primary);
+        }
+        .key-point strong {
+            color: var(--toki-blue);
+        }
+
+        /* ---- Segment Table ---- */
+        .segment-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 1.2rem;
+            margin: 2rem 0;
+        }
+        .segment-card {
+            background: var(--bg-white);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 1.5rem;
+        }
+        .segment-card h4 {
+            font-family: var(--font-display);
+            font-size: 1rem;
+            margin-bottom: 0.3rem;
+        }
+        .segment-card .seg-tag {
+            font-size: 0.7rem;
+            color: var(--toki-blue);
+            font-weight: 600;
+            letter-spacing: 0.05em;
+        }
+        .segment-card p {
+            font-size: 0.85rem;
+            color: var(--text-secondary);
+            margin-top: 0.3rem;
+        }
+
+        /* ---- Footer ---- */
+        .pitch-footer {
+            text-align: center;
+            padding: 2rem;
+            font-size: 0.75rem;
+            color: var(--text-secondary);
+            border-top: 1px solid var(--border);
+        }
+
+        /* ---- Responsive ---- */
+        @media (max-width: 768px) {
+            .slide { padding: 5rem 1.2rem 3rem; }
+            .cover-slide h1 { font-size: 2.2rem; }
+            .slide h2 { font-size: 1.6rem; }
+            .problem-grid, .market-layers { grid-template-columns: 1fr; }
+            .bm-grid, .traction-grid, .segment-grid { grid-template-columns: 1fr; }
+            .solution-equation { flex-direction: column; }
+            .team-profile { flex-direction: column; }
+            .comp-table { font-size: 0.75rem; }
+            .comp-table th, .comp-table td { padding: 0.5rem; }
+            .question-row { flex-direction: column; gap: 0.2rem; }
+            .question-row .q-company { width: auto; }
+        }
+
+        @media print {
+            * { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+
+            body {
+                font-size: 10pt;
+                line-height: 1.6;
+                color: #000;
+                background: #fff;
+            }
+
+            .pitch-nav { display: none; }
+
+            .slide {
+                min-height: auto;
+                page-break-after: always;
+                page-break-inside: avoid;
+                padding: 1.5cm 2cm;
+                display: block;
+            }
+            .slide:nth-child(even):not(.cover-slide):not(.cta-slide) {
+                background: #F5F5F5;
+            }
+
+            .cover-slide {
+                background: #1E293B !important;
+                color: #fff;
+                padding: 3cm 2cm;
+                text-align: center;
+            }
+            .cover-slide h1 {
+                font-size: 28pt;
+                -webkit-text-fill-color: #fff;
+                color: #fff;
+                background: none;
+            }
+            .cover-tagline { color: var(--toki-accent); }
+            .cover-subtitle { color: #ccc; }
+            .cover-meta { color: #aaa; }
+            .cover-meta strong { color: #ccc; }
+            .cover-confidential { color: #999; border-color: #666; }
+
+            .cta-slide {
+                background: var(--toki-blue) !important;
+                color: #fff;
+            }
+            .cta-slide h2 { color: #fff; font-size: 20pt; }
+            .cta-slide .slide-number { color: rgba(255,255,255,0.6); }
+            .cta-slide .slide-lead { color: #ddd; }
+            .cta-contact { color: #fff; border-color: rgba(255,255,255,0.4); background: rgba(255,255,255,0.1); }
+            .cta-details { color: #ccc; }
+            .cta-details strong { color: #eee; }
+
+            .slide h2 { font-size: 18pt; margin-bottom: 6pt; }
+            .slide h3 { font-size: 13pt; margin-bottom: 6pt; }
+            .slide-number { font-size: 7pt; color: #666; }
+            .slide-lead { font-size: 9pt; color: #333; margin-bottom: 12pt; }
+
+            .stat-grid, .problem-grid, .market-layers,
+            .bm-grid, .traction-grid, .segment-grid, .funds-grid {
+                gap: 8pt;
+            }
+            .stat-card, .problem-card, .solution-box, .market-layer,
+            .bm-card, .traction-item, .segment-card, .fund-item {
+                border: 1px solid #ccc;
+                padding: 10pt;
+                page-break-inside: avoid;
+            }
+            .stat-card .stat-number { font-size: 18pt; color: #1D4ED8; }
+            .stat-card .stat-label { color: #333; }
+
+            .solution-result { background: var(--toki-blue) !important; color: #fff; }
+            .solution-result h4, .solution-result p { color: #fff; }
+
+            .key-point {
+                background: #EFF6FF;
+                border-left: 3pt solid #2563EB;
+                padding: 8pt 10pt;
+                page-break-inside: avoid;
+            }
+            .key-point p { font-size: 8pt; color: #000; }
+            .key-point strong { color: #1D4ED8; }
+
+            .comp-table, .fin-table { font-size: 8pt; }
+            .comp-table th, .fin-table th {
+                background: #E8E8E8 !important;
+                color: #333;
+            }
+            .comp-table .highlight { background: #E0EDFF !important; }
+            .comp-table td, .fin-table td { border-bottom: 0.5pt solid #ccc; }
+            .check { color: #16A34A; }
+            .cross { color: #DC2626; }
+
+            .moat-list li { border-bottom: 0.5pt solid #ccc; }
+            .moat-list .moat-num { color: #1D4ED8; }
+
+            .roadmap { border-left: 1.5pt solid #ccc; }
+            .roadmap-item::before { background: #2563EB; }
+            .roadmap-item.future::before { background: #ccc; }
+            .roadmap-item .r-date { color: #1D4ED8; }
+            .roadmap-item.future .r-date { color: #666; }
+
+            .traction-item .t-year { color: #1D4ED8; }
+            .bm-card .bm-price { color: #1D4ED8; }
+            .fund-item .fund-pct { color: #1D4ED8; }
+            .team-info .team-title { color: #1D4ED8; }
+            .segment-card .seg-tag { color: #1D4ED8; }
+
+            .question-compare-label { color: rgba(255,255,255,0.6); font-size: 7pt; }
+            .question-row .q-company { color: rgba(255,255,255,0.5); font-size: 7pt; }
+            .question-row .q-text { color: rgba(255,255,255,0.8); font-size: 8pt; }
+            .question-row.q-highlight { background: rgba(255,255,255,0.12); }
+            .question-row.q-highlight .q-company { color: #fff; }
+            .question-row.q-highlight .q-text { color: #fff; }
+
+            .pitch-footer {
+                page-break-after: avoid;
+                font-size: 7pt;
+                color: #666;
+            }
+
+            a { color: inherit; text-decoration: none; }
+        }
+    </style>
+</head>
+<body>
+
+<!-- Navigation -->
+<nav class="pitch-nav">
+    <a href="index-en.html" class="nav-brand">TokiStorage</a>
+    <span class="nav-label">INVESTOR PITCH DECK - CONFIDENTIAL</span>
+</nav>
+
+<!-- ========================================
+     SLIDE 1: COVER
+     ======================================== -->
+<section class="slide cover-slide">
+    <div class="slide-inner">
+        <p class="cover-tagline">Democratizing Proof of Existence</p>
+        <h1>TokiStorage</h1>
+        <p class="cover-subtitle">A Millennium of Memory, Etched in Quartz Glass</p>
+        <div class="cover-meta">
+            <strong>TokiStorage</strong><br>
+            Takuya Sato<br>
+            February 2026
+        </div>
+        <div class="cover-confidential">CONFIDENTIAL - DO NOT DISTRIBUTE</div>
+    </div>
+</section>
+
+<!-- ========================================
+     SLIDE 2: EXECUTIVE SUMMARY
+     ======================================== -->
+<section class="slide">
+    <div class="slide-inner">
+        <p class="slide-number">01 - Executive Summary</p>
+        <h2>Creating the Millennium Memorial Market</h2>
+        <p class="slide-lead">Quartz glass &#215; QR code technology delivers a server-free, zero-maintenance perpetual memorial to individuals. The first product to democratize data-center-grade storage technology for personal proof of existence.</p>
+
+        <div class="stat-grid">
+            <div class="stat-card">
+                <div class="stat-number">1,000<span class="stat-unit"> yr</span></div>
+                <div class="stat-label">Physical preservation</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-number">$0</div>
+                <div class="stat-label">Annual maintenance (customer)</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-number">3,000<span class="stat-unit">+</span></div>
+                <div class="stat-label">Engraving tests completed</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-number">$330<span class="stat-unit">~</span></div>
+                <div class="stat-label">Entry price</div>
+            </div>
+        </div>
+
+        <div class="key-point">
+            <p><strong>Investment Highlight:</strong> Zero server costs mean marginal costs decrease proportionally as sales volume grows&#8212;a structurally scalable business model. As we champion "democratizing proof of existence," the ultimate destination is a world where every human being has a perpetual memorial. Manufacturing automation and near-zero marginal cost will make that future a reality. From one home in Sado, to 8 billion people.</p>
+        </div>
+    </div>
+</section>
+
+<!-- ========================================
+     SLIDE 3: PROBLEM
+     ======================================== -->
+<section class="slide">
+    <div class="slide-inner">
+        <p class="slide-number">02 - Problem</p>
+        <h2>Different Time Horizons, Different Design</h2>
+        <p class="slide-lead">Digital and stone each excel at their own timescale. The millennium layer is missing.</p>
+
+        <div class="problem-grid">
+            <div class="problem-card">
+                <div class="p-icon">&#x1F4BE;</div>
+                <h4>Digital: Optimized for Today</h4>
+                <p>Cloud and social platforms are superb at everyday recording and sharing. But S&amp;P 500 companies average under 20 years of lifespan (McKinsey). Preservation at 100- or 1,000-year timescales demands a different design philosophy.</p>
+            </div>
+            <div class="problem-card">
+                <div class="p-icon">&#x1FAA6;</div>
+                <h4>Gravestones: Built for Reverence</h4>
+                <p>Over 100,000 graves are decommissioned annually in Japan alone. Headstones excel as places to gather and pay respects, but last 100&#8211;200 years. Declining birthrates and urbanization create demand for a complementary preservation layer.</p>
+            </div>
+            <div class="problem-card">
+                <div class="p-icon">&#x1F464;</div>
+                <h4>The Inequality of Memory</h4>
+                <p>Only the privileged few leave records in history. An ordinary person's existence vanishes within 3 generations. "Can you name your great-grandparents?"</p>
+            </div>
+        </div>
+
+        <div class="key-point">
+            <p><strong>Structural Market Opportunity:</strong> Digital services excel at "everyday records." Gravestones excel at "the reverence experience." But no individual-facing layer exists for "millennium-scale information preservation." The opportunity lies not in replacing existing services, but in complementing them with a new, enduring layer.</p>
+        </div>
+    </div>
+</section>
+
+<!-- ========================================
+     SLIDE 4: SOLUTION
+     ======================================== -->
+<section class="slide">
+    <div class="slide-inner">
+        <p class="slide-number">03 - Solution</p>
+        <h2>Quartz Glass &#215; QR Code = Perpetual Memorial</h2>
+        <p class="slide-lead">No server. No power. 1,000 years from now, just hold up a smartphone and the memory comes alive.</p>
+
+        <div class="solution-equation">
+            <div class="solution-box">
+                <div class="s-icon">&#x1F48E;</div>
+                <h4>Quartz Glass</h4>
+                <p>1,000-year durability<br>1,000&#x2103; heat resistance</p>
+            </div>
+            <div class="solution-operator">+</div>
+            <div class="solution-box">
+                <div class="s-icon">&#x1F4F1;</div>
+                <h4>QR Code</h4>
+                <p>ISO international standard<br>30+ years of proven use</p>
+            </div>
+            <div class="solution-operator">=</div>
+            <div class="solution-box solution-result">
+                <div class="s-icon">&#x2728;</div>
+                <h4>TokiStorage</h4>
+                <p>Perpetual memorial<br>Zero maintenance</p>
+            </div>
+        </div>
+
+        <h3>Scientific Foundation</h3>
+        <ul style="margin:1rem 0 1.5rem 1.2rem; color:var(--text-secondary); font-size:0.9rem;">
+            <li>Hitachi &amp; Kyoto University: demonstrated 300M+ years of data preservation on quartz glass via laser recording (2012)</li>
+            <li>Microsoft Project Silica: actively developing quartz-glass-based data center storage technology</li>
+            <li>Founder's 20+ year career in semiconductor manufacturing equipment led to proprietary metal deposition engraving technology</li>
+            <li>Developed proprietary voice-to-QR binary encoding with up to 10&#215; compression (international patent filed)</li>
+        </ul>
+
+        <div class="key-point">
+            <p><strong>Democratizing Deep Tech:</strong> Quartz glass storage for data centers (5D Memory Crystal, etc.) exists, but requires specialized equipment and is not consumer-facing. TokiStorage is the only personal quartz glass memorial that can be read with a smartphone&#8212;bridging this gap.</p>
+        </div>
+    </div>
+</section>
+
+<!-- ========================================
+     SLIDE 5: MARKET OPPORTUNITY
+     ======================================== -->
+<section class="slide">
+    <div class="slide-inner">
+        <p class="slide-number">04 - Market Opportunity</p>
+        <h2>A Human-Scale Market&#8212;Where Death Meets Memory</h2>
+        <p class="slide-lead">In a world where 60 million people die each year, the memorial industry exists in every culture.<br>"Perpetual preservation" is its untapped layer&#8212;transcending geography, religion, and culture.</p>
+
+        <div class="market-layers">
+            <div class="market-layer">
+                <p class="m-label">TAM</p>
+                <div class="m-size">$130B</div>
+                <h4>Global Deathcare &amp; Memorial Market</h4>
+                <p>Funeral, burial, cremation, and memorial services worldwide (&#165;20T). 60M annual deaths and growing</p>
+            </div>
+            <div class="market-layer">
+                <p class="m-label">SAM</p>
+                <div class="m-size">$40B</div>
+                <h4>Cultures with High Affinity for Perpetual Preservation</h4>
+                <p>Japan (&#165;1.8T) + Asia-Pacific ancestor veneration cultures + North American &amp; European cemetery memorial market. Latent demand for physical perpetual preservation is surfacing</p>
+            </div>
+            <div class="market-layer">
+                <p class="m-label">SOM</p>
+                <div class="m-size">$3.3B</div>
+                <h4>Addressable Market Within 5 Years</h4>
+                <p>Japan's end-of-life planning &amp; grave decommissioning + B2B (temples, funeral homes, municipalities) + North America via Maui + overseas Japanese communities</p>
+            </div>
+        </div>
+
+        <h3>Target Segments</h3>
+        <div class="segment-grid">
+            <div class="segment-card">
+                <p class="seg-tag">PRIMARY - HIGHEST LTV</p>
+                <h4>End-of-Life Planners (60&#8211;80s)</h4>
+                <p>End-of-life planning is a growing market. "I don't want to burden my children" and "one-time purchase, no subscription" resonate. Effective acquisition via Buddhist altar shops and funeral homes</p>
+            </div>
+            <div class="segment-card">
+                <p class="seg-tag">PRIMARY - HIGH LTV</p>
+                <h4>Grave Decommissioning Families</h4>
+                <p>100K+ graves decommissioned annually in Japan. Positioned as "the archive after you close the grave." Multi-unit family purchases increase LTV</p>
+            </div>
+            <div class="segment-card">
+                <p class="seg-tag">SECONDARY</p>
+                <h4>Temples, Altar Shops &amp; Funeral Homes</h4>
+                <p>B2B wholesale channel leveraging existing customer bases. As grave decommissioning consultations surge, TokiStorage becomes a compelling new offering</p>
+            </div>
+            <div class="segment-card">
+                <p class="seg-tag">SECONDARY</p>
+                <h4>Government &amp; Institutions</h4>
+                <p>War memorials, disaster records, corporate commemorations. The server-free, zero-maintenance structure fits public budgets. Existing partnerships with JICA Yokohama &amp; Japan-Hawaii Immigration Museum</p>
+            </div>
+            <div class="segment-card">
+                <p class="seg-tag">GLOBAL EXPANSION</p>
+                <h4>Western Cemetery &amp; Memorial Market</h4>
+                <p>Graves in Europe and North America face serious erosion, abandonment, and urban redevelopment. Server-free, language-agnostic QR codes work across all cultures. Maui base provides North American market access</p>
+            </div>
+            <div class="segment-card">
+                <p class="seg-tag">GLOBAL EXPANSION</p>
+                <h4>Asia &amp; Overseas Japanese Communities</h4>
+                <p>East and Southeast Asia's deep ancestor veneration traditions are highly compatible. Japanese communities in Hawaii, Brazil, etc. have tangible demand for heritage preservation. English LP already live</p>
+            </div>
+        </div>
+
+        <div class="key-point">
+            <p><strong>Structural Advantage for Global Expansion:</strong> Quartz glass &#215; QR code is a universal technology&#8212;independent of language, religion, or culture. The zero-maintenance, server-free architecture works even in regions with unstable infrastructure. The mission of "democratizing proof of existence" crosses all borders.</p>
+        </div>
+    </div>
+</section>
+
+<!-- ========================================
+     SLIDE 5.5: VISION
+     ======================================== -->
+<section class="slide cta-slide">
+    <div class="slide-inner">
+        <p class="slide-number">05 - Vision</p>
+        <h2>Backcasting from a World Where 8 Billion People Have a Perpetual Memorial</h2>
+        <p class="slide-lead">"Democratizing proof of existence" means building a world where every person can send their existence a thousand years into the future.<br>Backcasting from that world reveals where TokiStorage stands today.</p>
+
+        <div class="question-compare">
+            <p class="question-compare-label">THE DEFINING QUESTION &#8212; Every world-changing company started with one question</p>
+            <div class="question-row">
+                <span class="q-company">Google</span>
+                <span class="q-text">"Can we organize all the world's information and make it universally accessible?"</span>
+            </div>
+            <div class="question-row">
+                <span class="q-company">Tesla</span>
+                <span class="q-text">"Can we accelerate the transition to sustainable energy?"</span>
+            </div>
+            <div class="question-row">
+                <span class="q-company">Wikipedia</span>
+                <span class="q-text">"Can we give all human knowledge to every person for free?"</span>
+            </div>
+            <div class="question-row">
+                <span class="q-company">SpaceX</span>
+                <span class="q-text">"Can we make humanity a multi-planetary species?"</span>
+            </div>
+            <div class="question-row q-highlight">
+                <span class="q-company">TokiStorage</span>
+                <span class="q-text">"Can we deliver every person's existence a thousand years into the future?"</span>
+            </div>
+        </div>
+
+        <p class="slide-lead" style="font-size:0.85rem; margin-bottom:1.5rem; opacity:0.8;">
+            The scale of the question defines the scale of the market.<br>
+            8 billion people &#215; the universal desire to leave a mark&#8212;<br>
+            this question operates at the same human scale as information, energy, and knowledge.
+        </p>
+
+        <div class="cta-contact" style="text-align:left; max-width:580px; margin:0 auto; padding:1.5rem 2rem;">
+            <strong style="color:#fff; font-size:0.8rem; letter-spacing:0.05em;">BACKCASTING</strong><br>
+            <span style="font-size:0.85rem; opacity:0.85;">
+            2050&#x2500; Perpetual memorials become personal infrastructure, like a passport<br>
+            2040&#x2500; Expansion complete across Asia, Middle East, and African veneration cultures<br>
+            2035&#x2500; Standard partnerships with Western cemetery associations. Municipalities distribute to residents<br>
+            2030&#x2500; Manufacturing automation &amp; local partners drive marginal cost to near zero<br>
+            2028&#x2500; Domestic B2B channels established. International expansion begins<br>
+            <strong style="color:#fff;">2026&#x2500; We are here. Starting from Sado.</strong>
+            </span>
+        </div>
+    </div>
+</section>
+
+<!-- ========================================
+     SLIDE 6: COMPETITIVE ADVANTAGE
+     ======================================== -->
+<section class="slide">
+    <div class="slide-inner">
+        <p class="slide-number">06 - Competitive Landscape</p>
+        <h2>"1,000 Years &#215; Smartphone-Readable" Is a Unique Position</h2>
+        <p class="slide-lead">The "short-term preservation &#215; specialized equipment" quadrant is a red ocean. TokiStorage occupies the blue ocean.</p>
+
+        <table class="comp-table">
+            <thead>
+                <tr>
+                    <th>Criteria</th>
+                    <th class="highlight">TokiStorage</th>
+                    <th>QR Gravestones</th>
+                    <th>Online Memorials</th>
+                    <th>Time Capsules</th>
+                    <th>5D Memory Crystal</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>Preservation</td>
+                    <td class="highlight"><strong>1,000 years</strong></td>
+                    <td>Service-dependent</td>
+                    <td>Service-dependent</td>
+                    <td>10&#8211;50 years</td>
+                    <td>13.8B years (theory)</td>
+                </tr>
+                <tr>
+                    <td>Server Required</td>
+                    <td class="highlight"><span class="check">No</span></td>
+                    <td><span class="cross">Yes</span></td>
+                    <td><span class="cross">Yes</span></td>
+                    <td><span class="check">No</span></td>
+                    <td><span class="check">No</span></td>
+                </tr>
+                <tr>
+                    <td>How to Read</td>
+                    <td class="highlight"><strong>Smartphone</strong></td>
+                    <td>Smartphone</td>
+                    <td>Browser</td>
+                    <td>Open only</td>
+                    <td><span class="cross">Specialized optics</span></td>
+                </tr>
+                <tr>
+                    <td>Consumer Sales</td>
+                    <td class="highlight"><span class="check">Yes</span></td>
+                    <td><span class="check">Yes</span></td>
+                    <td><span class="check">Yes</span></td>
+                    <td><span class="check">Yes</span></td>
+                    <td><span class="cross">No (B2B only)</span></td>
+                </tr>
+                <tr>
+                    <td>Ongoing Cost</td>
+                    <td class="highlight"><strong>$0</strong></td>
+                    <td>Monthly fee</td>
+                    <td>$3&#8211;20/mo</td>
+                    <td>Storage fee</td>
+                    <td>Service contract</td>
+                </tr>
+                <tr>
+                    <td>Service Shutdown Risk</td>
+                    <td class="highlight"><span class="check">Works standalone</span></td>
+                    <td><span class="cross">Yes</span></td>
+                    <td><span class="cross">Yes</span></td>
+                    <td>Low</td>
+                    <td>Low</td>
+                </tr>
+            </tbody>
+        </table>
+
+        <div class="key-point">
+            <p><strong>Positioning:</strong> TokiStorage is the only product in the "ultra-long preservation (1,000 years) &#215; smartphone-readable" quadrant. 5D Memory Crystal can theoretically last 13.8 billion years, but requires specialized equipment and isn't consumer-facing. QR gravestones are smartphone-compatible but server-dependent. This structural gap is our moat.</p>
+        </div>
+    </div>
+</section>
+
+<!-- ========================================
+     SLIDE 7: BUSINESS MODEL
+     ======================================== -->
+<section class="slide">
+    <div class="slide-inner">
+        <p class="slide-number">07 - Business Model</p>
+        <h2>Product Sales + Experience Service Hybrid</h2>
+        <p class="slide-lead">One-time product revenue at the core, diversified through high-ticket retreat experiences and B2B channels.</p>
+
+        <div class="bm-grid">
+            <div class="bm-card">
+                <h4>Individual Plan</h4>
+                <div class="bm-price">&#165;50,000 (~$330)</div>
+                <p>Quartz glass plate (50&#215;50mm) with QR code, text, and image engraving. Fully online process, nationwide delivery.</p>
+                <ul>
+                    <li>Entry product for brand awareness</li>
+                    <li>Gift purchase demand expected</li>
+                    <li>~$0.33/year value proposition</li>
+                </ul>
+            </div>
+            <div class="bm-card">
+                <h4>Three-Generation Plan (Recommended)</h4>
+                <div class="bm-price">&#165;550,000 (~$3,700)</div>
+                <p>From grandparents to grandchildren. Family tree design, family photo engraving, on-site crafting experience in Sado or Hana (2 nights, 3 days).</p>
+                <ul>
+                    <li>High ARPU through experiential service</li>
+                    <li>Family-unit purchases maximize LTV</li>
+                    <li>"Making it yourself" drives word-of-mouth</li>
+                </ul>
+            </div>
+            <div class="bm-card">
+                <h4>Voice Memorial Course</h4>
+                <div class="bm-price">&#165;5,550,000 (~$37,000)</div>
+                <p>Limited to 5 families/year. Voice recording + metal deposition engraving + 12 guided sessions. Fully bespoke, personally guided by the founder.</p>
+                <ul>
+                    <li>Highest revenue per unit (~$37K)</li>
+                    <li>Proprietary metal deposition technology</li>
+                    <li>Revenue funds SoulCarrier social mission</li>
+                </ul>
+            </div>
+            <div class="bm-card">
+                <h4>Annual Resonance Membership</h4>
+                <div class="bm-price">&#165;9,990,000/yr (~$67K)</div>
+                <p>Exclusive to Voice Memorial purchasers. Patron plaque engraving, annual activity report, corporate patronage available.</p>
+                <ul>
+                    <li>Recurring revenue pillar</li>
+                    <li>Deductible as advertising expense for corporates</li>
+                    <li>Enhances brand social credibility</li>
+                </ul>
+            </div>
+        </div>
+
+        <h3>Revenue Structure Characteristics</h3>
+        <div class="key-point">
+            <p><strong>Decreasing Marginal Cost Enables Democratization:</strong> Products are fully offline, so server and maintenance costs don't increase with customers. Variable cost is manufacturing only (quartz glass processing). As manufacturing is automated and outsourced, marginal cost drops&#8212;allowing price reductions while preserving margin. At the end of this curve lies a world where everyone can have a perpetual memorial.</p>
+        </div>
+    </div>
+</section>
+
+<!-- ========================================
+     SLIDE 8: PEARL SOAP - GRATITUDE INFRASTRUCTURE & TOKI STORAGE FUNNEL
+     ======================================== -->
+<section class="slide">
+    <div class="slide-inner">
+        <p class="slide-number">08 - Pearl Soap &#x2192; TokiStorage</p>
+        <h2>Pearl Soap Workshop: Gratitude Funnel to TokiStorage</h2>
+        <p class="slide-lead">Traditional craft workshops end with "making for yourself," creations pile up, no repeat.<br>Pearl Soap's shift to "making to give" creates a natural funnel to TokiStorage.</p>
+
+        <h3>The Contrast That Creates Inevitability</h3>
+        <table class="comp-table">
+            <thead>
+                <tr>
+                    <th>Element</th>
+                    <th>Pearl Soap</th>
+                    <th class="highlight">TokiStorage</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>Material</td>
+                    <td>Soap (organic)</td>
+                    <td class="highlight">Quartz glass (inorganic)</td>
+                </tr>
+                <tr>
+                    <td>Lifespan</td>
+                    <td>Disappears in weeks</td>
+                    <td class="highlight">Lasts 1,000+ years</td>
+                </tr>
+                <tr>
+                    <td>Price Range</td>
+                    <td>~$13 (workshop)</td>
+                    <td class="highlight">Up to ~$37,000</td>
+                </tr>
+                <tr>
+                    <td>Emotion Delivered</td>
+                    <td>"Thank you for being here"</td>
+                    <td class="highlight">"I was here"</td>
+                </tr>
+                <tr>
+                    <td>Shared Philosophy</td>
+                    <td>Affirmation of existence</td>
+                    <td class="highlight">Perpetuation of existence</td>
+                </tr>
+            </tbody>
+        </table>
+
+        <h3>Digital Ads vs Pearl Soap: Structural Difference</h3>
+        <table class="comp-table">
+            <thead>
+                <tr>
+                    <th>Comparison</th>
+                    <th>Digital Advertising</th>
+                    <th class="highlight">Pearl Soap</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>Lead Acquisition Cost</td>
+                    <td>CPA $50&#8211;$100+<br><small>(end-of-life KWs are expensive)</small></td>
+                    <td class="highlight">$13 workshop delivers<br>experience-qualified leads</td>
+                </tr>
+                <tr>
+                    <td>Lead Quality</td>
+                    <td>"Someone who clicked an ad"<br>Emotional readiness unknown</td>
+                    <td class="highlight">"Someone who made and gave"<br>Existence-affirmation internalized</td>
+                </tr>
+                <tr>
+                    <td>Persistence</td>
+                    <td>Stops when you stop paying</td>
+                    <td class="highlight">Runs on its own once given<br><small>(weeks of use until soap is gone)</small></td>
+                </tr>
+                <tr>
+                    <td>Delivery Path</td>
+                    <td>Comes from "seller"</td>
+                    <td class="highlight">Comes from "someone you care about"</td>
+                </tr>
+                <tr>
+                    <td>Competitive Structure</td>
+                    <td>Auction bidding<br>CPC rises every year</td>
+                    <td class="highlight">No auction<br>Competitor ad spend is irrelevant</td>
+                </tr>
+            </tbody>
+        </table>
+
+        <div class="key-point">
+            <p><strong>Pearl Soap is not an ad channel&#8212;it's a structural alternative to the advertising industry:</strong> 50K digital ad impressions vs 50K Pearl Soaps distributed differ not in CTR or CVR, but in psychological receptivity of recipients. In ad terms, it's like a single CPA purchase that runs free retargeting for weeks.</p>
+        </div>
+
+        <div class="key-point">
+            <p><strong>Internal Exposure Marketing:</strong> Pearl Soap's "100 Scenes" naturally includes grief care, pet loss, hospice, and end-of-life planning. As people read about "ways to give soap," concepts like "proof of existence" and "memory of the deceased" are unconsciously absorbed. By the time they realize it, TokiStorage's worldview is already internalized.</p>
+        </div>
+
+        <div class="key-point">
+            <p><strong>Structural SDGs Alignment:</strong> Zero waste (Goal 12: disappearing is completion), Breaking isolation (Goal 3: recipients become givers), Regional revitalization (Goal 11: meaningful visits), Global partnerships (Goal 17: gift economy via Workaway)&#8212;these aren't "costs for SDG contribution" but automatically achieved with each soap distributed. A structure where business growth and social impact point the same direction has high ESG investment compatibility and strengthens grant applications.</p>
+        </div>
+    </div>
+</section>
+
+<!-- ========================================
+     SLIDE 9: PEARL SOAP - GROWTH SCENARIO
+     ======================================== -->
+<section class="slide">
+    <div class="slide-inner">
+        <p class="slide-number">09 - Pearl Soap Growth</p>
+        <h2>Pearl Soap Workshop Growth Scenario</h2>
+        <p class="slide-lead">Starting from the Sado base, building a "Gratitude Network" through franchise and global expansion.</p>
+
+        <div class="roadmap">
+            <div class="roadmap-item">
+                <p class="r-date">PHASE 1: Sado Base (Year 1-2)</p>
+                <h4>Permanent workshop at Sado Island base</h4>
+                <p>Mobile workshops at hotels and inns across Sado Island. Annual participants: 500&#8211;1,000. QR codes distributed: 500&#8211;1,000/year. Heritage house provides atmospheric value as experience venue.</p>
+            </div>
+            <div class="roadmap-item future">
+                <p class="r-date">PHASE 2: National Expansion (Year 2-4)</p>
+                <h4>Franchise expansion via certified instructor program</h4>
+                <p>Partnerships with existing facilities like Creators Factory. 50&#8211;100 locations nationwide. Annual participants: 25,000&#8211;50,000. QR codes distributed: 25,000&#8211;50,000/year.</p>
+            </div>
+            <div class="roadmap-item future">
+                <p class="r-date">PHASE 3: Global Expansion (Year 4+)</p>
+                <h4>International nodes via Workaway</h4>
+                <p>Multi-language QR content platform. Expansion to Asia, North America, Europe. QR codes distributed: 100,000+/year. Each country's node connects to Sado's TokiStorage via QR codes.</p>
+            </div>
+        </div>
+
+        <h3>Revenue Model</h3>
+        <div class="bm-grid">
+            <div class="bm-card">
+                <h4>Workshop Fee</h4>
+                <div class="bm-price">&#165;2,000 (~$13)/session</div>
+                <p>Revenue from direct-operated locations. 50%+ gross margin after materials and labor.</p>
+            </div>
+            <div class="bm-card">
+                <h4>Franchise</h4>
+                <div class="bm-price">Monthly license + material kit sales</div>
+                <p>License fees from certified instructors and material kit sales. Instructor certification course fees also contribute.</p>
+            </div>
+            <div class="bm-card">
+                <h4>TokiStorage Conversion</h4>
+                <div class="bm-price">&#165;50K&#8211;&#165;5.55M (~$330&#8211;$37K)</div>
+                <p>Millennium memorial service contracts from workshop participants. "Disappearing gift" experiencers become "everlasting record" customers.</p>
+            </div>
+            <div class="bm-card">
+                <h4>B2B Partnerships</h4>
+                <div class="bm-price">Hotels, inns, corporate wellness</div>
+                <p>Experience programs at accommodations. Also demand for corporate wellness and team building.</p>
+            </div>
+        </div>
+
+        <div class="key-point">
+            <p><strong>Exceptional Franchise Compatibility:</strong> Minimal instructor training cost (just melt MP soap base and pour into molds), standardized 60-minute program, zero inventory risk (materials are consumables, finished products go home with participants), no equipment investment (heating equipment and work table only), easy quality control ("fail-proof" method).</p>
+        </div>
+    </div>
+</section>
+
+<!-- ========================================
+     SLIDE 10: CHANNELS & GO-TO-MARKET
+     ======================================== -->
+<section class="slide">
+    <div class="slide-inner">
+        <p class="slide-number">10 - Go-to-Market</p>
+        <h2>Multi-Layer Channels: Domestic Distribution + Global Expansion</h2>
+        <p class="slide-lead">Leveraging existing infrastructure of Buddhist altar shops and funeral homes while opening international markets from our Maui base.</p>
+
+        <div class="bm-grid">
+            <div class="bm-card">
+                <h4>B2B Partnership Channel (Domestic)</h4>
+                <ul>
+                    <li>Buddhist altar shops: wholesale to existing customer base</li>
+                    <li>Funeral home networks: end-of-life touchpoint</li>
+                    <li>Stone dealers: proposal during grave decommissioning</li>
+                    <li>End-of-life planning seminars &amp; events</li>
+                </ul>
+            </div>
+            <div class="bm-card">
+                <h4>D2C &amp; Media Channel</h4>
+                <ul>
+                    <li>Official website (EN/JP landing pages live)</li>
+                    <li>Calendly online consultation (free)</li>
+                    <li>X (Twitter) 310K+ impressions</li>
+                    <li>Forbes JAPAN contributor for brand awareness</li>
+                </ul>
+            </div>
+            <div class="bm-card">
+                <h4>Experience Channel (2 Locations)</h4>
+                <ul>
+                    <li>Sado retreat (on-site crafting, Jul 2026~)</li>
+                    <li>Hana, Maui workshop experience</li>
+                    <li>Workaway international community for awareness</li>
+                    <li>Organic growth via participant word-of-mouth</li>
+                </ul>
+            </div>
+            <div class="bm-card">
+                <h4>SoulCarrier Integration</h4>
+                <ul>
+                    <li>Preferential sales to "Resonance Circle" members</li>
+                    <li>Media coverage of bone repatriation &#8594; brand awareness</li>
+                    <li>Creates "participation in social mission" as a purchase driver</li>
+                    <li>Escapes price competition via empathy-based selling</li>
+                </ul>
+            </div>
+            <div class="bm-card">
+                <h4>International Market Channel</h4>
+                <ul>
+                    <li>Direct North American access via Maui base</li>
+                    <li>Proposals to Western cemetery management &amp; stone dealers</li>
+                    <li>Overseas Japanese communities (Hawaii, Brazil, etc.)</li>
+                    <li>English LP + Calendly for fully online process</li>
+                </ul>
+            </div>
+            <div class="bm-card">
+                <h4>Asia Expansion</h4>
+                <ul>
+                    <li>Ancestor veneration cultures (East &amp; Southeast Asia)</li>
+                    <li>War memorial &amp; colonial-era heritage preservation demand</li>
+                    <li>Partnerships with local stone &amp; memorial businesses</li>
+                    <li>Multilingual support (QR codes are language-agnostic)</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- ========================================
+     SLIDE 11: TRACTION & MILESTONES
+     ======================================== -->
+<section class="slide">
+    <div class="slide-inner">
+        <p class="slide-number">11 - Traction</p>
+        <h2>Proven Technology &amp; Established Trust</h2>
+        <p class="slide-lead">Beyond the product development stage&#8212;now in the partnership and validation phase.</p>
+
+        <div class="traction-grid">
+            <div class="traction-item">
+                <p class="t-year">2025 H1</p>
+                <h4>SoulCarrier Social Impact</h4>
+                <p>Surveyed 5,000 gravestones on foot in Gunma Prefecture. 3+ years supporting bone repatriation for Japanese-American Martin. Began contributing to Forbes JAPAN. 310K+ impressions on X</p>
+            </div>
+            <div class="traction-item">
+                <p class="t-year">2025 H2</p>
+                <h4>Technology &amp; Product Completion</h4>
+                <p>3,000+ engraving tests completed. Established voice binary QR code + proprietary compression (up to 10&#215;). Achieved commercial-quality photo engraving via metal deposition</p>
+            </div>
+            <div class="traction-item">
+                <p class="t-year">2026 Q1</p>
+                <h4>Cultural Institution Partnerships</h4>
+                <p>Offering to Ise Grand Shrine Shikinen Sengu (Jan). Permanent inscription at Mt. Hiei Enryaku-ji Konpon Chudo (Jan). MOU with Japan-Hawaii Immigration Museum. Discussions with JICA Yokohama ongoing</p>
+            </div>
+            <div class="traction-item">
+                <p class="t-year">2026 Q1</p>
+                <h4>Business Foundation</h4>
+                <p>Landing page live, pre-orders open. Sado heritage house handover in progress (Mar). SoulCarrier Resonance Circle cooperation signatures obtained. Workaway host registration support launched</p>
+            </div>
+            <div class="traction-item">
+                <p class="t-year">2026 Q1</p>
+                <h4>Free Monitor Program (10 users)</h4>
+                <p>Pearl Soap distributed to ~250 households as outgoing HOA president's farewell gift. 10 selected residents receive Individual Plan (&#165;50K value) free. User behavior observation, testimonial collection, and word-of-mouth conversion validation conducted pre-relocation to establish Year 1 D2C evidence base</p>
+            </div>
+        </div>
+
+        <h3>Triple Trust Architecture</h3>
+        <div class="stat-grid">
+            <div class="stat-card">
+                <div class="stat-number" style="font-size:1.5rem;">&#x26E9;</div>
+                <div class="stat-label">Religious Authority<br>Ise Grand Shrine &amp; Mt. Hiei Enryaku-ji</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-number" style="font-size:1.5rem;">&#x1F3DB;</div>
+                <div class="stat-label">Public Institutions<br>JICA, Immigration Museums, National Diet Library</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-number" style="font-size:1.5rem;">&#x1F4CA;</div>
+                <div class="stat-label">Scientific Evidence<br>Hitachi &#215; Kyoto University research</div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- ========================================
+     SLIDE 12: COMPETITIVE MOAT
+     ======================================== -->
+<section class="slide">
+    <div class="slide-inner">
+        <p class="slide-number">12 - Competitive Moat</p>
+        <h2>Triple Barrier to Entry</h2>
+        <p class="slide-lead">The trinity of technology, place, and philosophy creates an imitation-resistant competitive advantage.</p>
+
+        <ul class="moat-list">
+            <li>
+                <span class="moat-num">1</span>
+                <div>
+                    <h4>Technology Barrier: Quartz Glass Processing + Voice QR Compression (International Patent Filed)</h4>
+                    <p>Proprietary metal deposition engraving technology built on 20+ years in semiconductor manufacturing. Proprietary voice binary compression (up to 10&#215;) filed as international patent under patent attorney supervision. The combination of 3,000+ tests of accumulated know-how and IP protection makes short-term imitation structurally difficult.</p>
+                </div>
+            </li>
+            <li>
+                <span class="moat-num">2</span>
+                <div>
+                    <h4>Place Barrier: Sado Island + Maui Dual-Base Experience</h4>
+                    <p>Sado as "the island where memories of forgotten people endured." Hana, Maui as "the proving ground for off-grid living." The founder's relocation to Sado in spring 2026 makes this place-identity inseparable from his life story.</p>
+                </div>
+            </li>
+            <li>
+                <span class="moat-num">3</span>
+                <div>
+                    <h4>Philosophical Barrier: "Democratizing Proof of Existence" + SoulCarrier Ecosystem</h4>
+                    <p>SoulCarrier's real-world activities&#8212;bone repatriation, abandoned grave surveys&#8212;give the "democratizing proof of existence" brand authentic credibility. The dual flywheel of commercial (TokiStorage) and social (SoulCarrier) establishes a position beyond mere memorial products&#8212;a social movement. While competitors fight on features and price, TokiStorage competes on philosophy and experience.</p>
+                </div>
+            </li>
+        </ul>
+
+        <h3>Risk Scenario: 5D Memory Crystal Entering the Consumer Market</h3>
+        <div class="key-point">
+            <p><strong>Defense Thesis:</strong> Even if 5D Memory Crystal (University of Southampton) enters the consumer market: &#9312; the structural constraint of requiring specialized optical readers is fundamentally different from QR code's "scan with any smartphone" immediacy &#9313; commercializing research-lab technology for consumer UX typically takes 5&#8211;10 years &#9314; by then, TokiStorage will have established B2B channels, temple/shrine trust networks, and an experiential brand. Even if they enter, they compete on "technology"&#8212;not on the "experience and philosophy" layer where TokiStorage operates.</p>
+        </div>
+    </div>
+</section>
+
+<!-- ========================================
+     SLIDE 13: ROADMAP
+     ======================================== -->
+<section class="slide">
+    <div class="slide-inner">
+        <p class="slide-number">13 - Roadmap</p>
+        <h2>Business Expansion Roadmap</h2>
+        <p class="slide-lead">Starting from relocation to Sado, progressively scaling product, channels, and geography.</p>
+
+        <div class="roadmap">
+            <div class="roadmap-item">
+                <p class="r-date">2026 Q1 (NOW)</p>
+                <h4>Phase 0: Free Monitor Validation</h4>
+                <p>Pearl Soap distributed to ~250 households as outgoing HOA president's farewell gift. 10 residents receive free Individual Plan (&#165;50K value). Observing user behavior (where they place it, how they explain to family, desire to share), collecting testimonials, and validating paid conversion rates&#8212;all completed before relocation.</p>
+            </div>
+            <div class="roadmap-item">
+                <p class="r-date">2026 Q1 (NOW)</p>
+                <h4>Phase 1: Foundation</h4>
+                <p>Pre-orders open (Individual &amp; Three-Generation Plans). LP optimization &amp; online consultation flow. Sado heritage house handover &amp; renovation. Ise Shrine &amp; Enryaku-ji offerings complete.</p>
+            </div>
+            <div class="roadmap-item">
+                <p class="r-date">2026 Q2</p>
+                <h4>Phase 2: Sado Relocation &amp; Production Launch</h4>
+                <p>Relocation to Sado Island. Heritage house converted to production studio. B2B partnership talks with altar shops &amp; funeral homes. Full-scale online course sales.</p>
+            </div>
+            <div class="roadmap-item">
+                <p class="r-date">2026 Q3</p>
+                <h4>Phase 3: Retreat Experiences Begin</h4>
+                <p>Sado retreat (on-site crafting) launches Jul 2026. Three-Generation Plan with experience fully available. Workaway hosting starts for international awareness.</p>
+            </div>
+            <div class="roadmap-item future">
+                <p class="r-date">2026 Q4 - 2027</p>
+                <h4>Phase 4: Channel Expansion</h4>
+                <p>B2B wholesale to altar shops &amp; funeral homes begins. Government &amp; municipal proposals intensify. Voice Memorial Course: first 5 families completed. Annual Resonance Membership launched.</p>
+            </div>
+            <div class="roadmap-item future">
+                <p class="r-date">2027 - 2028</p>
+                <h4>Phase 5: Scale + Global Expansion</h4>
+                <p>Manufacturing outsourcing for capacity growth. North American &amp; Western cemetery expansion from Maui base. Asia-Pacific partnerships (ancestor veneration cultures). Overseas Japanese community services at full scale. Hana workshop expansion.</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- ========================================
+     SLIDE 14: TEAM
+     ======================================== -->
+<section class="slide">
+    <div class="slide-inner">
+        <p class="slide-number">14 - Team</p>
+        <h2>Founder</h2>
+        <p class="slide-lead">20 years in technology, 3 years of off-grid living, bone repatriation as social mission. Everything connects in one line.</p>
+
+        <div class="team-profile">
+            <div class="team-info">
+                <h4>Takuya Sato</h4>
+                <p class="team-title">Founder, TokiStorage (Registered Sole Proprietorship) / Founder, SoulCarrier "Resonance Circle"</p>
+                <p>After 20+ years as a semiconductor manufacturing equipment engineer, pivoted to memorial technology. Practiced off-grid living on Maui after the 2023 wildfire, embodying the concept of "server-free perpetual preservation." Established the philosophy of "democratizing proof of existence" through bone repatriation work.</p>
+                <ul>
+                    <li>20+ years in semiconductor manufacturing engineering</li>
+                    <li>Forbes JAPAN contributor</li>
+                    <li>Former HOA president, Timeless Town Shin-Urayasu (2 years, ~250 households)</li>
+                    <li>Off-grid living since Maui 2023 wildfire</li>
+                    <li>Surveyed 5,000 gravestones on foot in Gunma Prefecture</li>
+                    <li>3+ years supporting Japanese-American bone repatriation</li>
+                    <li>Relocating to Sado Island, Spring 2026</li>
+                </ul>
+            </div>
+        </div>
+
+        <h3>Hiring Roadmap</h3>
+        <div class="segment-grid" style="margin-bottom:2rem;">
+            <div class="segment-card">
+                <p class="seg-tag">2026 Q2 &#8212; TOP PRIORITY</p>
+                <h4>Manufacturing &amp; QC (Sado, On-Site)</h4>
+                <p>Quartz glass processing &amp; engraving operations. Technology transfer from founder doubles production capacity. International interns via Workaway supplement the team</p>
+            </div>
+            <div class="segment-card">
+                <p class="seg-tag">2026 Q3 &#8212; HIGH PRIORITY</p>
+                <h4>Sales &amp; Partnerships (Remote OK)</h4>
+                <p>B2B sales to altar shops, funeral homes, and municipalities. Lead generation through closing. Seeking memorial industry or enterprise sales experience</p>
+            </div>
+        </div>
+
+        <h3>Advisors &amp; Partners</h3>
+        <div class="segment-grid">
+            <div class="segment-card">
+                <h4>Mr. &amp; Mrs. Ueda</h4>
+                <p>Directors of NPO "Iga no Tomo," Mie Prefecture SDGs Partner. First cooperation signatories for SoulCarrier Resonance Circle. Supporting Workaway host registration</p>
+            </div>
+            <div class="segment-card">
+                <h4>Melanie</h4>
+                <p>Former high school principal, operates "Hale Pueo" farm (Hana, Maui). Collaborator at the Hana base. Supports the venture with an educator's perspective</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- ========================================
+     SLIDE 15: FINANCIAL PROJECTIONS
+     ======================================== -->
+<section class="slide">
+    <div class="slide-inner">
+        <p class="slide-number">15 - Financial Projections</p>
+        <h2>Growth Trajectory</h2>
+        <p class="slide-lead">From domestic B2B channel launch to global expansion.<br>Zero server cost &#215; manufacturing outsourcing means gross margin improves as revenue scales.</p>
+
+        <table class="fin-table">
+            <thead>
+                <tr>
+                    <th>Segment</th>
+                    <th>Year 1<br>(2026)</th>
+                    <th>Year 3<br>(2028)</th>
+                    <th>Year 5<br>(2030)</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>D2C (Domestic Individual)</td>
+                    <td>&#165;5M</td>
+                    <td>&#165;50M</td>
+                    <td>&#165;500M</td>
+                </tr>
+                <tr>
+                    <td>B2B (Temples, Funeral Homes, Gov.)</td>
+                    <td>&#165;5M</td>
+                    <td>&#165;200M</td>
+                    <td>&#165;1B</td>
+                </tr>
+                <tr>
+                    <td>Premium &amp; Membership</td>
+                    <td>&#165;20M</td>
+                    <td>&#165;70M</td>
+                    <td>&#165;150M</td>
+                </tr>
+                <tr>
+                    <td>International (NA &amp; Asia-Pacific)</td>
+                    <td>&#8211;</td>
+                    <td>&#165;50M</td>
+                    <td>&#165;1.5B</td>
+                </tr>
+                <tr class="total-row">
+                    <td>Total Revenue</td>
+                    <td>&#165;30M<br><small style="font-weight:400;color:var(--text-secondary)">~$200K</small></td>
+                    <td>&#165;370M<br><small style="font-weight:400;color:var(--text-secondary)">~$2.5M</small></td>
+                    <td>&#165;3.15B<br><small style="font-weight:400;color:var(--text-secondary)">~$21M</small></td>
+                </tr>
+                <tr>
+                    <td>Gross Margin</td>
+                    <td>55%</td>
+                    <td>65%</td>
+                    <td>72%</td>
+                </tr>
+                <tr>
+                    <td>Operating Margin</td>
+                    <td>&#x25B3;30%</td>
+                    <td>22%</td>
+                    <td>38%</td>
+                </tr>
+            </tbody>
+        </table>
+
+        <h3>Year 1 Revenue Breakdown (2026)</h3>
+        <div class="segment-grid" style="margin-top:1rem;">
+            <div class="segment-card">
+                <p class="seg-tag">D2C &#165;5M</p>
+                <h4>Individual Plan &#215;10 units</h4>
+                <p>Projections anchored in pre-launch free monitor data (10 users). Paid conversions from monitor participants ("I want to make one for my parents"), LP optimization using real testimonials, and organic inflow via word-of-mouth. Conservative ~1 unit/month. Estimate based on "extrapolation from monitor results" rather than assumptions</p>
+            </div>
+            <div class="segment-card">
+                <p class="seg-tag">B2B &#165;5M &#8594; Y3: &#165;200M &#8594; Y5: &#165;1B</p>
+                <h4>Institutional &#215;2&#8211;3 &#8594; Wholesale Channel Scale</h4>
+                <p>Year 1: direct sales from ongoing JICA Yokohama &amp; Immigration Museum discussions. Year 2&#8211;3: wholesale model via altar shops &amp; funeral homes (negotiation &#8594; sample &#8594; training &#8594; sales launch = ~6&#8211;9 month lead time). Year 2: pilot with 3&#8211;5 partners for validation &#8594; Year 3: scale to 10&#8211;15 partners, avg. &#165;15M wholesale each</p>
+            </div>
+            <div class="segment-card">
+                <p class="seg-tag">PREMIUM &#165;20M (67% of Y1 revenue)</p>
+                <h4>Voice Memorial &#215;3 families + Membership &#215;1</h4>
+                <p>&#165;5.55M &#215; 3 = &#165;16.65M + 1 Annual Resonance Membership. Pipeline of ~15 leads from SoulCarrier signatories, Forbes readers, and Ise Shrine offering contacts; 20% conversion assumed. Concentration risk acknowledged&#8212;downside scenario prepared with D2C &#215;20 units (incl. Three-Generation Plans) as fallback</p>
+            </div>
+            <div class="segment-card">
+                <p class="seg-tag">YEAR 5 INTERNATIONAL &#165;1.5B PATH</p>
+                <h4>3-Stage Expansion Scenario</h4>
+                <p>&#9312; North American cemetery associations via Maui (5 partners, ~&#165;300M) &#9313; Overseas Japanese community D2C (~&#165;200M) &#9314; Asia-Pacific stone/memorial OEM &amp; wholesale (~&#165;1B). Year 3's &#165;50M corresponds to the initial pilot of stage &#9312;</p>
+            </div>
+            <div class="segment-card">
+                <p class="seg-tag">PEARL SOAP &#8594; D2C CONVERSION</p>
+                <h4>Customer Acquisition That Generates Revenue</h4>
+                <p>Year 3: 30,000 QR codes/year from 50&#8211;100 franchise locations. At 0.3% conversion = ~90 D2C pipeline leads. Unlike advertising, workshops generate revenue (&#165;2,000/participant)&#8212;effective customer acquisition cost is negative. Year 5: 100K+ QR codes &#215; 0.5% = 500+ leads. ~50% of D2C &#165;500M (&#165;500K &#215; 1,000 units) acquired via Pearl Soap, while workshop revenue is booked separately</p>
+            </div>
+        </div>
+
+        <div class="key-point">
+            <p><strong>Structural Leverage:</strong> Zero server costs and minimal inventory risk (made-to-order) mean variable costs are limited to manufacturing. As production is outsourced and automated, gross margins improve&#8212;enabling price reductions while preserving profitability. Beyond Year 5, as international B2B (cemetery associations, municipal distribution models) reaches scale, the $3.3B SOM comes within reach.</p>
+        </div>
+    </div>
+</section>
+
+<!-- ========================================
+     SLIDE 16: USE OF FUNDS
+     ======================================== -->
+<section class="slide">
+    <div class="slide-inner">
+        <p class="slide-number">16 - Use of Funds</p>
+        <h2>Use of Funds</h2>
+        <p class="slide-lead">Concentrated investment in Sado base establishment and channel development.</p>
+
+        <div class="funds-grid">
+            <div class="fund-item">
+                <div class="fund-pct">35%</div>
+                <h4>Manufacturing &amp; Facilities</h4>
+                <p>Sado heritage house renovation<br>Production equipment &amp; tools<br>Initial raw materials</p>
+            </div>
+            <div class="fund-item">
+                <div class="fund-pct">25%</div>
+                <h4>Marketing</h4>
+                <p>Altar shop &amp; funeral home outreach<br>End-of-life event exhibitions<br>Digital ads &amp; SEO</p>
+            </div>
+            <div class="fund-item">
+                <div class="fund-pct">20%</div>
+                <h4>Channel Development</h4>
+                <p>B2B partnership building<br>Sample production &amp; loans<br>Staff training programs</p>
+            </div>
+            <div class="fund-item">
+                <div class="fund-pct">20%</div>
+                <h4>Working Capital</h4>
+                <p>Personnel (part-time hires)<br>Post-relocation living costs<br>Retreat experience design</p>
+            </div>
+        </div>
+
+        <h3>Facility Risk Mitigation</h3>
+        <div class="key-point" style="margin-bottom:1rem;">
+            <p><strong>Sado Base &amp; Natural Disaster:</strong> For a business built on "1,000-year permanence," facility risk is addressed structurally: &#9312; quartz glass plates are waterproof and heat-resistant (1,000&#8451;)&#8212;natural disasters cannot degrade the product &#9313; delivered products are in customers' hands; facility damage does not affect customer assets &#9314; the distributed storage service is designed by principle to never depend on a single location &#9315; manufacturing equipment is portable and can be relocated if needed. Product durability and business continuity are architecturally decoupled.</p>
+        </div>
+        <div class="key-point">
+            <p><strong>Capital Efficiency:</strong> No server infrastructure investment required, so the majority of funds go directly to customer acquisition and channel building. Physical products with limited inventory risk (made-to-order model). Sado City relocation subsidies also planned for utilization.</p>
+        </div>
+    </div>
+</section>
+
+<!-- ========================================
+     SLIDE 17: CTA
+     ======================================== -->
+<section class="slide cta-slide">
+    <div class="slide-inner">
+        <p class="slide-number">17 &#8212; Contact</p>
+        <h2>From One Home in Sado, to 8 Billion People.</h2>
+        <p class="slide-lead">Delivering every person's existence a thousand years into the future&#8212;<br>we welcome dialogue with those who resonate with this question.</p>
+
+        <div class="cta-contact" style="margin-top:2rem;">
+            TokiStorage<br>
+            Takuya Sato
+        </div>
+
+        <div class="cta-details">
+            <strong>Location:</strong> Urayasu, Chiba, Japan (relocating to Sado Island, Spring 2026)<br>
+            <strong>Email:</strong> business@satotakuya.jp<br>
+            <strong>Calendly:</strong> <a href="https://calendly.com/pearlmemorial/pearlmemorialsession" target="_blank" rel="noopener" style="color:rgba(255,255,255,0.75); text-decoration:underline;">Book a meeting</a>
+        </div>
+    </div>
+</section>
+
+<!-- Footer -->
+<footer class="pitch-footer">
+    <p>CONFIDENTIAL &#8212; This document contains proprietary information of TokiStorage Unauthorized disclosure or distribution is prohibited.</p>
+    <p><span class="footer-sub-links"><a href="../index.html">SoulCarrier Resonance Circle</a> (<a href="../movement/Membership_Guide_EN.pdf">Enrollment</a> / <a href="../movement/BasicAgreement.pdf">Agreement</a> / <a href="../movement/Bylaws_EN.pdf">Bylaws</a>)</span></p>
+    <p>&copy; 2026 TokiStorage All rights reserved.</p>
+</footer>
+
+</body>
+</html>

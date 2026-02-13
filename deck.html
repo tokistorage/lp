@@ -1,0 +1,1093 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>協業提案デッキ | TokiStorage</title>
+    <meta name="robots" content="noindex, nofollow">
+    <meta name="description" content="TokiStorage 協業提案スライドデッキ。コンサルティングファーム・事業会社向け。">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --navy: #1B2A4A;
+            --navy-deep: #0F1B33;
+            --accent: #2563EB;
+            --accent-light: #DBEAFE;
+            --accent-pale: #EFF6FF;
+            --gold: #C9A962;
+            --emerald: #059669;
+            --text: #1E293B;
+            --text-mid: #475569;
+            --text-light: #94A3B8;
+            --border: #E2E8F0;
+            --bg: #FFFFFF;
+            --bg-alt: #F8FAFC;
+            --font: 'Noto Sans JP', 'Helvetica Neue', Arial, sans-serif;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            font-family: var(--font);
+            font-weight: 400;
+            background: #E5E7EB;
+            color: var(--text);
+            line-height: 1.6;
+            font-size: 14px;
+        }
+
+        /* ── Web toolbar (hidden in print) ── */
+        .toolbar {
+            position: fixed;
+            top: 0; left: 0; right: 0;
+            z-index: 1000;
+            background: var(--navy-deep);
+            padding: 0.45rem 1.5rem;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+        .toolbar-brand {
+            font-size: 0.7rem;
+            font-weight: 600;
+            color: rgba(255,255,255,0.7);
+            text-decoration: none;
+            letter-spacing: 0.05em;
+        }
+        .toolbar-actions {
+            display: flex;
+            align-items: center;
+            gap: 0.6rem;
+        }
+        .toolbar-actions a, .toolbar-actions button {
+            font-family: var(--font);
+            font-size: 0.65rem;
+            color: rgba(255,255,255,0.6);
+            text-decoration: none;
+            padding: 0.25rem 0.7rem;
+            border: 1px solid rgba(255,255,255,0.2);
+            border-radius: 3px;
+            background: transparent;
+            cursor: pointer;
+            transition: all 0.15s;
+        }
+        .toolbar-actions a:hover, .toolbar-actions button:hover {
+            color: #fff;
+            border-color: rgba(255,255,255,0.5);
+        }
+        .toolbar-actions .btn-pdf {
+            color: var(--gold);
+            border-color: var(--gold);
+        }
+        .toolbar-actions .btn-pdf:hover {
+            background: var(--gold);
+            color: var(--navy-deep);
+        }
+
+        /* ── Slide frame ── */
+        .slide {
+            width: 960px;
+            height: 540px;
+            margin: 2.5rem auto;
+            background: var(--bg);
+            position: relative;
+            overflow: hidden;
+            box-shadow: 0 2px 20px rgba(0,0,0,0.12);
+            display: flex;
+            flex-direction: column;
+        }
+        .slide:first-of-type { margin-top: 4rem; }
+
+        /* ── Action title bar ── */
+        .action-bar {
+            background: var(--navy);
+            padding: 0.5rem 2rem;
+            flex-shrink: 0;
+            max-height: 52px;
+            overflow: hidden;
+        }
+        .action-bar h2 {
+            font-size: 0.78rem;
+            font-weight: 600;
+            color: #fff;
+            line-height: 1.35;
+            display: -webkit-box;
+            -webkit-line-clamp: 2;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+        }
+
+        /* ── Slide body ── */
+        .slide-body {
+            flex: 1 1 0%;
+            min-height: 0;
+            padding: 0.8rem 2rem 0.25rem;
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+        }
+        .slide-content {
+            flex: 1 1 0%;
+            min-height: 0;
+            overflow: hidden;
+        }
+
+        /* ── Slide footer ── */
+        .slide-footer {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0 2rem 0.35rem;
+            border-top: 1px solid var(--border);
+            margin-top: auto;
+            padding-top: 0.25rem;
+            flex-shrink: 0;
+        }
+        .slide-footer span {
+            font-size: 0.5rem;
+            color: var(--text-light);
+            letter-spacing: 0.03em;
+        }
+        .slide-footer .pg {
+            font-weight: 600;
+        }
+
+        /* ── Cover slide (special) ── */
+        .slide.cover {
+            background: var(--navy);
+            flex-direction: column;
+            justify-content: center;
+            align-items: stretch;
+        }
+        .cover-body {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            padding: 2.5rem 3rem;
+        }
+        .cover-label {
+            font-size: 0.55rem;
+            font-weight: 700;
+            letter-spacing: 0.25em;
+            color: var(--gold);
+            margin-bottom: 1.5rem;
+            text-transform: uppercase;
+        }
+        .cover-title {
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: #fff;
+            line-height: 1.6;
+            margin-bottom: 0.75rem;
+        }
+        .cover-sub {
+            font-size: 0.85rem;
+            color: rgba(255,255,255,0.5);
+            line-height: 1.8;
+            max-width: 500px;
+        }
+        .cover-sub strong { color: var(--gold); }
+        .cover-stripe {
+            height: 4px;
+            background: linear-gradient(90deg, var(--accent), var(--gold));
+        }
+        .cover-footer {
+            padding: 0.8rem 3rem;
+            display: flex;
+            justify-content: space-between;
+        }
+        .cover-footer span {
+            font-size: 0.6rem;
+            color: rgba(255,255,255,0.3);
+            letter-spacing: 0.05em;
+        }
+
+        /* ── CTA slide (special) ── */
+        .slide.cta-slide {
+            background: var(--navy);
+        }
+        .slide.cta-slide .action-bar {
+            background: var(--navy-deep);
+        }
+        .cta-body {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            padding: 1.5rem 3rem;
+        }
+        .cta-body h3 {
+            font-size: 1.4rem;
+            font-weight: 700;
+            color: #fff;
+            margin-bottom: 0.75rem;
+            line-height: 1.6;
+        }
+        .cta-body p {
+            font-size: 0.8rem;
+            color: rgba(255,255,255,0.5);
+            line-height: 1.8;
+            margin-bottom: 1.5rem;
+            max-width: 420px;
+        }
+        .cta-links {
+            display: flex;
+            gap: 0.6rem;
+        }
+        .cta-links a {
+            font-size: 0.7rem;
+            color: var(--gold);
+            text-decoration: none;
+            padding: 0.4rem 1rem;
+            border: 1px solid rgba(201,169,98,0.5);
+            border-radius: 3px;
+            transition: all 0.15s;
+        }
+        .cta-links a:hover {
+            background: var(--gold);
+            color: var(--navy);
+        }
+        .slide.cta-slide .slide-footer {
+            border-top-color: rgba(255,255,255,0.1);
+        }
+        .slide.cta-slide .slide-footer span {
+            color: rgba(255,255,255,0.25);
+        }
+
+        /* ── Typography helpers ── */
+        .section-label {
+            font-size: 0.5rem;
+            font-weight: 700;
+            letter-spacing: 0.2em;
+            color: var(--accent);
+            text-transform: uppercase;
+            margin-bottom: 0.35rem;
+            flex-shrink: 0;
+        }
+        .body-lead {
+            font-size: 0.7rem;
+            color: var(--text-mid);
+            line-height: 1.5;
+            margin-bottom: 0.6rem;
+            flex-shrink: 0;
+        }
+
+        /* ── 3-column cards ── */
+        .cols3 {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 0.5rem;
+            flex: 1 1 0%;
+            min-height: 0;
+        }
+        .col-card {
+            background: var(--bg-alt);
+            border: 1px solid var(--border);
+            border-radius: 4px;
+            padding: 0.4rem 0.55rem;
+            overflow: hidden;
+        }
+        .col-card-num {
+            font-size: 0.72rem;
+            font-weight: 700;
+            color: var(--accent);
+            margin-bottom: 0.1rem;
+        }
+        .col-card h4 {
+            font-size: 0.56rem;
+            font-weight: 600;
+            color: var(--text);
+            margin-bottom: 0.1rem;
+        }
+        .col-card p {
+            font-size: 0.48rem;
+            color: var(--text-mid);
+            line-height: 1.4;
+        }
+
+        /* ── 2x2 grid ── */
+        .grid2x2 {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 0.45rem;
+            flex: 1 1 0%;
+            min-height: 0;
+        }
+        .grid-card {
+            background: var(--bg-alt);
+            border: 1px solid var(--border);
+            border-radius: 4px;
+            padding: 0.4rem 0.55rem;
+            display: flex;
+            align-items: flex-start;
+            gap: 0.4rem;
+            overflow: hidden;
+        }
+        .grid-card-icon {
+            font-size: 0.85rem;
+            flex-shrink: 0;
+            line-height: 1;
+            margin-top: 0.05rem;
+        }
+        .grid-card h4 {
+            font-size: 0.54rem;
+            font-weight: 600;
+            color: var(--text);
+            margin-bottom: 0.05rem;
+        }
+        .grid-card p {
+            font-size: 0.46rem;
+            color: var(--text-mid);
+            line-height: 1.35;
+        }
+
+        /* ── Table ── */
+        .dk-table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 0.5rem;
+        }
+        .dk-table th, .dk-table td {
+            padding: 0.25rem 0.4rem;
+            text-align: left;
+            border-bottom: 1px solid var(--border);
+        }
+        .dk-table thead th {
+            background: var(--navy);
+            color: #fff;
+            font-weight: 600;
+            font-size: 0.46rem;
+            border-bottom: none;
+        }
+        .dk-table tbody th {
+            font-weight: 600;
+            color: var(--text);
+            background: var(--bg-alt);
+            width: 15%;
+        }
+        .dk-table td {
+            color: var(--text-mid);
+        }
+        .dk-table .hl {
+            color: var(--accent);
+            font-weight: 600;
+        }
+        .dk-table tbody tr:last-child th,
+        .dk-table tbody tr:last-child td { border-bottom: none; }
+
+        /* ── Model rows ── */
+        .model-row {
+            display: flex;
+            flex-direction: column;
+            gap: 0.3rem;
+            flex: 1 1 0%;
+            min-height: 0;
+        }
+        .model-item {
+            display: flex;
+            align-items: flex-start;
+            gap: 0.4rem;
+            background: var(--bg-alt);
+            border: 1px solid var(--border);
+            border-radius: 4px;
+            padding: 0.35rem 0.55rem;
+            overflow: hidden;
+        }
+        .model-badge {
+            flex-shrink: 0;
+            width: 1.8rem;
+            height: 1.8rem;
+            border-radius: 4px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.34rem;
+            font-weight: 700;
+            text-align: center;
+            line-height: 1.15;
+            color: #fff;
+        }
+        .model-badge.b1 { background: var(--accent); }
+        .model-badge.b2 { background: var(--gold); }
+        .model-badge.b3 { background: var(--emerald); }
+        .model-text { flex: 1; min-width: 0; }
+        .model-text h4 {
+            font-size: 0.54rem;
+            font-weight: 600;
+            color: var(--text);
+            margin-bottom: 0.02rem;
+        }
+        .model-text p {
+            font-size: 0.44rem;
+            color: var(--text-mid);
+            line-height: 1.3;
+        }
+        .model-text .ex {
+            font-size: 0.42rem;
+            color: var(--accent);
+            margin-top: 0.05rem;
+        }
+
+        /* ── Revenue flow ── */
+        .flow-row {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0;
+            margin: 0.5rem 0;
+        }
+        .flow-box {
+            text-align: center;
+            padding: 0.4rem 0.8rem;
+            border-radius: 4px;
+            border: 1px solid var(--border);
+            min-width: 140px;
+        }
+        .flow-box h4 {
+            font-size: 0.54rem;
+            font-weight: 600;
+            margin-bottom: 0.05rem;
+        }
+        .flow-box p {
+            font-size: 0.42rem;
+            color: var(--text-mid);
+            line-height: 1.25;
+        }
+        .flow-box.fc { background: #ECFDF5; }
+        .flow-box.fc h4 { color: var(--emerald); }
+        .flow-box.fp { background: var(--accent-pale); }
+        .flow-box.fp h4 { color: var(--accent); }
+        .flow-box.ft { background: #FEF9EE; }
+        .flow-box.ft h4 { color: #92400E; }
+        .flow-arrow {
+            font-size: 0.75rem;
+            color: var(--text-light);
+            padding: 0 0.25rem;
+        }
+
+        /* ── Callout ── */
+        .callout {
+            background: var(--accent-pale);
+            border-left: 3px solid var(--accent);
+            border-radius: 0 4px 4px 0;
+            padding: 0.35rem 0.55rem;
+            margin-top: 0.4rem;
+            flex-shrink: 0;
+        }
+        .callout h4 {
+            font-size: 0.48rem;
+            font-weight: 600;
+            color: var(--text);
+            margin-bottom: 0.05rem;
+        }
+        .callout p {
+            font-size: 0.42rem;
+            color: var(--text-mid);
+            line-height: 1.3;
+        }
+
+        /* ── Sector grid ── */
+        .sector-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 0.4rem;
+            flex: 1 1 0%;
+            min-height: 0;
+        }
+        .sector-card {
+            background: var(--bg-alt);
+            border: 1px solid var(--border);
+            border-radius: 4px;
+            padding: 0.35rem 0.4rem;
+            text-align: center;
+            overflow: hidden;
+        }
+        .sector-icon { font-size: 0.8rem; margin-bottom: 0.1rem; }
+        .sector-card h4 {
+            font-size: 0.5rem;
+            font-weight: 600;
+            color: var(--text);
+            margin-bottom: 0.02rem;
+        }
+        .sector-card p {
+            font-size: 0.42rem;
+            color: var(--text-mid);
+            line-height: 1.25;
+        }
+
+        /* ── Founder ── */
+        .founder-row {
+            display: flex;
+            align-items: flex-start;
+            gap: 0.5rem;
+        }
+        .founder-avatar {
+            flex-shrink: 0;
+            width: 1.8rem;
+            height: 1.8rem;
+            border-radius: 50%;
+            background: var(--navy);
+            color: #fff;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.65rem;
+            font-weight: 700;
+        }
+        .founder-info { flex: 1; min-width: 0; }
+        .founder-info h4 {
+            font-size: 0.54rem;
+            font-weight: 600;
+            color: var(--text);
+            margin-bottom: 0.1rem;
+        }
+        .founder-info p {
+            font-size: 0.44rem;
+            color: var(--text-mid);
+            line-height: 1.35;
+        }
+        .tag-row {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.15rem;
+            margin-top: 0.2rem;
+        }
+        .tag-pill {
+            font-size: 0.38rem;
+            padding: 0.05rem 0.3rem;
+            background: var(--bg-alt);
+            border: 1px solid var(--border);
+            border-radius: 3px;
+            color: var(--text-mid);
+        }
+
+        /* ── Responsive: always maintain 16:9 ── */
+        @media (max-width: 1000px) {
+            .slide {
+                width: 100%;
+                height: auto;
+                aspect-ratio: 16 / 9;
+                margin: 1rem auto;
+                border-radius: 0;
+            }
+            .slide.cover, .slide.cta-slide { aspect-ratio: 16 / 9; }
+            body { background: #fff; }
+            .action-bar { padding: 0.6rem 1.2rem; }
+            .action-bar h2 { font-size: 0.75rem; }
+            .slide-body { padding: 0.8rem 1.2rem 0.3rem; }
+            .slide-footer { padding: 0 1.2rem 0.4rem; }
+            .section-label { margin-bottom: 0.4rem; }
+            .cols3 { gap: 0.5rem; }
+            .col-card { padding: 0.6rem; }
+            .col-card-num { font-size: 0.9rem; }
+            .col-card h4 { font-size: 0.65rem; }
+            .col-card p { font-size: 0.55rem; }
+            .grid2x2 { gap: 0.5rem; }
+            .grid-card { padding: 0.5rem 0.6rem; gap: 0.4rem; }
+            .grid-card-icon { font-size: 1rem; }
+            .grid-card h4 { font-size: 0.62rem; }
+            .grid-card p { font-size: 0.52rem; }
+            .dk-table { font-size: 0.58rem; }
+            .dk-table th, .dk-table td { padding: 0.35rem 0.5rem; }
+            .model-item { padding: 0.5rem 0.6rem; gap: 0.5rem; }
+            .model-badge { width: 2.2rem; height: 2.2rem; font-size: 0.4rem; }
+            .model-text h4 { font-size: 0.6rem; }
+            .model-text p, .model-text .ex { font-size: 0.5rem; }
+            .flow-box { padding: 0.6rem 0.8rem; min-width: 120px; }
+            .flow-box h4 { font-size: 0.6rem; }
+            .flow-box p { font-size: 0.48rem; }
+            .callout { padding: 0.5rem 0.7rem; }
+            .callout h4 { font-size: 0.58rem; }
+            .callout p { font-size: 0.5rem; }
+            .sector-card { padding: 0.4rem 0.5rem; }
+            .sector-icon { font-size: 1rem; margin-bottom: 0.15rem; }
+            .sector-card h4 { font-size: 0.58rem; }
+            .sector-card p { font-size: 0.46rem; }
+            .body-lead { font-size: 0.6rem; margin-bottom: 0.6rem; }
+            .founder-avatar { width: 2.4rem; height: 2.4rem; font-size: 0.8rem; }
+            .founder-info h4 { font-size: 0.65rem; }
+            .founder-info p { font-size: 0.5rem; }
+            .tag-pill { font-size: 0.45rem; }
+            .toolbar-brand { font-size: 0.6rem; }
+            .cover-body { padding: 1.5rem 2rem; }
+            .cover-title { font-size: 1.3rem; }
+            .cover-sub { font-size: 0.65rem; }
+            .cover-label { font-size: 0.45rem; margin-bottom: 0.8rem; }
+            .cta-body h3 { font-size: 1rem; }
+            .cta-body p { font-size: 0.6rem; }
+            .cta-links a { font-size: 0.55rem; padding: 0.3rem 0.7rem; }
+        }
+        @media (max-width: 640px) {
+            .slide {
+                aspect-ratio: auto;
+                height: auto;
+                min-height: auto;
+                overflow: visible;
+            }
+            .slide-body {
+                overflow: visible;
+                padding: 0.8rem 1rem 0.5rem;
+            }
+            .slide-content {
+                overflow: visible;
+            }
+            .action-bar {
+                max-height: none;
+                padding: 0.5rem 1rem;
+            }
+            .action-bar h2 {
+                font-size: 0.75rem;
+                -webkit-line-clamp: unset;
+            }
+            .slide-footer { padding: 0.3rem 1rem; }
+            .cols3 { grid-template-columns: 1fr; gap: 0.5rem; }
+            .col-card { padding: 0.5rem 0.6rem; overflow: visible; }
+            .col-card-num { font-size: 0.8rem; }
+            .col-card h4 { font-size: 0.7rem; }
+            .col-card p { font-size: 0.6rem; line-height: 1.5; }
+            .grid2x2 { grid-template-columns: 1fr; gap: 0.5rem; }
+            .grid-card { padding: 0.5rem 0.6rem; overflow: visible; }
+            .grid-card-icon { font-size: 1rem; }
+            .grid-card h4 { font-size: 0.7rem; }
+            .grid-card p { font-size: 0.6rem; line-height: 1.5; }
+            .dk-table { font-size: 0.6rem; }
+            .dk-table th, .dk-table td { padding: 0.35rem 0.4rem; }
+            .dk-table thead th { font-size: 0.55rem; }
+            .sector-grid { grid-template-columns: 1fr 1fr; gap: 0.4rem; }
+            .sector-card { padding: 0.4rem; overflow: visible; }
+            .sector-icon { font-size: 1rem; }
+            .sector-card h4 { font-size: 0.65rem; }
+            .sector-card p { font-size: 0.55rem; line-height: 1.4; }
+            .model-row { gap: 0.5rem; }
+            .model-item { padding: 0.5rem 0.6rem; overflow: visible; }
+            .model-badge { width: 2rem; height: 2rem; font-size: 0.4rem; }
+            .model-text h4 { font-size: 0.7rem; }
+            .model-text p { font-size: 0.6rem; line-height: 1.5; }
+            .model-text .ex { font-size: 0.55rem; }
+            .flow-row { flex-direction: column; gap: 0.4rem; }
+            .flow-arrow { transform: rotate(90deg); }
+            .flow-box { min-width: auto; padding: 0.5rem 0.8rem; }
+            .flow-box h4 { font-size: 0.7rem; }
+            .flow-box p { font-size: 0.6rem; line-height: 1.4; }
+            .callout { padding: 0.5rem 0.6rem; }
+            .callout h4 { font-size: 0.65rem; }
+            .callout p { font-size: 0.55rem; line-height: 1.4; }
+            .founder-row { flex-direction: column; }
+            .founder-avatar { width: 2.2rem; height: 2.2rem; font-size: 0.8rem; }
+            .founder-info h4 { font-size: 0.7rem; }
+            .founder-info p { font-size: 0.6rem; line-height: 1.5; }
+            .tag-pill { font-size: 0.55rem; padding: 0.1rem 0.4rem; }
+            .toolbar-brand { font-size: 0.6rem; }
+            .section-label { font-size: 0.55rem; margin-bottom: 0.4rem; }
+            .body-lead { font-size: 0.7rem; }
+            .cover-title { font-size: 1.2rem; }
+            .cover-sub { font-size: 0.7rem; }
+            .cta-body h3 { font-size: 1rem; }
+            .cta-body p { font-size: 0.7rem; }
+        }
+
+        /* ── Print / PDF ── */
+        @media print {
+            body { background: white; }
+            .toolbar { display: none !important; }
+            .slide {
+                width: 100%;
+                height: 100vh;
+                aspect-ratio: 16 / 9;
+                margin: 0;
+                box-shadow: none;
+                page-break-after: always;
+                page-break-inside: avoid;
+                border-radius: 0;
+            }
+            .slide:last-child { page-break-after: auto; }
+            .slide:first-of-type { margin-top: 0; }
+            .action-bar, .model-badge, .founder-avatar, .tag-pill,
+            .col-card, .grid-card, .sector-card, .flow-box, .callout {
+                -webkit-print-color-adjust: exact;
+                print-color-adjust: exact;
+            }
+            .slide.cover, .slide.cta-slide,
+            .slide.cover *, .slide.cta-slide * {
+                -webkit-print-color-adjust: exact;
+                print-color-adjust: exact;
+            }
+            .dk-table thead th, .dk-table tbody th {
+                -webkit-print-color-adjust: exact;
+                print-color-adjust: exact;
+            }
+        }
+
+        @page {
+            size: landscape;
+            margin: 0;
+        }
+    </style>
+</head>
+<body>
+
+<!-- Toolbar -->
+<nav class="toolbar">
+    <a href="partnership.html" class="toolbar-brand">TOKISTORAGE &mdash; 協業提案デッキ</a>
+    <div class="toolbar-actions">
+        <a href="deck-en.html">EN</a>
+        <a href="partnership.html">詳細版</a>
+        <button class="btn-pdf" onclick="window.print()">PDF ダウンロード</button>
+    </div>
+</nav>
+
+<!-- ━━━ SLIDE 01: COVER ━━━ -->
+<section class="slide cover">
+    <div class="cover-body">
+        <p class="cover-label">Partnership Proposal &mdash; Confidential</p>
+        <h1 class="cover-title">貴社クライアントに、<br>「千年の存在証明」を。</h1>
+        <p class="cover-sub">
+            テクノロジーは揃っています。ユースケースも200以上。<br>
+            足りないのは、<strong>届ける仕組み</strong>です。
+        </p>
+    </div>
+    <div class="cover-stripe"></div>
+    <div class="cover-footer">
+        <span>TokiStorage</span>
+        <span>TokiStorage</span>
+        <span>Confidential</span>
+    </div>
+</section>
+
+<!-- ━━━ SLIDE 02: PROBLEM ━━━ -->
+<section class="slide">
+    <div class="action-bar">
+        <h2>既存のデジタルサービスは「今」に最適化されており、千年スケールの保存レイヤーが構造的に不在である</h2>
+    </div>
+    <div class="slide-body">
+        <div class="slide-content">
+            <p class="section-label">Background</p>
+            <div class="cols3">
+                <div class="col-card">
+                    <div class="col-card-num">01</div>
+                    <h4>デジタルは「今」に最適化</h4>
+                    <p>クラウドやSNSは日常の記録に極めて優秀。しかし100年・1000年スケールは設計対象外。時間軸が違えば、必要な設計も違う。</p>
+                </div>
+                <div class="col-card">
+                    <div class="col-card-num">02</div>
+                    <h4>「墓じまい」が社会課題に</h4>
+                    <p>無縁墓は年間数万基。2040年には単身世帯が4割超。「誰が記憶を残すのか」は個人の問題から社会の問題へ移行。</p>
+                </div>
+                <div class="col-card">
+                    <div class="col-card-num">03</div>
+                    <h4>千年レイヤーが不在</h4>
+                    <p>デジタル遺品整理、AI故人再現——市場は急成長。しかし全て既存インフラ上。補完する千年レイヤーが求められている。</p>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="slide-footer">
+        <span>TokiStorage &mdash; 協業提案</span>
+        <span>Confidential</span>
+        <span class="pg">2</span>
+    </div>
+</section>
+
+<!-- ━━━ SLIDE 03: SOLUTION ━━━ -->
+<section class="slide">
+    <div class="action-bar">
+        <h2>TokiStorageは技術・ユースケース・思想基盤・展開網の4つを「設計思想ごと」提供できる</h2>
+    </div>
+    <div class="slide-body">
+        <div class="slide-content">
+            <p class="section-label">Our Offering</p>
+            <div class="grid2x2">
+                <div class="grid-card">
+                    <div class="grid-card-icon">&#x1F48E;</div>
+                    <div>
+                        <h4>石英ガラス記録技術</h4>
+                        <p>金属蒸着によるQRコード刻印。サーバー・電源ゼロ。SLA 100%、1000年保証。スマホカメラで読取可能。</p>
+                    </div>
+                </div>
+                <div class="grid-card">
+                    <div class="grid-card-icon">&#x1F4CA;</div>
+                    <div>
+                        <h4>200+ ユースケース（業界別整理済み）</h4>
+                        <p>終活・婚礼・寺社・学校・企業・自治体・NGO・ホテル・航空。提案書にそのまま転用可能な粒度。</p>
+                    </div>
+                </div>
+                <div class="grid-card">
+                    <div class="grid-card-icon">&#x1F4DD;</div>
+                    <div>
+                        <h4>70+ 思想エッセイ（9領域）</h4>
+                        <p>存在証明を心理学・宗教・経済・AI・宇宙まで展開。知的コンテンツとしてクライアント提案に活用可能。</p>
+                    </div>
+                </div>
+                <div class="grid-card">
+                    <div class="grid-card-icon">&#x1F43E;</div>
+                    <div>
+                        <h4>Pearl Soap + アンバサダー網</h4>
+                        <p>贈与経済の実践。全国にワークショップ展開可能な分散型運動体。エンドユーザーとの接点を提供。</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="slide-footer">
+        <span>TokiStorage &mdash; 協業提案</span>
+        <span>Confidential</span>
+        <span class="pg">3</span>
+    </div>
+</section>
+
+<!-- ━━━ SLIDE 04: DIFFERENTIATOR ━━━ -->
+<section class="slide">
+    <div class="action-bar">
+        <h2>TokiStorageは既存デジタルサービスの「競合」ではなく「千年レイヤー」として補完する位置づけである</h2>
+    </div>
+    <div class="slide-body">
+        <div class="slide-content">
+            <p class="section-label">Positioning</p>
+            <table class="dk-table">
+                <thead>
+                    <tr>
+                        <th style="width:15%"></th>
+                        <th style="width:42%">デジタルサービス（日常の記録）</th>
+                        <th style="width:43%">TokiStorage（千年の記録）</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <th>記録媒体</th>
+                        <td>クラウド / HDD</td>
+                        <td class="hl">石英ガラス（物理）</td>
+                    </tr>
+                    <tr>
+                        <th>得意な時間軸</th>
+                        <td>今〜数十年（日常利用に最適）</td>
+                        <td class="hl">100年〜1000年（永続保存に特化）</td>
+                    </tr>
+                    <tr>
+                        <th>インフラ</th>
+                        <td>サーバー・電源（利便性の源泉）</td>
+                        <td class="hl">不要（GitHub分散管理）</td>
+                    </tr>
+                    <tr>
+                        <th>読み取り</th>
+                        <td>専用アプリ / ログイン</td>
+                        <td class="hl">スマホのカメラだけ</td>
+                    </tr>
+                    <tr>
+                        <th>文化的厚み</th>
+                        <td>機能・利便性が価値の中心</td>
+                        <td class="hl">70+ エッセイ＋贈与経済の実践</td>
+                    </tr>
+                    <tr>
+                        <th>社会的接点</th>
+                        <td>プラットフォームとしての貢献</td>
+                        <td class="hl">SoulCarrier（無縁墓・遺骨送還活動）</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <div class="slide-footer">
+        <span>TokiStorage &mdash; 協業提案</span>
+        <span>Confidential</span>
+        <span class="pg">4</span>
+    </div>
+</section>
+
+<!-- ━━━ SLIDE 05: PARTNERSHIP MODELS ━━━ -->
+<section class="slide">
+    <div class="action-bar">
+        <h2>貴社のビジネスモデルに応じた3つの提携モデルを用意しており、段階的な移行も可能</h2>
+    </div>
+    <div class="slide-body">
+        <div class="slide-content">
+            <p class="section-label">Partnership Models</p>
+            <div class="model-row">
+                <div class="model-item">
+                    <div class="model-badge b1">紹介<br>モデル</div>
+                    <div class="model-text">
+                        <h4>A. クライアント紹介型パートナーシップ</h4>
+                        <p>紹介ベースで連携。リファラルフィーをお支払い。クライアント対応・納品はTokiStorage側で完結。</p>
+                        <p class="ex">例：終活コンサル→存在証明を提案 / 葬祭業DX→メモリアルオプション追加</p>
+                    </div>
+                </div>
+                <div class="model-item">
+                    <div class="model-badge b2">共同<br>提案</div>
+                    <div class="model-text">
+                        <h4>B. 共同ソリューション型</h4>
+                        <p>貴社コンサルにTokiStorageを組み込んだ共同提案。ESG・地方創生・文化保存の「出口」として千年記録を位置づけ。</p>
+                        <p class="ex">例：自治体DX→地域記憶アーカイブ / ホテルCX改革→ゲスト記録のアップグレード</p>
+                    </div>
+                </div>
+                <div class="model-item">
+                    <div class="model-badge b3">事業<br>共創</div>
+                    <div class="model-text">
+                        <h4>C. 新規事業共創型</h4>
+                        <p>存在証明を軸に新規事業を共同立ち上げ。技術・思想・ユースケースはTokiStorage、市場アクセス・信用・スケールは貴社。</p>
+                        <p class="ex">例：メモリアルテック新規事業 / 企業向け永続アーカイブサービス</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="slide-footer">
+        <span>TokiStorage &mdash; 協業提案</span>
+        <span>Confidential</span>
+        <span class="pg">5</span>
+    </div>
+</section>
+
+<!-- ━━━ SLIDE 06: REVENUE + EARLY PARTNER ━━━ -->
+<section class="slide">
+    <div class="action-bar">
+        <h2>クライアント・パートナー・TokiStorageの三者がWinになる収益設計を採用している</h2>
+    </div>
+    <div class="slide-body">
+        <div class="slide-content">
+            <p class="section-label">Revenue Flow</p>
+
+            <div class="flow-row">
+                <div class="flow-box fc">
+                    <h4>クライアント</h4>
+                    <p>千年の存在証明<br>社会的意義の実感</p>
+                </div>
+                <span class="flow-arrow">&larr;</span>
+                <div class="flow-box fp">
+                    <h4>パートナー（貴社）</h4>
+                    <p>紹介フィー or 共同提案収益<br>クライアントLTV向上</p>
+                </div>
+                <span class="flow-arrow">&larr;</span>
+                <div class="flow-box ft">
+                    <h4>TokiStorage</h4>
+                    <p>技術・思想・納品<br>収益の一部→SoulCarrier活動</p>
+                </div>
+            </div>
+
+            <div class="callout">
+                <h4>初期パートナー優遇</h4>
+                <p>複数のコンサルティングファームに順次ご提案を進めています。最初に提携いただいたファームには、紹介モデルの優先条件・エリア独占権など、初期パートナーならではのインセンティブをご用意します。</p>
+            </div>
+        </div>
+    </div>
+    <div class="slide-footer">
+        <span>TokiStorage &mdash; 協業提案</span>
+        <span>Confidential</span>
+        <span class="pg">6</span>
+    </div>
+</section>
+
+<!-- ━━━ SLIDE 07: CLIENT SECTORS ━━━ -->
+<section class="slide">
+    <div class="action-bar">
+        <h2>葬祭・ホスピタリティ・宗教法人・自治体・ESG・金融の6領域で特に高い親和性がある</h2>
+    </div>
+    <div class="slide-body">
+        <div class="slide-content">
+            <p class="section-label">Client Fit</p>
+            <p class="body-lead">貴社のクライアントポートフォリオに、以下のセクターはありませんか。</p>
+            <div class="sector-grid">
+                <div class="sector-card">
+                    <div class="sector-icon">&#x1F3E5;</div>
+                    <h4>葬祭・メモリアル</h4>
+                    <p>墓じまい代替、永代供養デジタル化、遺族向け新サービス</p>
+                </div>
+                <div class="sector-card">
+                    <div class="sector-icon">&#x1F3E8;</div>
+                    <h4>ホスピタリティ</h4>
+                    <p>ウェディング記録、ホテルCX、記念日サービス</p>
+                </div>
+                <div class="sector-card">
+                    <div class="sector-icon">&#x1F3DB;</div>
+                    <h4>宗教法人・寺社</h4>
+                    <p>檀家記録の永続化、参拝体験DX、文化財保存</p>
+                </div>
+                <div class="sector-card">
+                    <div class="sector-icon">&#x1F3EC;</div>
+                    <h4>自治体・教育</h4>
+                    <p>地域アーカイブ、災害記録、学校史の永続化</p>
+                </div>
+                <div class="sector-card">
+                    <div class="sector-icon">&#x1F30F;</div>
+                    <h4>ESG・サステナビリティ</h4>
+                    <p>1000年設計の企業理念記録、SDGs実績の永続証明</p>
+                </div>
+                <div class="sector-card">
+                    <div class="sector-icon">&#x1F4BC;</div>
+                    <h4>金融・保険</h4>
+                    <p>終活関連サービス連携、デジタル遺品対策</p>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="slide-footer">
+        <span>TokiStorage &mdash; 協業提案</span>
+        <span>Confidential</span>
+        <span class="pg">7</span>
+    </div>
+</section>
+
+<!-- ━━━ SLIDE 08: FOUNDER + INDEPENDENCE ━━━ -->
+<section class="slide">
+    <div class="action-bar">
+        <h2>代表はBig4出身であり、ファームのコンプライアンス要件を理解した上で提携モデルを設計している</h2>
+    </div>
+    <div class="slide-body">
+        <div class="slide-content">
+            <p class="section-label">Team &amp; Independence</p>
+
+            <div class="founder-row">
+                <div class="founder-avatar">佐</div>
+                <div class="founder-info">
+                    <h4>佐藤卓也 &mdash; TokiStorage 代表（個人事業 開業届出済）</h4>
+                    <p>大手コンサルティングファームでの経験を経て、半導体製造装置のエンジニアリング20年超。タイムレスタウン新浦安（250世帯）の自治会長として「ゆりかごから墓場まで」のコミュニティ運営を経験。SoulCarrier活動で「記憶が消える恐怖」を目の当たりにし、TokiStorageを着想。マウイ・山中湖でのオフグリッド実証を経て、制度に依存しない千年設計の技術を完成。</p>
+                    <div class="tag-row">
+                        <span class="tag-pill">元Big4ファーム</span>
+                        <span class="tag-pill">半導体エンジニアリング 20年+</span>
+                        <span class="tag-pill">自治会長（250世帯）</span>
+                        <span class="tag-pill">SoulCarrier主宰</span>
+                        <span class="tag-pill">オフグリッド実証済み</span>
+                        <span class="tag-pill">佐渡島移住予定（2026春）</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="callout" style="margin-top: 0.6rem;">
+                <h4>独立性（Independence）について</h4>
+                <p>本提携はベンダーパートナーシップです。SalesforceやSAPの導入推奨と同じ構造であり、監査契約・出資関係は一切含みません。独立性に関する懸念が発生しない設計です。</p>
+            </div>
+        </div>
+    </div>
+    <div class="slide-footer">
+        <span>TokiStorage &mdash; 協業提案</span>
+        <span>Confidential</span>
+        <span class="pg">8</span>
+    </div>
+</section>
+
+<!-- ━━━ SLIDE 09: NEXT STEP ━━━ -->
+<section class="slide cta-slide">
+    <div class="action-bar">
+        <h2>Next Step</h2>
+    </div>
+    <div class="cta-body">
+        <h3>まずは30分、お話ししませんか。</h3>
+        <p>提携の形は柔軟に設計できます。<br>貴社クライアントの具体的な課題から逆算して、一緒に最適なモデルを見つけましょう。</p>
+        <div class="cta-links">
+            <a href="partnership.html">詳細版を見る</a>
+            <a href="infographic.html">エコシステム全体像</a>
+            <a href="usecases.html">200+ ユースケース</a>
+        </div>
+    </div>
+    <div class="slide-footer">
+        <span>TokiStorage &mdash; TokiStorage</span>
+        <span>Confidential</span>
+        <span class="pg">9</span>
+    </div>
+</section>
+
+</body>
+</html>

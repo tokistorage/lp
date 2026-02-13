@@ -1,0 +1,600 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Metal Deposition Technology on Quartz Glass | TokiStorage</title>
+    <meta name="robots" content="noindex, nofollow">
+    <meta name="description" content="The technology to engrave QR codes on quartz glass — metal deposition, laser processing, and nanoscale structure control. Explaining the technical foundation for 1,000-year preservation.">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Shippori+Mincho:wght@400;500;600;700&family=Zen+Kaku+Gothic+New:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --toki-violet: #7C3AED;
+            --toki-violet-dark: #6D28D9;
+            --toki-violet-pale: #F5F3FF;
+            --accent-purple: #8B5CF6;
+            --bg-white: #FFFFFF;
+            --bg-section: #EDE9FE;
+            --text-primary: #1E293B;
+            --text-secondary: #475569;
+            --text-muted: #94A3B8;
+            --border: #E2E8F0;
+            --font-display: 'Shippori Mincho', serif;
+            --font-body: 'Zen Kaku Gothic New', sans-serif;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        html { scroll-behavior: smooth; }
+
+        body {
+            font-family: var(--font-body);
+            font-weight: 400;
+            background: var(--bg-white);
+            color: var(--text-primary);
+            line-height: 2;
+            font-size: 16px;
+        }
+
+        .article-nav {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 1000;
+            background: rgba(255,255,255,0.95);
+            backdrop-filter: blur(12px);
+            border-bottom: 1px solid var(--border);
+            padding: 0.6rem 1.2rem;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 1rem;
+        }
+        .article-nav .nav-brand {
+            font-family: var(--font-display);
+            font-size: 0.9rem;
+            font-weight: 600;
+            color: var(--toki-violet);
+            text-decoration: none;
+            white-space: nowrap;
+        }
+        .article-nav .nav-right {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+        .article-nav .nav-label {
+            font-size: 0.6rem;
+            color: var(--text-muted);
+            letter-spacing: 0.08em;
+        }
+        .article-nav .lang-switch {
+            font-size: 0.75rem;
+            color: var(--toki-violet);
+            text-decoration: none;
+            padding: 0.3rem 0.6rem;
+            border: 1px solid var(--toki-violet);
+            border-radius: 4px;
+        }
+        .article-nav .lang-switch:hover {
+            background: var(--toki-violet);
+            color: #fff;
+        }
+
+        .article-container {
+            max-width: 680px;
+            margin: 0 auto;
+            padding: 7rem 2rem 4rem;
+        }
+
+        .article-header {
+            margin-bottom: 3rem;
+            padding-bottom: 2rem;
+            border-bottom: 1px solid var(--border);
+        }
+        .article-category {
+            font-size: 0.7rem;
+            color: var(--toki-violet);
+            letter-spacing: 0.15em;
+            margin-bottom: 1rem;
+        }
+        .article-header h1 {
+            font-family: var(--font-display);
+            font-size: 1.8rem;
+            font-weight: 700;
+            line-height: 1.5;
+            margin-bottom: 1.5rem;
+        }
+        .article-subtitle {
+            font-size: 0.95rem;
+            color: var(--text-secondary);
+            line-height: 1.9;
+        }
+
+        .article-content h2 {
+            font-family: var(--font-display);
+            font-size: 1.3rem;
+            font-weight: 600;
+            margin: 3rem 0 1.5rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 2px solid var(--toki-violet-pale);
+        }
+        .article-content h3 {
+            font-family: var(--font-display);
+            font-size: 1.1rem;
+            font-weight: 600;
+            margin: 2rem 0 1rem;
+            color: var(--toki-violet-dark);
+        }
+        .article-content p {
+            margin-bottom: 1.5rem;
+        }
+        .article-content blockquote {
+            border-left: 3px solid var(--toki-violet);
+            padding-left: 1.5rem;
+            margin: 2rem 0;
+            font-family: var(--font-display);
+            color: var(--text-secondary);
+        }
+        .article-content ul, .article-content ol {
+            margin: 1.5rem 0;
+            padding-left: 1.5rem;
+        }
+        .article-content li {
+            margin-bottom: 0.75rem;
+        }
+
+        .core-message {
+            background: var(--toki-violet-pale);
+            border-left: 4px solid var(--toki-violet);
+            padding: 1.5rem;
+            margin: 2rem 0;
+            font-size: 0.95rem;
+        }
+
+        .key-point {
+            background: linear-gradient(135deg, var(--toki-violet-pale) 0%, #fff 100%);
+            border: 1px solid var(--toki-violet);
+            border-radius: 8px;
+            padding: 1.5rem;
+            margin: 2rem 0;
+            text-align: center;
+        }
+        .key-point p {
+            font-family: var(--font-display);
+            font-size: 1.1rem;
+            color: var(--toki-violet-dark);
+            margin: 0;
+        }
+
+        .tech-card {
+            background: var(--bg-section);
+            border-radius: 8px;
+            padding: 1.5rem;
+            margin: 2rem 0;
+        }
+        .tech-card h4 {
+            font-family: var(--font-display);
+            font-size: 1rem;
+            color: var(--toki-violet);
+            margin-bottom: 0.75rem;
+        }
+        .tech-card p {
+            font-size: 0.9rem;
+            margin-bottom: 0.5rem;
+        }
+        .tech-card p:last-child {
+            margin-bottom: 0;
+        }
+
+        .process-flow {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1rem;
+            margin: 2rem 0;
+        }
+        .process-step {
+            flex: 1;
+            min-width: 150px;
+            background: var(--toki-violet-pale);
+            border-radius: 8px;
+            padding: 1rem;
+            text-align: center;
+            position: relative;
+        }
+        .process-step::after {
+            content: '→';
+            position: absolute;
+            right: -0.8rem;
+            top: 50%;
+            transform: translateY(-50%);
+            color: var(--toki-violet);
+            font-weight: bold;
+        }
+        .process-step:last-child::after {
+            display: none;
+        }
+        .process-step .step-num {
+            font-family: var(--font-display);
+            font-size: 1.5rem;
+            font-weight: 600;
+            color: var(--toki-violet);
+        }
+        .process-step .step-label {
+            font-size: 0.85rem;
+            color: var(--text-secondary);
+        }
+
+        .stat-box {
+            display: flex;
+            align-items: baseline;
+            gap: 0.5rem;
+            margin: 1.5rem 0;
+            padding: 1rem;
+            background: var(--toki-violet-pale);
+            border-radius: 8px;
+        }
+        .stat-box .number {
+            font-family: var(--font-display);
+            font-size: 2rem;
+            font-weight: 600;
+            color: var(--toki-violet);
+        }
+        .stat-box .unit {
+            font-size: 0.9rem;
+            color: var(--text-secondary);
+        }
+
+        .disclaimer {
+            font-size: 0.8rem;
+            color: var(--text-muted);
+            font-style: italic;
+            margin-bottom: 2rem;
+        }
+
+        .article-footer {
+            margin-top: 4rem;
+            padding-top: 2rem;
+            border-top: 1px solid var(--border);
+            text-align: center;
+        }
+        .article-footer p {
+            font-size: 0.8rem;
+            color: var(--text-muted);
+            margin-bottom: 1rem;
+        }
+        .article-footer a {
+            color: var(--toki-violet);
+            text-decoration: none;
+        }
+        .article-footer a:hover {
+            text-decoration: underline;
+        }
+
+        @media (max-width: 768px) {
+            .article-container { padding: 6rem 1.2rem 3rem; }
+            .article-header h1 { font-size: 1.5rem; }
+            .article-nav .nav-label { display: none; }
+            .process-step::after { display: none; }
+        }
+
+        @media print {
+            .article-nav { display: none; }
+            .article-container { padding-top: 2rem; }
+        }
+    </style>
+</head>
+<body>
+
+<nav class="article-nav">
+    <a href="index-en.html" class="nav-brand">TokiStorage</a>
+    <div class="nav-right">
+        <span class="nav-label">TECHNOLOGY</span>
+        <a href="deposition.html" class="lang-switch">JA</a>
+    </div>
+</nav>
+
+<main class="article-container">
+
+    <header class="article-header">
+        <p class="article-category">ESSAY — MATERIALS ENGINEERING</p>
+        <h1>Metal Deposition Technology<br>on Quartz Glass</h1>
+        <p class="article-subtitle">
+            The technology to engrave QR codes on quartz glass — metal deposition, laser processing, and nanoscale structure control.<br>
+            Explaining the technical foundation for 1,000-year preservation.
+        </p>
+    </header>
+
+    <article class="article-content">
+
+        <div class="core-message">
+            <strong>Key Message:</strong> Metal deposition on quartz glass traditionally required expensive specialized equipment. We developed a method using off-the-shelf materials and fiber laser technology, achieving "democratization" of the technology.
+        </div>
+
+        <p class="disclaimer">*This essay is a technical overview and does not disclose specific manufacturing process details.</p>
+
+        <h2>1. Why "Engrave" on Quartz?</h2>
+
+        <p>Preserving information for 1,000 years requires two conditions.</p>
+
+        <p>First, the medium must have physical stability for over 1,000 years. This is satisfied by quartz glass.</p>
+
+        <p>Second, the information must remain readable for over 1,000 years. This is achieved through "engraving" technology.</p>
+
+        <h3>The Problem with Ink</h3>
+
+        <p>What would happen if we printed on quartz glass with ink? Ink is organic compound that degrades through UV exposure, oxidation, and temperature changes. It would likely fade in decades and become illegible in centuries.</p>
+
+        <p>Even if we choose a permanent medium like quartz, it's meaningless if the recording method is vulnerable.</p>
+
+        <h3>The Solution: "Engraving"</h3>
+
+        <p>"Engraving" means changing the structure of the quartz glass itself. This integrates information with the quartz, ensuring information persists as long as the quartz exists.</p>
+
+        <p>Several specific methods exist:</p>
+
+        <ul>
+            <li><strong>Metal thin film deposition</strong> — Depositing metal at nanoscale</li>
+            <li><strong>Laser processing</strong> — Modifying quartz surface with laser</li>
+            <li><strong>Ion implantation</strong> — Injecting ions into quartz interior</li>
+            <li><strong>Femtosecond laser</strong> — Changing internal structure with ultra-short pulses</li>
+        </ul>
+
+        <p>TokiStorage uses combinations of these technologies.</p>
+
+
+        <h2>2. Metal Deposition Technology</h2>
+
+        <p>Metal deposition is a fundamental technology in semiconductor manufacturing.</p>
+
+        <h3>Vacuum Evaporation Principle</h3>
+
+        <p>When metal is heated in a vacuum chamber, it vaporizes. The vaporized metal atoms travel in straight lines and adhere to the target surface (substrate). Repeated, this forms films at the nanometer scale.</p>
+
+        <div class="process-flow">
+            <div class="process-step">
+                <div class="step-num">1</div>
+                <div class="step-label">Vacuum Chamber</div>
+            </div>
+            <div class="process-step">
+                <div class="step-num">2</div>
+                <div class="step-label">Heat Metal</div>
+            </div>
+            <div class="process-step">
+                <div class="step-num">3</div>
+                <div class="step-label">Vaporize & Travel</div>
+            </div>
+            <div class="process-step">
+                <div class="step-num">4</div>
+                <div class="step-label">Deposit & Form Film</div>
+            </div>
+        </div>
+
+        <h3>Sputtering</h3>
+
+        <p>Sputtering is another deposition method.</p>
+
+        <p>Ions collide with target metal, ejecting metal atoms. These ejected atoms adhere to the substrate, forming thin films. This produces denser, more uniform films than evaporation.</p>
+
+        <div class="stat-box">
+            <span class="number">10-100</span>
+            <span class="unit">nm — typical metal thin film thickness (nanometers)</span>
+        </div>
+
+        <h3>Metal Selection</h3>
+
+        <p>The choice of metal depends on the application.</p>
+
+        <div class="tech-card">
+            <h4>Metal Thin Film Properties Comparison</h4>
+            <p><strong>Gold (Au)</strong> — Most chemically stable. Expensive but doesn't oxidize.</p>
+            <p><strong>Silver (Ag)</strong> — High reflectivity. However, tarnishes (sulfidizes).</p>
+            <p><strong>Chromium (Cr)</strong> — High hardness and wear resistance.</p>
+            <p><strong>Aluminum (Al)</strong> — Inexpensive but forms oxide layer.</p>
+            <p><strong>Titanium (Ti)</strong> — High adhesion, used as underlayer.</p>
+        </div>
+
+        <p>TokiStorage designs metal combinations considering durability and readability balance.</p>
+
+
+        <h2>3. Democratizing the Technology — Our Approach</h2>
+
+        <p>The conventional metal deposition techniques described above require expensive equipment like vacuum chambers and sputtering systems. These exist in semiconductor factories and research institutions but are inaccessible to most.</p>
+
+        <p>We developed a way to break through this barrier.</p>
+
+        <h3>Using Off-the-Shelf Materials</h3>
+
+        <p>We use commercially available quartz glass plates and brass. Not specialized materials, but commonly accessible items.</p>
+
+        <h3>Fiber Laser Deposition</h3>
+
+        <p>We fix brass beneath a quartz glass plate and engrave from the top surface using a fiber laser. The laser's thermal energy locally vaporizes the brass, and the vapor adheres to the quartz glass surface.</p>
+
+        <p>We have verified that this enables metal deposition in arbitrary shapes — including QR codes — onto quartz glass.</p>
+
+        <div class="key-point">
+            <p>No vacuum chamber required.<br>Metal deposition achieved with off-the-shelf materials + fiber laser.</p>
+        </div>
+
+        <h3>The Significance of Democratization</h3>
+
+        <p>Traditionally, metal deposition was considered "technology only experts can do." Expensive equipment, clean rooms, specialized knowledge — these barriers kept the technology monopolized by a few.</p>
+
+        <p>Our approach significantly lowers these barriers. Fiber laser machines are increasingly being adopted by small businesses and makerspaces. Materials are commercially available.</p>
+
+        <p>Bringing the dream of "preserving proof of existence for 1,000 years" to more people's hands — that is democratization of technology.</p>
+
+
+        <h2>4. Patterning Technology</h2>
+
+        <p>Simply depositing metal thin film across the entire surface doesn't create a QR code. Specific patterns must be formed.</p>
+
+        <h3>Photolithography</h3>
+
+        <p>This is the standard patterning technique used in semiconductor manufacturing.</p>
+
+        <ol>
+            <li>Apply photosensitive resin (photoresist) to substrate</li>
+            <li>Expose to UV light through a mask</li>
+            <li>Remove exposed (or unexposed) areas through development</li>
+            <li>Metal deposition or etching</li>
+            <li>Remove resist</li>
+        </ol>
+
+        <p>This method achieves micrometer to nanometer precision patterns.</p>
+
+        <h3>Direct Laser Writing</h3>
+
+        <p>There's also a method of directly drawing patterns with a laser beam without using masks.</p>
+
+        <p>This is suitable for low-volume, high-variety production, and effective for TokiStorage where each QR code is unique.</p>
+
+        <div class="stat-box">
+            <span class="number">1-10</span>
+            <span class="unit">μm — typical laser writing resolution (micrometers)</span>
+        </div>
+
+        <h3>QR Code Resolution</h3>
+
+        <p>QR codes consist of 21×21 to 177×177 cells (modules). Version 1 (smallest) has 21×21=441 cells, Version 40 (largest) has 177×177=31,329 cells.</p>
+
+        <p>Calculating cell size for a 10mm square QR code, Version 10 (57×57 cells) equals about 175μm/cell. This is well within current manufacturing capabilities.</p>
+
+
+        <h2>5. Protection Technology</h2>
+
+        <p>Metal thin film formed on quartz glass surface alone risks physical wear and chemical change. Protective layers are needed for long-term storage.</p>
+
+        <h3>Overcoat</h3>
+
+        <p>Transparent protective films are formed over the metal pattern.</p>
+
+        <ul>
+            <li><strong>SiO₂ film</strong> — Same material as quartz, high compatibility</li>
+            <li><strong>Si₃N₄ film</strong> — Silicon nitride. High hardness and wear resistance</li>
+            <li><strong>Diamond-like carbon (DLC)</strong> — Hardness close to diamond</li>
+        </ul>
+
+        <p>These protective films are also formed through deposition or CVD (Chemical Vapor Deposition).</p>
+
+        <h3>Encapsulation</h3>
+
+        <p>For more reliable protection, quartz glass pieces can be fused together. Another quartz glass piece is placed over the patterned glass and fused at high temperature.</p>
+
+        <p>This "seals" the metal pattern in quartz glass, completely isolating it from the external environment.</p>
+
+        <div class="key-point">
+            <p>Metal thin film + Protective layer + Quartz substrate<br>This three-layer structure enables 1,000-year preservation.</p>
+        </div>
+
+
+        <h2>6. Femtosecond Laser Technology</h2>
+
+        <p>A more advanced technology is recording information inside quartz glass using femtosecond lasers.</p>
+
+        <h3>What Is Femtosecond?</h3>
+
+        <p>A femtosecond (fs) is 10⁻¹⁵ seconds — one quadrillionth of a second. Lasers that emit pulses in this ultra-short time are called "femtosecond lasers."</p>
+
+        <div class="stat-box">
+            <span class="number">10⁻¹⁵</span>
+            <span class="unit">seconds — the femtosecond timescale</span>
+        </div>
+
+        <h3>Multiphoton Absorption</h3>
+
+        <p>Normally, quartz glass transmits visible light and UV. But with femtosecond laser's ultra-high intensity pulses, "multiphoton absorption" occurs.</p>
+
+        <p>Multiple photons are absorbed simultaneously, locally changing the structure inside the quartz glass. This enables recording information inside the quartz glass, not on its surface.</p>
+
+        <h3>5D Data Storage</h3>
+
+        <p>A research team at the University of Southampton, UK, developed technology to record data in "5 dimensions" on quartz glass using femtosecond lasers.</p>
+
+        <p>In addition to 3D position (x, y, z), they use the "size" and "orientation" of nanostructures formed by the laser as information. This could enable storing hundreds of terabytes on a single disc.</p>
+
+        <div class="tech-card">
+            <h4>5D Recording Principle</h4>
+            <p><strong>x, y, z</strong> — 3D spatial position</p>
+            <p><strong>Size</strong> — Nanostructure size (reading light intensity change)</p>
+            <p><strong>Orientation</strong> — Nanostructure direction (reading light polarization change)</p>
+        </div>
+
+        <p>This technology is called "eternal data storage," and preservation for billions of years is theoretically possible.</p>
+
+
+        <h2>7. Reading Technology</h2>
+
+        <p>Recording information is meaningless if it cannot be read. Readability in 1,000 years is essential.</p>
+
+        <h3>Advantages of QR Codes</h3>
+
+        <p>One reason for choosing QR codes is the "universality of reading technology."</p>
+
+        <p>QR codes can be read with a camera and software. No special reading device is required. Existing infrastructure like smartphones can be used directly.</p>
+
+        <p>Whether smartphones will exist in 1,000 years is unknown, but the principle of "optically recognizing patterns and decoding" will likely remain. QR code specifications are public, making reimplementation by future technologists easy.</p>
+
+        <h3>Error Correction</h3>
+
+        <p>QR codes have built-in error correction. Even if part of the code is damaged, original data can be recovered from remaining information.</p>
+
+        <p>There are four error correction levels, and the highest level (H) enables recovery even with 30% damage. The design ensures information remains readable despite some degradation over 1,000 years.</p>
+
+        <h3>Ensuring Visibility</h3>
+
+        <p>Metal thin film QR codes are read using reflectance difference. Metal parts reflect light while quartz parts transmit it. This contrast creates readability.</p>
+
+        <p>Metal selection, film thickness design, and optical properties of protective layers — all are optimized considering readability in 1,000 years.</p>
+
+
+        <h2>8. Technology Reliability and Democratization</h2>
+
+        <p>The foundational technologies used in TokiStorage are not newly developed. They are proven technologies used for decades in semiconductor manufacturing, optical equipment, and aerospace industries.</p>
+
+        <h3>Proven Principles</h3>
+
+        <p>Metal deposition, laser processing, QR codes — these are all technologies used daily around the world. Their reliability is proven through track record.</p>
+
+        <h3>Our Innovation</h3>
+
+        <p>Our contribution is reconstructing these principles into "a form anyone can access."</p>
+
+        <p>Commercially available quartz glass plates, brass, and fiber laser machines — with this combination, we achieved metal deposition that previously required specialized equipment.</p>
+
+        <div class="key-point">
+            <p>"Democratization of Technology"<br>Bringing advanced technology to more people's hands — that is TokiStorage's innovation.</p>
+        </div>
+
+
+        <h2>Conclusion — To Engineers</h2>
+
+        <p>If you're an engineer reading this, here's a proposal:</p>
+
+        <p>When someone says "you need specialized equipment for that," question whether that's really true.</p>
+
+        <p>Metal deposition supposedly required vacuum chambers. We achieved it with off-the-shelf quartz glass, brass plates, and fiber lasers. Embedding audio in QR codes was supposedly impossible. We achieved 30 seconds with Opus and proprietary compression.</p>
+
+        <p>"Democratization" means liberating technology from privilege. Replacing expensive equipment with affordable ingenuity. Transforming expert-only domains into spaces where anyone can try.</p>
+
+        <p>In your field too, there must be technology waiting to be democratized. Among the things labeled "too expensive" or "too difficult," simple solutions may be sleeping.</p>
+
+        <p>We believe in that possibility. If you share the same vision, let's open "closed technology" together.</p>
+
+        <p>We're waiting to hear from you.</p>
+
+    </article>
+
+    <footer class="article-footer">
+        <p id="essay-nav-links"></p>
+        <p style="margin-top: 2rem; font-size: 0.75rem;">&copy; 2026 TokiStorage</p>
+    </footer>
+
+</main>
+
+<script src="essay-nav.js?v=20260209"></script>
+</body>
+</html>

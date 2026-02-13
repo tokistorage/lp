@@ -1,0 +1,711 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>タイムレスコンサルティング | 100年後に何を残しますか</title>
+    <meta name="robots" content="noindex, nofollow">
+    <meta name="description" content="100年後に何を残しますか——AIが答えられない問いに、千年の視座で向き合う。タイムレスコンサルティングは、あなたの存在証明を設計する対話型サービスです。">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Shippori+Mincho:wght@400;500;600;700&family=Zen+Kaku+Gothic+New:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --toki-blue: #2563EB;
+            --toki-blue-light: #3B82F6;
+            --toki-blue-dark: #1D4ED8;
+            --toki-blue-pale: #EFF6FF;
+            --toki-blue-glow: rgba(37, 99, 235, 0.12);
+            --toki-gold: #C9A962;
+            --toki-gold-pale: #FDF8E8;
+            --emerald: #16A34A;
+            --emerald-pale: #F0FDF4;
+            --bg-white: #FFFFFF;
+            --bg-page: #F8FAFC;
+            --bg-section: #F1F5F9;
+            --bg-card: #FFFFFF;
+            --text-primary: #1E293B;
+            --text-secondary: #475569;
+            --text-muted: #94A3B8;
+            --text-dim: #CBD5E1;
+            --border: #E2E8F0;
+            --border-light: #F1F5F9;
+            --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.05);
+            --shadow-md: 0 4px 16px rgba(0, 0, 0, 0.06);
+            --font-display: 'Shippori Mincho', serif;
+            --font-body: 'Zen Kaku Gothic New', sans-serif;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        html { scroll-behavior: smooth; }
+
+        body {
+            font-family: var(--font-body);
+            font-weight: 400;
+            background: var(--bg-white);
+            color: var(--text-primary);
+            line-height: 1.9;
+            font-size: 16px;
+        }
+
+        /* Navigation */
+        .pp-nav {
+            position: fixed;
+            top: 0; left: 0; right: 0;
+            z-index: 1000;
+            background: rgba(255,255,255,0.95);
+            backdrop-filter: blur(12px);
+            border-bottom: 1px solid var(--border);
+            padding: 0.6rem 1.2rem;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+        .pp-nav .nav-brand {
+            font-family: var(--font-display);
+            font-size: 0.9rem;
+            font-weight: 600;
+            color: var(--toki-blue);
+            text-decoration: none;
+        }
+        .pp-nav .nav-right {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+        .pp-nav .nav-label {
+            font-size: 0.6rem;
+            color: var(--text-muted);
+            letter-spacing: 0.08em;
+        }
+        .pp-nav .lang-switch {
+            font-size: 0.75rem;
+            color: var(--toki-blue);
+            text-decoration: none;
+            padding: 0.3rem 0.6rem;
+            border: 1px solid var(--toki-blue);
+            border-radius: 4px;
+        }
+        .pp-nav .lang-switch:hover {
+            background: var(--toki-blue);
+            color: #fff;
+        }
+
+        /* Hero */
+        .cp-hero {
+            padding: 8rem 2rem 5rem;
+            text-align: center;
+            background: linear-gradient(180deg, var(--text-primary) 0%, #1a2744 60%, #0f172a 100%);
+            color: #fff;
+        }
+        .cp-hero-label {
+            font-size: 0.7rem;
+            letter-spacing: 0.25em;
+            color: var(--toki-gold);
+            margin-bottom: 2rem;
+        }
+        .cp-hero h1 {
+            font-family: var(--font-display);
+            font-size: 2.2rem;
+            font-weight: 700;
+            line-height: 1.6;
+            margin-bottom: 1.5rem;
+        }
+        .cp-hero-sub {
+            font-size: 1rem;
+            color: var(--text-muted);
+            max-width: 560px;
+            margin: 0 auto;
+            line-height: 2;
+        }
+        .cp-hero-sub strong {
+            color: var(--toki-gold);
+        }
+
+        /* Section */
+        .pp-section {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 4rem 2rem;
+        }
+        .pp-section-title {
+            font-family: var(--font-display);
+            font-size: 1.4rem;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+            color: var(--text-primary);
+        }
+        .pp-section-sub {
+            font-size: 0.9rem;
+            color: var(--text-secondary);
+            margin-bottom: 2.5rem;
+        }
+        .pp-section-border {
+            border-top: 1px solid var(--border);
+        }
+
+        /* Insight cards */
+        .insight-card {
+            background: var(--bg-section);
+            border-radius: 12px;
+            padding: 2rem;
+            margin-bottom: 1.5rem;
+        }
+        .insight-card h3 {
+            font-family: var(--font-display);
+            font-size: 1.05rem;
+            font-weight: 600;
+            color: var(--text-primary);
+            margin-bottom: 0.75rem;
+        }
+        .insight-card p {
+            font-size: 0.9rem;
+            color: var(--text-secondary);
+        }
+
+        /* Offering grid */
+        .offer-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+        }
+        .offer-card {
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 1.5rem;
+        }
+        .offer-num {
+            font-family: var(--font-display);
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: var(--toki-blue);
+            opacity: 0.25;
+            margin-bottom: 0.3rem;
+        }
+        .offer-card h4 {
+            font-family: var(--font-display);
+            font-size: 0.95rem;
+            font-weight: 600;
+            color: var(--text-primary);
+            margin-bottom: 0.5rem;
+        }
+        .offer-card p {
+            font-size: 0.85rem;
+            color: var(--text-secondary);
+            line-height: 1.7;
+        }
+
+        /* Process steps */
+        .process-list {
+            display: flex;
+            flex-direction: column;
+            gap: 1.5rem;
+        }
+        .process-item {
+            display: flex;
+            align-items: flex-start;
+            gap: 1.5rem;
+        }
+        .process-num {
+            flex-shrink: 0;
+            width: 3rem;
+            height: 3rem;
+            border-radius: 50%;
+            background: var(--toki-blue);
+            color: #fff;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-family: var(--font-display);
+            font-size: 0.9rem;
+            font-weight: 700;
+        }
+        .process-body h4 {
+            font-family: var(--font-display);
+            font-size: 1rem;
+            font-weight: 600;
+            color: var(--text-primary);
+            margin-bottom: 0.3rem;
+        }
+        .process-body p {
+            font-size: 0.85rem;
+            color: var(--text-secondary);
+            line-height: 1.7;
+        }
+
+        /* Audience cards */
+        .audience-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 1rem;
+        }
+        .audience-card {
+            background: var(--bg-section);
+            border-radius: 10px;
+            padding: 1.2rem;
+            text-align: center;
+        }
+        .audience-icon {
+            font-size: 1.5rem;
+            margin-bottom: 0.5rem;
+        }
+        .audience-card h4 {
+            font-family: var(--font-display);
+            font-size: 0.85rem;
+            font-weight: 600;
+            color: var(--text-primary);
+            margin-bottom: 0.3rem;
+        }
+        .audience-card p {
+            font-size: 0.75rem;
+            color: var(--text-secondary);
+            line-height: 1.6;
+        }
+
+        /* Deliverables */
+        .deliverable-list {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+        }
+        .deliverable-item {
+            display: flex;
+            align-items: flex-start;
+            gap: 1rem;
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 1.2rem 1.5rem;
+        }
+        .deliverable-icon {
+            flex-shrink: 0;
+            width: 2.5rem;
+            height: 2.5rem;
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.2rem;
+        }
+        .deliverable-icon.blue { background: var(--toki-blue-pale); }
+        .deliverable-icon.gold { background: var(--toki-gold-pale); }
+        .deliverable-icon.green { background: var(--emerald-pale); }
+        .deliverable-body h4 {
+            font-family: var(--font-display);
+            font-size: 0.95rem;
+            font-weight: 600;
+            color: var(--text-primary);
+            margin-bottom: 0.2rem;
+        }
+        .deliverable-body p {
+            font-size: 0.85rem;
+            color: var(--text-secondary);
+            line-height: 1.7;
+        }
+
+        /* Founder */
+        .founder-section {
+            background: var(--bg-section);
+            border-radius: 12px;
+            padding: 2rem;
+            display: flex;
+            gap: 1.5rem;
+            align-items: flex-start;
+        }
+        .founder-body h4 {
+            font-family: var(--font-display);
+            font-size: 1rem;
+            font-weight: 600;
+            color: var(--text-primary);
+            margin-bottom: 0.3rem;
+        }
+        .founder-body p {
+            font-size: 0.85rem;
+            color: var(--text-secondary);
+            line-height: 1.7;
+        }
+        .founder-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.4rem;
+            margin-top: 0.75rem;
+        }
+        .founder-tag {
+            font-size: 0.65rem;
+            padding: 0.2rem 0.6rem;
+            background: var(--bg-white);
+            border: 1px solid var(--border);
+            border-radius: 4px;
+            color: var(--text-secondary);
+        }
+        .founder-story {
+            margin-top: 1.2rem;
+            padding: 1rem 1.2rem;
+            background: var(--blue-pale);
+            border-left: 4px solid var(--gold);
+            border-radius: 6px;
+            font-size: 0.85rem;
+            line-height: 1.8;
+            color: var(--text-primary);
+        }
+
+        /* CTA */
+        .pp-cta {
+            background: var(--text-primary);
+            color: #fff;
+            text-align: center;
+            padding: 4rem 2rem;
+        }
+        .pp-cta h2 {
+            font-family: var(--font-display);
+            font-size: 1.5rem;
+            font-weight: 600;
+            margin-bottom: 1rem;
+        }
+        .pp-cta p {
+            font-size: 0.9rem;
+            color: var(--text-muted);
+            max-width: 500px;
+            margin: 0 auto 2rem;
+            line-height: 1.8;
+        }
+        .pp-cta-links {
+            display: flex;
+            justify-content: center;
+            gap: 1.5rem;
+            flex-wrap: wrap;
+        }
+        .pp-cta-links a {
+            color: var(--toki-gold);
+            text-decoration: none;
+            font-size: 0.85rem;
+            padding: 0.5rem 1.2rem;
+            border: 1px solid var(--toki-gold);
+            border-radius: 6px;
+            transition: background 0.2s;
+        }
+        .pp-cta-links a:hover {
+            background: var(--toki-gold);
+            color: var(--text-primary);
+        }
+
+        /* Quote block */
+        .quote-block {
+            background: var(--toki-blue-pale);
+            border-left: 4px solid var(--toki-blue);
+            border-radius: 0 12px 12px 0;
+            padding: 1.5rem 2rem;
+            margin-bottom: 2rem;
+        }
+        .quote-block p {
+            font-family: var(--font-display);
+            font-size: 1.1rem;
+            font-weight: 500;
+            color: var(--text-primary);
+            line-height: 1.8;
+        }
+        .quote-block .quote-attr {
+            font-family: var(--font-body);
+            font-size: 0.8rem;
+            color: var(--text-muted);
+            margin-top: 0.75rem;
+            font-weight: 400;
+        }
+
+        /* Footer */
+        .pp-footer {
+            text-align: center;
+            padding: 2rem;
+            border-top: 1px solid var(--border);
+        }
+        .pp-footer p {
+            font-size: 0.75rem;
+            color: var(--text-muted);
+        }
+        .pp-footer a {
+            color: var(--toki-blue);
+            text-decoration: none;
+        }
+
+        @media (max-width: 768px) {
+            .cp-hero { padding: 6rem 1.2rem 3rem; }
+            .cp-hero h1 { font-size: 1.5rem; }
+            .pp-section { padding: 3rem 1.2rem; }
+            .offer-grid { grid-template-columns: 1fr; }
+            .audience-grid { grid-template-columns: 1fr; }
+            .process-item { flex-direction: column; gap: 1rem; }
+            .process-num { width: auto; height: auto; padding: 0.5rem 1rem; border-radius: 6px; }
+            .founder-section { flex-direction: column; }
+            .pp-nav .nav-label { display: none; }
+        }
+
+        @media print {
+            .pp-nav { display: none; }
+            .cp-hero { padding-top: 2rem; }
+        }
+    </style>
+</head>
+<body>
+
+<nav class="pp-nav">
+    <a href="index.html" class="nav-brand">トキストレージ</a>
+    <div class="nav-right">
+        <span class="nav-label">TIMELESS CONSULTING</span>
+        <a href="client-proposal-en.html" class="lang-switch">EN</a>
+    </div>
+</nav>
+
+<!-- Hero -->
+<header class="cp-hero">
+    <p class="cp-hero-label">TIMELESS CONSULTING</p>
+    <h1>100年後に、<br>何を残しますか。</h1>
+    <p class="cp-hero-sub">
+        AIがあらゆる問いに答える時代。<br>
+        しかしこの問いだけは、<strong>あなた自身</strong>にしか答えられない。<br>
+        千年の視座で、あなたの存在証明を設計します。
+    </p>
+</header>
+
+<!-- The Question -->
+<section class="pp-section">
+    <h2 class="pp-section-title">なぜ今、この問いなのか</h2>
+    <p class="pp-section-sub">AIが答えられない、ただひとつの問い</p>
+
+    <div class="insight-card">
+        <h3>AIは「最適解」を出す。しかし「何を残すか」は決められない。</h3>
+        <p>生成AIは調査・分析・戦略を瞬時に出力します。しかし「100年後に何を残すか」——この問いへの答えは、あなたの人生の文脈からしか生まれません。最適化ではなく、意味の選択です。</p>
+    </div>
+    <div class="insight-card">
+        <h3>富の継承は解決済み。意味の継承は手つかずのまま。</h3>
+        <p>相続設計、事業承継、資産運用——「何を渡すか」の仕組みは整っています。しかし「なぜそれを残すのか」という物語は、制度では設計できません。あなたの意志を、千年先まで届ける仕組みが必要です。</p>
+    </div>
+    <div class="insight-card">
+        <h3>存在証明は、贈り物である。</h3>
+        <p>あなたが残すものは、未来の誰かへの贈り物になります。家族に。地域に。まだ生まれていない世代に。「自分が確かに存在した」という証が、見知らぬ未来の誰かの支えになる——それが存在証明の本質です。</p>
+    </div>
+</section>
+
+<!-- What We Offer -->
+<section class="pp-section pp-section-border">
+    <h2 class="pp-section-title">タイムレスコンサルティングとは</h2>
+    <p class="pp-section-sub">千年の視座を持つ人間との対話から、あなたの存在証明を設計する</p>
+
+    <div class="quote-block">
+        <p>あなたが買うのは「プロダクト」ではありません。<br>千年の視座を持つ人間との対話です。<br>その対話の先に、トキストレージという「かたち」が生まれます。</p>
+    </div>
+
+    <div class="offer-grid">
+        <div class="offer-card">
+            <div class="offer-num">01</div>
+            <h4>千年の問いとの対話</h4>
+            <p>「100年後に何を残すか」——この問いに、心理学・宗教・経済・AI・宇宙まで9領域の思想フレームワークで向き合います。あなたの答えは、あなただけのものです。</p>
+        </div>
+        <div class="offer-card">
+            <div class="offer-num">02</div>
+            <h4>存在証明のデザイン</h4>
+            <p>あなたの人生の物語、価値観、伝えたいメッセージを構造化し、千年先まで届く「存在証明」として設計します。200以上のユースケースから最適な形を。</p>
+        </div>
+        <div class="offer-card">
+            <div class="offer-num">03</div>
+            <h4>石英ガラスへの刻印</h4>
+            <p>設計した存在証明を、石英ガラスに物理的に刻印。サーバー・電源・制度に依存しない、1000年保証の記録媒体。スマホのカメラだけで読み取り可能。</p>
+        </div>
+        <div class="offer-card">
+            <div class="offer-num">04</div>
+            <h4>継続的なキュレーション</h4>
+            <p>人生は一度で語りきれません。節目ごとに、存在証明をアップデート。新しい物語を追加し、あなたの「千年アーカイブ」を育て続けます。</p>
+        </div>
+    </div>
+</section>
+
+<!-- Process -->
+<section class="pp-section pp-section-border">
+    <h2 class="pp-section-title">ご利用の流れ</h2>
+    <p class="pp-section-sub">対話から始まり、千年に届く</p>
+
+    <div class="process-list">
+        <div class="process-item">
+            <span class="process-num">01</span>
+            <div class="process-body">
+                <h4>初回対話（90分）</h4>
+                <p>「100年後に何を残したいか」を軸に、あなたの人生の物語を聴かせていただきます。家族のこと、仕事のこと、信念のこと。この対話自体が、多くの方にとって深い内省の機会になります。</p>
+            </div>
+        </div>
+        <div class="process-item">
+            <span class="process-num">02</span>
+            <div class="process-body">
+                <h4>存在証明の設計</h4>
+                <p>対話をもとに、あなたの存在証明の構造を設計します。何を、誰に、どんな形で残すか。テキスト、写真、音声、映像——最適なメディアと構成を提案します。</p>
+            </div>
+        </div>
+        <div class="process-item">
+            <span class="process-num">03</span>
+            <div class="process-body">
+                <h4>コンテンツの制作・キュレーション</h4>
+                <p>設計に基づいて、あなたの存在証明を制作します。必要に応じて、プロフェッショナルな撮影・収録・編集をコーディネート。あなたの物語を最高の形に仕上げます。</p>
+            </div>
+        </div>
+        <div class="process-item">
+            <span class="process-num">04</span>
+            <div class="process-body">
+                <h4>石英ガラスへの刻印・納品</h4>
+                <p>完成した存在証明を石英ガラスに刻印し、QRコードとともにお届けします。スマホカメラで読み取るだけで、1000年先の誰かがあなたの物語に出会えます。</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Who This Is For -->
+<section class="pp-section pp-section-border">
+    <h2 class="pp-section-title">こんな方にお届けしたい</h2>
+    <p class="pp-section-sub">「残す」ことに意味を感じるすべての方へ</p>
+
+    <div class="audience-grid">
+        <div class="audience-card">
+            <div class="audience-icon">&#x1F3E2;</div>
+            <h4>経営者・創業者</h4>
+            <p>会社を超えて残る、あなた自身の理念と物語を</p>
+        </div>
+        <div class="audience-card">
+            <div class="audience-icon">&#x1F46A;</div>
+            <h4>家族の記録を残したい方</h4>
+            <p>家族の歴史、想い出、伝えたい言葉を千年先へ</p>
+        </div>
+        <div class="audience-card">
+            <div class="audience-icon">&#x26E9;</div>
+            <h4>宗教者・文化人</h4>
+            <p>教え、作品、精神的遺産を制度に依存せず永続化</p>
+        </div>
+        <div class="audience-card">
+            <div class="audience-icon">&#x1F3A8;</div>
+            <h4>アーティスト・クリエイター</h4>
+            <p>作品と創作の意図を、プラットフォームを超えて残す</p>
+        </div>
+        <div class="audience-card">
+            <div class="audience-icon">&#x1F30F;</div>
+            <h4>地域・コミュニティ</h4>
+            <p>まちの記憶、お祭り、方言、災害の教訓を未来に</p>
+        </div>
+        <div class="audience-card">
+            <div class="audience-icon">&#x1F4DA;</div>
+            <h4>教育者・研究者</h4>
+            <p>知の系譜、発見の文脈、師弟の物語を永続的に記録</p>
+        </div>
+    </div>
+</section>
+
+<!-- Deliverables -->
+<section class="pp-section pp-section-border">
+    <h2 class="pp-section-title">お届けするもの</h2>
+    <p class="pp-section-sub">対話から生まれる、具体的な成果物</p>
+
+    <div class="deliverable-list">
+        <div class="deliverable-item">
+            <div class="deliverable-icon blue">&#x1F48E;</div>
+            <div class="deliverable-body">
+                <h4>石英ガラスの存在証明</h4>
+                <p>あなたの物語が刻まれた石英ガラス。サーバー・電源不要、1000年保証。スマートフォンのカメラで読み取り可能なQRコード付き。</p>
+            </div>
+        </div>
+        <div class="deliverable-item">
+            <div class="deliverable-icon gold">&#x1F4F1;</div>
+            <div class="deliverable-body">
+                <h4>デジタルコンパニオン</h4>
+                <p>QRコードを読み取ると表示されるデジタルページ。テキスト、写真、音声、映像を含む、あなたの存在証明のリッチな体験版。</p>
+            </div>
+        </div>
+        <div class="deliverable-item">
+            <div class="deliverable-icon green">&#x1F4D6;</div>
+            <div class="deliverable-body">
+                <h4>思想フレームワークレポート</h4>
+                <p>あなたの存在証明を、70以上の思想エッセイの文脈に位置づけたレポート。「なぜ残すのか」の知的な裏付けを提供します。</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Founder -->
+<section class="pp-section pp-section-border">
+    <h2 class="pp-section-title">対話のパートナーについて</h2>
+    <p class="pp-section-sub">千年の視座で、あなたの物語に向き合う人間</p>
+
+    <div class="founder-section">
+        <img src="asset/IMG_4310-2.jpeg" alt="佐藤卓也" style="flex-shrink:0; width:4.5rem; height:4.5rem; border-radius:50%; object-fit:cover;">
+        <div class="founder-body">
+            <h4>佐藤卓也 ── TokiStorage 代表（個人事業 開業届出済）</h4>
+            <p>大手コンサルティングファームでの経験を経て、半導体製造装置のエンジニアリング20年超。タイムレスタウン新浦安（250世帯）の自治会長として「ゆりかごから墓場まで」のコミュニティ運営を経験。SoulCarrier活動で無縁墓・遺骨送還に携わる中で「記憶が消える恐怖」を目の当たりにし、TokiStorageを着想。マウイ・山中湖でのオフグリッド実証を経て、制度に依存しない千年設計の技術を完成。70以上の思想エッセイを執筆し、9つの知的領域から存在証明の意味を探究し続けている。</p>
+            <div class="founder-tags">
+                <span class="founder-tag">元Big4ファーム</span>
+                <span class="founder-tag">半導体エンジニアリング 20年+</span>
+                <span class="founder-tag">自治会長（250世帯）</span>
+                <span class="founder-tag">SoulCarrier主宰</span>
+                <span class="founder-tag">70+思想エッセイ執筆</span>
+                <span class="founder-tag">オフグリッド実証済み</span>
+                <span class="founder-tag">佐渡島移住予定（2026春）</span>
+            </div>
+            <div class="founder-story">
+                愛犬パールのお墓とともに、家族でパールハーバーを訪れました。平和を願う声を音声QRとして刻んだプレートを持って。そこで気がつきました——時を超えた願いは、愛や平和への想いに変容する。一人でも多くの方と分かち合いたい。TokiStorageをきっかけに、時を超えた変容をご一緒できれば幸いです。
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- CTA / Next Steps -->
+<section class="pp-cta">
+    <h2>まずは、お話しましょう。</h2>
+    <div style="max-width: 560px; margin: 0 auto 2.5rem; text-align: left;">
+        <div style="display: flex; align-items: flex-start; gap: 1rem; margin-bottom: 1.5rem;">
+            <span style="flex-shrink:0; width:2rem; height:2rem; border-radius:50%; background:var(--toki-blue); color:#fff; display:flex; align-items:center; justify-content:center; font-size:0.8rem; font-weight:700;">01</span>
+            <div><strong style="color:#fff;">初回対話（90分・無料）</strong><br><span style="color:var(--text-muted); font-size:0.85rem;">「100年後に何を残したいか」を一緒に考える、最初の90分</span></div>
+        </div>
+        <div style="display: flex; align-items: flex-start; gap: 1rem; margin-bottom: 1.5rem;">
+            <span style="flex-shrink:0; width:2rem; height:2rem; border-radius:50%; background:var(--toki-blue); color:#fff; display:flex; align-items:center; justify-content:center; font-size:0.8rem; font-weight:700;">02</span>
+            <div><strong style="color:#fff;">存在証明の設計ご提案</strong><br><span style="color:var(--text-muted); font-size:0.85rem;">対話をもとに、あなただけのプランをお作りします</span></div>
+        </div>
+        <div style="display: flex; align-items: flex-start; gap: 1rem; margin-bottom: 1.5rem;">
+            <span style="flex-shrink:0; width:2rem; height:2rem; border-radius:50%; background:var(--toki-blue); color:#fff; display:flex; align-items:center; justify-content:center; font-size:0.8rem; font-weight:700;">03</span>
+            <div><strong style="color:#fff;">制作・刻印</strong><br><span style="color:var(--text-muted); font-size:0.85rem;">存在証明を制作し、石英ガラスに永久に刻みます</span></div>
+        </div>
+        <div style="display: flex; align-items: flex-start; gap: 1rem;">
+            <span style="flex-shrink:0; width:2rem; height:2rem; border-radius:50%; background:var(--toki-blue); color:#fff; display:flex; align-items:center; justify-content:center; font-size:0.8rem; font-weight:700;">04</span>
+            <div><strong style="color:#fff;">納品・キュレーション開始</strong><br><span style="color:var(--text-muted); font-size:0.85rem;">お届けし、継続的なアップデートをサポートします</span></div>
+        </div>
+    </div>
+    <p style="font-size: 0.85rem; color: var(--text-muted); margin-bottom: 2rem;">TokiStorage　佐藤卓也<br><span style="font-size: 0.75rem;">個人事業開業届出済（2026年2月11日／市川税務署）・青色申告届出済</span></p>
+    <div class="pp-cta-links">
+        <a href="tokistorage-client-deck.pdf" download>スライドデッキ（PDF）をダウンロード</a>
+        <a href="index.html">トキストレージについて</a>
+        <a href="usecases.html">200+のユースケースを見る</a>
+    </div>
+</section>
+
+<!-- Disclaimer -->
+<section class="pp-section" style="padding-bottom: 2rem;">
+    <div style="border-top: 1px solid var(--border); padding-top: 2rem;">
+        <h3 style="font-size: 0.85rem; color: var(--text-muted); font-weight: 600; margin-bottom: 1rem;">Confidential / Disclaimer</h3>
+        <p style="font-size: 0.75rem; color: var(--text-muted); line-height: 1.8;">
+            本資料は、TokiStorage（佐藤卓也）がサービスご検討のために作成した資料です。本資料に含まれる情報は、現時点における見解および計画に基づくものであり、その正確性、完全性、または将来の結果を保証するものではありません。本資料は情報提供を目的としており、法的助言、投資助言、その他いかなる専門的助言を構成するものでもありません。
+        </p>
+        <p style="font-size: 0.7rem; color: var(--text-muted); margin-top: 1rem;">&copy; 2026 TokiStorage / 佐藤卓也. All rights reserved.</p>
+    </div>
+</section>
+
+<!-- Footer -->
+<footer class="pp-footer" style="padding: 2.5rem 2rem;">
+    <div style="display: flex; justify-content: center; gap: 1.5rem; flex-wrap: wrap; margin-bottom: 1rem;">
+        <a href="index.html">トキストレージ</a>
+        <a href="pearl-soap.html">Pearl Soap</a>
+        <a href="../index-ja.html">SoulCarrier 共鳴の会</a>
+        <a href="ambassador.html">アンバサダー</a>
+        <a href="usecases.html">ユースケース</a>
+        <a href="infographic.html">エコシステム全体像</a>
+        <a href="partnership.html">パートナーシップ提案</a>
+        <a href="government-proposal.html">行政提案</a>
+        <a href="patronage.html">パトロネージ</a>
+        <a href="pitch-deck.html">投資家向け資料</a>
+    </div>
+    <p>TokiStorage | <a href="client-proposal-en.html">English Version</a></p>
+</footer>
+
+</body>
+</html>

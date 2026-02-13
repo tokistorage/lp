@@ -1,0 +1,1271 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ユースケース | トキストレージ</title>
+    <meta name="description" content="トキストレージの活用シーン。個人の終活から、航空機内販売、温泉旅館、結婚式場、葬儀社、観光地、神社仏閣まで、さまざまな場面で「存在証明」をお届けします。">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Shippori+Mincho:wght@400;500;600;700&family=Zen+Kaku+Gothic+New:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="index.css">
+    <style>
+        .usecases-page {
+            max-width: 1100px;
+            margin: 0 auto;
+            padding: 2rem;
+            padding-top: 6rem;
+        }
+
+        .usecases-header {
+            text-align: center;
+            margin-bottom: 3rem;
+        }
+
+        .usecases-header h1 {
+            font-family: 'Shippori Mincho', serif;
+            font-size: 2.2rem;
+            color: #1e293b;
+            margin-bottom: 1rem;
+        }
+
+        .usecases-header .lead {
+            font-size: 1.1rem;
+            color: #64748b;
+            max-width: 600px;
+            margin: 0 auto;
+            line-height: 1.8;
+        }
+
+        .usecases-section {
+            margin-bottom: 4rem;
+        }
+
+        .usecases-section h2 {
+            font-family: 'Shippori Mincho', serif;
+            font-size: 1.5rem;
+            color: #1e293b;
+            margin-bottom: 0.5rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .usecases-section h2::before {
+            content: '';
+            width: 4px;
+            height: 1.5rem;
+            background: var(--toki-blue, #2563EB);
+            border-radius: 2px;
+        }
+
+        .section-desc {
+            color: #64748b;
+            margin-bottom: 1.5rem;
+            font-size: 0.95rem;
+        }
+
+        .usecase-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+            gap: 1.5rem;
+        }
+
+        .usecase-card {
+            background: #fff;
+            border: 1px solid #e2e8f0;
+            border-radius: 12px;
+            padding: 1.5rem;
+            transition: all 0.2s ease;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .usecase-card:hover {
+            border-color: var(--toki-blue, #2563EB);
+            box-shadow: 0 4px 20px rgba(37, 99, 235, 0.1);
+        }
+
+        .usecase-card.linked {
+            cursor: pointer;
+            text-decoration: none;
+            color: inherit;
+        }
+
+        .usecase-icon {
+            font-size: 2rem;
+            margin-bottom: 0.75rem;
+        }
+
+        .usecase-card h3 {
+            font-family: 'Shippori Mincho', serif;
+            font-size: 1.15rem;
+            color: #1e293b;
+            margin-bottom: 0.5rem;
+        }
+
+        .usecase-card p {
+            font-size: 0.9rem;
+            color: #64748b;
+            line-height: 1.7;
+            flex: 1;
+        }
+
+        .usecase-card .arrow {
+            color: var(--toki-blue, #2563EB);
+            font-size: 0.85rem;
+            margin-top: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 0.3rem;
+        }
+
+        .usecase-card .arrow::after {
+            content: '\2192';
+        }
+
+        /* B2B Cards - Slightly different styling */
+        .usecase-card.b2b {
+            background: linear-gradient(135deg, #f8fafc 0%, #fff 100%);
+        }
+
+        .usecase-card.b2b h3 {
+            color: var(--toki-blue, #2563EB);
+        }
+
+        .partner-benefits {
+            background: #f1f5f9;
+            border-radius: 12px;
+            padding: 2rem;
+            margin-top: 2rem;
+        }
+
+        .partner-benefits h3 {
+            font-family: 'Shippori Mincho', serif;
+            font-size: 1.2rem;
+            margin-bottom: 1rem;
+            color: #1e293b;
+        }
+
+        .benefits-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            gap: 1rem;
+        }
+
+        .benefit-item {
+            display: flex;
+            align-items: flex-start;
+            gap: 0.5rem;
+        }
+
+        .benefit-item .check {
+            color: var(--toki-blue, #2563EB);
+            font-weight: bold;
+        }
+
+        .benefit-item span {
+            font-size: 0.9rem;
+            color: #475569;
+        }
+
+        .cta-section {
+            text-align: center;
+            padding: 3rem;
+            background: linear-gradient(135deg, #eff6ff 0%, #f8fafc 100%);
+            border-radius: 16px;
+            margin-top: 3rem;
+        }
+
+        .cta-section h2 {
+            font-family: 'Shippori Mincho', serif;
+            font-size: 1.5rem;
+            color: #1e293b;
+            margin-bottom: 1rem;
+        }
+
+        .cta-section p {
+            color: #64748b;
+            margin-bottom: 1.5rem;
+        }
+
+        .cta-buttons {
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        .cta-buttons .btn-primary,
+        .cta-buttons .btn-secondary {
+            padding: 0.9rem 2rem;
+            border-radius: 8px;
+            font-size: 0.95rem;
+            text-decoration: none;
+            transition: all 0.2s ease;
+        }
+
+        .cta-buttons .btn-primary {
+            background: var(--toki-blue, #2563EB);
+            color: #fff;
+        }
+
+        .cta-buttons .btn-primary:hover {
+            background: #1d4ed8;
+        }
+
+        .cta-buttons .btn-secondary {
+            background: #fff;
+            color: var(--toki-blue, #2563EB);
+            border: 1px solid var(--toki-blue, #2563EB);
+        }
+
+        .cta-buttons .btn-secondary:hover {
+            background: #eff6ff;
+        }
+
+        /* Filter and Search */
+        .filter-controls {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1rem;
+            margin-bottom: 1.5rem;
+            align-items: center;
+        }
+
+        .search-box {
+            flex: 1;
+            min-width: 200px;
+            max-width: 300px;
+            position: relative;
+        }
+
+        .search-box input {
+            width: 100%;
+            padding: 0.7rem 1rem 0.7rem 2.5rem;
+            border: 1px solid #e2e8f0;
+            border-radius: 8px;
+            font-size: 0.9rem;
+            outline: none;
+            transition: border-color 0.2s;
+        }
+
+        .search-box input:focus {
+            border-color: var(--toki-blue, #2563EB);
+        }
+
+        .search-box::before {
+            content: '\1F50D';
+            position: absolute;
+            left: 0.8rem;
+            top: 50%;
+            transform: translateY(-50%);
+            font-size: 0.9rem;
+            opacity: 0.5;
+        }
+
+        .show-count {
+            color: #64748b;
+            font-size: 0.9rem;
+        }
+
+        .usecase-card.hidden {
+            display: none;
+        }
+
+        .show-more-btn {
+            display: block;
+            width: 100%;
+            padding: 1rem;
+            margin-top: 1.5rem;
+            background: #f8fafc;
+            border: 1px dashed #cbd5e1;
+            border-radius: 8px;
+            color: var(--toki-blue, #2563EB);
+            font-size: 0.95rem;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .show-more-btn:hover {
+            background: #eff6ff;
+            border-color: var(--toki-blue, #2563EB);
+        }
+
+        .show-more-btn.hidden {
+            display: none;
+        }
+
+        @media (max-width: 768px) {
+            .usecases-page {
+                padding: 1.5rem;
+                padding-top: 5rem;
+            }
+
+            .usecases-header h1 {
+                font-size: 1.8rem;
+            }
+
+            .usecase-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .benefits-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .cta-buttons {
+                flex-direction: column;
+            }
+
+            .filter-controls {
+                flex-direction: column;
+                align-items: stretch;
+            }
+
+            .search-box {
+                max-width: none;
+            }
+        }
+    </style>
+</head>
+<body>
+
+<!-- Navigation -->
+<nav class="toki-nav">
+    <a href="index.html" class="nav-logo">トキストレージ</a>
+    <div class="nav-links">
+        <a href="index.html#personas">お悩み</a>
+        <a href="index.html#solution">特徴</a>
+        <a href="index.html#pricing">料金</a>
+        <a href="index.html#faq">よくある質問</a>
+        <a href="index.html#cta" class="nav-cta">無料相談</a>
+        <a href="usecases-en.html" class="lang-switch" aria-label="Switch to English">EN</a>
+    </div>
+    <button class="nav-toggle" aria-label="メニュー">
+        <span></span><span></span><span></span>
+    </button>
+</nav>
+
+<main class="usecases-page">
+    <header class="usecases-header">
+        <h1>ユースケース</h1>
+        <p class="lead">個人の終活から、法人パートナーシップまで。<br>トキストレージは、さまざまな場面で「存在証明」をお届けします。</p>
+    </header>
+
+    <!-- 個人向け -->
+    <section class="usecases-section">
+        <h2>個人のお客様向け</h2>
+        <p class="section-desc">ご自身やご家族の記録を、千年先まで残したい方へ</p>
+
+        <div class="usecase-grid">
+            <div class="usecase-card">
+                <div class="usecase-icon">&#x1F338;</div>
+                <h3>終活・エンディングノート</h3>
+                <p>デジタル遺品は消え、紙は劣化する。石英ガラスに刻めば、月額料金も維持費もゼロで、1000年残る存在証明に。</p>
+            </div>
+
+            <div class="usecase-card">
+                <div class="usecase-icon">&#x1F4D6;</div>
+                <h3>家族の歴史・家系図</h3>
+                <p>古い戸籍、家系図、先祖の写真。散逸しがちな家族の記録を、子孫がいつでも辿れる確かな形で残します。</p>
+            </div>
+
+            <div class="usecase-card">
+                <div class="usecase-icon">&#x1F381;</div>
+                <h3>親への贈り物</h3>
+                <p>親御さんの人生を形に残す、最高のプレゼント。元気なうちに一緒に記録を作る時間も宝物になります。</p>
+            </div>
+
+            <div class="usecase-card">
+                <div class="usecase-icon">&#x1F3E0;</div>
+                <h3>墓じまい後の記録</h3>
+                <p>墓石を閉じても、ご先祖の記録は残したい。手のひらサイズで、どこにでも置ける新しい「存在の証」。</p>
+            </div>
+
+            <div class="usecase-card">
+                <div class="usecase-icon">&#x1F9D1;</div>
+                <h3>おひとりさまの終活</h3>
+                <p>お墓を継ぐ人がいなくても大丈夫。誰かに託さなくても自己完結。あなた自身の言葉を千年先へ届けます。</p>
+            </div>
+
+            <div class="usecase-card">
+                <div class="usecase-icon">&#x1F30A;</div>
+                <h3>災害への備え</h3>
+                <p>1000℃の耐熱性を持つ石英ガラス。複製を分散保管することで、さまざまな災害から記録を守ります。</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- 法人・パートナー向け -->
+    <section class="usecases-section" id="b2b-section">
+        <h2>法人・パートナー様向け</h2>
+        <p class="section-desc">「存在証明」を新たな付加価値として。業種別の導入プランをご用意しています。</p>
+
+        <div class="filter-controls">
+            <div class="search-box">
+                <input type="text" id="usecase-search" placeholder="業種名で検索..." aria-label="ユースケースを検索">
+            </div>
+            <span class="show-count" id="show-count">100件中 12件を表示</span>
+        </div>
+
+        <div class="usecase-grid" id="b2b-grid">
+            <a href="usecase-airline.html" class="usecase-card b2b linked">
+                <div class="usecase-icon">&#x2708;&#xFE0F;</div>
+                <h3>航空会社・機内販売</h3>
+                <p>空の旅は人生を振り返る特別な時間。プレミアムクラスの記念品や機内限定ギフトとして。</p>
+                <span class="arrow">詳しく見る</span>
+            </a>
+
+            <a href="usecase-onsen.html" class="usecase-card b2b linked">
+                <div class="usecase-icon">&#x2668;&#xFE0F;</div>
+                <h3>温泉・旅館・お土産</h3>
+                <p>「湯治」は古来より心身の節目。温泉地ならではの記念品として、滞在の思い出を永遠に。</p>
+                <span class="arrow">詳しく見る</span>
+            </a>
+
+            <a href="usecase-wedding.html" class="usecase-card b2b linked">
+                <div class="usecase-icon">&#x1F492;</div>
+                <h3>結婚式場・ブライダル</h3>
+                <p>誓いの言葉を千年残す。引き出物、両親への贈呈品、タイムカプセルとして。</p>
+                <span class="arrow">詳しく見る</span>
+            </a>
+
+            <a href="usecase-funeral.html" class="usecase-card b2b linked">
+                <div class="usecase-icon">&#x1F56F;&#xFE0F;</div>
+                <h3>葬儀社・メモリアル</h3>
+                <p>返礼品に「故人の存在証明」という新たな選択肢を。追悼の形を革新します。</p>
+                <span class="arrow">詳しく見る</span>
+            </a>
+
+            <a href="usecase-tourism.html" class="usecase-card b2b linked">
+                <div class="usecase-icon">&#x1F5FC;</div>
+                <h3>観光地・道の駅</h3>
+                <p>「ここに来た証」を永遠に。地域限定デザイン、ご当地キャラとのコラボも可能です。</p>
+                <span class="arrow">詳しく見る</span>
+            </a>
+
+            <a href="usecase-shrine.html" class="usecase-card b2b linked">
+                <div class="usecase-icon">&#x26E9;&#xFE0F;</div>
+                <h3>神社仏閣</h3>
+                <p>参拝記念、祈願成就の証を千年残す。御朱印文化の延長線上にある、新しい奉納の形。</p>
+                <span class="arrow">詳しく見る</span>
+            </a>
+
+            <a href="usecase-golf.html" class="usecase-card b2b linked">
+                <div class="usecase-icon">&#x26F3;</div>
+                <h3>ゴルフ場</h3>
+                <p>ホールインワン記念、メンバーシップ記念、コンペ優勝を千年の証として。</p>
+                <span class="arrow">詳しく見る</span>
+            </a>
+
+            <a href="usecase-cruise.html" class="usecase-card b2b linked">
+                <div class="usecase-icon">&#x1F6F3;&#xFE0F;</div>
+                <h3>クルーズ船</h3>
+                <p>世界一周、特別航海、洋上ウェディング。船旅の記憶を永遠に残す。</p>
+                <span class="arrow">詳しく見る</span>
+            </a>
+
+            <a href="usecase-hotel.html" class="usecase-card b2b linked">
+                <div class="usecase-icon">&#x1F3E8;</div>
+                <h3>ホテル・リゾート</h3>
+                <p>記念日宿泊、プロポーズ、アニバーサリー。特別な滞在を永遠の記憶に。</p>
+                <span class="arrow">詳しく見る</span>
+            </a>
+
+            <a href="usecase-museum.html" class="usecase-card b2b linked">
+                <div class="usecase-icon">&#x1F3DB;&#xFE0F;</div>
+                <h3>美術館・博物館</h3>
+                <p>特別展記念、来館記念。文化との出会いを千年残すミュージアムグッズ。</p>
+                <span class="arrow">詳しく見る</span>
+            </a>
+
+            <a href="usecase-school.html" class="usecase-card b2b linked">
+                <div class="usecase-icon">&#x1F393;</div>
+                <h3>大学・学校</h3>
+                <p>卒業記念、創立記念、学位の証。学びの軌跡を千年残す。</p>
+                <span class="arrow">詳しく見る</span>
+            </a>
+
+            <a href="usecase-hospital.html" class="usecase-card b2b linked">
+                <div class="usecase-icon">&#x1F476;</div>
+                <h3>病院・産院</h3>
+                <p>出産記念、誕生の証。新しい命の存在証明を千年先へ届ける。</p>
+                <span class="arrow">詳しく見る</span>
+            </a>
+
+            <a href="usecase-sports.html" class="usecase-card b2b linked">
+                <div class="usecase-icon">&#x1F3C6;</div>
+                <h3>スポーツチーム</h3>
+                <p>優勝記念、ファンクラブ特典、引退記念。栄光の瞬間を永遠に。</p>
+                <span class="arrow">詳しく見る</span>
+            </a>
+
+            <a href="usecase-corporate.html" class="usecase-card b2b linked">
+                <div class="usecase-icon">&#x1F3E2;</div>
+                <h3>企業・法人</h3>
+                <p>創業記念、永年勤続表彰、企業理念。組織の志を千年残す。</p>
+                <span class="arrow">詳しく見る</span>
+            </a>
+
+            <a href="usecase-municipality.html" class="usecase-card b2b linked">
+                <div class="usecase-icon">&#x1F3DB;&#xFE0F;</div>
+                <h3>自治体</h3>
+                <p>市制記念、タイムカプセル、復興記念。地域の記憶を千年先へ。</p>
+                <span class="arrow">詳しく見る</span>
+            </a>
+
+            <a href="usecase-pet.html" class="usecase-card b2b linked">
+                <div class="usecase-icon">&#x1F43E;</div>
+                <h3>ペット関連</h3>
+                <p>ペットメモリアル、大切な家族の存在証明を千年残す。</p>
+                <span class="arrow">詳しく見る</span>
+            </a>
+
+            <a href="usecase-railway.html" class="usecase-card b2b linked">
+                <div class="usecase-icon">&#x1F683;</div>
+                <h3>鉄道会社</h3>
+                <p>引退車両記念、駅開業周年、特別列車。鉄道ファンの思い出を千年先へ。</p>
+                <span class="arrow">詳しく見る</span>
+            </a>
+
+            <a href="usecase-cinema.html" class="usecase-card b2b linked">
+                <div class="usecase-icon">&#x1F3AC;</div>
+                <h3>映画館・劇場</h3>
+                <p>プレミア上映、千秋楽、特別公演。感動の瞬間を永遠に残す。</p>
+                <span class="arrow">詳しく見る</span>
+            </a>
+
+            <a href="usecase-restaurant.html" class="usecase-card b2b linked">
+                <div class="usecase-icon">&#x1F37D;&#xFE0F;</div>
+                <h3>レストラン・料亭</h3>
+                <p>プロポーズ、記念日ディナー、還暦祝い。特別な食事の記憶を千年先へ。</p>
+                <span class="arrow">詳しく見る</span>
+            </a>
+
+            <a href="usecase-fitness.html" class="usecase-card b2b linked">
+                <div class="usecase-icon">&#x1F4AA;</div>
+                <h3>フィットネス・ジム</h3>
+                <p>目標達成記念、大会記録、パーソナルベスト。努力の証を永遠に。</p>
+                <span class="arrow">詳しく見る</span>
+            </a>
+
+            <a href="usecase-bank.html" class="usecase-card b2b linked">
+                <div class="usecase-icon">&#x1F3E6;</div>
+                <h3>銀行・証券</h3>
+                <p>相続対策、資産承継、ファミリーオフィス。金融資産と共に想いを残す。</p>
+                <span class="arrow">詳しく見る</span>
+            </a>
+
+            <a href="usecase-housing.html" class="usecase-card b2b linked">
+                <div class="usecase-icon">&#x1F3E0;</div>
+                <h3>不動産・住宅</h3>
+                <p>新築記念、引渡し式、定礎プレート。住まいの歴史を千年残す。</p>
+                <span class="arrow">詳しく見る</span>
+            </a>
+
+            <a href="usecase-car.html" class="usecase-card b2b linked">
+                <div class="usecase-icon">&#x1F697;</div>
+                <h3>自動車ディーラー</h3>
+                <p>納車記念、限定車購入、初めてのマイカー。愛車との出会いを永遠に。</p>
+                <span class="arrow">詳しく見る</span>
+            </a>
+
+            <a href="usecase-winery.html" class="usecase-card b2b linked">
+                <div class="usecase-icon">&#x1F377;</div>
+                <h3>酒蔵・ワイナリー</h3>
+                <p>記念ボトル、ヴィンテージ証明、蔵元見学。醸造の証を千年先へ。</p>
+                <span class="arrow">詳しく見る</span>
+            </a>
+
+            <a href="usecase-jewelry.html" class="usecase-card b2b linked">
+                <div class="usecase-icon">&#x1F48E;</div>
+                <h3>宝石・時計店</h3>
+                <p>婚約指輪、高級時計、鑑定証明。永遠の輝きに永遠の証を。</p>
+                <span class="arrow">詳しく見る</span>
+            </a>
+
+            <a href="usecase-photo.html" class="usecase-card b2b linked">
+                <div class="usecase-icon">&#x1F4F7;</div>
+                <h3>写真館</h3>
+                <p>七五三、成人式、家族写真。思い出の瞬間を千年先へ届ける。</p>
+                <span class="arrow">詳しく見る</span>
+            </a>
+
+            <a href="usecase-themepark.html" class="usecase-card b2b linked">
+                <div class="usecase-icon">&#x1F3A2;</div>
+                <h3>遊園地・テーマパーク</h3>
+                <p>開園記念、アトラクション体験、夢の時間を千年先へ届ける。</p>
+                <span class="arrow">詳しく見る</span>
+            </a>
+
+            <a href="usecase-zoo.html" class="usecase-card b2b linked">
+                <div class="usecase-icon">&#x1F42C;</div>
+                <h3>動物園・水族館</h3>
+                <p>人気動物の記念、赤ちゃん誕生。いのちとの出会いを千年先へ。</p>
+                <span class="arrow">詳しく見る</span>
+            </a>
+
+            <a href="usecase-concert.html" class="usecase-card b2b linked">
+                <div class="usecase-icon">&#x1F3B5;</div>
+                <h3>音楽・コンサート</h3>
+                <p>ツアーファイナル、周年記念、あの感動を千年先へ届ける。</p>
+                <span class="arrow">詳しく見る</span>
+            </a>
+
+            <a href="usecase-publishing.html" class="usecase-card b2b linked">
+                <div class="usecase-icon">&#x1F4DA;</div>
+                <h3>出版・書店</h3>
+                <p>著者サイン、初版記念、言葉の力を千年先へ届ける。</p>
+                <span class="arrow">詳しく見る</span>
+            </a>
+
+            <a href="usecase-farm.html" class="usecase-card b2b linked">
+                <div class="usecase-icon">&#x1F33E;</div>
+                <h3>農業・酪農</h3>
+                <p>農場の歴史、品種開発、大地の恵みを千年先へ届ける。</p>
+                <span class="arrow">詳しく見る</span>
+            </a>
+
+            <a href="usecase-fishing.html" class="usecase-card b2b linked">
+                <div class="usecase-icon">&#x1F41F;</div>
+                <h3>漁業・水産</h3>
+                <p>漁港の歴史、大漁記念、海の恵みを千年先へ届ける。</p>
+                <span class="arrow">詳しく見る</span>
+            </a>
+
+            <a href="usecase-crafts.html" class="usecase-card b2b linked">
+                <div class="usecase-icon">&#x1F3FA;</div>
+                <h3>伝統工芸</h3>
+                <p>作品証明、人間国宝記念、匠の技を千年先へ届ける。</p>
+                <span class="arrow">詳しく見る</span>
+            </a>
+
+            <a href="usecase-tea.html" class="usecase-card b2b linked">
+                <div class="usecase-icon">&#x1F375;</div>
+                <h3>茶道・華道教室</h3>
+                <p>免状、師弟の絆、道の心を千年先へ届ける。</p>
+                <span class="arrow">詳しく見る</span>
+            </a>
+
+            <a href="usecase-marina.html" class="usecase-card b2b linked">
+                <div class="usecase-icon">&#x26F5;</div>
+                <h3>ヨットハーバー・マリーナ</h3>
+                <p>航海記録、レース優勝、海への情熱を千年先へ届ける。</p>
+                <span class="arrow">詳しく見る</span>
+            </a>
+
+            <a href="usecase-outdoor.html" class="usecase-card b2b linked">
+                <div class="usecase-icon">&#x26F0;&#xFE0F;</div>
+                <h3>登山・アウトドア</h3>
+                <p>百名山踏破、トレイルラン完走、挑戦の証を千年先へ届ける。</p>
+                <span class="arrow">詳しく見る</span>
+            </a>
+
+            <a href="usecase-insurance.html" class="usecase-card b2b linked">
+                <div class="usecase-icon">&#x1F4CB;</div>
+                <h3>保険会社</h3>
+                <p>終身保険、相続対策、家族への想いを千年先へ届ける。</p>
+                <span class="arrow">詳しく見る</span>
+            </a>
+
+            <a href="usecase-law.html" class="usecase-card b2b linked">
+                <div class="usecase-icon">&#x2696;&#xFE0F;</div>
+                <h3>法律事務所</h3>
+                <p>遺言、相続、重要契約の証を千年先へ届ける。</p>
+                <span class="arrow">詳しく見る</span>
+            </a>
+
+            <a href="usecase-nursing.html" class="usecase-card b2b linked">
+                <div class="usecase-icon">&#x1F3E5;</div>
+                <h3>介護施設</h3>
+                <p>入居者の人生、家族への想いを千年先へ届ける。</p>
+                <span class="arrow">詳しく見る</span>
+            </a>
+
+            <a href="usecase-kindergarten.html" class="usecase-card b2b linked">
+                <div class="usecase-icon">&#x1F3EB;</div>
+                <h3>幼稚園・保育園</h3>
+                <p>卒園記念、成長の証を千年先へ届ける。</p>
+                <span class="arrow">詳しく見る</span>
+            </a>
+
+            <a href="usecase-lessons.html" class="usecase-card b2b linked">
+                <div class="usecase-icon">&#x1F3B9;</div>
+                <h3>習い事教室</h3>
+                <p>発表会、コンクール、学びの軌跡を千年先へ届ける。</p>
+                <span class="arrow">詳しく見る</span>
+            </a>
+
+            <a href="usecase-salon.html" class="usecase-card b2b linked">
+                <div class="usecase-icon">&#x1F487;</div>
+                <h3>美容院・理容院</h3>
+                <p>長年の顧客への感謝、美の絆を千年先へ届ける。</p>
+                <span class="arrow">詳しく見る</span>
+            </a>
+
+            <a href="usecase-spa.html" class="usecase-card b2b linked">
+                <div class="usecase-icon">&#x1F9D6;</div>
+                <h3>エステ・スパ</h3>
+                <p>ブライダルエステ、美の記念を千年先へ届ける。</p>
+                <span class="arrow">詳しく見る</span>
+            </a>
+
+            <a href="usecase-pension.html" class="usecase-card b2b linked">
+                <div class="usecase-icon">&#x1F3E1;</div>
+                <h3>ペンション・民宿</h3>
+                <p>宿泊記念、温かな宿の記憶を千年先へ届ける。</p>
+                <span class="arrow">詳しく見る</span>
+            </a>
+
+            <a href="usecase-campsite.html" class="usecase-card b2b linked">
+                <div class="usecase-icon">&#x1F3D5;&#xFE0F;</div>
+                <h3>キャンプ場</h3>
+                <p>家族の思い出、自然との出会いを千年先へ届ける。</p>
+                <span class="arrow">詳しく見る</span>
+            </a>
+
+            <a href="usecase-diving.html" class="usecase-card b2b linked">
+                <div class="usecase-icon">&#x1F93F;</div>
+                <h3>ダイビングショップ</h3>
+                <p>ライセンス取得、記念ダイブ、海の世界を千年先へ届ける。</p>
+                <span class="arrow">詳しく見る</span>
+            </a>
+
+            <a href="usecase-ski.html" class="usecase-card b2b linked">
+                <div class="usecase-icon">&#x26F7;&#xFE0F;</div>
+                <h3>スキー場</h3>
+                <p>初滑り記念、シーズンパス、雪山の感動を千年先へ届ける。</p>
+                <span class="arrow">詳しく見る</span>
+            </a>
+
+            <a href="usecase-horse.html" class="usecase-card b2b linked">
+                <div class="usecase-icon">&#x1F40E;</div>
+                <h3>乗馬クラブ</h3>
+                <p>ライセンス取得、愛馬との絆を千年先へ届ける。</p>
+                <span class="arrow">詳しく見る</span>
+            </a>
+
+            <a href="usecase-bowling.html" class="usecase-card b2b linked">
+                <div class="usecase-icon">&#x1F3B3;</div>
+                <h3>ボウリング場</h3>
+                <p>パーフェクトゲーム、大会優勝、栄光の瞬間を千年先へ届ける。</p>
+                <span class="arrow">詳しく見る</span>
+            </a>
+
+            <a href="usecase-karaoke.html" class="usecase-card b2b linked">
+                <div class="usecase-icon">&#x1F3A4;</div>
+                <h3>カラオケ</h3>
+                <p>十八番の歌、歌への想いを千年先へ届ける。</p>
+                <span class="arrow">詳しく見る</span>
+            </a>
+
+            <a href="usecase-library.html" class="usecase-card b2b linked">
+                <div class="usecase-icon">&#x1F4DA;</div>
+                <h3>図書館</h3>
+                <p>読書記録、知の継承を千年先へ届ける。</p>
+                <span class="arrow">詳しく見る</span>
+            </a>
+
+            <a href="usecase-planetarium.html" class="usecase-card b2b linked">
+                <div class="usecase-icon">&#x1F320;</div>
+                <h3>プラネタリウム</h3>
+                <p>星空体験、宇宙への夢を千年先へ届ける。</p>
+                <span class="arrow">詳しく見る</span>
+            </a>
+
+            <a href="usecase-florist.html" class="usecase-card b2b linked">
+                <div class="usecase-icon">&#x1F490;</div>
+                <h3>花屋</h3>
+                <p>花束に込めた想い、贈り物の証を千年先へ届ける。</p>
+                <span class="arrow">詳しく見る</span>
+            </a>
+
+            <a href="usecase-patisserie.html" class="usecase-card b2b linked">
+                <div class="usecase-icon">&#x1F382;</div>
+                <h3>ケーキ屋・パティスリー</h3>
+                <p>誕生日、記念日、甘い思い出を千年先へ届ける。</p>
+                <span class="arrow">詳しく見る</span>
+            </a>
+
+            <a href="usecase-heritage.html" class="usecase-card b2b linked">
+                <div class="usecase-icon">&#x1F3EF;</div>
+                <h3>老舗・百年企業</h3>
+                <p>創業の精神、伝統の継承を千年先へ届ける。</p>
+                <span class="arrow">詳しく見る</span>
+            </a>
+
+            <a href="usecase-npo.html" class="usecase-card b2b linked">
+                <div class="usecase-icon">&#x1F91D;</div>
+                <h3>NPO・慈善団体</h3>
+                <p>活動の記録、支援者への感謝を千年先へ届ける。</p>
+                <span class="arrow">詳しく見る</span>
+            </a>
+
+            <a href="usecase-izakaya.html" class="usecase-card b2b linked">
+                <div class="usecase-icon">&#x1F37A;</div>
+                <h3>居酒屋・バー</h3>
+                <p>常連の証、語らいの時間を千年先へ届ける。</p>
+                <span class="arrow">詳しく見る</span>
+            </a>
+
+            <a href="usecase-ramen.html" class="usecase-card b2b linked">
+                <div class="usecase-icon">&#x1F35C;</div>
+                <h3>ラーメン店</h3>
+                <p>一杯に込めた情熱、味の継承を千年先へ届ける。</p>
+                <span class="arrow">詳しく見る</span>
+            </a>
+
+            <a href="usecase-sushi.html" class="usecase-card b2b linked">
+                <div class="usecase-icon">&#x1F363;</div>
+                <h3>寿司屋</h3>
+                <p>職人の技、おまかせの記憶を千年先へ届ける。</p>
+                <span class="arrow">詳しく見る</span>
+            </a>
+
+            <a href="usecase-wagashi.html" class="usecase-card b2b linked">
+                <div class="usecase-icon">&#x1F361;</div>
+                <h3>和菓子店</h3>
+                <p>季節の美、伝統の技を千年先へ届ける。</p>
+                <span class="arrow">詳しく見る</span>
+            </a>
+
+            <a href="usecase-tatami.html" class="usecase-card b2b linked">
+                <div class="usecase-icon">&#x1F3E0;</div>
+                <h3>畳店</h3>
+                <p>畳職人の技、和の心を千年先へ届ける。</p>
+                <span class="arrow">詳しく見る</span>
+            </a>
+
+            <a href="usecase-stone.html" class="usecase-card b2b linked">
+                <div class="usecase-icon">&#x1FAA8;</div>
+                <h3>石材店</h3>
+                <p>墓石の証、石工の技を千年先へ届ける。</p>
+                <span class="arrow">詳しく見る</span>
+            </a>
+
+            <a href="usecase-garden.html" class="usecase-card b2b linked">
+                <div class="usecase-icon">&#x1F333;</div>
+                <h3>造園会社</h3>
+                <p>庭園の設計思想、緑の遺産を千年先へ届ける。</p>
+                <span class="arrow">詳しく見る</span>
+            </a>
+
+            <a href="usecase-juku.html" class="usecase-card b2b linked">
+                <div class="usecase-icon">&#x1F4DD;</div>
+                <h3>学習塾</h3>
+                <p>合格の証、努力の記録を千年先へ届ける。</p>
+                <span class="arrow">詳しく見る</span>
+            </a>
+
+            <a href="usecase-dojo.html" class="usecase-card b2b linked">
+                <div class="usecase-icon">&#x1F94B;</div>
+                <h3>武道場</h3>
+                <p>段位、師弟の絆、武道の精神を千年先へ届ける。</p>
+                <span class="arrow">詳しく見る</span>
+            </a>
+
+            <a href="usecase-tourbus.html" class="usecase-card b2b linked">
+                <div class="usecase-icon">&#x1F68C;</div>
+                <h3>観光バス</h3>
+                <p>ツアーの思い出、旅仲間との絆を千年先へ届ける。</p>
+                <span class="arrow">詳しく見る</span>
+            </a>
+
+            <a href="usecase-taxi.html" class="usecase-card b2b linked">
+                <div class="usecase-icon">&#x1F695;</div>
+                <h3>タクシー</h3>
+                <p>長年のドライバー、街を走った記録を千年先へ届ける。</p>
+                <span class="arrow">詳しく見る</span>
+            </a>
+
+            <a href="usecase-moving.html" class="usecase-card b2b linked">
+                <div class="usecase-icon">&#x1F69A;</div>
+                <h3>引越し会社</h3>
+                <p>新生活の門出、思い出の住まいを千年先へ届ける。</p>
+                <span class="arrow">詳しく見る</span>
+            </a>
+
+            <a href="usecase-cleaner.html" class="usecase-card b2b linked">
+                <div class="usecase-icon">&#x1F9FA;</div>
+                <h3>クリーニング店</h3>
+                <p>思い出の衣服、大切な一着を千年先へ届ける。</p>
+                <span class="arrow">詳しく見る</span>
+            </a>
+
+            <a href="usecase-renovation.html" class="usecase-card b2b linked">
+                <div class="usecase-icon">&#x1F3D7;&#xFE0F;</div>
+                <h3>リフォーム会社</h3>
+                <p>住まいの再生、家族の歴史を千年先へ届ける。</p>
+                <span class="arrow">詳しく見る</span>
+            </a>
+
+            <a href="usecase-architect.html" class="usecase-card b2b linked">
+                <div class="usecase-icon">&#x1F4D0;</div>
+                <h3>設計事務所</h3>
+                <p>建築の思想、設計の意図を千年先へ届ける。</p>
+                <span class="arrow">詳しく見る</span>
+            </a>
+
+            <a href="usecase-dentist.html" class="usecase-card b2b linked">
+                <div class="usecase-icon">&#x1F9B7;</div>
+                <h3>歯科医院</h3>
+                <p>治療の記録、健康な笑顔を千年先へ届ける。</p>
+                <span class="arrow">詳しく見る</span>
+            </a>
+
+            <a href="usecase-pharmacy.html" class="usecase-card b2b linked">
+                <div class="usecase-icon">&#x1F48A;</div>
+                <h3>薬局</h3>
+                <p>地域の健康を守る歴史を千年先へ届ける。</p>
+                <span class="arrow">詳しく見る</span>
+            </a>
+
+            <a href="usecase-optician.html" class="usecase-card b2b linked">
+                <div class="usecase-icon">&#x1F453;</div>
+                <h3>眼鏡店</h3>
+                <p>視界を守る絆、老舗の技術を千年先へ届ける。</p>
+                <span class="arrow">詳しく見る</span>
+            </a>
+
+            <a href="usecase-tailor.html" class="usecase-card b2b linked">
+                <div class="usecase-icon">&#x1FA7A;</div>
+                <h3>仕立て屋</h3>
+                <p>オーダースーツの証、職人の技を千年先へ届ける。</p>
+                <span class="arrow">詳しく見る</span>
+            </a>
+
+            <a href="usecase-print.html" class="usecase-card b2b linked">
+                <div class="usecase-icon">&#x1F5A8;&#xFE0F;</div>
+                <h3>印刷会社</h3>
+                <p>活版の技術、印刷の歴史を千年先へ届ける。</p>
+                <span class="arrow">詳しく見る</span>
+            </a>
+
+            <a href="usecase-watch.html" class="usecase-card b2b linked">
+                <div class="usecase-icon">&#x231A;</div>
+                <h3>時計修理店</h3>
+                <p>時を刻む技術、修理の記録を千年先へ届ける。</p>
+                <span class="arrow">詳しく見る</span>
+            </a>
+
+            <a href="usecase-shoe.html" class="usecase-card b2b linked">
+                <div class="usecase-icon">&#x1F45E;</div>
+                <h3>靴修理店</h3>
+                <p>履物への愛、修繕の技を千年先へ届ける。</p>
+                <span class="arrow">詳しく見る</span>
+            </a>
+
+            <a href="usecase-furniture.html" class="usecase-card b2b linked">
+                <div class="usecase-icon">&#x1FA91;</div>
+                <h3>家具店</h3>
+                <p>暮らしを彩る家具、職人の技を千年先へ届ける。</p>
+                <span class="arrow">詳しく見る</span>
+            </a>
+
+            <a href="usecase-electronics.html" class="usecase-card b2b linked">
+                <div class="usecase-icon">&#x1F4FA;</div>
+                <h3>電器店</h3>
+                <p>街の電器屋さん、暮らしを支えた歴史を千年先へ。</p>
+                <span class="arrow">詳しく見る</span>
+            </a>
+
+            <a href="usecase-instrument.html" class="usecase-card b2b linked">
+                <div class="usecase-icon">&#x1F3B8;</div>
+                <h3>楽器店</h3>
+                <p>音楽への情熱、楽器との出会いを千年先へ届ける。</p>
+                <span class="arrow">詳しく見る</span>
+            </a>
+
+            <a href="usecase-bookstore.html" class="usecase-card b2b linked">
+                <div class="usecase-icon">&#x1F4D6;</div>
+                <h3>書店</h3>
+                <p>本との出会い、知の拠点の歴史を千年先へ届ける。</p>
+                <span class="arrow">詳しく見る</span>
+            </a>
+
+            <a href="usecase-stationery.html" class="usecase-card b2b linked">
+                <div class="usecase-icon">&#x270F;&#xFE0F;</div>
+                <h3>文房具店</h3>
+                <p>書く喜び、学びの道具の記録を千年先へ届ける。</p>
+                <span class="arrow">詳しく見る</span>
+            </a>
+
+            <a href="usecase-toystore.html" class="usecase-card b2b linked">
+                <div class="usecase-icon">&#x1F9F8;</div>
+                <h3>おもちゃ屋</h3>
+                <p>子供の夢、遊びの思い出を千年先へ届ける。</p>
+                <span class="arrow">詳しく見る</span>
+            </a>
+
+            <a href="usecase-petshop.html" class="usecase-card b2b linked">
+                <div class="usecase-icon">&#x1F436;</div>
+                <h3>ペットショップ</h3>
+                <p>家族との出会い、絆の証を千年先へ届ける。</p>
+                <span class="arrow">詳しく見る</span>
+            </a>
+
+            <a href="usecase-gallery.html" class="usecase-card b2b linked">
+                <div class="usecase-icon">&#x1F5BC;&#xFE0F;</div>
+                <h3>画廊</h3>
+                <p>芸術の証、作品の来歴を千年先へ届ける。</p>
+                <span class="arrow">詳しく見る</span>
+            </a>
+
+            <a href="usecase-gym.html" class="usecase-card b2b linked">
+                <div class="usecase-icon">&#x1F3CB;&#xFE0F;</div>
+                <h3>スポーツジム</h3>
+                <p>健康への挑戦、会員との絆を千年先へ届ける。</p>
+                <span class="arrow">詳しく見る</span>
+            </a>
+
+            <a href="usecase-yoga.html" class="usecase-card b2b linked">
+                <div class="usecase-icon">&#x1F9D8;</div>
+                <h3>ヨガスタジオ</h3>
+                <p>心と体の調和、師弟の絆を千年先へ届ける。</p>
+                <span class="arrow">詳しく見る</span>
+            </a>
+
+            <a href="usecase-sento.html" class="usecase-card b2b linked">
+                <div class="usecase-icon">&#x2668;&#xFE0F;</div>
+                <h3>銭湯・サウナ</h3>
+                <p>地域の憩い、裸の付き合いを千年先へ届ける。</p>
+                <span class="arrow">詳しく見る</span>
+            </a>
+
+            <a href="usecase-dagashi.html" class="usecase-card b2b linked">
+                <div class="usecase-icon">&#x1F36C;</div>
+                <h3>駄菓子屋</h3>
+                <p>子供時代の宝物、地域の思い出を千年先へ届ける。</p>
+                <span class="arrow">詳しく見る</span>
+            </a>
+
+            <a href="usecase-kissaten.html" class="usecase-card b2b linked">
+                <div class="usecase-icon">&#x2615;</div>
+                <h3>喫茶店</h3>
+                <p>珈琲の香り、マスターとの思い出を千年先へ届ける。</p>
+                <span class="arrow">詳しく見る</span>
+            </a>
+
+            <a href="usecase-bakery.html" class="usecase-card b2b linked">
+                <div class="usecase-icon">&#x1F35E;</div>
+                <h3>パン屋</h3>
+                <p>焼きたての香り、職人の技を千年先へ届ける。</p>
+                <span class="arrow">詳しく見る</span>
+            </a>
+
+            <a href="usecase-greengrocer.html" class="usecase-card b2b linked">
+                <div class="usecase-icon">&#x1F966;</div>
+                <h3>八百屋</h3>
+                <p>地域の台所、目利きの技を千年先へ届ける。</p>
+                <span class="arrow">詳しく見る</span>
+            </a>
+
+            <a href="usecase-fishmonger.html" class="usecase-card b2b linked">
+                <div class="usecase-icon">&#x1F41F;</div>
+                <h3>魚屋</h3>
+                <p>海の恵み、さばきの技を千年先へ届ける。</p>
+                <span class="arrow">詳しく見る</span>
+            </a>
+
+            <a href="usecase-butcher.html" class="usecase-card b2b linked">
+                <div class="usecase-icon">&#x1F969;</div>
+                <h3>肉屋</h3>
+                <p>肉への情熱、手作りの味を千年先へ届ける。</p>
+                <span class="arrow">詳しく見る</span>
+            </a>
+
+            <a href="usecase-tofu.html" class="usecase-card b2b linked">
+                <div class="usecase-icon">&#x1F9C8;</div>
+                <h3>豆腐屋</h3>
+                <p>日本の味、手作りの技を千年先へ届ける。</p>
+                <span class="arrow">詳しく見る</span>
+            </a>
+
+            <a href="usecase-rice.html" class="usecase-card b2b linked">
+                <div class="usecase-icon">&#x1F35A;</div>
+                <h3>米屋</h3>
+                <p>日本の主食、精米の技を千年先へ届ける。</p>
+                <span class="arrow">詳しく見る</span>
+            </a>
+
+            <a href="usecase-sake.html" class="usecase-card b2b linked">
+                <div class="usecase-icon">&#x1F376;</div>
+                <h3>酒屋</h3>
+                <p>日本酒文化、酒蔵との絆を千年先へ届ける。</p>
+                <span class="arrow">詳しく見る</span>
+            </a>
+
+            <a href="usecase-general.html" class="usecase-card b2b linked">
+                <div class="usecase-icon">&#x1F9F9;</div>
+                <h3>荒物屋</h3>
+                <p>暮らしの道具、職人との絆を千年先へ届ける。</p>
+                <span class="arrow">詳しく見る</span>
+            </a>
+
+            <a href="usecase-hardware.html" class="usecase-card b2b linked">
+                <div class="usecase-icon">&#x1F527;</div>
+                <h3>金物屋</h3>
+                <p>道具への愛、職人の知恵を千年先へ届ける。</p>
+                <span class="arrow">詳しく見る</span>
+            </a>
+        </div>
+
+        <button class="show-more-btn" id="show-more-btn">さらに表示する（<span id="remaining-count">88</span>件）</button>
+
+        <div class="partner-benefits">
+            <h3>パートナー導入のメリット</h3>
+            <div class="benefits-grid">
+                <div class="benefit-item">
+                    <span class="check">&#x2713;</span>
+                    <span>初期費用・在庫リスクなし</span>
+                </div>
+                <div class="benefit-item">
+                    <span class="check">&#x2713;</span>
+                    <span>受注生産で無駄なし</span>
+                </div>
+                <div class="benefit-item">
+                    <span class="check">&#x2713;</span>
+                    <span>OEM・ホワイトラベル対応</span>
+                </div>
+                <div class="benefit-item">
+                    <span class="check">&#x2713;</span>
+                    <span>売上連動のレベニューシェア</span>
+                </div>
+                <div class="benefit-item">
+                    <span class="check">&#x2713;</span>
+                    <span>オリジナルデザイン制作</span>
+                </div>
+                <div class="benefit-item">
+                    <span class="check">&#x2713;</span>
+                    <span>販促物・POP提供</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA -->
+    <section class="cta-section">
+        <h2>導入のご相談はお気軽に</h2>
+        <p>個人のお客様も、法人パートナー様も、まずは無料相談から。</p>
+        <div class="cta-buttons">
+            <a href="https://line.me/R/oaMessage/@897glsbz/?%E3%83%A6%E3%83%BC%E3%82%B9%E3%82%B1%E3%83%BC%E3%82%B9%E4%B8%80%E8%A6%A7%E3%82%92%E8%A6%8B%E3%81%A6%E9%80%A3%E7%B5%A1%E3%81%97%E3%81%BE%E3%81%97%E3%81%9F" class="btn-primary" style="display: inline-flex; align-items: center; justify-content: center; gap: 0.5rem;" target="_blank" rel="noopener"><svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M19.365 9.863c.349 0 .63.285.63.631 0 .345-.281.63-.63.63H17.61v1.125h1.755c.349 0 .63.283.63.63 0 .344-.281.629-.63.629h-2.386c-.345 0-.627-.285-.627-.629V8.108c0-.345.282-.63.63-.63h2.386c.346 0 .627.285.627.63 0 .349-.281.63-.63.63H17.61v1.125h1.755zm-3.855 3.016c0 .27-.174.51-.432.596-.064.021-.133.031-.199.031-.211 0-.391-.09-.51-.25l-2.443-3.317v2.94c0 .344-.279.629-.631.629-.346 0-.626-.285-.626-.629V8.108c0-.27.173-.51.43-.595.06-.023.136-.033.194-.033.195 0 .375.104.495.254l2.462 3.33V8.108c0-.345.282-.63.63-.63.345 0 .63.285.63.63v4.771zm-5.741 0c0 .344-.282.629-.631.629-.345 0-.627-.285-.627-.629V8.108c0-.345.282-.63.63-.63.346 0 .628.285.628.63v4.771zm-2.466.629H4.917c-.345 0-.63-.285-.63-.629V8.108c0-.345.285-.63.63-.63.348 0 .63.285.63.63v4.141h1.756c.348 0 .629.283.629.63 0 .344-.282.629-.629.629M24 10.314C24 4.943 18.615.572 12 .572S0 4.943 0 10.314c0 4.811 4.27 8.842 10.035 9.608.391.082.923.258 1.058.59.12.301.079.766.038 1.08l-.164 1.02c-.045.301-.24 1.186 1.049.645 1.291-.539 6.916-4.078 9.436-6.975C23.176 14.393 24 12.458 24 10.314"/></svg>LINEで相談する</a>
+            <a href="index.html" class="btn-secondary">トップに戻る</a>
+        </div>
+    </section>
+</main>
+
+<!-- Footer -->
+<footer class="toki-footer">
+    <div class="footer-inner">
+        <div class="footer-brand">
+            <h3>トキストレージ</h3>
+            <p>石英ガラスに刻む、永遠の墓誌。<br>サーバー不要、維持費ゼロ。<br>存在証明を、千年先へ届ける。</p>
+        </div>
+        <div class="footer-links-group">
+            <h4>リンク</h4>
+            <a href="index.html">トキストレージとは</a>
+            <a href="index.html#pricing">料金プラン</a>
+            <a href="index.html#faq">よくある質問</a>
+            <a href="index.html#cta">お問い合わせ</a>
+            <a href="profile.html">代表プロフィール</a>
+            <a href="pitch-deck.html">投資家向け資料</a>
+            <a href="legacy.html">1000年の設計思想</a>
+            <a href="kids.html">お子さま向けページ</a>
+            <a href="infographic.html">エコシステム全体像</a>
+        </div>
+        <div class="footer-links-group">
+            <h4>提案</h4>
+            <a href="partnership.html">パートナーシップ提案</a>
+            <a href="client-proposal.html">クライアント提案</a>
+            <a href="government-proposal.html">行政提案</a>
+            <a href="patronage.html">パトロネージ</a>
+        </div>
+        <div class="footer-links-group">
+            <h4>関連サービス</h4>
+            <span class="footer-sub-links"><a href="../index-ja.html">SoulCarrier 共鳴の会</a>（<a href="../movement/入会のご案内.pdf">入会案内</a>／<a href="../movement/BasicAgreement.pdf">合意書</a>／<a href="../movement/Soul_Carrier規約.pdf">規約</a>）</span>
+            <span class="footer-sub-links"><a href="pearl-soap.html">Pearl Soap</a>（<a href="how-to-make.html">作り方</a>／<a href="workshop.html">ワークショップ</a>／<a href="ambassador.html">アンバサダー</a>／<a href="100-scenes.html">100のシーン</a>）</span>
+            <span class="footer-sub-links"><a href="workaway.html">Workaway導入支援</a>（<a href="workaway-proposal.html">提案書</a>）</span>
+            <a href="offgrid.html">オフグリッド構築支援</a>
+            <a href="https://voice-memorial-qr.onrender.com/" target="_blank" rel="noopener">Voice QR 技術デモ</a>
+        </div>
+        <div class="footer-links-group">
+            <h4>法的情報</h4>
+            <a href="tokushoho.html">特定商取引法に基づく表記</a>
+            <a href="privacy.html">プライバシーポリシー</a>
+        </div>
+        <div class="footer-links-group">
+            <h4>運営</h4>
+            <p class="footer-company">TokiStorage<br>佐藤卓也</p>
+            <a href="https://www.linkedin.com/in/satotakuya" target="_blank" rel="noopener"><svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" style="vertical-align:-2px;margin-right:4px"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 01-2.063-2.065 2.064 2.064 0 112.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg>satotakuya</a>
+            <a href="https://x.com/tokistorage" target="_blank" rel="noopener"><svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" style="vertical-align:-2px;margin-right:4px"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>@tokistorage</a>
+            <a href="https://www.facebook.com/tokistorage" target="_blank" rel="noopener"><svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" style="vertical-align:-2px;margin-right:4px"><path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/></svg>@tokistorage</a>
+            <a href="https://www.instagram.com/tokistorage" target="_blank" rel="noopener"><svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" style="vertical-align:-2px;margin-right:4px"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.052.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 100 12.324 6.162 6.162 0 000-12.324zM12 16a4 4 0 110-8 4 4 0 010 8zm6.406-11.845a1.44 1.44 0 100 2.881 1.44 1.44 0 000-2.881z"/></svg>@tokistorage</a>
+        </div>
+    </div>
+    <div class="footer-bottom">
+        <p>&copy; 2026 トキストレージ / TokiStorage. All rights reserved.</p>
+    </div>
+</footer>
+
+<script src="index.js"></script>
+<script>
+(function() {
+    const INITIAL_SHOW = 12;
+    const SHOW_MORE_COUNT = 12;
+
+    const grid = document.getElementById('b2b-grid');
+    const cards = grid.querySelectorAll('.usecase-card.b2b');
+    const searchInput = document.getElementById('usecase-search');
+    const showCountEl = document.getElementById('show-count');
+    const showMoreBtn = document.getElementById('show-more-btn');
+    const remainingCountEl = document.getElementById('remaining-count');
+
+    let visibleCount = INITIAL_SHOW;
+    let filteredCards = Array.from(cards);
+
+    function updateDisplay() {
+        const searchTerm = searchInput.value.toLowerCase();
+
+        // Filter cards by search term
+        filteredCards = Array.from(cards).filter(card => {
+            const title = card.querySelector('h3').textContent.toLowerCase();
+            const desc = card.querySelector('p').textContent.toLowerCase();
+            return title.includes(searchTerm) || desc.includes(searchTerm);
+        });
+
+        // Show/hide cards
+        cards.forEach(card => card.classList.add('hidden'));
+        filteredCards.slice(0, visibleCount).forEach(card => card.classList.remove('hidden'));
+
+        // Update count display
+        const totalFiltered = filteredCards.length;
+        const showing = Math.min(visibleCount, totalFiltered);
+        showCountEl.textContent = `${totalFiltered}件中 ${showing}件を表示`;
+
+        // Update show more button
+        const remaining = totalFiltered - visibleCount;
+        if (remaining > 0) {
+            showMoreBtn.classList.remove('hidden');
+            remainingCountEl.textContent = remaining;
+        } else {
+            showMoreBtn.classList.add('hidden');
+        }
+    }
+
+    searchInput.addEventListener('input', function() {
+        visibleCount = INITIAL_SHOW;
+        updateDisplay();
+    });
+
+    showMoreBtn.addEventListener('click', function() {
+        visibleCount += SHOW_MORE_COUNT;
+        updateDisplay();
+    });
+
+    // Initial display
+    updateDisplay();
+})();
+</script>
+</body>
+</html>

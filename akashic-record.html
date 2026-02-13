@@ -1,0 +1,317 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>アカシックレコードの実装——神秘から工学へ | トキストレージ</title>
+    <meta name="robots" content="noindex, nofollow">
+    <meta name="description" content="アカシックレコードの三属性——消去不能・非特権アクセス・時間超越——を神秘ではなく工学仕様として読み解き、石英とQRコードによる物理実装を考察する。">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Shippori+Mincho:wght@400;500;600;700&family=Zen+Kaku+Gothic+New:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --toki-indigo: #4F46E5;
+            --toki-indigo-dark: #3730A3;
+            --toki-indigo-pale: #EEF2FF;
+            --bg-white: #FFFFFF;
+            --bg-section: #E0E7FF;
+            --text-primary: #1E293B;
+            --text-secondary: #475569;
+            --text-muted: #94A3B8;
+            --border: #E2E8F0;
+            --font-display: 'Shippori Mincho', serif;
+            --font-body: 'Zen Kaku Gothic New', sans-serif;
+        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        html { scroll-behavior: smooth; }
+        body { font-family: var(--font-body); font-weight: 400; background: var(--bg-white); color: var(--text-primary); line-height: 2; font-size: 16px; }
+        .article-nav { position: fixed; top: 0; left: 0; right: 0; z-index: 1000; background: rgba(255,255,255,0.95); backdrop-filter: blur(12px); border-bottom: 1px solid var(--border); padding: 0.6rem 1.2rem; display: flex; align-items: center; justify-content: space-between; }
+        .article-nav .nav-brand { font-family: var(--font-display); font-size: 0.9rem; font-weight: 600; color: var(--toki-indigo); text-decoration: none; }
+        .article-nav .nav-right { display: flex; align-items: center; gap: 1rem; }
+        .article-nav .nav-label { font-size: 0.6rem; color: var(--text-muted); letter-spacing: 0.08em; }
+        .article-nav .lang-switch { font-size: 0.75rem; color: var(--toki-indigo); text-decoration: none; padding: 0.3rem 0.6rem; border: 1px solid var(--toki-indigo); border-radius: 4px; }
+        .article-nav .lang-switch:hover { background: var(--toki-indigo); color: #fff; }
+        .article-container { max-width: 680px; margin: 0 auto; padding: 7rem 2rem 4rem; }
+        .article-header { margin-bottom: 3rem; padding-bottom: 2rem; border-bottom: 1px solid var(--border); }
+        .article-category { font-size: 0.7rem; color: var(--toki-indigo); letter-spacing: 0.15em; margin-bottom: 1rem; }
+        .article-header h1 { font-family: var(--font-display); font-size: 1.8rem; font-weight: 600; line-height: 1.5; margin-bottom: 1rem; }
+        .article-subtitle { font-size: 0.95rem; color: var(--text-secondary); line-height: 1.8; }
+        .article-content h2 { font-family: var(--font-display); font-size: 1.25rem; font-weight: 600; margin: 3rem 0 1.5rem; padding-bottom: 0.5rem; border-bottom: 1px solid var(--border); }
+        .article-content h3 { font-family: var(--font-display); font-size: 1.1rem; font-weight: 500; margin: 2rem 0 1rem; }
+        .article-content p { margin-bottom: 1.5rem; text-align: justify; }
+        .article-content blockquote { margin: 2rem 0; padding: 1.5rem 2rem; background: var(--bg-section); border-left: 3px solid var(--toki-indigo); font-style: italic; }
+        .article-content blockquote cite { display: block; font-size: 0.85rem; color: var(--text-muted); font-style: normal; margin-top: 0.5rem; }
+        .article-content ul { margin: 1.5rem 0; padding-left: 1.5rem; }
+        .article-content li { margin-bottom: 0.75rem; }
+        .key-point { background: var(--toki-indigo-pale); padding: 1.5rem 2rem; border-radius: 8px; margin: 2rem 0; }
+        .key-point p { margin-bottom: 0; font-size: 0.95rem; }
+        .core-message { background: linear-gradient(135deg, var(--toki-indigo-pale) 0%, var(--bg-section) 100%); border-left: 4px solid var(--toki-indigo); padding: 1.2rem 1.5rem; margin: 0 0 1.5rem 0; border-radius: 0 8px 8px 0; font-size: 0.95rem; line-height: 1.8; }
+        .disclaimer { font-size: 0.8rem; color: var(--text-muted); margin-bottom: 2rem; padding-bottom: 1rem; border-bottom: 1px solid var(--border); }
+        .spec-table { width: 100%; border-collapse: collapse; margin: 2rem 0; font-size: 0.9rem; }
+        .spec-table th, .spec-table td { padding: 0.8rem 1rem; border: 1px solid var(--border); text-align: left; }
+        .spec-table th { background: var(--toki-indigo-pale); font-weight: 600; font-size: 0.85rem; color: var(--toki-indigo-dark); }
+        .spec-table td:first-child { font-weight: 500; white-space: nowrap; }
+        .references { margin-top: 4rem; padding-top: 2rem; border-top: 1px solid var(--border); }
+        .references h2 { font-size: 1rem; margin-bottom: 1.5rem; }
+        .references ul { list-style: none; padding: 0; }
+        .references li { font-size: 0.85rem; color: var(--text-secondary); margin-bottom: 0.75rem; padding-left: 1.5rem; text-indent: -1.5rem; }
+        .article-footer { margin-top: 4rem; padding-top: 2rem; border-top: 1px solid var(--border); text-align: center; }
+        .article-footer p { font-size: 0.8rem; color: var(--text-muted); margin-bottom: 1rem; }
+        .article-footer a { color: var(--toki-indigo); text-decoration: none; }
+        @media (max-width: 768px) { .article-container { padding: 6rem 1.2rem 3rem; } .article-header h1 { font-size: 1.5rem; } .article-nav .nav-label { display: none; } .spec-table { font-size: 0.8rem; } .spec-table th, .spec-table td { padding: 0.5rem 0.6rem; } }
+        @media print { .article-nav { display: none; } .article-container { padding-top: 2rem; } }
+    </style>
+</head>
+<body>
+
+<nav class="article-nav">
+    <a href="index.html" class="nav-brand">トキストレージ</a>
+    <div class="nav-right">
+        <span class="nav-label">アカシックレコード</span>
+        <a href="akashic-record-en.html" class="lang-switch">EN</a>
+    </div>
+</nav>
+
+<main class="article-container">
+    <header class="article-header">
+        <p class="article-category">エッセイ——技術と神秘</p>
+        <h1>アカシックレコードの実装<br>——神秘から工学へ</h1>
+        <p class="article-subtitle">
+            あらゆる出来事が記録される宇宙的書庫——<br>
+            その属性を仕様書として読み解くと、<br>
+            石英とQRコードで実装可能な工学問題になる。<br>
+            これは信仰の話ではない。設計の話である。
+        </p>
+    </header>
+
+    <article class="article-content">
+        <div class="core-message">
+            <strong>この記事で言いたいこと：</strong>アカシックレコードの本質的属性——消去不能・非特権アクセス・時間超越——は、神秘思想の語彙で書かれた工学仕様である。石英にQRコードを刻むという行為は、この仕様の物理実装にほかならない。ただし完全な実装ではない。アカシックレコードが「すべてを自動記録する」のに対し、石英は「何を刻むか」を人間に問う。この制約こそが、信仰にはない工学の贈り物である。
+        </div>
+        <p class="disclaimer">本稿は神智学・宗教思想を工学的視点から再解釈する試みであり、特定の信仰を肯定・否定するものではありません。「<a href="openness.html" style="color: var(--toki-indigo);">公開主義</a>」の続編として、構造設計の思想的背景を掘り下げます。</p>
+
+        <h2>1. アカシックレコードとは何か——伝統的定義</h2>
+
+        <p>アカシックレコード（Akashic Records）は、宇宙に存在するすべての出来事、思考、感情、意図が記録されている非物質的な書庫である——と、伝統的には説明される。</p>
+
+        <h3>語源と思想的系譜</h3>
+        <p>「アーカーシャ（Ākāśa）」はサンスクリット語で「虚空」「エーテル」を意味する。ヒンドゥー哲学において、アーカーシャは五大元素の一つであり、すべてを包含する空間である。この概念を西洋に持ち込んだのは、19世紀の神智学運動だった。ヘレナ・P・ブラヴァツキーは『シークレット・ドクトリン』(1888)で、宇宙の記憶が非物質的な媒体に保存されているという思想を体系化した。</p>
+
+        <h3>ルドルフ・シュタイナーの「読み取り」</h3>
+        <p>ルドルフ・シュタイナーはこの概念をさらに発展させ、訓練された霊的知覚によってアカシックレコードを「読む」ことが可能だと主張した。彼の著作『アカシャ年代記より』(1904)は、人類の霊的進化の歴史をこの「記録」から読み取ったものとされる。真偽の判断はここでは保留する。本稿が注目するのは、内容ではなく構造——この概念が前提としている属性のほうである。</p>
+
+        <h3>エドガー・ケイシーの解釈</h3>
+        <p>「眠れる預言者」エドガー・ケイシーは、トランス状態でアカシックレコードにアクセスし、個人の過去世や健康情報を読み取ったと主張した。ケイシーのリーディングの正確さはさておき、彼の実践が示唆するのは、アカシックレコードが「個人の記録」をも含むという点である。宇宙的な歴史書であると同時に、一人ひとりの存在証明の書庫でもある。</p>
+
+        <blockquote>
+            <p>「アカシックレコードとは、これまでに起きたすべてのこと、これから起きるすべてのことの記録である。宇宙の記憶そのものである。」</p>
+            <cite>——エドガー・ケイシー財団による要約</cite>
+        </blockquote>
+
+        <h2>2. 三つの本質的属性——仕様書として読む</h2>
+
+        <p>ここからが本題である。アカシックレコードの伝統的記述を、信仰ではなく仕様書として読み解く。そこから三つの属性が抽出できる。</p>
+
+        <h3>属性1：消去不能（Immutability）</h3>
+        <p>アカシックレコードに記録されたものは、消去できない。過去を改変することはできず、記録は永続する。これは宗教的な主張に聞こえるが、技術者の言葉に翻訳すれば「Write-Once, Read-Many（WORM）」——一度書き込んだら上書き・削除できない記録媒体の仕様にほかならない。ブロックチェーンの不変性（immutability）も、同じ属性の実装である。</p>
+
+        <h3>属性2：非特権アクセス（Permissionless Access）</h3>
+        <p>アカシックレコードは特定の神官や組織が管理するものではない。原理的には、すべての存在がアクセス可能である（シュタイナーは「訓練」を要求したが、権限は不要とした）。これはインターネットにおけるオープンアクセス、あるいはオープンソースの「誰でも読める」という設計原則と同構造である。管理者がいない。鍵がいらない。許可がいらない。</p>
+
+        <h3>属性3：時間超越（Time-Transcendence）</h3>
+        <p>アカシックレコードは「いつ」にも制約されない。過去も現在も未来も含む。この属性の完全な実装は不可能だが、「人間の時間感覚を超える永続性」と再解釈すれば、工学的に近似できる。一世代（100年）を超え、文明のスケール（1000年）を超え、地質学的時間（数億年）に耐える記録——これは素材科学の問題である。</p>
+
+        <table class="spec-table">
+            <thead>
+                <tr>
+                    <th>属性</th>
+                    <th>神秘思想の記述</th>
+                    <th>工学仕様への翻訳</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>消去不能</td>
+                    <td>宇宙の記録は永遠に消えない</td>
+                    <td>WORM（追記型・改変不能）</td>
+                </tr>
+                <tr>
+                    <td>非特権アクセス</td>
+                    <td>すべての存在に開かれている</td>
+                    <td>Permissionless / Open Standard</td>
+                </tr>
+                <tr>
+                    <td>時間超越</td>
+                    <td>過去・現在・未来を包含する</td>
+                    <td>地質学的耐久性（10<sup>3</sup>〜10<sup>8</sup>年）</td>
+                </tr>
+            </tbody>
+        </table>
+
+        <div class="key-point">
+            <p>アカシックレコードの三属性は、神秘の語彙で書かれているが、その構造は工学仕様そのものである。問題は「信じるかどうか」ではなく「実装できるかどうか」に変わる。</p>
+        </div>
+
+        <h2>3. 石英とQRコードによる物理実装</h2>
+
+        <p>三つの仕様に対して、石英とQRコードはどの程度の実装を提供するか。</p>
+
+        <h3>消去不能の実装——石英の物性</h3>
+        <p>石英ガラス（SiO<sub>2</sub>）の軟化点は約1,700℃。地球上の自然環境でこの温度に達する状況はほぼ存在しない。化学的にも極めて安定で、酸にもアルカリにも強い。レーザーで刻印された構造変化は、石英そのものが破壊されない限り消去不能である。紙は数十年で劣化し、磁気テープは数十年で消磁され、HDDは電気がなければ読めない。石英は「何もしなくても残る」。消去するには、能動的に破壊するしかない。これはWORM仕様の物理実装である。</p>
+
+        <h3>非特権アクセスの実装——QRコードの開放性</h3>
+        <p>QRコードはISO/IEC 18004で国際標準化されたオープンフォーマットである。その読み取りに専用機器は不要で、世界中で普及しているスマートフォンのカメラで足りる。パスワードも、アカウントも、利用料も必要ない。記録を「読むための許可」が不要だという設計は、非特権アクセスの直接的な実装である。デンソーウェーブがQRコードの特許を開放した判断が、この設計を可能にしている。</p>
+
+        <h3>時間超越の実装——地質学的安定性</h3>
+        <p>石英は地殻を構成する最も一般的な鉱物のひとつであり、地質学的時間スケールで安定する。人工の石英ガラスもまた、数億年単位の保存ポテンシャルを持つ。もちろん「未来の記録」は実装できない——アカシックレコードとの決定的な差はここにある。しかし「過去の記録が、人類文明の寿命を超えて残り続ける」という意味での時間超越は、物理的に達成されている。</p>
+
+        <h3>三仕様の充足度</h3>
+        <table class="spec-table">
+            <thead>
+                <tr>
+                    <th>仕様</th>
+                    <th>石英 + QR</th>
+                    <th>充足度</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>消去不能</td>
+                    <td>物理的破壊以外で消去不可能</td>
+                    <td>高（WORMを満たす）</td>
+                </tr>
+                <tr>
+                    <td>非特権アクセス</td>
+                    <td>スマートフォンで読取可能・鍵不要</td>
+                    <td>高（オープン規格）</td>
+                </tr>
+                <tr>
+                    <td>時間超越</td>
+                    <td>地質学的耐久性（過去→未来方向のみ）</td>
+                    <td>部分的（未来の記録は不可）</td>
+                </tr>
+            </tbody>
+        </table>
+
+        <h2>4. 信仰から工学へ——パラダイムの転換</h2>
+
+        <p>アカシックレコードという概念を工学仕様として読み解くことは、神秘思想を否定することではない。思考のフレームを移動させることである。</p>
+
+        <h3>信仰が解決する問題、工学が解決する問題</h3>
+        <p>「すべてが記録されている」という信仰は、人間の根源的な不安——忘れられることへの恐怖、存在が無に帰すことへの恐怖——に答える。しかし信仰は検証を許さない。アカシックレコードが「本当に存在するか」を確かめる手段は、信仰の枠組みの中にはない。工学は別のアプローチをとる。「存在するか」ではなく「実装できるか」を問い、検証可能な形で結果を提示する。信仰が「信じる者には開かれている」と言うとき、工学は「QRコードを読み取ればわかる」と言う。</p>
+
+        <h3>古代の直感と現代の素材科学</h3>
+        <p>興味深いのは、アカシックレコードの概念が2000年以上前に構想されたという事実である。当時の技術ではこの「仕様」を実装する手段がなかったため、形而上学的な存在として概念化された。しかし素材科学とデジタル技術の進展により、かつて神秘の領域にあった属性が、物理的に達成可能になった。これは古代人が間違っていたことの証明ではない。彼らが正確に必要な属性を言語化していたことの証明である——ただし、使える語彙が「神秘」しかなかった。</p>
+
+        <h3>「信じてください」から「確かめてください」へ</h3>
+        <p>信仰と工学のもっとも根本的な違いは、検証に対する態度にある。信仰は検証を求めない（あるいは求めることを禁じる）。工学は検証を前提とする。石英に刻まれたQRコードは「このなかに記録がある」と主張しない。「読んで確かめてください」と言っている。前稿「<a href="openness.html" style="color: var(--toki-indigo);">公開主義</a>」で論じた「隠せない」構造は、ここでは「確かめられる」構造として現れる。検証可能性は、工学がもたらす信頼の基盤である。</p>
+
+        <blockquote>
+            <p>「十分に発達した技術は、魔法と見分けがつかない。」</p>
+            <cite>——アーサー・C・クラーク『未来のプロフィル』（1962）</cite>
+        </blockquote>
+        <p>クラークの法則を逆転させれば、こうも言える——「十分に分析された魔法は、技術仕様と見分けがつかない。」</p>
+
+        <div class="key-point">
+            <p>信仰が「宇宙はすべてを記録している」と言うとき、工学は「この素材とこの規格の組み合わせで、近似的に実装できる」と応答する。どちらが正しいかは問題ではない。片方は信じることを求め、もう片方は確かめることを求めている。</p>
+        </div>
+
+        <h2>5. 記録のフィルター——実装が突きつける問い</h2>
+
+        <p>ここに、物理実装がアカシックレコードの概念を超える一点がある。</p>
+
+        <h3>アカシックレコードは問わない</h3>
+        <p>アカシックレコードは「すべて」を自動的に記録するとされる。思考も、行動も、意図も、感情も——あらゆるものが無差別に書き込まれる。そこに選択はなく、したがって問いもない。「何を記録すべきか」という問いは、完全な記録システムには存在しない。すべてが記録されるなら、選ぶ必要がないからだ。</p>
+
+        <h3>石英は問う</h3>
+        <p>しかし石英ガラスの面積は有限である。QRコードに格納できるデータ量にも上限がある。「すべて」は刻めない。この物理的制約が、記録者に問いを突きつける——あなたは何を残すのか。</p>
+        <p>人生のすべてを刻むことはできない。だから選ばなければならない。そして「選ぶ」という行為は、存在の本質に触れる問いを起動する。何があなたにとって本当に大切か。何が1000年後に残る価値を持つか。何があなたの存在証明として十分か。</p>
+
+        <h3>制約がもたらす純度</h3>
+        <p>「なんでも書ける」日記は、しばしば惰性で書かれる。しかし「一行しか書けない」日記は、一行に凝縮すべきものを吟味させる。同様に、石英の有限性は記録の純度を高める。些末なものは自然に脱落し、本質的なものだけが残る。この選別作用は、アカシックレコードにはない。アカシックレコードが「すべてを受け入れる海」だとすれば、石英は「何を残すかを問う、門」である。</p>
+
+        <h3>フィルターとしての物理性</h3>
+        <p>「何を残すべきか」と自分に問い、答えを出し、その答えを不可逆的に刻む。この一連の行為は、記録者に自己との対話を強いる。これは信仰が提供しない機能である。アカシックレコードは受動的に記録される——そこに人間の意志は介在しない。しかし石英に刻むという行為には、能動的な意志が必要である。何を刻むかを決めるのは宇宙ではなく、あなた自身である。</p>
+        <p>この制約こそが、物理実装の予期せぬ贈り物である。完全な実装に失敗したからこそ得られた、不完全さの価値。</p>
+
+        <blockquote>
+            <p>「不完全な実装が、完全な仕様より価値を持つことがある。制約は問いを生み、問いは思考を生み、思考は意味を生む。」</p>
+        </blockquote>
+
+        <h2>6. 実装の限界——正直な乖離の記録</h2>
+
+        <p>アカシックレコードの「完全な実装」を主張するつもりはない。乖離を正直に記録する。</p>
+
+        <h3>自動 vs. 能動</h3>
+        <p>アカシックレコードは受動的・自動的に記録される。石英は能動的・意図的に刻まれる。これは仕様との根本的な乖離である。ただし前節で論じた通り、この乖離がフィルター機能を生んでいる。仕様通りでないことが、実装を貧弱にしているのではなく、別の価値を付加している。</p>
+
+        <h3>全体 vs. 部分</h3>
+        <p>アカシックレコードは宇宙のすべてを含む。石英は一人の人間の選んだ記録だけを含む。この落差は埋めようがない。しかし、すべてを記録するシステムと、一つだけを選んで記録するシステムのどちらが、その記録の意味をより濃くするか。答えは自明ではない。</p>
+
+        <h3>形而上 vs. 物理</h3>
+        <p>アカシックレコードは非物質的であり、物理的制約を受けない。石英は物質であり、破壊されれば記録は失われる。ハンマーで砕けば消える記録を「永遠」とは呼べない。しかし逆に、物理的に存在するからこそ、その記録は「確かめられる」。手に取れる。目で見える。QRコードをスキャンして内容を読める。形而上学的な記録にはない「確かさ」が、物理的な実装にはある。</p>
+
+        <table class="spec-table">
+            <thead>
+                <tr>
+                    <th>項目</th>
+                    <th>アカシックレコード</th>
+                    <th>石英 + QR</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>記録の起動</td>
+                    <td>自動（すべてが記録される）</td>
+                    <td>能動（記録者が選択する）</td>
+                </tr>
+                <tr>
+                    <td>範囲</td>
+                    <td>全宇宙・全歴史</td>
+                    <td>一人の人間の選んだ記録</td>
+                </tr>
+                <tr>
+                    <td>存在の性質</td>
+                    <td>形而上学的（検証不能）</td>
+                    <td>物理的（検証可能）</td>
+                </tr>
+                <tr>
+                    <td>記録者への影響</td>
+                    <td>なし（受動的記録）</td>
+                    <td>あり（選択が思考を起動する）</td>
+                </tr>
+            </tbody>
+        </table>
+
+        <h2>結論——仕様を読み、構造を作り、問いに向き合う</h2>
+
+        <p>アカシックレコードは、宇宙のすべてが記録されている書庫だと言われてきた。その属性——消去不能、非特権アクセス、時間超越——を仕様書として読み解くと、石英とQRコードによって部分的に実装可能であることがわかる。</p>
+        <p>ただし、実装は完全ではない。「すべてを自動的に記録する」という中核仕様には到達していない。しかし、その不完全さが「何を記録するか」という問いを生み、問いが記録の意味を深める。神秘が「すべてを受け入れる」と言うとき、工学は「何を選ぶのか」と問い返す。</p>
+        <p>前稿「<a href="openness.html" style="color: var(--toki-indigo);">公開主義</a>」では、秘密を構造的に持たない設計について論じた。本稿はその延長にある。公開主義が「隠せない」構造であるなら、アカシックレコードの実装は「消せない」構造である。どちらも、構造によって不可逆性を保証する。理念ではなく、物理法則によって。</p>
+        <p>2000年前、人類はこの仕様を「神秘」と呼んだ。今、私たちはそれを「工学」と呼び直すことができる。呼び方が変わっただけで、問いは変わっていない——何を、残すか。</p>
+
+        <section class="references">
+            <h2>参考文献</h2>
+            <ul>
+                <li>Blavatsky, H. P. (1888). <em>The Secret Doctrine.</em> Theosophical Publishing Company.</li>
+                <li>Steiner, R. (1904). <em>Aus der Akasha-Chronik.</em> (邦訳：高橋巖訳『アカシャ年代記より』筑摩書房)</li>
+                <li>Laszlo, E. (2004). <em>Science and the Akashic Field: An Integral Theory of Everything.</em> Inner Traditions.</li>
+                <li>Clarke, A. C. (1962). <em>Profiles of the Future: An Inquiry into the Limits of the Possible.</em> Harper & Row.</li>
+                <li>Simmel, G. (1906). The Sociology of Secrecy and of Secret Societies. <em>American Journal of Sociology</em>, 11(4), 441-498.</li>
+                <li>Zhang, J. et al. (2014). 5D Data Storage by Ultrafast Laser Nanostructuring in Glass. <em>Proceedings of SPIE</em>, 9163.</li>
+                <li>デンソーウェーブ. QRコードの知的財産権について. (QRコードはデンソーウェーブの登録商標)</li>
+            </ul>
+        </section>
+    </article>
+
+    <footer class="article-footer">
+        <p>本稿は、アカシックレコードの概念を工学的視点から再解釈し、記録の物理実装を考察したエッセイです。</p>
+        <p id="essay-nav-links"></p>
+        <p style="margin-top: 2rem; font-size: 0.75rem;">&copy; 2026 TokiStorage</p>
+    </footer>
+</main>
+
+<script src="essay-nav.js?v=20260211"></script>
+</body>
+</html>

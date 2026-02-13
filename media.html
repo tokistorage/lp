@@ -1,0 +1,256 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>メディアと存在証明——報道・記録・デジタル痕跡 | トキストレージ</title>
+    <meta name="robots" content="noindex, nofollow">
+    <meta name="description" content="新聞、テレビ、SNS、Wikipedia——メディアは「誰が存在したか」を決定する力を持つ。報道される存在とされない存在、デジタル痕跡の意味を考察する。">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Shippori+Mincho:wght@400;500;600;700&family=Zen+Kaku+Gothic+New:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --toki-rose: #E11D48;
+            --toki-rose-dark: #BE123C;
+            --toki-rose-pale: #FFF1F2;
+            --accent-pink: #F43F5E;
+            --bg-white: #FFFFFF;
+            --bg-section: #FEF2F2;
+            --text-primary: #1E293B;
+            --text-secondary: #475569;
+            --text-muted: #94A3B8;
+            --border: #E2E8F0;
+            --font-display: 'Shippori Mincho', serif;
+            --font-body: 'Zen Kaku Gothic New', sans-serif;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        html { scroll-behavior: smooth; }
+        body {
+            font-family: var(--font-body);
+            font-weight: 400;
+            background: var(--bg-white);
+            color: var(--text-primary);
+            line-height: 2;
+            font-size: 16px;
+        }
+
+        .article-nav {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 1000;
+            background: rgba(255,255,255,0.95);
+            backdrop-filter: blur(12px);
+            border-bottom: 1px solid var(--border);
+            padding: 0.6rem 1.2rem;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+        .article-nav .nav-brand {
+            font-family: var(--font-display);
+            font-size: 0.9rem;
+            font-weight: 600;
+            color: var(--toki-rose);
+            text-decoration: none;
+        }
+        .article-nav .nav-right { display: flex; align-items: center; gap: 1rem; }
+        .article-nav .nav-label { font-size: 0.6rem; color: var(--text-muted); letter-spacing: 0.08em; }
+        .article-nav .lang-switch {
+            font-size: 0.75rem;
+            color: var(--toki-rose);
+            text-decoration: none;
+            padding: 0.3rem 0.6rem;
+            border: 1px solid var(--toki-rose);
+            border-radius: 4px;
+        }
+        .article-nav .lang-switch:hover { background: var(--toki-rose); color: #fff; }
+
+        .article-container { max-width: 680px; margin: 0 auto; padding: 7rem 2rem 4rem; }
+        .article-header { margin-bottom: 3rem; padding-bottom: 2rem; border-bottom: 1px solid var(--border); }
+        .article-category { font-size: 0.7rem; color: var(--toki-rose); letter-spacing: 0.15em; margin-bottom: 1rem; }
+        .article-header h1 { font-family: var(--font-display); font-size: 1.8rem; font-weight: 600; line-height: 1.5; margin-bottom: 1rem; }
+        .article-subtitle { font-size: 0.95rem; color: var(--text-secondary); line-height: 1.8; }
+
+        .article-content h2 { font-family: var(--font-display); font-size: 1.25rem; font-weight: 600; margin: 3rem 0 1.5rem; padding-bottom: 0.5rem; border-bottom: 1px solid var(--border); }
+        .article-content h3 { font-family: var(--font-display); font-size: 1.1rem; font-weight: 500; margin: 2rem 0 1rem; }
+        .article-content p { margin-bottom: 1.5rem; text-align: justify; }
+        .article-content blockquote { margin: 2rem 0; padding: 1.5rem 2rem; background: var(--bg-section); border-left: 3px solid var(--toki-rose); font-style: italic; }
+        .article-content blockquote cite { display: block; font-size: 0.85rem; color: var(--text-muted); font-style: normal; margin-top: 0.5rem; }
+        .article-content ul { margin: 1.5rem 0; padding-left: 1.5rem; }
+        .article-content li { margin-bottom: 0.75rem; }
+
+        .key-point { background: var(--toki-rose-pale); padding: 1.5rem 2rem; border-radius: 8px; margin: 2rem 0; }
+        .key-point p { margin-bottom: 0; font-size: 0.95rem; }
+        .core-message { background: linear-gradient(135deg, var(--toki-rose-pale) 0%, #FFE4E6 100%); border-left: 4px solid var(--toki-rose); padding: 1.2rem 1.5rem; margin: 0 0 1.5rem 0; border-radius: 0 8px 8px 0; font-size: 0.95rem; line-height: 1.8; }
+        .disclaimer { font-size: 0.8rem; color: var(--text-muted); margin-bottom: 2rem; padding-bottom: 1rem; border-bottom: 1px solid var(--border); }
+
+        .references { margin-top: 4rem; padding-top: 2rem; border-top: 1px solid var(--border); }
+        .references h2 { font-size: 1rem; margin-bottom: 1.5rem; }
+        .references ul { list-style: none; padding: 0; }
+        .references li { font-size: 0.85rem; color: var(--text-secondary); margin-bottom: 0.75rem; padding-left: 1.5rem; text-indent: -1.5rem; }
+
+        .article-footer { margin-top: 4rem; padding-top: 2rem; border-top: 1px solid var(--border); text-align: center; }
+        .article-footer p { font-size: 0.8rem; color: var(--text-muted); margin-bottom: 1rem; }
+        .article-footer a { color: var(--toki-rose); text-decoration: none; }
+
+        @media (max-width: 768px) { .article-container { padding: 6rem 1.2rem 3rem; } .article-header h1 { font-size: 1.5rem; } .article-nav .nav-label { display: none; } }
+        @media print { .article-nav { display: none; } .article-container { padding-top: 2rem; } }
+    </style>
+</head>
+<body>
+
+<nav class="article-nav">
+    <a href="index.html" class="nav-brand">トキストレージ</a>
+    <div class="nav-right">
+        <span class="nav-label">メディア論 / MEDIA STUDIES</span>
+        <a href="media-en.html" class="lang-switch">EN</a>
+    </div>
+</nav>
+
+<main class="article-container">
+    <header class="article-header">
+        <p class="article-category">ESSAY — メディアと記録</p>
+        <h1>メディアと存在証明<br>——報道・記録・デジタル痕跡</h1>
+        <p class="article-subtitle">
+            新聞、テレビ、SNS、Wikipedia——メディアは「誰が存在したか」を決定する力を持つ。<br>
+            報道される存在とされない存在、デジタル痕跡がもたらす新しい存在証明を考察する。
+        </p>
+    </header>
+
+    <article class="article-content">
+        <div class="core-message">
+            <strong>この記事で言いたいこと：</strong>メディアに取り上げられることは、現代における最も強力な存在証明の一つである。しかしメディアは選別する。報道されない存在は、社会的には「いなかった」ことになりうる。
+        </div>
+        <p class="disclaimer">※本稿は学術的考察であり、特定のメディアや報道姿勢を批判するものではありません。</p>
+
+        <h2>1. メディアと存在の可視化</h2>
+        <p>メディアは、存在を可視化する装置である。</p>
+        <p>テレビに映る、新聞に載る、SNSでバズる——これらは「社会がその存在を認知した」ことの証明である。逆に言えば、メディアに取り上げられない存在は、社会的には「見えない」。</p>
+
+        <blockquote>
+            <p>「メディアに映らないものは、存在しないも同然である。現代社会において、存在とは可視性である。」</p>
+            <cite>——ニック・クルドリー『メディア・社会・世界』を援用</cite>
+        </blockquote>
+
+        <h3>報道される人、されない人</h3>
+        <p>ニュースに登場する人は、社会的に「重要」とみなされた人である。政治家、経営者、犯罪者、被害者、専門家——彼らはメディアによって存在を承認される。</p>
+        <p>しかし、ほとんどの人はニュースに登場しない。「普通の人」の日常は報道価値がないとされる。彼らの存在は、メディアによっては証明されない。</p>
+
+        <h2>2. 訃報——死によって証明される存在</h2>
+        <p>新聞の訃報欄は、死によって存在を証明する場である。</p>
+        <h3>著名人の訃報</h3>
+        <p>著名人が亡くなると、新聞は経歴、功績、人となりを報じる。それは「この人物がどのように生き、何を成し遂げたか」の公式記録となる。</p>
+        <h3>一般人の死亡広告</h3>
+        <p>一般人でも、死亡広告（お悔やみ広告）を出すことで、新聞に名前を残すことができる。地方紙の死亡広告欄は、地域コミュニティにおける存在証明の場として機能している。</p>
+        <h3>訃報のない死</h3>
+        <p>しかし、すべての死が報道されるわけではない。孤独死、無縁死——メディアに取り上げられない死は、社会的には記録されない死である。</p>
+
+        <div class="key-point">
+            <p>訃報は「この人物が存在した」という最終的な社会的承認である。しかし、訃報が出るのは一部の人だけであり、多くの人の死は報道されない。</p>
+        </div>
+
+        <h2>3. Wikipediaと「特筆性」</h2>
+        <p>Wikipediaは、現代における「誰が重要か」を決定する百科事典である。</p>
+        <h3>特筆性の基準</h3>
+        <p>Wikipediaに記事を作成するには、「特筆性（notability）」が必要とされる。特筆性とは、「信頼できる情報源によって、独立した形で言及されていること」である。</p>
+        <p>言い換えれば、すでにメディアに取り上げられている人だけが、Wikipediaに載ることができる。メディアに取り上げられていない人は、「特筆性がない」として削除される。</p>
+        <h3>Wikipediaに載ることの意味</h3>
+        <p>Wikipediaに記事があることは、現代における最も強力な存在証明の一つである。検索すれば出てくる、引用できる、参照できる——それは「この人物は社会的に認知されている」ことの証明である。</p>
+        <h3>載らない人々</h3>
+        <p>しかし、Wikipediaに載っているのは、世界人口のごく一部である。ほとんどの人は「特筆性がない」とされ、記事が存在しない。彼らの存在は、この現代の百科事典には記録されない。</p>
+
+        <h2>4. SNSとデジタル痕跡</h2>
+        <p>ソーシャルメディアは、存在証明の民主化をもたらした。</p>
+        <h3>誰でも発信できる時代</h3>
+        <p>Twitter、Instagram、TikTok、YouTube——誰でもアカウントを作り、自分の存在を発信できる。かつてはメディアに取り上げられることでしか得られなかった「可視性」が、自分で作り出せるようになった。</p>
+        <h3>フォロワーという承認</h3>
+        <p>フォロワー数、いいね数、再生回数——これらは「あなたの存在が認知されている」ことの数値化である。多くのフォロワーを持つことは、社会的存在感の証明となる。</p>
+        <h3>デジタル痕跡の脆弱性</h3>
+        <p>しかし、SNSによる存在証明には脆弱性がある。アカウント停止、サービス終了、データ消失——デジタル痕跡は、プラットフォームの存続に依存している。</p>
+
+        <blockquote>
+            <p>「SNSは存在証明を民主化したが、その証明はプラットフォームという私企業に依存している。彼らが消えれば、あなたのデジタル存在も消える。」</p>
+        </blockquote>
+
+        <h2>5. 新聞アーカイブと永続性</h2>
+        <p>新聞は、最も永続的なメディアの一つである。</p>
+        <h3>マイクロフィルムとデジタルアーカイブ</h3>
+        <p>過去の新聞は、マイクロフィルムやデジタルアーカイブとして保存されている。100年以上前の新聞記事を検索し、読むことができる。</p>
+        <p>新聞に名前が載ることは、このアーカイブに永続的に記録されることを意味する。検索可能な形で、後世に存在が伝わる。</p>
+        <h3>投書欄・読者の声</h3>
+        <p>一般人が新聞に名前を残す最も一般的な方法は、投書欄への投稿である。「読者の声」「私の意見」——これらの欄に掲載されれば、一般人でも新聞アーカイブに名前を残すことができる。</p>
+
+        <h2>6. ポッドキャストとYouTube——自己メディア化</h2>
+        <p>テクノロジーの発達により、誰もが「メディア」になれる時代が到来した。</p>
+        <h3>自己発信の爆発</h3>
+        <p>YouTubeには毎分500時間以上の動画がアップロードされている。ポッドキャストは数百万番組が存在する。これらは「自分の声、自分の姿を記録し、発信する」という行為の爆発的な増加である。</p>
+        <h3>記録としての価値</h3>
+        <p>これらのコンテンツは、存在証明として機能しうる。顔、声、考え、日常——これらが動画や音声として記録され、インターネット上に残る。</p>
+        <h3>プラットフォーム依存の限界</h3>
+        <p>しかし、ここでもプラットフォーム依存の問題がある。YouTubeがポリシーを変更すれば、動画は削除されうる。サービスが終了すれば、すべてのコンテンツが消える可能性がある。</p>
+
+        <div class="key-point">
+            <p>自己メディア化は存在証明の機会を広げたが、その記録はプラットフォームに依存している。真の永続性を得るには、プラットフォームの外に記録を残す必要がある。</p>
+        </div>
+
+        <h2>7. メディアの選別と「見えない存在」</h2>
+        <p>メディアは、何を報道し、何を報道しないかを選別する。</p>
+        <h3>ニュースバリュー</h3>
+        <p>報道には「ニュースバリュー」が必要とされる。新規性、影響力、著名性、人間的興味——これらの基準を満たさない出来事は、報道されない。</p>
+        <h3>報道されない人々</h3>
+        <p>社会的弱者、少数派、地方、日常——これらは「ニュースバリューがない」として、しばしば報道から排除される。彼らの存在は、メディアによっては証明されない。</p>
+        <h3>歴史の空白</h3>
+        <p>過去のメディアも同様である。新聞、雑誌、放送——これらに記録されなかった人々は、歴史の記録からも抜け落ちている。女性、労働者、植民地の人々——彼らの存在は、メディアの選別によって「見えない」ものとされてきた。</p>
+
+        <h2>8. トキストレージの位置づけ——メディアを超える存在証明</h2>
+        <p>メディアによる存在証明には、構造的な限界がある。</p>
+        <ul>
+            <li><strong>選別</strong>：メディアは「ニュースバリュー」のある存在しか取り上げない</li>
+            <li><strong>依存</strong>：デジタルメディアはプラットフォームの存続に依存</li>
+            <li><strong>一時性</strong>：バズは一瞬、ニュースは流れる</li>
+            <li><strong>他者決定</strong>：報道されるかどうかは、本人が決められない</li>
+        </ul>
+
+        <p>トキストレージは、これらの限界を超えようとする。</p>
+        <ul>
+            <li><strong>非選別</strong>：「ニュースバリュー」は問わない。誰でも利用可能</li>
+            <li><strong>非依存</strong>：特定のプラットフォームに依存しない物理的保存</li>
+            <li><strong>永続</strong>：1000年スケールでの保存を設計</li>
+            <li><strong>自己決定</strong>：何を残すかは、本人が選ぶ</li>
+        </ul>
+
+        <p>メディアに取り上げられなくても、Wikipediaに載らなくても、「私はここにいた」という証を残すことができる。それが、存在証明の民主化である。</p>
+
+        <h2>結び——可視性を超えて</h2>
+        <p>メディアは、存在を可視化する強力な装置である。報道されること、SNSで発信すること、Wikipediaに載ること——これらは現代における存在証明の形態である。</p>
+        <p>しかし、メディアは選別する。「ニュースバリュー」のない存在、「特筆性」のない人物は、メディアによっては証明されない。彼らの存在は、社会的には「見えない」。</p>
+        <p>だからこそ、メディアに依存しない存在証明が必要である。報道されなくても、バズらなくても、「私はここにいた」という証を残せる仕組み。</p>
+        <p>メディアの可視性は一時的である。しかし、物理的な記録は永続しうる。1000年後、今日のSNSは存在しないだろう。しかし、石英ガラスに刻まれた存在証明は残りうる。</p>
+        <p>可視性を超えて、永続性へ——それが、メディア時代における存在証明の新しい形である。</p>
+
+        <section class="references">
+            <h2>参考文献</h2>
+            <ul>
+                <li>Couldry, N. (2012). <em>Media, Society, World: Social Theory and Digital Media Practice.</em> Polity.（邦訳『メディア・社会・世界』慶應義塾大学出版会）</li>
+                <li>Castells, M. (2009). <em>Communication Power.</em> Oxford University Press.</li>
+                <li>van Dijck, J. (2013). <em>The Culture of Connectivity: A Critical History of Social Media.</em> Oxford University Press.</li>
+                <li>Reagle, J. (2010). <em>Good Faith Collaboration: The Culture of Wikipedia.</em> MIT Press.</li>
+                <li>Bruns, A. (2008). <em>Blogs, Wikipedia, Second Life, and Beyond: From Production to Produsage.</em> Peter Lang.</li>
+            </ul>
+        </section>
+    </article>
+
+    <footer class="article-footer">
+        <p>本稿は、メディアと存在証明の関係をメディア論的に考察したものです。</p>
+        <p id="essay-nav-links"></p>
+        <p style="margin-top: 2rem; font-size: 0.75rem;">&copy; 2026 TokiStorage</p>
+    </footer>
+</main>
+
+<script src="essay-nav.js?v=20260209"></script>
+</body>
+</html>

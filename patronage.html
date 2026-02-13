@@ -1,0 +1,775 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>パトロネージ | 千年の記憶を社会に届ける</title>
+    <meta name="robots" content="noindex, nofollow">
+    <meta name="description" content="存在証明を民主化する——その活動そのものに参画しませんか。TokiStorageパトロネージプログラムのご案内。">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Shippori+Mincho:wght@400;500;600;700&family=Zen+Kaku+Gothic+New:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --toki-blue: #2563EB;
+            --toki-blue-light: #3B82F6;
+            --toki-blue-dark: #1D4ED8;
+            --toki-blue-pale: #EFF6FF;
+            --toki-blue-glow: rgba(37, 99, 235, 0.12);
+            --gold: #C9A962;
+            --gold-pale: #FDF8E8;
+            --emerald: #16A34A;
+            --emerald-dark: #15803D;
+            --emerald-pale: #F0FDF4;
+            --blue-pale: #EFF6FF;
+            --bg-white: #FFFFFF;
+            --bg-page: #F8FAFC;
+            --bg-section: #F1F5F9;
+            --bg-card: #FFFFFF;
+            --text-primary: #1E293B;
+            --text-secondary: #475569;
+            --text-muted: #94A3B8;
+            --text-dim: #CBD5E1;
+            --border: #E2E8F0;
+            --border-light: #F1F5F9;
+            --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.05);
+            --shadow-md: 0 4px 16px rgba(0, 0, 0, 0.06);
+            --font-display: 'Shippori Mincho', serif;
+            --font-body: 'Zen Kaku Gothic New', sans-serif;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        html { scroll-behavior: smooth; }
+
+        body {
+            font-family: var(--font-body);
+            font-weight: 400;
+            background: var(--bg-white);
+            color: var(--text-primary);
+            line-height: 1.9;
+            font-size: 16px;
+        }
+
+        /* Navigation */
+        .pp-nav {
+            position: fixed;
+            top: 0; left: 0; right: 0;
+            z-index: 1000;
+            background: rgba(255,255,255,0.95);
+            backdrop-filter: blur(12px);
+            border-bottom: 1px solid var(--border);
+            padding: 0.6rem 1.2rem;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+        .pp-nav .nav-brand {
+            font-family: var(--font-display);
+            font-size: 0.9rem;
+            font-weight: 600;
+            color: var(--emerald);
+            text-decoration: none;
+        }
+        .pp-nav .nav-right {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+        .pp-nav .nav-label {
+            font-size: 0.6rem;
+            color: var(--text-muted);
+            letter-spacing: 0.08em;
+        }
+        .pp-nav .lang-switch {
+            font-size: 0.75rem;
+            color: var(--emerald);
+            text-decoration: none;
+            padding: 0.3rem 0.6rem;
+            border: 1px solid var(--emerald);
+            border-radius: 4px;
+        }
+        .pp-nav .lang-switch:hover {
+            background: var(--emerald);
+            color: #fff;
+        }
+
+        /* Hero */
+        .pt-hero {
+            padding: 8rem 2rem 5rem;
+            text-align: center;
+            background: linear-gradient(180deg, #0f2818 0%, #132f1e 60%, #0a1f10 100%);
+            color: #fff;
+        }
+        .pt-hero-label {
+            font-size: 0.7rem;
+            letter-spacing: 0.25em;
+            color: var(--emerald);
+            margin-bottom: 2rem;
+        }
+        .pt-hero h1 {
+            font-family: var(--font-display);
+            font-size: 2.2rem;
+            font-weight: 700;
+            line-height: 1.6;
+            margin-bottom: 1.5rem;
+        }
+        .pt-hero-sub {
+            font-size: 1rem;
+            color: var(--text-muted);
+            max-width: 560px;
+            margin: 0 auto;
+            line-height: 2;
+        }
+        .pt-hero-sub strong {
+            color: var(--emerald);
+        }
+
+        /* Section */
+        .pp-section {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 4rem 2rem;
+        }
+        .pp-section-title {
+            font-family: var(--font-display);
+            font-size: 1.4rem;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+            color: var(--text-primary);
+        }
+        .pp-section-sub {
+            font-size: 0.9rem;
+            color: var(--text-secondary);
+            margin-bottom: 2.5rem;
+        }
+        .pp-section-border {
+            border-top: 1px solid var(--border);
+        }
+
+        /* Insight cards */
+        .insight-card {
+            background: var(--bg-section);
+            border-radius: 12px;
+            padding: 2rem;
+            margin-bottom: 1.5rem;
+        }
+        .insight-card h3 {
+            font-family: var(--font-display);
+            font-size: 1.05rem;
+            font-weight: 600;
+            color: var(--text-primary);
+            margin-bottom: 0.75rem;
+        }
+        .insight-card p {
+            font-size: 0.9rem;
+            color: var(--text-secondary);
+        }
+
+        /* Quote block */
+        .quote-block {
+            background: var(--emerald-pale);
+            border-left: 4px solid var(--emerald);
+            border-radius: 0 12px 12px 0;
+            padding: 1.5rem 2rem;
+            margin-bottom: 2rem;
+        }
+        .quote-block p {
+            font-family: var(--font-display);
+            font-size: 1.1rem;
+            font-weight: 500;
+            color: var(--text-primary);
+            line-height: 1.8;
+        }
+
+        /* Impact grid */
+        .impact-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+        }
+        .impact-card {
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 1.5rem;
+        }
+        .impact-num {
+            font-family: var(--font-display);
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: var(--emerald);
+            opacity: 0.3;
+            margin-bottom: 0.3rem;
+        }
+        .impact-card h4 {
+            font-family: var(--font-display);
+            font-size: 0.95rem;
+            font-weight: 600;
+            color: var(--text-primary);
+            margin-bottom: 0.5rem;
+        }
+        .impact-card p {
+            font-size: 0.85rem;
+            color: var(--text-secondary);
+            line-height: 1.7;
+        }
+
+        /* Comparison grid */
+        .compare-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 1rem;
+        }
+        .compare-card {
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 1.5rem;
+            position: relative;
+        }
+        .compare-card.is-patron {
+            border-color: var(--emerald);
+            background: var(--emerald-pale);
+        }
+        .compare-label {
+            font-size: 0.6rem;
+            letter-spacing: 0.15em;
+            font-weight: 700;
+            color: var(--text-muted);
+            margin-bottom: 0.6rem;
+        }
+        .compare-card.is-patron .compare-label {
+            color: var(--emerald);
+        }
+        .compare-card h4 {
+            font-family: var(--font-display);
+            font-size: 0.95rem;
+            font-weight: 600;
+            color: var(--text-primary);
+            margin-bottom: 0.5rem;
+        }
+        .compare-card p {
+            font-size: 0.8rem;
+            color: var(--text-secondary);
+            line-height: 1.7;
+        }
+        .compare-row {
+            display: flex;
+            align-items: baseline;
+            gap: 0.5rem;
+            margin-top: 0.6rem;
+        }
+        .compare-key {
+            font-size: 0.7rem;
+            color: var(--text-muted);
+            white-space: nowrap;
+            min-width: 3rem;
+        }
+        .compare-val {
+            font-size: 0.8rem;
+            color: var(--text-primary);
+            font-weight: 500;
+        }
+        .compare-note {
+            font-size: 0.7rem;
+            color: var(--text-muted);
+            margin-top: 0.8rem;
+            padding-top: 0.6rem;
+            border-top: 1px solid var(--border-light);
+            line-height: 1.5;
+        }
+
+        /* Patron core */
+        .patron-core {
+            background: var(--emerald-pale);
+            border-radius: 12px;
+            padding: 1.5rem 2rem;
+            border-left: 4px solid var(--emerald);
+        }
+        .patron-core h4 {
+            font-family: var(--font-display);
+            font-size: 0.95rem;
+            font-weight: 600;
+            color: var(--text-primary);
+            margin-bottom: 0.75rem;
+        }
+        .patron-core-list {
+            list-style: none;
+            padding: 0;
+        }
+        .patron-core-list li {
+            font-size: 0.85rem;
+            color: var(--text-secondary);
+            padding: 0.3rem 0;
+            padding-left: 1.2rem;
+            position: relative;
+        }
+        .patron-core-list li::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 0.7rem;
+            width: 6px;
+            height: 6px;
+            border-radius: 50%;
+            background: var(--emerald);
+            opacity: 0.5;
+        }
+
+        /* Receive list */
+        .receive-list {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+        }
+        .receive-item {
+            display: flex;
+            align-items: flex-start;
+            gap: 1rem;
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 1.2rem 1.5rem;
+        }
+        .receive-icon {
+            flex-shrink: 0;
+            width: 2.5rem;
+            height: 2.5rem;
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.2rem;
+        }
+        .receive-icon.green { background: var(--emerald-pale); }
+        .receive-icon.blue { background: var(--toki-blue-pale); }
+        .receive-icon.gold { background: var(--gold-pale); }
+        .receive-body h4 {
+            font-family: var(--font-display);
+            font-size: 0.95rem;
+            font-weight: 600;
+            color: var(--text-primary);
+            margin-bottom: 0.2rem;
+        }
+        .receive-body p {
+            font-size: 0.85rem;
+            color: var(--text-secondary);
+            line-height: 1.7;
+        }
+
+        /* Founder */
+        .founder-section {
+            background: var(--bg-section);
+            border-radius: 12px;
+            padding: 2rem;
+            display: flex;
+            gap: 1.5rem;
+            align-items: flex-start;
+        }
+        .founder-body h4 {
+            font-family: var(--font-display);
+            font-size: 1rem;
+            font-weight: 600;
+            color: var(--text-primary);
+            margin-bottom: 0.3rem;
+        }
+        .founder-body p {
+            font-size: 0.85rem;
+            color: var(--text-secondary);
+            line-height: 1.7;
+        }
+        .founder-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.4rem;
+            margin-top: 0.75rem;
+        }
+        .founder-tag {
+            font-size: 0.65rem;
+            padding: 0.2rem 0.6rem;
+            background: var(--bg-white);
+            border: 1px solid var(--border);
+            border-radius: 4px;
+            color: var(--text-secondary);
+        }
+        .founder-story {
+            margin-top: 1.2rem;
+            padding: 1rem 1.2rem;
+            background: var(--emerald-pale);
+            border-left: 4px solid var(--emerald);
+            border-radius: 6px;
+            font-size: 0.85rem;
+            line-height: 1.8;
+            color: var(--text-primary);
+        }
+
+        /* CTA */
+        .pp-cta {
+            background: var(--text-primary);
+            color: #fff;
+            text-align: center;
+            padding: 4rem 2rem;
+        }
+        .pp-cta h2 {
+            font-family: var(--font-display);
+            font-size: 1.5rem;
+            font-weight: 600;
+            margin-bottom: 1rem;
+        }
+        .pp-cta p {
+            font-size: 0.9rem;
+            color: var(--text-muted);
+            max-width: 500px;
+            margin: 0 auto 2rem;
+            line-height: 1.8;
+        }
+        .pp-cta-links {
+            display: flex;
+            justify-content: center;
+            gap: 1.5rem;
+            flex-wrap: wrap;
+        }
+        .pp-cta-links a {
+            color: var(--emerald);
+            text-decoration: none;
+            font-size: 0.85rem;
+            padding: 0.5rem 1.2rem;
+            border: 1px solid var(--emerald);
+            border-radius: 6px;
+            transition: background 0.2s;
+        }
+        .pp-cta-links a:hover {
+            background: var(--emerald);
+            color: #fff;
+        }
+
+        /* Footer */
+        .pp-footer {
+            text-align: center;
+            padding: 2rem;
+            border-top: 1px solid var(--border);
+        }
+        .pp-footer p {
+            font-size: 0.75rem;
+            color: var(--text-muted);
+        }
+        .pp-footer a {
+            color: var(--toki-blue);
+            text-decoration: none;
+        }
+
+        @media (max-width: 768px) {
+            .pt-hero { padding: 6rem 1.2rem 3rem; }
+            .pt-hero h1 { font-size: 1.5rem; }
+            .pp-section { padding: 3rem 1.2rem; }
+            .impact-grid { grid-template-columns: 1fr; }
+            .compare-grid { grid-template-columns: 1fr; }
+            .founder-section { flex-direction: column; }
+            .pp-nav .nav-label { display: none; }
+        }
+
+        @media print {
+            .pp-nav { display: none; }
+            .pt-hero { padding-top: 2rem; }
+        }
+    </style>
+</head>
+<body>
+
+<nav class="pp-nav">
+    <a href="index.html" class="nav-brand">トキストレージ</a>
+    <div class="nav-right">
+        <span class="nav-label">PATRONAGE</span>
+        <a href="patronage-en.html" class="lang-switch">EN</a>
+    </div>
+</nav>
+
+<!-- Hero -->
+<header class="pt-hero">
+    <p class="pt-hero-label">PATRONAGE</p>
+    <h1>千年の記憶を、<br>社会に届ける。</h1>
+    <p class="pt-hero-sub">
+        存在証明は特権ではない。<br>
+        誰もが「確かにここにいた」と残せる社会をつくる。<br>
+        その<strong>活動そのもの</strong>に参画しませんか。
+    </p>
+</header>
+
+<!-- Why Patronage -->
+<section class="pp-section">
+    <h2 class="pp-section-title">なぜパトロネージなのか</h2>
+    <p class="pp-section-sub">事業投資でも寄付でもない、第三の参画</p>
+
+    <div class="insight-card">
+        <h3>記憶が消えていく社会を、私たちは見てきた。</h3>
+        <p>SoulCarrierの活動で、納骨先の調査、無縁墓の調査——国内外10,000基以上の墓石を、この足で一つずつ歩き、この目で見てきました。「無名氏」とだけ刻まれた墓石に心が痛みました。名前すら残らない。生きた証が、風化して消えていく。記憶は放っておけば消えるのです。この現実を変えるために、TokiStorageは生まれました。</p>
+    </div>
+    <div class="insight-card">
+        <h3>存在証明は特権であってはならない。</h3>
+        <p>石英ガラスに千年の記録を残す技術は完成しました。しかしこの技術を、富裕層だけのサービスにとどめるわけにはいきません。無縁墓に眠る方、災害で記録を失ったコミュニティ、声を残せないまま去っていく人たち——すべての人に「存在した証」を届けたい。</p>
+    </div>
+    <div class="insight-card">
+        <h3>活動を支えること自体が、あなたの存在証明になる。</h3>
+        <p>パトロネージは投資でも寄付でもありません。「千年の記憶を社会に届ける」という活動に、あなたの名前と意志が刻まれます。あなたが支えた活動が千年続くとき、それ自体があなたの存在証明になる——そういう構造です。</p>
+    </div>
+</section>
+
+<!-- Comparison -->
+<section class="pp-section pp-section-border">
+    <h2 class="pp-section-title">4つの関わり方</h2>
+    <p class="pp-section-sub">TokiStorageとの関係は、一つではない</p>
+
+    <div class="compare-grid">
+        <div class="compare-card">
+            <div class="compare-label">INVESTOR ── 投資家</div>
+            <h4>事業の成長に賭ける</h4>
+            <p>事業を評価し、出資を通じて成長に参画する一般的な関わり方。</p>
+            <div class="compare-row">
+                <span class="compare-key">動機</span>
+                <span class="compare-val">事業成長・金銭的リターン</span>
+            </div>
+            <div class="compare-row">
+                <span class="compare-key">関係</span>
+                <span class="compare-val">出資者</span>
+            </div>
+            <p class="compare-note">※ 現在TokiStorageでは投資の受付はしていません</p>
+        </div>
+
+        <div class="compare-card">
+            <div class="compare-label">PARTNER ── 協業パートナー</div>
+            <h4>事業機会を共に創る</h4>
+            <p>コンサルティングファーム等が、自社クライアントにTokiStorageを提案する。</p>
+            <div class="compare-row">
+                <span class="compare-key">動機</span>
+                <span class="compare-val">事業連携・相互の顧客価値</span>
+            </div>
+            <div class="compare-row">
+                <span class="compare-key">関係</span>
+                <span class="compare-val">業務提携</span>
+            </div>
+        </div>
+
+        <div class="compare-card">
+            <div class="compare-label">CLIENT ── クライアント</div>
+            <h4>自身の存在証明を託す</h4>
+            <p>Timeless Consultingを通じて、ご自身や大切な方の記憶を千年先に届ける。</p>
+            <div class="compare-row">
+                <span class="compare-key">動機</span>
+                <span class="compare-val">自身・家族の存在証明</span>
+            </div>
+            <div class="compare-row">
+                <span class="compare-key">関係</span>
+                <span class="compare-val">サービス利用</span>
+            </div>
+        </div>
+
+        <div class="compare-card is-patron">
+            <div class="compare-label">PATRON ── パトロン</div>
+            <h4>活動そのものに参画する</h4>
+            <p>存在証明を社会に届けるという活動を支え、その活動自体があなたの存在証明になる。</p>
+            <div class="compare-row">
+                <span class="compare-key">動機</span>
+                <span class="compare-val">ミッションへの共感</span>
+            </div>
+            <div class="compare-row">
+                <span class="compare-key">関係</span>
+                <span class="compare-val">活動の参画者</span>
+            </div>
+        </div>
+    </div>
+
+    <p style="font-size: 0.8rem; color: var(--text-muted); margin-top: 1.5rem; line-height: 1.7;">もちろん、これらは排他的ではありません。クライアントでありながらパトロンとして活動を支える方も、パートナーとして事業連携しながらパトロンでもある方もいます。</p>
+</section>
+
+<!-- Vision -->
+<section class="pp-section pp-section-border">
+    <h2 class="pp-section-title">ビジョン</h2>
+    <p class="pp-section-sub">あなたの支援が届く、4つの領域</p>
+
+    <div class="quote-block">
+        <p>記憶が消えていく社会を、変えたい。<br>一人でも多くの「存在した証」を、千年先に届けたい。</p>
+    </div>
+
+    <div class="impact-grid">
+        <div class="impact-card">
+            <div class="impact-num">01</div>
+            <h4>無縁墓プロジェクト</h4>
+            <p>引き取り手のない墓に眠る方々の名前と物語を調査・記録し、石英ガラスに刻みます。忘れられた人を、千年先の誰かと繋ぐ。</p>
+        </div>
+        <div class="impact-card">
+            <div class="impact-num">02</div>
+            <h4>コミュニティアーカイブ</h4>
+            <p>消えゆく祭り、方言、災害の教訓、地域の記憶。コミュニティの存在証明を千年残すプロジェクトを支援します。</p>
+        </div>
+        <div class="impact-card">
+            <div class="impact-num">03</div>
+            <h4>教育・研究アーカイブ</h4>
+            <p>師弟の物語、発見の文脈、知の系譜。制度やプラットフォームに依存しない、千年の知的遺産を構築します。</p>
+        </div>
+        <div class="impact-card">
+            <div class="impact-num">04</div>
+            <h4>技術の民主化</h4>
+            <p>石英ガラスの記録技術を、より多くの人が利用できるよう研究開発を推進。存在証明のコストを下げ、アクセスを広げます。</p>
+        </div>
+    </div>
+</section>
+
+<!-- How to Participate -->
+<section class="pp-section pp-section-border">
+    <h2 class="pp-section-title">参画のかたち</h2>
+    <p class="pp-section-sub">金額やかたちは、お話しながら決めましょう</p>
+
+    <p style="font-size: 0.9rem; color: var(--text-secondary); margin-bottom: 2rem; line-height: 1.9;">パトロネージに決まった型はありません。金額も、関わり方も、対話の中で一緒に決めましょう。大切なのは「この活動を支えたい」という意志そのものです。</p>
+
+    <div class="patron-core">
+        <h4>すべてのパトロンが受け取るもの</h4>
+        <ul class="patron-core-list">
+            <li>千年アーカイブへの刻印——あなたの名前と意志が、千年の記録に加わります</li>
+            <li>活動の進展の共有——節目ごとに、どんな記憶を救えたかをお伝えします</li>
+            <li>いつでも変更・休止が可能——あなたのペースで、無理なく続けられます</li>
+        </ul>
+    </div>
+
+    <div style="margin-top: 2rem; padding: 1.5rem 2rem; background: var(--bg-section); border-radius: 12px;">
+        <p style="font-size: 0.85rem; color: var(--text-secondary); line-height: 1.8;">複雑な契約は不要です。特別な法的手続きもありません。「この活動に共感する」——その意志ひとつで、今日から始められます。</p>
+    </div>
+</section>
+<section class="pp-section pp-section-border">
+    <h2 class="pp-section-title">パトロンが受け取るもの</h2>
+    <p class="pp-section-sub">支援のリターンは、金銭ではない</p>
+
+    <div class="receive-list">
+        <div class="receive-item">
+            <div class="receive-icon green">&#x1F48E;</div>
+            <div class="receive-body">
+                <h4>千年アーカイブへの刻印</h4>
+                <p>あなたの名前と支援の意志が、石英ガラスに刻まれます。千年後の誰かが、この活動を支えた人としてあなたに出会う。それは、あなたの物語の一部になります。</p>
+            </div>
+        </div>
+        <div class="receive-item">
+            <div class="receive-icon blue">&#x1F4AC;</div>
+            <div class="receive-body">
+                <h4>活動の進展の共有</h4>
+                <p>節目ごとに、活動がどこまで進んだか、どんな記憶を救えたかをお伝えします。決まったスケジュールではなく、お伝えしたいことがあるときに。</p>
+            </div>
+        </div>
+        <div class="receive-item">
+            <div class="receive-icon green">&#x2728;</div>
+            <div class="receive-body">
+                <h4>あなた自身の存在証明</h4>
+                <p>活動を支えること自体が、あなたの存在証明になります。「この人は千年の記憶を社会に届ける活動を支えた」——それが未来に届く、あなたの物語です。</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Practical / Tax -->
+<section class="pp-section pp-section-border">
+    <h2 class="pp-section-title">法人・個人事業主の方へ</h2>
+    <p class="pp-section-sub">税務・経理のご参考</p>
+
+    <div style="display: flex; flex-direction: column; gap: 1rem;">
+        <div class="insight-card" style="margin-bottom: 0;">
+            <h3>他の協賛・パトロン活動と同様に処理できます</h3>
+            <p>TokiStorageパトロネージは、文化・社会活動への協賛と同様の構造です。芸術祭のスポンサー、文化財保護の後援、NPOへの協賛金など、すでに行われているパトロン活動と同じ枠組みで経理処理が可能です。</p>
+        </div>
+        <div class="insight-card" style="margin-bottom: 0;">
+            <h3>想定される勘定科目</h3>
+            <p><strong>協賛金・広告宣伝費</strong>として計上可能なケースが多くなります。パトロン認定による企業名の露出、千年アーカイブへの刻印など、対価性のある成果物が含まれるためです。詳細は顧問税理士にご確認ください。</p>
+        </div>
+        <div class="insight-card" style="margin-bottom: 0;">
+            <h3>適格請求書（インボイス）について</h3>
+            <p>TokiStorageは現在、免税事業者のため適格請求書（インボイス）の発行には対応しておりません。経過措置により、<strong>2026年9月まで消費税額の80%</strong>、2029年9月まで50%の仕入税額控除が可能です。なお、経費計上（損金算入）はインボイスの有無にかかわらず全額可能です。法人パトロンの皆様のご要望に応じて、適格請求書発行事業者への登録を検討いたします。</p>
+        </div>
+        <div class="insight-card" style="margin-bottom: 0;">
+            <h3>お渡しする書類</h3>
+            <p>協賛契約書（または支援契約書）、請求書、領収書を発行します。法人の経理部門がそのまま処理できる標準的な書式です。</p>
+            <div style="display: flex; flex-wrap: wrap; gap: 0.5rem; margin-top: 1rem;">
+                <a href="patronage-template-agreement.pdf" target="_blank" style="font-size: 0.75rem; padding: 0.4rem 0.8rem; border: 1px solid var(--border); border-radius: 6px; color: var(--text-secondary); text-decoration: none; display: inline-flex; align-items: center; gap: 0.3rem; transition: background 0.2s;">&#x1F4C4; 協賛契約書（見本）</a>
+                <a href="patronage-template-invoice.pdf" target="_blank" style="font-size: 0.75rem; padding: 0.4rem 0.8rem; border: 1px solid var(--border); border-radius: 6px; color: var(--text-secondary); text-decoration: none; display: inline-flex; align-items: center; gap: 0.3rem; transition: background 0.2s;">&#x1F4C4; 請求書（見本）</a>
+                <a href="patronage-template-receipt.pdf" target="_blank" style="font-size: 0.75rem; padding: 0.4rem 0.8rem; border: 1px solid var(--border); border-radius: 6px; color: var(--text-secondary); text-decoration: none; display: inline-flex; align-items: center; gap: 0.3rem; transition: background 0.2s;">&#x1F4C4; 領収書（見本）</a>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Founder -->
+<section class="pp-section pp-section-border">
+    <h2 class="pp-section-title">創設者について</h2>
+    <p class="pp-section-sub">なぜこの活動を始めたのか</p>
+
+    <div class="founder-section">
+        <img src="asset/IMG_4310-2.jpeg" alt="佐藤卓也" style="flex-shrink:0; width:4.5rem; height:4.5rem; border-radius:50%; object-fit:cover;">
+        <div class="founder-body">
+            <h4>佐藤卓也 ── TokiStorage 代表（個人事業 開業届出済）</h4>
+            <p>大手コンサルティングファームでの経験を経て、半導体製造装置のエンジニアリング20年超。タイムレスタウン新浦安（250世帯）の自治会長として「ゆりかごから墓場まで」のコミュニティ運営を経験。SoulCarrier活動で無縁墓・遺骨送還に携わる中で「記憶が消える恐怖」を目の当たりにし、TokiStorageを着想。マウイ・山中湖でのオフグリッド実証を経て、制度に依存しない千年設計の技術を完成。70以上の思想エッセイを執筆し、9つの知的領域から存在証明の意味を探究し続けている。</p>
+            <div class="founder-tags">
+                <span class="founder-tag">元Big4ファーム</span>
+                <span class="founder-tag">半導体エンジニアリング 20年+</span>
+                <span class="founder-tag">自治会長（250世帯）</span>
+                <span class="founder-tag">SoulCarrier主宰</span>
+                <span class="founder-tag">70+思想エッセイ執筆</span>
+                <span class="founder-tag">オフグリッド実証済み</span>
+                <span class="founder-tag">佐渡島移住予定（2026春）</span>
+            </div>
+            <div class="founder-story">
+                愛犬パールのお墓とともに、家族でパールハーバーを訪れました。平和を願う声を音声QRとして刻んだプレートを持って。そこで気がつきました——時を超えた願いは、愛や平和への想いに変容する。一人でも多くの方と分かち合いたい。TokiStorageをきっかけに、時を超えた変容をご一緒できれば幸いです。
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- CTA / Next Steps -->
+<section class="pp-cta">
+    <h2>気軽にお話しましょう。</h2>
+    <p style="font-size: 0.9rem; color: var(--text-muted); max-width: 500px; margin: 0 auto 2rem; line-height: 1.8;">堅い話は不要です。活動に興味がある、それだけで十分です。</p>
+    <div style="max-width: 560px; margin: 0 auto 2.5rem; text-align: left;">
+        <div style="display: flex; align-items: flex-start; gap: 1rem; margin-bottom: 1.5rem;">
+            <span style="flex-shrink:0; width:2rem; height:2rem; border-radius:50%; background:var(--emerald); color:#fff; display:flex; align-items:center; justify-content:center; font-size:0.8rem; font-weight:700;">01</span>
+            <div><strong style="color:#fff;">お話しする（30分）</strong><br><span style="color:var(--text-muted); font-size:0.85rem;">活動の現在地と、あなたが共感するポイントを共有します</span></div>
+        </div>
+        <div style="display: flex; align-items: flex-start; gap: 1rem; margin-bottom: 1.5rem;">
+            <span style="flex-shrink:0; width:2rem; height:2rem; border-radius:50%; background:var(--emerald); color:#fff; display:flex; align-items:center; justify-content:center; font-size:0.8rem; font-weight:700;">02</span>
+            <div><strong style="color:#fff;">参画スタート</strong><br><span style="color:var(--text-muted); font-size:0.85rem;">あなたのペースで始められます。金額もかたちもいつでも変更可能</span></div>
+        </div>
+        <div style="display: flex; align-items: flex-start; gap: 1rem;">
+            <span style="flex-shrink:0; width:2rem; height:2rem; border-radius:50%; background:var(--emerald); color:#fff; display:flex; align-items:center; justify-content:center; font-size:0.8rem; font-weight:700;">03</span>
+            <div><strong style="color:#fff;">千年アーカイブに刻まれる</strong><br><span style="color:var(--text-muted); font-size:0.85rem;">あなたの名前と意志が、千年の記録に加わります</span></div>
+        </div>
+    </div>
+    <p style="font-size: 0.85rem; color: var(--text-muted); margin-bottom: 2rem;">TokiStorage　佐藤卓也<br><span style="font-size: 0.75rem;">個人事業開業届出済（2026年2月11日／市川税務署）・青色申告届出済</span></p>
+    <div class="pp-cta-links">
+        <a href="index.html">トキストレージについて</a>
+        <a href="client-proposal.html">クライアント提案</a>
+        <a href="partnership.html">協業提案</a>
+    </div>
+</section>
+
+<!-- Disclaimer -->
+<section class="pp-section" style="padding-bottom: 2rem;">
+    <div style="border-top: 1px solid var(--border); padding-top: 2rem;">
+        <h3 style="font-size: 0.85rem; color: var(--text-muted); font-weight: 600; margin-bottom: 1rem;">Confidential / Disclaimer</h3>
+        <p style="font-size: 0.75rem; color: var(--text-muted); line-height: 1.8;">
+            本資料は、TokiStorage（佐藤卓也）がパトロネージプログラムのご検討のために作成した資料です。本資料に含まれる情報は、現時点における見解および計画に基づくものであり、その正確性、完全性、または将来の結果を保証するものではありません。パトロネージは投資や寄付とは異なり、金銭的リターンを保証するものではありません。
+        </p>
+        <p style="font-size: 0.7rem; color: var(--text-muted); margin-top: 1rem;">&copy; 2026 TokiStorage / 佐藤卓也. All rights reserved.</p>
+    </div>
+</section>
+
+<!-- Footer -->
+<footer class="pp-footer" style="padding: 2.5rem 2rem;">
+    <div style="display: flex; justify-content: center; gap: 1.5rem; flex-wrap: wrap; margin-bottom: 1rem;">
+        <a href="index.html">トキストレージ</a>
+        <a href="pearl-soap.html">Pearl Soap</a>
+        <a href="../index-ja.html">SoulCarrier 共鳴の会</a>
+        <a href="ambassador.html">アンバサダー</a>
+        <a href="usecases.html">ユースケース</a>
+        <a href="infographic.html">エコシステム全体像</a>
+        <a href="partnership.html">パートナーシップ提案</a>
+        <a href="client-proposal.html">クライアント提案</a>
+        <a href="government-proposal.html">行政提案</a>
+        <a href="pitch-deck.html">投資家向け資料</a>
+    </div>
+    <p>TokiStorage | <a href="patronage-en.html">English Version</a></p>
+</footer>
+
+</body>
+</html>

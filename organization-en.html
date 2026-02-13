@@ -1,0 +1,533 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Organizations and Proof of Existence — What "Leaving Behind" Means Within Institutions | Toki Storage</title>
+    <meta name="robots" content="noindex, nofollow">
+    <meta name="description" content="An examination of organizational lifespan versus individual lifespan, office politics, and the paradox of institutionalization—exploring what it means to 'leave something behind' within organizations.">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400&family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --toki-navy: #334155;
+            --toki-navy-dark: #1E293B;
+            --toki-navy-pale: #F1F5F9;
+            --accent-steel: #64748B;
+            --bg-white: #FFFFFF;
+            --bg-section: #F8FAFC;
+            --text-primary: #1E293B;
+            --text-secondary: #475569;
+            --text-muted: #94A3B8;
+            --border: #E2E8F0;
+            --font-display: 'Cormorant Garamond', serif;
+            --font-body: 'Inter', sans-serif;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        html { scroll-behavior: smooth; }
+
+        body {
+            font-family: var(--font-body);
+            font-weight: 400;
+            background: var(--bg-white);
+            color: var(--text-primary);
+            line-height: 1.9;
+            font-size: 16px;
+        }
+
+        /* Navigation */
+        .article-nav {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 1000;
+            background: rgba(255,255,255,0.95);
+            backdrop-filter: blur(12px);
+            border-bottom: 1px solid var(--border);
+            padding: 0.6rem 1.2rem;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 1rem;
+        }
+        .article-nav .nav-brand {
+            font-family: var(--font-display);
+            font-size: 1rem;
+            font-weight: 600;
+            color: var(--toki-navy);
+            text-decoration: none;
+            white-space: nowrap;
+        }
+        .article-nav .nav-right {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+        .article-nav .nav-label {
+            font-size: 0.6rem;
+            color: var(--text-muted);
+            letter-spacing: 0.08em;
+        }
+        .article-nav .lang-switch {
+            font-size: 0.75rem;
+            color: var(--toki-navy);
+            text-decoration: none;
+            padding: 0.3rem 0.6rem;
+            border: 1px solid var(--toki-navy);
+            border-radius: 4px;
+        }
+        .article-nav .lang-switch:hover {
+            background: var(--toki-navy);
+            color: #fff;
+        }
+
+        /* Article Container */
+        .article-container {
+            max-width: 680px;
+            margin: 0 auto;
+            padding: 7rem 2rem 4rem;
+        }
+
+        /* Article Header */
+        .article-header {
+            margin-bottom: 3rem;
+            padding-bottom: 2rem;
+            border-bottom: 1px solid var(--border);
+        }
+        .article-category {
+            font-size: 0.7rem;
+            color: var(--toki-navy);
+            letter-spacing: 0.15em;
+            margin-bottom: 1rem;
+        }
+        .article-header h1 {
+            font-family: var(--font-display);
+            font-size: 2rem;
+            font-weight: 600;
+            line-height: 1.4;
+            margin-bottom: 1rem;
+        }
+        .article-subtitle {
+            font-size: 0.95rem;
+            color: var(--text-secondary);
+            line-height: 1.8;
+        }
+
+        /* Article Content */
+        .article-content h2 {
+            font-family: var(--font-display);
+            font-size: 1.4rem;
+            font-weight: 600;
+            margin: 3rem 0 1.5rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 1px solid var(--border);
+        }
+        .article-content h3 {
+            font-family: var(--font-display);
+            font-size: 1.15rem;
+            font-weight: 500;
+            margin: 2rem 0 1rem;
+            color: var(--text-primary);
+        }
+        .article-content p {
+            margin-bottom: 1.5rem;
+            text-align: justify;
+        }
+        .article-content blockquote {
+            margin: 2rem 0;
+            padding: 1.5rem 2rem;
+            background: var(--bg-section);
+            border-left: 3px solid var(--toki-navy);
+            font-style: italic;
+        }
+        .article-content blockquote p {
+            margin-bottom: 0.5rem;
+        }
+        .article-content blockquote cite {
+            display: block;
+            font-size: 0.85rem;
+            color: var(--text-muted);
+            font-style: normal;
+            margin-top: 0.5rem;
+        }
+        .article-content ul, .article-content ol {
+            margin: 1.5rem 0;
+            padding-left: 1.5rem;
+        }
+        .article-content li {
+            margin-bottom: 0.75rem;
+        }
+
+        /* Key Point Box */
+        .key-point {
+            background: var(--toki-navy-pale);
+            padding: 1.5rem 2rem;
+            border-radius: 8px;
+            margin: 2rem 0;
+        }
+        .key-point p {
+            margin-bottom: 0;
+            font-size: 0.95rem;
+        }
+
+        /* Core Message */
+        .core-message {
+            background: linear-gradient(135deg, var(--toki-navy-pale) 0%, #E2E8F0 100%);
+            border-left: 4px solid var(--toki-navy);
+            padding: 1.2rem 1.5rem;
+            margin: 0 0 1.5rem 0;
+            border-radius: 0 8px 8px 0;
+            font-size: 0.95rem;
+            line-height: 1.8;
+        }
+        .disclaimer {
+            font-size: 0.8rem;
+            color: var(--text-muted);
+            margin-bottom: 2rem;
+            padding-bottom: 1rem;
+            border-bottom: 1px solid var(--border);
+        }
+
+        /* Comparison Table */
+        .comparison-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 2rem 0;
+            font-size: 0.9rem;
+        }
+        .comparison-table th,
+        .comparison-table td {
+            padding: 1rem;
+            text-align: left;
+            border-bottom: 1px solid var(--border);
+        }
+        .comparison-table th {
+            background: var(--bg-section);
+            font-weight: 500;
+            width: 50%;
+        }
+        .comparison-table td {
+            vertical-align: top;
+        }
+
+        /* References */
+        .references {
+            margin-top: 4rem;
+            padding-top: 2rem;
+            border-top: 1px solid var(--border);
+        }
+        .references h2 {
+            font-size: 1rem;
+            margin-bottom: 1.5rem;
+        }
+        .references ul {
+            list-style: none;
+            padding: 0;
+        }
+        .references li {
+            font-size: 0.85rem;
+            color: var(--text-secondary);
+            margin-bottom: 0.75rem;
+            padding-left: 1.5rem;
+            text-indent: -1.5rem;
+        }
+
+        /* Footer */
+        .article-footer {
+            margin-top: 4rem;
+            padding-top: 2rem;
+            border-top: 1px solid var(--border);
+            text-align: center;
+        }
+        .article-footer p {
+            font-size: 0.8rem;
+            color: var(--text-muted);
+            margin-bottom: 1rem;
+        }
+        .article-footer a {
+            color: var(--toki-navy);
+            text-decoration: none;
+        }
+        .article-footer a:hover {
+            text-decoration: underline;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .article-container { padding: 6rem 1.2rem 3rem; }
+            .article-header h1 { font-size: 1.6rem; }
+            .article-nav .nav-label { display: none; }
+            .comparison-table { font-size: 0.8rem; }
+            .comparison-table th,
+            .comparison-table td { padding: 0.75rem; }
+        }
+
+        @media print {
+            .article-nav { display: none; }
+            .article-container { padding: 2rem; }
+        }
+    </style>
+</head>
+<body>
+
+<nav class="article-nav">
+    <a href="index-en.html" class="nav-brand">Toki Storage</a>
+    <div class="nav-right">
+        <span class="nav-label">ORGANIZATIONAL STUDIES</span>
+        <a href="organization.html" class="lang-switch">JP</a>
+    </div>
+</nav>
+
+<article class="article-container">
+
+    <header class="article-header">
+        <p class="article-category">ESSAY — ORGANIZATIONS & INSTITUTIONS</p>
+        <h1>Organizations and Proof of Existence<br>— What "Leaving Behind" Means Within Institutions</h1>
+        <p class="article-subtitle">
+            Average corporate lifespan continues to shrink, and lifetime employment is a relic of the past.<br>
+            An examination of what it means to project oneself onto organizations, and the possibility of leaving something beyond them.
+        </p>
+    </header>
+
+    <div class="article-content">
+
+        <div class="core-message">
+            <strong>Key Takeaway:</strong> Organizations may disappear before individuals do. Recognizing the limits of entrusting oneself to organizations, we should consider paths to preserve existence both with and beyond organizations.
+        </div>
+
+        <p class="disclaimer">*This essay is an academic analysis and does not advocate for any specific political or religious position.</p>
+
+        <h2>1. Organizational Lifespan — The Paradox of Entrusting to a Shrinking Vessel</h2>
+
+        <p>The average lifespan of S&P 500 companies has declined from 61 years in 1958 to less than 20 years in the 2020s (Credit Suisse, 2017). Even large corporations once believed to be "permanent" often disappear in a timeframe shorter than an individual's career.</p>
+
+        <p>This presents a fundamental contradiction. Many people want to "leave their mark" on the organizations they belong to—through successful projects, institutional reforms, or mentoring the next generation. They seek to inscribe their traces within the organization. But if the vessel itself disappears before they do, what meaning do those inscribed traces hold?</p>
+
+        <blockquote>
+            <p>"Organizations are means to ends, not ends in themselves. Yet for those who belong to them, organizations often become extensions of the self."</p>
+            <cite>— James G. March & Herbert A. Simon, <em>Organizations</em> (1958)</cite>
+        </blockquote>
+
+        <p>Research on organizational identification reveals how individuals experience organizational success as personal success, linking organizational survival with their own sense of continuity. However, this identification exposes its limits when confronted with the physical constraint of organizational lifespan.</p>
+
+        <h2>2. Office Politics and the Desire to "Leave One's Name"</h2>
+
+        <p>Office politics—the implicit competition for influence, power, and recognition within organizations. While ostensibly framed as being "for the company" or "for the team," underlying these dynamics is often the desire to "leave one's name behind."</p>
+
+        <h3>The Organizational Expression of Recognition Needs</h3>
+
+        <p>Following Axel Honneth's theory of recognition, humans seek acknowledgment in three dimensions: recognition through love, recognition as rights, and recognition of social achievement (Honneth, 1992). Office politics primarily unfolds around the third dimension—recognition of contributions and accomplishments.</p>
+
+        <ul>
+            <li><strong>Obsession with visibility</strong>: The insistence that one's contributions be recorded in "visible" form—meeting minutes, explicit project involvement, signatures on deliverables.</li>
+            <li><strong>Entry into lineage</strong>: Being inscribed in organizational history as "the person who created X system" or "the leader of Y project."</li>
+            <li><strong>Successor formation</strong>: The attempt to extend oneself indirectly by cultivating successors who will inherit one's ideas and methodologies.</li>
+        </ul>
+
+        <p>These may appear to be healthy career development. Yet when we excavate the underlying motivation, we find the desire for proof of existence—the need to leave evidence that "I was here."</p>
+
+        <div class="key-point">
+            <p>The attempt to "leave one's name" within organizations is often an institutional expression of the need for recognition. While this need is fundamentally human, we must recognize the limitations of entrusting it to the finite vessel of an organization.</p>
+        </div>
+
+        <h2>3. Organizations and Individuals — Intersecting Time Horizons</h2>
+
+        <p>Organizations are vessels for achieving goals that individuals could never accomplish alone. Collaboration, specialization, resource concentration—countless things become possible only because organizations exist.</p>
+
+        <p>Yet there is a structural "difference in time horizons" between organizations and individuals. In his 1956 work <em>The Organization Man</em>, William H. Whyte depicted individuals who identify with large corporations and live according to organizational logic. The more deeply one engages with an organization, the more one synchronizes with its time horizon.</p>
+
+        <h3>The Gap in Time Horizons</h3>
+
+        <p>In <em>The Corrosion of Character</em> (1998), Richard Sennett analyzed how modern flexible capitalism erodes individual identity. Short-term performance pressure, frequent reorganizations, emphasis on "personal responsibility"—these reduce individuals to "interchangeable parts" of the organization.</p>
+
+        <blockquote>
+            <p>"The new capitalism's logic that 'nothing is long-term' corrodes human qualities like trust and loyalty."</p>
+            <cite>— Richard Sennett, <em>The Corrosion of Character</em> (1998)</cite>
+        </blockquote>
+
+        <p>Paradoxically, the more one strives to "leave something" through organizational contributions, the more one becomes absorbed into organizational logic and depleted. Project successes are recorded as organizational achievements, and individual contributions become anonymized. Institutions forget their founders' names; only the systems remain.</p>
+
+        <table class="comparison-table">
+            <tr>
+                <th>Leaving Within Organizations</th>
+                <th>Leaving Beyond Organizations</th>
+            </tr>
+            <tr>
+                <td>Dependent on organizational lifespan</td>
+                <td>Independent of organizational lifespan</td>
+            </tr>
+            <tr>
+                <td>Records belong to the organization</td>
+                <td>Records belong to the individual</td>
+            </tr>
+            <tr>
+                <td>Evaluation criteria set by organizational logic</td>
+                <td>Evaluation criteria set by oneself</td>
+            </tr>
+            <tr>
+                <td>Risk of anonymization</td>
+                <td>Personal context is preserved</td>
+            </tr>
+        </table>
+
+        <h2>4. Founder Myths and the Paradox of Institutionalization</h2>
+
+        <p>Max Weber introduced the concept of "routinization of charisma" (Veralltäglichung des Charisma) (Weber, 1922). A founder's personal vision and passion—charismatic authority—transforms into bureaucratic authority through rules and procedures as the organization grows.</p>
+
+        <p>Founders may be celebrated as "myths," but these myths often mutate into narratives that legitimize the organization. The complex personality, struggles, and contradictions of the actual founder are stripped away, leaving only a sanitized "great person biography" convenient for the organization.</p>
+
+        <h3>Institutionalization as a Natural Process</h3>
+
+        <p>DiMaggio and Powell's theory of institutional isomorphism (1983) explains how organizations become increasingly similar under environmental pressure. In this process, the unique visions of founders and reformers are leveled to conform to industry standards and social expectations.</p>
+
+        <p>In other words, even if one tries to inscribe "individuality" into an organization, the organization itself is homogenized by external forces. Individual traces are washed away by the waves of institutionalization and isomorphism, eventually disappearing.</p>
+
+        <div class="key-point">
+            <p>Charisma becomes routinized, vision is absorbed into bureaucracy, and uniqueness is leveled by isomorphism. Organizations are far too malleable to preserve individual traces.</p>
+        </div>
+
+        <h2>5. The Transformation of Mission — When What You Believed In Disappears</h2>
+
+        <p>Many people work not just for salary, but because they resonate with an organization's "philosophy" or "mission." "I want to contribute to the world this company envisions," "I want to align myself with this organization's values"—such beliefs give meaning to daily labor.</p>
+
+        <p>Yet organizational missions are surprisingly malleable.</p>
+
+        <h3>The Inevitability of Mission Drift</h3>
+
+        <p>Organizational theory recognizes the phenomenon of "mission drift"—the process by which founding principles and purposes transform and dilute over time. This is often not a management failure but rather an inevitable consequence of organizational adaptation and survival.</p>
+
+        <ul>
+            <li><strong>Market changes</strong>: Launching services that contradict original principles to respond to shifting customer needs</li>
+            <li><strong>Capital logic</strong>: Shareholder value maximization takes priority over social mission</li>
+            <li><strong>Leadership transitions</strong>: Mission interpretation changes as founders hand over to successors</li>
+            <li><strong>Scale expansion</strong>: As organizations grow, missions become abstract and hollow</li>
+        </ul>
+
+        <p>Collins and Porras identified "preserving core ideology" as a characteristic of long-lived companies in <em>Built to Last</em> (1994). Ironically, however, this "preservation" often amounts to reinterpretation and rewriting. The same words come to mean entirely different things across eras.</p>
+
+        <h3>The Loss of Existential Foundation</h3>
+
+        <p>The critical issue here is the proof of existence for individuals who have worked by aligning themselves with a mission.</p>
+
+        <p>"I worked for this mission for ten years"—but when that mission is rewritten by the organization, the meaning of those ten years is retroactively transformed. What you believed in and contributed to no longer exists within the organization. It becomes merely a "former policy," relegated to the margins of organizational history.</p>
+
+        <blockquote>
+            <p>"When you notice the gap between mission and reality, you face two choices: abandon the mission and stay with the organization, or preserve the mission and leave. Either way, you lose something."</p>
+        </blockquote>
+
+        <p>What makes this more severe is when organizations reframe mission transformation positively as "evolution" or "growth." Those who remained faithful to the original mission are repositioned as "outdated" or "unable to adapt to change." Actions that were once "correct" within the organization are retroactively rewritten as "mistakes."</p>
+
+        <div class="key-point">
+            <p>Organizational missions are not immutable. Those who work by projecting themselves onto missions bear the risk of losing their existential foundation when missions transform. Organizational "history" is always rewritten from the present perspective, and the meaning of past contributions is retroactively altered.</p>
+        </div>
+
+        <h2>6. A Perspective Beyond Organizations — The Position of Toki Storage</h2>
+
+        <p>The analysis above reveals the structural limitations of "leaving something" through organizations. Organizational lifespans are shorter than individuals', records become organizational property, and personal context is lost in the institutionalization process.</p>
+
+        <p>Toki Storage positions itself as one response to these limitations. It is a means not to "leave within organizations" but to "leave independently of organizations."</p>
+
+        <ul>
+            <li><strong>Organization-independent</strong>: Record preservation does not depend on any specific company or institution. Records persist even when organizations cease to exist.</li>
+            <li><strong>Preservation of personal context</strong>: Records can include personal context—motivations, emotions, struggles—unfiltered by organizational logic.</li>
+            <li><strong>Extended time horizon</strong>: Designed for a 1,000-year timeframe, not organizations that may disappear in 20 years.</li>
+            <li><strong>Pluralized evaluation</strong>: Beyond the binary of organizational "success" and "failure," existence itself is recorded.</li>
+        </ul>
+
+        <p>This does not negate organizational activity. Rather, it serves as a complementary means to record and preserve organizational experiences in a form liberated from organizational logic.</p>
+
+        <h2>7. Learning from Religious Longevity — How Organizations Could Use Toki Storage</h2>
+
+        <p>Let us shift perspective here. Toki Storage is not only for individuals—organizations themselves could use it to achieve longevity.</p>
+
+        <h3>Why Do Religions Last Millennia?</h3>
+
+        <p>Christianity spans 2,000 years, Buddhism 2,500 years, Judaism over 3,000 years. Meanwhile, the average corporate lifespan has fallen below 20 years. What accounts for this dramatic difference?</p>
+
+        <p>Religious longevity is not simply the power of "faith." There are structural characteristics:</p>
+
+        <ul>
+            <li><strong>Story transmission</strong>: The stories of founders and saints are passed down through generations. Not just abstract doctrine, but concrete evidence of lived human lives is preserved.</li>
+            <li><strong>Continuity of meaning</strong>: They continue to provide answers to the fundamental question "Why are we here?"</li>
+            <li><strong>Connection between individual and whole</strong>: Each believer's life is positioned as part of a larger narrative.</li>
+            <li><strong>Relationship with the deceased</strong>: Continuity with past believers is maintained, sharing a sense that "it doesn't end with death."</li>
+        </ul>
+
+        <h3>Why Are Corporations Short-Lived?</h3>
+
+        <p>In contrast, modern corporations tend to neglect "story":</p>
+
+        <ul>
+            <li><strong>Focus on short-term results</strong>: In environments demanding quarterly performance, long-term narrative building is naturally deprioritized</li>
+            <li><strong>Workforce mobility</strong>: Job-hopping has become normalized, leaving no one to carry organizational memory</li>
+            <li><strong>Mythologization and hollowing of founders</strong>: Instead of the founder's "living story," only conveniently edited hagiographies remain</li>
+            <li><strong>Disconnection from former employees</strong>: Relationships with those who left are severed, and wisdom and stories are lost</li>
+        </ul>
+
+        <div class="key-point">
+            <p>Religions have survived millennia by continuously preserving "people's stories." Modern corporations tend toward shorter lifespans perhaps because, in the pursuit of efficiency and growth, story transmission is structurally deprioritized.</p>
+        </div>
+
+        <h3>The Possibility of Organizations Using Toki Storage</h3>
+
+        <p>Here lies a new possibility for Toki Storage. Organizations could adopt Toki Storage to achieve longevity:</p>
+
+        <ul>
+            <li><strong>The living voice of founders</strong>: Not official corporate histories, but founders' own accounts of their doubts, struggles, and what they truly wanted to convey</li>
+            <li><strong>Stories of each employee</strong>: Accumulating individual stories of the people who comprised the organization as organizational memory</li>
+            <li><strong>The origin of mission</strong>: Preserving mission together with its living context, before it becomes hollow</li>
+            <li><strong>Continuity with former employees</strong>: Maintaining an extended organizational memory that includes those who have left</li>
+        </ul>
+
+        <p>This is not an "organization vs. individual" opposition. It is a form of coexistence where organizations achieve longevity by valuing individual stories.</p>
+
+        <p>Religions have lasted millennia because they did not negate individual believers' stories but rather incorporated them as part of the larger narrative. Perhaps companies, too, can break through the 20-year average lifespan barrier by respecting the proof of existence of each employee.</p>
+
+        <h2>Conclusion — With Institutions, Beyond Institutions</h2>
+
+        <p>Most of us spend the majority of our lives within some form of organization—schools, companies, associations. These provide the foundation for social participation and venues for self-realization. The experiences and contributions we make there unquestionably have meaning.</p>
+
+        <p>However, there are structural limitations to completely entrusting ourselves to organizations. Organizations disappear before individuals do, records become anonymized, and context is lost.</p>
+
+        <p>This is why two paths exist.</p>
+
+        <p>One is to leave your own story independently of organizations, as an individual. To inscribe proof that you existed in a place liberated from organizational evaluation criteria.</p>
+
+        <p>The other is for organizations themselves to change. To become organizations that value each employee's story, preserve founders' living voices, and maintain continuity with former employees. To become organizations that adopt story transmission as a life-support system, as religions have done for millennia.</p>
+
+        <p>These two paths do not conflict. Individuals holding their own proof of existence and organizations respecting individual stories point in the same direction.</p>
+
+        <blockquote>
+            <p>"Walking with institutions while inscribing yourself in places beyond them. This balance opens the path to longer life—for both individuals and organizations."</p>
+        </blockquote>
+
+    </div>
+
+    <section class="references">
+        <h2>References</h2>
+        <ul>
+            <li>Collins, J. C. & Porras, J. I. (1994). <em>Built to Last: Successful Habits of Visionary Companies</em>. HarperBusiness.</li>
+            <li>Credit Suisse (2017). <em>Creative Disruption: The Changing Pace of Creative Destruction</em>.</li>
+            <li>DiMaggio, P. J. & Powell, W. W. (1983). "The Iron Cage Revisited: Institutional Isomorphism and Collective Rationality in Organizational Fields." <em>American Sociological Review</em>, 48(2), 147-160.</li>
+            <li>Honneth, A. (1992). <em>Kampf um Anerkennung: Zur moralischen Grammatik sozialer Konflikte</em>. Suhrkamp. (English: <em>The Struggle for Recognition</em>, Polity Press, 1995)</li>
+            <li>March, J. G. & Simon, H. A. (1958). <em>Organizations</em>. Wiley.</li>
+            <li>Sennett, R. (1998). <em>The Corrosion of Character: The Personal Consequences of Work in the New Capitalism</em>. W. W. Norton.</li>
+            <li>Weber, M. (1922). <em>Wirtschaft und Gesellschaft</em>. Mohr Siebeck. (English: <em>Economy and Society</em>, University of California Press, 1978)</li>
+            <li>Whyte, W. H. (1956). <em>The Organization Man</em>. Simon & Schuster.</li>
+        </ul>
+    </section>
+
+    <footer class="article-footer">
+        <p>Toki Storage Essay Series</p>
+        <p id="essay-nav-links"></p>
+        <p style="margin-top: 1.5rem;">&copy; 2026 TokiStorage</p>
+    </footer>
+
+</article>
+
+<script src="essay-nav.js?v=20260209"></script>
+</body>
+</html>

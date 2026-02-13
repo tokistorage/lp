@@ -1,0 +1,339 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>行政提案 | TokiStorage — 地域の記憶を千年先へ</title>
+    <meta name="robots" content="noindex, nofollow">
+    <meta name="description" content="自治体・国の機関・行政機関向けのTokiStorage活用提案。地域記憶アーカイブ、無縁墓記録、市民ワークショップなど、随意契約にも対応。">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Shippori+Mincho:wght@400;500;600;700&family=Zen+Kaku+Gothic+New:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --toki-blue: #2563EB;
+            --toki-blue-light: #3B82F6;
+            --toki-blue-dark: #1D4ED8;
+            --toki-blue-pale: #EFF6FF;
+            --toki-blue-glow: rgba(37, 99, 235, 0.12);
+            --gold: #C9A962;
+            --gold-pale: #FDF8E8;
+            --bg-white: #FFFFFF;
+            --bg-page: #F8FAFC;
+            --bg-section: #F1F5F9;
+            --bg-card: #FFFFFF;
+            --text-primary: #1E293B;
+            --text-secondary: #475569;
+            --text-muted: #94A3B8;
+            --text-dim: #CBD5E1;
+            --border: #E2E8F0;
+            --border-light: #F1F5F9;
+            --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.05);
+            --shadow-md: 0 4px 16px rgba(0, 0, 0, 0.06);
+            --font-display: 'Shippori Mincho', serif;
+            --font-body: 'Zen Kaku Gothic New', sans-serif;
+        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        html { scroll-behavior: smooth; }
+        body { font-family: var(--font-body); font-weight: 400; background: var(--bg-white); color: var(--text-primary); line-height: 1.9; font-size: 16px; }
+        .pp-nav { position: fixed; top: 0; left: 0; right: 0; z-index: 1000; background: rgba(255,255,255,0.95); backdrop-filter: blur(12px); border-bottom: 1px solid var(--border); padding: 0.6rem 1.2rem; display: flex; align-items: center; justify-content: space-between; }
+        .pp-nav .nav-brand { font-family: var(--font-display); font-size: 0.9rem; font-weight: 600; color: var(--toki-blue); text-decoration: none; }
+        .pp-nav .nav-right { display: flex; align-items: center; gap: 1rem; }
+        .pp-nav .nav-label { font-size: 0.6rem; color: var(--text-muted); letter-spacing: 0.08em; }
+        .pp-nav .lang-switch { font-size: 0.75rem; color: var(--toki-blue); text-decoration: none; padding: 0.3rem 0.6rem; border: 1px solid var(--toki-blue); border-radius: 4px; }
+        .pp-nav .lang-switch:hover { background: var(--toki-blue); color: #fff; }
+        .gv-hero { padding: 8rem 2rem 5rem; text-align: center; background: linear-gradient(180deg, #0f172a 0%, #1e293b 60%, #0f172a 100%); color: #fff; }
+        .gv-hero-label { font-size: 0.7rem; letter-spacing: 0.25em; color: var(--toki-blue-light); margin-bottom: 2rem; }
+        .gv-hero h1 { font-family: var(--font-display); font-size: 2.2rem; font-weight: 700; line-height: 1.6; margin-bottom: 1.5rem; }
+        .gv-hero-sub { font-size: 1rem; color: var(--text-muted); max-width: 560px; margin: 0 auto; line-height: 2; }
+        .pp-section { max-width: 800px; margin: 0 auto; padding: 4rem 2rem; }
+        .pp-section-title { font-family: var(--font-display); font-size: 1.4rem; font-weight: 600; margin-bottom: 0.5rem; color: var(--text-primary); }
+        .pp-section-sub { font-size: 0.9rem; color: var(--text-secondary); margin-bottom: 2.5rem; }
+        .pp-section-border { border-top: 1px solid var(--border); }
+        .insight-card { background: var(--bg-section); border-radius: 12px; padding: 2rem; margin-bottom: 1.5rem; }
+        .insight-card h3 { font-family: var(--font-display); font-size: 1.05rem; font-weight: 600; color: var(--text-primary); margin-bottom: 0.75rem; }
+        .insight-card p { font-size: 0.9rem; color: var(--text-secondary); }
+        .usecase-card { background: var(--bg-white); border: 1px solid var(--border); border-radius: 12px; padding: 2.5rem; margin-bottom: 1.5rem; transition: box-shadow 0.2s; }
+        .usecase-card:hover { box-shadow: var(--shadow-md); }
+        .usecase-label { font-size: 0.65rem; letter-spacing: 0.15em; color: var(--toki-blue); font-weight: 700; margin-bottom: 0.75rem; }
+        .usecase-card h3 { font-family: var(--font-display); font-size: 1.1rem; font-weight: 600; color: var(--text-primary); margin-bottom: 0.75rem; }
+        .usecase-card > p { font-size: 0.9rem; color: var(--text-secondary); margin-bottom: 1.5rem; }
+        .usecase-examples { font-size: 0.8rem; color: var(--text-secondary); padding-left: 1.2rem; margin-bottom: 1.5rem; }
+        .usecase-examples li { margin-bottom: 0.3rem; }
+        .usecase-docs { border-top: 1px solid var(--border-light); padding-top: 1.2rem; }
+        .usecase-docs-label { font-size: 0.7rem; font-weight: 700; color: var(--text-muted); letter-spacing: 0.1em; margin-bottom: 0.6rem; }
+        .doc-tag { display: inline-block; font-size: 0.72rem; padding: 0.3rem 0.7rem; border: 1px solid var(--border); border-radius: 5px; color: var(--text-secondary); margin: 0.2rem 0.2rem 0.2rem 0; }
+        .doc-tag.common { background: var(--toki-blue-pale); border-color: rgba(37, 99, 235, 0.2); color: var(--toki-blue); }
+        .common-docs-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
+        @media (max-width: 600px) { .common-docs-grid { grid-template-columns: 1fr; } }
+        .common-doc-item { background: var(--bg-section); border-radius: 10px; padding: 1.8rem; }
+        .common-doc-item h4 { font-family: var(--font-display); font-size: 0.95rem; font-weight: 600; color: var(--text-primary); margin-bottom: 0.5rem; }
+        .common-doc-item p { font-size: 0.8rem; color: var(--text-secondary); line-height: 1.7; }
+        .note-box { background: var(--gold-pale); border-radius: 10px; padding: 1.5rem 2rem; margin-top: 2rem; }
+        .note-box h4 { font-size: 0.85rem; font-weight: 600; color: var(--text-primary); margin-bottom: 0.5rem; }
+        .note-box p { font-size: 0.8rem; color: var(--text-secondary); line-height: 1.7; }
+        .gv-cta { padding: 5rem 2rem; text-align: center; background: linear-gradient(180deg, #0f172a 0%, #1e293b 100%); color: #fff; }
+        .gv-cta h2 { font-family: var(--font-display); font-size: 1.5rem; font-weight: 600; margin-bottom: 1rem; }
+        .gv-cta p { font-size: 0.9rem; color: var(--text-muted); max-width: 560px; margin: 0 auto 2rem; line-height: 2; }
+        .pp-cta-links { display: flex; justify-content: center; gap: 1.5rem; flex-wrap: wrap; margin-top: 2rem; }
+        .pp-cta-links a { font-size: 0.8rem; color: var(--text-muted); text-decoration: none; border-bottom: 1px solid rgba(148,163,184,0.3); padding-bottom: 2px; }
+        .pp-cta-links a:hover { color: #fff; }
+        .pp-footer { text-align: center; padding: 2rem; font-size: 0.75rem; color: var(--text-muted); border-top: 1px solid var(--border); }
+        .pp-footer a { color: var(--text-muted); text-decoration: none; margin: 0 0.3rem; }
+        .pp-footer a:hover { color: var(--toki-blue); }
+    </style>
+</head>
+<body>
+
+<nav class="pp-nav">
+    <a href="index.html" class="nav-brand">TokiStorage</a>
+    <div class="nav-right">
+        <span class="nav-label">行政提案</span>
+        <a href="government-proposal-en.html" class="lang-switch">EN</a>
+    </div>
+</nav>
+
+<header class="gv-hero">
+    <p class="gv-hero-label">FOR GOVERNMENT &amp; PUBLIC AGENCIES</p>
+    <h1>地域の記憶を、<br>千年先へ届ける。</h1>
+    <p class="gv-hero-sub">
+        祭り、方言、災害の教訓、無縁仏の記録——<br>
+        デジタルは消え、紙は朽ちる。<br>
+        石英ガラスなら、<strong style="color:var(--toki-blue-light);">1,000年残る。</strong>
+    </p>
+</header>
+
+<section class="pp-section">
+    <h2 class="pp-section-title">なぜ今、行政にTokiStorageか</h2>
+    <p class="pp-section-sub">デジタルアーカイブの構造的課題と、千年媒体という解</p>
+    <div class="insight-card">
+        <h3>デジタルデータの寿命は10〜30年</h3>
+        <p>サーバー、クラウド、HDD——すべてのデジタル媒体は定期的なマイグレーション（移行）が必要です。予算が途切れた瞬間、データは消えます。行政の記録事業にとって、これは構造的なリスクです。</p>
+    </div>
+    <div class="insight-card">
+        <h3>石英ガラスは電源もサーバーも不要</h3>
+        <p>TokiStorageが使用する石英ガラスプレートは、1,000年以上の耐久性が実証されています。電源不要、サーバー不要、メンテナンス不要。スマートフォンのカメラで読み取れるQRコードとして情報を刻印します。</p>
+    </div>
+    <div class="insight-card">
+        <h3>地域の記憶は「行政」にしか守れないものがある</h3>
+        <p>個人では残せない規模の記録——祭りの全体像、方言の体系的な記録、災害の教訓、無縁仏の存在証明。これらは公共の責任として、行政が主体となって保存すべき地域資産です。</p>
+    </div>
+</section>
+
+<section class="pp-section pp-section-border">
+    <h2 class="pp-section-title">主要ユースケース</h2>
+    <p class="pp-section-sub">行政機関での活用が特に有効な5つの領域</p>
+
+    <div class="usecase-card">
+        <p class="usecase-label">USE CASE 01</p>
+        <h3>地域記憶アーカイブ事業</h3>
+        <p>祭り、方言、伝統工芸の技法、地域の口承伝承など、消えゆく地域の記憶を石英ガラスに刻み、千年先まで届けます。</p>
+        <ul class="usecase-examples">
+            <li>無形文化財（祭礼、民謡、踊り）の映像・音声記録</li>
+            <li>方言辞典・語り部の音声アーカイブ</li>
+            <li>伝統工芸の技法記録（職人の手元映像・工程解説）</li>
+            <li>地域の歴史写真・古地図のデジタル永続保存</li>
+        </ul>
+        <div class="usecase-docs">
+            <p class="usecase-docs-label">必要書類</p>
+            <span class="doc-tag common">事業者概要書</span>
+            <span class="doc-tag common">見積書</span>
+            <span class="doc-tag">業務仕様書（アーカイブ事業）</span>
+            <span class="doc-tag">企画提案書</span>
+        </div>
+    </div>
+
+    <div class="usecase-card">
+        <p class="usecase-label">USE CASE 02</p>
+        <h3>無縁墓・身元不明遺骨の記録事業</h3>
+        <p>引き取り手のない遺骨、行旅死亡人、無縁仏——「誰かがここにいた」という事実を、消えない媒体に刻みます。全国で10,000基以上の墓石に「無名氏」と刻まれている現実があります。</p>
+        <ul class="usecase-examples">
+            <li>無縁墓の所在・碑文・写真の記録</li>
+            <li>行旅死亡人の公告情報の永続保存</li>
+            <li>合祀先での存在証明プレートの設置</li>
+            <li>SoulCarrier「共鳴の会」との連携による遺骨帰還支援</li>
+        </ul>
+        <div class="usecase-docs">
+            <p class="usecase-docs-label">必要書類</p>
+            <span class="doc-tag common">事業者概要書</span>
+            <span class="doc-tag common">見積書</span>
+            <span class="doc-tag">業務仕様書（記録事業）</span>
+        </div>
+    </div>
+
+    <div class="usecase-card">
+        <p class="usecase-label">USE CASE 03</p>
+        <h3>災害伝承アーカイブ事業</h3>
+        <p>被災記録、復興の記録、住民の証言——災害の教訓を、次の千年に届けます。「ここまで水が来た」という記録が、未来の命を救います。</p>
+        <ul class="usecase-examples">
+            <li>被災者の証言・映像記録の永続保存</li>
+            <li>浸水域・被害状況の記録プレート設置</li>
+            <li>復興過程のドキュメンタリー記録</li>
+            <li>防災教育教材としての活用</li>
+        </ul>
+        <div class="usecase-docs">
+            <p class="usecase-docs-label">必要書類</p>
+            <span class="doc-tag common">事業者概要書</span>
+            <span class="doc-tag common">見積書</span>
+            <span class="doc-tag">業務仕様書（アーカイブ事業）</span>
+            <span class="doc-tag">企画提案書</span>
+        </div>
+    </div>
+
+    <div class="usecase-card">
+        <p class="usecase-label">USE CASE 04</p>
+        <h3>市民ワークショップ事業</h3>
+        <p>「100年後に何を残すか」を市民が考える体験型プログラム。生涯学習、シニア向け事業、学校教育との連携が可能です。</p>
+        <ul class="usecase-examples">
+            <li>生涯学習講座（公民館・文化センター）</li>
+            <li>シニア向け「わたしの存在証明」ワークショップ</li>
+            <li>小中学校での「地域の記憶」学習プログラム</li>
+            <li>親子参加型の家族アーカイブ体験</li>
+        </ul>
+        <div class="usecase-docs">
+            <p class="usecase-docs-label">必要書類</p>
+            <span class="doc-tag common">事業者概要書</span>
+            <span class="doc-tag common">見積書</span>
+            <span class="doc-tag">業務仕様書（ワークショップ）</span>
+            <span class="doc-tag">講師プロフィール</span>
+        </div>
+    </div>
+
+    <div class="usecase-card">
+        <p class="usecase-label">USE CASE 05</p>
+        <h3>文化財デジタル永続保存事業</h3>
+        <p>指定文化財・登録文化財のデジタル記録を、サーバーに依存しない千年媒体に保存。万が一の焼失・損壊に備えた「最後の砦」となります。</p>
+        <ul class="usecase-examples">
+            <li>建造物の3Dスキャンデータ・図面の永続保存</li>
+            <li>美術工芸品の高精細画像記録</li>
+            <li>天然記念物の生態記録・DNA情報の保存</li>
+            <li>無形文化財の技法伝承映像アーカイブ</li>
+        </ul>
+        <div class="usecase-docs">
+            <p class="usecase-docs-label">必要書類</p>
+            <span class="doc-tag common">事業者概要書</span>
+            <span class="doc-tag common">見積書</span>
+            <span class="doc-tag">業務仕様書（保存事業）</span>
+            <span class="doc-tag">企画提案書</span>
+        </div>
+    </div>
+</section>
+
+<section class="pp-section pp-section-border">
+    <h2 class="pp-section-title">共通書類</h2>
+    <p class="pp-section-sub">すべてのユースケースで使用する基本書類</p>
+
+    <div class="common-docs-grid">
+        <div class="common-doc-item">
+            <h4>事業者概要書</h4>
+            <p>TokiStorageの事業内容、代表者経歴、技術概要、実績をまとめた書類。稟議書への添付資料としてお使いいただけます。</p>
+        </div>
+        <div class="common-doc-item">
+            <h4>見積書</h4>
+            <p>ユースケースに応じた品目・単価・数量を記載。随意契約の根拠資料としてそのままご使用可能です。</p>
+        </div>
+        <div class="common-doc-item">
+            <h4>業務仕様書</h4>
+            <p>業務名称・目的・内容・成果物・品質要件・随意契約根拠を記載。契約書の別紙としてそのまま添付可能です。</p>
+        </div>
+        <div class="common-doc-item">
+            <h4>企画提案書</h4>
+            <p>背景と課題、提案内容、技術的優位性、概算費用、スケジュールを網羅。初回提案・庁内説明の基礎資料として使用できます。</p>
+        </div>
+    </div>
+
+    <div class="note-box">
+        <h4>随意契約について</h4>
+        <p>石英ガラスへの千年記録という特殊な技術を用いるため、「その性質又は目的が競争入札に適しないもの」として随意契約の対象となり得ます。</p>
+        <ul style="font-size: 0.85rem; margin: 0.8rem 0 0 1.2rem; line-height: 2;">
+            <li><strong>地方自治体：</strong>地方自治法施行令 第167条の2 第1項第2号</li>
+            <li><strong>国の機関：</strong>予算決算及び会計令 第99条第2号（会計法第29条の3第5項）</li>
+        </ul>
+        <p style="margin-top: 0.8rem;">詳細は担当部署の契約規則をご確認ください。</p>
+    </div>
+
+    <div style="display: flex; flex-wrap: wrap; gap: 0.5rem; margin-top: 2rem;">
+        <a href="government-template-overview.pdf" target="_blank" style="font-size: 0.75rem; padding: 0.4rem 0.8rem; border: 1px solid var(--border); border-radius: 6px; color: var(--text-secondary); text-decoration: none; display: inline-flex; align-items: center; gap: 0.3rem; transition: background 0.2s;">&#x1F4C4; 事業者概要書（見本）</a>
+        <a href="government-template-estimate.pdf" target="_blank" style="font-size: 0.75rem; padding: 0.4rem 0.8rem; border: 1px solid var(--border); border-radius: 6px; color: var(--text-secondary); text-decoration: none; display: inline-flex; align-items: center; gap: 0.3rem; transition: background 0.2s;">&#x1F4C4; 見積書（見本）</a>
+        <a href="government-template-specification.pdf" target="_blank" style="font-size: 0.75rem; padding: 0.4rem 0.8rem; border: 1px solid var(--border); border-radius: 6px; color: var(--text-secondary); text-decoration: none; display: inline-flex; align-items: center; gap: 0.3rem; transition: background 0.2s;">&#x1F4C4; 業務仕様書（見本）</a>
+        <a href="government-template-proposal.pdf" target="_blank" style="font-size: 0.75rem; padding: 0.4rem 0.8rem; border: 1px solid var(--border); border-radius: 6px; color: var(--text-secondary); text-decoration: none; display: inline-flex; align-items: center; gap: 0.3rem; transition: background 0.2s;">&#x1F4C4; 企画提案書（見本）</a>
+    </div>
+</section>
+
+<section class="pp-section pp-section-border">
+    <h2 class="pp-section-title">導入の流れ</h2>
+    <p class="pp-section-sub">初回ご相談から納品まで</p>
+    <div style="display: flex; flex-direction: column; gap: 1.5rem;">
+        <div style="display: flex; align-items: flex-start; gap: 1.2rem;">
+            <span style="flex-shrink:0; width:2.2rem; height:2.2rem; border-radius:50%; background:var(--toki-blue); color:#fff; display:flex; align-items:center; justify-content:center; font-size:0.8rem; font-weight:700;">01</span>
+            <div>
+                <strong>ご相談（30分・無料）</strong>
+                <p style="font-size:0.85rem; color:var(--text-secondary); margin-top:0.3rem;">対象とする地域資産・課題感を共有いただきます。ユースケースの選定と概算をご提示。</p>
+            </div>
+        </div>
+        <div style="display: flex; align-items: flex-start; gap: 1.2rem;">
+            <span style="flex-shrink:0; width:2.2rem; height:2.2rem; border-radius:50%; background:var(--toki-blue); color:#fff; display:flex; align-items:center; justify-content:center; font-size:0.8rem; font-weight:700;">02</span>
+            <div>
+                <strong>企画提案・見積提出</strong>
+                <p style="font-size:0.85rem; color:var(--text-secondary); margin-top:0.3rem;">業務仕様書・企画提案書・見積書を作成。随意契約に必要な書類一式をお渡しします。</p>
+            </div>
+        </div>
+        <div style="display: flex; align-items: flex-start; gap: 1.2rem;">
+            <span style="flex-shrink:0; width:2.2rem; height:2.2rem; border-radius:50%; background:var(--toki-blue); color:#fff; display:flex; align-items:center; justify-content:center; font-size:0.8rem; font-weight:700;">03</span>
+            <div>
+                <strong>契約・制作</strong>
+                <p style="font-size:0.85rem; color:var(--text-secondary); margin-top:0.3rem;">素材収集、コンテンツ設計、石英ガラスへの刻印。進捗は随時ご報告します。</p>
+            </div>
+        </div>
+        <div style="display: flex; align-items: flex-start; gap: 1.2rem;">
+            <span style="flex-shrink:0; width:2.2rem; height:2.2rem; border-radius:50%; background:var(--toki-blue); color:#fff; display:flex; align-items:center; justify-content:center; font-size:0.8rem; font-weight:700;">04</span>
+            <div>
+                <strong>納品・設置</strong>
+                <p style="font-size:0.85rem; color:var(--text-secondary); margin-top:0.3rem;">石英ガラスプレートの納品、設置場所への取り付け、読み取りテスト。完了報告書を提出します。</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="gv-cta">
+    <h2>まずはご相談ください。</h2>
+    <p>地域の記憶を千年先に届ける方法を、一緒に考えましょう。<br>30分の初回相談は無料です。</p>
+    <p style="font-size: 0.9rem; color: #fff; margin-bottom: 0.5rem;">business@satotakuya.jp</p>
+    <p style="font-size: 0.85rem;"><a href="https://line.me/R/oaMessage/@897glsbz/?行政提案ページを見て連絡しました" target="_blank" rel="noopener" style="color:var(--toki-blue-light); text-decoration:underline;">LINE でのご連絡</a></p>
+    <p style="font-size: 0.85rem; color: var(--text-muted); margin-top: 2rem;">TokiStorage　佐藤卓也<br><span style="font-size: 0.75rem;">個人事業開業届出済（2026年2月11日／市川税務署）・青色申告届出済</span></p>
+    <div class="pp-cta-links">
+        <a href="index.html">トキストレージについて</a>
+        <a href="partnership.html">協業提案</a>
+        <a href="client-proposal.html">クライアント提案</a>
+        <a href="patronage.html">パトロネージ</a>
+    </div>
+</section>
+
+<section class="pp-section" style="padding-bottom: 2rem;">
+    <div style="border-top: 1px solid var(--border); padding-top: 2rem;">
+        <h3 style="font-size: 0.85rem; color: var(--text-muted); font-weight: 600; margin-bottom: 1rem;">Confidential / Disclaimer</h3>
+        <p style="font-size: 0.75rem; color: var(--text-muted); line-height: 1.8;">
+            本資料は、TokiStorage（佐藤卓也）が行政機関向けサービスのご検討のために作成した資料です。本資料に含まれる情報は、現時点における見解および計画に基づくものであり、その正確性、完全性、または将来の結果を保証するものではありません。随意契約の可否については、各機関の契約規則に従ってご判断ください。
+        </p>
+        <p style="font-size: 0.7rem; color: var(--text-muted); margin-top: 1rem;">&copy; 2026 TokiStorage / 佐藤卓也. All rights reserved.</p>
+    </div>
+</section>
+
+<footer class="pp-footer" style="padding: 2.5rem 2rem;">
+    <div style="display: flex; justify-content: center; gap: 1.5rem; flex-wrap: wrap; margin-bottom: 1rem;">
+        <a href="index.html">トキストレージ</a>
+        <a href="pearl-soap.html">Pearl Soap</a>
+        <a href="../index-ja.html">SoulCarrier 共鳴の会</a>
+        <a href="ambassador.html">アンバサダー</a>
+        <a href="usecases.html">ユースケース</a>
+        <a href="infographic.html">エコシステム全体像</a>
+        <a href="partnership.html">パートナーシップ提案</a>
+        <a href="client-proposal.html">クライアント提案</a>
+        <a href="patronage.html">パトロネージ</a>
+        <a href="pitch-deck.html">投資家向け資料</a>
+    </div>
+    <p>TokiStorage | <a href="government-proposal-en.html">English Version</a></p>
+</footer>
+
+</body>
+</html>

@@ -1,0 +1,613 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>決める前に、疑ってください | トキストレージ</title>
+    <meta name="description" content="トキストレージが構造的に持つ「怪しく見える要素」を、私たち自身が列挙し、すべてに答えます。決める前にお読みください。">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Shippori+Mincho:wght@400;500;600;700&family=Zen+Kaku+Gothic+New:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --toki-blue: #2563EB;
+            --toki-blue-dark: #1D4ED8;
+            --toki-blue-pale: #EFF6FF;
+            --bg-white: #FFFFFF;
+            --bg-section: #F8FAFC;
+            --bg-warm: #FFFBF5;
+            --text-primary: #1E293B;
+            --text-secondary: #475569;
+            --text-muted: #94A3B8;
+            --border: #E2E8F0;
+            --amber: #D97706;
+            --amber-pale: #FEF3C7;
+            --amber-border: #F59E0B;
+            --green: #059669;
+            --green-pale: #ECFDF5;
+            --font-display: 'Shippori Mincho', serif;
+            --font-body: 'Zen Kaku Gothic New', sans-serif;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        html { scroll-behavior: smooth; }
+
+        body {
+            font-family: var(--font-body);
+            font-weight: 400;
+            background: var(--bg-white);
+            color: var(--text-primary);
+            line-height: 2;
+            font-size: 16px;
+        }
+
+        /* Navigation */
+        .article-nav {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 1000;
+            background: rgba(255,255,255,0.95);
+            backdrop-filter: blur(12px);
+            border-bottom: 1px solid var(--border);
+            padding: 0.6rem 1.2rem;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 1rem;
+        }
+        .article-nav .nav-brand {
+            font-family: var(--font-display);
+            font-size: 0.9rem;
+            font-weight: 600;
+            color: var(--toki-blue);
+            text-decoration: none;
+            white-space: nowrap;
+        }
+        .article-nav .nav-right {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+        .article-nav .nav-label {
+            font-size: 0.6rem;
+            color: var(--text-muted);
+            letter-spacing: 0.08em;
+        }
+        .article-nav .lang-switch {
+            font-size: 0.75rem;
+            color: var(--toki-blue);
+            text-decoration: none;
+            padding: 0.3rem 0.6rem;
+            border: 1px solid var(--toki-blue);
+            border-radius: 4px;
+        }
+        .article-nav .lang-switch:hover {
+            background: var(--toki-blue);
+            color: #fff;
+        }
+        .nav-back {
+            font-size: 0.75rem;
+            color: var(--text-secondary);
+            text-decoration: none;
+        }
+        .nav-back:hover {
+            color: var(--toki-blue);
+        }
+
+        /* Article Container */
+        .article-container {
+            max-width: 720px;
+            margin: 0 auto;
+            padding: 7rem 2rem 4rem;
+        }
+
+        /* Article Header */
+        .article-header {
+            margin-bottom: 3rem;
+            padding-bottom: 2rem;
+            border-bottom: 1px solid var(--border);
+        }
+        .article-category {
+            font-size: 0.7rem;
+            color: var(--amber);
+            letter-spacing: 0.15em;
+            margin-bottom: 1rem;
+        }
+        .article-header h1 {
+            font-family: var(--font-display);
+            font-size: 1.8rem;
+            font-weight: 700;
+            line-height: 1.5;
+            margin-bottom: 1rem;
+        }
+        .article-subtitle {
+            font-size: 1rem;
+            color: var(--text-secondary);
+            margin-bottom: 1.5rem;
+        }
+
+        /* Article Body */
+        .article-body h2 {
+            font-family: var(--font-display);
+            font-size: 1.3rem;
+            font-weight: 600;
+            margin: 3rem 0 1.5rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 1px solid var(--border);
+        }
+        .article-body h3 {
+            font-family: var(--font-display);
+            font-size: 1.1rem;
+            font-weight: 600;
+            margin: 2rem 0 1rem;
+            color: var(--text-primary);
+        }
+        .article-body p {
+            margin-bottom: 1.5rem;
+            text-align: justify;
+        }
+        .article-body strong {
+            font-weight: 600;
+        }
+        .article-body ul, .article-body ol {
+            margin: 0 0 1.5rem 1.5rem;
+        }
+        .article-body li {
+            margin-bottom: 0.5rem;
+        }
+
+        /* Concern Box */
+        .concern-box {
+            background: var(--bg-warm);
+            border: 1px solid #F3E8D0;
+            border-radius: 8px;
+            padding: 1.5rem 2rem;
+            margin: 2rem 0;
+        }
+        .concern-label {
+            font-size: 0.7rem;
+            font-weight: 600;
+            color: var(--amber);
+            letter-spacing: 0.1em;
+            margin-bottom: 0.5rem;
+        }
+        .concern-box blockquote {
+            font-family: var(--font-display);
+            font-size: 1.05rem;
+            font-style: italic;
+            color: var(--text-primary);
+            border: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        /* Answer Box */
+        .answer-box {
+            background: var(--green-pale);
+            border-left: 3px solid var(--green);
+            padding: 1.5rem 2rem;
+            margin: 1rem 0 2rem;
+            border-radius: 0 8px 8px 0;
+        }
+        .answer-label {
+            font-size: 0.7rem;
+            font-weight: 600;
+            color: var(--green);
+            letter-spacing: 0.1em;
+            margin-bottom: 0.5rem;
+        }
+        .answer-box p {
+            margin-bottom: 0.8rem;
+        }
+        .answer-box p:last-child {
+            margin-bottom: 0;
+        }
+
+        /* Promise Box */
+        .promise-box {
+            background: var(--toki-blue-pale);
+            border: 2px solid var(--toki-blue);
+            border-radius: 8px;
+            padding: 2rem;
+            margin: 2rem 0;
+            text-align: center;
+        }
+        .promise-box h3 {
+            color: var(--toki-blue);
+            margin-top: 0;
+        }
+        .promise-box p {
+            text-align: center;
+        }
+
+        /* Verify Box */
+        .verify-box {
+            background: var(--bg-section);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            padding: 1.5rem 2rem;
+            margin: 2rem 0;
+        }
+        .verify-box h3 {
+            font-size: 1rem;
+            margin-top: 0;
+        }
+        .verify-box a {
+            color: var(--toki-blue);
+        }
+
+        /* Footer nav */
+        .article-footer {
+            margin-top: 4rem;
+            padding-top: 2rem;
+            border-top: 1px solid var(--border);
+        }
+        .article-footer-links {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1rem;
+            justify-content: center;
+            margin-top: 1rem;
+        }
+        .article-footer-links a {
+            color: var(--toki-blue);
+            text-decoration: none;
+            font-size: 0.85rem;
+            padding: 0.4rem 1rem;
+            border: 1px solid var(--border);
+            border-radius: 6px;
+        }
+        .article-footer-links a:hover {
+            background: var(--toki-blue-pale);
+            border-color: var(--toki-blue);
+        }
+
+        /* Structural label */
+        .structural-note {
+            display: inline-block;
+            font-size: 0.7rem;
+            background: var(--amber-pale);
+            color: var(--amber);
+            padding: 0.15rem 0.5rem;
+            border-radius: 3px;
+            font-weight: 600;
+            letter-spacing: 0.05em;
+            margin-left: 0.3rem;
+            vertical-align: middle;
+        }
+
+        /* Blockquote */
+        .article-body blockquote {
+            background: var(--bg-section);
+            border-left: 3px solid var(--toki-blue);
+            padding: 1.2rem 1.5rem;
+            margin: 2rem 0;
+            font-style: italic;
+        }
+        .article-body blockquote p {
+            margin-bottom: 0.5rem;
+        }
+        .article-body blockquote p:last-child {
+            margin-bottom: 0;
+        }
+
+        /* Responsive */
+        @media (max-width: 600px) {
+            .article-container {
+                padding: 5rem 1.2rem 3rem;
+            }
+            .article-header h1 {
+                font-size: 1.4rem;
+            }
+            .concern-box, .answer-box, .promise-box, .verify-box {
+                padding: 1.2rem;
+            }
+        }
+    </style>
+</head>
+<body>
+
+<nav class="article-nav">
+    <a href="index.html" class="nav-brand">トキストレージ</a>
+    <div class="nav-right">
+        <a href="index.html" class="nav-back">トップへ戻る</a>
+        <a href="transparency-en.html" class="lang-switch" aria-label="Switch to English">EN</a>
+    </div>
+</nav>
+
+<article class="article-container">
+    <header class="article-header">
+        <p class="article-category">TRANSPARENCY</p>
+        <h1>決める前に、疑ってください</h1>
+        <p class="article-subtitle">このプロジェクトが「怪しい」と感じる直感は、正常です。<br>私たちが自ら挙げる懸念と、そのすべてへの回答。</p>
+    </header>
+
+    <div class="article-body">
+        <h2>なぜこのページがあるのか</h2>
+
+        <p>トキストレージには、外から見たとき「大丈夫かな？」と感じさせる要素が構造的にあります。</p>
+
+        <ul>
+            <li>大切な人の死や記憶という、感情的に最も繊細な領域を扱っている</li>
+            <li>「1000年」という、誰にも検証できないスケールを掲げている</li>
+            <li>島や古民家という、原野商法や観光詐欺と同じキーワードが出てくる</li>
+            <li>まだ若いプロジェクトであり、大企業のような社会的証明がない</li>
+        </ul>
+
+        <p>これらに対して「怪しい」と感じるのは、正常な判断力の表れです。</p>
+
+        <p>普通の企業はこういった懸念を隠します。しかし私たちは隠す代わりに<strong>自分で全部挙げて、全部に答える</strong>ことを選びました。なぜなら、「隠していること」こそが不信の最大の燃料だからです。</p>
+
+        <p>以下は、まだ申し込んでいない方——あるいは、申し込もうか迷っている方——のために書きました。読んだ上で「やっぱりやめる」のも、正しい判断です。</p>
+
+        <!-- ======================================= -->
+        <h2>1. 「これ、詐欺じゃないですか？」</h2>
+
+        <div class="concern-box">
+            <p class="concern-label">外から見たときの印象</p>
+            <blockquote>感動させてから高額商品を売る。島を買う話、1000年の約束。<br>これは詐欺やマルチ商法のパターンと重なる。</blockquote>
+        </div>
+
+        <div class="answer-box">
+            <p class="answer-label">私たちの答え</p>
+            <p>正直に言います。パターンが重なるのは事実です。</p>
+            <p>だからこそ、以下を明確にしています：</p>
+            <ul>
+                <li><strong>紹介制度・アフィリエイト・マルチレベルの仕組みは一切ありません。</strong>誰かを紹介して報酬が発生する構造は存在しません</li>
+                <li><strong>運営者の氏名・住所・経歴はすべて公開しています。</strong>匿名の運営ではありません。<a href="profile.html">代表プロフィール</a>をご覧ください</li>
+                <li><strong>法人登記情報、特定商取引法に基づく表示を公開しています。</strong><a href="tokushoho.html">こちら</a>でご確認いただけます</li>
+                <li><strong>国民生活センター・消費者ホットラインへのリンクをこのページの末尾に設置しています。</strong>不安があれば第三者に相談してください。私たちはそれを歓迎します</li>
+            </ul>
+        </div>
+
+        <!-- ======================================= -->
+        <h2>2. 「お金はどこに使われるの？」</h2>
+
+        <div class="concern-box">
+            <p class="concern-label">外から見たときの印象</p>
+            <blockquote>5万円、55万円、555万円。高い。<br>運営者が不当に儲けているのでは？対価に見合わないのでは？</blockquote>
+        </div>
+
+        <div class="answer-box">
+            <p class="answer-label">私たちの答え</p>
+            <p>代表的な個人プラン（5万円）の使途の概略です：</p>
+            <ul>
+                <li>石英ガラス素材・加工費</li>
+                <li>QRコード設計・刻印作業</li>
+                <li>専用ケース・梱包・配送</li>
+                <li>オンライン相談（30分×2回）の人件費</li>
+                <li>保管インフラ維持積立</li>
+                <li>運営経費（通信費、システム維持費等）</li>
+            </ul>
+            <p>参考比較：一般的な墓石は50〜200万円、散骨は5〜30万円、樹木葬は20〜80万円です。5万円は「記憶を物理的に1000年残す」ためのコストとして、原価に基づいた設計です。</p>
+            <p>ボイスメモリアルコース（555万円）は、6ヶ月・全12回の完全オーダーメイド伴走です。1回あたりの単価はコンサルティングサービスとして妥当な水準であり、そこに家系調査・音声収録・二拠点分散保管の全技術工程が含まれます。</p>
+            <p><strong>今後、年次収支報告書の公開を予定しています。</strong></p>
+        </div>
+
+        <!-- ======================================= -->
+        <h2>3. 「1000年なんて本当に可能？」</h2>
+
+        <div class="concern-box">
+            <p class="concern-label">外から見たときの印象</p>
+            <blockquote>1000年は大風呂敷すぎる。検証しようがない。<br>会社が1000年続く保証はない。</blockquote>
+        </div>
+
+        <div class="answer-box">
+            <p class="answer-label">私たちの答え</p>
+            <p><strong>「1000年」は石英ガラスの素材特性に基づく理論値であり、製品保証期間ではありません。</strong>この点は<a href="index.html#solution">科学的根拠のセクション</a>とサイト末尾の免責事項に明記しています。</p>
+            <p>根拠となる事実：</p>
+            <ul>
+                <li>日立製作所・京都大学の共同研究で、石英ガラスへのレーザー記録で3億年以上のデータ保存を実証（2012年）</li>
+                <li>石英ガラス（SiO₂）は1000℃超の耐熱性を持ち、化学的に極めて安定した物質</li>
+                <li>QRコードはISO国際規格（1994年〜）で30年以上の実績</li>
+            </ul>
+            <p>会社が1000年続く保証はない——おっしゃるとおりです。<strong>だからこそ、サーバーにも電源にも会社にも依存しない物理媒体を選びました。</strong>石英ガラスに刻まれた記録は、たとえ当社がなくなっても、スマホのカメラがあれば読み取れます。</p>
+            <p>さらに、20年ごとにデータを最新媒体に移行する「式年遷宮」モデルを採用し、技術的陳腐化にも対応する設計です。</p>
+        </div>
+
+        <!-- ======================================= -->
+        <h2>4. 「死を商売にしていませんか？」</h2>
+
+        <div class="concern-box">
+            <p class="concern-label">外から見たときの印象</p>
+            <blockquote>大切な人の死や喪失感を利用して、感情的に弱った人に買わせているのでは。<br>泣かせてから売るテクニックに見える。</blockquote>
+        </div>
+
+        <div class="answer-box">
+            <p class="answer-label">私たちの答え</p>
+            <p>「死×商業」は構造的に緊張を孕みます。<span class="structural-note">構造的に消えない</span></p>
+            <p>これは葬儀業界、墓石業界、保険業界と同じ構造です。私たちはこの緊張を認めたうえで、以下の線引きをしています：</p>
+            <ul>
+                <li><strong>グリーフ（悲嘆）マーケティングを行いません。</strong>葬儀直後・命日前後を狙った広告は出しません</li>
+                <li><strong>恐怖訴求を使いません。</strong>「忘れられる」「消える」といった脅しで購買を促すコピーは使用しません</li>
+                <li><strong>今日決めなくていい。</strong>冷却期間を設けています。感動した直後に決済を求める設計はしていません</li>
+                <li><strong>トキストレージを使わなくても、記憶は残ります。</strong>散骨、樹木葬、デジタル追悼、家族の語り継ぎ——選択肢はたくさんあり、私たちはその一つにすぎません</li>
+            </ul>
+            <p>このプロジェクトの出発点は、創設者自身の愛犬Pearlの喪失でした。<a href="index.html#philosophy">その経緯はこちら</a>に書いています。私たちは「死から儲ける」のではなく「記憶の不平等に挑む」ためにこの事業を始めました。その違いが伝わらなければ、私たちの伝え方が未熟だということです。</p>
+        </div>
+
+        <!-- ======================================= -->
+        <h2>5. 「宗教やカルトですか？」</h2>
+
+        <div class="concern-box">
+            <p class="concern-label">外から見たときの印象</p>
+            <blockquote>「存在証明の民主化」「魂を刻む」「共鳴」——精神性の高い言葉が多い。<br>閉鎖的なコミュニティに引き込まれるのでは。</blockquote>
+        </div>
+
+        <div class="answer-box">
+            <p class="answer-label">私たちの答え</p>
+            <p><strong>宗教ではありません。特定の信仰体系を前提としていません。</strong></p>
+            <ul>
+                <li>入会儀式、教義、聖典、教祖にあたるものは存在しません</li>
+                <li>SoulCarrier「共鳴の会」は退会自由です（1クリック、引き止めなし）</li>
+                <li>伊勢神宮や延暦寺との連携は「文化的継承の仕組みへの敬意」であり、宗教的帰依ではありません</li>
+                <li>エッセイや理念に哲学的な表現があるのは、1000年の時間軸で考えると自然にそうなるためです。しかし、それを信じることを求めていません</li>
+            </ul>
+            <p>確認方法：特定の信念を「信じること」を求められた瞬間、それは宗教です。私たちはいかなる場面でも「信じてください」とは言いません。「確かめてください」と言い続けます。</p>
+        </div>
+
+        <!-- ======================================= -->
+        <h2>6. 「辞めたくなったら？」</h2>
+
+        <div class="concern-box">
+            <p class="concern-label">外から見たときの印象</p>
+            <blockquote>一度お金を払ったら抜けられないのでは。<br>返金やキャンセルは本当にできるのか。</blockquote>
+        </div>
+
+        <div class="answer-box">
+            <p class="answer-label">私たちの答え</p>
+            <p><strong>製作開始前であれば、理由を問わず全額返金します。</strong></p>
+            <ul>
+                <li>申込後、製作工程に入る前であればキャンセル・全額返金が可能です</li>
+                <li>製作開始後は、実費を差し引いた返金対応となります</li>
+                <li>SoulCarrier「共鳴の会」の退会は即日可能。引き止めのメール・連絡は一切しません</li>
+                <li>退会後に「戻ってきませんか？」という追跡連絡を送ることはありません</li>
+            </ul>
+            <p><strong>「辞められる」ことは、信頼の土台です。</strong>辞められない仕組みの中での「続ける」には意味がありません。いつでも離れられると知ったうえで「続ける」と決めてくださること——それが本当の共鳴です。</p>
+        </div>
+
+        <!-- ======================================= -->
+        <h2>7. 「運営者は信用できる人ですか？」</h2>
+
+        <div class="concern-box">
+            <p class="concern-label">外から見たときの印象</p>
+            <blockquote>誰が運営しているのか。実体のある組織なのか。</blockquote>
+        </div>
+
+        <div class="answer-box">
+            <p class="answer-label">私たちの答え</p>
+            <p>代表の佐藤卓也は、以下をすべて実名で公開しています：</p>
+            <ul>
+                <li>氏名、住所、経歴：<a href="profile.html">代表プロフィール</a></li>
+                <li>特定商取引法に基づく表示：<a href="tokushoho.html">法的情報</a></li>
+                <li>届出：個人事業開業届出済（2026年2月11日／市川税務署）・青色申告届出済</li>
+                <li>SNSアカウント（X、LinkedIn、Facebook）：すべて実名運用</li>
+                <li>活動実績：<a href="index.html#testimonials">共鳴する声</a>のセクションに、実名で協力してくださっている方々の声を掲載</li>
+            </ul>
+            <p>20年超のエンジニアリングキャリア（半導体製造装置含む）、タイムレスタウン新浦安の自治会長経験（約250世帯）、群馬県での5,000基の墓石調査、ハワイでの遺骨帰還活動——これらはすべて事実であり、関係者に確認可能です。</p>
+        </div>
+
+        <!-- ======================================= -->
+        <h2>8. 「まだ実績がないのでは？」</h2>
+
+        <div class="concern-box">
+            <p class="concern-label">外から見たときの印象</p>
+            <blockquote>新しいプロジェクトで社会的証明がない。<br>大手企業や有名ブランドのような信頼の裏付けがない。</blockquote>
+        </div>
+
+        <div class="answer-box">
+            <p class="answer-label">私たちの答え</p>
+            <p>おっしゃるとおりです。まだ若いプロジェクトであり、大企業のような実績はありません。<span class="structural-note">時間が必要</span></p>
+            <p>しかし、以下の実績はすでにあります：</p>
+            <ul>
+                <li><strong>伊勢神宮</strong>：式年遷宮への奉納。代表者名の20年間記名を実現（2026年1月）</li>
+                <li><strong>比叡山延暦寺</strong>：根本中堂復元修理への奉納。永代記名（2026年1月）</li>
+                <li><strong>日本ハワイ移民資料館</strong>（山口県）：MOU締結</li>
+                <li><strong>二穂島ハワイ移民資料館</strong>（広島県）：学術資料収集を依頼され活動中</li>
+                <li><strong>JICA横浜</strong>：次長との協議進行中</li>
+                <li><strong>渋谷区</strong>（ハワイ姉妹都市）：担当課との協議進行中</li>
+                <li>3,000回以上の刻印テスト実績</li>
+                <li>X（旧Twitter）累計31万インプレッション超</li>
+            </ul>
+            <p>「まだ小さい」を隠すのではなく、「だからこそ全部見せる」を選んでいます。このページ自体がその証拠です。</p>
+        </div>
+
+        <!-- ======================================= -->
+        <h2>9. 「感動して判断が曇っているのでは」</h2>
+
+        <div class="concern-box">
+            <p class="concern-label">あなた自身の中で起きていること</p>
+            <blockquote>ストーリーに感動してしまった。でも感動と警戒が同時にある。<br>自分は騙されやすいタイプなのかもしれない。</blockquote>
+        </div>
+
+        <div class="answer-box">
+            <p class="answer-label">私たちの答え</p>
+            <p><strong>感動と警戒が同時にあるのは、健全です。</strong><span class="structural-note">消す必要なし</span></p>
+            <p>どちらかだけの人のほうが心配です。感動だけなら盲信、警戒だけなら拒絶。両方があるということは、あなたが自分の判断力を使っているということです。</p>
+            <p>だから、こうお願いします：</p>
+            <ul>
+                <li><strong>今日決めないでください。</strong>このプロジェクトは明日もあります</li>
+                <li><strong>周りの人に話してみてください。</strong>「こんなのがあるんだけど、どう思う？」と。説明しにくければ——「大切な人の記憶を石英ガラスに封じて1000年残すプロジェクト」で伝わります</li>
+                <li><strong>このページを一晩寝かせてください。</strong>翌朝も「やっぱり気になる」なら、それは衝動ではなく関心です</li>
+            </ul>
+        </div>
+
+        <!-- ======================================= -->
+        <h2>10. 私たちが「しない」と決めていること</h2>
+
+        <div class="promise-box">
+            <h3>7つの約束</h3>
+            <p style="text-align:left;">
+                1. 紹介報酬・アフィリエイト・マルチレベルの仕組みを<strong>作りません</strong><br>
+                2. 葬儀直後・命日前後を狙った広告を<strong>出しません</strong><br>
+                3. 「忘れられる」「消える」等の恐怖で購買を<strong>煽りません</strong><br>
+                4. 退会者を引き止める連絡を<strong>しません</strong><br>
+                5. 都合の悪い情報を<strong>隠しません</strong><br>
+                6. 「信じてください」とは<strong>言いません</strong>（「確かめてください」と言います）<br>
+                7. このページを<strong>削除しません</strong>
+            </p>
+        </div>
+
+        <!-- ======================================= -->
+        <h2>自分で確かめるために</h2>
+
+        <p>私たちの言葉だけでは不十分です。以下の第三者リソースで、ご自身で確かめてください。</p>
+
+        <div class="verify-box">
+            <h3>第三者による確認手段</h3>
+            <ul>
+                <li><strong>消費者ホットライン</strong>：<a href="https://www.kokusen.go.jp/" target="_blank" rel="noopener">国民生活センター</a>（電話 188）——怪しいと感じたらいつでも相談できます</li>
+                <li><strong>法人情報</strong>：<a href="tokushoho.html">特定商取引法に基づく表示</a>で登記情報をご確認ください</li>
+                <li><strong>代表者のSNS</strong>：<a href="https://www.linkedin.com/in/satotakuya" target="_blank" rel="noopener">LinkedIn</a>、<a href="https://x.com/tokistorage" target="_blank" rel="noopener">X（旧Twitter）</a>で活動履歴をご確認ください</li>
+                <li><strong>石英ガラスの科学的根拠</strong>：「日立 京都大学 石英ガラス データ保存」で検索すると、元論文や報道が見つかります</li>
+                <li><strong>連携先への問い合わせ</strong>：日本ハワイ移民資料館、JICA横浜に直接お問い合わせいただくことも可能です</li>
+            </ul>
+        </div>
+
+        <div class="verify-box">
+            <h3>もし不審な点があったら</h3>
+            <ul>
+                <li><strong>消費者ホットライン</strong>：188（局番なし）</li>
+                <li><strong>警察相談ダイヤル</strong>：#9110</li>
+                <li><strong>法テラス</strong>：0570-078374（法律相談）</li>
+            </ul>
+            <p>これらの機関に相談すること自体を、私たちは歓迎します。疑いを解消するプロセスの中に、第三者の存在があるのは健全なことです。</p>
+        </div>
+
+        <!-- ======================================= -->
+        <h2>最後に</h2>
+
+        <p>このページは、37の懸念項目を構造的に分析した<a href="trust-design.html">信頼設計ドキュメント</a>から生まれました。向いていない方には<a href="not-for-you.html">正直にお伝えしています</a>。</p>
+
+        <p>私たちは「信じてください」とは言いません。</p>
+
+        <p><strong>「確かめてください」</strong>と言い続けます。</p>
+
+        <p>確かめたうえで「やっぱりやめる」のも正しい。<br>
+        確かめたうえで「やっぱり気になる」なら、いつでもご連絡ください。</p>
+
+        <p>あなたの判断を、私たちは尊重します。</p>
+    </div>
+
+    <footer class="article-footer">
+        <p style="text-align:center; font-size: 0.85rem; color: var(--text-muted);">このページは定期的に更新されます。新たな懸念が見つかれば追加します。</p>
+        <div class="article-footer-links">
+            <a href="trust-design.html">信頼設計37項目</a>
+            <a href="not-for-you.html">向いていない方へ</a>
+            <a href="index.html">トキストレージ トップ</a>
+            <a href="index.html#pricing">料金プラン</a>
+            <a href="index.html#faq">よくある質問</a>
+            <a href="profile.html">代表プロフィール</a>
+            <a href="tokushoho.html">特定商取引法表示</a>
+            <a href="privacy.html">プライバシーポリシー</a>
+        </div>
+        <p id="essay-nav-links" style="font-size: 0.8rem; margin-top: 2rem; line-height: 2;"></p>
+        <p style="margin-top: 2rem; font-size: 0.75rem; color: var(--text-muted);">&copy; 2026 TokiStorage</p>
+    </footer>
+</article>
+
+<script src="essay-nav.js?v=20260211"></script>
+</body>
+</html>

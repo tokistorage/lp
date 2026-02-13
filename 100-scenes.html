@@ -1,0 +1,1046 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pearl Soapが届く100のシーン | トキストレージ</title>
+    <meta name="description" content="売っていない石鹸だからこそ届く感謝がある。Pearl Soapが手渡される、100の場面。">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Shippori+Mincho:wght@400;500;600;700&family=Zen+Kaku+Gothic+New:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="index.css">
+    <style>
+        .scenes-page { padding: 4rem 1.5rem 4rem; }
+        .scenes-inner { max-width: 800px; margin: 0 auto; }
+
+        .scenes-hero {
+            text-align: center;
+            padding: 3rem 1rem 4rem;
+            margin-bottom: 2rem;
+        }
+        .scenes-hero h1 {
+            font-family: var(--font-display);
+            font-size: clamp(2.5rem, 8vw, 4rem);
+            font-weight: 300;
+            color: var(--toki-gold);
+            opacity: 0.3;
+            margin-bottom: 0.5rem;
+            line-height: 1;
+        }
+        .scenes-hero .hero-subtitle {
+            font-family: var(--font-display);
+            font-size: 1.5rem;
+            font-weight: 600;
+            color: var(--text-primary);
+            margin-bottom: 1.5rem;
+        }
+        .scenes-hero .hero-tagline {
+            font-size: 0.95rem;
+            color: var(--text-secondary);
+            line-height: 1.9;
+            max-width: 400px;
+            margin: 0 auto;
+        }
+
+        .scenes-intro {
+            text-align: center;
+            padding: 2rem;
+            background: var(--bg-page);
+            border: 1px solid var(--border);
+            border-radius: 1rem;
+            margin-bottom: 3rem;
+        }
+        .scenes-intro p {
+            font-size: 0.9rem;
+            color: var(--text-secondary);
+            line-height: 2;
+            margin-bottom: 0.8rem;
+        }
+        .scenes-intro p:last-child { margin-bottom: 0; }
+        .scenes-intro .highlight {
+            font-family: var(--font-display);
+            font-size: 1.1rem;
+            color: var(--text-primary);
+            font-weight: 500;
+        }
+
+        .category-section {
+            margin-bottom: 3.5rem;
+        }
+        .category-header {
+            display: flex;
+            align-items: baseline;
+            gap: 1rem;
+            margin-bottom: 1.5rem;
+            padding-bottom: 0.8rem;
+            border-bottom: 2px solid var(--toki-gold);
+        }
+        .category-number {
+            font-family: var(--font-display);
+            font-size: 2rem;
+            font-weight: 300;
+            color: var(--toki-gold);
+            opacity: 0.5;
+        }
+        .category-title {
+            font-family: var(--font-display);
+            font-size: 1.3rem;
+            font-weight: 600;
+            color: var(--text-primary);
+        }
+        .category-desc {
+            font-size: 0.85rem;
+            color: var(--text-muted);
+            margin-left: auto;
+        }
+
+        .scene-grid {
+            display: grid;
+            gap: 1rem;
+        }
+        .scene-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 0.8rem;
+            padding: 1.2rem 1.5rem;
+            position: relative;
+            transition: border-color 0.3s ease, box-shadow 0.3s ease;
+        }
+        .scene-card:hover {
+            border-color: var(--toki-gold);
+            box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+        }
+        .scene-number {
+            position: absolute;
+            top: 0.8rem;
+            right: 1rem;
+            font-family: var(--font-display);
+            font-size: 1.5rem;
+            font-weight: 300;
+            color: var(--toki-gold);
+            opacity: 0.25;
+        }
+        .scene-card h3 {
+            font-family: var(--font-display);
+            font-size: 1rem;
+            font-weight: 600;
+            color: var(--text-primary);
+            margin-bottom: 0.5rem;
+            padding-right: 2rem;
+        }
+        .scene-card p {
+            font-size: 0.85rem;
+            color: var(--text-secondary);
+            line-height: 1.8;
+            margin-bottom: 0.6rem;
+        }
+        .scene-qr {
+            font-size: 0.75rem;
+            color: var(--toki-blue);
+            display: flex;
+            align-items: center;
+            gap: 0.3rem;
+        }
+        .scene-qr::before {
+            content: "□";
+            opacity: 0.5;
+        }
+
+        .scenes-cta {
+            text-align: center;
+            padding: 3rem 2rem;
+            background: linear-gradient(135deg, var(--toki-blue-pale) 0%, var(--bg-page) 100%);
+            border-radius: 1.5rem;
+            margin: 4rem 0 2rem;
+        }
+        .scenes-cta h2 {
+            font-family: var(--font-display);
+            font-size: 1.5rem;
+            font-weight: 600;
+            color: var(--text-primary);
+            margin-bottom: 1rem;
+        }
+        .scenes-cta p {
+            font-size: 0.92rem;
+            color: var(--text-secondary);
+            line-height: 1.9;
+            margin-bottom: 1.5rem;
+            max-width: 500px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+        .scenes-cta .cta-buttons {
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+        .scenes-cta a {
+            display: inline-block;
+            padding: 0.8rem 2rem;
+            border-radius: 0.5rem;
+            text-decoration: none;
+            font-size: 0.88rem;
+            font-weight: 500;
+            transition: all 0.3s ease;
+        }
+        .scenes-cta .btn-primary {
+            background: var(--toki-blue);
+            color: #fff;
+        }
+        .scenes-cta .btn-primary:hover {
+            background: var(--toki-blue-dark);
+        }
+        .scenes-cta .btn-secondary {
+            background: var(--bg-card);
+            color: var(--text-primary);
+            border: 1px solid var(--border);
+        }
+        .scenes-cta .btn-secondary:hover {
+            border-color: var(--toki-blue);
+        }
+
+        .scenes-back {
+            text-align: center;
+            margin-top: 2rem;
+        }
+        .scenes-back a {
+            color: var(--toki-blue);
+            text-decoration: none;
+            font-size: 0.85rem;
+        }
+        .scenes-back a:hover { text-decoration: underline; }
+
+        @media (max-width: 600px) {
+            .category-header {
+                flex-wrap: wrap;
+            }
+            .category-desc {
+                width: 100%;
+                margin-left: 0;
+                margin-top: 0.3rem;
+            }
+            .scene-card {
+                padding: 1rem 1.2rem;
+            }
+        }
+    </style>
+</head>
+<body>
+
+<nav class="toki-nav">
+    <span class="nav-logo"><a href="index.html">トキストレージ</a> / <a href="pearl-soap.html">Pearl Soap</a> / 100のシーン</span>
+</nav>
+
+<main class="scenes-page">
+    <div class="scenes-inner">
+
+        <div class="scenes-hero">
+            <h1>100</h1>
+            <p class="hero-subtitle">のシーン</p>
+            <p class="hero-tagline">
+                売っていない石鹸だからこそ届く感謝がある。<br>
+                Pearl Soapが手渡される、100の場面。
+            </p>
+        </div>
+
+        <div class="scenes-intro">
+            <p>Pearl Soapは販売していません。</p>
+            <p>ご縁のある方に、手渡しでお贈りしています。</p>
+            <p>肉球の形をした手作り石鹸。<br>QRコードから、贈り手の想いが読める。</p>
+            <p class="highlight">「いてくれてありがとう」</p>
+            <p>その一言が届く場面は、<br>日常の中に、驚くほどたくさんあります。</p>
+        </div>
+
+        <!-- 01 人生の節目に -->
+        <section class="category-section">
+            <div class="category-header">
+                <span class="category-number">01</span>
+                <span class="category-title">人生の節目に</span>
+                <span class="category-desc">始まりと終わり、出会いと別れ——人生の転換点に手渡す一つ。</span>
+            </div>
+            <div class="scene-grid">
+                <div class="scene-card">
+                    <span class="scene-number">01</span>
+                    <h3>退職・退任の挨拶回り</h3>
+                    <p>お世話になった方々へ、最後の出勤日に一つずつ手渡す。名刺よりも記憶に残る退任の挨拶。</p>
+                    <span class="scene-qr">QR → 感謝のメッセージと在任中の想い出</span>
+                </div>
+                <div class="scene-card">
+                    <span class="scene-number">02</span>
+                    <h3>定年退職のお祝い返し</h3>
+                    <p>花束や記念品をもらったお返しに。「長い間ありがとう」を、形にして返す。</p>
+                    <span class="scene-qr">QR → 職業人生を振り返るメッセージ</span>
+                </div>
+                <div class="scene-card">
+                    <span class="scene-number">03</span>
+                    <h3>卒園・卒業の記念品</h3>
+                    <p>先生からクラスの子どもたちへ。あるいは、子どもたちから先生へ。小さな手で渡す、大きな感謝。</p>
+                    <span class="scene-qr">QR → クラスの集合写真や先生からのメッセージ</span>
+                </div>
+                <div class="scene-card">
+                    <span class="scene-number">04</span>
+                    <h3>結婚式のプチギフト</h3>
+                    <p>披露宴の最後、お見送りで一人ずつ手渡す。市販の菓子ではなく、手作りの石鹸という選択。</p>
+                    <span class="scene-qr">QR → 二人の馴れ初めストーリー</span>
+                </div>
+                <div class="scene-card">
+                    <span class="scene-number">05</span>
+                    <h3>出産報告の内祝い</h3>
+                    <p>赤ちゃんの誕生を知らせるギフトに添えて。「この子がいてくれてありがとう」の意味を込めて。</p>
+                    <span class="scene-qr">QR → 赤ちゃんの写真と家族からのメッセージ</span>
+                </div>
+                <div class="scene-card">
+                    <span class="scene-number">06</span>
+                    <h3>引越しの挨拶</h3>
+                    <p>新しい街で、隣近所に一つずつ。「よろしくお願いします」を石鹸に載せて。</p>
+                    <span class="scene-qr">QR → 自己紹介と家族の紹介</span>
+                </div>
+                <div class="scene-card">
+                    <span class="scene-number">07</span>
+                    <h3>転勤・転居の別れの挨拶</h3>
+                    <p>ご近所さんへ、ママ友へ、いつもの商店街の人たちへ。「ここにいた時間」を形にする。</p>
+                    <span class="scene-qr">QR → この街での思い出と感謝</span>
+                </div>
+                <div class="scene-card">
+                    <span class="scene-number">08</span>
+                    <h3>成人式の記念</h3>
+                    <p>親から子へ、20年の感謝を伝える。「大人になったね」ではなく「いてくれてありがとう」。</p>
+                    <span class="scene-qr">QR → 生まれた日の記録、幼い頃の声</span>
+                </div>
+                <div class="scene-card">
+                    <span class="scene-number">09</span>
+                    <h3>還暦・古希・喜寿のお祝い</h3>
+                    <p>長寿のお祝いに集まった家族から、主役へ。あるいは主役から参加者全員へ。</p>
+                    <span class="scene-qr">QR → 家族の歴史と「これからも」のメッセージ</span>
+                </div>
+                <div class="scene-card">
+                    <span class="scene-number">10</span>
+                    <h3>七五三の記念</h3>
+                    <p>祖父母から孫へ。「ここまで元気に育ってくれてありがとう」を石鹸と一緒に。</p>
+                    <span class="scene-qr">QR → お参りの写真と祖父母からの手紙</span>
+                </div>
+                <div class="scene-card">
+                    <span class="scene-number">11</span>
+                    <h3>入学祝い</h3>
+                    <p>ランドセルの横に、小さな石鹸を一つ。新しい世界に踏み出す子どもへの応援。</p>
+                    <span class="scene-qr">QR → 「1年生のあなたへ」家族からの応援メッセージ</span>
+                </div>
+                <div class="scene-card">
+                    <span class="scene-number">12</span>
+                    <h3>留学・海外赴任の壮行会</h3>
+                    <p>旅立つ人に日本の匂いを。異国で石鹸を使うとき、見送った人たちの顔が浮かぶ。</p>
+                    <span class="scene-qr">QR → 友人・家族からの寄せ書き動画</span>
+                </div>
+            </div>
+        </section>
+
+        <!-- 02 日常の感謝に -->
+        <section class="category-section">
+            <div class="category-header">
+                <span class="category-number">02</span>
+                <span class="category-title">日常の感謝に</span>
+                <span class="category-desc">特別な日でなくても、「ありがとう」を伝えたい相手がいる。</span>
+            </div>
+            <div class="scene-grid">
+                <div class="scene-card">
+                    <span class="scene-number">13</span>
+                    <h3>行きつけの飲食店スタッフへ</h3>
+                    <p>いつもの店の、いつものスタッフに。「おいしかった」の先にある「いてくれてありがとう」。</p>
+                    <span class="scene-qr">QR → お店との思い出やお気に入りメニューの話</span>
+                </div>
+                <div class="scene-card">
+                    <span class="scene-number">14</span>
+                    <h3>美容師さんへ</h3>
+                    <p>年に何度も自分の話を聞いてくれる人への感謝。年末の最後のカット後に。</p>
+                    <span class="scene-qr">QR → 一年の感謝メッセージ</span>
+                </div>
+                <div class="scene-card">
+                    <span class="scene-number">15</span>
+                    <h3>かかりつけ医・歯医者さんへ</h3>
+                    <p>健康を守ってくれる人への、年に一度の感謝。</p>
+                    <span class="scene-qr">QR → 「おかげで元気です」のメッセージ</span>
+                </div>
+                <div class="scene-card">
+                    <span class="scene-number">16</span>
+                    <h3>郵便配達員さんへ</h3>
+                    <p>毎日来てくれる人に、年末の「お疲れさま」を形にして。</p>
+                    <span class="scene-qr">QR → 日頃の感謝メッセージ</span>
+                </div>
+                <div class="scene-card">
+                    <span class="scene-number">17</span>
+                    <h3>コンビニ・スーパーの顔なじみ店員さんへ</h3>
+                    <p>名前は知らないけど、毎朝会う。その「小さな日常」への感謝。</p>
+                    <span class="scene-qr">QR → 「毎朝ありがとうございます」</span>
+                </div>
+                <div class="scene-card">
+                    <span class="scene-number">18</span>
+                    <h3>お歳暮・お中元の代わりに</h3>
+                    <p>形式的な贈答ではなく、心からの感謝を手渡しで。</p>
+                    <span class="scene-qr">QR → 半年間の感謝と近況報告</span>
+                </div>
+                <div class="scene-card">
+                    <span class="scene-number">19</span>
+                    <h3>ご近所へのおすそ分け</h3>
+                    <p>旅行のお土産の代わりに。回覧板を回すついでに。塀越しの会話の延長で。</p>
+                    <span class="scene-qr">QR → Pearl Soapのストーリー</span>
+                </div>
+                <div class="scene-card">
+                    <span class="scene-number">20</span>
+                    <h3>タクシーの運転手さんへ</h3>
+                    <p>長距離で話が弾んだ運転手さんに。「いい出会いでした」を石鹸で。</p>
+                    <span class="scene-qr">QR → 旅の記録と出会いへの感謝</span>
+                </div>
+                <div class="scene-card">
+                    <span class="scene-number">21</span>
+                    <h3>マンションの管理人さんへ</h3>
+                    <p>毎朝「おはようございます」を交わす人。名前は知っているけど、感謝を伝えたことはない。</p>
+                    <span class="scene-qr">QR → 住民からの感謝メッセージ</span>
+                </div>
+                <div class="scene-card">
+                    <span class="scene-number">22</span>
+                    <h3>ペットショップ・動物病院のスタッフへ</h3>
+                    <p>Pearlの名を持つ石鹸だからこそ、動物を愛する人たちに。</p>
+                    <span class="scene-qr">QR → Pearlのストーリーとペットへの想い</span>
+                </div>
+            </div>
+        </section>
+
+        <!-- 03 コミュニティで -->
+        <section class="category-section">
+            <div class="category-header">
+                <span class="category-number">03</span>
+                <span class="category-title">コミュニティで</span>
+                <span class="category-desc">地域、サークル、自治会——人が集まる場所に、つながりの証を。</span>
+            </div>
+            <div class="scene-grid">
+                <div class="scene-card">
+                    <span class="scene-number">23</span>
+                    <h3>自治会長の退任挨拶</h3>
+                    <p>任期を終えて、全世帯に配る最後の贈り物。回覧板では伝えきれない感謝を添えて。</p>
+                    <span class="scene-qr">QR → 自治会長としての振り返りと住民への感謝</span>
+                </div>
+                <div class="scene-card">
+                    <span class="scene-number">24</span>
+                    <h3>町内会のお祭りの記念品</h3>
+                    <p>夏祭り、秋祭り。参加者への感謝と「来年もここで」の約束。</p>
+                    <span class="scene-qr">QR → 祭りの歴史と今年の記録</span>
+                </div>
+                <div class="scene-card">
+                    <span class="scene-number">25</span>
+                    <h3>防災訓練の参加者へ</h3>
+                    <p>休日に参加してくれた住民への感謝。石鹸は災害時にも役立つ実用品。</p>
+                    <span class="scene-qr">QR → 防災情報と地域の連絡先</span>
+                </div>
+                <div class="scene-card">
+                    <span class="scene-number">26</span>
+                    <h3>PTA役員の交代時</h3>
+                    <p>1年間の感謝を、次の役員に引き継ぎとともに。</p>
+                    <span class="scene-qr">QR → 活動の記録と後任への応援メッセージ</span>
+                </div>
+                <div class="scene-card">
+                    <span class="scene-number">27</span>
+                    <h3>ボランティア活動の打ち上げ</h3>
+                    <p>清掃活動、見守り隊、子ども食堂——無償で動いた人たちへの感謝。</p>
+                    <span class="scene-qr">QR → 活動の成果と参加者の声</span>
+                </div>
+                <div class="scene-card">
+                    <span class="scene-number">28</span>
+                    <h3>読書会・勉強会の解散時</h3>
+                    <p>毎月集まった仲間との最後の会合で。知識を分かち合った時間への感謝。</p>
+                    <span class="scene-qr">QR → 読んだ本のリストと参加者の感想集</span>
+                </div>
+                <div class="scene-card">
+                    <span class="scene-number">29</span>
+                    <h3>草野球・フットサルチームの解散記念</h3>
+                    <p>何年も一緒にプレーした仲間へ。試合の記録より、一緒にいた記憶。</p>
+                    <span class="scene-qr">QR → チームの戦績と集合写真アーカイブ</span>
+                </div>
+                <div class="scene-card">
+                    <span class="scene-number">30</span>
+                    <h3>合唱団・吹奏楽団の定期演奏会</h3>
+                    <p>演奏会後に団員同士で、あるいは来場者への感謝として。</p>
+                    <span class="scene-qr">QR → 演奏の録音と団員からのメッセージ</span>
+                </div>
+                <div class="scene-card">
+                    <span class="scene-number">31</span>
+                    <h3>お寺の檀家総会</h3>
+                    <p>住職から檀家の皆さまへ。仏教的な「縁」を、現代の形で。</p>
+                    <span class="scene-qr">QR → 住職の法話とお寺の歴史</span>
+                </div>
+                <div class="scene-card">
+                    <span class="scene-number">32</span>
+                    <h3>教会のバザー</h3>
+                    <p>売り物ではなく、来場者全員への贈り物として。</p>
+                    <span class="scene-qr">QR → 教会の活動紹介と牧師からのメッセージ</span>
+                </div>
+                <div class="scene-card">
+                    <span class="scene-number">33</span>
+                    <h3>消防団の年末警戒激励</h3>
+                    <p>寒い夜に地域を守る消防団員への感謝。住民から団員へ。</p>
+                    <span class="scene-qr">QR → 地域住民からの感謝メッセージ集</span>
+                </div>
+            </div>
+        </section>
+
+        <!-- 04 ビジネスシーンで -->
+        <section class="category-section">
+            <div class="category-header">
+                <span class="category-number">04</span>
+                <span class="category-title">ビジネスシーンで</span>
+                <span class="category-desc">名刺交換の先にある関係性を、石鹸で紡ぐ。</span>
+            </div>
+            <div class="scene-grid">
+                <div class="scene-card">
+                    <span class="scene-number">34</span>
+                    <h3>展示会・カンファレンスで</h3>
+                    <p>ブースに立ち寄ってくれた方へ。名刺の山に埋もれない、記憶に残るノベルティ。</p>
+                    <span class="scene-qr">QR → 自社サービスのストーリーページ</span>
+                </div>
+                <div class="scene-card">
+                    <span class="scene-number">35</span>
+                    <h3>取引先への年末挨拶</h3>
+                    <p>カレンダーや手帳の代わりに。「今年もありがとうございました」を手渡しで。</p>
+                    <span class="scene-qr">QR → 一年の感謝と来年の展望</span>
+                </div>
+                <div class="scene-card">
+                    <span class="scene-number">36</span>
+                    <h3>新規営業の初訪問</h3>
+                    <p>パンフレットの代わりに石鹸を置いてくる。商談の内容より石鹸が記憶に残る。</p>
+                    <span class="scene-qr">QR → 自己紹介とサービス概要</span>
+                </div>
+                <div class="scene-card">
+                    <span class="scene-number">37</span>
+                    <h3>プロジェクト完了の打ち上げ</h3>
+                    <p>チームメンバー全員へ。数ヶ月の苦労を共にした仲間への感謝。</p>
+                    <span class="scene-qr">QR → プロジェクトの記録と各メンバーへのメッセージ</span>
+                </div>
+                <div class="scene-card">
+                    <span class="scene-number">38</span>
+                    <h3>社員の誕生日プレゼント</h3>
+                    <p>社長から社員へ、チームから個人へ。「この会社にいてくれてありがとう」。</p>
+                    <span class="scene-qr">QR → 個人宛のメッセージ</span>
+                </div>
+                <div class="scene-card">
+                    <span class="scene-number">39</span>
+                    <h3>起業家のピッチイベント後</h3>
+                    <p>投資家やメンターへの感謝。名刺交換では生まれない「借り」を作る。</p>
+                    <span class="scene-qr">QR → 事業のビジョンとパーソナルストーリー</span>
+                </div>
+                <div class="scene-card">
+                    <span class="scene-number">40</span>
+                    <h3>セミナー・ワークショップの参加者へ</h3>
+                    <p>登壇後に参加者一人ひとりに。学びの記憶と一緒に石鹸の感触が残る。</p>
+                    <span class="scene-qr">QR → 講演資料と追加コンテンツ</span>
+                </div>
+                <div class="scene-card">
+                    <span class="scene-number">41</span>
+                    <h3>新入社員への歓迎</h3>
+                    <p>入社式の日に、先輩から新人へ。「ようこそ」を石鹸に込めて。</p>
+                    <span class="scene-qr">QR → 会社の文化や先輩からのアドバイス</span>
+                </div>
+                <div class="scene-card">
+                    <span class="scene-number">42</span>
+                    <h3>顧客への契約成立のお礼</h3>
+                    <p>契約書にサインした後に手渡す。ビジネスの向こうにある人間関係。</p>
+                    <span class="scene-qr">QR → パートナーシップへの想い</span>
+                </div>
+                <div class="scene-card">
+                    <span class="scene-number">43</span>
+                    <h3>コワーキングスペースの仲間へ</h3>
+                    <p>隣の席のフリーランサーに。同じ空間を共有する「ゆるい同僚」への感謝。</p>
+                    <span class="scene-qr">QR → 自分の仕事と活動の紹介</span>
+                </div>
+            </div>
+        </section>
+
+        <!-- 05 ケア・福祉の場で -->
+        <section class="category-section">
+            <div class="category-header">
+                <span class="category-number">05</span>
+                <span class="category-title">ケア・福祉の場で</span>
+                <span class="category-desc">「いてくれてありがとう」が最も必要な場所がある。</span>
+            </div>
+            <div class="scene-grid">
+                <div class="scene-card">
+                    <span class="scene-number">44</span>
+                    <h3>老人ホームのパブリックスペースで</h3>
+                    <p>入居者の方々に。手のひらに乗る肉球の形は、触覚で笑顔を引き出す。</p>
+                    <span class="scene-qr">QR → 施設の日常と入居者への感謝メッセージ</span>
+                </div>
+                <div class="scene-card">
+                    <span class="scene-number">45</span>
+                    <h3>介護スタッフへの感謝</h3>
+                    <p>家族から、毎日親をケアしてくれるスタッフへ。言葉にできない感謝を石鹸で。</p>
+                    <span class="scene-qr">QR → 家族からの感謝の手紙</span>
+                </div>
+                <div class="scene-card">
+                    <span class="scene-number">46</span>
+                    <h3>病院の退院時</h3>
+                    <p>看護師さん、お医者さん、リハビリスタッフへ。「おかげで帰れます」の気持ち。</p>
+                    <span class="scene-qr">QR → 回復の記録と医療スタッフへの感謝</span>
+                </div>
+                <div class="scene-card">
+                    <span class="scene-number">47</span>
+                    <h3>グリーフケアの場で</h3>
+                    <p>大切な人を亡くした方へ。「あの人がいた」ことを肯定する贈り物。</p>
+                    <span class="scene-qr">QR → 故人の存在証明とメモリアルページ</span>
+                </div>
+                <div class="scene-card">
+                    <span class="scene-number">48</span>
+                    <h3>障がい者施設のイベントで</h3>
+                    <p>利用者さんが作った作品展で、来場者への記念品として。</p>
+                    <span class="scene-qr">QR → 施設の活動紹介と利用者さんの作品</span>
+                </div>
+                <div class="scene-card">
+                    <span class="scene-number">49</span>
+                    <h3>産後ケア施設で</h3>
+                    <p>新しい命を迎えたお母さんへ。「よくがんばったね」を肉球に込めて。</p>
+                    <span class="scene-qr">QR → 出産のお祝いメッセージ</span>
+                </div>
+                <div class="scene-card">
+                    <span class="scene-number">50</span>
+                    <h3>ペットロスの方へ</h3>
+                    <p>愛するペットを亡くした方へ。Pearlの物語が、「あの子がいた」ことを肯定する。</p>
+                    <span class="scene-qr">QR → Pearlのストーリーと「虹の橋」へのメッセージ</span>
+                </div>
+                <div class="scene-card">
+                    <span class="scene-number">51</span>
+                    <h3>子ども食堂で</h3>
+                    <p>来てくれた子どもたちに。ご飯だけでなく「大切にされている」という感覚を。</p>
+                    <span class="scene-qr">QR → 「あなたはひとりじゃないよ」のメッセージ</span>
+                </div>
+                <div class="scene-card">
+                    <span class="scene-number">52</span>
+                    <h3>ホスピスで</h3>
+                    <p>最期の時間を過ごす方とそのご家族へ。「ここにいた」ことの証として。</p>
+                    <span class="scene-qr">QR → 存在証明のメッセージ</span>
+                </div>
+            </div>
+        </section>
+
+        <!-- 06 教育・習い事で -->
+        <section class="category-section">
+            <div class="category-header">
+                <span class="category-number">06</span>
+                <span class="category-title">教育・習い事で</span>
+                <span class="category-desc">学びの場は、出会いの場でもある。</span>
+            </div>
+            <div class="scene-grid">
+                <div class="scene-card">
+                    <span class="scene-number">53</span>
+                    <h3>ピアノ・バレエの発表会</h3>
+                    <p>先生から生徒へ、「今日の演奏をずっと覚えているよ」の気持ち。</p>
+                    <span class="scene-qr">QR → 発表会の記録と先生からのメッセージ</span>
+                </div>
+                <div class="scene-card">
+                    <span class="scene-number">54</span>
+                    <h3>習い事の最後のレッスン</h3>
+                    <p>引越しや進学で辞める生徒に、先生から最後の贈り物。</p>
+                    <span class="scene-qr">QR → 成長の記録と「いつでも戻っておいで」</span>
+                </div>
+                <div class="scene-card">
+                    <span class="scene-number">55</span>
+                    <h3>学習塾の合格祝い</h3>
+                    <p>合格発表の日に、先生から。「がんばったね」の一言と一緒に。</p>
+                    <span class="scene-qr">QR → 受験の軌跡と先生からの祝福</span>
+                </div>
+                <div class="scene-card">
+                    <span class="scene-number">56</span>
+                    <h3>料理教室の修了時</h3>
+                    <p>一緒に作って一緒に食べた仲間へ。レシピより大切な思い出。</p>
+                    <span class="scene-qr">QR → 教室で作った料理の写真集</span>
+                </div>
+                <div class="scene-card">
+                    <span class="scene-number">57</span>
+                    <h3>書道教室の作品展</h3>
+                    <p>来場者への記念品として。墨の香りと石鹸の香り。</p>
+                    <span class="scene-qr">QR → 生徒の作品ギャラリー</span>
+                </div>
+                <div class="scene-card">
+                    <span class="scene-number">58</span>
+                    <h3>プログラミング教室のハッカソン</h3>
+                    <p>子どもたちが作品を発表した後に。デジタルの学びに、アナログの記念品を。</p>
+                    <span class="scene-qr">QR → 作品のデモページ</span>
+                </div>
+                <div class="scene-card">
+                    <span class="scene-number">59</span>
+                    <h3>大学のゼミ卒業</h3>
+                    <p>教授から卒業生へ、あるいは同期同士で。研究室の思い出を石鹸に。</p>
+                    <span class="scene-qr">QR → ゼミの歴史と卒業論文テーマ集</span>
+                </div>
+                <div class="scene-card">
+                    <span class="scene-number">60</span>
+                    <h3>日本語教室の外国人生徒へ</h3>
+                    <p>日本で暮らす外国人に、日本的な「おもてなし」を。言葉の壁を超える贈り物。</p>
+                    <span class="scene-qr">QR → 多言語の歓迎メッセージ</span>
+                </div>
+            </div>
+        </section>
+
+        <!-- 07 旅と国際交流で -->
+        <section class="category-section">
+            <div class="category-header">
+                <span class="category-number">07</span>
+                <span class="category-title">旅と国際交流で</span>
+                <span class="category-desc">言語を超えて届く、肉球の形をした「ありがとう」。</span>
+            </div>
+            <div class="scene-grid">
+                <div class="scene-card">
+                    <span class="scene-number">61</span>
+                    <h3>Workawayのゲストへ</h3>
+                    <p>滞在してくれたゲストの出発日に。「ここに来てくれてありがとう」。</p>
+                    <span class="scene-qr">QR → ホストファミリーの紹介と滞在の記録</span>
+                </div>
+                <div class="scene-card">
+                    <span class="scene-number">62</span>
+                    <h3>Workawayのホストへ</h3>
+                    <p>ゲストからホストへの感謝。日本を離れても、石鹸を見るたびに思い出す。</p>
+                    <span class="scene-qr">QR → ゲストの母国の紹介と感謝メッセージ</span>
+                </div>
+                <div class="scene-card">
+                    <span class="scene-number">63</span>
+                    <h3>ゲストハウスのチェックアウト時</h3>
+                    <p>オーナーから旅人へ、あるいは旅人からオーナーへ。一期一会の証。</p>
+                    <span class="scene-qr">QR → 地域の観光ガイドとオーナーのストーリー</span>
+                </div>
+                <div class="scene-card">
+                    <span class="scene-number">64</span>
+                    <h3>国際会議の参加者へ</h3>
+                    <p>名札と一緒に配る。会議の内容は忘れても、石鹸の形は覚えている。</p>
+                    <span class="scene-qr">QR → 会議のテーマとホスト国の文化紹介</span>
+                </div>
+                <div class="scene-card">
+                    <span class="scene-number">65</span>
+                    <h3>ホームステイの手土産</h3>
+                    <p>海外のホストファミリーへ。日本から持っていく、最も軽くて最も心に残る手土産。</p>
+                    <span class="scene-qr">QR → 自分と家族の自己紹介（多言語）</span>
+                </div>
+                <div class="scene-card">
+                    <span class="scene-number">66</span>
+                    <h3>旅先で出会った人へ</h3>
+                    <p>偶然の出会い、親切にしてくれた現地の人。言葉が通じなくても贈れる感謝。</p>
+                    <span class="scene-qr">QR → 多言語の「ありがとう」ページ</span>
+                </div>
+                <div class="scene-card">
+                    <span class="scene-number">67</span>
+                    <h3>JICA研修員へ</h3>
+                    <p>日本で学ぶ途上国からの研修員に。帰国後も日本とのつながりを。</p>
+                    <span class="scene-qr">QR → 日本での研修の記録と交流の思い出</span>
+                </div>
+                <div class="scene-card">
+                    <span class="scene-number">68</span>
+                    <h3>姉妹都市の訪問団へ</h3>
+                    <p>市長の公式ギフトではなく、市民からの草の根の贈り物。</p>
+                    <span class="scene-qr">QR → 町の紹介と市民からのメッセージ</span>
+                </div>
+                <div class="scene-card">
+                    <span class="scene-number">69</span>
+                    <h3>クルーズ船のスタッフへ</h3>
+                    <p>長い航海を支えてくれたスタッフに。下船時に手渡す感謝。</p>
+                    <span class="scene-qr">QR → 航海の記録と感謝メッセージ</span>
+                </div>
+                <div class="scene-card">
+                    <span class="scene-number">70</span>
+                    <h3>空港のラウンジスタッフへ</h3>
+                    <p>出発前の最後の日本の思い出として、スタッフに感謝を。</p>
+                    <span class="scene-qr">QR → 旅の始まりへの感謝</span>
+                </div>
+            </div>
+        </section>
+
+        <!-- 08 季節と行事に -->
+        <section class="category-section">
+            <div class="category-header">
+                <span class="category-number">08</span>
+                <span class="category-title">季節と行事に</span>
+                <span class="category-desc">日本の四季と歳時記に寄り添う贈り物。</span>
+            </div>
+            <div class="scene-grid">
+                <div class="scene-card">
+                    <span class="scene-number">71</span>
+                    <h3>バレンタインデー</h3>
+                    <p>チョコの代わりに。甘くはないけど、感謝は甘い。義理でも本命でもなく「存在への感謝」。</p>
+                    <span class="scene-qr">QR → 「いてくれてありがとう」のメッセージ</span>
+                </div>
+                <div class="scene-card">
+                    <span class="scene-number">72</span>
+                    <h3>母の日・父の日</h3>
+                    <p>カーネーションやネクタイの代わりに。「産んでくれてありがとう」「育ててくれてありがとう」。</p>
+                    <span class="scene-qr">QR → 子どもからの手紙（音声付き）</span>
+                </div>
+                <div class="scene-card">
+                    <span class="scene-number">73</span>
+                    <h3>敬老の日</h3>
+                    <p>孫から祖父母へ。「おじいちゃん、おばあちゃんがいてくれてうれしい」。</p>
+                    <span class="scene-qr">QR → 孫の声のメッセージ</span>
+                </div>
+                <div class="scene-card">
+                    <span class="scene-number">74</span>
+                    <h3>クリスマスプレゼント</h3>
+                    <p>サンタクロースからではなく、「あなた」から「あなたの大切な人」へ。</p>
+                    <span class="scene-qr">QR → 今年一年の感謝と来年への願い</span>
+                </div>
+                <div class="scene-card">
+                    <span class="scene-number">75</span>
+                    <h3>お年賀</h3>
+                    <p>年始の挨拶に。年賀状のデジタル化が進む中、手渡しの贈り物の価値が際立つ。</p>
+                    <span class="scene-qr">QR → 新年の挨拶と昨年の振り返り</span>
+                </div>
+                <div class="scene-card">
+                    <span class="scene-number">76</span>
+                    <h3>ハロウィン</h3>
+                    <p>「Trick or Treat」の答えとして。お菓子よりユニークな肉球型の石鹸。</p>
+                    <span class="scene-qr">QR → Pearlのハロウィンストーリー</span>
+                </div>
+                <div class="scene-card">
+                    <span class="scene-number">77</span>
+                    <h3>お彼岸・お盆のお供え</h3>
+                    <p>墓参りに来てくれた親戚への手土産。故人を偲ぶ場での存在証明。</p>
+                    <span class="scene-qr">QR → 故人の思い出ページ</span>
+                </div>
+                <div class="scene-card">
+                    <span class="scene-number">78</span>
+                    <h3>花見の席で</h3>
+                    <p>場所取りしてくれた人、料理を持ち寄ってくれた人への感謝。桜の下で手渡す。</p>
+                    <span class="scene-qr">QR → 今年の花見の記念写真</span>
+                </div>
+            </div>
+        </section>
+
+        <!-- 09 特別な状況で -->
+        <section class="category-section">
+            <div class="category-header">
+                <span class="category-number">09</span>
+                <span class="category-title">特別な状況で</span>
+                <span class="category-desc">言葉では言いにくい感謝を、石鹸が代弁する。</span>
+            </div>
+            <div class="scene-grid">
+                <div class="scene-card">
+                    <span class="scene-number">79</span>
+                    <h3>謝罪の場で</h3>
+                    <p>言葉だけでは足りない「ごめんなさい」に添えて。誠意の形。</p>
+                    <span class="scene-qr">QR → 率直な謝罪と今後の約束</span>
+                </div>
+                <div class="scene-card">
+                    <span class="scene-number">80</span>
+                    <h3>離婚時の元パートナーへ</h3>
+                    <p>別れても、共に過ごした時間は事実。「あの時間をありがとう」。</p>
+                    <span class="scene-qr">QR → 子どもたちのために残す共通の記憶</span>
+                </div>
+                <div class="scene-card">
+                    <span class="scene-number">81</span>
+                    <h3>裁判後の和解の印</h3>
+                    <p>法的に終わった関係に、人間的な句読点を。石鹸一つが和解を完結させる。</p>
+                    <span class="scene-qr">QR → 「前を向きましょう」のメッセージ</span>
+                </div>
+                <div class="scene-card">
+                    <span class="scene-number">82</span>
+                    <h3>災害ボランティアの現場で</h3>
+                    <p>被災された方に、物資としてではなく「あなたを想っている人がいる」証として。石鹸は実用品でもある。</p>
+                    <span class="scene-qr">QR → 全国からの応援メッセージ</span>
+                </div>
+                <div class="scene-card">
+                    <span class="scene-number">83</span>
+                    <h3>養子縁組のセレモニー</h3>
+                    <p>新しい家族の始まりに。血のつながりではなく、選んだつながり。</p>
+                    <span class="scene-qr">QR → 「家族になった日」の記録</span>
+                </div>
+                <div class="scene-card">
+                    <span class="scene-number">84</span>
+                    <h3>刑務所の出所時</h3>
+                    <p>社会復帰する方に。「あなたの存在は否定されていない」というメッセージ。</p>
+                    <span class="scene-qr">QR → 再出発を応援するメッセージ</span>
+                </div>
+                <div class="scene-card">
+                    <span class="scene-number">85</span>
+                    <h3>不妊治療を終えた方へ</h3>
+                    <p>結果がどうであれ、「がんばったあなた」への存在肯定。</p>
+                    <span class="scene-qr">QR → 「あなたは十分です」のメッセージ</span>
+                </div>
+                <div class="scene-card">
+                    <span class="scene-number">86</span>
+                    <h3>遺品整理の後に</h3>
+                    <p>遺品整理を手伝ってくれた人へ。故人の記憶を共有した仲間への感謝。</p>
+                    <span class="scene-qr">QR → 故人の存在証明ページ</span>
+                </div>
+            </div>
+        </section>
+
+        <!-- 10 つながりを広げる -->
+        <section class="category-section">
+            <div class="category-header">
+                <span class="category-number">10</span>
+                <span class="category-title">つながりを広げる</span>
+                <span class="category-desc">既存の関係を深め、新しい関係を生む。</span>
+            </div>
+            <div class="scene-grid">
+                <div class="scene-card">
+                    <span class="scene-number">87</span>
+                    <h3>初対面のビジネスランチ</h3>
+                    <p>名刺交換の後に、もう一つ。「会えてよかった」を形にする。</p>
+                    <span class="scene-qr">QR → 自己紹介と仕事への想い</span>
+                </div>
+                <div class="scene-card">
+                    <span class="scene-number">88</span>
+                    <h3>マッチングアプリの初デート</h3>
+                    <p>2回目があるかわからない。でも「今日会えたこと」自体が贈り物。</p>
+                    <span class="scene-qr">QR → 「お会いできて嬉しかったです」</span>
+                </div>
+                <div class="scene-card">
+                    <span class="scene-number">89</span>
+                    <h3>同窓会で</h3>
+                    <p>何十年ぶりの再会。「変わったね」「変わらないね」の会話の後に。</p>
+                    <span class="scene-qr">QR → 当時の写真と現在の自分の紹介</span>
+                </div>
+                <div class="scene-card">
+                    <span class="scene-number">90</span>
+                    <h3>お見合いで</h3>
+                    <p>結果に関わらず「お時間をいただきありがとうございます」を形に。</p>
+                    <span class="scene-qr">QR → 丁寧な自己紹介</span>
+                </div>
+                <div class="scene-card">
+                    <span class="scene-number">91</span>
+                    <h3>SNSで知り合った人との初オフ会</h3>
+                    <p>オンラインの関係をオフラインの記憶に変える瞬間。</p>
+                    <span class="scene-qr">QR → オンラインでの交流の軌跡</span>
+                </div>
+                <div class="scene-card">
+                    <span class="scene-number">92</span>
+                    <h3>推し活仲間へ</h3>
+                    <p>ライブ会場で出会った同担に。共通の「好き」がつないだ縁。</p>
+                    <span class="scene-qr">QR → 推しへの想いと出会いの記録</span>
+                </div>
+                <div class="scene-card">
+                    <span class="scene-number">93</span>
+                    <h3>登山仲間へ</h3>
+                    <p>山頂で出会った人、一緒に登った仲間に。山の記憶と一緒に。</p>
+                    <span class="scene-qr">QR → 登頂の記録と山の写真</span>
+                </div>
+                <div class="scene-card">
+                    <span class="scene-number">94</span>
+                    <h3>マラソン大会の完走後</h3>
+                    <p>沿道で応援してくれたボランティアへ。走り抜いた感謝を。</p>
+                    <span class="scene-qr">QR → 完走タイムと沿道への感謝</span>
+                </div>
+                <div class="scene-card">
+                    <span class="scene-number">95</span>
+                    <h3>お遍路・巡礼の道中で</h3>
+                    <p>お接待してくれた方への感謝。巡礼の伝統に、現代の贈り物を。</p>
+                    <span class="scene-qr">QR → 巡礼の記録と祈りのメッセージ</span>
+                </div>
+                <div class="scene-card">
+                    <span class="scene-number">96</span>
+                    <h3>献血ルームで</h3>
+                    <p>スタッフから献血者への感謝。あるいは献血者同士の連帯。</p>
+                    <span class="scene-qr">QR → 「あなたの血液が誰かを救う」メッセージ</span>
+                </div>
+                <div class="scene-card">
+                    <span class="scene-number">97</span>
+                    <h3>里親制度の場で</h3>
+                    <p>里親から里子へ、あるいはケースワーカーへの感謝。</p>
+                    <span class="scene-qr">QR → 「あなたは大切な存在です」</span>
+                </div>
+                <div class="scene-card">
+                    <span class="scene-number">98</span>
+                    <h3>終活セミナーの参加者へ</h3>
+                    <p>自分の「終わり」を考え始めた方へ。存在証明の入口として。</p>
+                    <span class="scene-qr">QR → トキストレージの紹介と存在証明の意味</span>
+                </div>
+                <div class="scene-card">
+                    <span class="scene-number">99</span>
+                    <h3>まだ見ぬ誰かへ</h3>
+                    <p>カフェのテーブルに置いていく。電車の座席に忘れたふりをする。見知らぬ誰かの一日を変える贈り物。</p>
+                    <span class="scene-qr">QR → 「これを見つけたあなたへ」のメッセージ</span>
+                </div>
+                <div class="scene-card">
+                    <span class="scene-number">100</span>
+                    <h3>自分自身へ</h3>
+                    <p>最後の一つは、自分のために。「私はここにいた」——その事実を、自分で認めるために。</p>
+                    <span class="scene-qr">QR → 自分への手紙、自分の存在証明</span>
+                </div>
+            </div>
+        </section>
+
+        <div class="scenes-cta">
+            <h2>101番目のシーンは、あなたが作る</h2>
+            <p>
+                ここに並べた100のシーンは、ほんの一部にすぎません。<br>
+                あなたの日常の中にも、<br>
+                「いてくれてありがとう」を伝えたい瞬間があるはずです。
+            </p>
+            <p>
+                Pearl Soapは売っていません。<br>
+                でも、あなたのシーンに届けることはできます。
+            </p>
+            <div class="cta-buttons">
+                <a href="pearl-soap.html" class="btn-primary">Pearl Soapのストーリーを読む</a>
+                <a href="index.html" class="btn-secondary">トキストレージとは</a>
+            </div>
+        </div>
+
+        <div class="scenes-back">
+            <a href="pearl-soap.html">&larr; Pearl Soapへ戻る</a>
+        </div>
+
+    </div>
+</main>
+
+<footer class="toki-footer">
+    <div class="footer-inner">
+        <div class="footer-brand">
+            <h3>トキストレージ</h3>
+            <p>想いを1000年先へ届ける5次元記録</p>
+        </div>
+        <div class="footer-links-group">
+            <h4>リンク</h4>
+            <a href="index.html">トキストレージとは</a>
+            <a href="index.html#pricing">料金プラン</a>
+            <a href="index.html#faq">よくある質問</a>
+            <a href="index.html#cta">お問い合わせ</a>
+            <a href="profile.html">代表プロフィール</a>
+            <a href="pitch-deck.html">投資家向け資料</a>
+            <a href="legacy.html">1000年の設計思想</a>
+            <a href="kids.html">お子さま向けページ</a>
+            <a href="infographic.html">エコシステム全体像</a>
+        </div>
+        <div class="footer-links-group">
+            <h4>提案</h4>
+            <a href="partnership.html">パートナーシップ提案</a>
+            <a href="client-proposal.html">クライアント提案</a>
+            <a href="government-proposal.html">行政提案</a>
+            <a href="patronage.html">パトロネージ</a>
+        </div>
+        <div class="footer-links-group">
+            <h4>関連サービス</h4>
+            <span class="footer-sub-links"><a href="../index-ja.html">SoulCarrier 共鳴の会</a>（<a href="../movement/入会のご案内.pdf">入会案内</a>／<a href="../movement/BasicAgreement.pdf">合意書</a>／<a href="../movement/Soul_Carrier規約.pdf">規約</a>）</span>
+            <span class="footer-sub-links"><a href="pearl-soap.html">Pearl Soap</a>（<a href="how-to-make.html">作り方</a>／<a href="workshop.html">ワークショップ</a>／<a href="ambassador.html">アンバサダー</a>／<a href="100-scenes.html">100のシーン</a>）</span>
+            <span class="footer-sub-links"><a href="workaway.html">Workaway導入支援</a>（<a href="workaway-proposal.html">提案書</a>）</span>
+            <a href="offgrid.html">オフグリッド構築支援</a>
+            <a href="https://voice-memorial-qr.onrender.com/" target="_blank" rel="noopener">Voice QR 技術デモ</a>
+        </div>
+        <div class="footer-links-group">
+            <h4>法的情報</h4>
+            <a href="tokushoho.html">特定商取引法に基づく表示</a>
+            <a href="privacy.html">プライバシーポリシー</a>
+        </div>
+        <div class="footer-links-group">
+            <h4>運営</h4>
+            <p class="footer-company">TokiStorage<br>佐藤卓也<br>〒279-0014 千葉県浦安市明海2-11-13<br>（2026年春〜 佐渡市へ移転予定）</p>
+            <a href="https://www.linkedin.com/in/satotakuya" target="_blank" rel="noopener"><svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" style="vertical-align:-2px;margin-right:4px"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 01-2.063-2.065 2.064 2.064 0 112.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg>satotakuya</a>
+            <a href="https://x.com/tokistorage" target="_blank" rel="noopener"><svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" style="vertical-align:-2px;margin-right:4px"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>@tokistorage</a>
+            <a href="https://www.facebook.com/tokistorage" target="_blank" rel="noopener"><svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" style="vertical-align:-2px;margin-right:4px"><path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/></svg>@tokistorage</a>
+            <a href="https://www.instagram.com/tokistorage" target="_blank" rel="noopener"><svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" style="vertical-align:-2px;margin-right:4px"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.052.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 100 12.324 6.162 6.162 0 000-12.324zM12 16a4 4 0 110-8 4 4 0 010 8zm6.406-11.845a1.44 1.44 0 100 2.881 1.44 1.44 0 000-2.881z"/></svg>@tokistorage</a>
+            <a href="https://www.tiktok.com/@tokistorage" target="_blank" rel="noopener"><svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" style="vertical-align:-2px;margin-right:4px"><path d="M12.525.02c1.31-.02 2.61-.01 3.91-.02.08 1.53.63 3.09 1.75 4.17 1.12 1.11 2.7 1.62 4.24 1.79v4.03c-1.44-.05-2.89-.35-4.2-.97-.57-.26-1.1-.59-1.62-.93-.01 2.92.01 5.84-.02 8.75-.08 1.4-.54 2.79-1.35 3.94-1.31 1.92-3.58 3.17-5.91 3.21-1.43.08-2.86-.31-4.08-1.03-2.02-1.19-3.44-3.37-3.65-5.71-.02-.5-.03-1-.01-1.49.18-1.9 1.12-3.72 2.58-4.96 1.66-1.44 3.98-2.13 6.15-1.72.02 1.48-.04 2.96-.04 4.44-.99-.32-2.15-.23-3.02.37-.63.41-1.11 1.04-1.36 1.75-.21.51-.15 1.07-.14 1.61.24 1.64 1.82 3.02 3.5 2.87 1.12-.01 2.19-.66 2.77-1.61.19-.33.4-.67.41-1.06.1-1.79.06-3.57.07-5.36.01-4.03-.01-8.05.02-12.07z"/></svg>@tokistorage</a>
+            <a href="https://www.youtube.com/@tokistorage" target="_blank" rel="noopener"><svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" style="vertical-align:-2px;margin-right:4px"><path d="M23.498 6.186a3.016 3.016 0 00-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 00.502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 002.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 002.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/></svg>@tokistorage</a>
+            <a href="https://zenn.dev/idev" target="_blank" rel="noopener"><svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" style="vertical-align:-2px;margin-right:4px"><path d="M3 3h18v4h-9l9 10v4H3v-4h9L3 7z"/></svg>idev</a>
+        </div>
+    </div>
+    <div class="footer-bottom">
+        <p class="footer-disclaimer">※トキストレージは記録保存を目的とした製品です。墓地埋葬法上の墓地・墓石の代替となるものではありません。「1000年」は石英ガラスの素材特性に基づく理論値であり、製品保証期間ではありません。</p>
+        <p>&copy; 2026 トキストレージ / TokiStorage. Pearl Soapは販売しておりません。</p>
+    </div>
+</footer>
+
+</body>
+</html>

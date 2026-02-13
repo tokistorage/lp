@@ -1,0 +1,620 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Birth, Aging, Illness, and Death — Traces Left at Each Stage of Life | TokiStorage</title>
+    <meta name="robots" content="noindex, nofollow">
+    <meta name="description" content="The Four Sufferings of Buddhism—birth, aging, illness, and death—represent the finitude of human existence. From birth to death, we leave different forms of proof of existence at each stage. What do administrative records fail to capture?">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Shippori+Mincho:wght@400;500;600;700&family=Zen+Kaku+Gothic+New:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --toki-green: #065F46;
+            --toki-green-dark: #064E3B;
+            --toki-green-pale: #ECFDF5;
+            --accent-emerald: #047857;
+            --bg-white: #FFFFFF;
+            --bg-section: #F0FDF4;
+            --text-primary: #1E293B;
+            --text-secondary: #475569;
+            --text-muted: #94A3B8;
+            --border: #E2E8F0;
+            --font-display: 'Shippori Mincho', serif;
+            --font-body: 'Zen Kaku Gothic New', sans-serif;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        html { scroll-behavior: smooth; }
+
+        body {
+            font-family: var(--font-body);
+            font-weight: 400;
+            background: var(--bg-white);
+            color: var(--text-primary);
+            line-height: 2;
+            font-size: 16px;
+        }
+
+        /* Navigation */
+        .article-nav {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 1000;
+            background: rgba(255,255,255,0.95);
+            backdrop-filter: blur(12px);
+            border-bottom: 1px solid var(--border);
+            padding: 0.6rem 1.2rem;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 1rem;
+        }
+        .article-nav .nav-brand {
+            font-family: var(--font-display);
+            font-size: 0.9rem;
+            font-weight: 600;
+            color: var(--toki-green);
+            text-decoration: none;
+            white-space: nowrap;
+        }
+        .article-nav .nav-right {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+        .article-nav .nav-label {
+            font-size: 0.6rem;
+            color: var(--text-muted);
+            letter-spacing: 0.08em;
+        }
+        .article-nav .lang-switch {
+            font-size: 0.75rem;
+            color: var(--toki-green);
+            text-decoration: none;
+            padding: 0.3rem 0.6rem;
+            border: 1px solid var(--toki-green);
+            border-radius: 4px;
+        }
+        .article-nav .lang-switch:hover {
+            background: var(--toki-green);
+            color: #fff;
+        }
+
+        /* Article Container */
+        .article-container {
+            max-width: 680px;
+            margin: 0 auto;
+            padding: 7rem 2rem 4rem;
+        }
+
+        /* Article Header */
+        .article-header {
+            margin-bottom: 3rem;
+            padding-bottom: 2rem;
+            border-bottom: 1px solid var(--border);
+        }
+        .article-category {
+            font-size: 0.7rem;
+            color: var(--toki-green);
+            letter-spacing: 0.15em;
+            margin-bottom: 1rem;
+        }
+        .article-header h1 {
+            font-family: var(--font-display);
+            font-size: 1.8rem;
+            font-weight: 600;
+            line-height: 1.5;
+            margin-bottom: 1rem;
+        }
+        .article-subtitle {
+            font-size: 0.95rem;
+            color: var(--text-secondary);
+            line-height: 1.8;
+        }
+
+        /* Article Content */
+        .article-content h2 {
+            font-family: var(--font-display);
+            font-size: 1.25rem;
+            font-weight: 600;
+            margin: 3rem 0 1.5rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 1px solid var(--border);
+        }
+        .article-content h3 {
+            font-family: var(--font-display);
+            font-size: 1.1rem;
+            font-weight: 500;
+            margin: 2rem 0 1rem;
+            color: var(--text-primary);
+        }
+        .article-content p {
+            margin-bottom: 1.5rem;
+            text-align: justify;
+        }
+        .article-content blockquote {
+            margin: 2rem 0;
+            padding: 1.5rem 2rem;
+            background: var(--bg-section);
+            border-left: 3px solid var(--toki-green);
+            font-style: italic;
+        }
+        .article-content blockquote p {
+            margin-bottom: 0.5rem;
+        }
+        .article-content blockquote cite {
+            display: block;
+            font-size: 0.85rem;
+            color: var(--text-muted);
+            font-style: normal;
+            margin-top: 0.5rem;
+        }
+        .article-content ul, .article-content ol {
+            margin: 1.5rem 0;
+            padding-left: 1.5rem;
+        }
+        .article-content li {
+            margin-bottom: 0.75rem;
+        }
+
+        /* Key Point Box */
+        .key-point {
+            background: var(--toki-green-pale);
+            padding: 1.5rem 2rem;
+            border-radius: 8px;
+            margin: 2rem 0;
+        }
+        .key-point p {
+            margin-bottom: 0;
+            font-size: 0.95rem;
+        }
+
+        /* Core Message */
+        .core-message {
+            background: linear-gradient(135deg, var(--toki-green-pale) 0%, #D1FAE5 100%);
+            border-left: 4px solid var(--toki-green);
+            padding: 1.2rem 1.5rem;
+            margin: 0 0 1.5rem 0;
+            border-radius: 0 8px 8px 0;
+            font-size: 0.95rem;
+            line-height: 1.8;
+        }
+        .disclaimer {
+            font-size: 0.8rem;
+            color: var(--text-muted);
+            margin-bottom: 2rem;
+            padding-bottom: 1rem;
+            border-bottom: 1px solid var(--border);
+        }
+
+        /* Comparison Table */
+        .comparison-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 2rem 0;
+            font-size: 0.9rem;
+        }
+        .comparison-table th,
+        .comparison-table td {
+            padding: 1rem;
+            text-align: left;
+            border-bottom: 1px solid var(--border);
+        }
+        .comparison-table th {
+            background: var(--bg-section);
+            font-weight: 500;
+            width: 50%;
+        }
+        .comparison-table td {
+            vertical-align: top;
+        }
+
+        /* References */
+        .references {
+            margin-top: 4rem;
+            padding-top: 2rem;
+            border-top: 1px solid var(--border);
+        }
+        .references h2 {
+            font-size: 1rem;
+            margin-bottom: 1.5rem;
+        }
+        .references ul {
+            list-style: none;
+            padding: 0;
+        }
+        .references li {
+            font-size: 0.85rem;
+            color: var(--text-secondary);
+            margin-bottom: 0.75rem;
+            padding-left: 1.5rem;
+            text-indent: -1.5rem;
+        }
+
+        /* Footer */
+        .article-footer {
+            margin-top: 4rem;
+            padding-top: 2rem;
+            border-top: 1px solid var(--border);
+            text-align: center;
+        }
+        .article-footer p {
+            font-size: 0.8rem;
+            color: var(--text-muted);
+            margin-bottom: 1rem;
+        }
+        .article-footer a {
+            color: var(--toki-green);
+            text-decoration: none;
+        }
+        .article-footer a:hover {
+            text-decoration: underline;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .article-container { padding: 6rem 1.2rem 3rem; }
+            .article-header h1 { font-size: 1.5rem; }
+            .article-nav .nav-label { display: none; }
+            .comparison-table { font-size: 0.8rem; }
+            .comparison-table th,
+            .comparison-table td { padding: 0.75rem; }
+        }
+
+        @media print {
+            .article-nav { display: none; }
+            .article-container { padding-top: 2rem; }
+        }
+    </style>
+</head>
+<body>
+
+<nav class="article-nav">
+    <a href="index.html" class="nav-brand">TokiStorage</a>
+    <div class="nav-right">
+        <span class="nav-label">PHILOSOPHY OF LIFE</span>
+        <a href="lifecycle.html" class="lang-switch">JP</a>
+    </div>
+</nav>
+
+<main class="article-container">
+
+    <header class="article-header">
+        <p class="article-category">ESSAY — LIFE AND EXISTENCE</p>
+        <h1>Birth, Aging, Illness, and Death<br>— Traces Left at Each Stage of Life</h1>
+        <p class="article-subtitle">
+            Buddhism termed the fundamental sufferings of humanity the "Four Sufferings"—birth, aging, illness, and death.<br>
+            At these four inevitable stages, what "traces of existence" do we leave behind?
+        </p>
+    </header>
+
+    <article class="article-content">
+
+        <div class="core-message">
+            <strong>Key message:</strong> At each stage of birth, aging, illness, and death, we leave different forms of "proof of existence." However, administrative records capture "when" but not "how."
+        </div>
+
+        <p class="disclaimer">*This essay is an academic analysis and does not endorse any particular religious position. Buddhist philosophy is referenced as an analytical framework.</p>
+
+        <h2>1. The Four Sufferings and the Finitude of Existence</h2>
+
+        <p>The Buddhist concept of the "Four Sufferings"—the suffering of birth, aging, illness, and death—succinctly demonstrates the finitude of human existence. Though this insight came from the Buddha 2,500 years ago, the fundamental conditions of human existence remain unchanged today.</p>
+
+        <blockquote>
+            <p>"Birth is suffering. Aging is suffering. Illness is suffering. Death is suffering."</p>
+            <cite>—Samyutta Nikaya, Dhammacakkappavattana Sutta</cite>
+        </blockquote>
+
+        <p>Here, "suffering" (dukkha) does not mean mere pain or discomfort. It signifies "things not going as we wish," "dissatisfaction," and "imperfection." We cannot choose where we are born, we cannot stop aging, we cannot completely avoid illness, and we cannot escape death.</p>
+
+        <p>This very finitude becomes the fundamental motivation for proof of existence. If we could live forever, there would be no need to leave records. However, we inevitably die. Therefore, we seek to leave traces proving "I existed here."</p>
+
+        <div class="key-point">
+            <p>The Four Sufferings indicate the finitude of existence while simultaneously creating the necessity for proof of existence. At each stage of birth, aging, illness, and death, we record the fact that "we existed" in different forms.</p>
+        </div>
+
+
+        <h2>2. Birth and the Beginning of Existence</h2>
+
+        <p>Human proof of existence begins at birth. At the moment of birth, we are recognized for the first time as "one who exists in this world."</p>
+
+        <h3>Birth Registration and the Start of Legal Existence</h3>
+
+        <p>In Japan, the Family Register Act mandates that a birth notification be submitted within 14 days of birth. Through this notification, the child becomes "one who exists" in legal terms.</p>
+
+        <ul>
+            <li><strong>Family register entry</strong>: Name, date of birth, place of birth, and parents' names are recorded</li>
+            <li><strong>Resident registration</strong>: Existence at the place of residence is officially recognized</li>
+            <li><strong>Birth certificate issuance</strong>: Medical institutions certify the fact of birth</li>
+        </ul>
+
+        <p>However, there are children whose birth notifications are never submitted. It is estimated that there are over 10,000 unregistered children in Japan alone. They are placed in a state of "legal non-existence."</p>
+
+        <h3>Naming and the Establishment of Social Existence</h3>
+
+        <p>Being given a name signifies being recognized as a social being. A name is not merely an identifier. It is a declaration that "this human being is a unique existence."</p>
+
+        <blockquote>
+            <p>"To call someone by name is to bring them into existence. To have one's name forgotten is equivalent to losing one's existence."</p>
+            <cite>— Extending Emmanuel Levinas's thought</cite>
+        </blockquote>
+
+        <p>In many cultures, naming carries religious and ceremonial significance. The Christian baptismal name, the naming at Jewish circumcision ceremonies, the Shinto naming ceremony—these are rituals that welcome the child as a member of the community and represent the first form of proof of existence.</p>
+
+        <table class="comparison-table">
+            <tr>
+                <th>What administrative records preserve</th>
+                <th>What administrative records do not preserve</th>
+            </tr>
+            <tr>
+                <td>Date of birth (when born)</td>
+                <td>The joy of birth, the parents' feelings</td>
+            </tr>
+            <tr>
+                <td>Place of birth (where born)</td>
+                <td>The circumstances of birth</td>
+            </tr>
+            <tr>
+                <td>Parents' names (whose child)</td>
+                <td>The hopes embodied in the name</td>
+            </tr>
+            <tr>
+                <td>Birth weight (medical record)</td>
+                <td>The first cry, the first embrace</td>
+            </tr>
+        </table>
+
+
+        <h2>3. Aging and Memory</h2>
+
+        <p>Aging is a paradoxical stage for proof of existence. It is the period when we have accumulated the most experience in life, yet simultaneously the period when memory begins to fade.</p>
+
+        <h3>Memory Loss and Identity</h3>
+
+        <p>Dementia is estimated to affect approximately 7 million people in Japan by 2025. The progression of dementia threatens identity itself through the loss of memory.</p>
+
+        <ul>
+            <li><strong>Episodic memory</strong> loss: Memories of personal events are lost</li>
+            <li><strong>Semantic memory</strong> loss: The meaning of words and concepts is lost</li>
+            <li><strong>Procedural memory</strong> loss: Even familiar actions become impossible</li>
+        </ul>
+
+        <p>A person who has lost their memory can no longer prove "who they are" by themselves. Herein lies the essential suffering of aging.</p>
+
+        <blockquote>
+            <p>"We construct our selves through memory. To lose memory is equivalent to losing the self."</p>
+            <cite>— Extending Oliver Sacks, <em>The Man Who Mistook His Wife for a Hat</em></cite>
+        </blockquote>
+
+        <h3>Memories Passed Down and Memories Recorded</h3>
+
+        <p>The memories held by the elderly, unless orally passed down, disappear with their death. Family histories, local histories, testimonies of an era—these are lost unless recorded.</p>
+
+        <p>However, opportunities for recording are limited. The elderly have few chances to tell their life stories, and even when told, they are rarely recorded. As dementia progresses, telling the story itself becomes difficult.</p>
+
+        <div class="key-point">
+            <p>Aging is the stage of "crisis in proof of existence." At the time when we possess the most experience and wisdom, the ability to pass these on is lost. How we confront this paradox is the question we face.</p>
+        </div>
+
+
+        <h2>4. Illness and Medical Records</h2>
+
+        <p>Illness becomes the occasion when our existence is recorded in the most detail. Ironically, our bodies are recorded more thoroughly when ill than when healthy.</p>
+
+        <h3>Proof of Existence as Medical Records</h3>
+
+        <p>Modern medicine records the patient's body thoroughly. Blood tests, imaging diagnostics, genetic testing—these make our bodies visible down to the molecular level.</p>
+
+        <ul>
+            <li><strong>Medical charts</strong>: Records of clinical progress, symptoms, and treatment</li>
+            <li><strong>Test data</strong>: Quantification of blood components, organ conditions, and bodily functions</li>
+            <li><strong>Imaging records</strong>: Visualization of the body's interior through X-rays, CT, and MRI</li>
+            <li><strong>Genetic information</strong>: DNA sequences as the ultimate personal identification</li>
+        </ul>
+
+        <p>These are certainly "proof of existence." However, they are records of biological existence, not records of "how one lived."</p>
+
+        <h3>The Experience of Illness and the Meaning of Existence</h3>
+
+        <p>In <em>The Illness Narratives</em>, Arthur Kleinman distinguished between "disease," which medicine captures, and "illness," which the patient experiences.</p>
+
+        <blockquote>
+            <p>"Disease is a biological abnormality; illness is human experience. Medicine treats disease but rarely addresses the meaning of illness."</p>
+            <cite>—Arthur Kleinman, <em>The Illness Narratives</em></cite>
+        </blockquote>
+
+        <p>Medical records document "what happened" but not "how it was experienced." Pain can be quantified, but the meaning of pain cannot. The hope found while fighting illness, the deepening of family bonds, the fear and acceptance of death—these do not remain in medical records.</p>
+
+        <table class="comparison-table">
+            <tr>
+                <th>What medical records preserve</th>
+                <th>What medical records do not preserve</th>
+            </tr>
+            <tr>
+                <td>Diagnosis and treatment progress</td>
+                <td>How one faced the illness</td>
+            </tr>
+            <tr>
+                <td>Test values and imaging data</td>
+                <td>The experience of pain and suffering</td>
+            </tr>
+            <tr>
+                <td>Medication records and procedures</td>
+                <td>Conversations with healthcare providers, gratitude</td>
+            </tr>
+            <tr>
+                <td>Admission and discharge dates</td>
+                <td>Family support and memories of caregiving</td>
+            </tr>
+        </table>
+
+
+        <h2>5. Death and the End of Existence</h2>
+
+        <p>Death is the final stage of proof of existence. A death notification is submitted, the person is removed from the family register, and the resident registration is cancelled. Legally, the person "no longer exists."</p>
+
+        <h3>Death Notification and the End of Legal Existence</h3>
+
+        <p>In Japan, it is mandated that a death notification be submitted within 7 days of learning of the death. Through this notification:</p>
+
+        <ul>
+            <li>The fact of death is entered in the family register</li>
+            <li>The resident registration becomes a removed record</li>
+            <li>Inheritance procedures begin</li>
+            <li>Legal relationships such as pensions and insurance are terminated</li>
+        </ul>
+
+        <p>What is recorded on the death notification is the date and time of death, place of death, and cause of death. "How one lived" is not recorded. With a single document, the legal existence of a human being comes to an end.</p>
+
+        <h3>What Remains After Death</h3>
+
+        <p>Elisabeth Kubler-Ross described the five stages experienced by those facing death—denial, anger, bargaining, depression, and acceptance. However, she also noted that what dying people most desire is to confirm that "my life had meaning."</p>
+
+        <blockquote>
+            <p>"Those facing death want to know that they will be remembered by someone, that their life left something behind."</p>
+            <cite>— Extending Elisabeth Kubler-Ross, <em>On Death and Dying</em></cite>
+        </blockquote>
+
+        <p>What remains after death? The removed record in the family register, the name on the gravestone, the posthumous Buddhist name on the memorial tablet—these indicate that "one existed" but do not convey "how one existed." Photographs preserve appearance, letters preserve words, but these are merely fragments.</p>
+
+        <div class="key-point">
+            <p>Death is the end of legal existence, but existence in memory can continue. However, those who hold the memories will also eventually die. Unless recorded, everything will be forgotten.</p>
+        </div>
+
+
+        <h2>6. Hospice and Life Review</h2>
+
+        <p>Hospice care (end-of-life care) is a place that accepts death not as "defeat" but as the natural conclusion of life. Here, a "good death" is pursued rather than treatment.</p>
+
+        <h3>The Practice of Life Review</h3>
+
+        <p>In hospice, "life review" (reminiscence of life) is valued. This is not mere storytelling but psychological work to look back on one's life, find meaning, and process unfinished emotions.</p>
+
+        <ul>
+            <li><strong>Life integration</strong>: The final stage in Erikson's developmental theory</li>
+            <li><strong>Relationship repair</strong>: Expression of apology, gratitude, and forgiveness</li>
+            <li><strong>Transmission of final wishes</strong>: Messages to the next generation</li>
+            <li><strong>Discovery of meaning</strong>: What was accomplished throughout life</li>
+        </ul>
+
+        <p>Psychiatrist Robert Butler called life review "a universal psychological process in the face of death." It is an important practice for settling the past and accepting death.</p>
+
+        <h3>Digital Legacy and Dignity Therapy</h3>
+
+        <p>"Dignity Therapy," developed by Harvey Chochinov, is a therapy in which terminal patients tell their life story and leave it as a document.</p>
+
+        <blockquote>
+            <p>"What matters most to you in your life?" "What accomplishment are you most proud of?" "What do you want to tell your loved ones?"</p>
+            <cite>—Questions from Dignity Therapy</cite>
+        </blockquote>
+
+        <p>The patient's narrative is recorded, edited, and handed to the family as a "generativity document." This is a record of "how one lived" that does not remain in medical records.</p>
+
+
+        <h2>7. The Position of TokiStorage</h2>
+
+        <p>At each stage of birth, aging, illness, and death, administrative and medical records document "when," "where," and "what." However, "how"—how one was born, how one aged, how one was ill, how one died—is not recorded.</p>
+
+        <h3>The Unrecorded "How"</h3>
+
+        <table class="comparison-table">
+            <tr>
+                <th>Stage</th>
+                <th>What administration/medicine records</th>
+            </tr>
+            <tr>
+                <td>Birth</td>
+                <td>Date and time of birth, place of birth, parents' names</td>
+            </tr>
+            <tr>
+                <td>Aging</td>
+                <td>Care certification, level of care needed</td>
+            </tr>
+            <tr>
+                <td>Illness</td>
+                <td>Diagnosis, treatment progress, test values</td>
+            </tr>
+            <tr>
+                <td>Death</td>
+                <td>Date and time of death, place of death, cause of death</td>
+            </tr>
+        </table>
+
+        <p>These are certainly important records. However, they are insufficient to "prove" the existence of an individual human being. Because they are interchangeable information—others were born on the same day in the same place.</p>
+
+        <h3>Preserving "How One Lived"</h3>
+
+        <p>TokiStorage provides a system to record the "how" at each stage of birth, aging, illness, and death.</p>
+
+        <ul>
+            <li><strong>At birth</strong>: The hopes placed in the name, the joy of birth, messages from parents</li>
+            <li><strong>During growth</strong>: Turning points in life, achievements, setbacks, records of learning</li>
+            <li><strong>In old age</strong>: Accumulated wisdom, advice for the next generation, reflections on life</li>
+            <li><strong>During illness</strong>: Records of the fight against disease, gratitude to healthcare providers, thoughts for family</li>
+            <li><strong>At end of life</strong>: Life review, final wishes, last messages</li>
+        </ul>
+
+        <p>These have a different nature from administrative records. They are not "information that applies to anyone" but "stories that only that person can tell."</p>
+
+        <div class="key-point">
+            <p>At every stage of birth, aging, illness, and death, record not only "when" but "how." And preserve it in a form readable 1,000 years hence. TokiStorage is the infrastructure for proof of existence that encompasses all Four Sufferings.</p>
+        </div>
+
+
+        <h2>Conclusion—Within Finitude</h2>
+
+        <p>We are born, we age, we become ill, and we die. We cannot escape these Four Sufferings. But precisely because of this, the endeavor of proof of existence gains meaning.</p>
+
+        <p>Administrative records are efficient. The family register and resident registration function as systems to identify and manage individuals. Medical records provide the information necessary for disease diagnosis and treatment.</p>
+
+        <p>However, these records do not record "human beings." They are records of a unit of "population," of a "patient." The unique stories that each person holds—joy, sorrow, love, hope, fear, dreams—do not appear in these records.</p>
+
+        <blockquote>
+            <p>"Human beings are storytelling animals. We construct ourselves through stories and connect with others through stories."</p>
+            <cite>—Alasdair MacIntyre, <em>After Virtue</em></cite>
+        </blockquote>
+
+        <p>At each stage of birth, aging, illness, and death, we weave stories. The story of birth, the story of growth, the story of fighting illness, the story of facing death. These stories are the true "proof of existence."</p>
+
+        <p>Without records, stories disappear. When there is no one left to pass them down, memories also disappear. That is why records are necessary.</p>
+
+        <p>In 1,000 years, the fact that you were born may remain in the removed family register. But how you were born, how you were loved, how you were named—these will not remain unless recorded.</p>
+
+        <p>In 1,000 years, the fact that you died may be carved on a gravestone. But how you lived, what you loved, what you dreamed—these will not remain unless recorded.</p>
+
+        <p>The Four Sufferings are inescapable. But the stories woven within the Four Sufferings can be preserved. That is the proof of existence that we, as finite beings, can accomplish.</p>
+
+
+        <section class="references">
+            <h2>References</h2>
+            <ul>
+                <li>Butler, R. N. (1963). "The Life Review: An Interpretation of Reminiscence in the Aged." <em>Psychiatry</em>, 26(1), 65-76.</li>
+                <li>Chochinov, H. M. (2012). <em>Dignity Therapy: Final Words for Final Days.</em> Oxford University Press.</li>
+                <li>Erikson, E. H. (1950). <em>Childhood and Society.</em> W. W. Norton.</li>
+                <li>Kleinman, A. (1988). <em>The Illness Narratives: Suffering, Healing, and the Human Condition.</em> Basic Books.</li>
+                <li>Kubler-Ross, E. (1969). <em>On Death and Dying.</em> Macmillan.</li>
+                <li>Levinas, E. (1961). <em>Totalite et infini.</em> Nijhoff. (English translation: <em>Totality and Infinity</em>, Duquesne University Press)</li>
+                <li>MacIntyre, A. (1981). <em>After Virtue.</em> University of Notre Dame Press.</li>
+                <li>Sacks, O. (1985). <em>The Man Who Mistook His Wife for a Hat.</em> Summit Books.</li>
+                <li>Nakamura, H. (trans.) (1984). <em>The Words of the Buddha—Sutta Nipata.</em> Iwanami Bunko. (Japanese)</li>
+                <li>Masutani, F. (trans.) (1979). <em>Agama Sutras.</em> Chikuma Shobo. (Japanese)</li>
+            </ul>
+        </section>
+
+    </article>
+
+    <footer class="article-footer">
+        <p>This essay is a philosophical examination of the relationship between birth, aging, illness, death, and proof of existence from the perspective of life philosophy.</p>
+        <p id="essay-nav-links"></p>
+        <p style="margin-top: 2rem; font-size: 0.75rem;">&copy; 2026 TokiStorage</p>
+    </footer>
+
+</main>
+
+<script src="essay-nav.js?v=20260209"></script>
+</body>
+</html>

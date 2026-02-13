@@ -1,0 +1,337 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>1000年後の誰かへ | トキストレージ</title>
+    <meta name="robots" content="noindex, nofollow">
+    <meta name="description" content="小学生向け：タイムカプセル、恐竜の化石、そして「残す」ことの意味について考えてみよう。">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Zen+Maru+Gothic:wght@400;500;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --purple: #8B5CF6;
+            --purple-pale: #F5F3FF;
+            --orange: #F97316;
+            --orange-pale: #FFF7ED;
+            --teal: #14B8A6;
+            --teal-pale: #F0FDFA;
+            --blue: #3B82F6;
+            --blue-pale: #EFF6FF;
+            --text: #1F2937;
+            --text-light: #6B7280;
+            --bg: #FAFAFA;
+            --font-main: 'Zen Maru Gothic', sans-serif;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            font-family: var(--font-main);
+            background: var(--bg);
+            color: var(--text);
+            line-height: 2;
+            font-size: 17px;
+        }
+
+        /* Ruby for furigana */
+        ruby {
+            ruby-position: over;
+        }
+        rt {
+            font-size: 0.6em;
+            color: var(--text-light);
+        }
+
+        /* Navigation */
+        .kids-nav {
+            background: white;
+            padding: 1rem 1.5rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+        .kids-nav .nav-brand {
+            font-size: 1rem;
+            font-weight: 700;
+            color: var(--purple);
+            text-decoration: none;
+        }
+        .kids-nav .lang-switch {
+            font-size: 0.85rem;
+            color: var(--blue);
+            text-decoration: none;
+            padding: 0.4rem 0.8rem;
+            border: 2px solid var(--blue);
+            border-radius: 20px;
+        }
+
+        /* Main Content */
+        .content-container {
+            max-width: 700px;
+            margin: 0 auto;
+            padding: 2rem 1.5rem 4rem;
+        }
+
+        /* Header */
+        .page-header {
+            text-align: center;
+            padding: 2rem 0 3rem;
+        }
+        .page-header h1 {
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: var(--purple);
+            margin-bottom: 0.5rem;
+        }
+        .page-header .subtitle {
+            font-size: 1rem;
+            color: var(--text-light);
+        }
+
+        /* Section */
+        .section {
+            background: white;
+            border-radius: 20px;
+            padding: 2rem;
+            margin-bottom: 2rem;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+        }
+
+        .section.purple { border-left: 5px solid var(--purple); }
+        .section.orange { border-left: 5px solid var(--orange); }
+        .section.teal { border-left: 5px solid var(--teal); }
+        .section.blue { border-left: 5px solid var(--blue); }
+
+        .section h2 {
+            font-size: 1.3rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .section.purple h2 { color: var(--purple); }
+        .section.orange h2 { color: var(--orange); }
+        .section.teal h2 { color: var(--teal); }
+        .section.blue h2 { color: var(--blue); }
+
+        .section p {
+            margin-bottom: 1rem;
+        }
+        .section p:last-child {
+            margin-bottom: 0;
+        }
+
+        /* Think Box */
+        .think-box {
+            background: var(--purple-pale);
+            border-radius: 12px;
+            padding: 1.2rem 1.5rem;
+            margin: 1.5rem 0;
+        }
+        .think-box h3 {
+            font-size: 1rem;
+            color: var(--purple);
+            margin-bottom: 0.5rem;
+            display: flex;
+            align-items: center;
+            gap: 0.3rem;
+        }
+        .think-box p {
+            font-size: 0.95rem;
+            margin-bottom: 0;
+        }
+
+        /* Fun Fact */
+        .fun-fact {
+            background: var(--orange-pale);
+            border-radius: 12px;
+            padding: 1.2rem 1.5rem;
+            margin: 1.5rem 0;
+        }
+        .fun-fact h3 {
+            font-size: 1rem;
+            color: var(--orange);
+            margin-bottom: 0.5rem;
+        }
+        .fun-fact p {
+            font-size: 0.95rem;
+            margin-bottom: 0;
+        }
+
+        /* Timeline */
+        .timeline {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+            margin: 1.5rem 0;
+            padding-left: 1rem;
+            border-left: 3px solid var(--teal);
+        }
+        .timeline-item {
+            padding-left: 1rem;
+        }
+        .timeline-item .year {
+            font-weight: 700;
+            color: var(--teal);
+        }
+
+        /* Big Question */
+        .big-question {
+            background: linear-gradient(135deg, var(--purple-pale), var(--blue-pale));
+            border-radius: 16px;
+            padding: 2rem;
+            text-align: center;
+            margin: 2rem 0;
+        }
+        .big-question p {
+            font-size: 1.2rem;
+            font-weight: 700;
+            color: var(--purple);
+            margin-bottom: 0;
+        }
+
+        /* Footer */
+        .kids-footer {
+            text-align: center;
+            padding: 2rem;
+            font-size: 0.85rem;
+            color: var(--text-light);
+        }
+        .kids-footer a {
+            color: var(--blue);
+            text-decoration: none;
+        }
+
+        /* Responsive */
+        @media (max-width: 600px) {
+            body { font-size: 16px; }
+            .section { padding: 1.5rem; }
+            .page-header h1 { font-size: 1.5rem; }
+        }
+    </style>
+</head>
+<body>
+
+<nav class="kids-nav">
+    <a href="index.html" class="nav-brand">トキストレージ</a>
+    <a href="kids-en.html" class="lang-switch">English</a>
+</nav>
+
+<main class="content-container">
+
+    <header class="page-header">
+        <h1>🚀 1000年後の誰かへ</h1>
+        <p class="subtitle">タイムカプセル、<ruby>化石<rt>かせき</rt></ruby>、そして「<ruby>残<rt>のこ</rt></ruby>す」ことの<ruby>意味<rt>いみ</rt></ruby></p>
+    </header>
+
+    <section class="section purple">
+        <h2>📦 タイムカプセルって知ってる？</h2>
+        <p>タイムカプセルは、<ruby>未来<rt>みらい</rt></ruby>の自分や誰かに届けるために、大切なものを箱に入れて<ruby>埋<rt>う</rt></ruby>めておくものだよ。</p>
+        <p>学校の<ruby>卒業<rt>そつぎょう</rt></ruby>のとき、10年後に開けようって約束して埋めた人もいるかもしれないね。</p>
+        <div class="think-box">
+            <h3>🤔 考えてみよう</h3>
+            <p>もし10年後の自分に手紙を書くとしたら、何を伝えたい？</p>
+        </div>
+    </section>
+
+    <section class="section orange">
+        <h2>🦖 <ruby>恐竜<rt>きょうりゅう</rt></ruby>の<ruby>化石<rt>かせき</rt></ruby>はなぜ大切？</h2>
+        <p>恐竜は約6600万年前に絶滅した。でも、私たちは恐竜のことを知っている。なぜだろう？</p>
+        <p>それは<strong><ruby>化石<rt>かせき</rt></ruby></strong>があるから。骨や足あとが石になって残ったから、何千万年も前の生き物のことがわかるんだ。</p>
+        <div class="fun-fact">
+            <h3>💡 おもしろ<ruby>豆知識<rt>まめちしき</rt></ruby></h3>
+            <p>化石がなかったら、恐竜がいたことすら誰も知らなかった。「残る」ものがあるから「知れる」んだね。</p>
+        </div>
+    </section>
+
+    <section class="section teal">
+        <h2>⏰ 1000年ってどのくらい？</h2>
+        <p>1000年前の日本は<ruby>平安時代<rt>へいあんじだい</rt></ruby>。<ruby>紫式部<rt>むらさきしきぶ</rt></ruby>が『<ruby>源氏物語<rt>げんじものがたり</rt></ruby>』を書いていた頃だよ。</p>
+        <div class="timeline">
+            <div class="timeline-item">
+                <span class="year">1000年前</span> — 平安時代、貴族が和歌を詠んでいた
+            </div>
+            <div class="timeline-item">
+                <span class="year">500年前</span> — 戦国時代、お城がたくさん建てられた
+            </div>
+            <div class="timeline-item">
+                <span class="year">100年前</span> — 大正時代、ひいひいおじいちゃんの時代
+            </div>
+            <div class="timeline-item">
+                <span class="year">今</span> — きみが生きている時代
+            </div>
+            <div class="timeline-item">
+                <span class="year">1000年後</span> — どんな世界になっているかな？
+            </div>
+        </div>
+        <p>1000年後の人から見たら、きみは「大昔の人」になる。不思議だね。</p>
+    </section>
+
+    <section class="section blue">
+        <h2>📱 スマホの写真は残る？</h2>
+        <p>スマホにはたくさんの写真があるよね。でも、それは本当に1000年後まで残るかな？</p>
+        <p>実は、デジタルデータは意外と消えやすい。</p>
+        <ul style="margin: 1rem 0 1rem 1.5rem;">
+            <li>スマホが<ruby>壊<rt>こわ</rt></ruby>れたら？</li>
+            <li>クラウドの会社がなくなったら？</li>
+            <li>ファイルの形式が読めなくなったら？</li>
+        </ul>
+        <p>100年前の写真（紙）は今でも見られる。でも、20年前のフロッピーディスクはもう読めない機械が多い。</p>
+        <div class="fun-fact">
+            <h3>💡 ちなみに</h3>
+            <p><ruby>石英<rt>せきえい</rt></ruby>ガラスに<ruby>刻<rt>きざ</rt></ruby>んだデータは、理論上3億年もつと言われているよ。</p>
+        </div>
+    </section>
+
+    <section class="section purple">
+        <h2>✉️ 会ったことのない人への手紙</h2>
+        <p>1000年後に生まれる人と、きみは絶対に会えない。</p>
+        <p>でも、何かを残せば、その人に「こんにちは」と言えるかもしれない。</p>
+        <p>それって不思議じゃない？会ったことのない人に、メッセージを届けられるなんて。</p>
+        <div class="think-box">
+            <h3>🤔 考えてみよう</h3>
+            <p>1000年後の誰かに手紙を書くとしたら、何を伝える？<br>「今の世界はこんなだよ」って教えてあげたいことは？</p>
+        </div>
+    </section>
+
+    <section class="section orange">
+        <h2>🎁「残す」ってどういうこと？</h2>
+        <p>「残す」というのは、<strong>未来へのプレゼント</strong>みたいなもの。</p>
+        <p>受け取る人は、お礼を言えない。きみがいなくなった後に届くから。</p>
+        <p>でも、それでも残したいと思うのはなぜだろう？</p>
+        <p>たぶん、「自分がここにいた」ということを、誰かに知ってほしいから。自分の気持ちや考えを、未来につなげたいから。</p>
+    </section>
+
+    <div class="big-question">
+        <p>🌟 きみは1000年後の誰かに<br>何を届けたい？ 🌟</p>
+    </div>
+
+    <section class="section teal">
+        <h2>📝 やってみよう</h2>
+        <p>1000年後の誰かに向けて、短い手紙を書いてみよう。</p>
+        <ul style="margin: 1rem 0 1rem 1.5rem;">
+            <li>今の自分のこと（名前、年齢、好きなもの）</li>
+            <li>今の世界のこと（どんな生活をしてる？）</li>
+            <li>未来の人に聞いてみたいこと</li>
+            <li>伝えたいメッセージ</li>
+        </ul>
+        <p>書いたら、家族に見せてみよう。きっと面白い話ができるよ。</p>
+    </section>
+
+</main>
+
+<footer class="kids-footer">
+    <p><a href="kids-toddler.html">もっと小さい子向け</a> / <a href="index.html">大人向け</a></p>
+    <p style="margin-top: 1rem;">&copy; 2026 TokiStorage</p>
+</footer>
+
+</body>
+</html>

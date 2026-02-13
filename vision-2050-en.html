@@ -1,0 +1,527 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vision 2050 — A World Where Proof of Existence Is Normal | Toki Storage</title>
+    <meta name="robots" content="noindex, nofollow">
+    <meta name="description" content="Internal strategy document. Structural analysis of how proof of existence becomes as natural as a passport.">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Shippori+Mincho:wght@400;500;600;700&family=Zen+Kaku+Gothic+New:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --toki-amber: #B45309;
+            --toki-amber-dark: #92400E;
+            --toki-amber-pale: #FFFBEB;
+            --accent-bronze: #D97706;
+            --bg-white: #FFFFFF;
+            --bg-section: #FEF3C7;
+            --text-primary: #1E293B;
+            --text-secondary: #475569;
+            --text-muted: #94A3B8;
+            --border: #E2E8F0;
+            --font-display: 'Shippori Mincho', serif;
+            --font-body: 'Zen Kaku Gothic New', sans-serif;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        html { scroll-behavior: smooth; }
+
+        body {
+            font-family: var(--font-body);
+            font-weight: 400;
+            background: var(--bg-white);
+            color: var(--text-primary);
+            line-height: 2;
+            font-size: 16px;
+        }
+
+        /* Navigation */
+        .article-nav {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 1000;
+            background: rgba(255,255,255,0.95);
+            backdrop-filter: blur(12px);
+            border-bottom: 1px solid var(--border);
+            padding: 0.6rem 1.2rem;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 1rem;
+        }
+        .article-nav .nav-brand {
+            font-family: var(--font-display);
+            font-size: 0.9rem;
+            font-weight: 600;
+            color: var(--toki-amber);
+            text-decoration: none;
+            white-space: nowrap;
+        }
+        .article-nav .nav-right {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+        .article-nav .nav-label {
+            font-size: 0.6rem;
+            color: var(--text-muted);
+            letter-spacing: 0.08em;
+        }
+        .article-nav .lang-switch {
+            font-size: 0.75rem;
+            color: var(--toki-amber);
+            text-decoration: none;
+            padding: 0.3rem 0.6rem;
+            border: 1px solid var(--toki-amber);
+            border-radius: 4px;
+        }
+        .article-nav .lang-switch:hover {
+            background: var(--toki-amber);
+            color: #fff;
+        }
+
+        /* Article Container */
+        .article-container {
+            max-width: 680px;
+            margin: 0 auto;
+            padding: 7rem 2rem 4rem;
+        }
+
+        /* Article Header */
+        .article-header {
+            margin-bottom: 3rem;
+            padding-bottom: 2rem;
+            border-bottom: 1px solid var(--border);
+        }
+        .article-category {
+            font-size: 0.7rem;
+            color: var(--toki-amber);
+            letter-spacing: 0.15em;
+            margin-bottom: 1rem;
+        }
+        .article-header h1 {
+            font-family: var(--font-display);
+            font-size: 1.8rem;
+            font-weight: 600;
+            line-height: 1.5;
+            margin-bottom: 1rem;
+        }
+        .article-subtitle {
+            font-size: 0.95rem;
+            color: var(--text-secondary);
+            line-height: 1.8;
+        }
+
+        /* Article Content */
+        .article-content h2 {
+            font-family: var(--font-display);
+            font-size: 1.25rem;
+            font-weight: 600;
+            margin: 3rem 0 1.5rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 1px solid var(--border);
+        }
+        .article-content h3 {
+            font-family: var(--font-display);
+            font-size: 1.1rem;
+            font-weight: 500;
+            margin: 2rem 0 1rem;
+            color: var(--text-primary);
+        }
+        .article-content p {
+            margin-bottom: 1.5rem;
+            text-align: justify;
+        }
+        .article-content blockquote {
+            margin: 2rem 0;
+            padding: 1.5rem 2rem;
+            background: var(--bg-section);
+            border-left: 3px solid var(--toki-amber);
+            font-style: italic;
+        }
+        .article-content blockquote p {
+            margin-bottom: 0.5rem;
+        }
+        .article-content blockquote cite {
+            display: block;
+            font-size: 0.85rem;
+            color: var(--text-muted);
+            font-style: normal;
+            margin-top: 0.5rem;
+        }
+        .article-content ul, .article-content ol {
+            margin: 1.5rem 0;
+            padding-left: 1.5rem;
+        }
+        .article-content li {
+            margin-bottom: 0.75rem;
+        }
+
+        /* Key Point Box */
+        .key-point {
+            background: var(--toki-amber-pale);
+            padding: 1.5rem 2rem;
+            border-radius: 8px;
+            margin: 2rem 0;
+        }
+        .key-point p {
+            margin-bottom: 0;
+            font-size: 0.95rem;
+        }
+
+        /* Core Message */
+        .core-message {
+            background: linear-gradient(135deg, var(--toki-amber-pale) 0%, #FEF3C7 100%);
+            border-left: 4px solid var(--toki-amber);
+            padding: 1.2rem 1.5rem;
+            margin: 0 0 1.5rem 0;
+            border-radius: 0 8px 8px 0;
+            font-size: 0.95rem;
+            line-height: 1.8;
+        }
+        .disclaimer {
+            font-size: 0.8rem;
+            color: var(--text-muted);
+            margin-bottom: 2rem;
+            padding-bottom: 1rem;
+            border-bottom: 1px solid var(--border);
+        }
+
+        /* Concept Card */
+        .concept-card {
+            background: var(--bg-white);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            padding: 1.5rem;
+            margin: 1.5rem 0;
+        }
+        .concept-card h4 {
+            font-family: var(--font-display);
+            font-size: 1rem;
+            color: var(--toki-amber);
+            margin-bottom: 0.75rem;
+        }
+        .concept-card p {
+            font-size: 0.9rem;
+            margin-bottom: 0;
+        }
+
+        /* Comparison Table */
+        .comparison-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 2rem 0;
+            font-size: 0.9rem;
+        }
+        .comparison-table th {
+            background: var(--bg-section);
+            font-family: var(--font-display);
+            font-weight: 600;
+            padding: 0.75rem 1rem;
+            text-align: left;
+            border-bottom: 2px solid var(--toki-amber);
+        }
+        .comparison-table td {
+            padding: 0.75rem 1rem;
+            border-bottom: 1px solid var(--border);
+            vertical-align: top;
+        }
+        .comparison-table tr:last-child td {
+            border-bottom: none;
+        }
+
+        /* References */
+        .references {
+            margin-top: 4rem;
+            padding-top: 2rem;
+            border-top: 1px solid var(--border);
+        }
+        .references h2 {
+            font-size: 1rem;
+            margin-bottom: 1.5rem;
+        }
+        .references ul {
+            list-style: none;
+            padding: 0;
+        }
+        .references li {
+            font-size: 0.85rem;
+            color: var(--text-secondary);
+            margin-bottom: 0.75rem;
+            padding-left: 1.5rem;
+            text-indent: -1.5rem;
+        }
+
+        /* Footer */
+        .article-footer {
+            margin-top: 4rem;
+            padding-top: 2rem;
+            border-top: 1px solid var(--border);
+            text-align: center;
+        }
+        .article-footer p {
+            font-size: 0.8rem;
+            color: var(--text-muted);
+            margin-bottom: 1rem;
+        }
+        .article-footer a {
+            color: var(--toki-amber);
+            text-decoration: none;
+        }
+        .article-footer a:hover {
+            text-decoration: underline;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .article-container { padding: 6rem 1.2rem 3rem; }
+            .article-header h1 { font-size: 1.5rem; }
+            .article-nav .nav-label { display: none; }
+        }
+
+        @media print {
+            .article-nav { display: none; }
+            .article-container { padding-top: 2rem; }
+        }
+    </style>
+</head>
+<body>
+
+<nav class="article-nav">
+    <a href="index-en.html" class="nav-brand">TokiStorage</a>
+    <div class="nav-right">
+        <span class="nav-label">STRATEGY</span>
+        <a href="vision-2050.html" class="lang-switch">JA</a>
+    </div>
+</nav>
+
+<main class="article-container">
+
+    <header class="article-header">
+        <p class="article-category">STRATEGY — INTERNAL</p>
+        <h1>Vision 2050: A World Where Proof of Existence Becomes the Norm</h1>
+        <p class="article-subtitle">
+            Internal strategy document. For investors and partners.<br>
+            Intentionally separated from the public-facing trust design (trust-design-37.md / transparency.html).<br>
+            Reason: Expressions such as "the risk of not having one" may read as fear-based marketing in a general audience context.
+        </p>
+    </header>
+
+    <article class="article-content">
+
+        <h2>Premise: "Cult Today, Utility Tomorrow"</h2>
+
+        <p>In 2025, if you tell someone "we engrave proof of existence onto quartz glass to preserve it for 1,000 years," most people will find it suspicious.</p>
+
+        <p>By 2050, the reaction will be: "Wait, you still don't have one?"</p>
+
+        <p>This is not a prophecy. It is a structurally unavoidable transition.</p>
+
+
+        <h2>Why It Will Become the Norm</h2>
+
+        <h3>1. Ideas Dissolve into Function</h3>
+
+        <p>Every revolutionary concept first appears as an idea, then gradually dissolves into everyday function.</p>
+
+        <div class="concept-card">
+            <h4>Concept Stage</h4>
+            <p>"Every person has an equal right to be recorded." — The democratization of proof of existence (we are here now).</p>
+        </div>
+
+        <div class="concept-card">
+            <h4>Transition Stage</h4>
+            <p>Early adopters demonstrate the value. Proof of existence becomes a new standard in wills and end-of-life planning.</p>
+        </div>
+
+        <div class="concept-card">
+            <h4>Function Stage</h4>
+            <p>No one thinks of it as an idea anymore. It is simply something you have — like a passport.</p>
+        </div>
+
+        <p><strong>GPS and Einstein:</strong> The theory of relativity was "a mad idea" in 1905. In 2025, the GPS in your smartphone cannot function without relativistic correction. No one thinks of Einstein every time they use GPS. The idea dissolved into function.</p>
+
+        <p><strong>Passports:</strong> Until the 1920s, passports were criticized as "an unnatural system of state control over individuals." Today, no one imagines crossing a border without one.</p>
+
+        <p><strong>Temples and Banks:</strong> In Japan's Kamakura period, temples served as financial institutions. Eventually the function separated, and banks were born. Temples remained as "places for the spirit," while banks became independent as "places for finance." Proof of existence will follow the same separation. Graves will remain as "places of mourning," while proof of existence will become independent as "places of record."</p>
+
+        <h3>2. The Structural Irreversibility of Digital Legacy Loss</h3>
+
+        <ul>
+            <li>The average lifespan of an S&amp;P 500 company is less than 20 years (McKinsey)</li>
+            <li>Cloud services are consolidated or discontinued within 10 years</li>
+            <li>The majority of a person's digital data becomes inaccessible within 5 years of their death</li>
+        </ul>
+
+        <p>This problem cannot be solved by technological progress. Because technological progress itself accelerates the obsolescence of older formats. The solution is a return to physical media, and quartz glass is one of the optimal answers.</p>
+
+        <h3>3. Population Decline and the End of Traditional Graves</h3>
+
+        <ul>
+            <li>Japan: Over 100,000 graves are decommissioned annually (estimate)</li>
+            <li>By 2050: Japan's population will fall below 100 million</li>
+            <li>A majority of households will be unable to maintain family graves</li>
+        </ul>
+
+        <p>Demand does not "disappear" — it "changes form." From gravestones to proof of existence.</p>
+
+
+        <h2>The World in 2050: Universal Proof of Existence</h2>
+
+        <h3>Birth Certificates Issued Alongside Proof of Existence</h3>
+
+        <ul>
+            <li>When a birth is registered, the municipality engraves the record onto quartz glass or a successor medium</li>
+            <li>National ID number, name, date of birth, and parents' names are inscribed on the physical medium</li>
+            <li>A hybrid of digital and physical records becomes the standard</li>
+        </ul>
+
+        <h3>End-of-Life Planning Becomes Unremarkable</h3>
+
+        <ul>
+            <li>Alongside insurance policies and wills, proof of existence becomes one of the "three essentials of end-of-life planning"</li>
+            <li>Funeral companies, insurance firms, and legal professionals offer proof of existence as partner services</li>
+            <li>"The risk of not having one" becomes widely recognized</li>
+        </ul>
+
+        <h3>Cultural Heritage Status</h3>
+
+        <ul>
+            <li>Organizations such as UNESCO position "physical record preservation" as a critical measure alongside digital preservation</li>
+            <li>National archive facilities adopt quartz glass or successor media</li>
+            <li>Advances in Microsoft's Project Silica lead to quartz glass recording being recognized as a mainstream technology</li>
+        </ul>
+
+
+        <h2>The "Ultimate Answer" to the &#x1F512; Items in the 37-Point Trust Design</h2>
+
+        <p>Of the 37 items, the 6 marked as "structurally ineradicable" are, in fact, dissolved by time.</p>
+
+        <table class="comparison-table">
+            <tr>
+                <th>&#x1F512; Item</th>
+                <th>Current State</th>
+                <th>State in 2050</th>
+            </tr>
+            <tr>
+                <td><strong>"1,000 years cannot be verified"</strong></td>
+                <td>No one can confirm it</td>
+                <td>25 years of performance data accumulated. Third-party auditing established</td>
+            </tr>
+            <tr>
+                <td><strong>"Death &times; commerce creates tension"</strong></td>
+                <td>Same structure as the funeral industry</td>
+                <td>Normalized to the same degree as insurance or banking</td>
+            </tr>
+            <tr>
+                <td><strong>"No social proof"</strong></td>
+                <td>A new project</td>
+                <td>25 years of activity. Thousands to tens of thousands of users</td>
+            </tr>
+            <tr>
+                <td><strong>"Hard to explain to friends"</strong></td>
+                <td>The concept is new</td>
+                <td>"Proof of existence" appears in dictionaries</td>
+            </tr>
+            <tr>
+                <td><strong>"Discomfort with cross-cultural use"</strong></td>
+                <td>Insufficient co-creation with stakeholders</td>
+                <td>25 years of co-creation. Rooted in local communities</td>
+            </tr>
+            <tr>
+                <td><strong>"Simultaneous awe and suspicion"</strong></td>
+                <td>A natural response to something new</td>
+                <td>No one is suspicious of a passport</td>
+            </tr>
+        </table>
+
+        <div class="key-point">
+            <p><strong>They don't disappear — time dissolves them.</strong><br>
+            However, it is the job of trust design to shorten that timeline.</p>
+        </div>
+
+
+        <h2>Strategic Implications</h2>
+
+        <h3>1. First-Mover Advantage Structure</h3>
+
+        <p>In a world where proof of existence has become the norm, the first mover captures the following:</p>
+
+        <ul>
+            <li><strong>Brand recognition</strong> — "proof of existence = TokiStorage"</li>
+            <li><strong>Technological moat</strong> — Over 3,000 engraving tests, proprietary compression technology</li>
+            <li><strong>Community network effects</strong></li>
+            <li><strong>Accumulated trust</strong> — The longest track record = the most trusted</li>
+        </ul>
+
+        <h3>2. Partnership Timeline</h3>
+
+        <table class="comparison-table">
+            <tr>
+                <th>Period</th>
+                <th>Partners</th>
+                <th>Objective</th>
+            </tr>
+            <tr>
+                <td>2025–2027</td>
+                <td>Temples, funeral companies, municipalities</td>
+                <td>Securing distribution channels</td>
+            </tr>
+            <tr>
+                <td>2027–2030</td>
+                <td>Insurance companies, legal professionals</td>
+                <td>Integration into the end-of-life planning ecosystem</td>
+            </tr>
+            <tr>
+                <td>2030–2035</td>
+                <td>Educational institutions, museums</td>
+                <td>Establishing cultural legitimacy</td>
+            </tr>
+            <tr>
+                <td>2035–2050</td>
+                <td>Governments, international organizations</td>
+                <td>Becoming institutional infrastructure</td>
+            </tr>
+        </table>
+
+        <h3>3. How to Use This Document</h3>
+
+        <ul>
+            <li><strong>For investors:</strong> As the basis for "why you should invest now"</li>
+            <li><strong>For partners:</strong> As the basis for "why you should partner now"</li>
+            <li><strong>For the internal team:</strong> As a shared long-term vision</li>
+            <li><strong>Not for public release:</strong> The fear-based framing and scale of ambition risk reinforcing E-1 (cult perception) and A-4 (guilt exploitation)</li>
+        </ul>
+
+
+        <h2>Important Notes</h2>
+
+        <blockquote>
+            <p>This document is intentionally separated from the public-facing trust design (trust-design-37.md / transparency.html).</p>
+            <p>The trust design exists to "resolve present distrust."<br>
+            This document provides the structural explanation for "why that distrust will disappear over time."</p>
+            <p>The former says: "Please verify for yourself."<br>
+            The latter says: "Please calculate for yourself."</p>
+            <p>This document is held in reserve as a "second layer of transparency," disclosed only when the other party's interest has deepened sufficiently. The same structure as the Pearl Soap distribution design — rather than showing everything from the start, each successive layer opens in proportion to the depth of engagement.</p>
+        </blockquote>
+
+        <p><em>trust-design-37.md (public layer) &rarr; transparency.html (web public layer) &rarr; vision-2050.md (strategy layer)</em><br>
+        <em>Trust is designed in layers.</em></p>
+
+    </article>
+
+    <footer class="article-footer">
+        <p>This document is an internal strategy paper analyzing the long-term trajectory of Toki Storage.</p>
+        <p id="essay-nav-links"></p>
+        <p style="margin-top: 2rem; font-size: 0.75rem;">&copy; 2026 TokiStorage</p>
+    </footer>
+
+</main>
+
+<script src="essay-nav.js?v=20260211"></script>
+</body>
+</html>

@@ -1,0 +1,752 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>認定アンバサダープログラム | Pearl Soapワークショップ | トキストレージ</title>
+    <meta name="description" content="Pearl Soapワークショップの認定アンバサダー制度。機材セット・導入運用マニュアル・コミュニティ・個別サポート付きで、あなたの地域でワークショップを主催できます。">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Shippori+Mincho:wght@400;500;600;700&family=Zen+Kaku+Gothic+New:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="index.css">
+    <style>
+        .ambassador-page { padding: 6rem 2rem 4rem; }
+        .ambassador-inner { max-width: 760px; margin: 0 auto; }
+        .ambassador-inner h1 {
+            font-family: var(--font-display);
+            font-size: 1.8rem;
+            font-weight: 600;
+            color: var(--text-primary);
+            margin-bottom: 0.3rem;
+            text-align: center;
+        }
+        .ambassador-tagline {
+            text-align: center;
+            font-family: var(--font-display);
+            font-size: 0.92rem;
+            color: var(--text-secondary);
+            margin-bottom: 2.5rem;
+            line-height: 1.8;
+        }
+        .ambassador-section {
+            margin-bottom: 3rem;
+        }
+        .ambassador-section h2 {
+            font-family: var(--font-display);
+            font-size: 1.15rem;
+            font-weight: 600;
+            color: var(--text-primary);
+            margin-bottom: 1rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 2px solid var(--toki-gold);
+        }
+        .ambassador-section p,
+        .ambassador-section li {
+            font-size: 0.88rem;
+            color: var(--text-secondary);
+            line-height: 1.9;
+        }
+        .ambassador-lead {
+            background: var(--bg-page);
+            border: 1px solid var(--border);
+            border-radius: 1rem;
+            padding: 2rem;
+            margin-bottom: 3rem;
+        }
+        .ambassador-lead p {
+            font-size: 0.9rem;
+            color: var(--text-secondary);
+            line-height: 2;
+            margin-bottom: 0.8rem;
+        }
+        .ambassador-lead p:last-child { margin-bottom: 0; }
+
+        /* ペルソナカード */
+        .persona-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 1.2rem;
+            margin-top: 1.5rem;
+        }
+        .persona-item {
+            background: var(--bg-page);
+            border: 1px solid var(--border);
+            border-radius: 0.8rem;
+            padding: 1.5rem;
+        }
+        .persona-item h3 {
+            font-family: var(--font-display);
+            font-size: 0.95rem;
+            font-weight: 600;
+            color: var(--toki-gold);
+            margin-bottom: 0.6rem;
+        }
+        .persona-item p {
+            font-size: 0.85rem;
+            color: var(--text-secondary);
+            line-height: 1.8;
+        }
+
+        /* 提供内容カード */
+        .offering-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1.2rem;
+            margin-top: 1.5rem;
+        }
+        .offering-card {
+            background: var(--bg-page);
+            border: 1px solid var(--border);
+            border-radius: 0.8rem;
+            padding: 1.5rem;
+            text-align: center;
+        }
+        .offering-icon {
+            font-size: 1.6rem;
+            margin-bottom: 0.6rem;
+        }
+        .offering-card h3 {
+            font-family: var(--font-display);
+            font-size: 0.95rem;
+            font-weight: 600;
+            color: var(--text-primary);
+            margin-bottom: 0.5rem;
+        }
+        .offering-card p {
+            font-size: 0.82rem;
+            color: var(--text-secondary);
+            line-height: 1.7;
+        }
+
+        /* 機材リスト */
+        .kit-list {
+            list-style: none;
+            padding: 0;
+            margin: 1.5rem 0;
+        }
+        .kit-list li {
+            background: var(--bg-page);
+            border-left: 4px solid var(--toki-gold);
+            padding: 1.2rem 1.5rem;
+            margin-bottom: 1rem;
+            border-radius: 0 0.5rem 0.5rem 0;
+        }
+        .kit-list li h4 {
+            font-family: var(--font-display);
+            font-size: 0.95rem;
+            font-weight: 600;
+            color: var(--text-primary);
+            margin-bottom: 0.4rem;
+        }
+        .kit-list li p {
+            font-size: 0.85rem;
+            margin: 0;
+        }
+
+        /* プランカード */
+        .plan-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 1.5rem;
+            margin-top: 1.5rem;
+        }
+        .plan-card {
+            background: var(--bg-page);
+            border: 1px solid var(--border);
+            border-radius: 1rem;
+            padding: 2rem;
+            position: relative;
+        }
+        .plan-card.recommended {
+            border-color: var(--toki-gold);
+            box-shadow: 0 4px 20px rgba(201, 169, 98, 0.15);
+        }
+        .plan-badge {
+            position: absolute;
+            top: -0.7rem;
+            left: 50%;
+            transform: translateX(-50%);
+            background: var(--toki-gold);
+            color: #fff;
+            font-size: 0.72rem;
+            font-weight: 600;
+            padding: 0.25rem 1rem;
+            border-radius: 1rem;
+            white-space: nowrap;
+        }
+        .plan-card h3 {
+            font-family: var(--font-display);
+            font-size: 1.05rem;
+            font-weight: 600;
+            color: var(--text-primary);
+            margin-bottom: 0.5rem;
+            text-align: center;
+        }
+        .plan-price {
+            text-align: center;
+            margin-bottom: 1rem;
+            padding-bottom: 1rem;
+            border-bottom: 1px solid var(--border);
+        }
+        .plan-price .amount {
+            font-family: var(--font-display);
+            font-size: 1.6rem;
+            font-weight: 700;
+            color: var(--toki-gold);
+        }
+        .plan-price .unit {
+            font-size: 0.78rem;
+            color: var(--text-muted);
+        }
+        .plan-features {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+        .plan-features li {
+            font-size: 0.84rem;
+            color: var(--text-secondary);
+            line-height: 1.7;
+            padding: 0.3rem 0;
+            padding-left: 1.2rem;
+            position: relative;
+        }
+        .plan-features li::before {
+            content: "\2713";
+            position: absolute;
+            left: 0;
+            color: var(--toki-gold);
+            font-weight: 700;
+        }
+
+        /* ステップ */
+        .step-timeline {
+            position: relative;
+            padding-left: 2rem;
+            margin: 1.5rem 0;
+        }
+        .step-timeline::before {
+            content: "";
+            position: absolute;
+            left: 0.7rem;
+            top: 0.5rem;
+            bottom: 0.5rem;
+            width: 2px;
+            background: linear-gradient(to bottom, var(--toki-gold), var(--toki-blue));
+            border-radius: 1px;
+        }
+        .step-item {
+            position: relative;
+            margin-bottom: 1.5rem;
+            padding: 1rem 1.2rem;
+            background: var(--bg-page);
+            border: 1px solid var(--border);
+            border-radius: 0.6rem;
+        }
+        .step-item:last-child { margin-bottom: 0; }
+        .step-item::before {
+            content: "";
+            position: absolute;
+            left: -1.55rem;
+            top: 1.2rem;
+            width: 0.7rem;
+            height: 0.7rem;
+            background: var(--toki-gold);
+            border-radius: 50%;
+            border: 2px solid #fff;
+            box-shadow: 0 0 0 2px var(--toki-gold);
+        }
+        .step-label {
+            font-size: 0.75rem;
+            color: var(--toki-gold);
+            font-weight: 600;
+            margin-bottom: 0.3rem;
+        }
+        .step-item h4 {
+            font-family: var(--font-display);
+            font-size: 0.92rem;
+            font-weight: 600;
+            color: var(--text-primary);
+            margin-bottom: 0.3rem;
+        }
+        .step-item p {
+            font-size: 0.82rem;
+            color: var(--text-secondary);
+            line-height: 1.7;
+            margin: 0;
+        }
+
+        /* FAQ */
+        .amb-faq-item {
+            border-bottom: 1px solid var(--border);
+            padding: 1rem 0;
+        }
+        .amb-faq-item summary {
+            font-family: var(--font-display);
+            font-size: 0.92rem;
+            font-weight: 600;
+            color: var(--text-primary);
+            cursor: pointer;
+            list-style: none;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .amb-faq-item summary::-webkit-details-marker { display: none; }
+        .amb-faq-item summary::after {
+            content: "+";
+            font-size: 1.2rem;
+            color: var(--toki-gold);
+            transition: transform 0.3s ease;
+        }
+        .amb-faq-item[open] summary::after {
+            content: "\2212";
+        }
+        .amb-faq-item .amb-faq-answer {
+            font-size: 0.85rem;
+            color: var(--text-secondary);
+            line-height: 1.8;
+            padding-top: 0.8rem;
+            max-height: none;
+            overflow: visible;
+        }
+
+        /* ハイライトボックス */
+        .highlight-box {
+            background: var(--toki-gold-pale);
+            border: 1px solid var(--toki-gold);
+            border-radius: 1rem;
+            padding: 2rem;
+            margin: 2rem 0;
+            text-align: center;
+        }
+        .highlight-box h3 {
+            font-family: var(--font-display);
+            font-size: 1rem;
+            font-weight: 600;
+            color: var(--text-primary);
+            margin-bottom: 0.8rem;
+        }
+        .highlight-box p {
+            font-size: 0.88rem;
+            color: var(--text-secondary);
+            line-height: 1.8;
+        }
+
+        /* CTA */
+        .ambassador-cta {
+            text-align: center;
+            margin-top: 3rem;
+            padding: 2rem;
+            background: var(--toki-gold-pale);
+            border: 1px solid var(--toki-gold);
+            border-radius: 1rem;
+        }
+        .ambassador-cta h3 {
+            font-family: var(--font-display);
+            font-size: 1rem;
+            color: var(--text-primary);
+            margin-bottom: 0.8rem;
+        }
+        .ambassador-cta p {
+            font-size: 0.85rem;
+            color: var(--text-secondary);
+            margin-bottom: 1.2rem;
+        }
+        .ambassador-cta a.cta-button {
+            display: inline-block;
+            background: #06C755;
+            color: #fff;
+            padding: 0.8rem 2rem;
+            border-radius: 0.5rem;
+            text-decoration: none;
+            font-size: 0.9rem;
+            font-weight: 500;
+            transition: background 0.3s ease;
+        }
+        .ambassador-cta a.cta-button:hover { background: #05a847; }
+
+        .ambassador-back {
+            text-align: center;
+            margin-top: 2.5rem;
+        }
+        .ambassador-back a {
+            color: var(--toki-blue);
+            text-decoration: none;
+            font-size: 0.85rem;
+            margin: 0 0.8rem;
+        }
+        .ambassador-back a:hover { text-decoration: underline; }
+
+        /* 補足ノート */
+        .ambassador-note {
+            background: var(--bg-page);
+            border: 1px solid var(--border);
+            border-radius: 0.8rem;
+            padding: 1.2rem 1.5rem;
+            margin: 1.5rem 0;
+            font-size: 0.82rem;
+            color: var(--text-muted);
+            line-height: 1.8;
+        }
+    </style>
+</head>
+<body>
+
+<nav class="toki-nav">
+    <span class="nav-logo"><a href="index.html">トキストレージ</a> / <a href="pearl-soap.html">Pearl Soap</a> / <a href="workshop.html">ワークショップ</a> / アンバサダー</span>
+</nav>
+
+<main class="ambassador-page">
+    <div class="ambassador-inner">
+        <h1>認定アンバサダープログラム</h1>
+        <p class="ambassador-tagline">
+            「いてくれてありがとう」を届ける人になる。<br>
+            あなたの地域で、Pearl Soapワークショップを主催しませんか。
+        </p>
+
+        <div class="ambassador-lead">
+            <p>Pearl Soapワークショップの「体験」を、もっと多くの人に届けたい。でも私たちだけでは、届けられる場所に限りがあります。</p>
+            <p>だから、一緒に届けてくれる仲間を探しています。</p>
+            <p>認定アンバサダーは、Pearl Soapワークショップを自分の地域で主催できる制度です。機材セット・導入運用マニュアル・コミュニティ・個別サポートをすべてお渡しします。あなたは「教える人」ではなく、「一緒に作る人」として、参加者と喜びを分かち合う存在になります。</p>
+        </div>
+
+        <!-- こんな方に -->
+        <section class="ambassador-section">
+            <h2>こんな方にぴったりです</h2>
+            <div class="persona-grid">
+                <div class="persona-item">
+                    <h3>子育て支援・教育関係者</h3>
+                    <p>児童館、学童保育、PTA活動などで子供向けの体験プログラムを探している方。自尊心を育むワークショップは教育現場との相性が抜群です。</p>
+                </div>
+                <div class="persona-item">
+                    <h3>地域コミュニティの運営者</h3>
+                    <p>町内会、自治会、公民館でイベントを企画する方。老若男女が一緒に楽しめるプログラムとして、地域の絆づくりに活用できます。</p>
+                </div>
+                <div class="persona-item">
+                    <h3>ホテル・旅館の体験プログラム担当</h3>
+                    <p>宿泊者向けのアクティビティとして導入したい方。60分で完結し、持ち帰れるお土産になるため、ゲスト満足度の向上に直結します。</p>
+                </div>
+                <div class="persona-item">
+                    <h3>福祉・介護施設のスタッフ</h3>
+                    <p>高齢者向けのレクリエーションを探している方。手先を動かす作業は脳の活性化にもつながり、完成した石鹸を家族に贈る喜びが生まれます。</p>
+                </div>
+                <div class="persona-item">
+                    <h3>カフェ・雑貨店のオーナー</h3>
+                    <p>お店の集客イベントとしてワークショップを開催したい方。お茶と石鹸作りを組み合わせた体験会は、新規顧客の獲得にもつながります。</p>
+                </div>
+                <div class="persona-item">
+                    <h3>「何か始めたい」と思っている方</h3>
+                    <p>特別な資格は不要です。「人の喜ぶ顔が好き」「手作りが好き」——その気持ちがあれば十分。マニュアルとサポートがあるから、初めてでも安心です。</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- アンバサダーに提供されるもの -->
+        <section class="ambassador-section">
+            <h2>アンバサダーに提供されるもの</h2>
+            <p>「自分にできるかな」という不安をなくすために、必要なものはすべて用意しています。</p>
+
+            <div class="offering-grid">
+                <div class="offering-card">
+                    <div class="offering-icon">&#x1F9F0;</div>
+                    <h3>機材セット</h3>
+                    <p>ソープベース、モールド、加熱器具（屋内用・屋外用）、着色料、エッセンシャルオイル、ラベルライター、包装資材など。すぐに開催できる一式。</p>
+                </div>
+                <div class="offering-card">
+                    <div class="offering-icon">&#x1F4D6;</div>
+                    <h3>導入運用マニュアル</h3>
+                    <p>準備から片付けまでの手順書、参加者への声かけ例、トラブル対応集。動画マニュアルも含みます。</p>
+                </div>
+                <div class="offering-card">
+                    <div class="offering-icon">&#x1F465;</div>
+                    <h3>アンバサダーコミュニティ</h3>
+                    <p>全国のアンバサダー同士がつながるオンラインコミュニティ。ノウハウの共有、開催レポート、改善のヒントが集まります。</p>
+                </div>
+                <div class="offering-card">
+                    <div class="offering-icon">&#x1F4AC;</div>
+                    <h3>個別サポート</h3>
+                    <p>初回開催は本部が伴走。開催前の相談、当日のオンラインサポート、開催後の振り返りまでフォロー。</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- 機材セット詳細 -->
+        <section class="ambassador-section">
+            <h2>機材セットの内容</h2>
+            <p>10名分のワークショップを開催できるスターターキットです。消耗品は追加購入できます。</p>
+
+            <ul class="kit-list">
+                <li>
+                    <h4>ソープベース（MPソープ）</h4>
+                    <p>グリセリン配合の溶かして使うソープベース。肌にやさしく、子供でも安全に使えます。10名分の初回分を同梱。</p>
+                </li>
+                <li>
+                    <h4>肉球モールド（シリコン型）</h4>
+                    <p>Pearl Soapのシンボルである肉球型のシリコンモールド。繰り返し使えて、手入れも簡単。</p>
+                </li>
+                <li>
+                    <h4>加熱器具一式（屋内用・屋外用）</h4>
+                    <p><strong>屋内開催：</strong>マルチケトル、耐熱容器、温度計、撹拌用ヘラ。<br><strong>屋外開催：</strong>イワタニ カセットコンロ／バーナー、耐熱容器、温度計、撹拌用ヘラ。<br>安全な作業のための手袋・エプロンも含みます。</p>
+                </li>
+                <li>
+                    <h4>着色料・エッセンシャルオイル</h4>
+                    <p>食品グレードの着色料と、ココナッツのエッセンシャルオイル。Pearl Soapのトレードマークの香りです。</p>
+                </li>
+                <li>
+                    <h4>ラベルライター＆テープ</h4>
+                    <p>Pearl Soapオリジナルラベルを現場で印刷できるラベルライターと専用テープ。完成した石鹸にその場でラベリングできます。</p>
+                </li>
+                <li>
+                    <h4>包装資材</h4>
+                    <p>OPP袋、オーガンジー巾着袋、Pearl Soapラベルシール。参加者が「贈りもの」として持ち帰れる仕上げ。</p>
+                </li>
+                <li>
+                    <h4>運営ツール</h4>
+                    <p>参加者向け説明シート、受付台帳テンプレート、会場セッティングガイド。</p>
+                </li>
+            </ul>
+
+            <div class="ambassador-note">
+                消耗品（ソープベース、着色料、エッセンシャルオイル、ラベルテープ、包装資材）はアンバサダー専用の価格で追加購入いただけます。ご自身で材料を調達することも可能です。
+            </div>
+        </section>
+
+        <!-- 導入運用マニュアル詳細 -->
+        <section class="ambassador-section">
+            <h2>導入運用マニュアル</h2>
+            <p>「やったことがない」を「できる」に変えるために、細部まで手順化しています。</p>
+
+            <ul class="kit-list">
+                <li>
+                    <h4>開催準備マニュアル</h4>
+                    <p>会場選び、必要なスペース・設備の確認、材料の事前準備チェックリスト。開催2週間前から当日朝までの段取り。</p>
+                </li>
+                <li>
+                    <h4>当日進行マニュアル</h4>
+                    <p>60分の時間配分、各パートでの声かけ例文、参加者への説明スクリプト。Pearl Soapの由来を伝える「ストーリーテリングガイド」も付属。</p>
+                </li>
+                <li>
+                    <h4>動画マニュアル</h4>
+                    <p>ソープの溶かし方、着色のコツ、モールドへの流し方など、動画で確認できる作業手順集。</p>
+                </li>
+                <li>
+                    <h4>トラブル対応集</h4>
+                    <p>「固まらない」「気泡が入った」「色が混ざった」——よくあるトラブルと、その場での対処法をまとめたQ&A。</p>
+                </li>
+                <li>
+                    <h4>開催後の振り返りシート</h4>
+                    <p>参加者の反応、改善点、次回への気づきを記録するテンプレート。コミュニティで共有することで全体のノウハウが蓄積されます。</p>
+                </li>
+            </ul>
+        </section>
+
+        <!-- プラン -->
+        <section class="ambassador-section">
+            <h2>アンバサダープラン</h2>
+            <p>活動スタイルに合わせて選べる2つのプランをご用意しています。</p>
+
+            <div class="plan-grid">
+                <div class="plan-card recommended">
+                    <div class="plan-badge">おすすめ</div>
+                    <h3>スタンダードプラン</h3>
+                    <div class="plan-price">
+                        <span class="amount">¥55,000</span><br>
+                        <span class="unit">初期費用（税込）</span>
+                    </div>
+                    <ul class="plan-features">
+                        <li>機材スターターキット一式（10名分）</li>
+                        <li>導入運用マニュアル（印刷版＋デジタル版）</li>
+                        <li>動画マニュアル全編アクセス</li>
+                        <li>アンバサダーコミュニティ参加権</li>
+                        <li>初回開催時のオンライン伴走サポート</li>
+                        <li>消耗品のアンバサダー価格購入</li>
+                        <li>認定アンバサダー証書</li>
+                    </ul>
+                </div>
+                <div class="plan-card">
+                    <h3>プレミアムプラン</h3>
+                    <div class="plan-price">
+                        <span class="amount">¥110,000</span><br>
+                        <span class="unit">初期費用（税込）</span>
+                    </div>
+                    <ul class="plan-features">
+                        <li>スタンダードプランの全内容</li>
+                        <li>機材キット増量（20名分）</li>
+                        <li>代表による対面またはオンライン研修（2時間）</li>
+                        <li>オリジナルラベルデザイン制作</li>
+                        <li>年間の優先個別相談（月1回まで）</li>
+                        <li>公式サイトへの掲載</li>
+                        <li>トキストレージ個人プラン20%割引</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="ambassador-note">
+                月額費用やロイヤリティはありません。開催による売上はすべてアンバサダーのものです。材料費を参加費に含めるか、別途いただくかは自由に設定できます。
+            </div>
+        </section>
+
+        <!-- 開催までの流れ -->
+        <section class="ambassador-section">
+            <h2>開催までの流れ</h2>
+            <p>お問い合わせから初回開催まで、最短2週間で始められます。</p>
+
+            <div class="step-timeline">
+                <div class="step-item">
+                    <div class="step-label">Step 1</div>
+                    <h4>お問い合わせ・ご相談</h4>
+                    <p>LINEまたはメールでご連絡ください。活動予定の地域、対象者、開催頻度などをヒアリングし、最適なプランをご提案します。</p>
+                </div>
+                <div class="step-item">
+                    <div class="step-label">Step 2</div>
+                    <h4>お申し込み・機材セット発送</h4>
+                    <p>プランを決めてお申し込みいただいたら、機材セットとマニュアルをお届けします。届いたその日から準備を始められます。</p>
+                </div>
+                <div class="step-item">
+                    <div class="step-label">Step 3</div>
+                    <h4>事前準備・練習</h4>
+                    <p>マニュアルと動画を見ながら、まずはご自身で1回作ってみてください。わからないことはコミュニティや個別サポートで解決。</p>
+                </div>
+                <div class="step-item">
+                    <div class="step-label">Step 4</div>
+                    <h4>初回開催（伴走サポート付き）</h4>
+                    <p>初めての開催は本部がオンラインで伴走。進行の不安があれば、リアルタイムでフォローします。</p>
+                </div>
+                <div class="step-item">
+                    <div class="step-label">Step 5</div>
+                    <h4>振り返り・改善</h4>
+                    <p>開催後に振り返りシートを記入。本部との簡単なフィードバックセッションを経て、次回に活かします。</p>
+                </div>
+                <div class="step-item">
+                    <div class="step-label">Step 6 〜</div>
+                    <h4>自立した活動へ</h4>
+                    <p>2回目以降は自分のペースで自由に開催。コミュニティで他のアンバサダーと情報交換しながら、活動の幅を広げていきます。</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- 哲学 -->
+        <div class="highlight-box">
+            <h3>アンバサダーは「先生」ではなく「仲間」</h3>
+            <p>Pearl Soapワークショップの主催者に、特別なスキルは必要ありません。<br>大切なのは「一緒に作ること」を楽しむ姿勢。<br>参加者と同じ目線で、手を動かし、喜び合い、「いてくれてありがとう」を一緒に体験する。<br>それがアンバサダーの役割です。</p>
+        </div>
+
+        <!-- FAQ -->
+        <section class="ambassador-section">
+            <h2>よくある質問</h2>
+
+            <details class="amb-faq-item">
+                <summary>石鹸を作った経験がなくても大丈夫ですか？</summary>
+                <div class="amb-faq-answer">はい、大丈夫です。Pearl SoapはMPソープベースを溶かして型に流すだけのシンプルな製法です。動画マニュアルを見ながら1〜2回練習すれば、すぐにコツがつかめます。初回開催時は本部がオンラインで伴走しますのでご安心ください。</div>
+            </details>
+
+            <details class="amb-faq-item">
+                <summary>月額費用やロイヤリティは発生しますか？</summary>
+                <div class="amb-faq-answer">いいえ、月額費用やロイヤリティは一切ありません。初期費用のみでスタートでき、開催による参加費の設定や売上はすべてアンバサダーご自身のものです。</div>
+            </details>
+
+            <details class="amb-faq-item">
+                <summary>参加費はいくらに設定すればいいですか？</summary>
+                <div class="amb-faq-answer">参加費の設定は自由です。材料費（1人あたり約500〜800円）に会場費・利益を上乗せして、1,500〜3,000円で設定される方が多いです。無料の地域イベントとして開催される方もいます。</div>
+            </details>
+
+            <details class="amb-faq-item">
+                <summary>どんな場所で開催できますか？</summary>
+                <div class="amb-faq-answer">屋内・屋外ともに開催可能です。水道や電源は必須ではありません。<strong>屋内：</strong>公民館、カフェ、学校、イベントスペース、ホテルの一室など。電源がない屋内でもポータブル電源があれば問題なく開催できます。<strong>屋外：</strong>お祭り、マルシェ、地域フェスティバルなどにも対応。カセットコンロがあれば電源なしでも加熱でき、ジェネレーターやポータブル電源を用意すればより安定した長時間運営が可能です。</div>
+            </details>
+
+            <details class="amb-faq-item">
+                <summary>何名くらいから開催できますか？</summary>
+                <div class="amb-faq-answer">2〜3名の小規模な会から開催できます。初めては少人数（5名程度）がおすすめです。慣れてきたら10〜20名規模まで対応可能です。</div>
+            </details>
+
+            <details class="amb-faq-item">
+                <summary>アンバサダーを辞めたい場合は？</summary>
+                <div class="amb-faq-answer">いつでも自由に辞められます。解約金などは一切ありません。機材はそのままお手元に残りますので、個人的な石鹸作りに活用していただけます。</div>
+            </details>
+
+            <details class="amb-faq-item">
+                <summary>材料の仕入れはどうすればいいですか？</summary>
+                <div class="amb-faq-answer">アンバサダー専用の価格で本部から購入いただけます。もちろん、ご自身で同等品を調達いただいても構いません。推奨品リストはマニュアルに記載しています。</div>
+            </details>
+
+            <details class="amb-faq-item">
+                <summary>海外でも活動できますか？</summary>
+                <div class="amb-faq-answer">はい、海外での活動も可能です。現在ハワイでの活動実績があります。海外向けには英語版マニュアルもご用意しています。機材の送料は別途ご相談ください。</div>
+            </details>
+        </section>
+
+        <!-- CTA -->
+        <div class="ambassador-cta">
+            <h3>アンバサダーに興味がある方へ</h3>
+            <p>「自分にもできるかな？」「もう少し詳しく知りたい」<br>まずはお気軽にご連絡ください。無理な勧誘は一切しません。</p>
+            <a href="https://line.me/R/oaMessage/@897glsbz/?Pearl%20Soap%E3%82%A2%E3%83%B3%E3%83%90%E3%82%B5%E3%83%80%E3%83%BC%E3%83%97%E3%83%AD%E3%82%B0%E3%83%A9%E3%83%A0%E3%81%AB%E3%81%A4%E3%81%84%E3%81%A6%E7%9B%B8%E8%AB%87%E3%81%97%E3%81%9F%E3%81%84%E3%81%A7%E3%81%99" target="_blank" rel="noopener" class="cta-button">公式LINEで相談する</a>
+        </div>
+
+        <div class="ambassador-back">
+            <a href="workshop.html">&larr; ワークショップ</a>
+            <a href="pearl-soap.html">Pearl Soap</a>
+            <a href="index.html">トキストレージ &rarr;</a>
+        </div>
+    </div>
+</main>
+
+<footer class="toki-footer">
+    <div class="footer-inner">
+        <div class="footer-brand">
+            <h3>トキストレージ</h3>
+            <p>想いを1000年先へ届ける5次元記録</p>
+        </div>
+        <div class="footer-links-group">
+            <h4>リンク</h4>
+            <a href="index.html">トキストレージとは</a>
+            <a href="index.html#pricing">料金プラン</a>
+            <a href="index.html#faq">よくある質問</a>
+            <a href="index.html#cta">お問い合わせ</a>
+            <a href="profile.html">代表プロフィール</a>
+            <a href="pitch-deck.html">投資家向け資料</a>
+            <a href="legacy.html">1000年の設計思想</a>
+            <a href="kids.html">お子さま向けページ</a>
+            <a href="infographic.html">エコシステム全体像</a>
+        </div>
+        <div class="footer-links-group">
+            <h4>提案</h4>
+            <a href="partnership.html">パートナーシップ提案</a>
+            <a href="client-proposal.html">クライアント提案</a>
+            <a href="government-proposal.html">行政提案</a>
+            <a href="patronage.html">パトロネージ</a>
+        </div>
+        <div class="footer-links-group">
+            <h4>関連サービス</h4>
+            <span class="footer-sub-links"><a href="../index-ja.html">SoulCarrier 共鳴の会</a>（<a href="../movement/入会のご案内.pdf">入会案内</a>／<a href="../movement/BasicAgreement.pdf">合意書</a>／<a href="../movement/Soul_Carrier規約.pdf">規約</a>）</span>
+            <span class="footer-sub-links"><a href="pearl-soap.html">Pearl Soap</a>（<a href="how-to-make.html">作り方</a>／<a href="workshop.html">ワークショップ</a>／<a href="ambassador.html">アンバサダー</a>／<a href="100-scenes.html">100のシーン</a>）</span>
+            <span class="footer-sub-links"><a href="workaway.html">Workaway導入支援</a>（<a href="workaway-proposal.html">提案書</a>）</span>
+            <a href="offgrid.html">オフグリッド構築支援</a>
+            <a href="https://voice-memorial-qr.onrender.com/" target="_blank" rel="noopener">Voice QR 技術デモ</a>
+        </div>
+        <div class="footer-links-group">
+            <h4>法的情報</h4>
+            <a href="tokushoho.html">特定商取引法に基づく表示</a>
+            <a href="privacy.html">プライバシーポリシー</a>
+        </div>
+        <div class="footer-links-group">
+            <h4>運営</h4>
+            <p class="footer-company">TokiStorage<br>佐藤卓也<br>〒279-0014 千葉県浦安市明海2-11-13<br>（2026年春〜 佐渡市へ移転予定）</p>
+            <a href="https://www.linkedin.com/in/satotakuya" target="_blank" rel="noopener"><svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" style="vertical-align:-2px;margin-right:4px"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 01-2.063-2.065 2.064 2.064 0 112.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg>satotakuya</a>
+            <a href="https://x.com/tokistorage" target="_blank" rel="noopener"><svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" style="vertical-align:-2px;margin-right:4px"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>@tokistorage</a>
+            <a href="https://www.facebook.com/tokistorage" target="_blank" rel="noopener"><svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" style="vertical-align:-2px;margin-right:4px"><path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/></svg>@tokistorage</a>
+            <a href="https://www.instagram.com/tokistorage" target="_blank" rel="noopener"><svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" style="vertical-align:-2px;margin-right:4px"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.052.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 100 12.324 6.162 6.162 0 000-12.324zM12 16a4 4 0 110-8 4 4 0 010 8zm6.406-11.845a1.44 1.44 0 100 2.881 1.44 1.44 0 000-2.881z"/></svg>@tokistorage</a>
+            <a href="https://www.tiktok.com/@tokistorage" target="_blank" rel="noopener"><svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" style="vertical-align:-2px;margin-right:4px"><path d="M12.525.02c1.31-.02 2.61-.01 3.91-.02.08 1.53.63 3.09 1.75 4.17 1.12 1.11 2.7 1.62 4.24 1.79v4.03c-1.44-.05-2.89-.35-4.2-.97-.57-.26-1.1-.59-1.62-.93-.01 2.92.01 5.84-.02 8.75-.08 1.4-.54 2.79-1.35 3.94-1.31 1.92-3.58 3.17-5.91 3.21-1.43.08-2.86-.31-4.08-1.03-2.02-1.19-3.44-3.37-3.65-5.71-.02-.5-.03-1-.01-1.49.18-1.9 1.12-3.72 2.58-4.96 1.66-1.44 3.98-2.13 6.15-1.72.02 1.48-.04 2.96-.04 4.44-.99-.32-2.15-.23-3.02.37-.63.41-1.11 1.04-1.36 1.75-.21.51-.15 1.07-.14 1.61.24 1.64 1.82 3.02 3.5 2.87 1.12-.01 2.19-.66 2.77-1.61.19-.33.4-.67.41-1.06.1-1.79.06-3.57.07-5.36.01-4.03-.01-8.05.02-12.07z"/></svg>@tokistorage</a>
+            <a href="https://www.youtube.com/@tokistorage" target="_blank" rel="noopener"><svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" style="vertical-align:-2px;margin-right:4px"><path d="M23.498 6.186a3.016 3.016 0 00-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 00.502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 002.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 002.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/></svg>@tokistorage</a>
+            <a href="https://zenn.dev/idev" target="_blank" rel="noopener"><svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" style="vertical-align:-2px;margin-right:4px"><path d="M3 3h18v4h-9l9 10v4H3v-4h9L3 7z"/></svg>idev</a>
+        </div>
+    </div>
+    <div class="footer-bottom">
+        <p class="footer-disclaimer">※トキストレージは記録保存を目的とした製品です。墓地埋葬法上の墓地・墓石の代替となるものではありません。「1000年」は石英ガラスの素材特性に基づく理論値であり、製品保証期間ではありません。Pearl Soapは販売しておりません。</p>
+        <p>&copy; 2026 トキストレージ / TokiStorage. All rights reserved.</p>
+    </div>
+</footer>
+
+</body>
+</html>

@@ -1,0 +1,554 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Nation-States and Proof of Existence — Sovereignty, Legitimacy, and the Borders of Citizenship | Toki Storage</title>
+    <meta name="robots" content="noindex, nofollow">
+    <meta name="description" content="An examination of state legitimacy and citizenship, sovereignty and international recognition, empire and colonial erasure—exploring what it means to 'prove existence' within the framework of nation-states.">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400&family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --toki-wine: #7C2D12;
+            --toki-wine-dark: #5C1F0D;
+            --toki-wine-pale: #FEF3E2;
+            --accent-amber: #B45309;
+            --bg-white: #FFFFFF;
+            --bg-section: #FFFBF5;
+            --text-primary: #1E293B;
+            --text-secondary: #475569;
+            --text-muted: #94A3B8;
+            --border: #E2E8F0;
+            --font-display: 'Cormorant Garamond', serif;
+            --font-body: 'Inter', sans-serif;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        html { scroll-behavior: smooth; }
+
+        body {
+            font-family: var(--font-body);
+            font-weight: 400;
+            background: var(--bg-white);
+            color: var(--text-primary);
+            line-height: 1.9;
+            font-size: 16px;
+        }
+
+        /* Navigation */
+        .article-nav {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 1000;
+            background: rgba(255,255,255,0.95);
+            backdrop-filter: blur(12px);
+            border-bottom: 1px solid var(--border);
+            padding: 0.6rem 1.2rem;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 1rem;
+        }
+        .article-nav .nav-brand {
+            font-family: var(--font-display);
+            font-size: 1rem;
+            font-weight: 600;
+            color: var(--toki-wine);
+            text-decoration: none;
+            white-space: nowrap;
+        }
+        .article-nav .nav-right {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+        .article-nav .nav-label {
+            font-size: 0.6rem;
+            color: var(--text-muted);
+            letter-spacing: 0.08em;
+        }
+        .article-nav .lang-switch {
+            font-size: 0.75rem;
+            color: var(--toki-wine);
+            text-decoration: none;
+            padding: 0.3rem 0.6rem;
+            border: 1px solid var(--toki-wine);
+            border-radius: 4px;
+        }
+        .article-nav .lang-switch:hover {
+            background: var(--toki-wine);
+            color: #fff;
+        }
+
+        /* Article Container */
+        .article-container {
+            max-width: 680px;
+            margin: 0 auto;
+            padding: 7rem 2rem 4rem;
+        }
+
+        /* Article Header */
+        .article-header {
+            margin-bottom: 3rem;
+            padding-bottom: 2rem;
+            border-bottom: 1px solid var(--border);
+        }
+        .article-category {
+            font-size: 0.7rem;
+            color: var(--toki-wine);
+            letter-spacing: 0.15em;
+            margin-bottom: 1rem;
+        }
+        .article-header h1 {
+            font-family: var(--font-display);
+            font-size: 2rem;
+            font-weight: 600;
+            line-height: 1.4;
+            margin-bottom: 1rem;
+        }
+        .article-subtitle {
+            font-size: 0.95rem;
+            color: var(--text-secondary);
+            line-height: 1.8;
+        }
+
+        /* Article Content */
+        .article-content h2 {
+            font-family: var(--font-display);
+            font-size: 1.4rem;
+            font-weight: 600;
+            margin: 3rem 0 1.5rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 1px solid var(--border);
+        }
+        .article-content h3 {
+            font-family: var(--font-display);
+            font-size: 1.15rem;
+            font-weight: 500;
+            margin: 2rem 0 1rem;
+            color: var(--text-primary);
+        }
+        .article-content p {
+            margin-bottom: 1.5rem;
+            text-align: justify;
+        }
+        .article-content blockquote {
+            margin: 2rem 0;
+            padding: 1.5rem 2rem;
+            background: var(--bg-section);
+            border-left: 3px solid var(--toki-wine);
+            font-style: italic;
+        }
+        .article-content blockquote p {
+            margin-bottom: 0.5rem;
+        }
+        .article-content blockquote cite {
+            display: block;
+            font-size: 0.85rem;
+            color: var(--text-muted);
+            font-style: normal;
+            margin-top: 0.5rem;
+        }
+        .article-content ul, .article-content ol {
+            margin: 1.5rem 0;
+            padding-left: 1.5rem;
+        }
+        .article-content li {
+            margin-bottom: 0.75rem;
+        }
+
+        /* Key Point Box */
+        .key-point {
+            background: var(--toki-wine-pale);
+            padding: 1.5rem 2rem;
+            border-radius: 8px;
+            margin: 2rem 0;
+        }
+        .key-point p {
+            margin-bottom: 0;
+            font-size: 0.95rem;
+        }
+
+        /* Core Message */
+        .core-message {
+            background: linear-gradient(135deg, var(--toki-wine-pale) 0%, #FEE2E2 100%);
+            border-left: 4px solid var(--toki-wine);
+            padding: 1.2rem 1.5rem;
+            margin: 0 0 1.5rem 0;
+            border-radius: 0 8px 8px 0;
+            font-size: 0.95rem;
+            line-height: 1.8;
+        }
+        .disclaimer {
+            font-size: 0.8rem;
+            color: var(--text-muted);
+            margin-bottom: 2rem;
+            padding-bottom: 1rem;
+            border-bottom: 1px solid var(--border);
+        }
+
+        /* Comparison Table */
+        .comparison-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 2rem 0;
+            font-size: 0.9rem;
+        }
+        .comparison-table th,
+        .comparison-table td {
+            padding: 1rem;
+            text-align: left;
+            border-bottom: 1px solid var(--border);
+        }
+        .comparison-table th {
+            background: var(--bg-section);
+            font-weight: 500;
+            width: 50%;
+        }
+        .comparison-table td {
+            vertical-align: top;
+        }
+
+        /* References */
+        .references {
+            margin-top: 4rem;
+            padding-top: 2rem;
+            border-top: 1px solid var(--border);
+        }
+        .references h2 {
+            font-size: 1rem;
+            margin-bottom: 1.5rem;
+        }
+        .references ul {
+            list-style: none;
+            padding: 0;
+        }
+        .references li {
+            font-size: 0.85rem;
+            color: var(--text-secondary);
+            margin-bottom: 0.75rem;
+            padding-left: 1.5rem;
+            text-indent: -1.5rem;
+        }
+
+        /* Footer */
+        .article-footer {
+            margin-top: 4rem;
+            padding-top: 2rem;
+            border-top: 1px solid var(--border);
+            text-align: center;
+        }
+        .article-footer p {
+            font-size: 0.8rem;
+            color: var(--text-muted);
+            margin-bottom: 1rem;
+        }
+        .article-footer a {
+            color: var(--toki-wine);
+            text-decoration: none;
+        }
+        .article-footer a:hover {
+            text-decoration: underline;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .article-container { padding: 6rem 1.2rem 3rem; }
+            .article-header h1 { font-size: 1.6rem; }
+            .article-nav .nav-label { display: none; }
+            .comparison-table { font-size: 0.8rem; }
+            .comparison-table th,
+            .comparison-table td { padding: 0.75rem; }
+        }
+
+        @media print {
+            .article-nav { display: none; }
+            .article-container { padding-top: 2rem; }
+        }
+    </style>
+</head>
+<body>
+
+<nav class="article-nav">
+    <a href="index-en.html" class="nav-brand">Toki Storage</a>
+    <div class="nav-right">
+        <span class="nav-label">POLITICAL PHILOSOPHY</span>
+        <a href="nation.html" class="lang-switch">JP</a>
+    </div>
+</nav>
+
+<main class="article-container">
+
+    <header class="article-header">
+        <p class="article-category">ESSAY — NATION-STATES & SOVEREIGNTY</p>
+        <h1>Nation-States and Proof of Existence<br>— Sovereignty, Legitimacy, and the Borders of Citizenship</h1>
+        <p class="article-subtitle">
+            Nation-states are not eternal. The Soviet Union lasted 70 years; Imperial Japan, 77.<br>
+            What does it mean for "proof of existence" to depend on the nation-state framework? An examination of its limits and possibilities.
+        </p>
+    </header>
+
+    <article class="article-content">
+
+        <div class="core-message">
+            <strong>Key Takeaway:</strong> Nation-states do not last forever. Having proof of existence that does not depend on nationality or citizenship leads to more universal human rights protection.
+        </div>
+
+        <p class="disclaimer">*This essay is an academic analysis and does not advocate for any specific political or religious position.</p>
+
+        <h2>1. The Lifespan of Nation-States — Sovereignty Does Not Endure</h2>
+
+        <p>We tend to perceive nation-states as permanent fixtures. Yet history reveals that their lifespans are surprisingly short.</p>
+
+        <ul>
+            <li><strong>Soviet Union</strong>: 1922–1991 (69 years)</li>
+            <li><strong>Imperial Japan</strong>: 1868–1945 (77 years)</li>
+            <li><strong>East Germany</strong>: 1949–1990 (41 years)</li>
+            <li><strong>Yugoslavia</strong>: 1918–1992 (74 years)</li>
+            <li><strong>Ottoman Empire</strong>: 1299–1922 (623 years)</li>
+        </ul>
+
+        <p>Even states considered long-lasting amount to mere moments on a 1000-year timescale. As Benedict Anderson observed, nation-states are "imagined communities," and their borders are always in flux (Anderson, 1983).</p>
+
+        <blockquote>
+            <p>"The nation is an imagined political community—and imagined as both inherently limited and sovereign."</p>
+            <cite>— Benedict Anderson, <em>Imagined Communities</em></cite>
+        </blockquote>
+
+        <p>This presents a fundamental problem. Many people belong to states through nationality and prove their existence through passports and citizenship. But when that state ceases to exist, what happens to that "proof"?</p>
+
+        <div class="key-point">
+            <p>Proof of existence that depends on nation-states bears the structural constraint of state lifespan. Changes in sovereignty, territorial reorganization, state dissolution—in all these events, individual "records of existence" face crisis.</p>
+        </div>
+
+
+        <h2>2. Citizens and Non-Citizens — Who Is Recognized as "Existing"?</h2>
+
+        <p>Nation-states, by definition, distinguish between "citizens" and "non-citizens." This boundary directly determines whether one's existence can be proven.</p>
+
+        <h3>The Arbitrariness of Nationality</h3>
+
+        <p>For most people, nationality is something given at birth. However, it is not a universal right but merely a status granted by the state. Whether determined by blood (jus sanguinis) or birthplace (jus soli)—the criteria vary by country and have changed throughout history.</p>
+
+        <p>In <em>The Origins of Totalitarianism</em>, Hannah Arendt raised the problem of "the right to have rights." A person who loses nationality loses the standing to claim any rights. Stateless persons are placed in a condition that is legally equivalent to "not existing."</p>
+
+        <blockquote>
+            <p>"The loss of human rights appears first and above all as the loss of a place in the world."</p>
+            <cite>— Hannah Arendt, <em>The Origins of Totalitarianism</em></cite>
+        </blockquote>
+
+        <h3>Stateless Persons</h3>
+
+        <p>According to UNHCR estimates, approximately 4.2 million stateless persons exist worldwide. They:</p>
+
+        <ul>
+            <li>Cannot obtain passports</li>
+            <li>Cannot hold official identification</li>
+            <li>Cannot open bank accounts</li>
+            <li>Cannot access formal employment</li>
+            <li>Face restricted access to education and healthcare</li>
+        </ul>
+
+        <p>This represents an extreme form of "existence erasure." Not being recognized by any state is tantamount to socially "not existing."</p>
+
+        <table class="comparison-table">
+            <tr>
+                <th>Recognized as a Citizen</th>
+                <th>Not Recognized as a Citizen</th>
+            </tr>
+            <tr>
+                <td>Recorded in official documents</td>
+                <td>Excluded from records</td>
+            </tr>
+            <tr>
+                <td>Receives legal protection</td>
+                <td>Placed outside the law</td>
+            </tr>
+            <tr>
+                <td>Positioned as a subject of history</td>
+                <td>Erased from history</td>
+            </tr>
+            <tr>
+                <td>Records may persist after death</td>
+                <td>No trace of existence remains</td>
+            </tr>
+        </table>
+
+
+        <h2>3. Peoples Without Sovereignty — Those Without Nation-States</h2>
+
+        <p>Within the nation-state system, ethnic groups and peoples without sovereignty are structurally prone to exclusion from proof of existence.</p>
+
+        <h3>Nations Without States</h3>
+
+        <ul>
+            <li><strong>Kurds</strong>: Estimated over 30 million people, divided across Turkey, Iraq, Iran, and Syria. Often called the world's largest nation without a state.</li>
+            <li><strong>Palestinians</strong>: International debate over state recognition continues. Displaced as refugees across multiple countries.</li>
+            <li><strong>Roma (Romani)</strong>: Approximately 10 million living across Europe. Historically persecuted and excluded from official records.</li>
+            <li><strong>Tibetans</strong>: Under Chinese governance, facing difficulties maintaining their distinct identity and records.</li>
+        </ul>
+
+        <p>For these peoples, "state-based proof of existence" is doubly problematic. First, the state they would belong to either does not exist or is contested. Second, they may face discrimination and exclusion as minorities in their countries of residence.</p>
+
+        <h3>Unrecognized States</h3>
+
+        <p>In international society, whether an entity is recognized as a state depends on political judgment.</p>
+
+        <ul>
+            <li><strong>Taiwan</strong>: Not a UN member, yet a de facto independent state with 23 million residents</li>
+            <li><strong>Kosovo</strong>: Recognized by about 100 countries; more than half of UN members do not recognize it</li>
+            <li><strong>Northern Cyprus</strong>: Recognized only by Turkey</li>
+            <li><strong>Somaliland</strong>: Has maintained de facto independence for over 30 years with zero international recognition</li>
+        </ul>
+
+        <p>The proof of existence for people living in these regions is subject to the dynamics of international politics. Passports not recognized, access to international institutions denied—their "existence" is conditioned by international consensus.</p>
+
+
+        <h2>4. Empire, Colonialism, and the Erasure of Existence</h2>
+
+        <p>Throughout history, conquerors have erased the existence of the conquered. Banning languages, destroying cultures, rewriting history—this constitutes systematic denial of proof of existence.</p>
+
+        <h3>Linguistic Annihilation</h3>
+
+        <p>Language is a vessel for collective memory. Losing a language means losing the knowledge, stories, and worldviews accumulated in that language.</p>
+
+        <ul>
+            <li><strong>Ireland</strong>: Gaelic was suppressed under British rule and replaced by English</li>
+            <li><strong>Ainu</strong>: Ainu language speakers drastically declined under Japanese government assimilation policies</li>
+            <li><strong>Native Americans</strong>: Boarding school systems prohibited native language use</li>
+            <li><strong>Australian Aboriginals</strong>: The "Stolen Generations" were separated from families, severing language and culture</li>
+        </ul>
+
+        <p>The extinction of a language is also the extinction of "existences narrated" in that language. Oral histories, ancestors' names, memories of the land—all are lost with the language.</p>
+
+        <h3>Rewriting History</h3>
+
+        <p>Conquerors rewrite the history of the conquered. Or they simply do not write it. Under colonial rule, only history from the rulers' perspective is recorded as "official history," while the perspectives of the ruled are excluded.</p>
+
+        <blockquote>
+            <p>"History is written by the victors"—this adage succinctly expresses the inequality of proof of existence. Those with the power to keep records determine whose existence gets recorded.</p>
+        </blockquote>
+
+        <div class="key-point">
+            <p>Imperialism and colonialism were not merely physical domination but also domination of memory and records. Erasing the "traces of existence" of the conquered constructed the legitimacy of rule.</p>
+        </div>
+
+
+        <h2>5. Nationalism and Individual Narratives</h2>
+
+        <p>Nation-states give meaning to individual existence by defining people as "citizens." Yet simultaneously, that meaning becomes subordinate to the state's narrative.</p>
+
+        <h3>Individuals Subsumed into National Narratives</h3>
+
+        <p>States construct "national history." Within this narrative, individuals are positioned as "citizens." Soldiers who fought in wars, great figures who contributed to nation-building, cultural figures who represent the nation—these people are preserved as "national memory."</p>
+
+        <p>However, being subsumed into national narrative also means individual stories become subordinate to state logic.</p>
+
+        <ul>
+            <li>War dead are appropriated by the state as "heroic spirits"</li>
+            <li>Immigrants are defined by origin as "X-descended Y-nationals"</li>
+            <li>Minorities are positioned as "subjects to be integrated"</li>
+        </ul>
+
+        <h3>Individuals Excluded from National Narratives</h3>
+
+        <p>Conversely, individuals who do not fit national narratives are excluded from records.</p>
+
+        <ul>
+            <li><strong>Political dissidents</strong>: Regime critics may be "erased from history"</li>
+            <li><strong>Sexual minorities</strong>: When homosexuality was criminalized, their existence was excluded from official records</li>
+            <li><strong>"Shameful" existences</strong>: Hansen's disease patients, the mentally ill—those the state wished to hide</li>
+        </ul>
+
+        <p>As Michel Foucault observed, power determines "what is spoken and what is not spoken." States possess the power to choose whose existence to record and whose to leave unrecorded.</p>
+
+
+        <h2>6. The Possibility of Proof of Existence Beyond Nation-States</h2>
+
+        <p>The analysis above reveals the structural limits of state-dependent proof of existence. Is proof of existence beyond nation-states possible?</p>
+
+        <h3>Religion and Trans-National Records</h3>
+
+        <p>Historically, religions have built record systems transcending nation-states. Catholic baptismal records, Islamic waqf documents, Buddhist temple death registers—these have recorded individual existence beyond national frameworks.</p>
+
+        <p>Religious organizations are often more long-lived than states. The Catholic Church spans approximately 2000 years; some Buddhist temples have survived over 1000 years. Religious records may persist even when states dissolve.</p>
+
+        <h3>Possibilities in the Digital Age</h3>
+
+        <p>The internet and digital technology have opened possibilities for records independent of states.</p>
+
+        <ul>
+            <li><strong>Distributed storage</strong>: Data preservation independent of any specific nation or corporation</li>
+            <li><strong>Blockchain</strong>: Tamper-resistant record systems</li>
+            <li><strong>Open source</strong>: Sustainability through public code and data</li>
+        </ul>
+
+        <p>However, digital technology is also subject to state regulation and corporate policies. Truly state-independent proof of existence may require combination with physical media.</p>
+
+        <h3>The Position of Toki Storage</h3>
+
+        <p>Toki Storage positions itself as one response to this problem.</p>
+
+        <ul>
+            <li><strong>State-independent</strong>: Physical preservation that does not depend on any particular state's survival</li>
+            <li><strong>Nationality-agnostic</strong>: Equally accessible to stateless persons, refugees, and minorities</li>
+            <li><strong>Language preservation</strong>: Records in endangered languages are technically possible</li>
+            <li><strong>Political neutrality</strong>: Individual records independent of national narratives</li>
+        </ul>
+
+        <div class="key-point">
+            <p>Nation-states are important infrastructure for proof of existence, but not the only infrastructure. Building record systems that transcend state lifespans, borders, and political fluctuations enables more universal proof of existence.</p>
+        </div>
+
+
+        <h2>Conclusion — Beyond Sovereignty</h2>
+
+        <p>Nation-states have functioned as the primary infrastructure for proof of existence in modernity. Family registers, passports, citizenship—these are systems by which states recognize and record individual existence.</p>
+
+        <p>But nation-states do not endure. Borders change, sovereignty transfers, states dissolve. In these processes, proof of existence dependent on states faces crisis.</p>
+
+        <p>More serious still is the existence of those never recognized by states—stateless persons, refugees, ethnic minorities, political dissidents. For them, state-based proof of existence is also a tool of exclusion and oppression.</p>
+
+        <p>This is precisely why the possibility of proof of existence beyond nation-states matters.</p>
+
+        <blockquote>
+            <p>"All human beings are born free and equal in dignity and rights."</p>
+            <cite>— Universal Declaration of Human Rights, Article 1</cite>
+        </blockquote>
+
+        <p>Realizing this ideal requires infrastructure for proof of existence independent of states. A system where all people—regardless of nationality, ethnicity, language, or political stance—can leave proof that "I existed here."</p>
+
+        <p>This may sound idealistic. Yet it is becoming technically possible. Quartz glass and distributed storage, international standards and physical preservation—these combinations enable proof of existence that stands outside sovereignty.</p>
+
+        <p>One thousand years from now, no one knows what current borders will look like. Yet the fact that "one human being existed here" can hold meaning across borders. This is the core of universal proof of existence.</p>
+
+
+        <section class="references">
+            <h2>References</h2>
+            <ul>
+                <li>Anderson, B. (1983). <em>Imagined Communities: Reflections on the Origin and Spread of Nationalism.</em> Verso.</li>
+                <li>Arendt, H. (1951). <em>The Origins of Totalitarianism.</em> Schocken Books.</li>
+                <li>Foucault, M. (1975). <em>Discipline and Punish: The Birth of the Prison.</em> Vintage Books.</li>
+                <li>Hobsbawm, E. & Ranger, T. (1983). <em>The Invention of Tradition.</em> Cambridge University Press.</li>
+                <li>Said, E. W. (1978). <em>Orientalism.</em> Pantheon Books.</li>
+                <li>Scott, J. C. (1998). <em>Seeing Like a State.</em> Yale University Press.</li>
+                <li>UNHCR (2023). <em>Global Trends: Forced Displacement in 2022.</em></li>
+            </ul>
+        </section>
+
+    </article>
+
+    <footer class="article-footer">
+        <p id="essay-nav-links"></p>
+        <p style="margin-top: 2rem; font-size: 0.75rem;">&copy; 2026 TokiStorage</p>
+    </footer>
+
+</main>
+
+<script src="essay-nav.js?v=20260209"></script>
+</body>
+</html>

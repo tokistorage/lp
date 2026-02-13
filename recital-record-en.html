@@ -1,0 +1,480 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Recording Recitals and a Parent's Heart | Toki Storage</title>
+    <meta name="robots" content="noindex, nofollow">
+    <meta name="description" content="The universal parental desire to record children's performances. Technology to preserve voices is born from love.">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Shippori+Mincho:wght@400;500;600;700&family=Zen+Kaku+Gothic+New:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --toki-cyan: #0891B2;
+            --toki-cyan-dark: #0E7490;
+            --toki-cyan-pale: #ECFEFF;
+            --accent-teal: #14B8A6;
+            --bg-white: #FFFFFF;
+            --bg-section: #CFFAFE;
+            --text-primary: #1E293B;
+            --text-secondary: #475569;
+            --text-muted: #94A3B8;
+            --border: #E2E8F0;
+            --font-display: 'Shippori Mincho', serif;
+            --font-body: 'Zen Kaku Gothic New', sans-serif;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        html { scroll-behavior: smooth; }
+
+        body {
+            font-family: var(--font-body);
+            font-weight: 400;
+            background: var(--bg-white);
+            color: var(--text-primary);
+            line-height: 2;
+            font-size: 16px;
+        }
+
+        /* Navigation */
+        .article-nav {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 1000;
+            background: rgba(255,255,255,0.95);
+            backdrop-filter: blur(12px);
+            border-bottom: 1px solid var(--border);
+            padding: 0.6rem 1.2rem;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 1rem;
+        }
+        .article-nav .nav-brand {
+            font-family: var(--font-display);
+            font-size: 0.9rem;
+            font-weight: 600;
+            color: var(--toki-cyan);
+            text-decoration: none;
+            white-space: nowrap;
+        }
+        .article-nav .nav-right {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+        .article-nav .nav-label {
+            font-size: 0.6rem;
+            color: var(--text-muted);
+            letter-spacing: 0.08em;
+        }
+        .article-nav .lang-switch {
+            font-size: 0.75rem;
+            color: var(--toki-cyan);
+            text-decoration: none;
+            padding: 0.3rem 0.6rem;
+            border: 1px solid var(--toki-cyan);
+            border-radius: 4px;
+        }
+        .article-nav .lang-switch:hover {
+            background: var(--toki-cyan);
+            color: #fff;
+        }
+
+        /* Article Container */
+        .article-container {
+            max-width: 680px;
+            margin: 0 auto;
+            padding: 7rem 2rem 4rem;
+        }
+
+        /* Article Header */
+        .article-header {
+            margin-bottom: 3rem;
+            padding-bottom: 2rem;
+            border-bottom: 1px solid var(--border);
+        }
+        .article-category {
+            font-size: 0.7rem;
+            color: var(--toki-cyan);
+            letter-spacing: 0.15em;
+            margin-bottom: 1rem;
+        }
+        .article-header h1 {
+            font-family: var(--font-display);
+            font-size: 1.8rem;
+            font-weight: 700;
+            line-height: 1.5;
+            margin-bottom: 1.5rem;
+        }
+        .article-subtitle {
+            font-size: 0.95rem;
+            color: var(--text-secondary);
+            line-height: 1.9;
+        }
+
+        /* Article Content */
+        .article-content h2 {
+            font-family: var(--font-display);
+            font-size: 1.3rem;
+            font-weight: 600;
+            margin: 3rem 0 1.5rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 2px solid var(--toki-cyan-pale);
+        }
+        .article-content h3 {
+            font-family: var(--font-display);
+            font-size: 1.1rem;
+            font-weight: 600;
+            margin: 2rem 0 1rem;
+            color: var(--toki-cyan-dark);
+        }
+        .article-content p {
+            margin-bottom: 1.5rem;
+        }
+        .article-content blockquote {
+            border-left: 3px solid var(--toki-cyan);
+            padding-left: 1.5rem;
+            margin: 2rem 0;
+            font-family: var(--font-display);
+            color: var(--text-secondary);
+        }
+        .article-content blockquote cite {
+            display: block;
+            font-size: 0.85rem;
+            margin-top: 0.75rem;
+            font-style: normal;
+            color: var(--text-muted);
+        }
+        .article-content ul, .article-content ol {
+            margin: 1.5rem 0;
+            padding-left: 1.5rem;
+        }
+        .article-content li {
+            margin-bottom: 0.75rem;
+        }
+
+        /* Core Message */
+        .core-message {
+            background: var(--toki-cyan-pale);
+            border-left: 4px solid var(--toki-cyan);
+            padding: 1.5rem;
+            margin: 2rem 0;
+            font-size: 0.95rem;
+        }
+
+        /* Key Point */
+        .key-point {
+            background: linear-gradient(135deg, var(--toki-cyan-pale) 0%, #fff 100%);
+            border: 1px solid var(--toki-cyan);
+            border-radius: 8px;
+            padding: 1.5rem;
+            margin: 2rem 0;
+            text-align: center;
+        }
+        .key-point p {
+            font-family: var(--font-display);
+            font-size: 1.1rem;
+            color: var(--toki-cyan-dark);
+            margin: 0;
+        }
+
+        /* Scene Box */
+        .scene-box {
+            background: linear-gradient(135deg, #FEF3C7 0%, #FFFBEB 100%);
+            border-radius: 12px;
+            padding: 2rem;
+            margin: 2rem 0;
+            font-family: var(--font-display);
+        }
+        .scene-box p {
+            font-size: 0.95rem;
+            margin-bottom: 0.75rem;
+            color: var(--text-secondary);
+        }
+        .scene-box p:last-child {
+            margin-bottom: 0;
+        }
+
+        /* Stat Box */
+        .stat-box {
+            display: flex;
+            align-items: baseline;
+            gap: 0.5rem;
+            margin: 1.5rem 0;
+            padding: 1rem;
+            background: var(--toki-cyan-pale);
+            border-radius: 8px;
+        }
+        .stat-box .number {
+            font-family: var(--font-display);
+            font-size: 2rem;
+            font-weight: 600;
+            color: var(--toki-cyan);
+        }
+        .stat-box .unit {
+            font-size: 0.9rem;
+            color: var(--text-secondary);
+        }
+
+        /* Footer */
+        .article-footer {
+            margin-top: 4rem;
+            padding-top: 2rem;
+            border-top: 1px solid var(--border);
+            text-align: center;
+        }
+        .article-footer p {
+            font-size: 0.8rem;
+            color: var(--text-muted);
+            margin-bottom: 1rem;
+        }
+        .article-footer a {
+            color: var(--toki-cyan);
+            text-decoration: none;
+        }
+        .article-footer a:hover {
+            text-decoration: underline;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .article-container { padding: 6rem 1.2rem 3rem; }
+            .article-header h1 { font-size: 1.5rem; }
+            .article-nav .nav-label { display: none; }
+        }
+
+        @media print {
+            .article-nav { display: none; }
+            .article-container { padding-top: 2rem; }
+        }
+    </style>
+</head>
+<body>
+
+<nav class="article-nav">
+    <a href="index.html" class="nav-brand">Toki Storage</a>
+    <div class="nav-right">
+        <span class="nav-label">FAMILY / LEGACY</span>
+        <a href="recital-record.html" class="lang-switch">JP</a>
+    </div>
+</nav>
+
+<main class="article-container">
+
+    <header class="article-header">
+        <p class="article-category">ESSAY — FAMILY & LEGACY</p>
+        <h1>Recording Recitals and a Parent's Heart</h1>
+        <p class="article-subtitle">
+            The universal parental desire to record children's performances.<br>
+            Why do we try so hard to capture these fleeting moments?
+        </p>
+    </header>
+
+    <article class="article-content">
+
+        <div class="core-message">
+            <strong>The core message:</strong> Parents holding up smartphones at recitals represent humanity's universal desire to preserve records of growth. Technology to preserve voices is born from this love.
+        </div>
+
+        <h2>1. A Scene</h2>
+
+        <div class="scene-box">
+            <p>A kindergarten recital.</p>
+            <p>Parents in the audience raise their smartphones in unison.</p>
+            <p>Eyes searching for their child through tiny screens.</p>
+            <p>"Did I get it?" — anxious, yet pressing the shutter button anyway.</p>
+            <p>After the performance, immediately checking the video. Relief if captured. Disappointment if blurry.</p>
+        </div>
+
+        <p>This scene can be witnessed anywhere in the world. Across cultures and languages, parents try to record their children's moments.</p>
+
+        <p>Why?</p>
+
+
+        <h2>2. Why We Record</h2>
+
+        <h3>Growth is Irreversible</h3>
+
+        <p>Children never show the same appearance twice.</p>
+
+        <p>Today's five-year-old becomes five years and one day old tomorrow. Today's halting song will be slightly better next year. We call this "growth" and celebrate it, yet somewhere deep inside, parents mourn for "those days."</p>
+
+        <p>Recording is resistance against irreversible time.</p>
+
+        <h3>The Desire to "Show Someone"</h3>
+
+        <p>Recording has another motivation: the desire to show someone.</p>
+
+        <p>To grandparents who couldn't attend. To relatives living far away. And — to someone who doesn't yet exist in the future.</p>
+
+        <p>"I want to show this when my child grows up."</p>
+        <p>"I want to show my grandchildren what their parent looked like as a child."</p>
+
+        <p>Records are gifts that transcend time.</p>
+
+        <h3>Proof of Existence</h3>
+
+        <p>More fundamentally, recording is proof of existence.</p>
+
+        <p>"This child was here." "This moment happened." — We want to give these things tangible form. Parents recording their children's performances aren't simply making memories. They are inscribing irreplaceable existence into the fabric of time.</p>
+
+
+        <h2>3. The Fragility of Records</h2>
+
+        <p>Yet our records are surprisingly fragile.</p>
+
+        <h3>The Ephemerality of Digital</h3>
+
+        <p>Videos shot on smartphones. Where are they stored?</p>
+
+        <ul>
+            <li><strong>Device storage</strong> — Lost during phone upgrades, destroyed by malfunction</li>
+            <li><strong>Cloud</strong> — Service termination, account suspension, unpaid fees</li>
+            <li><strong>External HDD</strong> — Physical failure, obsolete connection standards</li>
+            <li><strong>DVD/Blu-ray</strong> — Disappearing playback devices, disc degradation</li>
+        </ul>
+
+        <p>Can you play a video you shot 10 years ago right now? Many would answer, "I don't even know where it is."</p>
+
+        <h3>Format Obsolescence</h3>
+
+        <p>Even if the data survives, playback isn't guaranteed.</p>
+
+        <p>How many households today can play VHS tapes? 8mm film? Cassette tapes?</p>
+
+        <p>Digital data faces the same fate. There's no guarantee that current file formats will be readable in 20 years.</p>
+
+        <div class="stat-box">
+            <span class="number">10</span>
+            <span class="unit">years — approximate "safe period" for digital records</span>
+        </div>
+
+        <p>If you want to show your child's growth to your grandchildren, you need storage lasting 50+ years. Current common recording methods don't guarantee this.</p>
+
+
+        <h2>4. The Meaning of Preserving Voice</h2>
+
+        <p>Among all records, "voice" holds special significance.</p>
+
+        <h3>Faces Remain, Voices Vanish</h3>
+
+        <p>Photographs exist in almost every household. Opening old albums reveals grandparents in their youth, even great-grandparents.</p>
+
+        <p>But what about voices?</p>
+
+        <p>Few have ever heard their great-grandparents' voices. Recording technology only became widespread a few decades ago. The voices of those before that era are lost forever.</p>
+
+        <h3>The Information Density of Voice</h3>
+
+        <p>Voices contain information that text and photographs cannot convey.</p>
+
+        <ul>
+            <li><strong>Timbre</strong> — High, low, husky, clear</li>
+            <li><strong>Intonation</strong> — Emotional fluctuations, speaking habits</li>
+            <li><strong>Pauses</strong> — Breathing rhythm, length of silences</li>
+            <li><strong>Speech patterns</strong> — Dialect, pet phrases, generational expressions</li>
+        </ul>
+
+        <p>If photographs preserve "appearance," voices preserve "personality."</p>
+
+        <h3>The Special Nature of Young Voices</h3>
+
+        <p>Children's voices are particularly ephemeral.</p>
+
+        <p>The high, sweet voice of a toddler. Lisping pronunciation of newly learned words. Slightly off-rhythm singing of a song they're trying their best to perform.</p>
+
+        <p>These disappear within years. Voice changes with growth, pronunciation becomes accurate, singing improves. "Growth" is something to celebrate, but the voice of childhood never returns.</p>
+
+        <div class="key-point">
+            <p>Voice is the most ephemeral<br>subject of recording, lost with growth.</p>
+        </div>
+
+
+        <h2>5. Technology Responds</h2>
+
+        <p>Can technology answer this desire to preserve voices?</p>
+
+        <h3>Audio QR Codes</h3>
+
+        <p>We developed technology to embed audio directly into QR codes. Using the Opus codec and proprietary compression technology, we can store approximately 30 seconds of audio in a QR code.</p>
+
+        <p>In 30 seconds, you can preserve a phrase from the song performed at the recital. You can preserve "Mommy, Daddy, watch me!" You can preserve that young voice, exactly as it was.</p>
+
+        <h3>Recording on Quartz Glass</h3>
+
+        <p>That QR code is engraved onto quartz glass. Quartz glass has durability exceeding 1000 years. It resists heat, water, and ultraviolet light.</p>
+
+        <p>Transcending the ephemerality of digital data, voices are physically preserved for eternity.</p>
+
+        <h3>Playback Mechanism</h3>
+
+        <p>How will people 1000 years from now read this QR code?</p>
+
+        <p>QR codes are standardized as an international specification (ISO/IEC 18004). If the specification documents survive, future engineers can reconstruct how to read them. And the specification explanation can itself be engraved on the quartz glass.</p>
+
+        <p>"Self-contained records" — this is what Toki Storage aims to achieve.</p>
+
+
+        <h2>6. The Driving Force of Technology is Love</h2>
+
+        <p>Parents holding smartphones at recitals and technology that lasts 1000 years. At first glance, they seem worlds apart.</p>
+
+        <p>Yet the foundation is the same.</p>
+
+        <h3>Love Creates Technology</h3>
+
+        <p>"I want to preserve this child's voice."</p>
+        <p>"I want to let my child hear their own young voice when they grow up."</p>
+        <p>"I want to share with my grandchildren what their parent was like as a child."</p>
+
+        <p>Technology is born from such wishes. It's not that demand creates supply. Love creates technology.</p>
+
+        <h3>A Universal Desire</h3>
+
+        <p>The desire to record children's growth is universal to humanity. The prehistoric parent who left a handprint on a cave wall, the Meiji-era parent who had a family portrait taken at a photography studio, and the modern parent shooting video on a smartphone — all share the same wish.</p>
+
+        <p>Technology changes. The desire remains.</p>
+
+        <div class="key-point">
+            <p>1000-year technology exists<br>to deliver 1000 years of love.</p>
+        </div>
+
+
+        <h2>Conclusion — A Recital 1000 Years from Now</h2>
+
+        <p>1000 years from now.</p>
+
+        <p>A family holds an old quartz glass plate. On its surface, a QR code is engraved.</p>
+
+        <p>They hold up a smartphone, and a young voice begins to play.</p>
+
+        <p>"Twinkle, twinkle, little star..."</p>
+
+        <p>A halting voice. Rhythm slightly off. But trying so hard.</p>
+
+        <p>A child listening asks, "Who is this?"</p>
+
+        <p>The parent answers, "Your ancestor. A voice from a recital 1000 years ago."</p>
+
+        <p>The child looks curious, listens again. Then says:</p>
+
+        <p>"I want to leave mine too."</p>
+
+        <p>— That chain is the true meaning of a parent's heart recording a recital.</p>
+
+    </article>
+
+    <footer class="article-footer">
+        <p id="essay-nav-links"></p>
+        <p style="margin-top: 2rem; font-size: 0.75rem;">&copy; 2026 TokiStorage</p>
+    </footer>
+
+</main>
+
+<script src="essay-nav.js?v=20260209"></script>
+</body>
+</html>

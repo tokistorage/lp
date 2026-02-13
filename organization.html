@@ -1,0 +1,533 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>組織と存在証明——制度の中で「残す」とは | トキストレージ</title>
+    <meta name="robots" content="noindex, nofollow">
+    <meta name="description" content="組織の寿命と個人の寿命、社内政治と承認欲求、制度化のパラドックスを通じて、組織の中で「残す」ことの意味を考察する。">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Shippori+Mincho:wght@400;500;600;700&family=Zen+Kaku+Gothic+New:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --toki-navy: #334155;
+            --toki-navy-dark: #1E293B;
+            --toki-navy-pale: #F1F5F9;
+            --accent-steel: #64748B;
+            --bg-white: #FFFFFF;
+            --bg-section: #F8FAFC;
+            --text-primary: #1E293B;
+            --text-secondary: #475569;
+            --text-muted: #94A3B8;
+            --border: #E2E8F0;
+            --font-display: 'Shippori Mincho', serif;
+            --font-body: 'Zen Kaku Gothic New', sans-serif;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        html { scroll-behavior: smooth; }
+
+        body {
+            font-family: var(--font-body);
+            font-weight: 400;
+            background: var(--bg-white);
+            color: var(--text-primary);
+            line-height: 2;
+            font-size: 16px;
+        }
+
+        /* Navigation */
+        .article-nav {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 1000;
+            background: rgba(255,255,255,0.95);
+            backdrop-filter: blur(12px);
+            border-bottom: 1px solid var(--border);
+            padding: 0.6rem 1.2rem;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 1rem;
+        }
+        .article-nav .nav-brand {
+            font-family: var(--font-display);
+            font-size: 0.9rem;
+            font-weight: 600;
+            color: var(--toki-navy);
+            text-decoration: none;
+            white-space: nowrap;
+        }
+        .article-nav .nav-right {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+        .article-nav .nav-label {
+            font-size: 0.6rem;
+            color: var(--text-muted);
+            letter-spacing: 0.08em;
+        }
+        .article-nav .lang-switch {
+            font-size: 0.75rem;
+            color: var(--toki-navy);
+            text-decoration: none;
+            padding: 0.3rem 0.6rem;
+            border: 1px solid var(--toki-navy);
+            border-radius: 4px;
+        }
+        .article-nav .lang-switch:hover {
+            background: var(--toki-navy);
+            color: #fff;
+        }
+
+        /* Article Container */
+        .article-container {
+            max-width: 680px;
+            margin: 0 auto;
+            padding: 7rem 2rem 4rem;
+        }
+
+        /* Article Header */
+        .article-header {
+            margin-bottom: 3rem;
+            padding-bottom: 2rem;
+            border-bottom: 1px solid var(--border);
+        }
+        .article-category {
+            font-size: 0.7rem;
+            color: var(--toki-navy);
+            letter-spacing: 0.15em;
+            margin-bottom: 1rem;
+        }
+        .article-header h1 {
+            font-family: var(--font-display);
+            font-size: 1.8rem;
+            font-weight: 600;
+            line-height: 1.5;
+            margin-bottom: 1rem;
+        }
+        .article-subtitle {
+            font-size: 0.95rem;
+            color: var(--text-secondary);
+            line-height: 1.8;
+        }
+
+        /* Article Content */
+        .article-content h2 {
+            font-family: var(--font-display);
+            font-size: 1.25rem;
+            font-weight: 600;
+            margin: 3rem 0 1.5rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 1px solid var(--border);
+        }
+        .article-content h3 {
+            font-family: var(--font-display);
+            font-size: 1.1rem;
+            font-weight: 500;
+            margin: 2rem 0 1rem;
+            color: var(--text-primary);
+        }
+        .article-content p {
+            margin-bottom: 1.5rem;
+            text-align: justify;
+        }
+        .article-content blockquote {
+            margin: 2rem 0;
+            padding: 1.5rem 2rem;
+            background: var(--bg-section);
+            border-left: 3px solid var(--toki-navy);
+            font-style: italic;
+        }
+        .article-content blockquote p {
+            margin-bottom: 0.5rem;
+        }
+        .article-content blockquote cite {
+            display: block;
+            font-size: 0.85rem;
+            color: var(--text-muted);
+            font-style: normal;
+            margin-top: 0.5rem;
+        }
+        .article-content ul, .article-content ol {
+            margin: 1.5rem 0;
+            padding-left: 1.5rem;
+        }
+        .article-content li {
+            margin-bottom: 0.75rem;
+        }
+
+        /* Key Point Box */
+        .key-point {
+            background: var(--toki-navy-pale);
+            padding: 1.5rem 2rem;
+            border-radius: 8px;
+            margin: 2rem 0;
+        }
+        .key-point p {
+            margin-bottom: 0;
+            font-size: 0.95rem;
+        }
+
+        /* Core Message */
+        .core-message {
+            background: linear-gradient(135deg, var(--toki-navy-pale) 0%, #E2E8F0 100%);
+            border-left: 4px solid var(--toki-navy);
+            padding: 1.2rem 1.5rem;
+            margin: 0 0 1.5rem 0;
+            border-radius: 0 8px 8px 0;
+            font-size: 0.95rem;
+            line-height: 1.8;
+        }
+        .disclaimer {
+            font-size: 0.8rem;
+            color: var(--text-muted);
+            margin-bottom: 2rem;
+            padding-bottom: 1rem;
+            border-bottom: 1px solid var(--border);
+        }
+
+        /* Comparison Table */
+        .comparison-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 2rem 0;
+            font-size: 0.9rem;
+        }
+        .comparison-table th,
+        .comparison-table td {
+            padding: 1rem;
+            text-align: left;
+            border-bottom: 1px solid var(--border);
+        }
+        .comparison-table th {
+            background: var(--bg-section);
+            font-weight: 500;
+            width: 50%;
+        }
+        .comparison-table td {
+            vertical-align: top;
+        }
+
+        /* References */
+        .references {
+            margin-top: 4rem;
+            padding-top: 2rem;
+            border-top: 1px solid var(--border);
+        }
+        .references h2 {
+            font-size: 1rem;
+            margin-bottom: 1.5rem;
+        }
+        .references ul {
+            list-style: none;
+            padding: 0;
+        }
+        .references li {
+            font-size: 0.85rem;
+            color: var(--text-secondary);
+            margin-bottom: 0.75rem;
+            padding-left: 1.5rem;
+            text-indent: -1.5rem;
+        }
+
+        /* Footer */
+        .article-footer {
+            margin-top: 4rem;
+            padding-top: 2rem;
+            border-top: 1px solid var(--border);
+            text-align: center;
+        }
+        .article-footer p {
+            font-size: 0.8rem;
+            color: var(--text-muted);
+            margin-bottom: 1rem;
+        }
+        .article-footer a {
+            color: var(--toki-navy);
+            text-decoration: none;
+        }
+        .article-footer a:hover {
+            text-decoration: underline;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .article-container { padding: 6rem 1.2rem 3rem; }
+            .article-header h1 { font-size: 1.5rem; }
+            .article-nav .nav-label { display: none; }
+            .comparison-table { font-size: 0.8rem; }
+            .comparison-table th,
+            .comparison-table td { padding: 0.75rem; }
+        }
+
+        @media print {
+            .article-nav { display: none; }
+            .article-container { padding: 2rem; }
+        }
+    </style>
+</head>
+<body>
+
+<nav class="article-nav">
+    <a href="index.html" class="nav-brand">トキストレージ</a>
+    <div class="nav-right">
+        <span class="nav-label">組織論 / ORGANIZATIONAL STUDIES</span>
+        <a href="organization-en.html" class="lang-switch">EN</a>
+    </div>
+</nav>
+
+<article class="article-container">
+
+    <header class="article-header">
+        <p class="article-category">ESSAY — 組織と制度</p>
+        <h1>組織と存在証明<br>——制度の中で「残す」とは</h1>
+        <p class="article-subtitle">
+            企業の平均寿命は短縮し続け、終身雇用は過去の概念となった。<br>
+            組織に自己を投影することの意味、そして組織を超えて「残す」可能性を考察する。
+        </p>
+    </header>
+
+    <div class="article-content">
+
+        <div class="core-message">
+            <strong>この記事で言いたいこと：</strong>組織は個人より先に消える可能性が高い。組織に自己を託すことの限界を認識し、組織と共に・組織を超えて残す道を考える。
+        </div>
+
+        <p class="disclaimer">※本稿は学術的考察であり、特定の政治的・宗教的立場を支持するものではありません。</p>
+
+        <h2>1. 組織の寿命——縮む器に託す矛盾</h2>
+
+        <p>S&P500企業の平均寿命は、1958年には61年であったが、2020年代には20年を下回るまでに短縮している（Credit Suisse, 2017）。かつて「永続する」と信じられていた大企業ですら、その多くは個人の職業人生よりも短い期間で消滅する。</p>
+
+        <p>これは根本的な矛盾を突きつける。多くの人は、自分が所属する組織に「足跡を残したい」と考える。プロジェクトの成功、制度の改革、後進の育成——それらを通じて、組織の中に自己の痕跡を刻もうとする。しかし、その器自体が自分より先に消えてしまうとしたら、そこに刻んだ痕跡の意味は何だろうか。</p>
+
+        <blockquote>
+            <p>「組織は目的のための手段であって、それ自体が目的ではない。しかし、組織に属する人間にとって、組織はしばしば自己の延長となる。」</p>
+            <cite>— James G. March & Herbert A. Simon『Organizations』(1958)</cite>
+        </blockquote>
+
+        <p>組織同一化（organizational identification）の研究は、個人が組織の成功を自己の成功と感じ、組織の存続を自己の存続と結びつける心理を明らかにしている。しかし、この同一化は、組織の寿命という物理的制約の前に、その限界を露呈する。</p>
+
+        <h2>2. 社内政治と「名を残す」欲望</h2>
+
+        <p>社内政治——それは組織内での影響力、権力、認知をめぐる暗黙の競争である。表面上は「会社のため」「チームのため」と語られながら、その深層には「自分の名を残したい」という欲望が横たわっていることが少なくない。</p>
+
+        <h3>承認欲求の組織的表出</h3>
+
+        <p>アクセル・ホネットの承認論に従えば、人間は三つの次元での承認を求める：愛情による承認、権利としての承認、そして社会的業績への承認である（Honneth, 1992）。組織における社内政治は、主に第三の次元——業績と貢献に対する承認——をめぐって展開される。</p>
+
+        <ul>
+            <li><strong>可視化への執着</strong>：自分の貢献が「見える」形で記録されることへのこだわり。会議での発言記録、プロジェクトへの関与の明示、成果物への署名。</li>
+            <li><strong>系譜への参入</strong>：「〇〇制度を作った人」「△△プロジェクトを率いた人」として組織の歴史に名を刻むこと。</li>
+            <li><strong>後継者形成</strong>：自分の思想や方法論を継承する後進を育てることで、間接的に自己を延長させようとする試み。</li>
+        </ul>
+
+        <p>これらは一見、健全なキャリア形成に見える。しかし、その根底にある動機を掘り下げると、「自分がここにいた証を残したい」という存在証明への欲求が見えてくる。</p>
+
+        <div class="key-point">
+            <p>組織内での「名を残す」試みは、しばしば承認欲求の制度的表出である。その欲求自体は人間的だが、組織という有限な器に託すことの限界を認識する必要がある。</p>
+        </div>
+
+        <h2>3. 組織と個人——異なる時間軸の交差</h2>
+
+        <p>組織は、個人では成し遂げられない大きな目標を実現するための器である。協働、専門分化、資源の集中——組織があるからこそ可能になることは無数にある。</p>
+
+        <p>しかし同時に、組織と個人の間には構造的な「時間軸の違い」が存在する。ウィリアム・H・ホワイトは1956年の『組織人間』において、大企業に自己を同一化し、組織の論理に従って生きる「オーガニゼーション・マン」の姿を描いた。組織に深く関わるほど、個人は組織の時間軸に同期していく。</p>
+
+        <h3>時間軸のずれ</h3>
+
+        <p>リチャード・セネットは『不安な経済/漂流する個人』（1998）において、現代の柔軟な資本主義が個人のアイデンティティをいかに侵食するかを分析した。短期的な成果主義、頻繁な組織再編、「自己責任」の強調——これらは個人を組織の「交換可能な部品」へと還元する。</p>
+
+        <blockquote>
+            <p>「『長期的なものは何もない』という新しい資本主義の論理は、信頼や忠誠といった人間的性質を腐食させる。」</p>
+            <cite>— Richard Sennett『The Corrosion of Character』(1998)</cite>
+        </blockquote>
+
+        <p>逆説的なことに、組織への貢献を通じて「残そう」とすればするほど、個人は組織の論理に取り込まれ、自己を消耗していく。プロジェクトの成功は組織の成功として記録され、個人の貢献は匿名化される。制度は創設者の名を忘れ、システムだけが残る。</p>
+
+        <table class="comparison-table">
+            <tr>
+                <th>組織に「残す」</th>
+                <th>組織を「超えて」残す</th>
+            </tr>
+            <tr>
+                <td>組織の寿命に依存</td>
+                <td>組織の寿命に非依存</td>
+            </tr>
+            <tr>
+                <td>記録は組織の所有物</td>
+                <td>記録は個人のもの</td>
+            </tr>
+            <tr>
+                <td>評価基準は組織の論理</td>
+                <td>評価基準は自分で設定</td>
+            </tr>
+            <tr>
+                <td>匿名化のリスク</td>
+                <td>個人の文脈が保存される</td>
+            </tr>
+        </table>
+
+        <h2>4. 創業者神話と制度化のパラドックス</h2>
+
+        <p>マックス・ウェーバーは「カリスマの日常化」（Veralltäglichung des Charisma）という概念を提示した（Weber, 1922）。創業者の個人的なビジョンや熱意——カリスマ的支配——は、組織が成長するにつれて、規則や手続きによる官僚的支配へと変容していく。</p>
+
+        <p>創業者は「神話」として語り継がれることがあるが、その神話は往々にして組織の正統性を担保するための物語へと変質する。創業者個人の複雑な人格、葛藤、矛盾は捨象され、組織にとって都合の良い「偉人伝」だけが残る。</p>
+
+        <h3>制度化という自然な過程</h3>
+
+        <p>ディマジオとパウエルの制度的同型化理論（DiMaggio & Powell, 1983）は、組織が外部環境からの圧力によって互いに類似していく過程を説明する。この過程において、創業者や改革者の独自のビジョンは、業界標準や社会的期待に適合する形へと平準化されていく。</p>
+
+        <p>つまり、組織に「自分らしさ」を刻もうとしても、組織自体が外部の力によって均質化されていくのである。個人の痕跡は、制度化と同型化の波に洗われ、やがて消えていく。</p>
+
+        <div class="key-point">
+            <p>カリスマは日常化し、ビジョンは官僚制に吸収され、独自性は同型化によって均される。組織という器は、個人の痕跡を保存するには、あまりにも可塑的である。</p>
+        </div>
+
+        <h2>5. 理念の変容——信じたものが消えるとき</h2>
+
+        <p>多くの人は、単に給与のためだけでなく、組織の「理念」や「ミッション」に共感して働いている。「この会社が目指す世界に貢献したい」「この組織の価値観に自分を重ねたい」——そうした思いが、日々の労働に意味を与えている。</p>
+
+        <p>しかし、組織の理念は驚くほど可塑的である。</p>
+
+        <h3>ミッション・ドリフトの必然性</h3>
+
+        <p>組織論では「ミッション・ドリフト」（mission drift）という現象が知られている。創業時の理念や目的が、時間の経過とともに変質・希薄化していく過程である。これは経営の失敗というより、むしろ組織が環境に適応して生き残るための必然的な帰結であることが多い。</p>
+
+        <ul>
+            <li><strong>市場の変化</strong>：顧客ニーズの変化に対応するため、当初の理念と矛盾するサービスを展開</li>
+            <li><strong>資本の論理</strong>：株主利益の最大化が、社会的ミッションより優先される</li>
+            <li><strong>リーダーの交代</strong>：創業者から後継者へ、理念の解釈が変容する</li>
+            <li><strong>規模の拡大</strong>：組織が大きくなるにつれ、理念が抽象化・形骸化する</li>
+        </ul>
+
+        <p>コリンズとポラスは『ビジョナリー・カンパニー』（1994）において、長寿企業の特徴として「基本理念の維持」を挙げた。しかし皮肉なことに、その「維持」の実態は、しばしば理念の再解釈と書き換えである。同じ言葉が、時代によってまったく異なる意味を持つようになる。</p>
+
+        <h3>存在の根拠の喪失</h3>
+
+        <p>ここで問題となるのは、理念に自己を重ねて働いてきた個人の存在証明である。</p>
+
+        <p>「この理念のために10年働いた」——しかし、その理念が組織によって書き換えられたとき、その10年間の意味は遡及的に変質する。自分が信じ、貢献してきたものが、もはや組織の中に存在しない。それは単に「過去の方針」として、組織の歴史の片隅に追いやられる。</p>
+
+        <blockquote>
+            <p>「理念と現実の乖離に気づいたとき、人は二つの選択を迫られる。理念を捨てて組織に残るか、理念を守って組織を去るか。いずれを選んでも、何かを失う。」</p>
+        </blockquote>
+
+        <p>さらに深刻なのは、組織が理念の変容を「進化」や「成長」として肯定的に語り直すことである。かつての理念に忠実であった者は、「時代遅れ」「変化に適応できない人」として位置づけられる。組織の中で「正しかった」はずの行動が、事後的に「誤り」へと書き換えられる。</p>
+
+        <div class="key-point">
+            <p>組織の理念は不変ではない。理念に自己を投影して働く者は、理念の変容とともに、存在の根拠を失うリスクを負っている。組織の「歴史」は常に現在の視点から書き換えられ、過去の貢献の意味は遡及的に変更される。</p>
+        </div>
+
+        <h2>6. 組織を超える視座——トキストレージの位置づけ</h2>
+
+        <p>以上の分析が示すのは、組織を通じて「残す」ことの構造的限界である。組織の寿命は個人より短く、記録は組織の所有物となり、個人の文脈は制度化の過程で失われていく。</p>
+
+        <p>トキストレージは、この限界に対する一つの応答として位置づけられる。それは「組織の中で残す」のではなく、「組織とは独立に残す」ための手段である。</p>
+
+        <ul>
+            <li><strong>組織非依存</strong>：記録の保存は特定の企業や制度に依存しない。組織が消滅しても、記録は存続する。</li>
+            <li><strong>個人の文脈の保存</strong>：組織の論理によってフィルタリングされない、個人としての文脈——動機、感情、葛藤——を含めた記録が可能。</li>
+            <li><strong>時間軸の拡張</strong>：20年で消える可能性のある組織ではなく、1000年という時間軸を前提とした設計。</li>
+            <li><strong>評価の多元化</strong>：組織における「成功」「失敗」という二項対立を超えて、存在そのものの記録として残す。</li>
+        </ul>
+
+        <p>これは、組織での活動を否定するものではない。むしろ、組織での経験を、組織の論理から解放された形で記録し、保存するための補完的な手段である。</p>
+
+        <h2>7. 宗教の長寿性に学ぶ——組織がトキストレージを活用する可能性</h2>
+
+        <p>ここで視点を転換してみよう。トキストレージは個人のためだけでなく、組織自体が活用することで、長寿命化を実現する可能性を持っている。</p>
+
+        <h3>なぜ宗教は数千年続くのか</h3>
+
+        <p>キリスト教は2000年、仏教は2500年、ユダヤ教は3000年以上の歴史を持つ。一方、企業の平均寿命は20年を下回る。この圧倒的な差は何に起因するのか。</p>
+
+        <p>宗教が長寿である理由は、単に「信仰」の力だけではない。構造的な特徴がある：</p>
+
+        <ul>
+            <li><strong>物語の継承</strong>：創始者や聖人の物語が、世代を超えて語り継がれる。抽象的な教義だけでなく、具体的な人間の生きた証が保存される。</li>
+            <li><strong>意味の連続性</strong>：「なぜ私たちはここにいるのか」という根源的な問いへの応答を提供し続ける。</li>
+            <li><strong>個人と全体の接続</strong>：信者一人ひとりの人生が、より大きな物語の一部として位置づけられる。</li>
+            <li><strong>死者との関係</strong>：過去の信者たちとの連続性が維持され、「死んでも終わらない」という感覚が共有される。</li>
+        </ul>
+
+        <h3>企業はなぜ短命なのか</h3>
+
+        <p>対照的に、現代の企業は「物語」を軽視しがちである：</p>
+
+        <ul>
+            <li><strong>短期業績への集中</strong>：四半期ごとの成果が求められる環境では、長期的な物語の構築は優先されにくい</li>
+            <li><strong>人材の流動性</strong>：転職が一般化し、組織の記憶を担う人がいなくなる</li>
+            <li><strong>創業者の神話化と形骸化</strong>：創業者の「生きた物語」ではなく、都合よく編集された偉人伝だけが残る</li>
+            <li><strong>退職者との断絶</strong>：組織を去った人々との関係が切れ、知恵と物語が失われる</li>
+        </ul>
+
+        <div class="key-point">
+            <p>宗教は「人の物語」を保存し続けることで数千年を生きてきた。現代の企業が短命になりがちなのは、効率と成長を追求する中で、物語の継承という側面が構造的に後回しにされやすいからかもしれない。</p>
+        </div>
+
+        <h3>組織によるトキストレージ活用の可能性</h3>
+
+        <p>ここにトキストレージの新たな可能性がある。組織が長寿命化を実現するために、トキストレージを導入するという選択肢である：</p>
+
+        <ul>
+            <li><strong>創業者の生きた声</strong>：公式の社史ではなく、創業者自身が語る迷い、葛藤、本当に伝えたかったことを保存する</li>
+            <li><strong>社員一人ひとりの物語</strong>：組織を構成した人々の個別の物語を、組織の記憶として蓄積する</li>
+            <li><strong>理念の原点</strong>：理念が形骸化する前の、生きた文脈と共に保存する</li>
+            <li><strong>退職者との連続性</strong>：組織を去った人々も含めた、拡張された組織の記憶を維持する</li>
+        </ul>
+
+        <p>これは「組織 vs 個人」という対立構図ではない。組織が個人の物語を大切にすることで、組織自体が長寿命化するという、共存の形である。</p>
+
+        <p>宗教が数千年続くのは、一人ひとりの信者の物語を否定せず、むしろ全体の物語の一部として包摂してきたからである。企業もまた、社員一人ひとりの存在証明を尊重することで、平均寿命20年の壁を超える可能性があるのではないか。</p>
+
+        <h2>結び——制度と共に、制度を超えて</h2>
+
+        <p>私たちの多くは、人生の大半を何らかの組織の中で過ごす。学校、企業、団体——それらは社会参加の基盤であり、自己実現の場でもある。そこでの経験や貢献は、間違いなく意味がある。</p>
+
+        <p>しかし、組織に自己を完全に託すことには、構造的な限界がある。組織は個人より先に消え、記録は匿名化され、文脈は失われていく。</p>
+
+        <p>だからこそ、二つの道がある。</p>
+
+        <p>一つは、個人として組織とは独立に、自らの物語を残すこと。組織の評価軸から解放された場所に、自分が存在した証を刻むこと。</p>
+
+        <p>もう一つは、組織自体が変わること。社員一人ひとりの物語を大切にし、創業者の生きた声を保存し、退職者との連続性を維持する組織へ。宗教が数千年続くように、物語の継承を組織の生命維持装置として取り入れる組織へ。</p>
+
+        <p>この二つは対立しない。個人が自らの存在証明を持つことと、組織が個人の物語を尊重することは、同じ方向を向いている。</p>
+
+        <blockquote>
+            <p>「組織と共に歩みながら、組織を超えた場所にも自己を刻む。その両立が、個人にも組織にも、より長い時間を生きる道を開く。」</p>
+        </blockquote>
+
+    </div>
+
+    <section class="references">
+        <h2>参考文献</h2>
+        <ul>
+            <li>Collins, J. C. & Porras, J. I. (1994). <em>Built to Last: Successful Habits of Visionary Companies</em>. HarperBusiness. （邦訳『ビジョナリー・カンパニー』日経BP社）</li>
+            <li>Credit Suisse (2017). <em>Creative Disruption: The Changing Pace of Creative Destruction</em>.</li>
+            <li>DiMaggio, P. J. & Powell, W. W. (1983). "The Iron Cage Revisited: Institutional Isomorphism and Collective Rationality in Organizational Fields." <em>American Sociological Review</em>, 48(2), 147-160.</li>
+            <li>Honneth, A. (1992). <em>Kampf um Anerkennung: Zur moralischen Grammatik sozialer Konflikte</em>. Suhrkamp. （邦訳『承認をめぐる闘争』法政大学出版局）</li>
+            <li>March, J. G. & Simon, H. A. (1958). <em>Organizations</em>. Wiley.</li>
+            <li>Sennett, R. (1998). <em>The Corrosion of Character: The Personal Consequences of Work in the New Capitalism</em>. W. W. Norton. （邦訳『不安な経済/漂流する個人』大月書店）</li>
+            <li>Weber, M. (1922). <em>Wirtschaft und Gesellschaft</em>. Mohr Siebeck. （邦訳『経済と社会』創文社）</li>
+            <li>Whyte, W. H. (1956). <em>The Organization Man</em>. Simon & Schuster. （邦訳『組織のなかの人間』東京創元社）</li>
+        </ul>
+    </section>
+
+    <footer class="article-footer">
+        <p>トキストレージ エッセイシリーズ</p>
+        <p id="essay-nav-links"></p>
+        <p style="margin-top: 1.5rem;">&copy; 2026 TokiStorage</p>
+    </footer>
+
+</article>
+
+<script src="essay-nav.js?v=20260209"></script>
+</body>
+</html>

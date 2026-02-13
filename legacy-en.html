@@ -1,0 +1,840 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Toki Storage | Design Philosophy for 1000 Years</title>
+    <meta name="robots" content="noindex, nofollow">
+    <meta name="description" content="SLA 100% × 1000 years. Zero-dependency architecture. Designed to function without the founder. Technical documentation for those who think in millennia.">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600;700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --toki-blue: #2563EB;
+            --toki-blue-light: #3B82F6;
+            --toki-blue-dark: #1D4ED8;
+            --toki-blue-pale: #EFF6FF;
+            --gold: #C9A962;
+            --bg-white: #FFFFFF;
+            --bg-page: #F8FAFC;
+            --bg-section: #F1F5F9;
+            --text-primary: #1E293B;
+            --text-secondary: #475569;
+            --text-muted: #94A3B8;
+            --border: #E2E8F0;
+            --font-display: 'Cormorant Garamond', serif;
+            --font-body: 'Inter', sans-serif;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        html { scroll-behavior: smooth; }
+
+        body {
+            font-family: var(--font-body);
+            font-weight: 400;
+            background: var(--bg-white);
+            color: var(--text-primary);
+            line-height: 1.8;
+            font-size: 16px;
+        }
+
+        /* Navigation */
+        .legacy-nav {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 1000;
+            background: rgba(255,255,255,0.95);
+            backdrop-filter: blur(12px);
+            border-bottom: 1px solid var(--border);
+            padding: 0.6rem 1.2rem;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 1rem;
+        }
+        .legacy-nav .nav-brand {
+            font-family: var(--font-display);
+            font-size: 1rem;
+            font-weight: 600;
+            color: var(--toki-blue);
+            text-decoration: none;
+            white-space: nowrap;
+            flex-shrink: 0;
+        }
+        .legacy-nav .nav-right {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+        .legacy-nav .nav-label {
+            font-size: 0.6rem;
+            color: var(--text-muted);
+            letter-spacing: 0.08em;
+            text-align: right;
+            line-height: 1.4;
+        }
+        .legacy-nav .lang-switch {
+            font-size: 0.75rem;
+            color: var(--toki-blue);
+            text-decoration: none;
+            padding: 0.3rem 0.6rem;
+            border: 1px solid var(--toki-blue);
+            border-radius: 4px;
+        }
+        .legacy-nav .lang-switch:hover {
+            background: var(--toki-blue);
+            color: #fff;
+        }
+
+        /* Main Content */
+        .legacy-content {
+            max-width: 720px;
+            margin: 0 auto;
+            padding: 8rem 2rem 4rem;
+        }
+
+        /* Hero */
+        .legacy-hero {
+            text-align: center;
+            margin-bottom: 5rem;
+            padding-bottom: 3rem;
+            border-bottom: 1px solid var(--border);
+        }
+        .legacy-hero .hero-label {
+            font-size: 0.7rem;
+            color: var(--text-muted);
+            letter-spacing: 0.2em;
+            margin-bottom: 1.5rem;
+        }
+        .legacy-hero h1 {
+            font-family: var(--font-display);
+            font-size: 2.4rem;
+            font-weight: 600;
+            line-height: 1.4;
+            margin-bottom: 1rem;
+        }
+        .legacy-hero .hero-sub {
+            font-size: 1rem;
+            color: var(--text-secondary);
+            max-width: 540px;
+            margin: 0 auto;
+        }
+
+        /* Sections */
+        .legacy-section {
+            margin-bottom: 4rem;
+        }
+        .legacy-section h2 {
+            font-family: var(--font-display);
+            font-size: 1.5rem;
+            font-weight: 600;
+            margin-bottom: 1.5rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 2px solid var(--toki-blue);
+            display: inline-block;
+        }
+        .legacy-section h3 {
+            font-family: var(--font-display);
+            font-size: 1.2rem;
+            font-weight: 600;
+            margin: 2rem 0 1rem;
+            color: var(--text-primary);
+        }
+        .legacy-section p {
+            margin-bottom: 1.2rem;
+            color: var(--text-secondary);
+        }
+        .legacy-section p strong {
+            color: var(--text-primary);
+        }
+
+        /* Off-grid Gallery */
+        .offgrid-gallery {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 1rem;
+            margin: 1.5rem 0;
+        }
+        .offgrid-gallery figure {
+            margin: 0;
+        }
+        .offgrid-gallery img {
+            width: 100%;
+            height: auto;
+            border-radius: 8px;
+            border: 1px solid var(--border);
+        }
+        .offgrid-gallery figcaption {
+            font-size: 0.75rem;
+            color: var(--text-muted);
+            text-align: center;
+            margin-top: 0.5rem;
+        }
+        @media (max-width: 480px) {
+            .offgrid-gallery {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        /* Spec Table */
+        .spec-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 1.5rem 0;
+            font-size: 0.9rem;
+        }
+        .spec-table th,
+        .spec-table td {
+            padding: 0.8rem 1rem;
+            text-align: left;
+            border-bottom: 1px solid var(--border);
+        }
+        .spec-table th {
+            background: var(--bg-section);
+            font-weight: 600;
+            color: var(--text-secondary);
+            font-size: 0.75rem;
+            letter-spacing: 0.05em;
+            width: 35%;
+        }
+        .spec-table td {
+            color: var(--text-primary);
+        }
+
+        /* Highlight Box */
+        .highlight-box {
+            background: var(--bg-section);
+            border-left: 4px solid var(--toki-blue);
+            padding: 1.5rem;
+            margin: 2rem 0;
+            border-radius: 0 8px 8px 0;
+        }
+        .highlight-box p {
+            margin-bottom: 0;
+            font-size: 0.95rem;
+        }
+        .highlight-box p:not(:last-child) {
+            margin-bottom: 0.8rem;
+        }
+
+        /* Philosophy Box */
+        .philosophy-box {
+            background: var(--toki-blue-pale);
+            border: 2px solid var(--toki-blue);
+            color: var(--text-primary);
+            padding: 2.5rem;
+            border-radius: 12px;
+            margin: 2rem 0;
+        }
+        .philosophy-box h3 {
+            color: var(--toki-blue);
+            margin-top: 0;
+            font-size: 1rem;
+            letter-spacing: 0.1em;
+            font-weight: 700;
+        }
+        .philosophy-box p {
+            color: var(--text-primary);
+            font-size: 0.95rem;
+        }
+        .philosophy-box p:last-child {
+            margin-bottom: 0;
+        }
+        .philosophy-box strong {
+            color: var(--toki-blue-dark);
+        }
+
+        /* Code Block */
+        .code-block {
+            background: #1E293B;
+            color: #E2E8F0;
+            padding: 1.5rem;
+            border-radius: 8px;
+            font-family: 'Menlo', 'Monaco', 'Courier New', monospace;
+            font-size: 0.8rem;
+            line-height: 1.7;
+            overflow-x: auto;
+            margin: 1.5rem 0;
+        }
+        .code-block .comment {
+            color: #64748B;
+        }
+        .code-block .key {
+            color: #7DD3FC;
+        }
+        .code-block .value {
+            color: #86EFAC;
+        }
+        .code-block .number {
+            color: #FCD34D;
+        }
+
+        /* Diagram */
+        .diagram {
+            background: var(--bg-page);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 2rem;
+            margin: 2rem 0;
+            text-align: center;
+        }
+        .diagram-title {
+            font-family: var(--font-display);
+            font-size: 0.85rem;
+            color: var(--text-secondary);
+            margin-bottom: 1.5rem;
+            letter-spacing: 0.05em;
+        }
+        .diagram-flow {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 1rem;
+            flex-wrap: wrap;
+        }
+        .diagram-node {
+            background: var(--bg-white);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            padding: 1rem 1.5rem;
+            min-width: 120px;
+        }
+        .diagram-node.highlight {
+            background: var(--toki-blue);
+            color: #fff;
+            border-color: var(--toki-blue);
+        }
+        .diagram-node h4 {
+            font-family: var(--font-display);
+            font-size: 0.9rem;
+            margin-bottom: 0.3rem;
+        }
+        .diagram-node p {
+            font-size: 0.75rem;
+            color: var(--text-muted);
+            margin: 0;
+        }
+        .diagram-node.highlight p {
+            color: rgba(255,255,255,0.8);
+        }
+        .diagram-arrow {
+            color: var(--text-muted);
+            font-size: 1.2rem;
+        }
+
+        /* List */
+        .legacy-list {
+            list-style: none;
+            margin: 1.5rem 0;
+        }
+        .legacy-list li {
+            padding: 0.8rem 0;
+            border-bottom: 1px solid var(--border);
+            display: flex;
+            gap: 1rem;
+            align-items: flex-start;
+        }
+        .legacy-list li:last-child {
+            border-bottom: none;
+        }
+        .legacy-list .list-num {
+            font-family: var(--font-display);
+            font-size: 1.2rem;
+            font-weight: 700;
+            color: var(--toki-blue);
+            min-width: 1.5rem;
+        }
+        .legacy-list .list-content h4 {
+            font-family: var(--font-display);
+            font-size: 1rem;
+            margin-bottom: 0.3rem;
+        }
+        .legacy-list .list-content p {
+            font-size: 0.9rem;
+            margin: 0;
+        }
+
+        /* CTA */
+        .legacy-cta {
+            text-align: center;
+            padding: 3rem 2rem;
+            margin-top: 4rem;
+            border-top: 1px solid var(--border);
+        }
+        .legacy-cta h2 {
+            font-family: var(--font-display);
+            font-size: 1.3rem;
+            margin-bottom: 1rem;
+            border: none;
+            display: block;
+        }
+        .legacy-cta p {
+            color: var(--text-secondary);
+            margin-bottom: 2rem;
+        }
+        .legacy-cta .cta-contact {
+            display: inline-block;
+            background: var(--bg-section);
+            padding: 1.5rem 2.5rem;
+            border-radius: 8px;
+            font-size: 0.9rem;
+            line-height: 2;
+        }
+        .legacy-cta .cta-contact a {
+            color: var(--toki-blue);
+        }
+
+        /* Footer */
+        .legacy-footer {
+            text-align: center;
+            padding: 2rem;
+            font-size: 0.75rem;
+            color: var(--text-muted);
+            border-top: 1px solid var(--border);
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .legacy-content { padding: 6rem 1.2rem 3rem; }
+            .legacy-hero h1 { font-size: 1.8rem; }
+            .diagram-flow { flex-direction: column; }
+            .diagram-arrow { transform: rotate(90deg); }
+            .spec-table th { width: 40%; }
+            .legacy-nav .nav-label { display: none; }
+        }
+
+        @media print {
+            .legacy-nav { display: none; }
+            .legacy-content { padding-top: 2rem; }
+        }
+    </style>
+</head>
+<body>
+
+<nav class="legacy-nav">
+    <a href="index-en.html" class="nav-brand">Toki Storage</a>
+    <div class="nav-right">
+        <span class="nav-label">TECHNICAL DOCUMENT FOR LEGACY OWNERS</span>
+        <a href="legacy.html" class="lang-switch">JP</a>
+    </div>
+</nav>
+
+<main class="legacy-content">
+
+    <header class="legacy-hero">
+        <p class="hero-label">FOR THOSE WHO THINK IN MILLENNIA</p>
+        <h1>Design Philosophy for 1000 Years</h1>
+        <p class="hero-sub">SLA 100% x 1000 years. Zero-dependency architecture. Designed to function without the founder.<br>This page exists to demonstrate that our millennium-scale timeframe is not just marketing.</p>
+    </header>
+
+    <!-- Background -->
+    <section class="legacy-section">
+        <h2>Origins of This Design Philosophy</h2>
+        <p>I served as the president of a homeowners association called "Timeless Town Shin-Urayasu" — a community of both condominiums and detached houses — for two years. The district also includes a nursery and a nursing home, designed around the concept of "cradle to grave." Living in a detached house while managing the daily systems that supported approximately 250 households, I found myself seriously confronting the word "timeless."</p>
+        <p>What does timeless truly mean? What kind of structure is immune to time?</p>
+        <p>Concurrently, through SoulCarrier, an organization dedicated to repatriating remains and investigating abandoned graves, I witnessed a stark reality: "Memories disappear with alarming ease." Gravestones weather in 100 years. Cloud services shut down in 10 years. If no one remembers, existence vanishes.</p>
+        <p>I then invested my personal assets to practice off-grid living across different countries. Trailer life in Maui, car camping at Lake Yamanaka in Japan. Power, water, communications - I deliberately disconnected from social infrastructure, physically testing what "zero dependency" truly means with my family. This is not theoretical design; it's a structure derived from continuous real-life sustainability testing.</p>
+
+        <div class="offgrid-gallery">
+            <figure>
+                <img src="asset/offgrid-maui-power.jpg" alt="Off-grid power system in Maui" loading="lazy">
+                <figcaption>Maui: Solar + Generator + Portable Power</figcaption>
+            </figure>
+            <figure>
+                <img src="asset/offgrid-yamanakako-setup.jpg" alt="Car camping off-grid setup at Lake Yamanaka" loading="lazy">
+                <figcaption>Yamanaka: Zero-dependency testing</figcaption>
+            </figure>
+        </div>
+        <p><strong>"Structurally eliminate the reasons for disappearing, and it remains."</strong></p>
+        <p>This simple principle, shaped by 20 years of engineering thinking and sustainability knowledge verified through my own life, became Toki Storage.</p>
+    </section>
+
+    <!-- Toro Ruins -->
+    <section class="legacy-section">
+        <p>When I visited the Toro Archaeological Site, a thought struck me: If the Jomon people had Toki Storage, their way of life, values, and thoughts would have been passed down alongside their pottery.</p>
+        <p>We will become the "Jomon people" to those living 1000 years from now. What we leave behind is our choice to make today.</p>
+    </section>
+
+    <!-- Section 1: The Question -->
+    <section class="legacy-section">
+        <h2>Framing the Question</h2>
+        <p>Saying "it will last 1000 years" is easy. But who can verify whether something actually remains 1000 years from now?</p>
+        <p>Our answer to this question is to <strong>design for "structural inevitability" rather than "verifiability."</strong></p>
+        <p>Rather than increasing the "probability of remaining" in 1000 years, we <strong>eliminate the "reasons for disappearing" one by one</strong>. Paradoxically, this is the most honest approach.</p>
+    </section>
+
+    <!-- Section 2: Dependency Analysis -->
+    <section class="legacy-section">
+        <h2>Dependency Analysis</h2>
+        <p>When we break down why digital services disappear, the following dependencies emerge:</p>
+
+        <table class="spec-table">
+            <tr>
+                <th>Dependency</th>
+                <td>Typical Cloud Service</td>
+            </tr>
+            <tr>
+                <th>Servers</th>
+                <td>AWS, GCP, Azure infrastructure</td>
+            </tr>
+            <tr>
+                <th>Domain</th>
+                <td>Annual renewal, registrar survival</td>
+            </tr>
+            <tr>
+                <th>Payment</th>
+                <td>Ongoing subscription</td>
+            </tr>
+            <tr>
+                <th>Company</th>
+                <td>Bankruptcy, acquisition, policy changes</td>
+            </tr>
+            <tr>
+                <th>Tech Stack</th>
+                <td>Framework and language obsolescence</td>
+            </tr>
+            <tr>
+                <th>Reading Device</th>
+                <td>Dedicated apps or devices</td>
+            </tr>
+        </table>
+
+        <p>The average lifespan of S&P 500 companies has shrunk from 61 years in 1958 to under 20 years today (McKinsey). Even the world's largest companies face this reality. Predicting which services will exist in 100 years is structurally impossible.</p>
+
+        <div class="highlight-box">
+            <p><strong>Toki Storage Design Principle:</strong> Reduce <strong>all</strong> of the above dependencies to <strong>zero</strong>. No servers, no domains, no subscriptions, no dedicated apps. A structure that is complete within the product itself.</p>
+        </div>
+    </section>
+
+    <!-- Section 3: Physical Layer -->
+    <section class="legacy-section">
+        <h2>Physical Layer: Quartz Glass</h2>
+
+        <h3>Material Properties</h3>
+
+        <div class="offgrid-gallery">
+            <figure>
+                <img src="asset/quartz-glass-round.jpg" alt="Message engraved on quartz glass" loading="lazy">
+                <figcaption>Round quartz glass with engraved message</figcaption>
+            </figure>
+            <figure>
+                <img src="asset/quartz-glass-sample.jpg" alt="Quartz glass with metal deposition and QR code" loading="lazy">
+                <figcaption>Metal deposition test + QR code + family crest</figcaption>
+            </figure>
+        </div>
+
+        <table class="spec-table">
+            <tr>
+                <th>Material</th>
+                <td>Synthetic fused quartz (SiO2 99.9%+)</td>
+            </tr>
+            <tr>
+                <th>Theoretical Lifespan</th>
+                <td>Hundreds of millions of years (Hitachi x Kyoto U., 2012)</td>
+            </tr>
+            <tr>
+                <th>Heat Resistance</th>
+                <td>Over 1000C</td>
+            </tr>
+            <tr>
+                <th>Water Resistance</th>
+                <td>Completely waterproof (chemically stable)</td>
+            </tr>
+            <tr>
+                <th>Chemical Resistance</th>
+                <td>Resistant to acids and alkalis</td>
+            </tr>
+            <tr>
+                <th>UV Exposure</th>
+                <td>No degradation</td>
+            </tr>
+        </table>
+
+        <h3>Comparison: Granite (Standard Gravestone)</h3>
+        <table class="spec-table">
+            <tr>
+                <th>Material</th>
+                <td>Granite</td>
+            </tr>
+            <tr>
+                <th>Practical Lifespan</th>
+                <td>100-200 years</td>
+            </tr>
+            <tr>
+                <th>Degradation Factors</th>
+                <td>Weathering, acid rain, moss, freeze-thaw cycles</td>
+            </tr>
+            <tr>
+                <th>Inscription Legibility</th>
+                <td>Degrades in 50-100 years</td>
+            </tr>
+        </table>
+
+        <p>Quartz glass is a high-purity material also used in photomask substrates for semiconductor manufacturing. It holds material-level advantages over the misconception that "stone lasts forever."</p>
+    </section>
+
+    <!-- Section 4: Data Layer -->
+    <section class="legacy-section">
+        <h2>Data Layer: QR Code</h2>
+
+        <h3>Standard Permanence</h3>
+        <table class="spec-table">
+            <tr>
+                <th>Development</th>
+                <td>1994, Denso Wave (Japan)</td>
+            </tr>
+            <tr>
+                <th>International Standard</th>
+                <td>ISO/IEC 18004</td>
+            </tr>
+            <tr>
+                <th>Track Record</th>
+                <td>30+ years of adoption with backward compatibility</td>
+            </tr>
+            <tr>
+                <th>Reading Device</th>
+                <td>Smartphone camera (no dedicated app required)</td>
+            </tr>
+            <tr>
+                <th>Patent</th>
+                <td>Open license (free to use)</td>
+            </tr>
+        </table>
+
+        <div class="highlight-box">
+            <p><strong>Predicting Device Evolution:</strong> We predict cameras and displays will exist 100 years from now as humanity's interface with visual information. Forms may change, but the principle of "optically recognizing patterns" is universal. QR code specifications are fixed as an ISO standard, ensuring readability on future devices.</p>
+        </div>
+
+        <h3>Comparison: 5D Memory Crystal</h3>
+        <p>The 5D memory crystal developed by the University of Southampton can theoretically store data for 13.8 billion years. However:</p>
+        <ul class="legacy-list">
+            <li>
+                <span class="list-num">1</span>
+                <div class="list-content">
+                    <h4>Requires Specialized Optical Equipment</h4>
+                    <p>Writing with femtosecond lasers, reading with polarization microscopes. Cannot be read with consumer devices.</p>
+                </div>
+            </li>
+            <li>
+                <span class="list-num">2</span>
+                <div class="list-content">
+                    <h4>No Consumer Sales</h4>
+                    <p>Designed for data center archival. Costs range from tens to hundreds of thousands of dollars per unit.</p>
+                </div>
+            </li>
+            <li>
+                <span class="list-num">3</span>
+                <div class="list-content">
+                    <h4>Infrastructure Dependency</h4>
+                    <p>If specialized equipment manufacturing stops, data physically exists but becomes "unreadable."</p>
+                </div>
+            </li>
+        </ul>
+        <p>Toki Storage adopts a conservative "1000 years" figure, not based on physical lifespan, but on <strong>practical lifespan including readability</strong>.</p>
+    </section>
+
+    <!-- Section 5: Hosting Layer -->
+    <section class="legacy-section">
+        <h2>Hosting Layer: GitHub Pages</h2>
+        <p>Memorial pages linked from QR codes are hosted on GitHub Pages.</p>
+
+        <h3>Why GitHub Pages?</h3>
+        <table class="spec-table">
+            <tr>
+                <th>Operator</th>
+                <td>Microsoft (acquired 2018, $7.5B)</td>
+            </tr>
+            <tr>
+                <th>Market Cap</th>
+                <td>~$3 trillion (as of 2024)</td>
+            </tr>
+            <tr>
+                <th>Developers</th>
+                <td>100+ million (world's largest developer platform)</td>
+            </tr>
+            <tr>
+                <th>Arctic Code Vault</th>
+                <td>Physical source code storage in Arctic permafrost (1000-year preservation project)</td>
+            </tr>
+            <tr>
+                <th>Cost</th>
+                <td>Free hosting for static sites</td>
+            </tr>
+        </table>
+
+        <div class="philosophy-box">
+            <h3>ARCTIC CODE VAULT</h3>
+            <p>In 2020, GitHub physically archived active public repositories in Arctic permafrost. Source code written to film is designed for 1000+ year preservation.</p>
+            <p>We chose this platform precisely because it shares our "1000-year preservation" philosophy.</p>
+        </div>
+
+        <h3>Static Site Advantages</h3>
+        <div class="code-block">
+<span class="comment">// Memorial page architecture</span>
+{
+  <span class="key">"server"</span>: <span class="value">"none"</span>,
+  <span class="key">"database"</span>: <span class="value">"none"</span>,
+  <span class="key">"backend"</span>: <span class="value">"none"</span>,
+  <span class="key">"dependencies"</span>: <span class="number">0</span>,
+  <span class="key">"monthly_cost"</span>: <span class="number">0</span>,
+  <span class="key">"format"</span>: <span class="value">"HTML/CSS/JS"</span>
+}
+        </div>
+        <p>Memorial pages are pure static HTML. No server-side processing, no database connections. Even if GitHub Pages disappears, the HTML files can be reproduced on any web server.</p>
+    </section>
+
+    <!-- Section 6: Founder Independence -->
+    <section class="legacy-section">
+        <h2>Designed to Function Without the Founder</h2>
+        <p>On a 1000-year timeline, we cannot assume the founder's existence. Toki Storage is designed to <strong>continue functioning even if the founder disappears tomorrow</strong>.</p>
+
+        <div class="diagram">
+            <p class="diagram-title">Elements Required for Product Operation</p>
+            <div class="diagram-flow">
+                <div class="diagram-node highlight">
+                    <h4>Quartz Glass</h4>
+                    <p>Physical existence</p>
+                </div>
+                <span class="diagram-arrow">+</span>
+                <div class="diagram-node highlight">
+                    <h4>QR Code</h4>
+                    <p>ISO standard reading</p>
+                </div>
+                <span class="diagram-arrow">+</span>
+                <div class="diagram-node highlight">
+                    <h4>Smartphone</h4>
+                    <p>Universal device</p>
+                </div>
+                <span class="diagram-arrow">=</span>
+                <div class="diagram-node">
+                    <h4>Record Access</h4>
+                    <p>No founder needed</p>
+                </div>
+            </div>
+        </div>
+
+        <h3>No Dependencies On</h3>
+        <ul class="legacy-list">
+            <li>
+                <span class="list-num">1</span>
+                <div class="list-content">
+                    <h4>Subscriptions</h4>
+                    <p>No monthly fees. One-time purchase. Product continues to function even if payments stop.</p>
+                </div>
+            </li>
+            <li>
+                <span class="list-num">2</span>
+                <div class="list-content">
+                    <h4>Dedicated Apps</h4>
+                    <p>Readable with standard camera apps. No dependency on App Store approvals or OS compatibility.</p>
+                </div>
+            </li>
+            <li>
+                <span class="list-num">3</span>
+                <div class="list-content">
+                    <h4>Accounts & Passwords</h4>
+                    <p>Viewable without authentication. No password loss or inheritance issues.</p>
+                </div>
+            </li>
+            <li>
+                <span class="list-num">4</span>
+                <div class="list-content">
+                    <h4>Company Survival</h4>
+                    <p>Even if TokiStorage disappears, the combination of quartz glass x QR code x GitHub Pages continues to function.</p>
+                </div>
+            </li>
+        </ul>
+
+        <div class="highlight-box">
+            <p><strong>Worst-Case Scenario:</strong> Even if GitHub Pages shuts down and the domain expires, data engraved in the QR code remains in an "error-free readable format." Text data is directly embedded, image data is Base64 encoded within the QR code. Zero external dependency by design.</p>
+        </div>
+    </section>
+
+    <!-- Section 7: SLA -->
+    <section class="legacy-section">
+        <h2>SLA 100% x 1000 Years</h2>
+        <p>Typical SLAs (Service Level Agreements) are expressed as "99.9% uptime." That 0.1% downtime equals about 9 hours per year.</p>
+        <p>Toki Storage's SLA is different.</p>
+
+        <div class="philosophy-box">
+            <h3>Toki Storage SLA</h3>
+            <p><strong>Availability: 100%</strong> (No servers means no concept of downtime)</p>
+            <p><strong>Data Persistence: 100% unless physically destroyed</strong> (Dependent on quartz glass properties)</p>
+            <p><strong>Duration: Product's physical lifespan</strong> (Theoretical: hundreds of millions of years)</p>
+        </div>
+
+        <p>This is not a "guarantee." It's a description of structural reality. No server means no downtime. Physically engraved means it won't disappear. No dependencies means no termination.</p>
+    </section>
+
+    <!-- Section 8: National Diet Library -->
+    <section class="legacy-section">
+        <h2>National Diet Library Deposit</h2>
+        <p>Memorial pages created with Toki Storage are deposited as PDFs to Japan's National Diet Library.</p>
+
+        <table class="spec-table">
+            <tr>
+                <th>Institution</th>
+                <td>National Diet Library (Japan)</td>
+            </tr>
+            <tr>
+                <th>Legal Basis</th>
+                <td>National Diet Library Act (established 1948)</td>
+            </tr>
+            <tr>
+                <th>Preservation Policy</th>
+                <td>Permanent preservation (no disposal)</td>
+            </tr>
+            <tr>
+                <th>Collection Size</th>
+                <td>~47 million items (as of 2023)</td>
+            </tr>
+        </table>
+
+        <p>Quartz glass (physical layer), GitHub Pages (digital layer), National Diet Library (institutional layer). Triple redundancy ensures that even if one fails, the record survives.</p>
+
+        <div class="highlight-box">
+            <p><strong>Literally "Timeless":</strong> The National Diet Library is institutional infrastructure that preserves records as long as Japan exists. Individual proof of existence becomes part of a national-level archive.</p>
+        </div>
+    </section>
+
+    <!-- Section 9: For Legacy Owners -->
+    <section class="legacy-section">
+        <h2>To Legacy Owners</h2>
+        <p>If you've read this far, you're someone who seriously thinks on a 1000-year timeline.</p>
+        <p>Toki Storage is not for everyone. To those who see no value beyond "getting something engraved on quartz glass," it's just an expensive souvenir.</p>
+        <p>But to those who understand the technical architecture of this page and resonate with the "zero dependency" design philosophy, what Toki Storage is trying to accomplish should be clear.</p>
+
+        <div class="philosophy-box">
+            <h3>Democratizing Proof of Existence</h3>
+            <p>Only royalty, great figures, and celebrities leave their names in history. Ordinary people's existence is forgotten within three generations.</p>
+            <p>Solving this "inequality of memory" through technology - that's the philosophy of Toki Storage.</p>
+            <p>Someone 1000 years from now will be able to know you existed. We're seriously designing the structure to make that possible.</p>
+        </div>
+    </section>
+
+    <!-- CTA -->
+    <section class="legacy-cta">
+        <h2>Contact</h2>
+        <p>Technical questions, discussions about design philosophy, business partnerships.</p>
+        <div class="cta-contact">
+            <strong>TokiStorage</strong><br>
+            Takuya Sato<br><br>
+            Email: <a href="mailto:business@satotakuya.jp">business@satotakuya.jp</a><br>
+            Schedule a meeting: <a href="https://calendly.com/pearlmemorial/pearlmemorialsession" target="_blank" rel="noopener">Calendly</a>
+        </div>
+    </section>
+
+</main>
+
+<footer class="legacy-footer">
+    <p>Related: <span id="essay-nav-links"></span></p>
+    <p><span class="footer-sub-links"><a href="../index.html">SoulCarrier Resonance Circle</a> (<a href="../movement/Membership_Guide_EN.pdf">Enrollment</a> / <a href="../movement/BasicAgreement.pdf">Agreement</a> / <a href="../movement/Bylaws_EN.pdf">Bylaws</a>)</span></p>
+    <p>&copy; 2026 TokiStorage All rights reserved.</p>
+</footer>
+
+<script src="essay-nav.js?v=20260209"></script>
+</body>
+</html>

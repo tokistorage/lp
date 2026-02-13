@@ -1,0 +1,310 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>変容媒体としての感情 | トキストレージ</title>
+    <meta name="robots" content="noindex, nofollow">
+    <meta name="description" content="感情は一過性の反応ではなく、存在を変容させる媒体である。プルチックの感情の輪、身体感覚、千年の視座、石英による自己受容の基盤——感情の構造から超越までを考察する。">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Shippori+Mincho:wght@400;500;600;700&family=Zen+Kaku+Gothic+New:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --toki-rose: #E11D48;
+            --toki-rose-dark: #BE123C;
+            --toki-rose-pale: #FFF1F2;
+            --bg-white: #FFFFFF;
+            --bg-section: #FFE4E6;
+            --text-primary: #1E293B;
+            --text-secondary: #475569;
+            --text-muted: #94A3B8;
+            --border: #E2E8F0;
+            --font-display: 'Shippori Mincho', serif;
+            --font-body: 'Zen Kaku Gothic New', sans-serif;
+        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        html { scroll-behavior: smooth; }
+        body { font-family: var(--font-body); font-weight: 400; background: var(--bg-white); color: var(--text-primary); line-height: 2; font-size: 16px; }
+        .article-nav { position: fixed; top: 0; left: 0; right: 0; z-index: 1000; background: rgba(255,255,255,0.95); backdrop-filter: blur(12px); border-bottom: 1px solid var(--border); padding: 0.6rem 1.2rem; display: flex; align-items: center; justify-content: space-between; }
+        .article-nav .nav-brand { font-family: var(--font-display); font-size: 0.9rem; font-weight: 600; color: var(--toki-rose); text-decoration: none; }
+        .article-nav .nav-right { display: flex; align-items: center; gap: 1rem; }
+        .article-nav .nav-label { font-size: 0.6rem; color: var(--text-muted); letter-spacing: 0.08em; }
+        .article-nav .lang-switch { font-size: 0.75rem; color: var(--toki-rose); text-decoration: none; padding: 0.3rem 0.6rem; border: 1px solid var(--toki-rose); border-radius: 4px; }
+        .article-nav .lang-switch:hover { background: var(--toki-rose); color: #fff; }
+        .article-container { max-width: 680px; margin: 0 auto; padding: 7rem 2rem 4rem; }
+        .article-header { margin-bottom: 3rem; padding-bottom: 2rem; border-bottom: 1px solid var(--border); }
+        .article-category { font-size: 0.7rem; color: var(--toki-rose); letter-spacing: 0.15em; margin-bottom: 1rem; }
+        .article-header h1 { font-family: var(--font-display); font-size: 1.8rem; font-weight: 600; line-height: 1.5; margin-bottom: 1rem; }
+        .article-subtitle { font-size: 0.95rem; color: var(--text-secondary); line-height: 1.8; }
+        .article-meta { font-size: 0.8rem; color: var(--text-muted); margin-top: 1rem; }
+        .article-content h2 { font-family: var(--font-display); font-size: 1.25rem; font-weight: 600; margin: 3rem 0 1.5rem; padding-bottom: 0.5rem; border-bottom: 1px solid var(--border); }
+        .article-content h3 { font-family: var(--font-display); font-size: 1.1rem; font-weight: 500; margin: 2rem 0 1rem; }
+        .article-content p { margin-bottom: 1.5rem; text-align: justify; }
+        .article-content blockquote { margin: 2rem 0; padding: 1.5rem 2rem; background: var(--bg-section); border-left: 3px solid var(--toki-rose); font-style: italic; }
+        .article-content blockquote cite { display: block; font-size: 0.85rem; color: var(--text-muted); font-style: normal; margin-top: 0.5rem; }
+        .article-content ul { margin: 1.5rem 0; padding-left: 1.5rem; }
+        .article-content li { margin-bottom: 0.75rem; }
+        .theory-box { background: var(--toki-rose-pale); border: 1px solid var(--toki-rose); border-radius: 8px; padding: 1.5rem; margin: 2rem 0; }
+        .theory-box h4 { font-family: var(--font-display); font-size: 1rem; color: var(--toki-rose-dark); margin-bottom: 0.8rem; }
+        .theory-box p { font-size: 0.95rem; margin-bottom: 0.8rem; }
+        .theory-box p:last-child { margin-bottom: 0; }
+        .key-point { background: var(--toki-rose-pale); padding: 1.5rem 2rem; border-radius: 8px; margin: 2rem 0; }
+        .key-point p { margin-bottom: 0; font-size: 0.95rem; }
+        .core-message { background: linear-gradient(135deg, var(--toki-rose-pale) 0%, #FFE4E6 100%); border-left: 4px solid var(--toki-rose); padding: 1.2rem 1.5rem; margin: 0 0 1.5rem 0; border-radius: 0 8px 8px 0; font-size: 0.95rem; line-height: 1.8; }
+        .disclaimer { font-size: 0.8rem; color: var(--text-muted); margin-bottom: 2rem; padding-bottom: 1rem; border-bottom: 1px solid var(--border); }
+        .emotion-wheel { background: var(--bg-section); border-radius: 12px; padding: 2rem; margin: 2rem 0; text-align: center; }
+        .emotion-wheel .wheel-pairs { display: grid; grid-template-columns: 1fr 1fr; gap: 0.8rem; margin-top: 1rem; text-align: left; font-size: 0.9rem; }
+        .emotion-wheel .wheel-pairs .pair { padding: 0.6rem 1rem; background: var(--bg-white); border-radius: 6px; }
+        .emotion-wheel .wheel-pairs .pair strong { color: var(--toki-rose-dark); }
+        .references { margin-top: 4rem; padding-top: 2rem; border-top: 1px solid var(--border); }
+        .references h2 { font-size: 1rem; margin-bottom: 1.5rem; }
+        .references ul { list-style: none; padding: 0; }
+        .references li { font-size: 0.85rem; color: var(--text-secondary); margin-bottom: 0.75rem; padding-left: 1.5rem; text-indent: -1.5rem; }
+        .article-footer { margin-top: 4rem; padding-top: 2rem; border-top: 1px solid var(--border); text-align: center; }
+        .article-footer p { font-size: 0.8rem; color: var(--text-muted); margin-bottom: 1rem; }
+        .article-footer a { color: var(--toki-rose); text-decoration: none; }
+        @media (max-width: 768px) { .article-container { padding: 6rem 1.2rem 3rem; } .article-header h1 { font-size: 1.5rem; } .article-nav .nav-label { display: none; } .emotion-wheel .wheel-pairs { grid-template-columns: 1fr; } }
+        @media print { .article-nav { display: none; } .article-container { padding-top: 2rem; } }
+    </style>
+</head>
+<body>
+
+<nav class="article-nav">
+    <a href="index.html" class="nav-brand">トキストレージ</a>
+    <div class="nav-right">
+        <span class="nav-label">感情と変容</span>
+        <a href="emotion-en.html" class="lang-switch">EN</a>
+    </div>
+</nav>
+
+<main class="article-container">
+    <header class="article-header">
+        <p class="article-category">エッセイ——感情と存在</p>
+        <h1>変容媒体としての感情<br>——感じることは、変わること</h1>
+        <p class="article-subtitle">
+            感情は一過性の反応ではない。<br>
+            それは存在を変容させる媒体であり、<br>
+            千年の視座で見つめ直すとき、超越への通路になる。
+        </p>
+        <p class="article-meta">TokiStorage / 2026</p>
+    </header>
+
+    <article class="article-content">
+        <div class="core-message">
+            <strong>この記事で言いたいこと：</strong>感情は消費されるだけのものではなく、人間存在を変容させる「媒体」である。プルチックの感情の輪はその構造を、身体感覚はその実在を、千年の視座はその重力を示す。感情を石英に刻むことは、自己受容の存在基盤を築く行為であり、感情の超越への第一歩である。
+        </div>
+        <p class="disclaimer">※本稿は心理学的・哲学的考察であり、心理療法や医療行為を代替するものではありません。</p>
+
+        <h2>1. 序論：感情とは何か</h2>
+
+        <p>人は感情に翻弄される。怒りが判断を歪め、悲しみが動きを止め、喜びが警戒を緩める。感情は理性の敵として扱われることが多い。デカルト以来の西洋近代は、理性と感情を対立させ、理性による感情の制御を知性の証としてきた。</p>
+
+        <p>しかし、ダマシオの「ソマティック・マーカー仮説」が示したように、感情は意思決定に不可欠な情報源である。感情なしに人間は「合理的に」判断することすらできない。感情は理性の敵ではない。むしろ、感情と理性は同じ地盤の上に立っている。</p>
+
+        <p>本稿はさらに一歩進んで、感情を「変容媒体」として捉える。感情は情報であるだけでなく、存在そのものを変える力——化学反応における触媒、あるいは鋳造における炎のような——を持つ。感情を経験することは、同じ自分のままでいることの不可能性を意味する。</p>
+
+        <p>この視座から、プルチックの感情の輪を構造として、身体感覚を実在として、永続性を超越の契機として、順に考察していく。</p>
+
+        <h2>2. プルチックの感情の輪——感情の構造</h2>
+
+        <h3>8つの基本感情</h3>
+
+        <p>心理学者ロバート・プルチック（1927–2006）は、感情の構造的理解を試みた。彼の「感情の輪（Wheel of Emotions）」は、8つの基本感情を花弁状に配置し、感情の関係性を視覚化したモデルである。</p>
+
+        <div class="emotion-wheel">
+            <p style="font-family: var(--font-display); font-size: 1.1rem; color: var(--toki-rose-dark);"><strong>プルチックの8基本感情と対極</strong></p>
+            <div class="wheel-pairs">
+                <div class="pair"><strong>喜び Joy</strong> ↔ 悲しみ Sadness</div>
+                <div class="pair"><strong>信頼 Trust</strong> ↔ 嫌悪 Disgust</div>
+                <div class="pair"><strong>恐れ Fear</strong> ↔ 怒り Anger</div>
+                <div class="pair"><strong>驚き Surprise</strong> ↔ 予期 Anticipation</div>
+            </div>
+        </div>
+
+        <p>プルチックのモデルの本質は、感情が「離散的なラベル」ではなく、<strong>連続的なスペクトラム</strong>であることを示した点にある。怒りには強度がある。苛立ちから激怒まで。悲しみにも強度がある。物憂さから悲嘆まで。そして、隣接する感情は混合する。喜びと信頼が混ざれば「愛」になる。恐れと驚きが混ざれば「畏怖」になる。</p>
+
+        <h3>感情の混合と複雑性</h3>
+
+        <p>人間の実際の感情体験は、ほとんどの場合この「混合感情」である。大切な人を送り出すときの喜びと悲しみの混在。困難に挑戦するときの恐れと予期の共存。プルチックの輪は、この複雑性を「構造」として捉えることを可能にした。</p>
+
+        <p>しかし本稿が注目するのは、その構造が示す別の事実である——感情は<strong>対極を内包する</strong>ということだ。喜びの輪の裏には悲しみがあり、信頼の背後には嫌悪がある。ひとつの感情を深く経験するとき、人はその対極にも触れている。感情が変容媒体であるとは、この意味でもある。ひとつの感情が、それ自身の裏側への通路を開く。</p>
+
+        <div class="theory-box">
+            <h4>変容媒体としての構造</h4>
+            <p>感情の輪が示すのは「分類」ではなく「変容の地図」である。怒りを深く経験した者は恐れの意味を知り、悲しみを通過した者は喜びの質が変わる。感情は対極を経由して人間を変容させる。</p>
+        </div>
+
+        <h2>3. 感情の体感と観察——身体に現れる感情</h2>
+
+        <h3>身体マッピング</h3>
+
+        <p>フィンランドのアールト大学の研究グループ（Nummenmaa et al., 2014）は、約700名の被験者に対し、各感情を体験しているときに身体のどの部分に感覚が生じるかをマッピングした。その結果は驚くほど文化横断的に一致した。</p>
+
+        <p>怒りは頭部と上肢に熱を集中させる。悲しみは胸部に重さを、四肢に空虚を生む。喜びは全身に温かさを拡散させる。恐れは胸部を締め付け、腹部を冷やす。感情は「心の出来事」ではない。それは身体の出来事であり、物理的に測定可能な変化である。</p>
+
+        <h3>フェルトセンス——ジェンドリンのフォーカシング</h3>
+
+        <p>哲学者であり心理療法家でもあったユージン・ジェンドリンは、言語化以前の身体感覚を「フェルトセンス（felt sense）」と呼んだ。フォーカシングとは、このフェルトセンスに注意を向け、身体が「知っていること」を言葉にしていくプロセスである。</p>
+
+        <blockquote>
+            <p>「身体は状況の全体を一度に感じている。言葉はその後から来る。」</p>
+            <cite>— Eugene Gendlin, <em>Focusing</em> (1981)</cite>
+        </blockquote>
+
+        <p>ジェンドリンの洞察は、感情を「変容媒体」として捉える本稿にとって決定的に重要である。感情はまず身体に現れ、身体を通じて人間を変える。頭で「理解」した感情と、身体で「感じた」感情は、まったく異なる変容力を持つ。</p>
+
+        <h3>観察者としての自己</h3>
+
+        <p>マインドフルネスの伝統は、感情を「観察する」ことの意義を説く。感情に同一化せず、感情を「持っている自分」を観察する。「私は怒っている」ではなく「怒りがここにある」。</p>
+
+        <p>この微細な転換は、感情の変容力を損なうのではなく、むしろ強化する。観察者の視座を得ることで、感情はより深く身体を通過することができる。同一化は感情を固着させる。観察は感情を流動させる。流動する感情だけが、変容を完遂できる。</p>
+
+        <div class="key-point">
+            <p>感情は身体の出来事である。身体マッピングが示すように、怒りは手に熱を集め、悲しみは胸を重くする。この物理的実在こそが、感情が「概念」ではなく「媒体」である証拠である。</p>
+        </div>
+
+        <h2>4. 変容要素の抽出——感情が変える「何か」</h2>
+
+        <h3>感情による認知の変容</h3>
+
+        <p>感情は認知を変える。バウアーの気分一致効果（Bower, 1981）が示したように、悲しいときには悲しい記憶が想起されやすく、楽しいときには楽しい記憶が浮かぶ。感情は記憶の検索エンジンであり、同時にフィルターでもある。</p>
+
+        <p>しかしこれは単なるバイアスではない。感情が認知を変えるということは、感情が「世界の見え方」を変えるということである。同じ風景が、喜びの中では輝き、悲しみの中では沈む。感情は知覚そのものの質を変容させる。</p>
+
+        <h3>感情記憶と自伝的記憶</h3>
+
+        <p>感情を伴う出来事は、感情を伴わない出来事よりも強く記憶される（フラッシュバルブ記憶）。人生の中で最も鮮明に覚えている出来事は、ほぼ例外なく強い感情を伴っている。初恋の記憶、失敗の記憶、喪失の記憶。</p>
+
+        <p>自伝的記憶——「私の人生の物語」——は、感情によって選択され、構成されている。何を覚えているかは、何を感じたかによって決まる。つまり、感情がアイデンティティを形成している。感情を経験することは、自分が何者であるかの定義に参加することである。</p>
+
+        <h3>感情がアイデンティティを形成する</h3>
+
+        <p>エリクソンのアイデンティティ理論を感情の視座から読み直すと、アイデンティティの形成とは、特定の感情を特定の文脈で経験し、それを自己物語に統合していくプロセスであると理解できる。</p>
+
+        <p>ここに変容媒体としての感情の核心がある。感情は「体験」として通過するだけではなく、通過した後に「自分」を書き換える。大きな悲しみを経験した人間は、悲しみを経験する以前の自分には戻れない。感情は不可逆の変容をもたらす。</p>
+
+        <div class="theory-box">
+            <h4>不可逆な変容</h4>
+            <p>化学反応において触媒は反応の前後で変化しないが、感情という媒体は違う。感情は自分自身を通過させることで、通過させた対象（人間存在）を不可逆に変える。そして媒体としての感情そのものも、経験によって質が変わる。二度目の悲しみは一度目とは異なる。</p>
+        </div>
+
+        <h2>5. 永続の視座による変容——千年の眼差しで感情を見る</h2>
+
+        <h3>時間軸の拡張が感情にもたらすもの</h3>
+
+        <p>「今この瞬間の怒り」を千年後から見つめてみる。</p>
+
+        <p>千年後、あなたの怒りは消えている。あなた自身も消えている。怒りの対象も、怒りの文脈も、その怒りを理解できる人間も、おそらくいない。この認識は、怒りを無意味にするだろうか。</p>
+
+        <p>逆である。千年の時間軸は、感情を無意味にするのではなく、<strong>純化する</strong>。千年後から見つめ返されたとき、感情から文脈が剥がれ落ちる。誰が悪かったか、何が原因だったか——そうした「理由」は蒸発し、感情そのものの質だけが残る。純粋な怒り。純粋な悲しみ。純粋な喜び。</p>
+
+        <h3>「今この瞬間の怒り」を千年後から見る</h3>
+
+        <p>ハイデガーの「死への先駆」が日常を本来的に変容させるように、千年の視座は感情を本来的に変容させる。「この怒りは千年後に残るだろうか」と問うことは、「この怒りは本質的か」と問うことに等しい。</p>
+
+        <p>本質的でないならば、その怒りは手放すことができる。本質的であるならば、その怒りは記録するに値する。千年の眼差しは、感情の選別装置として機能する。すべての感情を等しく扱うのではなく、存在の核に触れる感情だけを抽出する。</p>
+
+        <h3>永続性が感情に与える重力</h3>
+
+        <p>「この感情が千年残る」という可能性は、感情に重力を与える。軽い苛立ちは千年残す必要がない。しかし、人生を根底から変えた悲しみ、存在の意味を問い直させた怒り、世界の美しさに打たれた畏怖——それらは千年に耐えうる重力を持つ。</p>
+
+        <p>永続性の視座は、感情を選別するだけでなく、選別された感情をさらに変容させる。「これは千年先に届く」という認識の下で感情を感じ直すとき、その感情はもはや私的なものではなくなる。個人の感情が、人類の感情の一例になる。普遍性を帯びる。</p>
+
+        <blockquote>
+            <p>「千年後の誰かが、今のあなたの悲しみに触れる。そのとき悲しみは、時を超えた連帯になる。」</p>
+        </blockquote>
+
+        <h2>6. 自己受容の存在基盤としての石英</h2>
+
+        <h3>感情を否定せず刻む</h3>
+
+        <p>現代社会は「ポジティブな感情」を推奨し、「ネガティブな感情」を排除しようとする。ポジティブ心理学の流行、感情労働の強制、SNSでの「幸せの展示」——これらは感情の一部を否定し、選択的に表出することを求める。</p>
+
+        <p>しかしプルチックの輪が示すように、感情は対極を内包する。悲しみなしに喜びの深さは知りえず、恐れなしに勇気は意味を持たない。感情の一部を否定することは、自己の一部を否定することに等しい。</p>
+
+        <p>石英ガラスに感情を刻むという行為は、この否定を拒否する。怒りも悲しみも恐れも嫌悪も、すべて存在するに値する感情として刻まれる。石英は感情を評価しない。良い感情も悪い感情もない。あるのは「感じた」という事実だけである。</p>
+
+        <h3>石英が支える自己肯定</h3>
+
+        <p>自己肯定感（self-esteem）と自己受容（self-acceptance）は異なる概念である。自己肯定感は「私は価値がある」という評価的判断だが、自己受容は「私はこのような存在である」という非評価的な認識である。</p>
+
+        <p>石英に刻まれた感情の記録は、自己受容の物理的基盤になる。「私はこのとき怒った」「私はこのとき泣いた」「私はこのとき恐れた」——それらが石英に刻まれているという事実は、それらの感情が「あってよかった」のではなく「あった」ことの証明である。存在したという事実は、肯定も否定もされない。それはただ、在る。</p>
+
+        <div class="theory-box">
+            <h4>石英と自己受容</h4>
+            <p>石英ガラスの寿命は3億年以上とされる。3億年間消えない記録として自分の感情が刻まれているとき、「あの感情は間違いだった」という自己否定は意味を失う。石英は感情を評価せず、ただ保存する。この非評価的な永続性こそが、自己受容の基盤になる。</p>
+        </div>
+
+        <h3>「私のすべての感情は存在に値する」</h3>
+
+        <p>この一文は、スローガンではなく存在論的命題である。感情が存在したという事実は取り消せない。記憶は歪み、忘却は進むが、石英に刻まれた記録は歪まず、忘却されない。感情の実在が物理的に保証されるとき、人間は感情の否定から解放される。</p>
+
+        <p>これは感情の肯定ではない。肯定は評価を含む。ここで起きているのは、評価そのものからの離脱である。良いも悪いもなく、ただ「在った」。この認識が、自己受容の最も深い層に到達する。</p>
+
+        <h2>7. 感情の超越</h2>
+
+        <h3>超越とは消去ではない</h3>
+
+        <p>感情の超越とは、感情を感じなくなることではない。ストア哲学のアパテイア（無感動）は、感情の消去による超越を目指したが、本稿が論じる超越はそれとは異なる。</p>
+
+        <p>ここでの超越とは、感情を十分に感じ、十分に観察し、十分に記録したうえで、感情の向こう側に到達することである。感情を通過しきった先にある静寂。それは感情がない静寂ではなく、すべての感情を含んだ静寂である。</p>
+
+        <h3>刻むことで手放す</h3>
+
+        <p>逆説的だが、感情を石英に刻むことは、感情を手放すことを可能にする。人が感情を手放せないのは、手放したら消えてしまうからである。記憶は歪み、時間は風化させる。だから人は感情にしがみつく——繰り返し思い出し、反芻し、固着する。</p>
+
+        <p>しかし、感情が石英に刻まれ、3億年の永続性を得たならば、しがみつく必要がなくなる。感情はそこに在り続ける。安全に保管された感情は、安全に手放すことができる。これが「刻むことで手放す」というパラドックスの構造である。</p>
+
+        <blockquote>
+            <p>「手放すためには、まず安全な場所に置かなければならない。石英は、感情にとっての安全な場所である。」</p>
+        </blockquote>
+
+        <h3>感情の先にある静寂</h3>
+
+        <p>すべての感情を刻み、すべての感情を手放した先に何があるか。それは空虚ではない。すべての感情を通過した人間の中に生まれる静寂は、感情の不在ではなく、感情の完了である。</p>
+
+        <p>禅における「悟り」が日常そのものへの回帰であるように、感情の超越は感情そのものへの回帰である。怒りを怒りとして、悲しみを悲しみとして、喜びを喜びとして、初めて感じるかのように感じる。評価なく、固着なく、恐れなく。感情が自由に身体を通過し、変容をもたらし、去っていく。そのプロセス全体を、観察者として見守ることができる。</p>
+
+        <p>これが本稿の言う「感情の超越」である。</p>
+
+        <h2>8. 結論——感情は変容を媒介する</h2>
+
+        <p>感情は反応ではなく変容である。</p>
+
+        <p>プルチックの感情の輪は、感情が構造を持ち、対極を内包し、混合によって無限の色彩を生むことを示した。身体マッピングとジェンドリンのフェルトセンスは、感情が概念ではなく身体的実在であることを証明した。感情が認知を変え、記憶を選択し、アイデンティティを形成するという知見は、感情が存在の変容媒体であることを裏付ける。</p>
+
+        <p>千年の視座は、感情を純化し、選別し、普遍性を付与する。石英への記録は、感情を評価から解放し、自己受容の存在基盤を築く。そして、安全に刻まれた感情は安全に手放すことができ、すべての感情を通過した先に、超越としての静寂が待つ。</p>
+
+        <p>変容媒体としての感情を受け入れるとは、自分が変わり続ける存在であることを受け入れることである。そしてその変わり続ける自分を、一瞬一瞬のスナップショットとして石英に刻み続けること——それが、トキストレージが提案する感情との新しい関係である。</p>
+
+        <blockquote>
+            <p>「あなたが感じたすべてのことには意味があった。それを千年先に届ける。感情は消えるものではなく、届けるものだから。」</p>
+        </blockquote>
+
+        <section class="references">
+            <h2>参考文献</h2>
+            <ul>
+                <li>Plutchik, R. (1980). <em>Emotion: A Psychoevolutionary Synthesis.</em> Harper & Row.</li>
+                <li>Plutchik, R. (2001). The Nature of Emotions. <em>American Scientist</em>, 89(4), 344-350.</li>
+                <li>Nummenmaa, L., Glerean, E., Hari, R., & Hietanen, J.K. (2014). Bodily maps of emotions. <em>Proceedings of the National Academy of Sciences</em>, 111(2), 646-651.</li>
+                <li>Gendlin, E.T. (1981). <em>Focusing.</em> Bantam Books.</li>
+                <li>Damasio, A.R. (1994). <em>Descartes' Error: Emotion, Reason, and the Human Brain.</em> Putnam.</li>
+                <li>Bower, G.H. (1981). Mood and Memory. <em>American Psychologist</em>, 36(2), 129-148.</li>
+                <li>Erikson, E.H. (1968). <em>Identity: Youth and Crisis.</em> W. W. Norton & Company.</li>
+                <li>Heidegger, M. (1927). <em>Sein und Zeit.</em> Max Niemeyer Verlag.</li>
+                <li>Kabat-Zinn, J. (1994). <em>Wherever You Go, There You Are.</em> Hyperion.</li>
+                <li>河合隼雄. (1967). 『ユング心理学入門』培風館.</li>
+            </ul>
+        </section>
+    </article>
+
+    <footer class="article-footer">
+        <p id="essay-nav-links"></p>
+        <p style="margin-top: 2rem; font-size: 0.75rem;">&copy; 2026 TokiStorage</p>
+    </footer>
+</main>
+
+<script src="essay-nav.js?v=20260209"></script>
+</body>
+</html>

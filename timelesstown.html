@@ -1,0 +1,533 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>タイムレスタウン新浦安の皆さまへ | 佐藤卓也</title>
+    <meta name="robots" content="noindex, nofollow">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Shippori+Mincho:wght@400;500;600;700&family=Zen+Kaku+Gothic+New:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --toki-blue: #2563EB;
+            --toki-blue-light: #3B82F6;
+            --toki-blue-dark: #1D4ED8;
+            --toki-blue-pale: #EFF6FF;
+            --gold: #C9A962;
+            --bg-white: #FFFFFF;
+            --bg-page: #F8FAFC;
+            --bg-section: #F1F5F9;
+            --text-primary: #1E293B;
+            --text-secondary: #475569;
+            --text-muted: #94A3B8;
+            --border: #E2E8F0;
+            --shadow-sm: 0 1px 2px rgba(0,0,0,0.05);
+            --shadow-md: 0 4px 16px rgba(0,0,0,0.06);
+            --font-display: 'Shippori Mincho', serif;
+            --font-body: 'Zen Kaku Gothic New', sans-serif;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        html { scroll-behavior: smooth; }
+
+        body {
+            font-family: var(--font-body);
+            font-weight: 400;
+            background: var(--bg-white);
+            color: var(--text-primary);
+            line-height: 1.9;
+            font-size: 16px;
+        }
+
+        /* ---- Header ---- */
+        .tt-header {
+            background: var(--bg-page);
+            border-bottom: 1px solid var(--border);
+            padding: 3rem 2rem 2.5rem;
+            text-align: center;
+        }
+        .tt-header-inner {
+            max-width: 640px;
+            margin: 0 auto;
+        }
+        .tt-date {
+            font-size: 0.8rem;
+            color: var(--text-muted);
+            letter-spacing: 0.08em;
+            margin-bottom: 1.5rem;
+        }
+        .tt-header h1 {
+            font-family: var(--font-display);
+            font-size: 1.6rem;
+            font-weight: 600;
+            line-height: 1.6;
+            color: var(--text-primary);
+            margin-bottom: 1rem;
+        }
+        .tt-from {
+            font-family: var(--font-display);
+            font-size: 0.95rem;
+            color: var(--text-secondary);
+            line-height: 1.8;
+        }
+
+        /* ---- Main Content ---- */
+        .tt-main {
+            max-width: 640px;
+            margin: 0 auto;
+            padding: 3rem 2rem 4rem;
+        }
+
+        .tt-section {
+            margin-bottom: 3.5rem;
+        }
+        .tt-section h2 {
+            font-family: var(--font-display);
+            font-size: 1.15rem;
+            font-weight: 600;
+            color: var(--text-primary);
+            margin-bottom: 1rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 1px solid var(--border);
+        }
+        .tt-section p {
+            font-size: 0.9rem;
+            color: var(--text-secondary);
+            margin-bottom: 1rem;
+            line-height: 2;
+        }
+        .tt-section p:last-child {
+            margin-bottom: 0;
+        }
+
+        /* ---- Greeting ---- */
+        .tt-greeting {
+            font-family: var(--font-display);
+            font-size: 0.95rem;
+            color: var(--text-primary);
+            line-height: 2.2;
+            margin-bottom: 3.5rem;
+        }
+        .tt-author-photo {
+            text-align: center;
+            margin: 0 0 1.5rem;
+        }
+        .tt-author-photo img {
+            width: 120px;
+            height: 120px;
+            border-radius: 50%;
+            object-fit: cover;
+            box-shadow: var(--shadow-md);
+        }
+
+        /* ---- Soap Section ---- */
+        .tt-soap-photo {
+            text-align: center;
+            margin: 1.5rem 0;
+        }
+        .tt-soap-photo img {
+            width: 220px;
+            max-width: 50%;
+            height: auto;
+            border-radius: 0.8rem;
+            box-shadow: var(--shadow-sm);
+        }
+        .tt-soap-photo figcaption {
+            font-size: 0.75rem;
+            color: var(--text-muted);
+            margin-top: 0.5rem;
+        }
+
+        /* ---- Toki Photos ---- */
+        .tt-toki-photos {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 0.8rem;
+            margin: 1.5rem 0;
+        }
+        .tt-toki-photos .tt-soap-photo {
+            margin: 0;
+        }
+        .tt-toki-photos .tt-soap-photo img {
+            width: 100%;
+            max-width: 100%;
+            aspect-ratio: 1;
+            object-fit: cover;
+        }
+        @media (max-width: 520px) {
+            .tt-toki-photos { grid-template-columns: 1fr; }
+        }
+
+        /* ---- Episode Box ---- */
+        .tt-episode {
+            background: linear-gradient(135deg, #FAFAFA 0%, #F5F5F5 100%);
+            border-left: 3px solid var(--text-muted);
+            border-radius: 0 0.8rem 0.8rem 0;
+            padding: 1.5rem 1.8rem;
+            margin: 2rem 0;
+        }
+        .tt-episode p {
+            font-size: 0.88rem;
+            color: var(--text-secondary);
+            line-height: 1.9;
+            margin-bottom: 0.8rem;
+        }
+        .tt-episode p:last-child {
+            margin-bottom: 0;
+        }
+        .tt-episode-insight {
+            font-family: var(--font-display);
+            font-weight: 500;
+            color: var(--text-primary) !important;
+            margin-top: 1rem !important;
+            padding-top: 0.8rem;
+            border-top: 1px solid var(--border);
+        }
+
+        /* ---- Bridge (soap → toki) ---- */
+        .tt-bridge {
+            background: var(--bg-page);
+            border: 1px solid var(--border);
+            border-radius: 1rem;
+            padding: 2rem;
+            margin: 2rem 0;
+            text-align: center;
+        }
+        .tt-bridge p {
+            font-family: var(--font-display);
+            font-size: 1rem;
+            color: var(--text-primary);
+            line-height: 2;
+            margin-bottom: 0;
+        }
+        .tt-bridge .bridge-accent {
+            color: var(--toki-blue);
+            font-weight: 600;
+        }
+
+        /* ---- Toki Intro ---- */
+        .tt-toki-features {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 1rem;
+            margin: 1.5rem 0;
+        }
+        .tt-feature {
+            background: var(--bg-page);
+            border: 1px solid var(--border);
+            border-radius: 0.8rem;
+            padding: 1.2rem 1rem;
+            text-align: center;
+        }
+        .tt-feature .f-number {
+            font-family: var(--font-display);
+            font-size: 1.6rem;
+            font-weight: 700;
+            color: var(--toki-blue);
+        }
+        .tt-feature .f-unit {
+            font-size: 0.85rem;
+            color: var(--text-secondary);
+        }
+        .tt-feature .f-label {
+            font-size: 0.75rem;
+            color: var(--text-muted);
+            margin-top: 0.2rem;
+        }
+
+        /* ---- Monitor Section ---- */
+        .tt-monitor {
+            background: linear-gradient(135deg, var(--toki-blue-pale) 0%, #fff 100%);
+            border: 2px solid var(--toki-blue);
+            border-radius: 1rem;
+            padding: 2.5rem 2rem;
+            margin: 2rem 0;
+        }
+        .tt-monitor h2 {
+            font-family: var(--font-display);
+            font-size: 1.15rem;
+            font-weight: 600;
+            color: var(--toki-blue-dark);
+            margin-bottom: 1rem;
+            padding-bottom: 0;
+            border-bottom: none;
+        }
+        .tt-monitor p {
+            font-size: 0.9rem;
+            color: var(--text-secondary);
+            margin-bottom: 1rem;
+            line-height: 2;
+        }
+        .tt-monitor-details {
+            background: var(--bg-white);
+            border: 1px solid var(--border);
+            border-radius: 0.6rem;
+            padding: 1.2rem 1.5rem;
+            margin: 1.2rem 0;
+        }
+        .tt-monitor-details dt {
+            font-size: 0.78rem;
+            color: var(--text-muted);
+            font-weight: 600;
+            letter-spacing: 0.05em;
+            margin-top: 0.8rem;
+        }
+        .tt-monitor-details dt:first-child {
+            margin-top: 0;
+        }
+        .tt-monitor-details dd {
+            font-size: 0.88rem;
+            color: var(--text-primary);
+            margin-left: 0;
+            margin-bottom: 0.2rem;
+        }
+        .tt-monitor-note {
+            font-size: 0.8rem !important;
+            color: var(--text-muted) !important;
+            font-style: italic;
+        }
+
+        /* ---- Highlight Box ---- */
+        .tt-highlight {
+            background: linear-gradient(135deg, #FEF9E7 0%, #FFF8E1 100%);
+            border: 2px solid var(--gold);
+            border-radius: 0.8rem;
+            padding: 1.5rem;
+            margin: 1.5rem 0;
+            text-align: center;
+        }
+        .tt-highlight-title {
+            font-family: var(--font-display);
+            font-size: 1.1rem;
+            font-weight: 600;
+            color: var(--text-primary);
+            margin-bottom: 0.5rem;
+        }
+        .tt-highlight p {
+            font-size: 0.88rem;
+            color: var(--text-secondary);
+            margin-bottom: 0;
+            line-height: 1.8;
+        }
+        .tt-highlight-note {
+            font-size: 0.78rem !important;
+            color: var(--text-muted) !important;
+            margin-top: 0.8rem !important;
+        }
+
+        /* ---- CTA ---- */
+        .tt-cta {
+            text-align: center;
+            margin-top: 2rem;
+        }
+        .tt-cta-btn {
+            display: inline-block;
+            background: var(--toki-blue);
+            color: #fff;
+            padding: 0.8rem 2.5rem;
+            border-radius: 0.5rem;
+            text-decoration: none;
+            font-size: 0.9rem;
+            font-weight: 500;
+            transition: background 0.3s ease;
+        }
+        .tt-cta-btn:hover {
+            background: var(--toki-blue-dark);
+        }
+        .tt-cta-sub {
+            font-size: 0.78rem;
+            color: var(--text-muted);
+            margin-top: 0.6rem;
+        }
+
+        /* ---- Links ---- */
+        .tt-links {
+            margin-top: 3rem;
+            padding-top: 2rem;
+            border-top: 1px solid var(--border);
+            text-align: center;
+        }
+        .tt-links a {
+            display: inline-block;
+            color: var(--toki-blue);
+            text-decoration: none;
+            font-size: 0.85rem;
+            margin: 0.3rem 1rem;
+        }
+        .tt-links a:hover {
+            text-decoration: underline;
+        }
+
+        /* ---- Footer ---- */
+        .tt-footer {
+            text-align: center;
+            padding: 2rem;
+            font-size: 0.75rem;
+            color: var(--text-muted);
+            border-top: 1px solid var(--border);
+        }
+
+        /* ---- Responsive ---- */
+        @media (max-width: 520px) {
+            .tt-header { padding: 2rem 1.2rem; }
+            .tt-header h1 { font-size: 1.3rem; }
+            .tt-main { padding: 2rem 1.2rem 3rem; }
+            .tt-toki-features { grid-template-columns: 1fr; }
+            .tt-monitor { padding: 2rem 1.5rem; }
+        }
+    </style>
+</head>
+<body>
+
+<header class="tt-header">
+    <div class="tt-header-inner">
+        <p class="tt-date">2026年2月4日（水）立春</p>
+        <h1>タイムレスタウン新浦安の<br>皆さまへ</h1>
+        <p class="tt-from">
+            タイムレスタウン新浦安 自治会長<br>
+            佐藤 卓也
+        </p>
+        <div class="tt-lang-switch" style="margin-top: 1rem;">
+            <a href="timelesstown-en.html" style="display: inline-block; padding: 0.3rem 0.8rem; font-size: 0.8rem; color: #2563EB; border: 1px solid #2563EB; border-radius: 4px; text-decoration: none;">English Version</a>
+        </div>
+    </div>
+</header>
+
+<main class="tt-main">
+
+    <!-- ① 自治会長からのご挨拶 -->
+    <div class="tt-greeting">
+        <figure class="tt-author-photo">
+            <img src="asset/sato-family.jpg" alt="佐藤家" loading="lazy" width="400" height="400">
+        </figure>
+        <p>2年間の任期を通して、ありがとうございました。</p>
+        <p>前任の自治会長より信託を受け、「自治会DX」を目標に自治会長をお引き受けいたしました。ハロウィンイベントの継続実施、LINE Worksの自治会導入、バスツアーの企画運営、近隣のお祭りへの協賛協力と、住民の皆さまのお力添えのおかげで親睦を深めていただく機会を引き継げたと考えております。</p>
+        <p>一方、2期目の早々に、我が家系の本家の血筋でハワイはマウイ島にお墓があることがわかり、突如として墓守のために海外を行き来することとなりました。このため、運営面ではスムーズにいかなかった点があったことが、任期を通じた反省点です。</p>
+        <p>しかし、この墓守の経験を通じて、自治会のあり方を見つめ直し、さまざまな観点から生と死に向き合うことになりました。その教訓を皆さまに還元したいと考え、今回パールソープをお配りすることにいたしました。</p>
+        <p>この春、新潟県佐渡市に新たな拠点を構えます。タイムレスタウンとのご縁は続けていきたいと思っています。ここでの2年間は私にとってかけがえのない時間でした。</p>
+        <p>残り任期にて滞っている行政との連携、次期への引き継ぎを順次実施してまいります。次期会長が未定となっていますので、もし立候補されたい方がいらっしゃいましたら、お気軽にご連絡ください。</p>
+    </div>
+
+    <!-- ② Pearl Soapについて -->
+    <div class="tt-section">
+        <h2>Pearl Soapについて</h2>
+
+        <figure class="tt-soap-photo">
+            <img src="asset/pearl-soap-v2.jpg" alt="Pearl Soap" loading="lazy" width="960" height="960">
+            <figcaption>手作りの肉球石鹸</figcaption>
+        </figure>
+
+        <p>Pearl Soapは、2007年から家族と暮らした愛犬「Pearl」の名を冠した手作り石鹸です。2025年に旅立ったPearlへの「いてくれてありがとう」という気持ちを形にしました。</p>
+        <p>肉球の形をした石鹸を手に取るたびに、大切な存在が「いてくれた」ことを思い出す。そんなささやかな日常の瞬間を届けたくて作っています。</p>
+        <p>マウイでの墓守、愛犬との別れ。この2年間で「存在を残すこと」について考え続けてきました。その想いを最初にお届けしたいのが、タイムレスタウンの皆さまです。</p>
+        <p>販売品ではありません。ご縁のある方への贈りものです。</p>
+    </div>
+
+    <!-- エピソード: 消えるもの vs 残るもの -->
+    <div class="tt-episode">
+        <p>先日、娘と一緒にキッズイベントへ行きました。</p>
+        <p>帰り道、娘の手には紙の帽子とミニ風船。どちらも子どもは大喜び。でも帰宅する頃には風船はしぼみ、翌朝にはゴミ箱へ。</p>
+        <p>その日、娘は会場で出会った方にパールソープを渡していました。</p>
+        <p>企業がくれるものは、その場では楽しい。でもすぐに消える。<br>手作りの石鹸は、使い切るまで手元に残る。そしてQRコードから、作った人のストーリーにつながる。</p>
+        <p class="tt-episode-insight">同じ「もらいもの」でも、<br>記憶に残るものと消えるものがある。</p>
+    </div>
+
+    <!-- ③ 石鹸→存在証明への橋渡し -->
+    <div class="tt-bridge">
+        <p>石鹸は、使えばなくなります。</p>
+        <p>でも、あなたがここにいたこと、<br>あなたが誰かを大切に思ったことは、<br><span class="bridge-accent">消えなくていい。</span></p>
+    </div>
+
+    <!-- ④ トキストレージの紹介 -->
+    <div class="tt-section">
+        <h2>石英ガラスに刻む、千年の存在証明</h2>
+
+        <p>マウイの墓守を通じて、ひとつの問いが生まれました。墓石は風化し、クラウドはサービスが終われば消える。大切な人が存在した証を、本当に残せる方法はないのか。その問いから生まれたのが「トキストレージ」です。石英ガラスに名前や写真、メッセージを刻む存在証明サービスです。</p>
+
+        <div class="tt-toki-photos">
+            <figure class="tt-soap-photo">
+                <img src="asset/product-hero.jpg" alt="トキストレージ製品" loading="lazy" width="960" height="720">
+            </figure>
+            <figure class="tt-soap-photo">
+                <img src="asset/qr-scan.jpg" alt="スマホでQRコードを読み取る様子" loading="lazy" width="720" height="720">
+            </figure>
+            <figure class="tt-soap-photo">
+                <img src="asset/kamon-engraving.jpg" alt="家紋を刻印したガラスプレート" loading="lazy" width="720" height="720">
+            </figure>
+        </div>
+
+        <div class="tt-toki-features">
+            <div class="tt-feature">
+                <div class="f-number">1,000<span class="f-unit">年</span></div>
+                <div class="f-label">物理的保存期間</div>
+            </div>
+            <div class="tt-feature">
+                <div class="f-number">0<span class="f-unit">円</span></div>
+                <div class="f-label">維持費</div>
+            </div>
+            <div class="tt-feature">
+                <div class="f-number">1<span class="f-unit">枚</span></div>
+                <div class="f-label">から制作</div>
+            </div>
+        </div>
+
+        <p>サーバーも電源も必要ありません。石英ガラスにQRコードを刻印し、スマホをかざすだけで記録が読み取れます。一度作れば、あとは何もしなくていい。月額課金も維持費もゼロ。</p>
+        <p>半導体製造装置の開発経験を含むエンジニアキャリア20年超。その技術を「個人の存在証明」に転用したのがトキストレージです。</p>
+    </div>
+
+    <!-- ⑤ モニタープログラム -->
+    <div class="tt-monitor">
+        <h2>無料モニターのご案内</h2>
+
+        <p>タイムレスタウンの皆さまに、石鹸の次に届けたいものがあります。</p>
+        <p>トキストレージを、<strong>10名程度を目安に</strong>ご希望の方へ無料でお届けしたいと考えています。自治会長として最後にお渡しする、もうひとつの贈りものです。</p>
+
+        <dl class="tt-monitor-details">
+            <dt>対象</dt>
+            <dd>タイムレスタウン新浦安にお住まいの方（世帯単位）</dd>
+
+            <dt>内容</dt>
+            <dd>制作一式（石英ガラスプレート・QRコード刻印・専用ケース）</dd>
+
+            <dt>費用</dt>
+            <dd>無料</dd>
+
+            <dt>人数</dt>
+            <dd>10名程度を目安に（お気軽にご相談ください）</dd>
+
+            <dt>お願いしたいこと</dt>
+            <dd>完成後に、率直なご感想をお聞かせください</dd>
+        </dl>
+
+        <div class="tt-highlight">
+            <p class="tt-highlight-title">タイムレスタウンから、文字通り"タイムレス"な記録を</p>
+            <p>モニターにご参加いただいた方のお名前とご感想は、ニュースレター創刊号に掲載。国立国会図書館をはじめ、象徴的な施設へ永久保存として寄贈いたします。タイムレスタウンの皆さまと、この記念を分かち合えれば幸いです。</p>
+            <p class="tt-highlight-note">※ 掲載の際は事前にご相談の上、掲載可否・掲載内容を決定いたします。</p>
+        </div>
+
+        <p>「自分の名前を千年残すって、どういう気持ちになるんだろう」「親の名前を刻んでみたい」「正直よくわからないけど気になる」── どんな動機でも構いません。</p>
+
+        <p class="tt-monitor-note">※ ご感想はサービス改善や紹介文に活用させていただく場合があります（匿名／実名はご希望に応じます）。</p>
+
+        <div class="tt-cta">
+            <a href="https://line.me/R/oaMessage/@897glsbz/?%E3%82%BF%E3%82%A4%E3%83%A0%E3%83%AC%E3%82%B9%E3%82%BF%E3%82%A6%E3%83%B3%E6%96%B0%E6%B5%A6%E5%AE%89%E3%81%AE%E3%83%9A%E3%83%BC%E3%82%B8%E3%82%92%E8%A6%8B%E3%81%BE%E3%81%97%E3%81%9F" class="tt-cta-btn" target="_blank" rel="noopener">LINEで相談する</a>
+            <p class="tt-cta-sub">30分のオンライン相談、または直接お声がけください</p>
+        </div>
+    </div>
+
+    <!-- リンク -->
+    <div class="tt-links">
+        <a href="index.html">トキストレージ 詳細を見る</a>
+        <a href="pearl-soap.html">Pearl Soap 詳細</a>
+    </div>
+
+</main>
+
+<footer class="tt-footer">
+    <p>TokiStorage / 佐藤 卓也</p>
+    <p>&copy; 2026 All rights reserved.</p>
+</footer>
+
+</body>
+</html>

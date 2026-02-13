@@ -1,0 +1,528 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>オフグリッド構築支援コンサル | トキストレージ</title>
+    <meta name="description" content="オフグリッド構築支援コンサル — ソーラーパネル・バッテリー・衛星通信・雨水活用まで、地方拠点のインフラ自立をトータルサポート。実際に構築・検証した経験に基づく実践的コンサルティング。">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Shippori+Mincho:wght@400;500;600;700&family=Zen+Kaku+Gothic+New:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="index.css">
+    <style>
+        .og-page { padding: 6rem 2rem 4rem; }
+        .og-inner { max-width: 700px; margin: 0 auto; }
+        .og-inner h1 {
+            font-family: var(--font-display);
+            font-size: 1.6rem;
+            font-weight: 600;
+            color: var(--text-primary);
+            margin-bottom: 0.3rem;
+            text-align: center;
+        }
+        .og-tagline {
+            text-align: center;
+            font-family: var(--font-display);
+            font-size: 0.92rem;
+            color: var(--text-secondary);
+            margin-bottom: 2.5rem;
+            line-height: 1.8;
+        }
+        .og-section {
+            margin-bottom: 2.5rem;
+        }
+        .og-section h2 {
+            font-family: var(--font-display);
+            font-size: 1.05rem;
+            font-weight: 600;
+            color: var(--text-primary);
+            margin-bottom: 0.8rem;
+            padding-bottom: 0.4rem;
+            border-bottom: 1px solid var(--border);
+        }
+        .og-section h3 {
+            font-family: var(--font-display);
+            font-size: 0.92rem;
+            font-weight: 600;
+            color: var(--text-primary);
+            margin-top: 1.2rem;
+            margin-bottom: 0.4rem;
+        }
+        .og-section p,
+        .og-section li {
+            font-size: 0.88rem;
+            color: var(--text-secondary);
+            line-height: 1.9;
+        }
+        .og-section ul {
+            padding-left: 1.5rem;
+            margin-bottom: 1rem;
+        }
+        .og-section li { margin-bottom: 0.3rem; }
+        .og-features {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1.2rem;
+            margin-top: 1rem;
+        }
+        .og-feature-card {
+            background: var(--bg-page);
+            border: 1px solid var(--border);
+            border-radius: 0.8rem;
+            padding: 1.2rem;
+            text-align: center;
+        }
+        .og-feature-card .feature-icon {
+            font-size: 1.6rem;
+            margin-bottom: 0.5rem;
+        }
+        .og-feature-card h3 {
+            font-family: var(--font-display);
+            font-size: 0.88rem;
+            font-weight: 600;
+            color: var(--text-primary);
+            margin-bottom: 0.3rem;
+        }
+        .og-feature-card p {
+            font-size: 0.78rem;
+            color: var(--text-muted);
+            line-height: 1.6;
+        }
+        .og-story {
+            background: var(--bg-page);
+            border: 1px solid var(--border);
+            border-radius: 1rem;
+            padding: 1.8rem;
+            margin: 2rem 0;
+        }
+        .og-story p {
+            font-size: 0.88rem;
+            color: var(--text-secondary);
+            line-height: 1.9;
+            margin-bottom: 0.8rem;
+        }
+        .og-story p:last-child { margin-bottom: 0; }
+        .og-personas {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 1rem;
+            margin-top: 1rem;
+        }
+        .og-persona-card {
+            background: var(--bg-page);
+            border: 1px solid var(--border);
+            border-radius: 0.8rem;
+            padding: 1.2rem 1.5rem;
+        }
+        .og-persona-card h3 {
+            font-family: var(--font-display);
+            font-size: 0.92rem;
+            font-weight: 600;
+            color: var(--text-primary);
+            margin-bottom: 0.4rem;
+        }
+        .og-persona-card p {
+            font-size: 0.82rem;
+            color: var(--text-muted);
+            line-height: 1.7;
+        }
+        .og-flow {
+            counter-reset: flow-step;
+            margin-top: 1rem;
+        }
+        .og-flow-step {
+            display: flex;
+            gap: 1rem;
+            align-items: flex-start;
+            margin-bottom: 1.2rem;
+        }
+        .og-flow-step::before {
+            counter-increment: flow-step;
+            content: counter(flow-step);
+            flex-shrink: 0;
+            width: 2rem;
+            height: 2rem;
+            background: var(--toki-blue);
+            color: #fff;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.82rem;
+            font-weight: 600;
+        }
+        .og-flow-step div h3 {
+            font-family: var(--font-display);
+            font-size: 0.88rem;
+            font-weight: 600;
+            color: var(--text-primary);
+            margin-bottom: 0.2rem;
+        }
+        .og-flow-step div p {
+            font-size: 0.82rem;
+            color: var(--text-muted);
+            line-height: 1.7;
+        }
+        .og-pricing {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 1.2rem;
+            margin-top: 1rem;
+        }
+        .og-pricing-card {
+            background: var(--bg-page);
+            border: 1px solid var(--border);
+            border-radius: 0.8rem;
+            padding: 1.5rem;
+        }
+        .og-pricing-card.recommended {
+            border-color: var(--toki-blue);
+            box-shadow: 0 0 0 1px var(--toki-blue);
+        }
+        .og-pricing-card h3 {
+            font-family: var(--font-display);
+            font-size: 0.95rem;
+            font-weight: 600;
+            color: var(--text-primary);
+            margin-bottom: 0.3rem;
+        }
+        .og-pricing-card .price {
+            font-family: var(--font-display);
+            font-size: 1.3rem;
+            font-weight: 700;
+            color: var(--toki-blue);
+            margin-bottom: 0.8rem;
+        }
+        .og-pricing-card .price span {
+            font-size: 0.75rem;
+            font-weight: 400;
+            color: var(--text-muted);
+        }
+        .og-pricing-card ul {
+            padding-left: 1.2rem;
+            margin: 0;
+        }
+        .og-pricing-card li {
+            font-size: 0.78rem;
+            color: var(--text-secondary);
+            line-height: 1.8;
+            margin-bottom: 0.2rem;
+        }
+        .og-badge {
+            display: inline-block;
+            background: var(--toki-blue);
+            color: #fff;
+            font-size: 0.7rem;
+            padding: 0.15rem 0.6rem;
+            border-radius: 1rem;
+            margin-bottom: 0.5rem;
+            font-weight: 500;
+        }
+        .og-cta {
+            text-align: center;
+            margin-top: 3rem;
+            padding: 2rem;
+            background: var(--toki-blue-pale);
+            border-radius: 1rem;
+        }
+        .og-cta p {
+            font-family: var(--font-display);
+            font-size: 0.92rem;
+            color: var(--text-secondary);
+            margin-bottom: 1rem;
+            line-height: 1.8;
+        }
+        .og-cta a {
+            display: inline-block;
+            background: var(--toki-blue);
+            color: #fff;
+            padding: 0.7rem 2rem;
+            border-radius: 0.5rem;
+            text-decoration: none;
+            font-size: 0.85rem;
+            font-weight: 500;
+            transition: background 0.3s ease;
+        }
+        .og-cta a:hover { background: var(--toki-blue-dark); }
+        .og-back {
+            text-align: center;
+            margin-top: 2.5rem;
+        }
+        .og-back a {
+            color: var(--toki-blue);
+            text-decoration: none;
+            font-size: 0.85rem;
+        }
+        .og-back a:hover { text-decoration: underline; }
+        .og-note {
+            font-size: 0.75rem !important;
+            color: var(--text-muted) !important;
+            margin-top: 0.5rem;
+        }
+        .og-story-photos {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 0.8rem;
+            margin: 1.2rem 0;
+        }
+        .og-story-photos figure {
+            margin: 0;
+        }
+        .og-story-photos img {
+            width: 100%;
+            border-radius: 0.5rem;
+            aspect-ratio: 4/3;
+            object-fit: cover;
+        }
+        .og-story-photos figcaption {
+            font-size: 0.7rem;
+            color: var(--text-muted);
+            margin-top: 0.3rem;
+            line-height: 1.4;
+        }
+        @media (max-width: 520px) {
+            .og-story-photos {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+
+<nav class="toki-nav">
+    <span class="nav-logo"><a href="index.html">トキストレージ</a> / オフグリッド構築支援</span>
+</nav>
+
+<main class="og-page">
+    <div class="og-inner">
+        <h1>オフグリッド構築支援コンサル</h1>
+        <p class="og-tagline">
+            電気・水・通信——インフラが届かない場所でも、<br>
+            暮らせる環境は自分で作れます。<br>
+            3日で構築した実績をもとに、あなたの拠点づくりを支援します。
+        </p>
+
+        <div class="og-features">
+            <div class="og-feature-card">
+                <div class="feature-icon">&#x2600;</div>
+                <h3>電力の自立</h3>
+                <p>ソーラーパネル・バッテリー・ジェネレーターの組み合わせで、安定した電力供給を実現します。</p>
+            </div>
+            <div class="og-feature-card">
+                <div class="feature-icon">&#x1F4A7;</div>
+                <h3>水の確保</h3>
+                <p>雨水活用・太陽光温水器で、上水道に頼らない水回りのインフラを構築します。</p>
+            </div>
+            <div class="og-feature-card">
+                <div class="feature-icon">&#x1F4E1;</div>
+                <h3>通信の確立</h3>
+                <p>衛星通信・ネットワーク構築・ゲストWiFiまで、リモートワークにも耐える通信環境を整備します。</p>
+            </div>
+        </div>
+
+        <div class="og-story">
+            <p>代表・佐藤卓也は、千葉県浦安市のタイムレスタウン自宅で烏骨鶏飼育ハウスにミニオフグリッド環境を構築。ソーラーパネルとバッテリーによる電力自立の検証を、日常の中で繰り返しました。この飼育ハウスは、トキストレージの石英ガラス刻印造形物の屋外劣化検証も兼ねた実験拠点です。</p>
+            <div class="og-story-photos">
+                <figure>
+                    <img src="asset/IMG_0852.jpeg" alt="孵化器内の烏骨鶏のヒナ" loading="lazy">
+                    <figcaption>孵化器で誕生した烏骨鶏のヒナ</figcaption>
+                </figure>
+                <figure>
+                    <img src="asset/IMG_0858.jpeg" alt="段ボール飼育箱で育つ烏骨鶏のヒナたち" loading="lazy">
+                    <figcaption>飼育箱での初期育成</figcaption>
+                </figure>
+                <figure>
+                    <img src="asset/Snapshoot_1756198826573.jpg" alt="ソーラー電力で稼働する監視カメラの映像" loading="lazy">
+                    <figcaption>ソーラー電力で稼働する監視カメラ映像</figcaption>
+                </figure>
+            </div>
+            <p>また、SoulCarrier（共鳴の会）の墓石調査では各地で車中泊を行い、ポータブル電源とソーラーパネルで電力を自給しながらの長期フィールドワークを経験。移動しながらオフグリッド環境を維持する実践知も蓄えました。</p>
+            <p>2025年、マウイ島を東端から西端まで滞在する中で、自前の機材を持ち込み、2箇所でそれぞれ3日以内にオフグリッド環境を構築。現地のWorkawayホストへの構築支援も行い、実用レベルで機能することを検証しました。</p>
+            <div class="og-story-photos">
+                <figure>
+                    <img src="asset/IMG_2724-2.jpeg" alt="マウイ島でのソーラーパネル設置作業" loading="lazy">
+                    <figcaption>マウイでのソーラーパネル設置</figcaption>
+                </figure>
+                <figure>
+                    <img src="asset/IMG_3348.jpeg" alt="ポータブル電源・ジェネレーター・冷蔵庫の電力システム" loading="lazy">
+                    <figcaption>電力システム一式（ポータブル電源+ジェネレーター）</figcaption>
+                </figure>
+                <figure>
+                    <img src="asset/IMG_3352.jpeg" alt="Starlink WiFiルーターの設置" loading="lazy">
+                    <figcaption>衛星通信・WiFi環境の構築</figcaption>
+                </figure>
+            </div>
+            <p>2026年春からは佐渡島に移転し、本格的なオフグリッド生活基盤の構築を予定。実験→車中泊→遠征検証→本番と段階を踏んできた経験が、このコンサルティングの土台です。</p>
+        </div>
+
+        <div class="og-section">
+            <h2>対象領域</h2>
+            <ul>
+                <li><strong>発電</strong> — ソーラーパネル、ポータブル電源、バッテリーシステム、ジェネレーター</li>
+                <li><strong>給湯</strong> — 太陽光温水器、効率的な給湯設計</li>
+                <li><strong>水</strong> — 雨水収集・ろ過・貯水システム</li>
+                <li><strong>通信</strong> — Starlink等の衛星通信、ローカルネットワーク構築、ゲストWiFi</li>
+                <li><strong>統合設計</strong> — 上記を組み合わせた、拠点全体のインフラ設計</li>
+            </ul>
+        </div>
+
+        <div class="og-section">
+            <h2>こんな不安、ありませんか？</h2>
+            <div class="og-personas">
+                <div class="og-persona-card">
+                    <h3>「電気工事の資格がないとできないのでは」</h3>
+                    <p>資格が必要な範囲は限られています。ポータブル電源・ソーラーパネル・衛星通信など、資格不要で構築できる領域は広く、それだけで十分実用的な環境になります。必要な場合の専門業者への橋渡しもサポートします。</p>
+                </div>
+                <div class="og-persona-card">
+                    <h3>「初期投資が高すぎるのでは」</h3>
+                    <p>最小構成からのスモールスタートが可能です。まずはソーラーパネル1枚とポータブル電源から始めて、必要に応じて拡張していく。段階的に投資することで、リスクを抑えながら環境を育てられます。</p>
+                </div>
+                <div class="og-persona-card">
+                    <h3>「壊れたら直せない」</h3>
+                    <p>だからこそ、シンプルな構成にこだわります。部品点数を減らし、汎用品を使い、自分でメンテナンスできる設計に。マウイで3日以内に組めたのは、複雑にしないからです。</p>
+                </div>
+                <div class="og-persona-card">
+                    <h3>「趣味レベルで実用性がないのでは」</h3>
+                    <p>マウイでは実際にその環境で生活し、リモートワークもこなしました。烏骨鶏飼育ハウスでは電力を自動管理しています。「快適に暮らせるかどうか」が検証基準です。</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="og-section">
+            <h2>4つのフェーズ</h2>
+            <div class="og-flow">
+                <div class="og-flow-step">
+                    <div>
+                        <h3>Assessment — 現地調査・ヒアリング</h3>
+                        <p>無料セッション×2回。拠点の立地・気候・既存インフラ・目的をヒアリング。何が必要で何が不要かを一緒に見極めます。</p>
+                    </div>
+                </div>
+                <div class="og-flow-step">
+                    <div>
+                        <h3>Design — システム設計（2ヶ月）</h3>
+                        <p>電力・水・通信の最適な組み合わせを設計。機材選定、配置計画、予算策定まで。過剰投資を避け、拡張可能なシンプル設計を目指します。</p>
+                    </div>
+                </div>
+                <div class="og-flow-step">
+                    <div>
+                        <h3>Build — 構築支援（2ヶ月）</h3>
+                        <p>機材の調達サポート、設置のガイド、初期セットアップ。あなた自身が理解して組める状態にすることが目標です。</p>
+                    </div>
+                </div>
+                <div class="og-flow-step">
+                    <div>
+                        <h3>Optimize — 最適化・自走（2ヶ月）</h3>
+                        <p>実際の稼働データをもとに調整。発電量と消費のバランス、季節変動への対応、トラブルシューティング。自分で維持管理できるようになるまで伴走します。</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="og-section">
+            <h2>料金</h2>
+            <div class="og-pricing">
+                <div class="og-pricing-card">
+                    <h3>Assessment</h3>
+                    <div class="price">0<span>円</span></div>
+                    <ul>
+                        <li>無料セッション×2回</li>
+                        <li>現地状況ヒアリング</li>
+                        <li>オフグリッド適性の見極め</li>
+                        <li>概算見積もり・方針提案</li>
+                    </ul>
+                </div>
+                <div class="og-pricing-card recommended">
+                    <span class="og-badge">Design + Build + Optimize</span>
+                    <h3>各フェーズ</h3>
+                    <div class="price">88,000<span>円（税込）/ サポート期間6ヶ月</span></div>
+                    <ul>
+                        <li>インフラ設計・機材選定</li>
+                        <li>調達サポート・設置ガイド</li>
+                        <li>初期セットアップ</li>
+                        <li>稼働データに基づく最適化</li>
+                        <li>メール・チャット相談（6ヶ月）</li>
+                        <li>トラブルシューティング</li>
+                    </ul>
+                </div>
+            </div>
+            <p class="og-note">※Assessmentは無料です。まずお話しして、合わないと思えばそこで終了できます。<br>※価格は予告なく変更される場合があります。法人向けカスタムプランもご相談ください。<br>※機材費・交通費・宿泊費（現地作業を伴う場合）等は別途実費精算となります。</p>
+        </div>
+
+        <div class="og-section">
+            <h2>なぜ私たちがこれをやるのか</h2>
+            <p>トキストレージの使命は「存在証明」——記録を千年先に届けること。しかし記録を残す場所そのものが持続可能でなければ意味がありません。インフラに依存しない拠点づくりは、存在を未来につなぐための基盤です。</p>
+            <h3>Workaway支援との連携</h3>
+            <p>地方でWorkawayホストを始めるとき、最大のハードルの一つがインフラ整備です。通信環境がなければゲストとのやり取りができない。電力が不安定なら快適な受入ができない。オフグリッド構築支援は、Workaway導入の前提条件を整えるサービスでもあります。</p>
+            <h3>佐渡島での実践</h3>
+            <p>2026年春、私たち自身が佐渡島に移転し、オフグリッド生活基盤を本格的に構築します。タイムレスタウンでの実験、マウイでの遠征検証を経て、佐渡で「本番」を迎える。そのプロセスのすべてが、このコンサルティングの知見になります。</p>
+        </div>
+
+        <div class="og-cta">
+            <p>オフグリッド環境、一緒に作りませんか？<br>まずは無料相談からお気軽にどうぞ。</p>
+            <a href="https://line.me/R/oaMessage/@897glsbz/?%E3%82%AA%E3%83%95%E3%82%B0%E3%83%AA%E3%83%83%E3%83%89%E6%A7%8B%E7%AF%89%E3%81%AB%E3%81%A4%E3%81%84%E3%81%A6%E7%9B%B8%E8%AB%87%E3%81%97%E3%81%9F%E3%81%84%E3%81%A7%E3%81%99" target="_blank" rel="noopener">LINEで相談する</a>
+        </div>
+
+        <div class="og-back">
+            <a href="index.html">&larr; トキストレージ トップへ戻る</a>
+        </div>
+    </div>
+</main>
+
+<footer class="toki-footer">
+    <div class="footer-inner">
+        <div class="footer-brand">
+            <h3>トキストレージ</h3>
+            <p>想いを1000年先へ届ける5次元記録</p>
+        </div>
+        <div class="footer-links-group">
+            <h4>リンク</h4>
+            <a href="index.html">トキストレージとは</a>
+            <a href="index.html#pricing">料金プラン</a>
+            <a href="index.html#faq">よくある質問</a>
+            <a href="index.html#cta">お問い合わせ</a>
+            <a href="profile.html">代表プロフィール</a>
+            <a href="pitch-deck.html">投資家向け資料</a>
+            <a href="legacy.html">1000年の設計思想</a>
+            <a href="kids.html">お子さま向けページ</a>
+            <a href="infographic.html">エコシステム全体像</a>
+        </div>
+        <div class="footer-links-group">
+            <h4>提案</h4>
+            <a href="partnership.html">パートナーシップ提案</a>
+            <a href="client-proposal.html">クライアント提案</a>
+            <a href="government-proposal.html">行政提案</a>
+            <a href="patronage.html">パトロネージ</a>
+        </div>
+        <div class="footer-links-group">
+            <h4>関連サービス</h4>
+            <span class="footer-sub-links"><a href="../index-ja.html">SoulCarrier 共鳴の会</a>（<a href="../movement/入会のご案内.pdf">入会案内</a>／<a href="../movement/BasicAgreement.pdf">合意書</a>／<a href="../movement/Soul_Carrier規約.pdf">規約</a>）</span>
+            <span class="footer-sub-links"><a href="pearl-soap.html">Pearl Soap</a>（<a href="how-to-make.html">作り方</a>／<a href="workshop.html">ワークショップ</a>／<a href="ambassador.html">アンバサダー</a>／<a href="100-scenes.html">100のシーン</a>）</span>
+            <span class="footer-sub-links"><a href="workaway.html">Workaway導入支援</a>（<a href="workaway-proposal.html">提案書</a>）</span>
+            <a href="offgrid.html">オフグリッド構築支援</a>
+            <a href="https://voice-memorial-qr.onrender.com/" target="_blank" rel="noopener">Voice QR 技術デモ</a>
+        </div>
+        <div class="footer-links-group">
+            <h4>法的情報</h4>
+            <a href="tokushoho.html">特定商取引法に基づく表示</a>
+            <a href="privacy.html">プライバシーポリシー</a>
+        </div>
+        <div class="footer-links-group">
+            <h4>運営</h4>
+            <p class="footer-company">TokiStorage<br>佐藤卓也<br>〒279-0014 千葉県浦安市明海2-11-13<br>（2026年春〜 佐渡市へ移転予定）</p>
+            <a href="https://www.linkedin.com/in/satotakuya" target="_blank" rel="noopener"><svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" style="vertical-align:-2px;margin-right:4px"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 01-2.063-2.065 2.064 2.064 0 112.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg>satotakuya</a>
+            <a href="https://x.com/tokistorage" target="_blank" rel="noopener"><svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" style="vertical-align:-2px;margin-right:4px"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>@tokistorage</a>
+            <a href="https://www.facebook.com/tokistorage" target="_blank" rel="noopener"><svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" style="vertical-align:-2px;margin-right:4px"><path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/></svg>@tokistorage</a>
+            <a href="https://www.instagram.com/tokistorage" target="_blank" rel="noopener"><svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" style="vertical-align:-2px;margin-right:4px"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.052.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 100 12.324 6.162 6.162 0 000-12.324zM12 16a4 4 0 110-8 4 4 0 010 8zm6.406-11.845a1.44 1.44 0 100 2.881 1.44 1.44 0 000-2.881z"/></svg>@tokistorage</a>
+            <a href="https://www.tiktok.com/@tokistorage" target="_blank" rel="noopener"><svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" style="vertical-align:-2px;margin-right:4px"><path d="M12.525.02c1.31-.02 2.61-.01 3.91-.02.08 1.53.63 3.09 1.75 4.17 1.12 1.11 2.7 1.62 4.24 1.79v4.03c-1.44-.05-2.89-.35-4.2-.97-.57-.26-1.1-.59-1.62-.93-.01 2.92.01 5.84-.02 8.75-.08 1.4-.54 2.79-1.35 3.94-1.31 1.92-3.58 3.17-5.91 3.21-1.43.08-2.86-.31-4.08-1.03-2.02-1.19-3.44-3.37-3.65-5.71-.02-.5-.03-1-.01-1.49.18-1.9 1.12-3.72 2.58-4.96 1.66-1.44 3.98-2.13 6.15-1.72.02 1.48-.04 2.96-.04 4.44-.99-.32-2.15-.23-3.02.37-.63.41-1.11 1.04-1.36 1.75-.21.51-.15 1.07-.14 1.61.24 1.64 1.82 3.02 3.5 2.87 1.12-.01 2.19-.66 2.77-1.61.19-.33.4-.67.41-1.06.1-1.79.06-3.57.07-5.36.01-4.03-.01-8.05.02-12.07z"/></svg>@tokistorage</a>
+            <a href="https://www.youtube.com/@tokistorage" target="_blank" rel="noopener"><svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" style="vertical-align:-2px;margin-right:4px"><path d="M23.498 6.186a3.016 3.016 0 00-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 00.502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 002.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 002.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/></svg>@tokistorage</a>
+            <a href="https://zenn.dev/idev" target="_blank" rel="noopener"><svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" style="vertical-align:-2px;margin-right:4px"><path d="M3 3h18v4h-9l9 10v4H3v-4h9L3 7z"/></svg>idev</a>
+        </div>
+    </div>
+    <div class="footer-bottom">
+        <p class="footer-disclaimer">※トキストレージは記録保存を目的とした製品です。墓地埋葬法上の墓地・墓石の代替となるものではありません。「1000年」は石英ガラスの素材特性に基づく理論値であり、製品保証期間ではありません。分散保管はお客様の製品（複製）をお預かりするサービスであり、倉庫業法に基づく倉庫業には該当しません。QRコードは株式会社デンソーウェーブの登録商標です。</p>
+        <p>&copy; 2026 トキストレージ / TokiStorage. All rights reserved.</p>
+    </div>
+</footer>
+
+</body>
+</html>

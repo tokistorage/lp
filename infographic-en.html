@@ -1,0 +1,918 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TokiStorage Ecosystem Overview | TokiStorage</title>
+    <meta name="robots" content="noindex, nofollow">
+    <meta name="description" content="The TokiStorage ecosystem at a glance. Technology, culture, and social movement working in unison to democratize proof of existence.">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Shippori+Mincho:wght@400;500;600;700&family=Zen+Kaku+Gothic+New:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --toki-blue: #2563EB;
+            --toki-blue-dark: #1D4ED8;
+            --toki-blue-pale: #EFF6FF;
+            --toki-gold: #C9A962;
+            --toki-gold-pale: #FDF8E8;
+            --emerald: #059669;
+            --emerald-pale: #ECFDF5;
+            --rose: #E11D48;
+            --rose-pale: #FFF1F2;
+            --amber: #D97706;
+            --amber-pale: #FFFBEB;
+            --violet: #7C3AED;
+            --violet-pale: #F5F3FF;
+            --slate-700: #334155;
+            --slate-500: #64748B;
+            --slate-400: #94A3B8;
+            --slate-200: #E2E8F0;
+            --slate-100: #F1F5F9;
+            --bg-white: #FFFFFF;
+            --font-display: 'Shippori Mincho', serif;
+            --font-body: 'Zen Kaku Gothic New', sans-serif;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        html { scroll-behavior: smooth; }
+
+        body {
+            font-family: var(--font-body);
+            font-weight: 400;
+            background: var(--bg-white);
+            color: var(--slate-700);
+            line-height: 1.8;
+            font-size: 16px;
+        }
+
+        .info-nav {
+            position: fixed;
+            top: 0; left: 0; right: 0;
+            z-index: 1000;
+            background: rgba(255,255,255,0.95);
+            backdrop-filter: blur(12px);
+            border-bottom: 1px solid var(--slate-200);
+            padding: 0.6rem 1.2rem;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+        .info-nav .nav-brand {
+            font-family: var(--font-display);
+            font-size: 0.9rem;
+            font-weight: 600;
+            color: var(--toki-blue);
+            text-decoration: none;
+        }
+        .info-nav .nav-right {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+        .info-nav .nav-label {
+            font-size: 0.6rem;
+            color: var(--slate-400);
+            letter-spacing: 0.08em;
+        }
+        .info-nav .lang-switch {
+            font-size: 0.75rem;
+            color: var(--toki-blue);
+            text-decoration: none;
+            padding: 0.3rem 0.6rem;
+            border: 1px solid var(--toki-blue);
+            border-radius: 4px;
+        }
+        .info-nav .lang-switch:hover {
+            background: var(--toki-blue);
+            color: #fff;
+        }
+
+        .ig-hero {
+            padding: 8rem 2rem 4rem;
+            text-align: center;
+            background: linear-gradient(180deg, var(--toki-blue-pale) 0%, var(--bg-white) 100%);
+        }
+        .ig-hero-label {
+            font-size: 0.7rem;
+            letter-spacing: 0.2em;
+            color: var(--toki-blue);
+            margin-bottom: 1.5rem;
+        }
+        .ig-hero h1 {
+            font-family: var(--font-display);
+            font-size: 2.2rem;
+            font-weight: 700;
+            line-height: 1.4;
+            margin-bottom: 1rem;
+            color: var(--slate-700);
+        }
+        .ig-hero h1 span {
+            color: var(--toki-blue);
+        }
+        .ig-hero-sub {
+            font-size: 1rem;
+            color: var(--slate-500);
+            max-width: 600px;
+            margin: 0 auto;
+            line-height: 2;
+        }
+
+        .ig-section {
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 4rem 2rem;
+        }
+        .ig-section-title {
+            font-family: var(--font-display);
+            font-size: 1.5rem;
+            font-weight: 600;
+            text-align: center;
+            margin-bottom: 0.5rem;
+        }
+        .ig-section-sub {
+            text-align: center;
+            font-size: 0.9rem;
+            color: var(--slate-500);
+            margin-bottom: 3rem;
+        }
+
+        .core-hub {
+            text-align: center;
+            padding: 3rem 2rem;
+        }
+        .core-circle {
+            display: inline-flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            width: 220px;
+            height: 220px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, var(--toki-blue) 0%, var(--toki-blue-dark) 100%);
+            color: #fff;
+            box-shadow: 0 0 0 12px var(--toki-blue-pale), 0 8px 32px rgba(37,99,235,0.2);
+        }
+        .core-circle-label {
+            font-size: 0.65rem;
+            letter-spacing: 0.15em;
+            opacity: 0.8;
+            margin-bottom: 0.3rem;
+        }
+        .core-circle h2 {
+            font-family: var(--font-display);
+            font-size: 1.2rem;
+            font-weight: 700;
+            line-height: 1.4;
+        }
+        .core-circle-sub {
+            font-size: 0.6rem;
+            letter-spacing: 0.1em;
+            opacity: 0.7;
+            margin-top: 0.3rem;
+        }
+
+        .connector-line {
+            width: 2px;
+            height: 3rem;
+            background: var(--slate-200);
+            margin: 0 auto;
+        }
+        .connector-triple {
+            display: flex;
+            justify-content: center;
+            align-items: flex-start;
+            max-width: 800px;
+            margin: 0 auto;
+            position: relative;
+        }
+        .connector-triple::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 16.66%;
+            right: 16.66%;
+            height: 2px;
+            background: var(--slate-200);
+        }
+        .connector-branch {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        .connector-branch .connector-line {
+            height: 2rem;
+        }
+
+        .pillars {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 1.5rem;
+            max-width: 900px;
+            margin: 0 auto;
+        }
+        .pillar-card {
+            border-radius: 16px;
+            padding: 2rem 1.5rem;
+            text-align: center;
+            transition: transform 0.2s;
+        }
+        .pillar-card:hover { transform: translateY(-4px); }
+        .pillar-card.tech { background: var(--toki-blue-pale); border: 2px solid var(--toki-blue); }
+        .pillar-card.culture { background: var(--toki-gold-pale); border: 2px solid var(--toki-gold); }
+        .pillar-card.movement { background: var(--emerald-pale); border: 2px solid var(--emerald); }
+        .pillar-icon { font-size: 2rem; margin-bottom: 0.75rem; }
+        .pillar-card h3 {
+            font-family: var(--font-display);
+            font-size: 1.15rem;
+            font-weight: 600;
+            margin-bottom: 0.25rem;
+        }
+        .pillar-card.tech h3 { color: var(--toki-blue); }
+        .pillar-card.culture h3 { color: var(--amber); }
+        .pillar-card.movement h3 { color: var(--emerald); }
+        .pillar-en {
+            font-size: 0.65rem;
+            letter-spacing: 0.1em;
+            color: var(--slate-400);
+            margin-bottom: 0.75rem;
+        }
+        .pillar-card p {
+            font-size: 0.85rem;
+            color: var(--slate-500);
+            line-height: 1.7;
+        }
+        .pillar-tag {
+            display: inline-block;
+            font-size: 0.7rem;
+            padding: 0.2rem 0.7rem;
+            border-radius: 20px;
+            margin-top: 1rem;
+            color: #fff;
+        }
+        .pillar-card.tech .pillar-tag { background: var(--toki-blue); }
+        .pillar-card.culture .pillar-tag { background: var(--toki-gold); }
+        .pillar-card.movement .pillar-tag { background: var(--emerald); }
+
+        .activity-ring {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 1rem;
+            max-width: 900px;
+            margin: 0 auto;
+        }
+        .activity-card {
+            background: var(--bg-white);
+            border: 1px solid var(--slate-200);
+            border-radius: 12px;
+            padding: 1.5rem 1rem;
+            text-align: center;
+            transition: border-color 0.2s, box-shadow 0.2s;
+        }
+        .activity-card:hover {
+            border-color: var(--toki-blue);
+            box-shadow: 0 4px 16px rgba(37,99,235,0.1);
+        }
+        .activity-icon { font-size: 1.5rem; margin-bottom: 0.5rem; }
+        .activity-card h4 {
+            font-family: var(--font-display);
+            font-size: 0.95rem;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+            color: var(--slate-700);
+        }
+        .activity-card p {
+            font-size: 0.8rem;
+            color: var(--slate-500);
+            line-height: 1.6;
+        }
+        .activity-connects {
+            display: flex;
+            gap: 0.3rem;
+            justify-content: center;
+            margin-top: 0.75rem;
+            flex-wrap: wrap;
+        }
+        .connect-dot {
+            font-size: 0.6rem;
+            padding: 0.15rem 0.5rem;
+            border-radius: 10px;
+            font-weight: 500;
+        }
+        .connect-dot.tech { background: var(--toki-blue-pale); color: var(--toki-blue); }
+        .connect-dot.culture { background: var(--toki-gold-pale); color: var(--amber); }
+        .connect-dot.movement { background: var(--emerald-pale); color: var(--emerald); }
+
+        .essay-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 1rem;
+            max-width: 900px;
+            margin: 0 auto;
+        }
+        .essay-domain {
+            background: var(--slate-100);
+            border-radius: 10px;
+            padding: 1.2rem;
+        }
+        .essay-domain h4 {
+            font-family: var(--font-display);
+            font-size: 0.85rem;
+            font-weight: 600;
+            color: var(--slate-700);
+            margin-bottom: 0.5rem;
+        }
+        .essay-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.3rem;
+        }
+        .essay-tag {
+            font-size: 0.65rem;
+            background: var(--bg-white);
+            color: var(--slate-500);
+            padding: 0.2rem 0.5rem;
+            border-radius: 4px;
+            border: 1px solid var(--slate-200);
+        }
+
+        .flow-section {
+            background: var(--slate-100);
+            padding: 4rem 2rem;
+        }
+        .flow-container {
+            max-width: 900px;
+            margin: 0 auto;
+        }
+        .flow-steps {
+            display: flex;
+            align-items: stretch;
+            gap: 0;
+            justify-content: center;
+        }
+        .flow-step {
+            flex: 1;
+            max-width: 180px;
+            text-align: center;
+            position: relative;
+            padding: 0 0.5rem;
+        }
+        .flow-step::after {
+            content: '';
+            position: absolute;
+            top: 1.5rem;
+            right: -0.5rem;
+            width: 1rem;
+            height: 2px;
+            background: var(--slate-400);
+        }
+        .flow-step:last-child::after { display: none; }
+        .flow-num {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 3rem;
+            height: 3rem;
+            border-radius: 50%;
+            background: var(--toki-blue);
+            color: #fff;
+            font-family: var(--font-display);
+            font-size: 1rem;
+            font-weight: 700;
+            margin-bottom: 0.75rem;
+        }
+        .flow-step h4 {
+            font-family: var(--font-display);
+            font-size: 0.85rem;
+            font-weight: 600;
+            margin-bottom: 0.4rem;
+            color: var(--slate-700);
+        }
+        .flow-step p {
+            font-size: 0.75rem;
+            color: var(--slate-500);
+            line-height: 1.6;
+        }
+
+        .numbers-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 1.5rem;
+            max-width: 900px;
+            margin: 0 auto;
+        }
+        .number-card { text-align: center; padding: 1.5rem 1rem; }
+        .number-value {
+            font-family: var(--font-display);
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: var(--toki-blue);
+            line-height: 1.2;
+        }
+        .number-unit { font-size: 0.9rem; }
+        .number-label {
+            font-size: 0.8rem;
+            color: var(--slate-500);
+            margin-top: 0.3rem;
+        }
+
+        .stakeholder-section {
+            background: linear-gradient(180deg, var(--bg-white) 0%, var(--toki-blue-pale) 100%);
+            padding: 4rem 2rem;
+        }
+        .stakeholder-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 1.5rem;
+            max-width: 900px;
+            margin: 0 auto;
+        }
+        .stakeholder-card {
+            background: var(--bg-white);
+            border-radius: 12px;
+            padding: 1.5rem;
+            box-shadow: 0 2px 12px rgba(0,0,0,0.06);
+        }
+        .stakeholder-card h4 {
+            font-family: var(--font-display);
+            font-size: 0.95rem;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+            color: var(--slate-700);
+        }
+        .stakeholder-card p {
+            font-size: 0.8rem;
+            color: var(--slate-500);
+            line-height: 1.7;
+        }
+        .stakeholder-icon { font-size: 1.3rem; margin-bottom: 0.5rem; }
+
+        .ig-footer {
+            text-align: center;
+            padding: 3rem 2rem;
+            border-top: 1px solid var(--slate-200);
+        }
+        .ig-footer p {
+            font-size: 0.8rem;
+            color: var(--slate-400);
+            margin-bottom: 0.75rem;
+        }
+        .ig-footer a {
+            color: var(--toki-blue);
+            text-decoration: none;
+        }
+        .ig-footer a:hover { text-decoration: underline; }
+        .footer-links {
+            display: flex;
+            justify-content: center;
+            gap: 1.5rem;
+            flex-wrap: wrap;
+            margin-bottom: 1rem;
+        }
+        .footer-links a { font-size: 0.8rem; }
+
+        .principles-grid {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+            max-width: 700px;
+            margin: 0 auto;
+        }
+        .principle-card {
+            display: flex;
+            align-items: flex-start;
+            gap: 1.2rem;
+            background: var(--bg-white);
+            border: 1px solid var(--slate-200);
+            border-radius: 12px;
+            padding: 1.5rem;
+            transition: border-color 0.2s, box-shadow 0.2s;
+        }
+        .principle-card:hover {
+            border-color: var(--toki-blue);
+            box-shadow: 0 4px 16px rgba(37,99,235,0.1);
+        }
+        .principle-num {
+            flex-shrink: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 2.5rem;
+            height: 2.5rem;
+            border-radius: 50%;
+            background: var(--toki-blue);
+            color: #fff;
+            font-family: var(--font-display);
+            font-size: 1rem;
+            font-weight: 700;
+        }
+        .principle-body { flex: 1; }
+        .principle-icon { font-size: 1.3rem; margin-bottom: 0.3rem; }
+        .principle-body h4 {
+            font-family: var(--font-display);
+            font-size: 0.95rem;
+            font-weight: 600;
+            color: var(--slate-700);
+            margin-bottom: 0.3rem;
+        }
+        .principle-body p {
+            font-size: 0.8rem;
+            color: var(--slate-500);
+            line-height: 1.6;
+        }
+
+        @media (max-width: 768px) {
+            .ig-hero { padding: 6rem 1.2rem 3rem; }
+            .ig-hero h1 { font-size: 1.6rem; }
+            .pillars { grid-template-columns: 1fr; gap: 1rem; }
+            .activity-ring { grid-template-columns: repeat(2, 1fr); }
+            .essay-grid { grid-template-columns: 1fr; }
+            .flow-steps { flex-direction: column; align-items: center; gap: 1rem; }
+            .flow-step::after { display: none; }
+            .flow-step { max-width: 280px; }
+            .numbers-grid { grid-template-columns: repeat(2, 1fr); }
+            .stakeholder-grid { grid-template-columns: 1fr; }
+            .connector-triple { flex-direction: column; align-items: center; }
+            .connector-triple::before { display: none; }
+            .info-nav .nav-label { display: none; }
+            .ig-section { padding: 3rem 1.2rem; }
+        }
+
+        @media print {
+            .info-nav { display: none; }
+            .ig-hero { padding-top: 2rem; }
+            .pillar-card:hover, .activity-card:hover { transform: none; }
+        }
+    </style>
+</head>
+<body>
+
+<nav class="info-nav">
+    <a href="index-en.html" class="nav-brand">TokiStorage</a>
+    <div class="nav-right">
+        <span class="nav-label">INFOGRAPHIC</span>
+        <a href="infographic.html" class="lang-switch">JP</a>
+    </div>
+</nav>
+
+<!-- Hero -->
+<header class="ig-hero">
+    <p class="ig-hero-label">TOKISTORAGE ECOSYSTEM</p>
+    <h1>Democratizing <span>Proof of Existence</span><br>— Ecosystem Overview</h1>
+    <p class="ig-hero-sub">
+        Technology, culture, and social movement working as one<br>
+        to deliver "your proof of existence, a thousand years hence"
+    </p>
+</header>
+
+<!-- Core Concept -->
+<section class="ig-section">
+    <div class="core-hub">
+        <div class="core-circle">
+            <span class="core-circle-label">CORE CONCEPT</span>
+            <h2>Democratizing<br>Proof of<br>Existence</h2>
+            <span class="core-circle-sub">存在証明の民主化</span>
+        </div>
+    </div>
+    <div class="connector-line" style="margin: 0 auto;"></div>
+
+    <div class="connector-triple">
+        <div class="connector-branch"><div class="connector-line"></div></div>
+        <div class="connector-branch"><div class="connector-line"></div></div>
+        <div class="connector-branch"><div class="connector-line"></div></div>
+    </div>
+
+    <div class="pillars">
+        <div class="pillar-card tech">
+            <div class="pillar-icon">&#x1F48E;</div>
+            <h3>TokiStorage</h3>
+            <p class="pillar-en">TECHNOLOGY</p>
+            <p>Memories inscribed on quartz glass via metal deposition. No servers, no power. A thousand years from now, just hold up a phone and memories return.</p>
+            <span class="pillar-tag">Enduring Technology</span>
+        </div>
+        <div class="pillar-card culture">
+            <div class="pillar-icon">&#x1F43E;</div>
+            <h3>Pearl Soap</h3>
+            <p class="pillar-en">CULTURE</p>
+            <p>Paw-shaped handmade soap that says "Thank you for being here." A daily practice of gratitude rooted in the gift economy.</p>
+            <span class="pillar-tag">Daily Practice</span>
+        </div>
+        <div class="pillar-card movement">
+            <div class="pillar-icon">&#x1F30D;</div>
+            <h3>SoulCarrier</h3>
+            <p class="pillar-en">MOVEMENT</p>
+            <p>A social movement addressing unclaimed graves and bone repatriation. Challenging the inequality of memory and reconnecting the forgotten.</p>
+            <span class="pillar-tag">Social Change</span>
+        </div>
+    </div>
+</section>
+
+<!-- Numbers -->
+<section class="ig-section" style="padding-top: 0;">
+    <div class="numbers-grid">
+        <div class="number-card">
+            <div class="number-value">1,000<span class="number-unit"> yr</span></div>
+            <div class="number-label">Guaranteed record lifespan</div>
+        </div>
+        <div class="number-card">
+            <div class="number-value">0</div>
+            <div class="number-label">Servers or power required</div>
+        </div>
+        <div class="number-card">
+            <div class="number-value">200<span class="number-unit">+</span></div>
+            <div class="number-label">Business use cases</div>
+        </div>
+        <div class="number-card">
+            <div class="number-value">70<span class="number-unit">+</span></div>
+            <div class="number-label">Proof-of-existence essays</div>
+        </div>
+    </div>
+</section>
+
+<!-- Activity Layer -->
+<section class="ig-section">
+    <h2 class="ig-section-title">Activity Layer</h2>
+    <p class="ig-section-sub">Four initiatives that connect the three pillars and drive the ecosystem</p>
+
+    <div class="activity-ring">
+        <div class="activity-card">
+            <div class="activity-icon">&#x1F9F4;</div>
+            <h4>Workshop</h4>
+            <p>Hands-on Pearl Soap making for all ages. Experience the joy of creating something to give — and feel the reality of your own existence.</p>
+            <div class="activity-connects">
+                <span class="connect-dot culture">Pearl Soap</span>
+                <span class="connect-dot movement">SoulCarrier</span>
+            </div>
+        </div>
+        <div class="activity-card">
+            <div class="activity-icon">&#x1F91D;</div>
+            <h4>Ambassador Program</h4>
+            <p>A certification system to bring workshops nationwide. Equipment, manuals, and community support for decentralized growth.</p>
+            <div class="activity-connects">
+                <span class="connect-dot culture">Pearl Soap</span>
+                <span class="connect-dot tech">TokiStorage</span>
+            </div>
+        </div>
+        <div class="activity-card">
+            <div class="activity-icon">&#x1F30F;</div>
+            <h4>Workaway Consulting</h4>
+            <p>Helping rural properties adopt international volunteer exchange. Cross-cultural shared memories deepen proof of existence.</p>
+            <div class="activity-connects">
+                <span class="connect-dot movement">SoulCarrier</span>
+                <span class="connect-dot tech">TokiStorage</span>
+            </div>
+        </div>
+        <div class="activity-card">
+            <div class="activity-icon">&#x26A1;</div>
+            <h4>Off-Grid Consulting</h4>
+            <p>Solar, battery, satellite — building autonomous infrastructure. Real-world proof that 1,000-year design works without institutional dependence.</p>
+            <div class="activity-connects">
+                <span class="connect-dot tech">TokiStorage</span>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Value Flow -->
+<section class="flow-section">
+    <div class="flow-container">
+        <h2 class="ig-section-title">Value Circulation Flow</h2>
+        <p class="ig-section-sub">How value is created and circulated within the ecosystem</p>
+
+        <div class="flow-steps">
+            <div class="flow-step">
+                <div class="flow-num">1</div>
+                <h4>Awareness</h4>
+                <p>Receive Pearl Soap and encounter "Thank you for being here"</p>
+            </div>
+            <div class="flow-step">
+                <div class="flow-num">2</div>
+                <h4>Experience</h4>
+                <p>Make soap by hand at a workshop and discover the joy of giving</p>
+            </div>
+            <div class="flow-step">
+                <div class="flow-num">3</div>
+                <h4>Resonance</h4>
+                <p>Connect with SoulCarrier's mission and deepen understanding of proof of existence</p>
+            </div>
+            <div class="flow-step">
+                <div class="flow-num">4</div>
+                <h4>Record</h4>
+                <p>Inscribe your own or a loved one's existence into quartz glass for a thousand years</p>
+            </div>
+            <div class="flow-step">
+                <div class="flow-num">5</div>
+                <h4>Expand</h4>
+                <p>Become an ambassador and bring that first moment of awareness to the next person</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Essay Knowledge Base -->
+<section class="ig-section">
+    <h2 class="ig-section-title">Philosophical Foundation — 70+ Essays</h2>
+    <p class="ig-section-sub">Proof of existence explored across nine concentric domains of human life</p>
+
+    <div class="essay-grid">
+        <div class="essay-domain">
+            <h4>&#x1F9E0; Inner Self</h4>
+            <div class="essay-tags">
+                <span class="essay-tag">Psychology</span>
+                <span class="essay-tag">Philosophy</span>
+                <span class="essay-tag">Integrity</span>
+                <span class="essay-tag">Solitude</span>
+                <span class="essay-tag">Inherited Trauma</span>
+            </div>
+        </div>
+        <div class="essay-domain">
+            <h4>&#x1F331; Life Milestones</h4>
+            <div class="essay-tags">
+                <span class="essay-tag">Life Cycle</span>
+                <span class="essay-tag">Adversity</span>
+                <span class="essay-tag">Rites of Passage</span>
+                <span class="essay-tag">Lifestyle</span>
+                <span class="essay-tag">Off-Grid</span>
+            </div>
+        </div>
+        <div class="essay-domain">
+            <h4>&#x1F54A; Belief &amp; Beyond</h4>
+            <div class="essay-tags">
+                <span class="essay-tag">Religion &amp; Myth</span>
+                <span class="essay-tag">Fifth Dimension</span>
+            </div>
+        </div>
+        <div class="essay-domain">
+            <h4>&#x1F3DB; Social Institutions</h4>
+            <div class="essay-tags">
+                <span class="essay-tag">Organizations</span>
+                <span class="essay-tag">Government</span>
+                <span class="essay-tag">Elections</span>
+                <span class="essay-tag">Nation</span>
+                <span class="essay-tag">Global Society</span>
+            </div>
+        </div>
+        <div class="essay-domain">
+            <h4>&#x1F4B0; Economy &amp; Assets</h4>
+            <div class="essay-tags">
+                <span class="essay-tag">Gift Economy</span>
+                <span class="essay-tag">Industry</span>
+                <span class="essay-tag">Finance</span>
+                <span class="essay-tag">Ownership</span>
+                <span class="essay-tag">ESG</span>
+                <span class="essay-tag">Science of Scent</span>
+            </div>
+        </div>
+        <div class="essay-domain">
+            <h4>&#x1F3A8; Culture &amp; Education</h4>
+            <div class="essay-tags">
+                <span class="essay-tag">Education</span>
+                <span class="essay-tag">Art</span>
+                <span class="essay-tag">Music</span>
+                <span class="essay-tag">Tourism</span>
+                <span class="essay-tag">History</span>
+                <span class="essay-tag">Media</span>
+            </div>
+        </div>
+        <div class="essay-domain">
+            <h4>&#x1F30D; Nature &amp; Cosmos</h4>
+            <div class="essay-tags">
+                <span class="essay-tag">Animal Welfare</span>
+                <span class="essay-tag">Ecology</span>
+                <span class="essay-tag">Geology</span>
+                <span class="essay-tag">Space</span>
+            </div>
+        </div>
+        <div class="essay-domain">
+            <h4>&#x1F4BB; Technology &amp; Design</h4>
+            <div class="essay-tags">
+                <span class="essay-tag">AI Era</span>
+                <span class="essay-tag">Technical Design</span>
+                <span class="essay-tag">Metal Deposition</span>
+                <span class="essay-tag">Voice Restoration</span>
+            </div>
+        </div>
+        <div class="essay-domain">
+            <h4>&#x267E; Meta</h4>
+            <div class="essay-tags">
+                <span class="essay-tag">Choosing Not to Leave Behind</span>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Stakeholder Map -->
+<section class="stakeholder-section">
+    <div style="max-width: 1000px; margin: 0 auto;">
+        <h2 class="ig-section-title">Who Is This Ecosystem For?</h2>
+        <p class="ig-section-sub">For every person and organization that needs proof of existence</p>
+
+        <div class="stakeholder-grid">
+            <div class="stakeholder-card">
+                <div class="stakeholder-icon">&#x1F338;</div>
+                <h4>End-of-Life Planning</h4>
+                <p>When maintaining a gravestone is too burdensome. Quartz glass requires zero maintenance fees and lasts a thousand years.</p>
+            </div>
+            <div class="stakeholder-card">
+                <div class="stakeholder-icon">&#x1F9D1;</div>
+                <h4>Individuals Without Heirs</h4>
+                <p>No successor needed. Leave proof of your existence by your own choice. Ending the inequality of being remembered.</p>
+            </div>
+            <div class="stakeholder-card">
+                <div class="stakeholder-icon">&#x1F3E9;</div>
+                <h4>Temples &amp; Memorial Parks</h4>
+                <p>A new form of perpetual memorial. Sustaining visitor connections through both digital and physical records.</p>
+            </div>
+            <div class="stakeholder-card">
+                <div class="stakeholder-icon">&#x1F492;</div>
+                <h4>Weddings &amp; Anniversaries</h4>
+                <p>Wedding venues, hotels, photo studios. Upgrade "memories of a lifetime" to "records for a millennium."</p>
+            </div>
+            <div class="stakeholder-card">
+                <div class="stakeholder-icon">&#x1F3EB;</div>
+                <h4>Education &amp; Local Government</h4>
+                <p>School histories, cultural heritage, disaster records. Preserving public memory without institutional dependence.</p>
+            </div>
+            <div class="stakeholder-card">
+                <div class="stakeholder-icon">&#x1F310;</div>
+                <h4>Corporations &amp; NGOs</h4>
+                <p>A founder's vision, project records, social contribution. Physically inscribing an organization's proof of existence.</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Design Philosophy -->
+<section class="ig-section">
+    <h2 class="ig-section-title">Five Principles of 1,000-Year Design</h2>
+    <p class="ig-section-sub">Why TokiStorage chooses to design outside institutional frameworks</p>
+
+    <div class="principles-grid">
+        <div class="principle-card">
+            <div class="principle-num">1</div>
+            <div class="principle-body">
+                <div class="principle-icon">&#x1FAA8;</div>
+                <h4>Material Permanence</h4>
+                <p>Quartz glass (98% SiO&#8322;) resists weathering and corrosion. Earth's most stable recording medium.</p>
+            </div>
+        </div>
+        <div class="principle-card">
+            <div class="principle-num">2</div>
+            <div class="principle-body">
+                <div class="principle-icon">&#x1F50C;</div>
+                <h4>Zero Power</h4>
+                <p>No servers, no cloud. Designed without predicting the technology landscape a millennium from now.</p>
+            </div>
+        </div>
+        <div class="principle-card">
+            <div class="principle-num">3</div>
+            <div class="principle-body">
+                <div class="principle-icon">&#x1F4F1;</div>
+                <h4>QR Universality</h4>
+                <p>Just hold up a smartphone. The simplest possible reading method was chosen by design.</p>
+            </div>
+        </div>
+        <div class="principle-card">
+            <div class="principle-num">4</div>
+            <div class="principle-body">
+                <div class="principle-icon">&#x1F310;</div>
+                <h4>Distributed Custody</h4>
+                <p>Metadata published and distributed on GitHub. No single point of failure.</p>
+            </div>
+        </div>
+        <div class="principle-card">
+            <div class="principle-num">5</div>
+            <div class="principle-body">
+                <div class="principle-icon">&#x1F3DB;</div>
+                <h4>Extra-Institutional</h4>
+                <p>Governments, companies, currencies — none guaranteed to exist in 1,000 years. We depend on none.</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Footer -->
+<footer class="ig-footer">
+    <div class="footer-links">
+        <a href="index-en.html">TokiStorage</a>
+        <a href="pearl-soap-en.html">Pearl Soap</a>
+        <a href="../index.html">SoulCarrier Resonance Circle</a>
+        <a href="ambassador-en.html">Ambassador Program</a>
+        <a href="workshop-en.html">Workshop</a>
+        <a href="usecases-en.html">Use Cases</a>
+        <a href="pitch-deck-en.html">For Investors</a>
+    </div>
+    <div style="display: flex; justify-content: center; gap: 1.5rem; flex-wrap: wrap; margin-bottom: 0.5rem; font-size: 0.8rem;">
+        <span style="color: var(--text-muted); font-weight: 500;">Proposals:</span>
+        <a href="partnership-en.html">Partnership</a>
+        <a href="client-proposal-en.html">Client</a>
+        <a href="government-proposal-en.html">Government</a>
+        <a href="patronage-en.html">Patronage</a>
+    </div>
+    <p>&copy; TokiStorage</p>
+    <p><a href="infographic.html">Japanese Version</a></p>
+</footer>
+
+</body>
+</html>

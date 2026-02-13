@@ -1,0 +1,701 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Industry and Proof of Existence — The Structure and Limits of the Memory Business | TokiStorage</title>
+    <meta name="robots" content="noindex, nofollow">
+    <meta name="description" content="Funerals, gravestones, digital legacies, end-of-life planning—the desire to 'leave existence behind' has created a massive industry. We examine the market structure of the memory business and the problem that much of it depends on short-lived services.">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Shippori+Mincho:wght@400;500;600;700&family=Zen+Kaku+Gothic+New:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --toki-gray: #475569;
+            --toki-gray-dark: #334155;
+            --toki-gray-pale: #F8FAFC;
+            --accent-slate: #64748B;
+            --bg-white: #FFFFFF;
+            --bg-section: #F8FAFC;
+            --text-primary: #1E293B;
+            --text-secondary: #475569;
+            --text-muted: #94A3B8;
+            --border: #E2E8F0;
+            --font-display: 'Shippori Mincho', serif;
+            --font-body: 'Zen Kaku Gothic New', sans-serif;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        html { scroll-behavior: smooth; }
+
+        body {
+            font-family: var(--font-body);
+            font-weight: 400;
+            background: var(--bg-white);
+            color: var(--text-primary);
+            line-height: 2;
+            font-size: 16px;
+        }
+
+        /* Navigation */
+        .article-nav {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 1000;
+            background: rgba(255,255,255,0.95);
+            backdrop-filter: blur(12px);
+            border-bottom: 1px solid var(--border);
+            padding: 0.6rem 1.2rem;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 1rem;
+        }
+        .article-nav .nav-brand {
+            font-family: var(--font-display);
+            font-size: 0.9rem;
+            font-weight: 600;
+            color: var(--toki-gray);
+            text-decoration: none;
+            white-space: nowrap;
+        }
+        .article-nav .nav-right {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+        .article-nav .nav-label {
+            font-size: 0.6rem;
+            color: var(--text-muted);
+            letter-spacing: 0.08em;
+        }
+        .article-nav .lang-switch {
+            font-size: 0.75rem;
+            color: var(--toki-gray);
+            text-decoration: none;
+            padding: 0.3rem 0.6rem;
+            border: 1px solid var(--toki-gray);
+            border-radius: 4px;
+        }
+        .article-nav .lang-switch:hover {
+            background: var(--toki-gray);
+            color: #fff;
+        }
+
+        /* Article Container */
+        .article-container {
+            max-width: 680px;
+            margin: 0 auto;
+            padding: 7rem 2rem 4rem;
+        }
+
+        /* Article Header */
+        .article-header {
+            margin-bottom: 3rem;
+            padding-bottom: 2rem;
+            border-bottom: 1px solid var(--border);
+        }
+        .article-category {
+            font-size: 0.7rem;
+            color: var(--toki-gray);
+            letter-spacing: 0.15em;
+            margin-bottom: 1rem;
+        }
+        .article-header h1 {
+            font-family: var(--font-display);
+            font-size: 1.8rem;
+            font-weight: 600;
+            line-height: 1.5;
+            margin-bottom: 1rem;
+        }
+        .article-subtitle {
+            font-size: 0.95rem;
+            color: var(--text-secondary);
+            line-height: 1.8;
+        }
+
+        /* Article Content */
+        .article-content h2 {
+            font-family: var(--font-display);
+            font-size: 1.25rem;
+            font-weight: 600;
+            margin: 3rem 0 1.5rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 1px solid var(--border);
+        }
+        .article-content h3 {
+            font-family: var(--font-display);
+            font-size: 1.1rem;
+            font-weight: 500;
+            margin: 2rem 0 1rem;
+            color: var(--text-primary);
+        }
+        .article-content p {
+            margin-bottom: 1.5rem;
+            text-align: justify;
+        }
+        .article-content blockquote {
+            margin: 2rem 0;
+            padding: 1.5rem 2rem;
+            background: var(--bg-section);
+            border-left: 3px solid var(--toki-gray);
+            font-style: italic;
+        }
+        .article-content blockquote p {
+            margin-bottom: 0.5rem;
+        }
+        .article-content blockquote cite {
+            display: block;
+            font-size: 0.85rem;
+            color: var(--text-muted);
+            font-style: normal;
+            margin-top: 0.5rem;
+        }
+        .article-content ul, .article-content ol {
+            margin: 1.5rem 0;
+            padding-left: 1.5rem;
+        }
+        .article-content li {
+            margin-bottom: 0.75rem;
+        }
+
+        /* Key Point Box */
+        .key-point {
+            background: var(--toki-gray-pale);
+            padding: 1.5rem 2rem;
+            border-radius: 8px;
+            margin: 2rem 0;
+            border-left: 3px solid var(--toki-gray);
+        }
+        .key-point p {
+            margin-bottom: 0;
+            font-size: 0.95rem;
+        }
+
+        /* Core Message */
+        .core-message {
+            background: linear-gradient(135deg, var(--toki-gray-pale) 0%, #E2E8F0 100%);
+            border-left: 4px solid var(--toki-gray);
+            padding: 1.2rem 1.5rem;
+            margin: 0 0 1.5rem 0;
+            border-radius: 0 8px 8px 0;
+            font-size: 0.95rem;
+            line-height: 1.8;
+        }
+        .disclaimer {
+            font-size: 0.8rem;
+            color: var(--text-muted);
+            margin-bottom: 2rem;
+            padding-bottom: 1rem;
+            border-bottom: 1px solid var(--border);
+        }
+
+        /* Comparison Table */
+        .comparison-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 2rem 0;
+            font-size: 0.9rem;
+        }
+        .comparison-table th,
+        .comparison-table td {
+            padding: 1rem;
+            text-align: left;
+            border-bottom: 1px solid var(--border);
+        }
+        .comparison-table th {
+            background: var(--bg-section);
+            font-weight: 500;
+        }
+        .comparison-table td {
+            vertical-align: top;
+        }
+
+        /* Market Size Box */
+        .market-box {
+            background: var(--toki-gray-pale);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            padding: 1.5rem;
+            margin: 2rem 0;
+        }
+        .market-box h4 {
+            font-family: var(--font-display);
+            font-size: 1rem;
+            font-weight: 500;
+            margin-bottom: 1rem;
+            color: var(--toki-gray-dark);
+        }
+        .market-box ul {
+            list-style: none;
+            padding: 0;
+        }
+        .market-box li {
+            display: flex;
+            justify-content: space-between;
+            padding: 0.5rem 0;
+            border-bottom: 1px dashed var(--border);
+            font-size: 0.9rem;
+        }
+        .market-box li:last-child {
+            border-bottom: none;
+        }
+        .market-box .value {
+            font-weight: 500;
+            color: var(--toki-gray-dark);
+        }
+
+        /* References */
+        .references {
+            margin-top: 4rem;
+            padding-top: 2rem;
+            border-top: 1px solid var(--border);
+        }
+        .references h2 {
+            font-size: 1rem;
+            margin-bottom: 1.5rem;
+        }
+        .references ul {
+            list-style: none;
+            padding: 0;
+        }
+        .references li {
+            font-size: 0.85rem;
+            color: var(--text-secondary);
+            margin-bottom: 0.75rem;
+            padding-left: 1.5rem;
+            text-indent: -1.5rem;
+        }
+
+        /* Footer */
+        .article-footer {
+            margin-top: 4rem;
+            padding-top: 2rem;
+            border-top: 1px solid var(--border);
+            text-align: center;
+        }
+        .article-footer p {
+            font-size: 0.8rem;
+            color: var(--text-muted);
+            margin-bottom: 1rem;
+        }
+        .article-footer a {
+            color: var(--toki-gray);
+            text-decoration: none;
+        }
+        .article-footer a:hover {
+            text-decoration: underline;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .article-container { padding: 6rem 1.2rem 3rem; }
+            .article-header h1 { font-size: 1.5rem; }
+            .article-nav .nav-label { display: none; }
+            .comparison-table { font-size: 0.8rem; }
+            .comparison-table th,
+            .comparison-table td { padding: 0.75rem; }
+            .market-box li { flex-direction: column; gap: 0.25rem; }
+        }
+
+        @media print {
+            .article-nav { display: none; }
+            .article-container { padding-top: 2rem; }
+        }
+    </style>
+</head>
+<body>
+
+<nav class="article-nav">
+    <a href="index.html" class="nav-brand">TokiStorage</a>
+    <div class="nav-right">
+        <span class="nav-label">INDUSTRY ANALYSIS</span>
+        <a href="industry.html" class="lang-switch">JA</a>
+    </div>
+</nav>
+
+<main class="article-container">
+
+    <header class="article-header">
+        <p class="article-category">ESSAY — MEMORY INDUSTRY</p>
+        <h1>Industry and Proof of Existence<br>— The Structure and Limits of the Memory Business</h1>
+        <p class="article-subtitle">
+            Funerals, gravestones, digital legacies, end-of-life planning—the desire to "leave existence behind" has created a massive industry.<br>
+            However, much of it depends on short-lived services. We examine the structure of the memory business.
+        </p>
+    </header>
+
+    <article class="article-content">
+
+        <div class="core-message">
+            <strong>Key Message:</strong> The desire to "leave existence behind" has created a massive industry. However, much of it depends on short-lived services. Sustainable proof of existence requires a fundamental rethinking of business models.
+        </div>
+
+        <p class="disclaimer">Disclaimer: This essay analyzes industry structure and does not criticize or endorse any specific company or service.</p>
+
+        <h2>1. The Market Structure of the "Memory Business"</h2>
+
+        <p>Humans are beings who wish to "leave their existence behind." This universal desire has formed massive industrial sectors. Death, memory, legacy—markets related to these reach tens of trillions of yen globally.</p>
+
+        <div class="market-box">
+            <h4>Market Size of the "Memory Industry" in Japan (Estimates)</h4>
+            <ul>
+                <li><span>Funeral Industry</span><span class="value">Approx. 1.8 trillion yen</span></li>
+                <li><span>Gravestone & Cemetery Industry</span><span class="value">Approx. 1 trillion yen</span></li>
+                <li><span>Buddhist Altar & Supplies Industry</span><span class="value">Approx. 300 billion yen</span></li>
+                <li><span>Estate Clearing Industry</span><span class="value">Approx. 100 billion yen</span></li>
+                <li><span>End-of-Life Planning Services</span><span class="value">Approx. 50 billion yen</span></li>
+                <li><span>Digital Legacy Management</span><span class="value">Approx. 10 billion yen (growing)</span></li>
+            </ul>
+        </div>
+
+        <p>Jean Baudrillard pointed out in <em>The Consumer Society</em> that in modern society, even death becomes an object of consumption. The act of "leaving memories behind" is both a personal endeavor and part of a massive economic activity.</p>
+
+        <blockquote>
+            <p>"In consumer society, death becomes the final act of consumption. Funerals, gravestones, memorials—everything becomes commodified."</p>
+            <cite>— Referencing Jean Baudrillard's <em>The Consumer Society</em></cite>
+        </blockquote>
+
+        <p>There is a fundamental contradiction in this industrial structure. While providing services that promise to "preserve forever," there is no guarantee that the services themselves will endure.</p>
+
+
+        <h2>2. The Transformation of the Funeral Industry</h2>
+
+        <p>The funeral industry has been at the core of the memory business. However, this industry is rapidly transforming.</p>
+
+        <h3>The Decline of Traditional Funerals</h3>
+
+        <p>Funerals in Japan were once rituals conducted by local communities and religious practitioners. However, since the period of rapid economic growth, funerals have become industrialized, with professional service providers handling all arrangements.</p>
+
+        <ul>
+            <li><strong>1970s</strong>: Nationwide chains of funeral companies expanded</li>
+            <li><strong>1990s</strong>: Mutual aid systems became widespread</li>
+            <li><strong>2000s</strong>: Increase in family funerals and direct cremations</li>
+            <li><strong>2010s onward</strong>: Further simplification of funerals, emergence of online funerals</li>
+        </ul>
+
+        <p>Currently, the average cost of funerals is declining, and "family funerals" and "one-day funerals" are becoming mainstream. This reflects not only cost concerns but also social structural changes such as the weakening of local communities, declining religious affiliation, and the rise of nuclear families.</p>
+
+        <h3>Funerals and Proof of Existence</h3>
+
+        <p>Funerals were also rituals that socially confirmed the existence of the deceased. Attendees gathered, reflected on the deceased's life, and inscribed their existence in memory—this served an important "proof of existence" function.</p>
+
+        <p>However, the simplification of funerals is weakening this function. In direct cremations without attendees, there is no one to testify to the deceased's existence. The function of inscribing into social memory is being lost.</p>
+
+        <div class="key-point">
+            <p>The funeral industry has functioned as infrastructure for "proof of existence." However, its simplification and efficiency improvements risk undermining the essential function of sharing memories.</p>
+        </div>
+
+
+        <h2>3. The Gravestone and Cemetery Industry</h2>
+
+        <p>Graves are one of the oldest forms of physical proof of existence. Inscribing names on stone and interring remains—this practice has supported human memory preservation for thousands of years.</p>
+
+        <h3>Structural Challenges in the Cemetery Industry</h3>
+
+        <p>Japan's cemetery industry faces serious structural challenges.</p>
+
+        <ul>
+            <li><strong>Lack of successors</strong>: Due to declining birthrates and increasing non-marriage, families with no one to inherit graves are increasing</li>
+            <li><strong>Grave closure</strong>: Approximately 100,000 graves are removed annually</li>
+            <li><strong>Abandoned graves</strong>: Graves with unknown caretakers are increasing, becoming a burden on municipalities</li>
+            <li><strong>Limits of "perpetual care"</strong>: Despite promising "perpetuity," some cases involve relocation to communal graves after 33 or 50 years</li>
+        </ul>
+
+        <p>What is interesting is the ambiguity of the term "perpetual care." Many perpetual care services relocate remains from individual graves to communal graves after a certain period. "Perpetual" often does not mean its literal sense, but rather "for the time being."</p>
+
+        <h3>New Forms of Burial</h3>
+
+        <p>Alternatives to traditional gravestones are also increasing.</p>
+
+        <table class="comparison-table">
+            <tr>
+                <th>Burial Form</th>
+                <th>Characteristics</th>
+                <th>Durability as Proof of Existence</th>
+            </tr>
+            <tr>
+                <td>Tree Burial</td>
+                <td>Burial beneath trees</td>
+                <td>Depends on tree lifespan (decades to centuries)</td>
+            </tr>
+            <tr>
+                <td>Scattering</td>
+                <td>Scattering remains at sea or in mountains</td>
+                <td>No physical trace</td>
+            </tr>
+            <tr>
+                <td>Columbarium</td>
+                <td>Remains housed in a building</td>
+                <td>Depends on facility survival</td>
+            </tr>
+            <tr>
+                <td>Home Memorial</td>
+                <td>Keeping remains at home</td>
+                <td>Depends on keeper's lifespan</td>
+            </tr>
+            <tr>
+                <td>Space Burial</td>
+                <td>Launching remains into space</td>
+                <td>Years to decades in orbit</td>
+            </tr>
+        </table>
+
+        <p>These new forms are more flexible and less expensive than traditional gravestones. However, their durability as "proof of existence" is often reduced.</p>
+
+
+        <h2>4. Digital Legacy Management</h2>
+
+        <p>The arrival of the digital age has created new infrastructure for "proof of existence." Social media accounts, cloud storage, blogs—we leave more digital traces than ever before.</p>
+
+        <h3>The Scale of Digital Legacy</h3>
+
+        <p>According to research from Oxford University, on Facebook alone, deceased users may outnumber living users by 2070. This phenomenon is sometimes called a "digital cemetery."</p>
+
+        <ul>
+            <li><strong>Google Photos</strong>: Billions of photos uploaded worldwide</li>
+            <li><strong>YouTube</strong>: Over 500 hours of video uploaded every minute</li>
+            <li><strong>Social Media</strong>: Billions of accounts exist</li>
+        </ul>
+
+        <p>These platforms are, in a sense, the largest "memory devices" in human history. However, their permanence is not guaranteed.</p>
+
+        <h3>Problems with Digital Legacy Management Services</h3>
+
+        <p>Services for managing digital legacies have also emerged. Transmitting passwords to family after death, switching social media accounts to memorial mode, inheriting digital assets—various services are offered.</p>
+
+        <p>However, these services have structural problems.</p>
+
+        <ul>
+            <li><strong>Platform dependency</strong>: There is no guarantee that Facebook, Google, or Twitter will continue to exist</li>
+            <li><strong>Terms of service changes</strong>: Terms of service can be changed at any time</li>
+            <li><strong>Service termination risk</strong>: Startups especially have high survival risk</li>
+            <li><strong>Format obsolescence</strong>: There is no guarantee that current video and image formats will be playable in 100 years</li>
+        </ul>
+
+        <blockquote>
+            <p>"There is a myth that digital data lasts forever. But in reality, digital data is one of the most fragile recording media."</p>
+            <cite>— Warning by Vint Cerf (Father of the Internet)</cite>
+        </blockquote>
+
+        <div class="key-point">
+            <p>Digital legacy management services are completely dependent on the survival of the service provider. The promise to "preserve forever" is difficult to fulfill given the business model.</p>
+        </div>
+
+
+        <h2>5. Estate Clearing and End-of-Life Planning Industries</h2>
+
+        <p>The term "shukatsu" (end-of-life planning) became common around 2009. Preparing for one's own death—once considered inauspicious—has now become a massive industry.</p>
+
+        <h3>Expansion of the End-of-Life Planning Industry</h3>
+
+        <ul>
+            <li><strong>Ending Notes</strong>: Recording one's wishes and information</li>
+            <li><strong>Pre-death organizing</strong>: Sorting belongings, decluttering</li>
+            <li><strong>Will preparation support</strong>: Preparing legal documents</li>
+            <li><strong>Pre-arranged funerals</strong>: Deciding funeral format and costs in advance</li>
+            <li><strong>Digital end-of-life planning</strong>: Organizing social media and data</li>
+        </ul>
+
+        <p>The end-of-life planning industry has commodified "preparation for death." This is not necessarily a bad thing. Rather, facing death and preparing could be considered a healthy practice.</p>
+
+        <h3>The Work of Estate Clearing</h3>
+
+        <p>The estate clearing industry is rapidly growing. Aging population, increase in single-person households, complexity of inheritance—these factors are driving demand for estate clearing.</p>
+
+        <p>However, the scene of estate clearing is also the "erasure of existence." Items the deceased cherished, mementos, are disposed of as large amounts of trash. According to professionals, over 90% of belongings are discarded.</p>
+
+        <blockquote>
+            <p>"Estate clearing is the work of wrapping up a person's entire life in a few days. Looking at the mountain of things left behind, you imagine how that person lived. And then you throw most of it away."</p>
+            <cite>— Testimony from an estate clearing professional</cite>
+        </blockquote>
+
+        <p>This is paradoxical from the perspective of "proof of existence." The question of "what to leave behind" is also the question of "what to discard."</p>
+
+
+        <h2>6. The Problem of Commercializing Grief</h2>
+
+        <p>There is a fundamental ethical problem in the memory industry. It is the problem of the "commercialization of grief."</p>
+
+        <h3>Commodification of Emotions</h3>
+
+        <p>Sociologist Arlie Hochschild proposed the concept of "emotional labor." The memory industry represents a further extension of this concept—the commodification of emotions themselves.</p>
+
+        <ul>
+            <li><strong>Grief</strong>: Commodified as funeral services</li>
+            <li><strong>Memories</strong>: Commodified as photo services and memorabilia</li>
+            <li><strong>Anxiety</strong>: Commodified as end-of-life planning services and insurance</li>
+            <li><strong>Guilt</strong>: Commodified as spending on expensive gravestones and funerals</li>
+        </ul>
+
+        <p>Love and respect for the deceased become linked to monetary expenditure. "We must have a proper funeral," "We must build a fine grave"—it cannot be denied that this psychology is exploited by the industry.</p>
+
+        <h3>Information Asymmetry</h3>
+
+        <p>There is serious information asymmetry in the memory industry. Consumers:</p>
+
+        <ul>
+            <li>Do not know the "market rate" for funerals or graves</li>
+            <li>Are forced to make decisions while emotionally vulnerable</li>
+            <li>Have no time for comparison shopping</li>
+            <li>Face social pressure of "not wanting to appear cheap"</li>
+        </ul>
+
+        <p>This is not necessarily due to malice on the industry's part. However, it is a fact that structurally, consumers are easily placed at a disadvantage.</p>
+
+        <h3>The Problem of Service Sustainability</h3>
+
+        <p>A more fundamental problem is the sustainability of services that promise to "preserve forever."</p>
+
+        <table class="comparison-table">
+            <tr>
+                <th>Service Type</th>
+                <th>Typical Company Lifespan</th>
+                <th>Promised Duration</th>
+            </tr>
+            <tr>
+                <td>Funeral Companies</td>
+                <td>Decades or more</td>
+                <td>One-time service</td>
+            </tr>
+            <tr>
+                <td>Cemetery Management</td>
+                <td>Decades to a century</td>
+                <td>"Perpetual" (effectively 33-50 years)</td>
+            </tr>
+            <tr>
+                <td>Digital Legacy</td>
+                <td>Startups: a few years</td>
+                <td>"Permanent preservation"</td>
+            </tr>
+            <tr>
+                <td>Cloud Services</td>
+                <td>Even major companies: 20-30 years</td>
+                <td>"Always accessible"</td>
+            </tr>
+        </table>
+
+        <p>There is a structural gap between service survival duration and promised duration. This is a common problem across the entire memory industry.</p>
+
+        <div class="key-point">
+            <p>The memory industry is a business that sells "eternity." However, the permanence of the service providers themselves is not guaranteed. This structural contradiction is the fundamental challenge of the memory business.</p>
+        </div>
+
+
+        <h2>7. TokiStorage's Position</h2>
+
+        <p>Based on the above analysis, how is TokiStorage positioned within the memory industry?</p>
+
+        <h3>Differences from Conventional Services</h3>
+
+        <table class="comparison-table">
+            <tr>
+                <th>Aspect</th>
+                <th>Conventional Memory Services</th>
+                <th>TokiStorage</th>
+            </tr>
+            <tr>
+                <td>Storage Duration</td>
+                <td>Depends on service survival</td>
+                <td>Over 1,000 years as physical medium</td>
+            </tr>
+            <tr>
+                <td>Ongoing Costs</td>
+                <td>Often monthly/annual subscription</td>
+                <td>One-time payment, complete</td>
+            </tr>
+            <tr>
+                <td>Provider Dependency</td>
+                <td>Service stops when business ends</td>
+                <td>Physical medium independent of provider</td>
+            </tr>
+            <tr>
+                <td>Technology Dependency</td>
+                <td>Depends on specific formats</td>
+                <td>Optically readable</td>
+            </tr>
+            <tr>
+                <td>Access</td>
+                <td>Internet connection required</td>
+                <td>Directly viewable as physical medium</td>
+            </tr>
+        </table>
+
+        <h3>Response to Memory Industry Challenges</h3>
+
+        <p>TokiStorage is designed as one response to the structural challenges of the memory industry.</p>
+
+        <ul>
+            <li><strong>Breaking free from service dependency</strong>: Physical media exist independently of provider survival</li>
+            <li><strong>Countermeasures against technology obsolescence</strong>: Optically encoded on quartz glass, readable even after 1,000 years</li>
+            <li><strong>The problem of ongoing costs</strong>: One-time payment, complete; no running costs</li>
+            <li><strong>Information asymmetry</strong>: Transparent pricing structure, public technical specifications</li>
+        </ul>
+
+        <h3>Recognition of Limitations</h3>
+
+        <p>At the same time, TokiStorage also has limitations. It is important to honestly acknowledge these.</p>
+
+        <ul>
+            <li>If the physical medium is lost or destroyed, the data is lost</li>
+            <li>Capacity is limited</li>
+            <li>Not suitable for storing dynamic content (such as video)</li>
+            <li>Physical medium is required for access</li>
+        </ul>
+
+        <p>No perfect means of proof of existence exists. TokiStorage does not promise "eternity," but offers one option for preserving "as long as possible."</p>
+
+
+        <h2>Conclusion — Toward a Sustainable Memory Industry</h2>
+
+        <p>The desire to "leave existence behind" is a fundamental human wish. The existence of an industry that responds to this wish is necessary for society.</p>
+
+        <p>However, there are structural problems in the current memory industry.</p>
+
+        <ul>
+            <li>Promises "eternity" without guarantees</li>
+            <li>Depends on emotionally vulnerable consumers</li>
+            <li>Gap between service sustainability and promises</li>
+        </ul>
+
+        <p>Solving these problems requires a change in awareness across the entire industry.</p>
+
+        <blockquote>
+            <p>"The memory industry is an industry for the living, not the dead. Supporting the living in remembering the dead and preparing for their own death—this is the essential role of this industry."</p>
+        </blockquote>
+
+        <p>A sustainable memory industry would be one that provides honest services within achievable scope, rather than making grandiose promises. Not "eternity" but "as long as possible"—this humility enhances the credibility of the memory industry.</p>
+
+        <p>TokiStorage is one attempt exploring this direction. Quartz glass as a physical medium complements the fragility of digital services. At the same time, we recognize that it is not a universal solution.</p>
+
+        <p>Ultimately, what matters is the individual's choice of "what to leave behind." The industry exists to support that choice, not to replace it. The subject of proof of existence always remains the individual.</p>
+
+
+        <section class="references">
+            <h2>References</h2>
+            <ul>
+                <li>Baudrillard, J. (1970). <em>La Societe de consommation.</em> Gallimard. (English: <em>The Consumer Society: Myths and Structures</em>)</li>
+                <li>Hochschild, A. R. (1983). <em>The Managed Heart: Commercialization of Human Feeling.</em> University of California Press.</li>
+                <li>Mitford, J. (1963). <em>The American Way of Death.</em> Simon & Schuster.</li>
+                <li>Walter, T. (1994). <em>The Revival of Death.</em> Routledge.</li>
+                <li>Ohman, C. & Watson, D. (2019). Are the dead taking over Facebook? A Big Data approach to the future of death online. <em>Big Data & Society</em>, 6(1).</li>
+                <li>Inoue, H. (2003). <em>Sociology of Graves and Funerals.</em> Yoshikawa Kobunkan. [In Japanese]</li>
+                <li>Kotani, M. (2017). <em>Changing Funerals, Changing Graves.</em> Yoshikawa Kobunkan. [In Japanese]</li>
+                <li>Ministry of Economy, Trade and Industry (2023). <em>Survey of Selected Service Industries.</em> [In Japanese]</li>
+            </ul>
+        </section>
+
+    </article>
+
+    <footer class="article-footer">
+        <p id="essay-nav-links"></p>
+        <p style="margin-top: 2rem; font-size: 0.75rem;">&copy; 2026 TokiStorage</p>
+    </footer>
+
+</main>
+
+<script src="essay-nav.js?v=20260209"></script>
+</body>
+</html>

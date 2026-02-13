@@ -1,0 +1,450 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Elections and Proof of Existence | Toki Storage</title>
+    <meta name="robots" content="noindex, nofollow">
+    <meta name="description" content="The fundamental difference between political victory and proof of existence. Elections are won or lost, but existence transcends victory.">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Shippori+Mincho:wght@400;500;600;700&family=Zen+Kaku+Gothic+New:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --toki-cyan: #0891B2;
+            --toki-cyan-dark: #0E7490;
+            --toki-cyan-pale: #ECFEFF;
+            --accent-teal: #14B8A6;
+            --bg-white: #FFFFFF;
+            --bg-section: #CFFAFE;
+            --text-primary: #1E293B;
+            --text-secondary: #475569;
+            --text-muted: #94A3B8;
+            --border: #E2E8F0;
+            --font-display: 'Shippori Mincho', serif;
+            --font-body: 'Zen Kaku Gothic New', sans-serif;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        html { scroll-behavior: smooth; }
+
+        body {
+            font-family: var(--font-body);
+            font-weight: 400;
+            background: var(--bg-white);
+            color: var(--text-primary);
+            line-height: 2;
+            font-size: 16px;
+        }
+
+        /* Navigation */
+        .article-nav {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 1000;
+            background: rgba(255,255,255,0.95);
+            backdrop-filter: blur(12px);
+            border-bottom: 1px solid var(--border);
+            padding: 0.6rem 1.2rem;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 1rem;
+        }
+        .article-nav .nav-brand {
+            font-family: var(--font-display);
+            font-size: 0.9rem;
+            font-weight: 600;
+            color: var(--toki-cyan);
+            text-decoration: none;
+            white-space: nowrap;
+        }
+        .article-nav .nav-right {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+        .article-nav .nav-label {
+            font-size: 0.6rem;
+            color: var(--text-muted);
+            letter-spacing: 0.08em;
+        }
+        .article-nav .lang-switch {
+            font-size: 0.75rem;
+            color: var(--toki-cyan);
+            text-decoration: none;
+            padding: 0.3rem 0.6rem;
+            border: 1px solid var(--toki-cyan);
+            border-radius: 4px;
+        }
+        .article-nav .lang-switch:hover {
+            background: var(--toki-cyan);
+            color: #fff;
+        }
+
+        /* Article Container */
+        .article-container {
+            max-width: 680px;
+            margin: 0 auto;
+            padding: 7rem 2rem 4rem;
+        }
+
+        /* Article Header */
+        .article-header {
+            margin-bottom: 3rem;
+            padding-bottom: 2rem;
+            border-bottom: 1px solid var(--border);
+        }
+        .article-category {
+            font-size: 0.7rem;
+            color: var(--toki-cyan);
+            letter-spacing: 0.15em;
+            margin-bottom: 1rem;
+        }
+        .article-header h1 {
+            font-family: var(--font-display);
+            font-size: 1.8rem;
+            font-weight: 700;
+            line-height: 1.5;
+            margin-bottom: 1.5rem;
+        }
+        .article-subtitle {
+            font-size: 0.95rem;
+            color: var(--text-secondary);
+            line-height: 1.9;
+        }
+
+        /* Article Content */
+        .article-content h2 {
+            font-family: var(--font-display);
+            font-size: 1.3rem;
+            font-weight: 600;
+            margin: 3rem 0 1.5rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 2px solid var(--toki-cyan-pale);
+        }
+        .article-content h3 {
+            font-family: var(--font-display);
+            font-size: 1.1rem;
+            font-weight: 600;
+            margin: 2rem 0 1rem;
+            color: var(--toki-cyan-dark);
+        }
+        .article-content p {
+            margin-bottom: 1.5rem;
+        }
+        .article-content blockquote {
+            border-left: 3px solid var(--toki-cyan);
+            padding-left: 1.5rem;
+            margin: 2rem 0;
+            font-family: var(--font-display);
+            color: var(--text-secondary);
+        }
+        .article-content blockquote cite {
+            display: block;
+            font-size: 0.85rem;
+            margin-top: 0.75rem;
+            font-style: normal;
+            color: var(--text-muted);
+        }
+        .article-content ul, .article-content ol {
+            margin: 1.5rem 0;
+            padding-left: 1.5rem;
+        }
+        .article-content li {
+            margin-bottom: 0.75rem;
+        }
+
+        /* Core Message */
+        .core-message {
+            background: var(--toki-cyan-pale);
+            border-left: 4px solid var(--toki-cyan);
+            padding: 1.5rem;
+            margin: 2rem 0;
+            font-size: 0.95rem;
+        }
+
+        /* Key Point */
+        .key-point {
+            background: linear-gradient(135deg, var(--toki-cyan-pale) 0%, #fff 100%);
+            border: 1px solid var(--toki-cyan);
+            border-radius: 8px;
+            padding: 1.5rem;
+            margin: 2rem 0;
+            text-align: center;
+        }
+        .key-point p {
+            font-family: var(--font-display);
+            font-size: 1.1rem;
+            color: var(--toki-cyan-dark);
+            margin: 0;
+        }
+
+        /* Contrast Box */
+        .contrast-box {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1rem;
+            margin: 2rem 0;
+        }
+        .contrast-box .left, .contrast-box .right {
+            padding: 1.5rem;
+            border-radius: 8px;
+        }
+        .contrast-box .left {
+            background: #FEE2E2;
+            border-left: 4px solid #DC2626;
+        }
+        .contrast-box .right {
+            background: var(--toki-cyan-pale);
+            border-left: 4px solid var(--toki-cyan);
+        }
+        .contrast-box h4 {
+            font-family: var(--font-display);
+            font-size: 1rem;
+            margin-bottom: 0.75rem;
+        }
+        .contrast-box p {
+            font-size: 0.9rem;
+            margin-bottom: 0.5rem;
+        }
+        .contrast-box p:last-child {
+            margin-bottom: 0;
+        }
+        @media (max-width: 600px) {
+            .contrast-box {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        /* Footer */
+        .article-footer {
+            margin-top: 4rem;
+            padding-top: 2rem;
+            border-top: 1px solid var(--border);
+            text-align: center;
+        }
+        .article-footer p {
+            font-size: 0.8rem;
+            color: var(--text-muted);
+            margin-bottom: 1rem;
+        }
+        .article-footer a {
+            color: var(--toki-cyan);
+            text-decoration: none;
+        }
+        .article-footer a:hover {
+            text-decoration: underline;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .article-container { padding: 6rem 1.2rem 3rem; }
+            .article-header h1 { font-size: 1.5rem; }
+            .article-nav .nav-label { display: none; }
+        }
+
+        @media print {
+            .article-nav { display: none; }
+            .article-container { padding-top: 2rem; }
+        }
+    </style>
+</head>
+<body>
+
+<nav class="article-nav">
+    <a href="index.html" class="nav-brand">Toki Storage</a>
+    <div class="nav-right">
+        <span class="nav-label">SOCIAL SYSTEMS</span>
+        <a href="election.html" class="lang-switch">JP</a>
+    </div>
+</nav>
+
+<main class="article-container">
+
+    <header class="article-header">
+        <p class="article-category">ESSAY — SOCIAL SYSTEMS</p>
+        <h1>Elections and Proof of Existence</h1>
+        <p class="article-subtitle">
+            Politics is decided by winning and losing. But proof of existence transcends victory.<br>
+            Examining the essence of "leaving something behind" through a political lens.
+        </p>
+    </header>
+
+    <article class="article-content">
+
+        <div class="core-message">
+            <strong>The core message:</strong> Elections determine "correctness" by majority vote, and "achievements" are overturned with regime change. But proof of existence is not about winning or losing. The simple fact that someone "was here" cannot be denied by anyone.
+        </div>
+
+        <h2>1. The Institution of Elections</h2>
+
+        <h3>"Correctness" Decided by Majority</h3>
+
+        <p>In democracy, elections are considered the most legitimate means of decision-making.</p>
+
+        <p>However, elections are fundamentally a system for determining winners and losers. Gain 51% support and you're deemed "right"; 49% is dismissed as "wrong." Policies that were correct yesterday can become "mistakes" with a single election result.</p>
+
+        <p>This is not a flaw of democracy. It's the essence. Majority rule is not a system for determining "truth" — it's a system for legitimizing "decisions."</p>
+
+        <h3>Winners Write History</h3>
+
+        <p>Those who win elections gain the authority to implement policy. They also gain the authority to "review" past policies.</p>
+
+        <p>The previous administration's achievements are reevaluated as "failures," while their own policies are positioned as "reform." Change the government, and even textbook descriptions can change.</p>
+
+        <p>Political legacy exists only insofar as succeeding administrations "acknowledge" it.</p>
+
+
+        <h2>2. The Fragility of Political Legacy</h2>
+
+        <h3>"Achievements" That Get Overturned</h3>
+
+        <p>Throughout history, many politicians' "achievements" have been overturned by posterity.</p>
+
+        <ul>
+            <li>Leaders praised as heroes are reevaluated as "dictators" decades later</li>
+            <li>"National projects" become "waste of taxpayer money" after regime change</li>
+            <li>Statues are erected, statues are toppled</li>
+        </ul>
+
+        <p>Political legacy is always at risk of "reevaluation."</p>
+
+        <h3>Even If the Name Remains</h3>
+
+        <p>Certainly, some politicians leave their names in history. But the evaluation attached to that "name" is never constant.</p>
+
+        <p>The same person might be called a "great figure" in one era and a "war criminal" in another. The name remains, but its meaning changes with the times.</p>
+
+        <p>This is the essential fragility of political legacy.</p>
+
+        <div class="contrast-box">
+            <div class="left">
+                <h4>Political Legacy</h4>
+                <p>Depends on evaluation</p>
+                <p>Overturned by regime change</p>
+                <p>Defined by winners</p>
+                <p>Meaning changes with era</p>
+            </div>
+            <div class="right">
+                <h4>Proof of Existence</h4>
+                <p>Needs no evaluation</p>
+                <p>Cannot be overturned</p>
+                <p>Defined by the person</p>
+                <p>Facts don't change</p>
+            </div>
+        </div>
+
+
+        <h2>3. The Fundamental Difference</h2>
+
+        <h3>Not About Winning or Losing</h3>
+
+        <p>Proof of existence means preserving the fact that someone "was here."</p>
+
+        <p>This is not about winning or losing. You don't need to win an election. You don't need anyone's approval. The simple fact that someone "was here" is eternally true in the history of the universe.</p>
+
+        <p>A farmer who lived 1000 years ago doesn't appear in history textbooks. But the fact that they "existed" cannot be denied by anyone.</p>
+
+        <h3>Beyond Evaluation</h3>
+
+        <p>Politicians are evaluated by "what they achieved." But proof of existence is unrelated to achievements.</p>
+
+        <p>Even someone who achieved nothing — their existence has meaning. At least to someone who loved them.</p>
+
+        <p>Proof of existence lies outside social evaluation.</p>
+
+        <h3>You Decide</h3>
+
+        <p>Political legacy is determined by posterity, regardless of the person's intentions. No matter how you "want to be evaluated," you cannot resist election results or history's judgment.</p>
+
+        <p>But proof of existence is something you can decide. What to leave behind, who to tell, how to express it — all of this you choose yourself.</p>
+
+        <div class="key-point">
+            <p>Elections are decided by others.<br>Proof of existence is decided by you.</p>
+        </div>
+
+
+        <h2>4. Politicians' Graves, Ordinary People's Graves</h2>
+
+        <h3>Politicians' Graves</h3>
+
+        <p>Great politicians' graves often become monuments. Words praising their achievements are inscribed, visitors never cease.</p>
+
+        <p>But if the government changes, the treatment of that grave can change too. Visiting can become a "political act." Even the words carved on the gravestone can become subjects of controversy.</p>
+
+        <p>Politicians' graves remain within politics even after death.</p>
+
+        <h3>Ordinary People's Graves</h3>
+
+        <p>Meanwhile, ordinary people's graves are quiet.</p>
+
+        <p>Only family and friends visit. No inscriptions praising achievements, just a name and dates of birth and death.</p>
+
+        <p>Yet within that quietness lies true proof of existence. Political evaluation, the judgment of eras — none of it matters. Only the facts remain: "This person was here." "This person was loved."</p>
+
+        <h3>What Truly Remains</h3>
+
+        <p>In 1000 years, how many will remember today's politicians?</p>
+
+        <p>But in 1000 years, names engraved on quartz glass will still be readable. Voices will play from QR codes. Descendants will know "this person was my ancestor."</p>
+
+        <p>Political legacy may be forgotten, but proof of existence remains.</p>
+
+
+        <h2>5. Choosing Not to Run</h2>
+
+        <h3>Stepping Out of Competition</h3>
+
+        <p>Elections are competition. Without winning, there's no meaning.</p>
+
+        <p>But proof of existence is not competition. You don't need to beat anyone. You don't need to be compared to anyone.</p>
+
+        <p>"Not running for election" might be political defeat. But in terms of proof of existence, it may actually be a choice that brings you closer to the essence.</p>
+
+        <h3>Quiet Records</h3>
+
+        <p>Even without appearing in the news, without being in textbooks, that person existed.</p>
+
+        <p>They raised children, did their work, loved someone. That daily life is their proof of existence.</p>
+
+        <p>Even without political achievements, existence has value.</p>
+
+        <div class="key-point">
+            <p>Becoming famous and proving existence<br>are entirely different things.</p>
+        </div>
+
+
+        <h2>Conclusion — What Will You Leave Behind?</h2>
+
+        <p>Elections determine winners and losers. Winners gain legitimacy, losers exit the stage.</p>
+
+        <p>But proof of existence has no winners or losers. No one can decide by majority vote that "you never existed."</p>
+
+        <p>Political evaluation is just "evaluation." It changes with the times. But the fact of existence cannot be overturned.</p>
+
+        <p>Here is the question:</p>
+
+        <p>Are you living to be evaluated by others?<br>
+        Or are you living to leave behind the simple fact that you "were here"?</p>
+
+        <p>You don't need to win elections. You don't need to make it into history books.</p>
+
+        <p>You were here. You loved. You lived.</p>
+
+        <p>— Who do you want to tell?</p>
+
+    </article>
+
+    <footer class="article-footer">
+        <p id="essay-nav-links"></p>
+        <p style="margin-top: 2rem; font-size: 0.75rem;">&copy; 2026 TokiStorage</p>
+    </footer>
+
+</main>
+
+<script src="essay-nav.js?v=20260209"></script>
+</body>
+</html>

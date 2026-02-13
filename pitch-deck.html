@@ -1,0 +1,1919 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>トキストレージ | 投資家向けピッチ資料</title>
+    <meta name="robots" content="noindex, nofollow">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Shippori+Mincho:wght@400;500;600;700&family=Zen+Kaku+Gothic+New:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --toki-blue: #2563EB;
+            --toki-blue-light: #3B82F6;
+            --toki-blue-dark: #1D4ED8;
+            --toki-blue-pale: #EFF6FF;
+            --toki-accent: #7EB8C9;
+            --gold: #C9A962;
+            --bg-white: #FFFFFF;
+            --bg-page: #F8FAFC;
+            --bg-section: #F1F5F9;
+            --text-primary: #1E293B;
+            --text-secondary: #475569;
+            --text-muted: #94A3B8;
+            --border: #E2E8F0;
+            --shadow-sm: 0 1px 2px rgba(0,0,0,0.05);
+            --shadow-md: 0 4px 16px rgba(0,0,0,0.06);
+            --shadow-lg: 0 10px 40px rgba(0,0,0,0.08);
+            --font-display: 'Shippori Mincho', serif;
+            --font-body: 'Zen Kaku Gothic New', sans-serif;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        html { scroll-behavior: smooth; }
+
+        body {
+            font-family: var(--font-body);
+            font-weight: 400;
+            background: var(--bg-white);
+            color: var(--text-primary);
+            line-height: 1.8;
+            font-size: 16px;
+        }
+
+        /* ---- Navigation ---- */
+        .pitch-nav {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 1000;
+            background: rgba(255,255,255,0.95);
+            backdrop-filter: blur(12px);
+            border-bottom: 1px solid var(--border);
+            padding: 0.8rem 2rem;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+        .pitch-nav .nav-brand {
+            font-family: var(--font-display);
+            font-size: 1rem;
+            font-weight: 600;
+            color: var(--toki-blue);
+            text-decoration: none;
+            white-space: nowrap;
+        }
+        .pitch-nav .nav-label {
+            font-size: 0.75rem;
+            color: var(--text-secondary);
+            letter-spacing: 0.1em;
+            text-align: right;
+        }
+
+        /* ---- Slide System ---- */
+        .slide {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 6rem 2rem 4rem;
+        }
+        .slide:nth-child(even):not(.cover-slide):not(.cta-slide) {
+            background: var(--bg-page);
+        }
+        .slide-inner {
+            max-width: 960px;
+            width: 100%;
+        }
+        .slide-number {
+            font-family: var(--font-body);
+            font-size: 0.7rem;
+            color: var(--text-secondary);
+            letter-spacing: 0.15em;
+            text-transform: uppercase;
+            margin-bottom: 1rem;
+        }
+        .slide h2 {
+            font-family: var(--font-display);
+            font-size: 2.2rem;
+            font-weight: 700;
+            color: var(--text-primary);
+            margin-bottom: 0.5rem;
+            line-height: 1.4;
+        }
+        .slide h3 {
+            font-family: var(--font-display);
+            font-size: 1.4rem;
+            font-weight: 600;
+            color: var(--text-primary);
+            margin-bottom: 0.8rem;
+        }
+        .slide-lead {
+            font-size: 1.05rem;
+            color: var(--text-secondary);
+            margin-bottom: 2.5rem;
+            max-width: 700px;
+        }
+
+        /* ---- Cover Slide ---- */
+        .cover-slide {
+            background: linear-gradient(135deg, #1E293B 0%, #0F172A 100%);
+            color: #fff;
+            text-align: center;
+        }
+        .cover-slide .slide-inner {
+            max-width: 800px;
+        }
+        .cover-tagline {
+            font-family: var(--font-display);
+            font-size: 1rem;
+            color: var(--toki-accent);
+            letter-spacing: 0.2em;
+            margin-bottom: 1.5rem;
+        }
+        .cover-slide h1 {
+            font-family: var(--font-display);
+            font-size: 3.5rem;
+            font-weight: 700;
+            margin-bottom: 0.8rem;
+            background: linear-gradient(135deg, #fff 0%, var(--toki-accent) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        .cover-subtitle {
+            font-family: var(--font-display);
+            font-size: 1.3rem;
+            color: rgba(255,255,255,0.7);
+            margin-bottom: 3rem;
+        }
+        .cover-meta {
+            font-size: 0.85rem;
+            color: rgba(255,255,255,0.7);
+            line-height: 2;
+        }
+        .cover-meta strong {
+            color: rgba(255,255,255,0.9);
+        }
+        .cover-confidential {
+            display: inline-block;
+            margin-top: 2rem;
+            padding: 0.4rem 1.2rem;
+            border: 1px solid rgba(255,255,255,0.3);
+            border-radius: 4px;
+            font-size: 0.7rem;
+            color: rgba(255,255,255,0.6);
+            letter-spacing: 0.15em;
+        }
+
+        /* ---- Stat Cards ---- */
+        .stat-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1.5rem;
+            margin: 2rem 0;
+        }
+        .stat-card {
+            background: var(--bg-white);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 1.5rem;
+            text-align: center;
+        }
+        .stat-card .stat-number {
+            font-family: var(--font-display);
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: var(--toki-blue);
+        }
+        .stat-card .stat-unit {
+            font-size: 1rem;
+            color: var(--text-secondary);
+        }
+        .stat-card .stat-label {
+            font-size: 0.8rem;
+            color: var(--text-secondary);
+            margin-top: 0.3rem;
+        }
+
+        /* ---- Origin Slide ---- */
+        .origin-episode {
+            background: linear-gradient(135deg, #FAFAFA 0%, #F5F5F5 100%);
+            border-left: 3px solid var(--text-muted);
+            border-radius: 0 12px 12px 0;
+            padding: 1.5rem 2rem;
+            margin: 2rem 0;
+        }
+        .origin-episode p {
+            font-size: 1rem;
+            color: var(--text-secondary);
+            line-height: 2;
+            margin-bottom: 0.8rem;
+        }
+        .origin-episode p:last-child {
+            margin-bottom: 0;
+        }
+        .origin-insight {
+            text-align: center;
+            margin: 2.5rem 0;
+        }
+        .origin-insight p {
+            font-size: 1.1rem;
+            color: var(--text-secondary);
+            line-height: 2;
+            margin-bottom: 0.5rem;
+        }
+        .origin-insight .insight-highlight {
+            font-family: var(--font-display);
+            font-size: 1.3rem;
+            font-weight: 600;
+            color: var(--toki-blue);
+            margin-top: 1.5rem;
+            padding-top: 1rem;
+            border-top: 2px solid var(--toki-blue-pale);
+        }
+
+        /* ---- Problem Cards ---- */
+        .problem-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 1.5rem;
+            margin: 2rem 0;
+        }
+        .problem-card {
+            background: var(--bg-white);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 2rem 1.5rem;
+        }
+        .problem-card .p-icon {
+            font-size: 2rem;
+            margin-bottom: 0.8rem;
+        }
+        .problem-card h4 {
+            font-family: var(--font-display);
+            font-size: 1.1rem;
+            margin-bottom: 0.5rem;
+        }
+        .problem-card p {
+            font-size: 0.9rem;
+            color: var(--text-secondary);
+        }
+
+        /* ---- Solution Box ---- */
+        .solution-equation {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 1.5rem;
+            margin: 2.5rem 0;
+            flex-wrap: wrap;
+        }
+        .solution-box {
+            background: var(--bg-white);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 1.5rem 2rem;
+            text-align: center;
+            flex: 1;
+            min-width: 180px;
+        }
+        .solution-box .s-icon {
+            font-size: 2rem;
+            margin-bottom: 0.5rem;
+        }
+        .solution-box h4 {
+            font-family: var(--font-display);
+            font-size: 1.1rem;
+        }
+        .solution-box p {
+            font-size: 0.85rem;
+            color: var(--text-secondary);
+        }
+        .solution-operator {
+            font-family: var(--font-display);
+            font-size: 2rem;
+            color: var(--text-muted);
+        }
+        .solution-result {
+            background: var(--toki-blue);
+            color: #fff;
+            border: none;
+        }
+        .solution-result h4, .solution-result p {
+            color: #fff;
+        }
+
+        /* ---- Market ---- */
+        .market-layers {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 1.5rem;
+            margin: 2rem 0;
+        }
+        .market-layer {
+            background: var(--bg-white);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 2rem 1.5rem;
+            text-align: center;
+        }
+        .market-layer .m-size {
+            font-family: var(--font-display);
+            font-size: 2rem;
+            font-weight: 700;
+            color: var(--toki-blue);
+        }
+        .market-layer .m-label {
+            font-size: 0.75rem;
+            color: var(--text-secondary);
+            font-weight: 600;
+            letter-spacing: 0.1em;
+            margin-bottom: 0.5rem;
+        }
+        .market-layer h4 {
+            font-family: var(--font-display);
+            font-size: 1rem;
+            margin: 0.5rem 0 0.3rem;
+        }
+        .market-layer p {
+            font-size: 0.85rem;
+            color: var(--text-secondary);
+        }
+
+        /* ---- Comparison Table ---- */
+        .comp-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 2rem 0;
+            font-size: 0.85rem;
+        }
+        .comp-table th, .comp-table td {
+            padding: 0.8rem 1rem;
+            text-align: left;
+            border-bottom: 1px solid var(--border);
+        }
+        .comp-table th {
+            background: var(--bg-section);
+            font-weight: 600;
+            font-size: 0.75rem;
+            color: var(--text-secondary);
+            letter-spacing: 0.05em;
+        }
+        .comp-table .highlight {
+            background: var(--toki-blue-pale);
+            font-weight: 600;
+        }
+        .check { color: #16A34A; }
+        .cross { color: #DC2626; }
+
+        /* ---- Business Model ---- */
+        .bm-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 1.5rem;
+            margin: 2rem 0;
+        }
+        .bm-card {
+            background: var(--bg-white);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 1.8rem;
+        }
+        .bm-card h4 {
+            font-family: var(--font-display);
+            font-size: 1.1rem;
+            margin-bottom: 0.5rem;
+        }
+        .bm-card .bm-price {
+            font-family: var(--font-display);
+            font-size: 1.6rem;
+            font-weight: 700;
+            color: var(--toki-blue);
+            margin-bottom: 0.3rem;
+        }
+        .bm-card p, .bm-card li {
+            font-size: 0.85rem;
+            color: var(--text-secondary);
+        }
+        .bm-card ul {
+            list-style: none;
+            margin-top: 0.5rem;
+        }
+        .bm-card ul li::before {
+            content: "- ";
+            color: var(--toki-blue);
+        }
+
+        /* ---- Traction ---- */
+        .traction-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 1.5rem;
+            margin: 2rem 0;
+        }
+        .traction-item {
+            background: var(--bg-white);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 1.5rem;
+        }
+        .traction-item .t-year {
+            font-size: 0.7rem;
+            color: var(--toki-blue);
+            font-weight: 700;
+            letter-spacing: 0.1em;
+        }
+        .traction-item h4 {
+            font-family: var(--font-display);
+            font-size: 1rem;
+            margin: 0.3rem 0;
+        }
+        .traction-item p {
+            font-size: 0.85rem;
+            color: var(--text-secondary);
+        }
+
+        /* ---- Moat ---- */
+        .moat-list {
+            list-style: none;
+            margin: 2rem 0;
+        }
+        .moat-list li {
+            display: flex;
+            gap: 1rem;
+            align-items: flex-start;
+            padding: 1.2rem 0;
+            border-bottom: 1px solid var(--border);
+        }
+        .moat-list .moat-num {
+            font-family: var(--font-display);
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--toki-blue);
+            min-width: 2rem;
+        }
+        .moat-list h4 {
+            font-family: var(--font-display);
+            font-size: 1rem;
+            margin-bottom: 0.2rem;
+        }
+        .moat-list p {
+            font-size: 0.85rem;
+            color: var(--text-secondary);
+        }
+
+        /* ---- Roadmap ---- */
+        .roadmap {
+            position: relative;
+            margin: 2rem 0;
+            padding-left: 2rem;
+            border-left: 2px solid var(--border);
+        }
+        .roadmap-item {
+            position: relative;
+            padding: 1rem 0 2rem 1.5rem;
+        }
+        .roadmap-item::before {
+            content: '';
+            position: absolute;
+            left: -2.55rem;
+            top: 1.3rem;
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            background: var(--toki-blue);
+            border: 2px solid var(--bg-white);
+        }
+        .roadmap-item.future::before {
+            background: var(--border);
+        }
+        .roadmap-item .r-date {
+            font-size: 0.7rem;
+            color: var(--toki-blue);
+            font-weight: 700;
+            letter-spacing: 0.1em;
+        }
+        .roadmap-item.future .r-date {
+            color: var(--text-muted);
+        }
+        .roadmap-item h4 {
+            font-family: var(--font-display);
+            font-size: 1rem;
+            margin: 0.2rem 0;
+        }
+        .roadmap-item p {
+            font-size: 0.85rem;
+            color: var(--text-secondary);
+        }
+
+        /* ---- Team ---- */
+        .team-profile {
+            display: flex;
+            gap: 2rem;
+            align-items: flex-start;
+            margin: 2rem 0;
+        }
+        .team-info {
+            flex: 1;
+        }
+        .team-info h4 {
+            font-family: var(--font-display);
+            font-size: 1.3rem;
+            margin-bottom: 0.2rem;
+        }
+        .team-info .team-title {
+            font-size: 0.85rem;
+            color: var(--toki-blue);
+            margin-bottom: 1rem;
+        }
+        .team-info p, .team-info li {
+            font-size: 0.9rem;
+            color: var(--text-secondary);
+        }
+        .team-info ul {
+            list-style: none;
+            margin-top: 0.8rem;
+        }
+        .team-info ul li {
+            padding: 0.2rem 0;
+        }
+        .team-info ul li::before {
+            content: "- ";
+            color: var(--toki-blue);
+        }
+
+        /* ---- Financial ---- */
+        .fin-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 2rem 0;
+            font-size: 0.85rem;
+        }
+        .fin-table th, .fin-table td {
+            padding: 0.8rem 1rem;
+            text-align: right;
+            border-bottom: 1px solid var(--border);
+        }
+        .fin-table th:first-child, .fin-table td:first-child {
+            text-align: left;
+        }
+        .fin-table th {
+            background: var(--bg-section);
+            font-weight: 600;
+            font-size: 0.75rem;
+            color: var(--text-secondary);
+        }
+        .fin-table .total-row {
+            font-weight: 700;
+            border-top: 2px solid var(--text-primary);
+        }
+
+        /* ---- Use of Funds ---- */
+        .funds-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1.2rem;
+            margin: 2rem 0;
+        }
+        .fund-item {
+            background: var(--bg-white);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 1.5rem;
+            text-align: center;
+        }
+        .fund-item .fund-pct {
+            font-family: var(--font-display);
+            font-size: 2rem;
+            font-weight: 700;
+            color: var(--toki-blue);
+        }
+        .fund-item h4 {
+            font-family: var(--font-display);
+            font-size: 0.95rem;
+            margin: 0.3rem 0;
+        }
+        .fund-item p {
+            font-size: 0.8rem;
+            color: var(--text-secondary);
+        }
+
+        /* ---- CTA Slide ---- */
+        .cta-slide {
+            background: linear-gradient(135deg, var(--toki-blue-dark) 0%, var(--toki-blue) 100%);
+            color: #fff;
+            text-align: center;
+        }
+        .cta-slide .slide-number {
+            color: rgba(255,255,255,0.6);
+        }
+        .cta-slide h2 {
+            color: #fff;
+            font-size: 2.5rem;
+        }
+        .cta-slide .slide-lead {
+            color: rgba(255,255,255,0.85);
+            margin: 1rem auto 2rem;
+        }
+        .cta-contact {
+            display: inline-block;
+            margin-top: 1rem;
+            padding: 1rem 3rem;
+            background: rgba(255,255,255,0.15);
+            border: 1px solid rgba(255,255,255,0.35);
+            border-radius: 8px;
+            color: #fff;
+            font-family: var(--font-display);
+            font-size: 1rem;
+            line-height: 2;
+        }
+        .cta-details {
+            margin-top: 2rem;
+            font-size: 0.85rem;
+            color: rgba(255,255,255,0.75);
+            line-height: 2;
+        }
+        .cta-details strong {
+            color: rgba(255,255,255,0.9);
+        }
+
+        /* ---- Question Comparison ---- */
+        .question-compare {
+            max-width: 620px;
+            margin: 2rem auto;
+            text-align: left;
+        }
+        .question-compare-label {
+            font-size: 0.75rem;
+            letter-spacing: 0.08em;
+            color: rgba(255,255,255,0.55);
+            margin-bottom: 0.8rem;
+            font-family: var(--font-body);
+        }
+        .question-row {
+            display: flex;
+            align-items: baseline;
+            gap: 0.8rem;
+            padding: 0.55rem 0;
+            border-bottom: 1px solid rgba(255,255,255,0.1);
+            font-size: 0.85rem;
+            line-height: 1.6;
+        }
+        .question-row:last-child {
+            border-bottom: none;
+        }
+        .question-row .q-company {
+            flex-shrink: 0;
+            width: 100px;
+            color: rgba(255,255,255,0.5);
+            font-size: 0.75rem;
+            font-family: var(--font-body);
+        }
+        .question-row .q-text {
+            color: rgba(255,255,255,0.75);
+            font-family: var(--font-display);
+        }
+        .question-row.q-highlight {
+            padding: 0.7rem 0.8rem;
+            margin-top: 0.3rem;
+            background: rgba(255,255,255,0.08);
+            border-radius: 6px;
+            border-bottom: none;
+        }
+        .question-row.q-highlight .q-company {
+            color: rgba(255,255,255,0.8);
+            font-weight: 500;
+        }
+        .question-row.q-highlight .q-text {
+            color: #fff;
+            font-weight: 600;
+        }
+
+        /* ---- Key Point Box ---- */
+        .key-point {
+            background: var(--toki-blue-pale);
+            border-left: 4px solid var(--toki-blue);
+            padding: 1.2rem 1.5rem;
+            margin: 1.5rem 0;
+            border-radius: 0 8px 8px 0;
+        }
+        .key-point p {
+            font-size: 0.9rem;
+            color: var(--text-primary);
+        }
+        .key-point strong {
+            color: var(--toki-blue);
+        }
+
+        /* ---- Segment Table ---- */
+        .segment-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 1.2rem;
+            margin: 2rem 0;
+        }
+        .segment-card {
+            background: var(--bg-white);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 1.5rem;
+        }
+        .segment-card h4 {
+            font-family: var(--font-display);
+            font-size: 1rem;
+            margin-bottom: 0.3rem;
+        }
+        .segment-card .seg-tag {
+            font-size: 0.7rem;
+            color: var(--toki-blue);
+            font-weight: 600;
+            letter-spacing: 0.05em;
+        }
+        .segment-card p {
+            font-size: 0.85rem;
+            color: var(--text-secondary);
+            margin-top: 0.3rem;
+        }
+
+        /* ---- Footer ---- */
+        .pitch-footer {
+            text-align: center;
+            padding: 2rem;
+            font-size: 0.75rem;
+            color: var(--text-secondary);
+            border-top: 1px solid var(--border);
+        }
+
+        /* ---- Responsive ---- */
+        @media (max-width: 768px) {
+            .slide { padding: 5rem 1.2rem 3rem; }
+            .cover-slide h1 { font-size: 2.2rem; }
+            .slide h2 { font-size: 1.6rem; }
+            .problem-grid, .market-layers { grid-template-columns: 1fr; }
+            .bm-grid, .traction-grid, .segment-grid { grid-template-columns: 1fr; }
+            .solution-equation { flex-direction: column; }
+            .team-profile { flex-direction: column; }
+            .comp-table { font-size: 0.75rem; }
+            .comp-table th, .comp-table td { padding: 0.5rem; }
+            .question-row { flex-direction: column; gap: 0.2rem; }
+            .question-row .q-company { width: auto; }
+        }
+
+        @media print {
+            * { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+
+            body {
+                font-size: 10pt;
+                line-height: 1.6;
+                color: #000;
+                background: #fff;
+            }
+
+            .pitch-nav { display: none; }
+
+            .slide {
+                min-height: auto;
+                page-break-after: always;
+                page-break-inside: avoid;
+                padding: 1.5cm 2cm;
+                display: block;
+            }
+            .slide:nth-child(even):not(.cover-slide):not(.cta-slide) {
+                background: #F5F5F5;
+            }
+
+            /* Cover slide: dark bg for print */
+            .cover-slide {
+                background: #1E293B !important;
+                color: #fff;
+                padding: 3cm 2cm;
+                text-align: center;
+            }
+            .cover-slide h1 {
+                font-size: 28pt;
+                -webkit-text-fill-color: #fff;
+                color: #fff;
+                background: none;
+            }
+            .cover-tagline { color: var(--toki-accent); }
+            .cover-subtitle { color: #ccc; }
+            .cover-meta { color: #aaa; }
+            .cover-meta strong { color: #ccc; }
+            .cover-confidential { color: #999; border-color: #666; }
+
+            /* CTA slide: keep blue bg for print */
+            .cta-slide {
+                background: var(--toki-blue) !important;
+                color: #fff;
+            }
+            .cta-slide h2 { color: #fff; font-size: 20pt; }
+            .cta-slide .slide-number { color: rgba(255,255,255,0.6); }
+            .cta-slide .slide-lead { color: #ddd; }
+            .cta-contact { color: #fff; border-color: rgba(255,255,255,0.4); background: rgba(255,255,255,0.1); }
+            .cta-details { color: #ccc; }
+            .cta-details strong { color: #eee; }
+
+            /* Typography */
+            .slide h2 { font-size: 18pt; margin-bottom: 6pt; }
+            .slide h3 { font-size: 13pt; margin-bottom: 6pt; }
+            .slide-number { font-size: 7pt; color: #666; }
+            .slide-lead { font-size: 9pt; color: #333; margin-bottom: 12pt; }
+
+            /* Cards & grids: keep structure, ensure borders print */
+            .stat-grid, .problem-grid, .market-layers,
+            .bm-grid, .traction-grid, .segment-grid, .funds-grid {
+                gap: 8pt;
+            }
+            .stat-card, .problem-card, .solution-box, .market-layer,
+            .bm-card, .traction-item, .segment-card, .fund-item {
+                border: 1px solid #ccc;
+                padding: 10pt;
+                page-break-inside: avoid;
+            }
+            .stat-card .stat-number { font-size: 18pt; color: #1D4ED8; }
+            .stat-card .stat-label { color: #333; }
+
+            /* Solution result box */
+            .solution-result { background: var(--toki-blue) !important; color: #fff; }
+            .solution-result h4, .solution-result p { color: #fff; }
+
+            /* Key point */
+            .key-point {
+                background: #EFF6FF;
+                border-left: 3pt solid #2563EB;
+                padding: 8pt 10pt;
+                page-break-inside: avoid;
+            }
+            .key-point p { font-size: 8pt; color: #000; }
+            .key-point strong { color: #1D4ED8; }
+
+            /* Tables */
+            .comp-table, .fin-table { font-size: 8pt; }
+            .comp-table th, .fin-table th {
+                background: #E8E8E8 !important;
+                color: #333;
+            }
+            .comp-table .highlight { background: #E0EDFF !important; }
+            .comp-table td, .fin-table td { border-bottom: 0.5pt solid #ccc; }
+            .check { color: #16A34A; }
+            .cross { color: #DC2626; }
+
+            /* Moat list */
+            .moat-list li { border-bottom: 0.5pt solid #ccc; }
+            .moat-list .moat-num { color: #1D4ED8; }
+
+            /* Roadmap */
+            .roadmap { border-left: 1.5pt solid #ccc; }
+            .roadmap-item::before { background: #2563EB; }
+            .roadmap-item.future::before { background: #ccc; }
+            .roadmap-item .r-date { color: #1D4ED8; }
+            .roadmap-item.future .r-date { color: #666; }
+
+            /* Traction */
+            .traction-item .t-year { color: #1D4ED8; }
+
+            /* BM price */
+            .bm-card .bm-price { color: #1D4ED8; }
+
+            /* Fund pct */
+            .fund-item .fund-pct { color: #1D4ED8; }
+
+            /* Team */
+            .team-info .team-title { color: #1D4ED8; }
+
+            /* Segment tag */
+            .segment-card .seg-tag { color: #1D4ED8; }
+
+            /* Question comparison */
+            .question-compare-label { color: rgba(255,255,255,0.6); font-size: 7pt; }
+            .question-row .q-company { color: rgba(255,255,255,0.5); font-size: 7pt; }
+            .question-row .q-text { color: rgba(255,255,255,0.8); font-size: 8pt; }
+            .question-row.q-highlight { background: rgba(255,255,255,0.12); }
+            .question-row.q-highlight .q-company { color: #fff; }
+            .question-row.q-highlight .q-text { color: #fff; }
+
+            /* Footer */
+            .pitch-footer {
+                page-break-after: avoid;
+                font-size: 7pt;
+                color: #666;
+            }
+
+            /* Links: show as text */
+            a { color: inherit; text-decoration: none; }
+        }
+    </style>
+</head>
+<body>
+
+<!-- Navigation -->
+<nav class="pitch-nav">
+    <a href="index.html" class="nav-brand">トキストレージ</a>
+    <span class="nav-label">INVESTOR PITCH DECK - CONFIDENTIAL</span>
+</nav>
+
+<!-- ========================================
+     SLIDE 1: COVER
+     ======================================== -->
+<section class="slide cover-slide">
+    <div class="slide-inner">
+        <p class="cover-tagline">存在証明の民主化</p>
+        <h1>トキストレージ</h1>
+        <p class="cover-subtitle">石英ガラスに刻む、千年の存在証明</p>
+        <div class="cover-meta">
+            <strong>TokiStorage</strong><br>
+            佐藤 卓也<br>
+            2026年2月
+        </div>
+        <div class="cover-confidential">CONFIDENTIAL - 配布厳禁</div>
+    </div>
+</section>
+
+<!-- ========================================
+     SLIDE 2: EXECUTIVE SUMMARY
+     ======================================== -->
+<section class="slide">
+    <div class="slide-inner">
+        <p class="slide-number">01 - Executive Summary</p>
+        <h2>千年先の存在証明市場を創る</h2>
+        <p class="slide-lead">石英ガラス x QRコード技術で、サーバー不要・維持費ゼロの永続メモリアルを個人に届ける。データセンター向け技術を初めて「個人の存在証明」へ民主化するプロダクト。</p>
+
+        <div class="stat-grid">
+            <div class="stat-card">
+                <div class="stat-number">1,000<span class="stat-unit">年</span></div>
+                <div class="stat-label">物理的保存期間</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-number">0<span class="stat-unit">円</span></div>
+                <div class="stat-label">年間維持費（顧客側）</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-number">3,000<span class="stat-unit">回超</span></div>
+                <div class="stat-label">刻印テスト実績</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-number">5<span class="stat-unit">万円〜</span></div>
+                <div class="stat-label">エントリー価格</div>
+            </div>
+        </div>
+
+        <div class="key-point">
+            <p><strong>投資ハイライト：</strong>サーバーコストゼロのため、販売数増加に比例して限界費用が逓減するスケーラブルなビジネスモデル。「存在証明の民主化」を掲げる以上、最終到達点は人類一人ひとりが永続墓誌を持つ世界。製造の自動化と限界費用の極小化がその世界線を現実にする。佐渡の1件から、80億人へ。</p>
+        </div>
+    </div>
+</section>
+
+<!-- ========================================
+     SLIDE 2: ORIGIN STORY
+     ======================================== -->
+<section class="slide origin-slide">
+    <div class="slide-inner">
+        <p class="slide-number">02 - Origin</p>
+        <h2>なぜ、この事業なのか</h2>
+        <p class="slide-lead">マウイでの墓守、愛犬との別れ。そして、日常の中での小さな気づき。</p>
+
+        <div class="origin-episode">
+            <p>先日、娘とキッズイベントに行きました。</p>
+            <p>帰り道、娘の手には紙の帽子とミニ風船。どちらも子どもは大喜び。でも帰宅する頃には風船はしぼみ、翌朝にはゴミ箱へ。</p>
+            <p>その日、娘は会場で出会った方に手作りのパールソープを渡していました。</p>
+        </div>
+
+        <div class="origin-insight">
+            <p>企業がくれるものは、その場では楽しい。でもすぐに消える。</p>
+            <p>手作りの石鹸は、使い切るまで手元に残る。そしてQRコードから、作った人のストーリーにつながる。</p>
+            <p class="insight-highlight">同じ「もらいもの」でも、記憶に残るものと消えるものがある。</p>
+        </div>
+
+        <div class="key-point">
+            <p>消費社会が生み出す「一時的な楽しさ」と、「誰かの存在を残す」という行為は違う。<br>この問いが、トキストレージの出発点です。</p>
+        </div>
+    </div>
+</section>
+
+<!-- ========================================
+     SLIDE 3: PROBLEM
+     ======================================== -->
+<section class="slide">
+    <div class="slide-inner">
+        <p class="slide-number">03 - Problem</p>
+        <h2>記憶はなぜ消えてしまうのか</h2>
+        <p class="slide-lead">現代のメモリアル手段はすべて「時間の壁」に直面しています。</p>
+
+        <div class="problem-grid">
+            <div class="problem-card">
+                <div class="p-icon">&#x1F4BE;</div>
+                <h4>デジタルの時間軸</h4>
+                <p>クラウドやSNSは日常の記録に最適化されている。S&amp;P 500企業の平均寿命は20年未満（McKinsey調査）。100年・1000年スケールの保存には異なる設計思想が必要。</p>
+            </div>
+            <div class="problem-card">
+                <div class="p-icon">&#x1FAA6;</div>
+                <h4>墓の維持が困難な時代</h4>
+                <p>年間推定10万基以上が墓じまい。墓石は参拝体験に優れるが寿命は100-200年。少子化・核家族化・都市集中で維持が困難に。千年スケールの記録には補完手段が求められている。</p>
+            </div>
+            <div class="problem-card">
+                <div class="p-icon">&#x1F464;</div>
+                <h4>記憶の不平等</h4>
+                <p>歴史に名を残せるのは一部の特権階級のみ。一般人の存在記録は3世代で消失。「あなたの曾祖父母の名前を言えますか？」</p>
+            </div>
+        </div>
+
+        <div class="key-point">
+            <p><strong>市場の構造的機会：</strong>デジタルサービスは「日常の記録」に、墓石は「参拝体験」に優れる。しかし「千年スケールの情報保存」を担うレイヤーは個人向けにまだ存在しない。既存サービスを置き換えるのではなく、補完する新レイヤーに大きな機会がある。</p>
+        </div>
+    </div>
+</section>
+
+<!-- ========================================
+     SLIDE 4: SOLUTION
+     ======================================== -->
+<section class="slide">
+    <div class="slide-inner">
+        <p class="slide-number">04 - Solution</p>
+        <h2>石英ガラス x QRコード = 永続墓誌</h2>
+        <p class="slide-lead">サーバー不要・電源不要。1000年後、スマホをかざすだけで記憶が蘇る。</p>
+
+        <div class="solution-equation">
+            <div class="solution-box">
+                <div class="s-icon">&#x1F48E;</div>
+                <h4>石英ガラス</h4>
+                <p>1000年の耐久性<br>1000&#x2103;耐熱</p>
+            </div>
+            <div class="solution-operator">+</div>
+            <div class="solution-box">
+                <div class="s-icon">&#x1F4F1;</div>
+                <h4>QRコード</h4>
+                <p>ISO国際規格<br>30年以上の実績</p>
+            </div>
+            <div class="solution-operator">=</div>
+            <div class="solution-box solution-result">
+                <div class="s-icon">&#x2728;</div>
+                <h4>トキストレージ</h4>
+                <p>永続墓誌<br>維持費ゼロ</p>
+            </div>
+        </div>
+
+        <h3>技術的裏付け</h3>
+        <ul style="margin:1rem 0 1.5rem 1.2rem; color:var(--text-secondary); font-size:0.9rem;">
+            <li>日立製作所・京都大学：石英ガラスへのレーザー記録で3億年以上のデータ保存を実証（2012年）</li>
+            <li>Microsoft Project Silica：石英ガラスベースのデータセンター保存技術を研究開発中</li>
+            <li>代表の半導体製造装置の開発経験を含む20年超のエンジニアキャリアから独自の金属蒸着刻印技術を確立</li>
+            <li>音声バイナリデータのQRコード化＋独自圧縮技術（最大10倍）を開発済（国際特許出願済）</li>
+        </ul>
+
+        <div class="key-point">
+            <p><strong>先端技術の民主化：</strong>データセンター向けの石英ガラスストレージ技術（5Dメモリクリスタル等）は存在するが、専用機器が必要で個人向けではない。トキストレージは「スマホで読み取れる」唯一の個人向け石英ガラスメモリアルとして、このギャップを埋める。</p>
+        </div>
+    </div>
+</section>
+
+<!-- ========================================
+     SLIDE 5: MARKET OPPORTUNITY
+     ======================================== -->
+<section class="slide">
+    <div class="slide-inner">
+        <p class="slide-number">05 - Market Opportunity</p>
+        <h2>人類規模の市場──死と記憶の交差点</h2>
+        <p class="slide-lead">年間6,000万人が亡くなる世界で、メモリアル産業はすべての文化圏に存在する。<br>「永続保存」はその未開拓レイヤーであり、地理・宗教・文化を問わない。</p>
+
+        <div class="market-layers">
+            <div class="market-layer">
+                <p class="m-label">TAM</p>
+                <div class="m-size">20兆円</div>
+                <h4>世界のデスケア・メモリアル市場</h4>
+                <p>葬儀・埋葬・火葬・メモリアルサービスを含むグローバル市場（約$130B）。年間死亡者6,000万人は今後も増加</p>
+            </div>
+            <div class="market-layer">
+                <p class="m-label">SAM</p>
+                <div class="m-size">6兆円</div>
+                <h4>永続保存と親和性の高い文化圏</h4>
+                <p>日本（1.8兆円）＋先祖供養文化のあるアジア太平洋圏＋北米・欧州の墓地メモリアル市場。物理的永続保存への潜在需要が顕在化しつつある領域</p>
+            </div>
+            <div class="market-layer">
+                <p class="m-label">SOM</p>
+                <div class="m-size">500億円</div>
+                <h4>5年以内の到達可能市場</h4>
+                <p>日本の終活・墓じまい層＋B2B（寺院・葬儀社・自治体）＋マウイ起点の北米初期展開＋在外日系人コミュニティ</p>
+            </div>
+        </div>
+
+        <h3>ターゲットセグメント</h3>
+        <div class="segment-grid">
+            <div class="segment-card">
+                <p class="seg-tag">PRIMARY - LTV最高</p>
+                <h4>終活シニア（60-80代）</h4>
+                <p>終活市場は拡大中。「子供に迷惑をかけたくない」「サブスク不要で買い切り」のニーズに合致。仏壇店・葬儀社経由での獲得が有効</p>
+            </div>
+            <div class="segment-card">
+                <p class="seg-tag">PRIMARY - LTV高</p>
+                <h4>墓じまい検討層</h4>
+                <p>年間10万基以上が墓じまい。「墓を閉じた後の記録の受け皿」として提案。家族分の追加購入によりLTV増大</p>
+            </div>
+            <div class="segment-card">
+                <p class="seg-tag">SECONDARY</p>
+                <h4>寺院・仏壇店・葬儀社</h4>
+                <p>B2Bチャネルとして卸販売。既存の顧客基盤を活用。墓じまい相談が増加する中、新たな提案商材として需要あり</p>
+            </div>
+            <div class="segment-card">
+                <p class="seg-tag">SECONDARY</p>
+                <h4>行政・自治体・企業</h4>
+                <p>戦没者名簿、災害記録、企業記念品。公的予算に馴染むサーバー不要・維持費ゼロの構造。JICA横浜・日本ハワイ移民資料館との連携実績あり</p>
+            </div>
+            <div class="segment-card">
+                <p class="seg-tag">GLOBAL EXPANSION</p>
+                <h4>海外墓地・西洋メモリアル市場</h4>
+                <p>欧米の墓地は風化・管理放棄・都市開発による消失が深刻化。サーバー不要・言語非依存のQRコードは文化圏を問わず機能。マウイ拠点を起点に北米市場へのアクセスが可能</p>
+            </div>
+            <div class="segment-card">
+                <p class="seg-tag">GLOBAL EXPANSION</p>
+                <h4>アジア諸国・在外日系人コミュニティ</h4>
+                <p>先祖供養の文化が根強い東アジア・東南アジア圏は親和性が高い。ハワイ・ブラジル等の日系人コミュニティはルーツ保全の需要が顕在化。英語版LP公開済み</p>
+            </div>
+        </div>
+
+        <div class="key-point">
+            <p><strong>グローバル展開の構造的優位性：</strong>石英ガラス x QRコードは言語・宗教・文化に依存しない普遍的技術。維持費ゼロ・サーバー不要の構造は、インフラが不安定な地域でもそのまま機能する。「存在証明の民主化」というミッションは国境を越える。</p>
+        </div>
+    </div>
+</section>
+
+<!-- ========================================
+     SLIDE 5.5: VISION
+     ======================================== -->
+<section class="slide cta-slide">
+    <div class="slide-inner">
+        <p class="slide-number">06 - Vision</p>
+        <h2>80億人が永続墓誌を持つ世界から逆算する</h2>
+        <p class="slide-lead">「存在証明の民主化」とは、すべての人が自らの存在を千年先に届けられる世界を実現すること。<br>その世界線から今日を逆算したとき、トキストレージの現在地が見えてきます。</p>
+
+        <div class="question-compare">
+            <p class="question-compare-label">THE DEFINING QUESTION ── 世界を変えた企業は、一つの「問い」から始まった</p>
+            <div class="question-row">
+                <span class="q-company">Google</span>
+                <span class="q-text">「世界中の情報を整理し、誰もがアクセスできるようにする」</span>
+            </div>
+            <div class="question-row">
+                <span class="q-company">Tesla</span>
+                <span class="q-text">「持続可能エネルギーへの移行を加速できるか」</span>
+            </div>
+            <div class="question-row">
+                <span class="q-company">Wikipedia</span>
+                <span class="q-text">「人類の全知識を、すべての人に無料で届けられるか」</span>
+            </div>
+            <div class="question-row">
+                <span class="q-company">SpaceX</span>
+                <span class="q-text">「人類を多惑星種にできるか」</span>
+            </div>
+            <div class="question-row q-highlight">
+                <span class="q-company">トキストレージ</span>
+                <span class="q-text">「すべての人の存在を、千年先に届けられるか」</span>
+            </div>
+        </div>
+
+        <p class="slide-lead" style="font-size:0.85rem; margin-bottom:1.5rem; opacity:0.8;">
+            問いのスケールが市場のスケールを決める。<br>
+            80億人×「存在を残したい」という普遍的欲求──<br>
+            この問いの射程は、情報・エネルギー・知識と同じ人類規模にある。
+        </p>
+
+        <div class="cta-contact" style="text-align:left; max-width:580px; margin:0 auto; padding:1.5rem 2rem;">
+            <strong style="color:#fff; font-size:0.8rem; letter-spacing:0.05em;">BACKCASTING</strong><br>
+            <span style="font-size:0.85rem; opacity:0.85;">
+            2050&#x2500; 永続墓誌がパスポートのように個人の基本インフラとなる<br>
+            2040&#x2500; アジア・中東・アフリカの供養文化圏へ展開完了<br>
+            2035&#x2500; 欧米墓地管理団体との標準提携。自治体が住民に配布<br>
+            2030&#x2500; 製造の自動化・現地パートナー展開で限界費用が極小化<br>
+            2028&#x2500; 国内B2Bチャネル確立。海外展開開始<br>
+            <strong style="color:#fff;">2026&#x2500; 今ここ。佐渡から始まる。</strong>
+            </span>
+        </div>
+    </div>
+</section>
+
+<!-- ========================================
+     SLIDE 6: COMPETITIVE ADVANTAGE
+     ======================================== -->
+<section class="slide">
+    <div class="slide-inner">
+        <p class="slide-number">07 - Competitive Landscape</p>
+        <h2>「1000年 x スマホ読取」は唯一のポジション</h2>
+        <p class="slide-lead">短期保存 x 専門機器の象限はレッドオーシャン。トキストレージはブルーオーシャン。</p>
+
+        <table class="comp-table">
+            <thead>
+                <tr>
+                    <th>比較項目</th>
+                    <th class="highlight">トキストレージ</th>
+                    <th>QRコード墓石</th>
+                    <th>オンライン墓</th>
+                    <th>タイムカプセル</th>
+                    <th>5Dメモリクリスタル</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>保存期間</td>
+                    <td class="highlight"><strong>1,000年</strong></td>
+                    <td>サービス依存</td>
+                    <td>サービス依存</td>
+                    <td>10-50年</td>
+                    <td>理論上138億年</td>
+                </tr>
+                <tr>
+                    <td>サーバー依存</td>
+                    <td class="highlight"><span class="check">不要</span></td>
+                    <td><span class="cross">必要</span></td>
+                    <td><span class="cross">必要</span></td>
+                    <td><span class="check">不要</span></td>
+                    <td><span class="check">不要</span></td>
+                </tr>
+                <tr>
+                    <td>読取方法</td>
+                    <td class="highlight"><strong>スマホ</strong></td>
+                    <td>スマホ</td>
+                    <td>ブラウザ</td>
+                    <td>開封のみ</td>
+                    <td><span class="cross">専用光学機器</span></td>
+                </tr>
+                <tr>
+                    <td>個人向け販売</td>
+                    <td class="highlight"><span class="check">あり</span></td>
+                    <td><span class="check">あり</span></td>
+                    <td><span class="check">あり</span></td>
+                    <td><span class="check">あり</span></td>
+                    <td><span class="cross">なし（B2Bのみ）</span></td>
+                </tr>
+                <tr>
+                    <td>維持費</td>
+                    <td class="highlight"><strong>0円</strong></td>
+                    <td>月額課金</td>
+                    <td>月額500-3,000円</td>
+                    <td>保管料</td>
+                    <td>保守契約</td>
+                </tr>
+                <tr>
+                    <td>サービス終了リスク</td>
+                    <td class="highlight"><span class="check">製品単体で機能</span></td>
+                    <td><span class="cross">あり</span></td>
+                    <td><span class="cross">あり</span></td>
+                    <td>低</td>
+                    <td>低</td>
+                </tr>
+            </tbody>
+        </table>
+
+        <div class="key-point">
+            <p><strong>ポジショニング：</strong>「超長期保存（1000年） x スマホで読取可能」の象限に位置するのはトキストレージのみ。5Dメモリクリスタルは138億年保存可能だが専用機器が必要で個人向けではない。QRコード墓石はスマホ対応だがサーバー依存。この構造的ギャップが参入障壁となる。</p>
+        </div>
+    </div>
+</section>
+
+<!-- ========================================
+     SLIDE 7: BUSINESS MODEL
+     ======================================== -->
+<section class="slide">
+    <div class="slide-inner">
+        <p class="slide-number">08 - Business Model</p>
+        <h2>製品販売 + 体験サービスの複合モデル</h2>
+        <p class="slide-lead">買い切り型の製品収益を軸に、高単価リトリート体験と法人チャネルで多角化。</p>
+
+        <div class="bm-grid">
+            <div class="bm-card">
+                <h4>個人プラン</h4>
+                <div class="bm-price">5万円（税込）</div>
+                <p>石英ガラスプレート（50x50mm）にQRコード・テキスト・画像を刻印。オンライン完結で全国配送。</p>
+                <ul>
+                    <li>エントリー商品として認知獲得</li>
+                    <li>ギフト購入需要も見込む</li>
+                    <li>年あたり50円の訴求力</li>
+                </ul>
+            </div>
+            <div class="bm-card">
+                <h4>三世代プラン（推奨）</h4>
+                <div class="bm-price">55万円（税込）</div>
+                <p>祖父母から孫へ。家系図デザイン、家族写真刻印、佐渡/ハナでの現地製作体験（2泊3日）込み。</p>
+                <ul>
+                    <li>体験型サービスで高単価を実現</li>
+                    <li>家族単位での購入でLTV最大化</li>
+                    <li>「作る体験」が口コミの起点に</li>
+                </ul>
+            </div>
+            <div class="bm-card">
+                <h4>ボイスメモリアルコース</h4>
+                <div class="bm-price">555万円（税込）</div>
+                <p>年5家族程度を目安に。肉声録音＋金属蒸着刻印＋12回の伴走セッション。代表が直接伴走する完全オーダーメイド。</p>
+                <ul>
+                    <li>最高収益商材（555万円/件）</li>
+                    <li>独自の金属蒸着技術による差別化</li>
+                    <li>売上はSoulCarrier活動に還元</li>
+                </ul>
+            </div>
+            <div class="bm-card">
+                <h4>年間共鳴メンバーシップ</h4>
+                <div class="bm-price">999万円/年</div>
+                <p>ボイスメモリアルコース購入者限定。パトロン銘板刻印、年次活動報告、法人パトロネージ対応。</p>
+                <ul>
+                    <li>リカーリング収益の柱</li>
+                    <li>法人の広告宣伝費として経費処理可</li>
+                    <li>ブランドのソーシャル信頼性向上</li>
+                </ul>
+            </div>
+        </div>
+
+        <h3>収益構造の特徴</h3>
+        <div class="key-point">
+            <p><strong>限界費用逓減が「民主化」を可能にする：</strong>製品はオフラインで完結するため、顧客数が増えてもサーバー費・保守費が発生しない。変動費は製造原価（石英ガラス加工）のみ。製造の自動化・外注化が進むほど限界費用は下がり、価格を下げてもマージンが残る構造になる。この逓減曲線の先に、すべての人が永続墓誌を持てる世界がある。</p>
+        </div>
+    </div>
+</section>
+
+<!-- ========================================
+     SLIDE 8: PEARL SOAP - GRATITUDE INFRASTRUCTURE & TOKI STORAGE FUNNEL
+     ======================================== -->
+<section class="slide">
+    <div class="slide-inner">
+        <p class="slide-number">09 - Pearl Soap &#x2192; TokiStorage</p>
+        <h2>Pearl Soapワークショップ：トキストレージへの感謝導線</h2>
+        <p class="slide-lead">従来のクラフトワークショップは「自分のために作る」で完結し、作品が溜まり、リピートしない。<br>Pearl Soapは「誰かに渡すために作る」への転換により、トキストレージへの自然な導線を生む。</p>
+
+        <h3>「消えるギフト」から「消えない記録」への対比構造</h3>
+        <table class="comp-table">
+            <thead>
+                <tr>
+                    <th>要素</th>
+                    <th>Pearl Soap</th>
+                    <th class="highlight">トキストレージ</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>素材</td>
+                    <td>石鹸（有機物）</td>
+                    <td class="highlight">石英ガラス（無機物）</td>
+                </tr>
+                <tr>
+                    <td>寿命</td>
+                    <td>数週間で消える</td>
+                    <td class="highlight">1,000年以上残る</td>
+                </tr>
+                <tr>
+                    <td>価格帯</td>
+                    <td>2,000円（ワークショップ）</td>
+                    <td class="highlight">最大555万円</td>
+                </tr>
+                <tr>
+                    <td>届ける感情</td>
+                    <td>「いてくれてありがとう」</td>
+                    <td class="highlight">「ここにいた」</td>
+                </tr>
+                <tr>
+                    <td>共通思想</td>
+                    <td>存在の肯定</td>
+                    <td class="highlight">存在の永続</td>
+                </tr>
+            </tbody>
+        </table>
+
+        <h3>デジタル広告 vs Pearl Soap：構造的な違い</h3>
+        <table class="comp-table">
+            <thead>
+                <tr>
+                    <th>比較項目</th>
+                    <th>デジタル広告</th>
+                    <th class="highlight">Pearl Soap</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>リード獲得コスト</td>
+                    <td>CPA 数千円〜1万円超</td>
+                    <td class="highlight">2,000円で体験済みリードを獲得</td>
+                </tr>
+                <tr>
+                    <td>リードの質</td>
+                    <td>「広告をクリックした人」</td>
+                    <td class="highlight">「自分で作って渡す体験をした人」</td>
+                </tr>
+                <tr>
+                    <td>持続性</td>
+                    <td>出稿を止めたら止まる</td>
+                    <td class="highlight">渡した瞬間から勝手に走り続ける</td>
+                </tr>
+                <tr>
+                    <td>到達経路</td>
+                    <td>「売りたい側」から届く</td>
+                    <td class="highlight">「大切な人」から届く</td>
+                </tr>
+                <tr>
+                    <td>競合構造</td>
+                    <td>オークション競争・CPC上昇</td>
+                    <td class="highlight">オークション不在</td>
+                </tr>
+            </tbody>
+        </table>
+
+        <div class="key-point">
+            <p><strong>Pearl Soapは広告チャネルではなく、広告産業の構造的代替である：</strong>5万個の石鹸流通は5万インプレッションとCTR/CVRの次元で比較できない。「大切な人から手渡しで届く」心理的受容度が根本的に異なる。競合がレッドオーシャンで広告費を積めば積むほど、Pearl Soapの相対的優位性は高まる。</p>
+        </div>
+
+        <div class="key-point">
+            <p><strong>なぜ石鹸なのか：</strong>誰でも使う（万人共通）・必ず消える（置き場問題なし）・拒絶されない（消耗品）。この「渡す前提」の三条件を満たす素材は石鹸だけ。陶芸やアクセサリーでは成立しない構造。</p>
+        </div>
+
+        <div class="key-point">
+            <p><strong>SDGsモデルケースとしての構造：</strong>廃棄物ゼロ（目標12：消えることが完成）、孤立の解消（目標3：受け手が贈り手に転換）、地方創生（目標11：意味ある来訪）、国際協力（目標17：Workawayによるギフトエコノミー）——これらは「SDGsに貢献するためのコスト」ではなく、石鹸が1個流通するたびに自動的に達成される。事業成長と社会的インパクトが同じ方向を向く構造は、ESG投資との親和性が高く、佐渡市雇用機会拡充事業補助金等の審査でも加点要素となり得る。</p>
+        </div>
+    </div>
+</section>
+
+<!-- ========================================
+     SLIDE 9: PEARL SOAP - GROWTH SCENARIO
+     ======================================== -->
+<section class="slide">
+    <div class="slide-inner">
+        <p class="slide-number">10 - Pearl Soap Growth</p>
+        <h2>Pearl Soapワークショップの成長シナリオ</h2>
+        <p class="slide-lead">佐渡拠点を起点に、フランチャイズとグローバル展開で「感謝のネットワーク」を構築。</p>
+
+        <div class="roadmap">
+            <div class="roadmap-item">
+                <p class="r-date">PHASE 1：佐渡拠点（Year 1-2）</p>
+                <h4>佐渡島内の拠点でワークショップ常設開催</h4>
+                <p>佐渡島内のホテル・旅館への出張開催。年間参加者数：500〜1,000名。QRコード流通数：500〜1,000個/年。古民家等を活用し、体験の場としての雰囲気価値を提供。</p>
+            </div>
+            <div class="roadmap-item future">
+                <p class="r-date">PHASE 2：全国展開（Year 2-4）</p>
+                <h4>認定講師制度によるフランチャイズ展開</h4>
+                <p>クリエイターズファクトリー等の既存施設との提携。全国50〜100拠点。年間参加者数：25,000〜50,000名。QRコード流通数：25,000〜50,000個/年。</p>
+            </div>
+            <div class="roadmap-item future">
+                <p class="r-date">PHASE 3：グローバル展開（Year 4-）</p>
+                <h4>Workaway経由での海外ノード形成</h4>
+                <p>多言語対応のQRコンテンツ基盤。アジア・北米・欧州への展開。QRコード流通数：年間100,000個以上。各国のノードがQRコードで佐渡のトキストレージと接続。</p>
+            </div>
+        </div>
+
+        <h3>収益モデル</h3>
+        <div class="bm-grid">
+            <div class="bm-card">
+                <h4>ワークショップ参加費</h4>
+                <div class="bm-price">2,000円/回</div>
+                <p>直営拠点での開催収益。材料費・人件費を差し引いても50%以上の粗利率。</p>
+            </div>
+            <div class="bm-card">
+                <h4>フランチャイズ</h4>
+                <div class="bm-price">月額固定 + 材料キット販売</div>
+                <p>認定講師からのライセンス料・材料キット販売。講師養成講座の受講料も収益源。</p>
+            </div>
+            <div class="bm-card">
+                <h4>トキストレージ転換</h4>
+                <div class="bm-price">5万円〜555万円</div>
+                <p>ワークショップ参加者からの千年記録サービス契約。「消えるギフト」体験者が「消えない記録」へ。</p>
+            </div>
+            <div class="bm-card">
+                <h4>B2B提携</h4>
+                <div class="bm-price">ホテル・旅館・企業福利厚生</div>
+                <p>宿泊施設での体験プログラム提供。企業の福利厚生・チームビルディングとしても需要あり。</p>
+            </div>
+        </div>
+
+        <div class="key-point">
+            <p><strong>フランチャイズモデルとの異常な相性：</strong>講師養成コスト極小（MPソープベースを溶かして型に流すだけ）、プログラム標準化済み（60分の流れが確立）、在庫リスクゼロ（材料は消耗品、完成品は参加者が持ち帰る）、設備投資不要（加熱機器と作業台のみ）、品質管理容易（「失敗がない」製法）。</p>
+        </div>
+    </div>
+</section>
+
+<!-- ========================================
+     SLIDE 10: CHANNELS & GO-TO-MARKET
+     ======================================== -->
+<section class="slide">
+    <div class="slide-inner">
+        <p class="slide-number">11 - Go-to-Market</p>
+        <h2>国内流通＋海外展開の多層チャネル</h2>
+        <p class="slide-lead">仏壇店・葬儀社の既存インフラを活用しつつ、マウイ拠点から海外市場を開拓。</p>
+
+        <div class="bm-grid">
+            <div class="bm-card">
+                <h4>B2B提携チャネル（国内）</h4>
+                <ul>
+                    <li>仏壇店（現代仏壇等）：既存顧客基盤への卸販売</li>
+                    <li>葬儀社ネットワーク：エンドオブライフ接点</li>
+                    <li>石材店：墓じまい相談時の提案商材</li>
+                    <li>終活セミナー・イベント出展</li>
+                </ul>
+            </div>
+            <div class="bm-card">
+                <h4>D2C・メディアチャネル</h4>
+                <ul>
+                    <li>公式Webサイト（日英LP公開済）</li>
+                    <li>Calendlyによるオンライン無料相談</li>
+                    <li>X（Twitter）31万+インプレッション</li>
+                    <li>Forbes JAPAN寄稿による認知拡大</li>
+                </ul>
+            </div>
+            <div class="bm-card">
+                <h4>体験チャネル（2拠点）</h4>
+                <ul>
+                    <li>佐渡リトリート（2026年7月〜）</li>
+                    <li>ハナ（マウイ）工房体験</li>
+                    <li>Workaway国際コミュニティ経由の認知</li>
+                    <li>体験者口コミによるオーガニック成長</li>
+                </ul>
+            </div>
+            <div class="bm-card">
+                <h4>SoulCarrier連携</h4>
+                <ul>
+                    <li>「共鳴の会」会員への優待販売</li>
+                    <li>遺骨帰還活動のメディア露出→認知誘導</li>
+                    <li>「社会運動への参加」という購買動機の創出</li>
+                    <li>価格競争から脱却した共感ベースの販売</li>
+                </ul>
+            </div>
+            <div class="bm-card">
+                <h4>海外市場チャネル</h4>
+                <ul>
+                    <li>マウイ拠点から北米市場への直接アクセス</li>
+                    <li>海外墓地管理団体・石材業者への提案</li>
+                    <li>在外日系人コミュニティ（ハワイ・ブラジル等）</li>
+                    <li>英語版LP・Calendlyによるオンライン完結</li>
+                </ul>
+            </div>
+            <div class="bm-card">
+                <h4>アジア展開</h4>
+                <ul>
+                    <li>先祖供養文化圏（東アジア・東南アジア）</li>
+                    <li>戦没者記録・植民地時代の記憶保全需要</li>
+                    <li>各国の石材・メモリアル業者との提携</li>
+                    <li>多言語対応（QRコード自体は言語非依存）</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- ========================================
+     SLIDE 11: TRACTION & MILESTONES
+     ======================================== -->
+<section class="slide">
+    <div class="slide-inner">
+        <p class="slide-number">12 - Traction</p>
+        <h2>既に確立された技術と信頼基盤</h2>
+        <p class="slide-lead">プロダクト開発段階を超え、パートナーシップと実証実績のフェーズに到達。</p>
+
+        <div class="traction-grid">
+            <div class="traction-item">
+                <p class="t-year">2025 H1</p>
+                <h4>SoulCarrier活動・社会実績</h4>
+                <p>群馬県で5,000基の墓石を徒歩調査。日系アメリカ人マーティンさんの遺骨帰還を3年以上支援。Forbes JAPAN寄稿開始。X累計31万+インプレッション達成</p>
+            </div>
+            <div class="traction-item">
+                <p class="t-year">2025 H2</p>
+                <h4>技術・プロダクト完成</h4>
+                <p>3,000回超の刻印テスト完了。音声バイナリQRコード＋独自圧縮技術（最大10倍）を確立。金属蒸着による写真刻印の商用品質を達成</p>
+            </div>
+            <div class="traction-item">
+                <p class="t-year">2026 Q1</p>
+                <h4>文化機関との連携</h4>
+                <p>伊勢神宮式年遷宮への奉納（1月）。比叡山延暦寺根本中堂への永代記名（1月）。日本ハワイ移民資料館とMOU締結。JICA横浜と協議進行中</p>
+            </div>
+            <div class="traction-item">
+                <p class="t-year">2026 Q1</p>
+                <h4>事業基盤構築</h4>
+                <p>LP公開・先行受付開始。佐渡古民家の引渡し進行中（3月予定）。SoulCarrier共鳴の会 協力合意署名を取得。Workawayホスト登録支援を開始</p>
+            </div>
+            <div class="traction-item">
+                <p class="t-year">2026 Q1</p>
+                <h4>無料モニタープログラム（10名）</h4>
+                <p>自治会長退任に伴い約250世帯へPearl Soap配布。うち10名に個人プラン（5万円相当）を無料提供し、ユーザー行動の観察・テスティモニアル収集・口コミ転換の検証を実施。Year 1 D2C積算の実績根拠を拠点設立前に確保</p>
+            </div>
+        </div>
+
+        <h3>信頼性の三重構造</h3>
+        <div class="stat-grid">
+            <div class="stat-card">
+                <div class="stat-number" style="font-size:1.5rem;">&#x26E9;</div>
+                <div class="stat-label">宗教的権威<br>伊勢神宮・比叡山延暦寺</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-number" style="font-size:1.5rem;">&#x1F3DB;</div>
+                <div class="stat-label">公的機関<br>JICA・移民資料館・国立国会図書館</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-number" style="font-size:1.5rem;">&#x1F4CA;</div>
+                <div class="stat-label">科学的根拠<br>日立×京大の実証研究</div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- ========================================
+     SLIDE 12: COMPETITIVE MOAT
+     ======================================== -->
+<section class="slide">
+    <div class="slide-inner">
+        <p class="slide-number">13 - Competitive Moat</p>
+        <h2>三重の参入障壁</h2>
+        <p class="slide-lead">技術・場所・思想の三位一体が模倣困難な競争優位を構築。</p>
+
+        <ul class="moat-list">
+            <li>
+                <span class="moat-num">1</span>
+                <div>
+                    <h4>技術的障壁：石英ガラス加工 + 音声QR圧縮技術（国際特許出願済）</h4>
+                    <p>半導体製造装置の開発経験を含むエンジニアキャリア20年超から確立した金属蒸着刻印技術。音声バイナリデータの独自圧縮技術（最大10倍）は弁理士監修のもと国際特許出願済。3,000回以上のテストで蓄積されたノウハウと知財保護の両輪で、短期間での模倣は困難。</p>
+                </div>
+            </li>
+            <li>
+                <span class="moat-num">2</span>
+                <div>
+                    <h4>場所的障壁：佐渡 + マウイの二拠点体験</h4>
+                    <p>「忘れられた人々の記憶が残り続けた場所」としての佐渡、「オフグリッドの実証地」としてのマウイ島ハナ。2026年春の佐渡拠点設立により、この場所性は代表自身のライフストーリーと不可分に。</p>
+                </div>
+            </li>
+            <li>
+                <span class="moat-num">3</span>
+                <div>
+                    <h4>思想的障壁：「存在証明の民主化」+ SoulCarrierエコシステム</h4>
+                    <p>SoulCarrierの遺骨帰還・無縁墓調査という実際の社会活動が、「存在証明の民主化」ブランドの信頼性を裏付け。営利（トキストレージ）と非営利（SoulCarrier）の両輪で、単なるメモリアル製品を超えた社会運動としてのポジションを確立。競合が「機能と価格」で戦う中、トキストレージは「思想と体験」で戦う。</p>
+                </div>
+            </li>
+        </ul>
+
+        <h3>想定リスク：5Dメモリクリスタルの個人向け参入</h3>
+        <div class="key-point">
+            <p><strong>防衛シナリオ：</strong>5Dメモリクリスタル（サウサンプトン大学発）が個人市場に参入した場合でも、①読取に専用光学機器が必要な技術的制約は構造的に解消困難（QRコードの「スマホで読める」即時性とは本質的に異なる）②研究機関発の技術の消費者向けUX構築には通常5〜10年を要する③トキストレージはその間にB2Bチャネル・寺社仏閣の信頼ネットワーク・体験ブランドを確立済みとなる。仮に参入しても「技術」ではなく「体験と思想」のレイヤーでは競合しない。</p>
+        </div>
+    </div>
+</section>
+
+<!-- ========================================
+     SLIDE 13: ROADMAP
+     ======================================== -->
+<section class="slide">
+    <div class="slide-inner">
+        <p class="slide-number">14 - Roadmap</p>
+        <h2>事業展開ロードマップ</h2>
+        <p class="slide-lead">佐渡拠点設立を起点に、段階的にプロダクト・チャネル・地域を拡大。</p>
+
+        <div class="roadmap">
+            <div class="roadmap-item">
+                <p class="r-date">2026 Q1（現在）</p>
+                <h4>Phase 0：無料モニター検証</h4>
+                <p>自治会長退任に伴い約250世帯へPearl Soap配布。うち10名に個人プラン（5万円相当）を無料提供。ユーザー行動の観察（設置場所・家族への説明・口コミ意欲）、テスティモニアル収集、有料転換率の検証を拠点設立前に完了。</p>
+            </div>
+            <div class="roadmap-item">
+                <p class="r-date">2026 Q1（現在）</p>
+                <h4>Phase 1：基盤構築</h4>
+                <p>先行受付開始（個人プラン・三世代プラン）。LP最適化・オンライン相談フロー確立。佐渡古民家の引渡し・改修着手。伊勢神宮・延暦寺への奉納完了。</p>
+            </div>
+            <div class="roadmap-item">
+                <p class="r-date">2026 Q2</p>
+                <h4>Phase 2：佐渡拠点設立・製造開始</h4>
+                <p>新潟県佐渡市に新拠点設立。古民家を製作拠点として整備。仏壇店・葬儀社との提携交渉開始。オンライン完結コースの本格販売。</p>
+            </div>
+            <div class="roadmap-item">
+                <p class="r-date">2026 Q3</p>
+                <h4>Phase 3：リトリート体験開始</h4>
+                <p>佐渡リトリート（現地製作体験）提供開始（7月〜）。三世代プランの体験込み販売を本格化。Workaway受入れ開始による国際認知拡大。</p>
+            </div>
+            <div class="roadmap-item future">
+                <p class="r-date">2026 Q4 - 2027</p>
+                <h4>Phase 4：チャネル拡大</h4>
+                <p>仏壇店・葬儀社への卸販売開始。行政・自治体向け提案強化。ボイスメモリアルコース初年度5家族完遂。年間共鳴メンバーシップ導入。</p>
+            </div>
+            <div class="roadmap-item future">
+                <p class="r-date">2027-2028</p>
+                <h4>Phase 5：スケール＋海外展開</h4>
+                <p>製造外注化によるキャパシティ拡大。マウイ拠点を起点に北米・西洋墓地市場へ展開。アジア圏（先祖供養文化圏）への提携開拓。在外日系人コミュニティ向けサービス本格化。ハナ工房体験の拡充。</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- ========================================
+     SLIDE 14: TEAM
+     ======================================== -->
+<section class="slide">
+    <div class="slide-inner">
+        <p class="slide-number">15 - Team</p>
+        <h2>創業者</h2>
+        <p class="slide-lead">20年の技術キャリア、国内外でのオフグリッド構築経験、遺骨帰還の社会活動。すべてが一本の線でつながった。</p>
+
+        <div class="team-profile">
+            <div class="team-info">
+                <h4>佐藤 卓也（Takuya Sato）</h4>
+                <p class="team-title">TokiStorage 代表（個人事業 開業届出済）/ SoulCarrier「共鳴の会」創設者</p>
+                <p>半導体製造装置の開発経験を含むエンジニアキャリア20年超を経て、メモリアル技術に転身。2025年マウイ島でのオフグリッド構築生活を経験し、「サーバー不要の永続保存」のコンセプトを体現。遺骨帰還活動を通じて「存在証明の民主化」の思想を確立。</p>
+                <ul>
+                    <li>半導体製造装置の開発経験を含むエンジニアキャリア 20年超</li>
+                    <li>Forbes JAPAN寄稿者</li>
+                    <li>タイムレスタウン新浦安 自治会長（2年・約250世帯）</li>
+                    <li>2025年マウイ島でオフグリッド構築生活を経験</li>
+                    <li>群馬県で5,000基の墓石を徒歩調査</li>
+                    <li>日系アメリカ人の遺骨帰還を3年以上支援</li>
+                    <li>2026年春 佐渡市に新拠点設立予定</li>
+                </ul>
+            </div>
+        </div>
+
+        <h3>採用ロードマップ</h3>
+        <div class="segment-grid" style="margin-bottom:2rem;">
+            <div class="segment-card">
+                <p class="seg-tag">2026 Q2 ── 最優先</p>
+                <h4>製造・品質管理（佐渡常駐）</h4>
+                <p>石英ガラス加工・刻印オペレーション担当。代表からの技術移転により、製造キャパシティを2倍に。Workaway経由の国際インターンも併用</p>
+            </div>
+            <div class="segment-card">
+                <p class="seg-tag">2026 Q3 ── 高優先</p>
+                <h4>営業・パートナーシップ（リモート可）</h4>
+                <p>仏壇店・葬儀社・自治体向けB2B営業。リード創出からクロージングまで。メモリアル業界または法人営業経験者を想定</p>
+            </div>
+        </div>
+
+        <h3>アドバイザー・パートナー</h3>
+        <div class="segment-grid">
+            <div class="segment-card">
+                <h4>上田ご夫妻</h4>
+                <p>NPO「伊賀の友」代表・三重県SDGsパートナー。SoulCarrier共鳴の会の最初の協力合意署名者。Workawayホスト登録支援中</p>
+            </div>
+            <div class="segment-card">
+                <h4>メラニーさん</h4>
+                <p>元高校校長・農園「ハレ・プエオ」運営（マウイ島ハナ）。ハナ拠点の協力者。教育者としての視点で事業を支援</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- ========================================
+     SLIDE 15: FINANCIAL PROJECTIONS
+     ======================================== -->
+<section class="slide">
+    <div class="slide-inner">
+        <p class="slide-number">16 - Financial Projections</p>
+        <h2>成長トラジェクトリー</h2>
+        <p class="slide-lead">国内B2Bチャネルの立ち上げからグローバル展開へ。<br>サーバーコストゼロ×製造外注化により、売上拡大に伴い粗利率が改善するモデル。</p>
+
+        <table class="fin-table">
+            <thead>
+                <tr>
+                    <th>セグメント</th>
+                    <th>Year 1<br>(2026)</th>
+                    <th>Year 3<br>(2028)</th>
+                    <th>Year 5<br>(2030)</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>D2C（国内個人）</td>
+                    <td>500万</td>
+                    <td>5,000万</td>
+                    <td>5億</td>
+                </tr>
+                <tr>
+                    <td>B2B（寺院・葬儀社・自治体）</td>
+                    <td>500万</td>
+                    <td>2億</td>
+                    <td>10億</td>
+                </tr>
+                <tr>
+                    <td>プレミアム・メンバーシップ</td>
+                    <td>2,000万</td>
+                    <td>7,000万</td>
+                    <td>1.5億</td>
+                </tr>
+                <tr>
+                    <td>海外（北米・アジア太平洋）</td>
+                    <td>&#x2013;</td>
+                    <td>5,000万</td>
+                    <td>15億</td>
+                </tr>
+                <tr class="total-row">
+                    <td>売上合計</td>
+                    <td>3,000万</td>
+                    <td>3.7億</td>
+                    <td>31.5億</td>
+                </tr>
+                <tr>
+                    <td>粗利率</td>
+                    <td>55%</td>
+                    <td>65%</td>
+                    <td>72%</td>
+                </tr>
+                <tr>
+                    <td>営業利益率</td>
+                    <td>&#x25B3;30%</td>
+                    <td>22%</td>
+                    <td>38%</td>
+                </tr>
+            </tbody>
+        </table>
+
+        <h3>Year 1 積算根拠（2026）</h3>
+        <div class="segment-grid" style="margin-top:1rem;">
+            <div class="segment-card">
+                <p class="seg-tag">D2C 500万</p>
+                <h4>個人プラン ×10件</h4>
+                <p>拠点設立前に実施する無料モニター10名の実績データを起点に積算。モニター参加者からの有料転換（「親にも作りたい」等）、テスティモニアルを活用したLP最適化、口コミ経由のオーガニック流入を加え、月1件ペースで保守的に想定。「仮説」ではなく「モニター実績からの外挿」に基づく見積り</p>
+            </div>
+            <div class="segment-card">
+                <p class="seg-tag">B2B 500万 → Year 3: 2億 → Year 5: 10億</p>
+                <h4>法人・自治体 ×2〜3件 → チャネル卸へ拡大</h4>
+                <p>Year 1はJICA横浜・移民資料館との協議が先行する直販案件。Year 2〜3で仏壇店・葬儀社への卸モデルを確立（提携交渉→サンプル導入→研修→販売開始に約6〜9ヶ月のリードタイム）。Year 2にパイロット提携3〜5社で検証→Year 3に横展開で10〜15社、平均卸売1,500万を想定</p>
+            </div>
+            <div class="segment-card">
+                <p class="seg-tag">プレミアム 2,000万（売上構成比67%）</p>
+                <h4>ボイスメモリアル ×3家族 + メンバーシップ ×1</h4>
+                <p>555万×3＝1,665万 + 年間共鳴メンバーシップ1件。SoulCarrier共鳴の会署名者・Forbes寄稿読者・伊勢神宮奉納関係者を含むリード約15件から転換率20%を想定。プレミアム偏重のリスクを認識し、未達時はD2C×20件（三世代プラン含む）で補完するダウンサイドシナリオを用意</p>
+            </div>
+            <div class="segment-card">
+                <p class="seg-tag">Year 5 海外15億の道筋</p>
+                <h4>3段階の展開シナリオ</h4>
+                <p>①マウイ起点で北米墓地管理団体5社と提携（〜3億）②在外日系人コミュニティD2C（〜2億）③アジア太平洋の石材・メモリアル業者へのOEM/卸（〜10億）。Year 3の5,000万は①の初期パイロットに相当</p>
+            </div>
+            <div class="segment-card">
+                <p class="seg-tag">Pearl Soap → D2C転換率</p>
+                <h4>収益を生みながら顧客を獲得</h4>
+                <p>Year 3：全国50〜100拠点から年間3万個のQRコード流通。転換率0.3%で約90件のD2Cパイプライン。広告と異なり、ワークショップ自体が収益（参加費2,000円）を生むため、顧客獲得コストは実質マイナス。Year 5：流通10万個超×転換率0.5%＝500件以上。D2C 5億円（単価50万×1,000件）の約50%をPearl Soap経由で獲得しながら、ワークショップ売上も別途計上される構造</p>
+            </div>
+        </div>
+
+        <div class="key-point">
+            <p><strong>構造的レバレッジ：</strong>サーバー費ゼロ・在庫リスク極小（受注生産）のため、売上増に対して変動費は製造原価のみ。製造の外注化・自動化が進むほど粗利率が改善し、価格を下げてもマージンが残る。Year 5以降、海外B2B（墓地管理団体・自治体配布モデル）が本格稼働すれば、SOM 500億円圏への到達が視野に入る。</p>
+        </div>
+    </div>
+</section>
+
+<!-- ========================================
+     SLIDE 16: USE OF FUNDS
+     ======================================== -->
+<section class="slide">
+    <div class="slide-inner">
+        <p class="slide-number">17 - Use of Funds</p>
+        <h2>資金使途</h2>
+        <p class="slide-lead">佐渡拠点の確立とチャネル開拓に集中投下。</p>
+
+        <div class="funds-grid">
+            <div class="fund-item">
+                <div class="fund-pct">35%</div>
+                <h4>製造・拠点整備</h4>
+                <p>佐渡古民家の改修<br>製作設備・工具<br>原材料の初期調達</p>
+            </div>
+            <div class="fund-item">
+                <div class="fund-pct">25%</div>
+                <h4>マーケティング</h4>
+                <p>仏壇店・葬儀社営業<br>終活イベント出展<br>Web広告・SEO</p>
+            </div>
+            <div class="fund-item">
+                <div class="fund-pct">20%</div>
+                <h4>チャネル開発</h4>
+                <p>B2B提携構築<br>サンプル制作・貸出<br>スタッフ向け研修</p>
+            </div>
+            <div class="fund-item">
+                <div class="fund-pct">20%</div>
+                <h4>運転資金</h4>
+                <p>人件費（パート雇用）<br>拠点設立後の生活基盤<br>リトリート体験設計</p>
+            </div>
+        </div>
+
+        <h3>拠点リスクへの対応</h3>
+        <div class="key-point" style="margin-bottom:1rem;">
+            <p><strong>佐渡拠点と自然災害リスク：</strong>「1000年の永続」を掲げる事業として、拠点リスクには以下の構造的対策を講じている：①製品である石英ガラスプレートは耐水性・耐熱性（1000℃）を有し、自然災害で品質が劣化しない②納品済み製品は顧客の手元にあり、拠点被災は顧客資産に影響しない③分散保管サービスの設計思想自体が「単一拠点に依存しない」ことを前提としている④製造設備は可搬性が高く、万一の場合は移転が可能。製品の耐久性と事業の継続性は分離して設計されている。</p>
+        </div>
+        <div class="key-point">
+            <p><strong>資本効率：</strong>サーバーインフラへの投資が不要なため、調達資金の大部分を顧客獲得とチャネル構築に充当可能。物理製品のため在庫リスクは限定的（受注生産モデル）。佐渡市の移住支援補助金も活用予定。</p>
+        </div>
+    </div>
+</section>
+
+<!-- ========================================
+     SLIDE 17: CTA
+     ======================================== -->
+<section class="slide cta-slide">
+    <div class="slide-inner">
+        <p class="slide-number">18 ─ Contact</p>
+        <h2>佐渡の1件から、80億人へ。</h2>
+        <p class="slide-lead">すべての人の存在を千年先に届ける──<br>この問いに共鳴していただける方との対話を歓迎します。</p>
+
+        <div class="cta-contact" style="margin-top:2rem;">
+            TokiStorage<br>
+            佐藤 卓也
+        </div>
+
+        <div class="cta-details">
+            <strong>所在地：</strong>千葉県浦安市明海2-11-13（2026年春 新潟県佐渡市へ移転）<br>
+            <strong>Email：</strong>business@satotakuya.jp<br>
+            <strong>LINE：</strong><a href="https://line.me/R/oaMessage/@897glsbz/?%E3%83%94%E3%83%83%E3%83%81%E3%83%87%E3%83%83%E3%82%AF%E3%82%92%E8%A6%8B%E3%81%A6%E9%80%A3%E7%B5%A1%E3%81%97%E3%81%BE%E3%81%97%E3%81%9F" target="_blank" rel="noopener" style="color:rgba(255,255,255,0.75); text-decoration:underline;">@897glsbz</a>
+        </div>
+    </div>
+</section>
+
+<!-- Footer -->
+<footer class="pitch-footer">
+    <p>CONFIDENTIAL - この資料はTokiStorageの機密情報を含みます。許可なく第三者への開示・配布を禁じます。</p>
+    <p>&copy; 2026 TokiStorage All rights reserved.</p>
+</footer>
+
+</body>
+</html>

@@ -1,0 +1,534 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Workaway Implementation Proposal — Our Vision for Regional Revitalization | TokiStorage</title>
+    <meta name="description" content="A proposal for regional revitalization through Workaway adoption. Why SoulCarrier / TokiStorage is involved, our vision, and how you can help.">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Shippori+Mincho:wght@400;500;600;700&family=Zen+Kaku+Gothic+New:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="index.css">
+    <style>
+        .proposal-page { padding: 6rem 2rem 4rem; }
+        .proposal-inner { max-width: 720px; margin: 0 auto; }
+        .proposal-inner h1 {
+            font-family: var(--font-display);
+            font-size: 1.5rem;
+            font-weight: 600;
+            color: var(--text-primary);
+            margin-bottom: 0.5rem;
+            text-align: center;
+        }
+        .proposal-subtitle {
+            text-align: center;
+            font-size: 0.95rem;
+            color: var(--text-secondary);
+            margin-bottom: 2.5rem;
+        }
+        .proposal-section {
+            margin-bottom: 3rem;
+        }
+        .proposal-section h2 {
+            font-family: var(--font-display);
+            font-size: 1.1rem;
+            font-weight: 600;
+            color: var(--text-primary);
+            margin-bottom: 1rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 2px solid var(--toki-gold);
+        }
+        .proposal-section p,
+        .proposal-section li {
+            font-size: 0.88rem;
+            color: var(--text-secondary);
+            line-height: 2;
+        }
+        .proposal-section ul {
+            padding-left: 1.5rem;
+            margin: 1rem 0;
+        }
+        .proposal-section li { margin-bottom: 0.5rem; }
+
+        .highlight-box {
+            background: var(--toki-gold-pale);
+            border: 1px solid var(--toki-gold);
+            border-radius: 1rem;
+            padding: 1.5rem 2rem;
+            margin: 1.5rem 0;
+        }
+        .highlight-box p {
+            margin-bottom: 0.8rem;
+        }
+        .highlight-box p:last-child { margin-bottom: 0; }
+
+        .story-box {
+            background: var(--bg-page);
+            border: 1px solid var(--border);
+            border-radius: 1rem;
+            padding: 2rem;
+            margin: 1.5rem 0;
+        }
+        .story-box h3 {
+            font-family: var(--font-display);
+            font-size: 0.95rem;
+            font-weight: 600;
+            color: var(--text-primary);
+            margin-bottom: 1rem;
+        }
+        .story-box p {
+            margin-bottom: 0.8rem;
+        }
+        .story-box p:last-child { margin-bottom: 0; }
+
+        .benefit-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1rem;
+            margin: 1.5rem 0;
+        }
+        .benefit-card {
+            background: var(--bg-page);
+            border: 1px solid var(--border);
+            border-radius: 0.8rem;
+            padding: 1.2rem;
+        }
+        .benefit-card h4 {
+            font-family: var(--font-display);
+            font-size: 0.9rem;
+            font-weight: 600;
+            color: var(--text-primary);
+            margin-bottom: 0.5rem;
+        }
+        .benefit-card p {
+            font-size: 0.82rem;
+            color: var(--text-muted);
+            line-height: 1.7;
+        }
+
+        .stat-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+            gap: 1rem;
+            margin: 1.5rem 0;
+        }
+        .stat-card {
+            background: var(--toki-gold-pale);
+            border: 1px solid var(--toki-gold);
+            border-radius: 0.8rem;
+            padding: 1.2rem;
+            text-align: center;
+        }
+        .stat-card .stat-number {
+            font-family: var(--font-display);
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--text-primary);
+            display: block;
+        }
+        .stat-card .stat-label {
+            font-size: 0.75rem;
+            color: var(--text-secondary);
+            margin-top: 0.3rem;
+        }
+
+        .case-study {
+            background: var(--bg-page);
+            border: 1px solid var(--border);
+            border-radius: 0.8rem;
+            padding: 1.5rem;
+            margin: 1rem 0;
+        }
+        .case-study h4 {
+            font-family: var(--font-display);
+            font-size: 0.9rem;
+            font-weight: 600;
+            color: var(--text-primary);
+            margin-bottom: 0.5rem;
+        }
+        .case-study .case-location {
+            font-size: 0.75rem;
+            color: var(--toki-blue);
+            margin-bottom: 0.8rem;
+        }
+        .case-study p {
+            font-size: 0.82rem;
+            color: var(--text-muted);
+            line-height: 1.8;
+        }
+
+        .cost-comparison {
+            margin: 1.5rem 0;
+        }
+        .cost-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0.8rem 1rem;
+            border-bottom: 1px solid var(--border);
+        }
+        .cost-row:last-child { border-bottom: none; }
+        .cost-row .cost-item { font-size: 0.85rem; color: var(--text-secondary); }
+        .cost-row .cost-value {
+            font-weight: 600;
+            color: var(--text-primary);
+            font-size: 0.9rem;
+        }
+        .cost-row.highlight {
+            background: var(--toki-gold-pale);
+            border-radius: 0.5rem;
+            border-bottom: none;
+            margin-top: 0.5rem;
+        }
+        .cost-row.highlight .cost-value { color: #059669; }
+
+        .request-list {
+            list-style: none;
+            padding: 0;
+            margin: 1.5rem 0;
+        }
+        .request-list li {
+            background: var(--bg-page);
+            border-left: 4px solid var(--toki-blue);
+            padding: 1rem 1.5rem;
+            margin-bottom: 0.8rem;
+            border-radius: 0 0.5rem 0.5rem 0;
+        }
+        .request-list li strong {
+            color: var(--text-primary);
+            display: block;
+            margin-bottom: 0.3rem;
+        }
+
+        .cta-box {
+            text-align: center;
+            margin-top: 3rem;
+            padding: 2rem;
+            background: var(--toki-gold-pale);
+            border: 1px solid var(--toki-gold);
+            border-radius: 1rem;
+        }
+        .cta-box h3 {
+            font-family: var(--font-display);
+            font-size: 1rem;
+            color: var(--text-primary);
+            margin-bottom: 1rem;
+        }
+        .cta-box p {
+            font-size: 0.85rem;
+            color: var(--text-secondary);
+            margin-bottom: 1.2rem;
+        }
+        .cta-box a.cta-button {
+            display: inline-block;
+            background: #06C755;
+            color: #fff;
+            padding: 0.8rem 2rem;
+            border-radius: 0.5rem;
+            text-decoration: none;
+            font-size: 0.9rem;
+            font-weight: 500;
+            transition: background 0.3s ease;
+        }
+        .cta-box a.cta-button:hover { background: #05a847; }
+
+        .back-link {
+            text-align: center;
+            margin-top: 2rem;
+        }
+        .back-link a {
+            color: var(--toki-blue);
+            text-decoration: none;
+            font-size: 0.85rem;
+        }
+        .back-link a:hover { text-decoration: underline; }
+
+        @media print {
+            .toki-nav, .toki-footer, .cta-box, .back-link { display: none; }
+            .proposal-page { padding: 2rem; }
+        }
+    </style>
+</head>
+<body>
+
+<nav class="toki-nav">
+    <span class="nav-logo"><a href="index-en.html">TokiStorage</a> / <a href="workaway-en.html">Workaway Consulting</a> / Proposal</span>
+</nav>
+
+<main class="proposal-page">
+    <div class="proposal-inner">
+        <h1>Workaway Implementation Proposal</h1>
+        <p class="proposal-subtitle">Why we're involved, and what we hope to achieve together</p>
+
+        <!-- What is Workaway? -->
+        <section class="proposal-section">
+            <h2>What is Workaway?</h2>
+            <p>Workaway is an international volunteer and cultural exchange platform used in over 190 countries worldwide.</p>
+            <p>Hosts provide accommodation and meals, while guests (travelers) contribute to the community through 4-5 hours of work per day. Rather than a monetary transaction, it is a relationship built around "experience" and "exchange."</p>
+
+            <div class="benefit-grid">
+                <div class="benefit-card">
+                    <h4>Solving labor shortages</h4>
+                    <p>Secure temporary help during busy seasons without any recruitment costs.</p>
+                </div>
+                <div class="benefit-card">
+                    <h4>Promoting international exchange</h4>
+                    <p>Interaction with guests from around the world brings fresh perspectives to the community.</p>
+                </div>
+                <div class="benefit-card">
+                    <h4>Word-of-mouth promotion</h4>
+                    <p>Guests share the region's appeal with the world through social media and blog posts.</p>
+                </div>
+                <div class="benefit-card">
+                    <h4>Building a connected population</h4>
+                    <p>Guests who visit once often return or introduce friends, creating a cycle of ongoing connections.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Why we're involved -->
+        <section class="proposal-section">
+            <h2>Why we're involved</h2>
+
+            <div class="story-box">
+                <h3>SoulCarrier Resonance Circle / TokiStorage Activities</h3>
+                <p>We champion the "democratization of proof of existence" — recording and preserving the existence of every person.</p>
+                <p>TokiStorage, a 1,000-year preservation medium engraved in quartz glass; Pearl Soap, a handmade soap that conveys the presence of a beloved pet; and this Workaway consulting service — all spring from the same root.</p>
+                <p><strong>We don't just want to "reclaim forgotten existences" — we want to build systems where no one is forgotten in the first place.</strong></p>
+            </div>
+
+            <p>Travelers who visit a region through Workaway are not mere tourists. They spend weeks or months living alongside the community, immersing themselves in local life, and building genuine relationships.</p>
+            <p>What they take home is more than "memories." The names, smiles, words, and daily lives of local people scatter across the world and endure as lasting impressions.</p>
+
+            <div class="highlight-box">
+                <p><strong>Why we support Workaway adoption:</strong></p>
+                <p>Engraving a region's existence in the memories of people around the world. That is the very essence of "democratizing proof of existence."</p>
+            </div>
+        </section>
+
+        <!-- Our vision for regional revitalization -->
+        <section class="proposal-section">
+            <h2>Our vision for regional revitalization</h2>
+            <p>Rural areas across Japan harbor untold appeal that the world has yet to discover. Yet many of these communities struggle with labor shortages, a lack of successors, and low visibility.</p>
+            <p>Workaway offers one solution to these challenges. Motivated travelers arrive from around the globe, immerse themselves in community life, and carry those experiences back to their home countries — this cycle generates a "connected population" on a global scale.</p>
+
+            <div class="story-box">
+                <h3>A formative experience on Maui</h3>
+                <p>On the island of Maui, Hawaii, we met an educator running a Workaway host operation. Her farm has become a place where young people from around the world can feel at home. People come, build relationships, and carry memories back with them — we witnessed firsthand the power of that cycle.</p>
+                <p>Starting spring 2026, we will relocate our base to Sado City, Niigata Prefecture, and work to spread this model across Japan. Workaway is especially powerful in remote islands, mountainous areas, and depopulated regions where labor shortages are most acute.</p>
+            </div>
+        </section>
+
+        <!-- Workaway adoption worldwide -->
+        <section class="proposal-section">
+            <h2>Workaway adoption worldwide</h2>
+
+            <div class="stat-grid">
+                <div class="stat-card">
+                    <span class="stat-number">170+</span>
+                    <span class="stat-label">Countries covered</span>
+                </div>
+                <div class="stat-card">
+                    <span class="stat-number">50,000+</span>
+                    <span class="stat-label">Hosts worldwide</span>
+                </div>
+                <div class="stat-card">
+                    <span class="stat-number">21%</span>
+                    <span class="stat-label">Growth over 5 years</span>
+                </div>
+                <div class="stat-card">
+                    <span class="stat-number">100+</span>
+                    <span class="stat-label">Monthly applications (popular hosts in Japan)</span>
+                </div>
+            </div>
+
+            <p>As of 2025, Workaway has over 50,000 registered hosts in more than 170 countries. Growing 21% from approximately 41,000 in 2020, demand has continued to expand even through the pandemic.</p>
+            <p>Within Japan, popular hosts receive over 100 applications per month, reflecting strong overseas interest. However, hosts in rural areas remain scarce, presenting a first-mover advantage for those who act now.</p>
+
+            <h3 style="font-size: 0.95rem; margin-top: 2rem; margin-bottom: 1rem;">2026: A tipping point with a surge of potential guests</h3>
+
+            <div class="highlight-box">
+                <p>The rapid spread of AI is accelerating the reduction and restructuring of white-collar jobs in developed countries. More people are choosing (or being forced to choose) alternative work styles such as remote work, freelancing, and digital nomadism over traditional full-time employment.</p>
+                <p style="font-size: 0.82rem; color: var(--text-muted); margin: 1rem 0; padding-left: 1rem; border-left: 2px solid var(--toki-gold);">I myself built my career as a Senior Specialist at a global consulting firm, standing at the forefront of knowledge-based production. And now I am witnessing firsthand the replacement of that production by AI. Recently, at my daughter's extracurricular recital, I had the chance to speak with someone who graduated from Japan's top university and works at a Big Tech company. They confided, "I want to leave within five years." Whether in consulting or tech, those closest to the front lines feel the change most keenly.</p>
+                <p>Many in this demographic seek to experience the world while keeping living costs low. Workaway is a model that perfectly matches this need, and <strong>2026 is predicted to be a tipping point where potential Workawayers surge globally</strong>.</p>
+                <p>Registering as a host now positions you to be among the first to benefit from this wave.</p>
+            </div>
+
+            <h3 style="font-size: 0.95rem; margin-top: 2rem; margin-bottom: 1rem;">Domestic case studies</h3>
+
+            <div class="case-study">
+                <h4>International exchange hub in a repurposed school</h4>
+                <p class="case-location">Sanuki Region, Kagawa Prefecture</p>
+                <p>A closed elementary school was renovated and operated as a Workaway host site. Activities include English camps for local junior and senior high school students, conversational English classes for residents, DIY renovation of traditional houses, event planning, and social media marketing. Guests who stayed have commented: "It was the most meaningful experience I had in Japan."</p>
+            </div>
+
+            <div class="case-study">
+                <h4>Leading inbound tourism initiatives</h4>
+                <p class="case-location">Takayama City, Gifu Prefecture</p>
+                <p>Having pursued inbound tourism since 1986, the city achieved 610,000 foreign overnight stays in 2019. Through collaboration between the local government and businesses, multilingual support and social media outreach were strengthened. Prioritizing "quality" over "quantity," the city successfully extended visitor stays and generated repeat visitors. Workaway is a highly compatible model for this type of regional strategy.</p>
+            </div>
+        </section>
+
+        <!-- Cost-effectiveness analysis -->
+        <section class="proposal-section">
+            <h2>Cost-effectiveness analysis</h2>
+            <p>A comparison of the costs of adopting Workaway versus traditional recruitment and advertising methods.</p>
+
+            <div class="cost-comparison">
+                <div class="cost-row">
+                    <span class="cost-item">Job site listing (Indeed, etc. / 1 month)</span>
+                    <span class="cost-value">&yen;30,000 - 100,000</span>
+                </div>
+                <div class="cost-row">
+                    <span class="cost-item">Recruitment agency fee (upon hiring)</span>
+                    <span class="cost-value">20-35% of annual salary</span>
+                </div>
+                <div class="cost-row">
+                    <span class="cost-item">Short-term part-time labor (1 month, full-time equivalent)</span>
+                    <span class="cost-value">&yen;150,000 - 200,000</span>
+                </div>
+                <div class="cost-row">
+                    <span class="cost-item">Social media advertising (per 10,000 impressions)</span>
+                    <span class="cost-value">&yen;5,000 - 10,000</span>
+                </div>
+                <div class="cost-row highlight">
+                    <span class="cost-item"><strong>Workaway annual fee</strong></span>
+                    <span class="cost-value">Approx. &yen;9,000/year</span>
+                </div>
+            </div>
+
+            <div class="highlight-box">
+                <p><strong>Estimated value of a single Workaway guest stay:</strong></p>
+                <p>- Labor: 4-5 hours/day x 2-4 weeks = equivalent to &yen;100,000 - 200,000 in short-term part-time wages</p>
+                <p>- Social media exposure: 1,000-5,000 reach per Instagram post x 10 posts during stay = &yen;5,000 - 50,000 in advertising value</p>
+                <p>- Word-of-mouth: Workaway reviews, blog articles, referrals to friends = priceless</p>
+            </div>
+
+            <p>Of course, guests are not "labor" — they are travelers seeking cultural exchange. However, the result is the potential to achieve outcomes across recruitment, advertising, and PR while keeping costs low.</p>
+        </section>
+
+        <!-- How you can help -->
+        <section class="proposal-section">
+            <h2>How you can help</h2>
+
+            <ul class="request-list">
+                <li>
+                    <strong>Spread awareness of Workaway to local businesses</strong>
+                    We would appreciate your help in sharing information with businesses that need extra hands — accommodation providers, farms, restaurants, workshops, and more.
+                </li>
+                <li>
+                    <strong>Introduce potential hosts</strong>
+                    We provide end-to-end support from registration through operation. If you know someone who might be a good fit for Workaway, please connect us.
+                </li>
+                <li>
+                    <strong>Share success stories</strong>
+                    By featuring post-adoption success stories in local media and community channels, we can create a positive cycle that inspires the next wave of hosts.
+                </li>
+                <li>
+                    <strong>Collaborate on outreach</strong>
+                    Experiences shared by Workaway guests can also be leveraged as regional PR content (with the guest's consent).
+                </li>
+            </ul>
+
+            <p>Support we can provide:</p>
+            <ul>
+                <li>Workaway host registration assistance and support (bilingual Japanese/English profile creation)</li>
+                <li>House rules and preparation guidelines for hosting</li>
+                <li>Hands-on support during your first guest's stay</li>
+                <li>Consultation on trouble-shooting and email communication</li>
+                <li>Ongoing support for 6 months</li>
+            </ul>
+        </section>
+
+        <!-- Expected outcomes -->
+        <section class="proposal-section">
+            <h2>Expected outcomes</h2>
+
+            <div class="benefit-grid">
+                <div class="benefit-card">
+                    <h4>Reduced recruitment costs</h4>
+                    <p>Secure motivated help without job advertising fees or agency commissions.</p>
+                </div>
+                <div class="benefit-card">
+                    <h4>Improved foreign language skills</h4>
+                    <p>Daily interaction with English-speaking guests naturally improves staff language abilities.</p>
+                </div>
+                <div class="benefit-card">
+                    <h4>Greater overseas visibility</h4>
+                    <p>Guest social media posts and reviews contribute to attracting visitors from abroad.</p>
+                </div>
+                <div class="benefit-card">
+                    <h4>Building regional fans</h4>
+                    <p>Guests who form deep connections become powerful advocates for your community.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- CTA -->
+        <div class="cta-box">
+            <h3>Let's start a conversation</h3>
+            <p>If this proposal interests you, we would love the opportunity to speak with you.<br>We are available for online explanations via Zoom or in-person meetings.</p>
+            <a href="https://line.me/R/oaMessage/@897glsbz/?Workaway%E5%B0%8E%E5%85%A5%E3%81%AB%E3%81%A4%E3%81%84%E3%81%A6%E7%9B%B8%E8%AB%87%E3%81%97%E3%81%9F%E3%81%84%E3%81%A7%E3%81%99" target="_blank" rel="noopener" class="cta-button">Contact us via LINE</a>
+            <p style="margin-top: 1rem; font-size: 0.8rem; color: var(--text-muted);">TokiStorage Takuya Sato<br>2-11-13 Akemi, Urayasu, Chiba 279-0014, Japan (Relocating to Sado City, spring 2026)</p>
+        </div>
+
+        <p style="text-align: center; margin-top: 2rem; font-size: 0.78rem; color: var(--text-muted);">This page supports PDF printing. Use your browser's print function to save as PDF.</p>
+
+        <div class="back-link">
+            <a href="workaway-en.html">&larr; Back to Workaway Consulting</a>
+        </div>
+    </div>
+</main>
+
+<footer class="toki-footer">
+    <div class="footer-inner">
+        <div class="footer-brand">
+            <h3>TokiStorage</h3>
+            <p>Eternal memorial engraved in quartz glass.<br>No server, no maintenance.<br>Proof of existence, delivered a thousand years forward.</p>
+        </div>
+        <div class="footer-links-group">
+            <h4>Links</h4>
+            <a href="index-en.html">About TokiStorage</a>
+            <a href="index-en.html#pricing">Pricing</a>
+            <a href="index-en.html#faq">FAQ</a>
+            <a href="index-en.html#cta">Contact</a>
+            <a href="pitch-deck-en.html">Investor Deck</a>
+            <a href="legacy-en.html">1000-Year Design Philosophy</a>
+            <a href="kids-en.html">For Kids</a>
+            <a href="infographic-en.html">Ecosystem Overview</a>
+        </div>
+        <div class="footer-links-group">
+            <h4>Proposals</h4>
+            <a href="partnership-en.html">Partnership Proposal</a>
+            <a href="client-proposal-en.html">Client Proposal</a>
+            <a href="government-proposal-en.html">Government Proposal</a>
+            <a href="patronage-en.html">Patronage</a>
+        </div>
+        <div class="footer-links-group">
+            <h4>Related</h4>
+            <span class="footer-sub-links"><a href="../index.html">SoulCarrier Resonance Circle</a> (<a href="../movement/Membership_Guide_EN.pdf">Enrollment</a> / <a href="../movement/BasicAgreement.pdf">Agreement</a> / <a href="../movement/Bylaws_EN.pdf">Bylaws</a>)</span>
+            <span class="footer-sub-links"><a href="pearl-soap-en.html">Pearl Soap</a> (<a href="how-to-make-en.html">How to Make</a> / <a href="workshop-en.html">Workshop</a> / <a href="ambassador-en.html">Ambassador</a> / <a href="100-scenes-en.html">100 Scenes</a>)</span>
+            <span class="footer-sub-links"><a href="workaway-en.html">Workaway Consulting</a> (<a href="workaway-proposal-en.html">Proposal</a>)</span>
+            <a href="offgrid-en.html">Off-Grid Consulting</a>
+            <a href="https://voice-memorial-qr.onrender.com/" target="_blank" rel="noopener">Voice QR Tech Demo</a>
+        </div>
+        <div class="footer-links-group">
+            <h4>Legal</h4>
+            <a href="tokushoho-en.html">Specified Commercial Transactions Act</a>
+            <a href="privacy-en.html">Privacy Policy</a>
+        </div>
+        <div class="footer-links-group">
+            <h4>Company</h4>
+            <p class="footer-company">TokiStorage<br>Takuya Sato<br>2-11-13 Akemi, Urayasu, Chiba 279-0014, Japan<br>(Relocating to Sado City, spring 2026)</p>
+            <a href="https://www.linkedin.com/in/satotakuya" target="_blank" rel="noopener"><svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" style="vertical-align:-2px;margin-right:4px"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 01-2.063-2.065 2.064 2.064 0 112.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg>satotakuya</a>
+            <a href="https://x.com/tokistorage" target="_blank" rel="noopener"><svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" style="vertical-align:-2px;margin-right:4px"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>@tokistorage</a>
+        </div>
+    </div>
+    <div class="footer-bottom">
+        <p class="footer-disclaimer">*TokiStorage is a record preservation product. It is not a substitute for a cemetery or gravestone under the Graveyard and Burial Act. "1,000 years" is a theoretical value based on quartz glass material properties, not a product warranty period. Pearl Soap is not for sale.</p>
+        <p>&copy; 2026 TokiStorage / TokiStorage All rights reserved.</p>
+    </div>
+</footer>
+
+</body>
+</html>

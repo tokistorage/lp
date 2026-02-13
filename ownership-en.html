@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ownership and Proof of Existence — Is "Having" the Same as "Being"? | TokiStorage</title>
+    <meta name="robots" content="noindex, nofollow">
+    <meta name="description" content="Ownership is a fundamental form of proof of existence. Property, intellectual property, digital assets—examining how 'having something' proves 'I exist.'">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Shippori+Mincho:wght@400;500;600;700&family=Zen+Kaku+Gothic+New:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <style>
+        :root { --toki-wine: #7C2D12; --toki-wine-dark: #5C1D0E; --toki-wine-pale: #FEF2F2; --bg-white: #FFFFFF; --bg-section: #FECACA; --text-primary: #1E293B; --text-secondary: #475569; --text-muted: #94A3B8; --border: #E2E8F0; --font-display: 'Shippori Mincho', serif; --font-body: 'Zen Kaku Gothic New', sans-serif; }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        html { scroll-behavior: smooth; }
+        body { font-family: var(--font-body); font-weight: 400; background: var(--bg-white); color: var(--text-primary); line-height: 2; font-size: 16px; }
+        .article-nav { position: fixed; top: 0; left: 0; right: 0; z-index: 1000; background: rgba(255,255,255,0.95); backdrop-filter: blur(12px); border-bottom: 1px solid var(--border); padding: 0.6rem 1.2rem; display: flex; align-items: center; justify-content: space-between; }
+        .article-nav .nav-brand { font-family: var(--font-display); font-size: 0.9rem; font-weight: 600; color: var(--toki-wine); text-decoration: none; }
+        .article-nav .nav-right { display: flex; align-items: center; gap: 1rem; }
+        .article-nav .nav-label { font-size: 0.6rem; color: var(--text-muted); letter-spacing: 0.08em; }
+        .article-nav .lang-switch { font-size: 0.75rem; color: var(--toki-wine); text-decoration: none; padding: 0.3rem 0.6rem; border: 1px solid var(--toki-wine); border-radius: 4px; }
+        .article-nav .lang-switch:hover { background: var(--toki-wine); color: #fff; }
+        .article-container { max-width: 680px; margin: 0 auto; padding: 7rem 2rem 4rem; }
+        .article-header { margin-bottom: 3rem; padding-bottom: 2rem; border-bottom: 1px solid var(--border); }
+        .article-category { font-size: 0.7rem; color: var(--toki-wine); letter-spacing: 0.15em; margin-bottom: 1rem; }
+        .article-header h1 { font-family: var(--font-display); font-size: 1.8rem; font-weight: 600; line-height: 1.5; margin-bottom: 1rem; }
+        .article-subtitle { font-size: 0.95rem; color: var(--text-secondary); line-height: 1.8; }
+        .article-content h2 { font-family: var(--font-display); font-size: 1.25rem; font-weight: 600; margin: 3rem 0 1.5rem; padding-bottom: 0.5rem; border-bottom: 1px solid var(--border); }
+        .article-content h3 { font-family: var(--font-display); font-size: 1.1rem; font-weight: 500; margin: 2rem 0 1rem; }
+        .article-content p { margin-bottom: 1.5rem; text-align: justify; }
+        .article-content blockquote { margin: 2rem 0; padding: 1.5rem 2rem; background: var(--bg-section); border-left: 3px solid var(--toki-wine); font-style: italic; }
+        .article-content blockquote cite { display: block; font-size: 0.85rem; color: var(--text-muted); font-style: normal; margin-top: 0.5rem; }
+        .article-content ul { margin: 1.5rem 0; padding-left: 1.5rem; }
+        .article-content li { margin-bottom: 0.75rem; }
+        .key-point { background: var(--toki-wine-pale); padding: 1.5rem 2rem; border-radius: 8px; margin: 2rem 0; }
+        .key-point p { margin-bottom: 0; font-size: 0.95rem; }
+        .core-message { background: linear-gradient(135deg, var(--toki-wine-pale) 0%, #FECACA 100%); border-left: 4px solid var(--toki-wine); padding: 1.2rem 1.5rem; margin: 0 0 1.5rem 0; border-radius: 0 8px 8px 0; font-size: 0.95rem; line-height: 1.8; }
+        .disclaimer { font-size: 0.8rem; color: var(--text-muted); margin-bottom: 2rem; padding-bottom: 1rem; border-bottom: 1px solid var(--border); }
+        .references { margin-top: 4rem; padding-top: 2rem; border-top: 1px solid var(--border); }
+        .references h2 { font-size: 1rem; margin-bottom: 1.5rem; }
+        .references ul { list-style: none; padding: 0; }
+        .references li { font-size: 0.85rem; color: var(--text-secondary); margin-bottom: 0.75rem; padding-left: 1.5rem; text-indent: -1.5rem; }
+        .article-footer { margin-top: 4rem; padding-top: 2rem; border-top: 1px solid var(--border); text-align: center; }
+        .article-footer p { font-size: 0.8rem; color: var(--text-muted); margin-bottom: 1rem; }
+        .article-footer a { color: var(--toki-wine); text-decoration: none; }
+        @media (max-width: 768px) { .article-container { padding: 6rem 1.2rem 3rem; } .article-header h1 { font-size: 1.5rem; } .article-nav .nav-label { display: none; } }
+        @media print { .article-nav { display: none; } .article-container { padding-top: 2rem; } }
+    </style>
+</head>
+<body>
+
+<nav class="article-nav">
+    <a href="index-en.html" class="nav-brand">TokiStorage</a>
+    <div class="nav-right">
+        <span class="nav-label">Ownership</span>
+        <a href="ownership.html" class="lang-switch">JP</a>
+    </div>
+</nav>
+
+<main class="article-container">
+    <header class="article-header">
+        <p class="article-category">ESSAY — LAW AND EXISTENCE</p>
+        <h1>Ownership and Proof of Existence<br>— Is "Having" the Same as "Being"?</h1>
+        <p class="article-subtitle">
+            Property, intellectual property, digital assets—<br>
+            Examining how "having something" proves "I exist."
+        </p>
+    </header>
+
+    <article class="article-content">
+        <div class="core-message">
+            <strong>Key Message:</strong> Ownership is a legal form of proof of existence. The claim "this is mine" is also a declaration that "I certainly exist." Property inventories are footprints of life, and inheritance is intergenerational transfer of proof of existence.
+        </div>
+        <p class="disclaimer">This essay is an academic analysis and does not provide legal advice or recommend any specific asset management strategies.</p>
+
+        <h2>1. Ownership and Existence — A Philosophical Examination</h2>
+        <p>The relationship between "having" and "being" is a fundamental philosophical question.</p>
+        <h3>From "I Think, Therefore I Am" to "I Have, Therefore I Am"</h3>
+        <p>Descartes proved existence through thought. However, in social proof of existence, "what you have" often defines "who you are." Bank accounts, real estate, cars—a list of possessions functions as a certificate of existence in society.</p>
+        <h3>Erich Fromm's "Having" and "Being"</h3>
+        <p>In "To Have or To Be," Fromm contrasted the "having mode" with the "being mode." He critiqued modern society's overemphasis on "having," arguing that true proof of existence should be found in "being."</p>
+        <h3>Origins of Ownership</h3>
+        <p>John Locke argued that ownership arises when labor is applied to natural objects. Cultivating fields, building houses, creating things—ownership as the fruit of labor is also proof of existence that "I worked here."</p>
+
+        <h2>2. Property Rights — Legal Proof of Existence</h2>
+        <p>Property rights in modern law are legal guarantees of proof of existence.</p>
+        <h3>Absoluteness of Ownership</h3>
+        <p>Article 206 of Japan's Civil Code states that "An owner has the right to freely use, profit from, and dispose of the object of ownership within the limits of laws and regulations." This absolute right legally acknowledges the owner's existence.</p>
+        <h3>Registration Systems — Publicized Existence</h3>
+        <p>Real estate registration, chattel registration, intellectual property registration—registration systems are mechanisms that publicly show "who owns what." Having your name in a registry is equivalent to obtaining official proof of existence.</p>
+        <h3>Possession and Ownership</h3>
+        <p>Possession (de facto control) and ownership (legal right) are distinguished. However, the de facto claim "this is mine" also functions as everyday proof of existence.</p>
+
+        <blockquote>
+            <p>"Property is one of the oldest mechanisms for making an individual's existence visible in society."</p>
+        </blockquote>
+
+        <h2>3. Intellectual Property — Proof of Existence Through Creation</h2>
+        <p>Intellectual property rights protect proof of existence through creative activities.</p>
+        <h3>Copyright — Ownership of Expression</h3>
+        <p>Copyright automatically arises for creators of original works. Novels, music, paintings—works are proof of the creator's existence, and copyright legally protects them. The claim "I created this work" is at the core of proof of existence.</p>
+        <h3>Patent Rights — Inventions as Footprints</h3>
+        <p>Patents officially record an inventor's existence. Patent bulletins list inventors' names, inscribing names in humanity's technological history. Edison, Tesla, Soichiro Honda—patents remain as their proof of existence.</p>
+        <h3>Trademark Rights — Brands as Existence</h3>
+        <p>Trademarks protect the identity of companies and individuals. Logos, brand names, catchphrases—these are differentiated proofs of existence stating "this existence is different from others."</p>
+
+        <h2>4. Digital Assets — New Forms of Ownership</h2>
+        <p>The digital age is changing the relationship between ownership and proof of existence.</p>
+        <h3>Cryptocurrency and Proof of Ownership</h3>
+        <p>Cryptocurrencies like Bitcoin prove ownership through holding private keys. "Whoever holds this private key is the owner"—a new form where ownership exists without physical substance.</p>
+        <h3>NFTs — Digital "One-of-a-Kind"</h3>
+        <p>NFTs (Non-Fungible Tokens) prove ownership of digital art and collectibles. "This work belongs to this person" is permanently inscribed on the blockchain. This is proof of existence for the digital age.</p>
+        <h3>Data Ownership</h3>
+        <p>Who owns personal data—this has been debated since GDPR. Search history, purchase history, location data—this data records "how I lived," and its ownership is a question of where proof of existence belongs.</p>
+
+        <div class="key-point">
+            <p>Digital assets have no physical substance, but function the same as proof of ownership. Through blockchain technology, records more robust and permanent than traditional proof of ownership have become possible.</p>
+        </div>
+
+        <h2>5. Inheritance — Intergenerational Transfer of Proof of Existence</h2>
+        <p>Inheritance is a mechanism for passing proof of existence to the next generation.</p>
+        <h3>Estate as Proof of Existence</h3>
+        <p>Leaving property is an act of extending one's proof of existence into the future. "This was inherited from grandfather"—inherited property becomes a medium transmitting the deceased's proof of existence to descendants.</p>
+        <h3>Wills — Proof of Existence of Intent</h3>
+        <p>Wills record the deceased's final wishes. The expression of intent "I want my property divided this way" is proof of existence that continues after death. Through will execution, the deceased's intent continues to affect reality.</p>
+        <h3>Renouncing Inheritance and Severance of Proof of Existence</h3>
+        <p>Renouncing inheritance is also an act of refusing to inherit proof of existence. While it's a system for avoiding negative legacies like debt, it also means severing the chain of proof of existence.</p>
+
+        <h2>6. Ownership and Loss — Vulnerability of Proof of Existence</h2>
+        <p>Proof of existence through ownership carries the risk of loss.</p>
+        <h3>Bankruptcy and Existential Crisis</h3>
+        <p>Losing property can mean losing social proof of existence. Bankruptcy proceedings are also a public declaration that "this person no longer has property." For those who depended on property for proof of existence, this is an existential crisis.</p>
+        <h3>Expropriation and Forced Loss</h3>
+        <p>Private property may be expropriated for public interest. "Ancestral land" becoming a road—the experience of proof of existence being erased by public authority brings deep sense of loss.</p>
+        <h3>Fraud, Theft, and Instability of Ownership</h3>
+        <p>Losing property through fraud or theft is also a collapse of the foundation of proof of existence. When the conviction "this is mine" wavers, anxiety about existence itself arises.</p>
+
+        <h2>7. Sharing and Proof of Existence</h2>
+        <p>Not all ownership needs to be exclusive.</p>
+        <h3>Shared Property — "Our" Proof of Existence</h3>
+        <p>Jointly-owned real estate, partnership property, commons—sharing is collective proof of existence that "we exist together." Individual proof of existence connects with collective proof of existence.</p>
+        <h3>Sharing Economy</h3>
+        <p>Car sharing, share houses, subscriptions—the shift from ownership to use is progressing. A new mode of demonstrating existence through "using" rather than "having."</p>
+        <h3>Open Source and Creative Commons</h3>
+        <p>There's also movement to deliberately make creative works into shared property. Linux, Wikipedia—by leaving things not as "mine" but as "everyone's," a different form of proof of existence is established.</p>
+
+        <h2>8. Desire for Ownership and Existential Anxiety</h2>
+        <p>Excessive desire for ownership may be the flip side of existential anxiety.</p>
+        <h3>Collecting and Proof of Existence</h3>
+        <p>Collectors, hobbyists—obsession with collecting things may be a confirmation that "I who have this much certainly exist." Collections become proof of existence reflecting the collector's entire life.</p>
+        <h3>The Paradox of Minimalism</h3>
+        <p>Minimalism, choosing not to have, is also a response to the relationship between ownership and proof of existence. The declaration "I exist even without having" is a search for proof of existence independent of ownership.</p>
+        <h3>Hoarding Disorder</h3>
+        <p>The pathological inability to discard things can be understood as excessive attachment to proof of existence. The fear that "if I discard, I disappear" arises from equating ownership with existence.</p>
+
+        <blockquote>
+            <p>"Attachment to ownership is often a manifestation of existential anxiety. True proof of existence lies not in having but in being."</p>
+            <cite>— Extending Erich Fromm, <em>To Have or To Be</em></cite>
+        </blockquote>
+
+        <h2>9. Posthumous Ownership — The Fate of Proof of Existence</h2>
+        <p>When people die, their possessions remain.</p>
+        <h3>Estate Clearing — Confronting Proof of Existence</h3>
+        <p>Estate clearing is work confronting the deceased's proof of existence. Clothes, photos, daily items—each is evidence that "this person was here," and hesitation arises about disposing of them.</p>
+        <h3>Digital Estates</h3>
+        <p>Social media accounts, cloud data, emails—handling digital estates is a new problem. Deleting accounts erases proof of existence; leaving them means they drift forever.</p>
+        <h3>Dividing Keepsakes — Distributing Proof of Existence</h3>
+        <p>Dividing keepsakes is a ceremony distributing the deceased's proof of existence to bereaved family. "Please keep this" is a wish to have part of one's proof of existence carried on.</p>
+
+        <div class="key-point">
+            <p>After death, possessions remain as the deceased's proof of existence. Estate clearing is not mere tidying but contains ethical questions about how to handle proof of existence.</p>
+        </div>
+
+        <h2>10. TokiStorage and Ownership — Preserving Existence Itself</h2>
+        <p>TokiStorage is an attempt to preserve existence itself, not possessions.</p>
+        <h3>Limitations of Proof of Existence Through Ownership</h3>
+        <ul>
+            <li><strong>Dispersal risk</strong>: Property can be sold, lost, or destroyed</li>
+            <li><strong>Inheritance uncertainty</strong>: May have no heirs or be renounced</li>
+            <li><strong>Value fluctuation</strong>: Value may disappear over time</li>
+            <li><strong>Material constraints</strong>: Objects deteriorate and eventually vanish</li>
+        </ul>
+
+        <p>TokiStorage takes a different approach.</p>
+        <ul>
+            <li><strong>Existence, not possessions</strong>: Records how you lived, not what you had</li>
+            <li><strong>No inheritance needed</strong>: Permanence not dependent on successors</li>
+            <li><strong>Immutable records</strong>: Tamper-proof digital preservation</li>
+            <li><strong>Universal access</strong>: Available regardless of wealth</li>
+        </ul>
+
+        <p>Proof of existence through ownership shows "what I had." Proof of existence through TokiStorage shows "who I was." The two are complementary, but the latter is more essential proof of existence.</p>
+
+        <h2>Conclusion — Beyond "Having" to "Being"</h2>
+        <p>Ownership and proof of existence are deeply connected. Property registration, intellectual property rights, digital assets—the claim "this is mine" is also a declaration that "I certainly exist."</p>
+        <p>However, proof of existence through ownership has limitations. Property is lost, inheritance is severed, objects decay. Proof of existence dependent on ownership always carries anxiety of loss.</p>
+        <p>As Erich Fromm pointed out, a shift from the "having" mode to the "being" mode is needed. TokiStorage supports this shift by recording existence itself rather than possessions.</p>
+        <p>Not "what I had" but "how I lived"—that is the true proof of existence worth preserving across time.</p>
+
+        <section class="references">
+            <h2>References</h2>
+            <ul>
+                <li>Fromm, E. (1976). <em>To Have or To Be?</em> Harper & Row.</li>
+                <li>Locke, J. (1689). <em>Two Treatises of Government.</em></li>
+                <li>Macpherson, C. B. (1962). <em>The Political Theory of Possessive Individualism.</em> Oxford University Press.</li>
+                <li>Radin, M. J. (1982). Property and Personhood. <em>Stanford Law Review</em>, 34(5), 957-1015.</li>
+                <li>Penner, J. E. (1997). <em>The Idea of Property in Law.</em> Oxford University Press.</li>
+                <li>Waldron, J. (1988). <em>The Right to Private Property.</em> Oxford University Press.</li>
+            </ul>
+        </section>
+    </article>
+
+    <footer class="article-footer">
+        <p id="essay-nav-links"></p>
+        <p style="margin-top: 2rem; font-size: 0.75rem;">&copy; 2026 TokiStorage</p>
+    </footer>
+</main>
+
+<script src="essay-nav.js?v=20260209"></script>
+</body>
+</html>

@@ -1,0 +1,518 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>代表プロフィール | 佐藤卓也 | トキストレージ</title>
+    <meta name="description" content="トキストレージ代表 佐藤卓也のプロフィール。半導体製造装置の開発経験を含むエンジニアキャリア20年超の技術経験を持ち、存在証明の民主化を目指す活動を展開。">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Shippori+Mincho:wght@400;500;600;700&family=Zen+Kaku+Gothic+New:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="index.css">
+    <style>
+        /* プロフィールページ専用スタイル */
+        .profile-page {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 2rem;
+            padding-top: 5rem;
+            background: #fff;
+        }
+
+        .profile-header {
+            display: flex;
+            gap: 2rem;
+            align-items: flex-start;
+            margin-bottom: 2rem;
+            padding-bottom: 1.5rem;
+            border-bottom: 2px solid var(--toki-blue, #2563EB);
+        }
+
+        .profile-photo {
+            width: 160px;
+            height: 200px;
+            object-fit: cover;
+            border-radius: 4px;
+            flex-shrink: 0;
+        }
+
+        .profile-intro {
+            flex: 1;
+        }
+
+        .profile-name {
+            font-family: 'Shippori Mincho', serif;
+            font-size: 1.8rem;
+            font-weight: 700;
+            margin: 0 0 0.3rem 0;
+            color: #1e293b;
+        }
+
+        .profile-name-kana {
+            font-size: 0.9rem;
+            color: #64748b;
+            margin-bottom: 0.8rem;
+        }
+
+        .profile-title {
+            font-size: 1rem;
+            color: var(--toki-blue, #2563EB);
+            font-weight: 500;
+            margin-bottom: 1rem;
+            line-height: 1.6;
+        }
+
+        .profile-mission {
+            font-family: 'Shippori Mincho', serif;
+            font-size: 1.1rem;
+            color: #334155;
+            border-left: 3px solid var(--toki-blue, #2563EB);
+            padding-left: 1rem;
+            margin: 0;
+            line-height: 1.8;
+        }
+
+        .profile-section {
+            margin-bottom: 1.5rem;
+        }
+
+        .profile-section h2 {
+            font-family: 'Shippori Mincho', serif;
+            font-size: 1.1rem;
+            color: #1e293b;
+            border-bottom: 1px solid #e2e8f0;
+            padding-bottom: 0.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .profile-list {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        .profile-list li {
+            padding: 0.4rem 0;
+            padding-left: 1.5rem;
+            position: relative;
+            font-size: 0.95rem;
+            line-height: 1.6;
+        }
+
+        .profile-list li::before {
+            content: "●";
+            position: absolute;
+            left: 0;
+            color: var(--toki-blue, #2563EB);
+            font-size: 0.5rem;
+            top: 0.7rem;
+        }
+
+        .profile-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1.5rem;
+        }
+
+        .dedication-box {
+            background: #f8fafc;
+            border: 1px solid #e2e8f0;
+            border-radius: 8px;
+            padding: 1rem 1.2rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .dedication-box h3 {
+            font-size: 0.9rem;
+            color: var(--toki-blue, #2563EB);
+            margin: 0 0 0.8rem 0;
+            font-weight: 600;
+        }
+
+        .dedication-item {
+            margin-bottom: 0.6rem;
+            font-size: 0.9rem;
+        }
+
+        .dedication-item:last-child {
+            margin-bottom: 0;
+        }
+
+        .dedication-item strong {
+            color: #1e293b;
+        }
+
+        .dedication-item span {
+            color: #64748b;
+            font-size: 0.85rem;
+        }
+
+        .contact-box {
+            background: #f1f5f9;
+            border-radius: 8px;
+            padding: 1rem 1.2rem;
+            margin-top: 1.5rem;
+        }
+
+        .contact-box h3 {
+            font-size: 0.95rem;
+            color: #1e293b;
+            margin: 0 0 0.8rem 0;
+        }
+
+        .contact-info {
+            font-size: 0.9rem;
+            line-height: 1.8;
+        }
+
+        .contact-info p {
+            margin: 0.3rem 0;
+        }
+
+        .profile-footer {
+            text-align: center;
+            margin-top: 2rem;
+            padding-top: 1rem;
+            border-top: 1px solid #e2e8f0;
+            font-size: 0.85rem;
+            color: #64748b;
+        }
+
+        /* 印刷用スタイル - A4 1枚コンパクトレイアウト */
+        @media print {
+            * {
+                -webkit-print-color-adjust: exact !important;
+                print-color-adjust: exact !important;
+            }
+
+            body {
+                font-size: 11pt;
+                line-height: 1.25;
+                margin: 0;
+                padding: 0;
+            }
+
+            .toki-nav,
+            .nav-toggle,
+            .profile-footer {
+                display: none !important;
+            }
+
+            .profile-page {
+                max-width: 100%;
+                padding: 0.4rem;
+                padding-top: 0.3rem;
+                margin: 0;
+                box-sizing: border-box;
+            }
+
+            .profile-header {
+                display: flex !important;
+                flex-direction: row !important;
+                align-items: flex-start !important;
+                text-align: left !important;
+                gap: 0.8rem;
+                margin-bottom: 0.3rem;
+                padding: 0.3rem;
+                padding-bottom: 0.3rem;
+                border-bottom: 1px solid #333;
+            }
+
+            .profile-photo {
+                width: 90px;
+                height: 113px;
+                flex-shrink: 0;
+            }
+
+            .profile-intro {
+                flex: 1;
+                text-align: left !important;
+            }
+
+            .profile-name {
+                font-size: 18pt;
+                margin-bottom: 0;
+            }
+
+            .profile-name-kana {
+                font-size: 9pt;
+                margin-bottom: 0.1rem;
+            }
+
+            .profile-title {
+                font-size: 10pt;
+                margin-bottom: 0.1rem;
+                line-height: 1.25;
+            }
+
+            .profile-mission {
+                font-size: 10pt;
+                line-height: 1.3;
+                padding: 0.3rem 0.6rem;
+                border: 1px solid #666;
+                border-left: none;
+                border-right: none;
+                margin: 0.25rem 0 0.3rem 0;
+                text-align: center;
+                background: none;
+            }
+
+            .dedication-box {
+                padding: 0.15rem 0;
+                margin: 0.15rem 0 0.2rem;
+                background: none !important;
+            }
+
+            .dedication-box h3 {
+                font-size: 11pt;
+                margin: 0 0 0.1rem 0;
+                padding: 0;
+                color: #333;
+                text-align: left;
+            }
+
+            .dedication-box h3::before {
+                content: "■ ";
+                color: #333;
+            }
+
+            .dedication-item {
+                font-size: 9pt;
+                margin-bottom: 0;
+                line-height: 1.2;
+            }
+
+            .dedication-item span {
+                font-size: 8pt;
+                color: #666;
+            }
+
+            .dedication-item br {
+                display: none;
+            }
+
+            .profile-section {
+                margin: 0.2rem 0 0.1rem;
+                padding: 0;
+            }
+
+            .profile-section h2 {
+                font-size: 11pt;
+                padding: 0;
+                margin: 0 0 0.05rem 0;
+                border-bottom: none;
+                color: #333;
+                text-align: left;
+            }
+
+            .profile-section h2::before {
+                content: "■ ";
+                color: #333;
+            }
+
+            .profile-list {
+                margin: 0 !important;
+                padding: 0 !important;
+            }
+
+            .profile-list li {
+                padding: 0 !important;
+                padding-left: 0 !important;
+                margin-left: 0 !important;
+                font-size: 10pt;
+                line-height: 1.2;
+            }
+
+            .profile-list li::before {
+                content: "・";
+                position: static;
+                color: #333;
+                font-size: 10pt;
+            }
+
+            .profile-grid {
+                display: block;
+                margin: 0 !important;
+                padding: 0 !important;
+                gap: 0 !important;
+            }
+
+            .profile-grid .profile-section {
+                margin: 0.2rem 0 0.1rem !important;
+                padding: 0 !important;
+            }
+
+            .contact-box {
+                padding: 0.15rem 0;
+                margin: 0.2rem 0 0;
+                border-top: 1px solid #333;
+                background: none;
+            }
+
+            .contact-box h3 {
+                display: none;
+            }
+
+            .contact-info {
+                font-size: 9pt;
+                line-height: 1.3;
+                display: flex;
+                justify-content: space-between;
+                flex-wrap: wrap;
+            }
+
+            .contact-info p {
+                margin: 0;
+            }
+
+            @page {
+                margin: 5mm;
+                size: A4;
+            }
+        }
+
+        /* モバイル対応 */
+        @media (max-width: 600px) {
+            .profile-header {
+                flex-direction: column;
+                align-items: center;
+                text-align: center;
+            }
+
+            .profile-mission {
+                border-left: none;
+                border-top: 3px solid var(--toki-blue, #2563EB);
+                padding-left: 0;
+                padding-top: 1rem;
+            }
+
+            .profile-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+
+<!-- Navigation -->
+<nav class="toki-nav">
+    <a href="index.html" class="nav-logo">トキストレージ</a>
+    <div class="nav-links">
+        <a href="index.html#personas">お悩み</a>
+        <a href="index.html#solution">特徴</a>
+        <a href="index.html#pricing">料金</a>
+        <a href="index.html#faq">よくある質問</a>
+        <a href="index.html#cta" class="nav-cta">無料相談</a>
+        <a href="profile-en.html" class="lang-switch" aria-label="Switch to English">EN</a>
+    </div>
+    <button class="nav-toggle" aria-label="メニュー">
+        <span></span><span></span><span></span>
+    </button>
+</nav>
+
+<main class="profile-page">
+    <!-- ヘッダー：写真・名前・理念 -->
+    <header class="profile-header">
+        <img src="asset/IMG_4310-2.jpeg" alt="佐藤卓也" class="profile-photo">
+        <div class="profile-intro">
+            <h1 class="profile-name">佐藤 卓也</h1>
+            <p class="profile-name-kana">さとう たくや / Takuya Sato</p>
+            <p class="profile-title">
+                TokiStorage 代表（個人事業 開業届出済）<br>
+                SoulCarrier「共鳴の会」創設者
+            </p>
+            <p class="profile-mission">
+                「存在を記録し継承する——それは特権ではなく、すべての人の権利です」<br>
+                記憶の不平等に挑み、千年先へ届く存在証明を届けます。
+            </p>
+        </div>
+    </header>
+
+    <!-- 奉納実績 -->
+    <div class="dedication-box">
+        <h3>神社仏閣への奉納実績</h3>
+        <div class="dedication-item">
+            <strong>伊勢神宮 式年遷宮</strong>へ奉納<span>（2026年・代表者名）</span><br>
+            <span>1300年続く「20年ごとの建て替えと継承」の伝統に記名</span>
+        </div>
+        <div class="dedication-item">
+            <strong>比叡山延暦寺 根本中堂</strong>へ奉納<span>（2026年・代表者名）</span><br>
+            <span>1200年灯り続ける「不滅の法灯」で知られる総本堂の復元修理事業に永代記名</span>
+        </div>
+    </div>
+
+    <!-- 経歴・実績 -->
+    <div class="profile-grid">
+        <section class="profile-section">
+            <h2>職歴・専門技術</h2>
+            <ul class="profile-list">
+                <li>大手コンサルティングファーム（Big4）、大手メーカーなどを経験</li>
+                <li>法務省の電子申請システム開発に従事</li>
+                <li>DX・AI・先端技術分野で20年超の実績</li>
+                <li>アジア太平洋地域での国際プロジェクト経験</li>
+                <li>石英ガラスへの刻印・QRコード化技術を独自開発</li>
+            </ul>
+        </section>
+
+        <section class="profile-section">
+            <h2>受賞・メディア</h2>
+            <ul class="profile-list">
+                <li>World Blockchain Summit Top 10 Project Leaders 受賞</li>
+                <li>Forbes JAPAN 寄稿者</li>
+                <li>Phoenix FM（海外メディア）掲載</li>
+                <li>ビジネスSNS フォロワー 4,000名以上</li>
+            </ul>
+        </section>
+    </div>
+
+    <div class="profile-grid">
+        <section class="profile-section">
+            <h2>社会活動・地域貢献</h2>
+            <ul class="profile-list">
+                <li>タイムレスタウン新浦安 自治会長（2年間・約250世帯）</li>
+                <li>日系アメリカ人の遺骨帰還支援活動（2025年より）</li>
+                <li>群馬県にて5,000基の墓石を徒歩調査</li>
+                <li>マウイ島にて墓守活動（年の半分を現地で活動）</li>
+            </ul>
+        </section>
+
+        <section class="profile-section">
+            <h2>活動拠点</h2>
+            <ul class="profile-list">
+                <li>現住所：千葉県浦安市明海2-11-13</li>
+                <li>2026年春より佐渡市に新拠点設立予定</li>
+                <li>マウイ島（ハワイ）にて墓守活動</li>
+            </ul>
+        </section>
+    </div>
+
+    <section class="profile-section">
+        <h2>活動の原点</h2>
+        <ul class="profile-list">
+            <li>愛犬Pearl（2007-2025）の「持ち歩けるお墓」を制作したことが存在証明の原点</li>
+            <li>東日本大震災で液状化した浦安市の復興後の街に移住し、自治会長として街づくりに参画</li>
+            <li>マウイ島ラハイナで「忘れられた日系移民の墓」と出会い、遺骨帰還活動を開始</li>
+            <li>「忘れられた存在を取り戻す」だけでなく「最初から忘れられない仕組み」の必要性を提唱</li>
+        </ul>
+    </section>
+
+    <!-- 連絡先 -->
+    <div class="contact-box">
+        <h3>お問い合わせ先</h3>
+        <div class="contact-info">
+            <p><strong>TokiStorage</strong></p>
+            <p>〒279-0014 千葉県浦安市明海2-11-13</p>
+            <p>個人事業開業届出済（2026年2月11日／市川税務署）／青色申告届出済</p>
+            <p>公式サイト：bit.ly/soapfo</p>
+        </div>
+    </div>
+
+    <footer class="profile-footer">
+        <p>本資料は <a href="index.html">トキストレージ公式サイト</a> より印刷できます</p>
+        <p>© TokiStorage</p>
+    </footer>
+</main>
+
+<script src="index.js"></script>
+</body>
+</html>

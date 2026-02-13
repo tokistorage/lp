@@ -1,0 +1,800 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>パートナーシップのご提案 | トキストレージ</title>
+    <meta name="robots" content="noindex, nofollow">
+    <meta name="description" content="トキストレージとの提携で、貴社クライアントに「千年の存在証明」という新しい価値を届けませんか。コンサルティングファーム・事業会社向けパートナーシップのご提案。">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Shippori+Mincho:wght@400;500;600;700&family=Zen+Kaku+Gothic+New:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            /* Brand — synced with index.css */
+            --toki-blue: #2563EB;
+            --toki-blue-light: #3B82F6;
+            --toki-blue-dark: #1D4ED8;
+            --toki-blue-pale: #EFF6FF;
+            --toki-blue-glow: rgba(37, 99, 235, 0.12);
+            --toki-gold: #C9A962;
+            --toki-gold-pale: #FDF8E8;
+            --emerald: #16A34A;
+            --emerald-pale: #F0FDF4;
+            /* Backgrounds */
+            --bg-white: #FFFFFF;
+            --bg-page: #F8FAFC;
+            --bg-section: #F1F5F9;
+            --bg-card: #FFFFFF;
+            /* Text */
+            --text-primary: #1E293B;
+            --text-secondary: #475569;
+            --text-muted: #94A3B8;
+            --text-dim: #CBD5E1;
+            /* Borders */
+            --border: #E2E8F0;
+            --border-light: #F1F5F9;
+            /* Shadows */
+            --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.05);
+            --shadow-md: 0 4px 16px rgba(0, 0, 0, 0.06);
+            /* Fonts */
+            --font-display: 'Shippori Mincho', serif;
+            --font-body: 'Zen Kaku Gothic New', sans-serif;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        html { scroll-behavior: smooth; }
+
+        body {
+            font-family: var(--font-body);
+            font-weight: 400;
+            background: var(--bg-white);
+            color: var(--text-primary);
+            line-height: 1.9;
+            font-size: 16px;
+        }
+
+        /* Navigation */
+        .pp-nav {
+            position: fixed;
+            top: 0; left: 0; right: 0;
+            z-index: 1000;
+            background: rgba(255,255,255,0.95);
+            backdrop-filter: blur(12px);
+            border-bottom: 1px solid var(--border);
+            padding: 0.6rem 1.2rem;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+        .pp-nav .nav-brand {
+            font-family: var(--font-display);
+            font-size: 0.9rem;
+            font-weight: 600;
+            color: var(--toki-blue);
+            text-decoration: none;
+        }
+        .pp-nav .nav-right {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+        .pp-nav .nav-label {
+            font-size: 0.6rem;
+            color: var(--text-muted);
+            letter-spacing: 0.08em;
+        }
+        .pp-nav .lang-switch {
+            font-size: 0.75rem;
+            color: var(--toki-blue);
+            text-decoration: none;
+            padding: 0.3rem 0.6rem;
+            border: 1px solid var(--toki-blue);
+            border-radius: 4px;
+        }
+        .pp-nav .lang-switch:hover {
+            background: var(--toki-blue);
+            color: #fff;
+        }
+
+        /* Hero */
+        .pp-hero {
+            padding: 8rem 2rem 4rem;
+            text-align: center;
+            background: linear-gradient(180deg, var(--text-primary) 0%, #1a2744 100%);
+            color: #fff;
+        }
+        .pp-hero-label {
+            font-size: 0.7rem;
+            letter-spacing: 0.2em;
+            color: var(--toki-gold);
+            margin-bottom: 1.5rem;
+        }
+        .pp-hero h1 {
+            font-family: var(--font-display);
+            font-size: 2rem;
+            font-weight: 700;
+            line-height: 1.5;
+            margin-bottom: 1rem;
+        }
+        .pp-hero-sub {
+            font-size: 1rem;
+            color: var(--text-muted);
+            max-width: 600px;
+            margin: 0 auto;
+            line-height: 2;
+        }
+        .pp-hero-sub strong {
+            color: var(--toki-gold);
+        }
+
+        /* Section */
+        .pp-section {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 4rem 2rem;
+        }
+        .pp-section-title {
+            font-family: var(--font-display);
+            font-size: 1.4rem;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+            color: var(--text-primary);
+        }
+        .pp-section-sub {
+            font-size: 0.9rem;
+            color: var(--text-secondary);
+            margin-bottom: 2.5rem;
+        }
+        .pp-section-border {
+            border-top: 1px solid var(--border);
+        }
+
+        /* Problem statement */
+        .problem-card {
+            background: var(--bg-section);
+            border-radius: 12px;
+            padding: 2rem;
+            margin-bottom: 1.5rem;
+        }
+        .problem-card h3 {
+            font-family: var(--font-display);
+            font-size: 1.05rem;
+            font-weight: 600;
+            color: var(--text-primary);
+            margin-bottom: 0.75rem;
+        }
+        .problem-card p {
+            font-size: 0.9rem;
+            color: var(--text-secondary);
+        }
+
+        /* What we bring */
+        .bring-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+        }
+        .bring-card {
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 1.5rem;
+        }
+        .bring-icon {
+            font-size: 1.5rem;
+            margin-bottom: 0.5rem;
+        }
+        .bring-card h4 {
+            font-family: var(--font-display);
+            font-size: 0.95rem;
+            font-weight: 600;
+            color: var(--text-primary);
+            margin-bottom: 0.5rem;
+        }
+        .bring-card p {
+            font-size: 0.85rem;
+            color: var(--text-secondary);
+            line-height: 1.7;
+        }
+
+        /* Partnership models */
+        .model-list {
+            display: flex;
+            flex-direction: column;
+            gap: 1.5rem;
+        }
+        .model-card {
+            display: flex;
+            align-items: flex-start;
+            gap: 1.5rem;
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 1.5rem;
+            transition: border-color 0.2s;
+        }
+        .model-card:hover {
+            border-color: var(--toki-blue);
+        }
+        .model-label {
+            flex-shrink: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 4rem;
+            height: 4rem;
+            border-radius: 12px;
+            font-family: var(--font-display);
+            font-size: 0.65rem;
+            font-weight: 700;
+            text-align: center;
+            line-height: 1.3;
+            color: #fff;
+        }
+        .model-label.blue { background: var(--toki-blue); }
+        .model-label.gold { background: var(--toki-gold); }
+        .model-label.emerald { background: var(--emerald); }
+        .model-body { flex: 1; }
+        .model-body h4 {
+            font-family: var(--font-display);
+            font-size: 1rem;
+            font-weight: 600;
+            color: var(--text-primary);
+            margin-bottom: 0.3rem;
+        }
+        .model-body p {
+            font-size: 0.85rem;
+            color: var(--text-secondary);
+            line-height: 1.7;
+        }
+        .model-example {
+            font-size: 0.8rem;
+            color: var(--toki-blue);
+            margin-top: 0.5rem;
+            font-weight: 500;
+        }
+
+        /* Client fit */
+        .client-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 1rem;
+        }
+        .client-card {
+            background: var(--bg-section);
+            border-radius: 10px;
+            padding: 1.2rem;
+            text-align: center;
+        }
+        .client-icon {
+            font-size: 1.5rem;
+            margin-bottom: 0.5rem;
+        }
+        .client-card h4 {
+            font-family: var(--font-display);
+            font-size: 0.85rem;
+            font-weight: 600;
+            color: var(--text-primary);
+            margin-bottom: 0.3rem;
+        }
+        .client-card p {
+            font-size: 0.75rem;
+            color: var(--text-secondary);
+            line-height: 1.6;
+        }
+
+        /* Differentiator */
+        .diff-table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 0.85rem;
+            margin-top: 1rem;
+        }
+        .diff-table th, .diff-table td {
+            padding: 0.75rem 1rem;
+            text-align: left;
+            border-bottom: 1px solid var(--border);
+        }
+        .diff-table th {
+            font-family: var(--font-display);
+            font-weight: 600;
+            color: var(--text-primary);
+            font-size: 0.8rem;
+            white-space: nowrap;
+        }
+        .diff-table thead th {
+            border-bottom: 2px solid var(--border);
+        }
+        .diff-table td {
+            color: var(--text-secondary);
+        }
+        .diff-table .highlight {
+            color: var(--toki-blue);
+            font-weight: 500;
+        }
+
+        /* Revenue */
+        .revenue-flow {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0;
+            margin: 2rem 0;
+            flex-wrap: wrap;
+        }
+        .revenue-box {
+            text-align: center;
+            padding: 1.2rem 1.5rem;
+            border-radius: 10px;
+            min-width: 140px;
+        }
+        .revenue-box.partner { background: var(--toki-blue-pale); }
+        .revenue-box.toki { background: var(--toki-gold-pale); }
+        .revenue-box.client { background: var(--emerald-pale); }
+        .revenue-box h4 {
+            font-family: var(--font-display);
+            font-size: 0.85rem;
+            font-weight: 600;
+            margin-bottom: 0.25rem;
+        }
+        .revenue-box p {
+            font-size: 0.75rem;
+            color: var(--text-secondary);
+        }
+        .revenue-arrow {
+            font-size: 1.2rem;
+            color: var(--text-muted);
+            padding: 0 0.5rem;
+        }
+
+        /* CTA */
+        .pp-cta {
+            background: var(--text-primary);
+            color: #fff;
+            text-align: center;
+            padding: 4rem 2rem;
+        }
+        .pp-cta h2 {
+            font-family: var(--font-display);
+            font-size: 1.5rem;
+            font-weight: 600;
+            margin-bottom: 1rem;
+        }
+        .pp-cta p {
+            font-size: 0.9rem;
+            color: var(--text-muted);
+            max-width: 500px;
+            margin: 0 auto 2rem;
+            line-height: 1.8;
+        }
+        .pp-cta-links {
+            display: flex;
+            justify-content: center;
+            gap: 1.5rem;
+            flex-wrap: wrap;
+        }
+        .pp-cta-links a {
+            color: var(--toki-gold);
+            text-decoration: none;
+            font-size: 0.85rem;
+            padding: 0.5rem 1.2rem;
+            border: 1px solid var(--toki-gold);
+            border-radius: 6px;
+            transition: background 0.2s;
+        }
+        .pp-cta-links a:hover {
+            background: var(--toki-gold);
+            color: var(--text-primary);
+        }
+
+        /* Founder */
+        .founder-section {
+            background: var(--bg-section);
+            border-radius: 12px;
+            padding: 2rem;
+            display: flex;
+            gap: 1.5rem;
+            align-items: flex-start;
+        }
+        .founder-badge {
+            flex-shrink: 0;
+            width: 4rem;
+            height: 4rem;
+            border-radius: 50%;
+            background: var(--toki-blue);
+            color: #fff;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-family: var(--font-display);
+            font-size: 1.2rem;
+            font-weight: 700;
+        }
+        .founder-body h4 {
+            font-family: var(--font-display);
+            font-size: 1rem;
+            font-weight: 600;
+            color: var(--text-primary);
+            margin-bottom: 0.3rem;
+        }
+        .founder-body p {
+            font-size: 0.85rem;
+            color: var(--text-secondary);
+            line-height: 1.7;
+        }
+        .founder-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.4rem;
+            margin-top: 0.75rem;
+        }
+        .founder-tag {
+            font-size: 0.65rem;
+            padding: 0.2rem 0.6rem;
+            background: var(--bg-white);
+            border: 1px solid var(--border);
+            border-radius: 4px;
+            color: var(--text-secondary);
+        }
+        .founder-story {
+            margin-top: 1.2rem;
+            padding: 1rem 1.2rem;
+            background: var(--blue-pale);
+            border-left: 4px solid var(--gold);
+            border-radius: 6px;
+            font-size: 0.85rem;
+            line-height: 1.8;
+            color: var(--text-primary);
+        }
+
+        /* Footer */
+        .pp-footer {
+            text-align: center;
+            padding: 2rem;
+            border-top: 1px solid var(--border);
+        }
+        .pp-footer p {
+            font-size: 0.75rem;
+            color: var(--text-muted);
+        }
+        .pp-footer a {
+            color: var(--toki-blue);
+            text-decoration: none;
+        }
+
+        @media (max-width: 768px) {
+            .pp-hero { padding: 6rem 1.2rem 3rem; }
+            .pp-hero h1 { font-size: 1.5rem; }
+            .pp-section { padding: 3rem 1.2rem; }
+            .bring-grid { grid-template-columns: 1fr; }
+            .client-grid { grid-template-columns: 1fr; }
+            .model-card { flex-direction: column; gap: 1rem; }
+            .model-label { width: auto; height: auto; padding: 0.5rem 1rem; border-radius: 6px; }
+            .revenue-flow { flex-direction: column; gap: 0.5rem; }
+            .revenue-arrow { transform: rotate(90deg); }
+            .founder-section { flex-direction: column; }
+            .pp-nav .nav-label { display: none; }
+            .diff-table-wrap { overflow-x: auto; -webkit-overflow-scrolling: touch; }
+            .diff-table { font-size: 0.75rem; min-width: 480px; }
+            .diff-table th, .diff-table td { padding: 0.5rem; }
+        }
+
+        @media print {
+            .pp-nav { display: none; }
+            .pp-hero { padding-top: 2rem; }
+        }
+    </style>
+</head>
+<body>
+
+<nav class="pp-nav">
+    <a href="index.html" class="nav-brand">トキストレージ</a>
+    <div class="nav-right">
+        <span class="nav-label">PARTNERSHIP PROPOSAL</span>
+        <a href="partnership-en.html" class="lang-switch">EN</a>
+    </div>
+</nav>
+
+<!-- Hero -->
+<header class="pp-hero">
+    <p class="pp-hero-label">PARTNERSHIP PROPOSAL</p>
+    <h1>貴社クライアントに、<br>「千年の存在証明」を。</h1>
+    <p class="pp-hero-sub">
+        テクノロジーは揃っています。ユースケースも200以上。<br>
+        足りないのは、<strong>届ける仕組み</strong>です。<br>
+        一緒に届けませんか。
+    </p>
+</header>
+
+<!-- Background -->
+<section class="pp-section">
+    <h2 class="pp-section-title">AIとビッグテックの台頭が迫る、構造的転換</h2>
+    <p class="pp-section-sub">コンサルティングファームに「コモディティ化しない問い」の獲得を迫っている</p>
+
+    <div class="problem-card">
+        <h3>AIがコンサルティングを変える</h3>
+        <p>生成AIにより、調査・分析・戦略フレームワーク作成は急速にコモディティ化。知識の非対称性に依存した価値提供モデルは構造的転換期にあります。</p>
+    </div>
+    <div class="problem-card">
+        <h3>差別化の源泉が縮小</h3>
+        <p>業界分析、ベンチマーク、DX——どのファームも同じツールで同じ提案に収束しがち。「何を提案するか」ではなく「どんな問いを立てるか」が差別化の核になります。</p>
+    </div>
+    <div class="problem-card">
+        <h3>「千年の問い」という機会</h3>
+        <p>「100年後に何を残すか」——AIが生成できない問い。クライアントの本質的ニーズに触れ、構造的にコモディティ化しない提案の起点になります。</p>
+    </div>
+</section>
+
+<!-- What TokiStorage brings -->
+<section class="pp-section pp-section-border">
+    <h2 class="pp-section-title">TokiStorageが持っているもの</h2>
+    <p class="pp-section-sub">技術だけではなく、「設計思想ごと」提供できます</p>
+
+    <div class="bring-grid">
+        <div class="bring-card">
+            <div class="bring-icon">&#x1F48E;</div>
+            <h4>石英ガラス記録技術</h4>
+            <p>金属蒸着によるQRコード刻印。サーバー・電源ゼロ。SLA100%、1000年保証。</p>
+        </div>
+        <div class="bring-card">
+            <div class="bring-icon">&#x1F4CA;</div>
+            <h4>200+のユースケース</h4>
+            <p>終活、婚礼、寺社、学校、企業、自治体、NGO、ホテル、航空——業界別に整理済み。</p>
+        </div>
+        <div class="bring-card">
+            <div class="bring-icon">&#x1F4DD;</div>
+            <h4>70+の思想エッセイ</h4>
+            <p>存在証明を心理学・宗教・経済・AI・宇宙まで9領域で展開。知的コンテンツとして自立する。</p>
+        </div>
+        <div class="bring-card">
+            <div class="bring-icon">&#x1F43E;</div>
+            <h4>Pearl Soap ＋ アンバサダー網</h4>
+            <p>贈与経済の実践と、全国にワークショップを展開できる分散型の運動体。</p>
+        </div>
+    </div>
+</section>
+
+<!-- Differentiator -->
+<section class="pp-section pp-section-border">
+    <h2 class="pp-section-title">なぜ「組む」価値があるのか</h2>
+    <p class="pp-section-sub">既存デジタルサービスを補完する「千年レイヤー」という位置づけ</p>
+
+    <div class="diff-table-wrap">
+    <table class="diff-table">
+        <thead>
+            <tr>
+                <th></th>
+                <th>デジタルサービス（日常の記録）</th>
+                <th>TokiStorage（千年の記録）</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <th>記録媒体</th>
+                <td>クラウド / HDD</td>
+                <td class="highlight">石英ガラス（物理）</td>
+            </tr>
+            <tr>
+                <th>得意な時間軸</th>
+                <td>今〜数十年（日常利用に最適）</td>
+                <td class="highlight">100年〜1000年（永続保存に特化）</td>
+            </tr>
+            <tr>
+                <th>インフラ</th>
+                <td>サーバー・電源（利便性の源泉）</td>
+                <td class="highlight">不要（GitHub分散管理）</td>
+            </tr>
+            <tr>
+                <th>読み取り</th>
+                <td>専用アプリ / ログイン</td>
+                <td class="highlight">スマホのカメラだけ</td>
+            </tr>
+            <tr>
+                <th>文化的厚み</th>
+                <td>機能・利便性が価値の中心</td>
+                <td class="highlight">70+のエッセイ＋贈与経済の実践</td>
+            </tr>
+            <tr>
+                <th>社会的接点</th>
+                <td>プラットフォームとしての貢献</td>
+                <td class="highlight">SoulCarrier（無縁墓・遺骨送還活動）</td>
+            </tr>
+        </tbody>
+    </table>
+    </div>
+</section>
+
+<!-- Partnership Models -->
+<section class="pp-section pp-section-border">
+    <h2 class="pp-section-title">提携モデル</h2>
+    <p class="pp-section-sub">貴社のビジネスモデルに応じた3つの組み方</p>
+
+    <div class="model-list">
+        <div class="model-card">
+            <div class="model-label blue">紹介<br>モデル</div>
+            <div class="model-body">
+                <h4>クライアント紹介型パートナーシップ</h4>
+                <p>貴社クライアントの課題にTokiStorageが適合する場合、紹介ベースで連携。貴社にはリファラルフィーをお支払い。クライアント対応・納品はTokiStorage側で完結。</p>
+                <p class="model-example">例：終活コンサル→クライアントに存在証明を提案、葬祭業DX→メモリアルオプションとして追加</p>
+            </div>
+        </div>
+        <div class="model-card">
+            <div class="model-label gold">共同<br>提案</div>
+            <div class="model-body">
+                <h4>共同ソリューション型</h4>
+                <p>貴社のコンサルティングにTokiStorageを組み込んだ共同提案。ESG・地方創生・文化保存・DXプロジェクトの「出口」として千年記録を位置づける。</p>
+                <p class="model-example">例：自治体DX→地域記憶アーカイブ、ホテルCX改革→ゲスト記録のアップグレード</p>
+            </div>
+        </div>
+        <div class="model-card">
+            <div class="model-label emerald">事業<br>共創</div>
+            <div class="model-body">
+                <h4>新規事業共創型</h4>
+                <p>存在証明を軸にした新規事業を共同で立ち上げる。技術・思想・ユースケースはTokiStorageが、市場アクセス・信用・スケールは貴社が持ち寄る。</p>
+                <p class="model-example">例：メモリアルテック新規事業、企業向け永続アーカイブサービス</p>
+            </div>
+        </div>
+    </div>
+
+    <div class="problem-card" style="margin-top: 2rem; background: var(--toki-blue-pale); border-left: 4px solid var(--toki-blue);">
+        <h3 style="font-size: 0.95rem;">初期パートナー優遇</h3>
+        <p>複数のコンサルティングファームに順次ご提案を進めています。最初に提携いただいたファームには、紹介モデルの優先条件・エリア独占権など、初期パートナーならではのインセンティブをご用意します。</p>
+    </div>
+
+    <div class="problem-card" style="margin-top: 1rem;">
+        <h3 style="font-size: 0.95rem;">独立性（Independence）について</h3>
+        <p>本提携はベンダーパートナーシップです。SalesforceやSAPの導入推奨と同じ構造であり、監査契約・出資関係は一切含みません。独立性に関する懸念が発生しない設計です。代表は大手コンサルティングファーム出身であり、ファームのコンプライアンス要件を十分に理解した上で提携モデルを設計しています。</p>
+    </div>
+</section>
+
+<!-- Revenue Flow -->
+<section class="pp-section pp-section-border">
+    <h2 class="pp-section-title">収益の流れ</h2>
+    <p class="pp-section-sub">クライアント・パートナー・TokiStorageの三者がWinになる設計</p>
+
+    <div class="revenue-flow">
+        <div class="revenue-box client">
+            <h4>クライアント</h4>
+            <p>千年の存在証明<br>社会的意義の実感</p>
+        </div>
+        <span class="revenue-arrow">&larr;</span>
+        <div class="revenue-box partner">
+            <h4>パートナー（貴社）</h4>
+            <p>紹介フィー or 共同提案収益<br>クライアントLTV向上</p>
+        </div>
+        <span class="revenue-arrow">&larr;</span>
+        <div class="revenue-box toki">
+            <h4>TokiStorage</h4>
+            <p>技術・思想・納品<br>収益の一部→SoulCarrier活動</p>
+        </div>
+    </div>
+
+    <div class="problem-card" style="text-align: center; margin-top: 1.5rem;">
+        <p>TokiStorage売上の一部はSoulCarrier（無縁墓・遺骨送還）活動に還元されます。<br>パートナーシップは社会貢献にも直結します。</p>
+    </div>
+</section>
+
+<!-- Client fit -->
+<section class="pp-section pp-section-border">
+    <h2 class="pp-section-title">特に相性の良いクライアント領域</h2>
+    <p class="pp-section-sub">貴社のクライアントポートフォリオに、こんなセクターはありませんか</p>
+
+    <div class="client-grid">
+        <div class="client-card">
+            <div class="client-icon">&#x1F3E5;</div>
+            <h4>葬祭・メモリアル</h4>
+            <p>墓じまい代替、永代供養デジタル化、遺族向け新サービス</p>
+        </div>
+        <div class="client-card">
+            <div class="client-icon">&#x1F3E8;</div>
+            <h4>ホスピタリティ</h4>
+            <p>ウェディング記録、ホテルCX、記念日サービス</p>
+        </div>
+        <div class="client-card">
+            <div class="client-icon">&#x1F3DB;</div>
+            <h4>宗教法人・寺社</h4>
+            <p>檀家記録の永続化、参拝体験DX、文化財保存</p>
+        </div>
+        <div class="client-card">
+            <div class="client-icon">&#x1F3EC;</div>
+            <h4>自治体・教育</h4>
+            <p>地域アーカイブ、災害記録、学校史の永続化</p>
+        </div>
+        <div class="client-card">
+            <div class="client-icon">&#x1F30F;</div>
+            <h4>ESG・サステナビリティ</h4>
+            <p>1000年設計の企業理念記録、SDGs実績の永続証明</p>
+        </div>
+        <div class="client-card">
+            <div class="client-icon">&#x1F4BC;</div>
+            <h4>金融・保険</h4>
+            <p>終活関連サービス連携、デジタル遺品対策</p>
+        </div>
+    </div>
+</section>
+
+<!-- Founder -->
+<section class="pp-section pp-section-border">
+    <h2 class="pp-section-title">代表について</h2>
+    <p class="pp-section-sub">なぜこの事業を、この人間がやるのか</p>
+
+    <div class="founder-section">
+        <img src="asset/IMG_4310-2.jpeg" alt="佐藤卓也" style="flex-shrink:0; width:4.5rem; height:4.5rem; border-radius:50%; object-fit:cover;">
+        <div class="founder-body">
+            <h4>佐藤卓也 ── TokiStorage 代表（個人事業 開業届出済）</h4>
+            <p>大手コンサルティングファームでの経験を経て、半導体製造装置のエンジニアリング20年超。ファームの文化・クライアント対応・プロジェクト設計を肌で理解しています。タイムレスタウン新浦安（250世帯）の自治会長として「ゆりかごから墓場まで」のコミュニティ運営を経験。SoulCarrier活動で無縁墓・遺骨送還に携わる中で「記憶が消える恐怖」を目の当たりにし、TokiStorageを着想。マウイ・山中湖でのオフグリッド実証を経て、制度に依存しない千年設計の技術を完成。</p>
+            <div class="founder-tags">
+                <span class="founder-tag">元Big4ファーム</span>
+                <span class="founder-tag">半導体エンジニアリング 20年+</span>
+                <span class="founder-tag">自治会長（250世帯）</span>
+                <span class="founder-tag">SoulCarrier主宰</span>
+                <span class="founder-tag">オフグリッド実証済み</span>
+                <span class="founder-tag">佐渡島移住予定（2026春）</span>
+            </div>
+            <div class="founder-story">
+                愛犬パールのお墓とともに、家族でパールハーバーを訪れました。平和を願う声を音声QRとして刻んだプレートを持って。そこで気がつきました——時を超えた願いは、愛や平和への想いに変容する。一人でも多くの方と分かち合いたい。TokiStorageをきっかけに、時を超えた変容をご一緒できれば幸いです。
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Next Steps -->
+<section class="pp-cta">
+    <h2>ご検討のステップ</h2>
+    <div style="max-width: 560px; margin: 0 auto 2.5rem; text-align: left;">
+        <div style="display: flex; align-items: flex-start; gap: 1rem; margin-bottom: 1.5rem;">
+            <span style="flex-shrink:0; width:2rem; height:2rem; border-radius:50%; background:var(--toki-blue); color:#fff; display:flex; align-items:center; justify-content:center; font-size:0.8rem; font-weight:700;">01</span>
+            <div><strong style="color:#fff;">初回ミーティング（30分）</strong><br><span style="color:var(--text-muted); font-size:0.85rem;">貴社クライアントの課題感・ポートフォリオを共有</span></div>
+        </div>
+        <div style="display: flex; align-items: flex-start; gap: 1rem; margin-bottom: 1.5rem;">
+            <span style="flex-shrink:0; width:2rem; height:2rem; border-radius:50%; background:var(--toki-blue); color:#fff; display:flex; align-items:center; justify-content:center; font-size:0.8rem; font-weight:700;">02</span>
+            <div><strong style="color:#fff;">ユースケース選定</strong><br><span style="color:var(--text-muted); font-size:0.85rem;">貴社クライアントとの親和性が高い領域を整理</span></div>
+        </div>
+        <div style="display: flex; align-items: flex-start; gap: 1rem; margin-bottom: 1.5rem;">
+            <span style="flex-shrink:0; width:2rem; height:2rem; border-radius:50%; background:var(--toki-blue); color:#fff; display:flex; align-items:center; justify-content:center; font-size:0.8rem; font-weight:700;">03</span>
+            <div><strong style="color:#fff;">提携モデル設計</strong><br><span style="color:var(--text-muted); font-size:0.85rem;">最適なモデルの選択・条件・スコープの整理</span></div>
+        </div>
+        <div style="display: flex; align-items: flex-start; gap: 1rem;">
+            <span style="flex-shrink:0; width:2rem; height:2rem; border-radius:50%; background:var(--toki-blue); color:#fff; display:flex; align-items:center; justify-content:center; font-size:0.8rem; font-weight:700;">04</span>
+            <div><strong style="color:#fff;">パイロット実施</strong><br><span style="color:var(--text-muted); font-size:0.85rem;">1〜2件のクライアントで実証・フィードバック</span></div>
+        </div>
+    </div>
+    <p style="font-size: 0.85rem; color: var(--text-muted); margin-bottom: 2rem;">TokiStorage　佐藤卓也<br><span style="font-size: 0.75rem;">個人事業開業届出済（2026年2月11日／市川税務署）・青色申告届出済</span></p>
+    <div class="pp-cta-links">
+        <a href="tokistorage-partnership-deck.pdf" download>スライドデッキ（PDF）をダウンロード</a>
+        <a href="infographic.html">エコシステム全体像を見る</a>
+        <a href="pitch-deck.html">投資家向け資料を見る</a>
+        <a href="usecases.html">200+のユースケースを見る</a>
+    </div>
+</section>
+
+<!-- Disclaimer -->
+<section class="pp-section" style="padding-bottom: 2rem;">
+    <div style="border-top: 1px solid var(--border); padding-top: 2rem;">
+        <h3 style="font-size: 0.85rem; color: var(--text-muted); font-weight: 600; margin-bottom: 1rem;">Confidential / Disclaimer</h3>
+        <p style="font-size: 0.75rem; color: var(--text-muted); line-height: 1.8;">
+            本資料は、TokiStorage（佐藤卓也）がパートナーシップのご検討のために作成した機密資料です。本資料に含まれる情報は、現時点における見解および計画に基づくものであり、その正確性、完全性、または将来の結果を保証するものではありません。本資料は情報提供を目的としており、法的助言、投資助言、その他いかなる専門的助言を構成するものでもありません。本資料の全部または一部を、事前の書面による同意なく、第三者に開示、複製、または配布することを禁じます。
+        </p>
+        <p style="font-size: 0.7rem; color: var(--text-muted); margin-top: 1rem;">&copy; 2026 TokiStorage / 佐藤卓也. All rights reserved.</p>
+    </div>
+</section>
+
+<!-- Footer -->
+<footer class="pp-footer" style="padding: 2.5rem 2rem;">
+    <div style="display: flex; justify-content: center; gap: 1.5rem; flex-wrap: wrap; margin-bottom: 1rem;">
+        <a href="index.html">トキストレージ</a>
+        <a href="pearl-soap.html">Pearl Soap</a>
+        <a href="../index-ja.html">SoulCarrier 共鳴の会</a>
+        <a href="ambassador.html">アンバサダー</a>
+        <a href="usecases.html">ユースケース</a>
+        <a href="infographic.html">エコシステム全体像</a>
+        <a href="client-proposal.html">クライアント提案</a>
+        <a href="government-proposal.html">行政提案</a>
+        <a href="patronage.html">パトロネージ</a>
+        <a href="pitch-deck.html">投資家向け資料</a>
+    </div>
+    <p>TokiStorage | <a href="partnership-en.html">English Version</a></p>
+</footer>
+
+</body>
+</html>

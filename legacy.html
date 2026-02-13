@@ -1,0 +1,840 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>トキストレージ | 1000年の設計思想</title>
+    <meta name="robots" content="noindex, nofollow">
+    <meta name="description" content="SLA 100% × 1000年。依存ゼロの構造設計。創業者不在でも動く永続性。1000年を真剣に考える人のための技術資料。">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Shippori+Mincho:wght@400;500;600;700&family=Zen+Kaku+Gothic+New:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --toki-blue: #2563EB;
+            --toki-blue-light: #3B82F6;
+            --toki-blue-dark: #1D4ED8;
+            --toki-blue-pale: #EFF6FF;
+            --gold: #C9A962;
+            --bg-white: #FFFFFF;
+            --bg-page: #F8FAFC;
+            --bg-section: #F1F5F9;
+            --text-primary: #1E293B;
+            --text-secondary: #475569;
+            --text-muted: #94A3B8;
+            --border: #E2E8F0;
+            --font-display: 'Shippori Mincho', serif;
+            --font-body: 'Zen Kaku Gothic New', sans-serif;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        html { scroll-behavior: smooth; }
+
+        body {
+            font-family: var(--font-body);
+            font-weight: 400;
+            background: var(--bg-white);
+            color: var(--text-primary);
+            line-height: 1.9;
+            font-size: 16px;
+        }
+
+        /* Navigation */
+        .legacy-nav {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 1000;
+            background: rgba(255,255,255,0.95);
+            backdrop-filter: blur(12px);
+            border-bottom: 1px solid var(--border);
+            padding: 0.6rem 1.2rem;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 1rem;
+        }
+        .legacy-nav .nav-brand {
+            font-family: var(--font-display);
+            font-size: 0.9rem;
+            font-weight: 600;
+            color: var(--toki-blue);
+            text-decoration: none;
+            white-space: nowrap;
+            flex-shrink: 0;
+        }
+        .legacy-nav .nav-right {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+        .legacy-nav .nav-label {
+            font-size: 0.6rem;
+            color: var(--text-muted);
+            letter-spacing: 0.08em;
+            text-align: right;
+            line-height: 1.4;
+        }
+        .legacy-nav .lang-switch {
+            font-size: 0.75rem;
+            color: var(--toki-blue);
+            text-decoration: none;
+            padding: 0.3rem 0.6rem;
+            border: 1px solid var(--toki-blue);
+            border-radius: 4px;
+        }
+        .legacy-nav .lang-switch:hover {
+            background: var(--toki-blue);
+            color: #fff;
+        }
+
+        /* Main Content */
+        .legacy-content {
+            max-width: 720px;
+            margin: 0 auto;
+            padding: 8rem 2rem 4rem;
+        }
+
+        /* Hero */
+        .legacy-hero {
+            text-align: center;
+            margin-bottom: 5rem;
+            padding-bottom: 3rem;
+            border-bottom: 1px solid var(--border);
+        }
+        .legacy-hero .hero-label {
+            font-size: 0.7rem;
+            color: var(--text-muted);
+            letter-spacing: 0.2em;
+            margin-bottom: 1.5rem;
+        }
+        .legacy-hero h1 {
+            font-family: var(--font-display);
+            font-size: 2.2rem;
+            font-weight: 700;
+            line-height: 1.5;
+            margin-bottom: 1rem;
+        }
+        .legacy-hero .hero-sub {
+            font-size: 1rem;
+            color: var(--text-secondary);
+            max-width: 540px;
+            margin: 0 auto;
+        }
+
+        /* Sections */
+        .legacy-section {
+            margin-bottom: 4rem;
+        }
+        .legacy-section h2 {
+            font-family: var(--font-display);
+            font-size: 1.4rem;
+            font-weight: 600;
+            margin-bottom: 1.5rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 2px solid var(--toki-blue);
+            display: inline-block;
+        }
+        .legacy-section h3 {
+            font-family: var(--font-display);
+            font-size: 1.1rem;
+            font-weight: 600;
+            margin: 2rem 0 1rem;
+            color: var(--text-primary);
+        }
+        .legacy-section p {
+            margin-bottom: 1.2rem;
+            color: var(--text-secondary);
+        }
+        .legacy-section p strong {
+            color: var(--text-primary);
+        }
+
+        /* Off-grid Gallery */
+        .offgrid-gallery {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 1rem;
+            margin: 1.5rem 0;
+        }
+        .offgrid-gallery figure {
+            margin: 0;
+        }
+        .offgrid-gallery img {
+            width: 100%;
+            height: auto;
+            border-radius: 8px;
+            border: 1px solid var(--border);
+        }
+        .offgrid-gallery figcaption {
+            font-size: 0.75rem;
+            color: var(--text-muted);
+            text-align: center;
+            margin-top: 0.5rem;
+        }
+        @media (max-width: 480px) {
+            .offgrid-gallery {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        /* Spec Table */
+        .spec-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 1.5rem 0;
+            font-size: 0.9rem;
+        }
+        .spec-table th,
+        .spec-table td {
+            padding: 0.8rem 1rem;
+            text-align: left;
+            border-bottom: 1px solid var(--border);
+        }
+        .spec-table th {
+            background: var(--bg-section);
+            font-weight: 600;
+            color: var(--text-secondary);
+            font-size: 0.75rem;
+            letter-spacing: 0.05em;
+            width: 35%;
+        }
+        .spec-table td {
+            color: var(--text-primary);
+        }
+
+        /* Highlight Box */
+        .highlight-box {
+            background: var(--bg-section);
+            border-left: 4px solid var(--toki-blue);
+            padding: 1.5rem;
+            margin: 2rem 0;
+            border-radius: 0 8px 8px 0;
+        }
+        .highlight-box p {
+            margin-bottom: 0;
+            font-size: 0.95rem;
+        }
+        .highlight-box p:not(:last-child) {
+            margin-bottom: 0.8rem;
+        }
+
+        /* Philosophy Box */
+        .philosophy-box {
+            background: var(--toki-blue-pale);
+            border: 2px solid var(--toki-blue);
+            color: var(--text-primary);
+            padding: 2.5rem;
+            border-radius: 12px;
+            margin: 2rem 0;
+        }
+        .philosophy-box h3 {
+            color: var(--toki-blue);
+            margin-top: 0;
+            font-size: 1rem;
+            letter-spacing: 0.1em;
+            font-weight: 700;
+        }
+        .philosophy-box p {
+            color: var(--text-primary);
+            font-size: 0.95rem;
+        }
+        .philosophy-box p:last-child {
+            margin-bottom: 0;
+        }
+        .philosophy-box strong {
+            color: var(--toki-blue-dark);
+        }
+
+        /* Code Block */
+        .code-block {
+            background: #1E293B;
+            color: #E2E8F0;
+            padding: 1.5rem;
+            border-radius: 8px;
+            font-family: 'Menlo', 'Monaco', 'Courier New', monospace;
+            font-size: 0.8rem;
+            line-height: 1.7;
+            overflow-x: auto;
+            margin: 1.5rem 0;
+        }
+        .code-block .comment {
+            color: #64748B;
+        }
+        .code-block .key {
+            color: #7DD3FC;
+        }
+        .code-block .value {
+            color: #86EFAC;
+        }
+        .code-block .number {
+            color: #FCD34D;
+        }
+
+        /* Diagram */
+        .diagram {
+            background: var(--bg-page);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 2rem;
+            margin: 2rem 0;
+            text-align: center;
+        }
+        .diagram-title {
+            font-family: var(--font-display);
+            font-size: 0.85rem;
+            color: var(--text-secondary);
+            margin-bottom: 1.5rem;
+            letter-spacing: 0.05em;
+        }
+        .diagram-flow {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 1rem;
+            flex-wrap: wrap;
+        }
+        .diagram-node {
+            background: var(--bg-white);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            padding: 1rem 1.5rem;
+            min-width: 120px;
+        }
+        .diagram-node.highlight {
+            background: var(--toki-blue);
+            color: #fff;
+            border-color: var(--toki-blue);
+        }
+        .diagram-node h4 {
+            font-family: var(--font-display);
+            font-size: 0.9rem;
+            margin-bottom: 0.3rem;
+        }
+        .diagram-node p {
+            font-size: 0.75rem;
+            color: var(--text-muted);
+            margin: 0;
+        }
+        .diagram-node.highlight p {
+            color: rgba(255,255,255,0.8);
+        }
+        .diagram-arrow {
+            color: var(--text-muted);
+            font-size: 1.2rem;
+        }
+
+        /* List */
+        .legacy-list {
+            list-style: none;
+            margin: 1.5rem 0;
+        }
+        .legacy-list li {
+            padding: 0.8rem 0;
+            border-bottom: 1px solid var(--border);
+            display: flex;
+            gap: 1rem;
+            align-items: flex-start;
+        }
+        .legacy-list li:last-child {
+            border-bottom: none;
+        }
+        .legacy-list .list-num {
+            font-family: var(--font-display);
+            font-size: 1.2rem;
+            font-weight: 700;
+            color: var(--toki-blue);
+            min-width: 1.5rem;
+        }
+        .legacy-list .list-content h4 {
+            font-family: var(--font-display);
+            font-size: 1rem;
+            margin-bottom: 0.3rem;
+        }
+        .legacy-list .list-content p {
+            font-size: 0.9rem;
+            margin: 0;
+        }
+
+        /* CTA */
+        .legacy-cta {
+            text-align: center;
+            padding: 3rem 2rem;
+            margin-top: 4rem;
+            border-top: 1px solid var(--border);
+        }
+        .legacy-cta h2 {
+            font-family: var(--font-display);
+            font-size: 1.3rem;
+            margin-bottom: 1rem;
+            border: none;
+            display: block;
+        }
+        .legacy-cta p {
+            color: var(--text-secondary);
+            margin-bottom: 2rem;
+        }
+        .legacy-cta .cta-contact {
+            display: inline-block;
+            background: var(--bg-section);
+            padding: 1.5rem 2.5rem;
+            border-radius: 8px;
+            font-size: 0.9rem;
+            line-height: 2;
+        }
+        .legacy-cta .cta-contact a {
+            color: var(--toki-blue);
+        }
+
+        /* Footer */
+        .legacy-footer {
+            text-align: center;
+            padding: 2rem;
+            font-size: 0.75rem;
+            color: var(--text-muted);
+            border-top: 1px solid var(--border);
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .legacy-content { padding: 6rem 1.2rem 3rem; }
+            .legacy-hero h1 { font-size: 1.6rem; }
+            .diagram-flow { flex-direction: column; }
+            .diagram-arrow { transform: rotate(90deg); }
+            .spec-table th { width: 40%; }
+        }
+
+        @media print {
+            .legacy-nav { display: none; }
+            .legacy-content { padding-top: 2rem; }
+            .philosophy-box { background: #333 !important; }
+            .code-block { background: #eee !important; color: #333; }
+        }
+    </style>
+</head>
+<body>
+
+<nav class="legacy-nav">
+    <a href="index.html" class="nav-brand">トキストレージ</a>
+    <div class="nav-right">
+        <span class="nav-label">TECHNICAL DOCUMENT FOR LEGACY OWNERS</span>
+        <a href="legacy-en.html" class="lang-switch">EN</a>
+    </div>
+</nav>
+
+<main class="legacy-content">
+
+    <header class="legacy-hero">
+        <p class="hero-label">FOR THOSE WHO THINK IN MILLENNIA</p>
+        <h1>1000年の設計思想</h1>
+        <p class="hero-sub">SLA 100% × 1000年。依存ゼロの構造。創業者不在でも動く設計。<br>このページは、時間軸の長さが「ただの宣伝文句」ではないことを技術的に示すためにあります。</p>
+    </header>
+
+    <!-- Background -->
+    <section class="legacy-section">
+        <h2>この設計思想が生まれた背景</h2>
+        <p>私は「タイムレスタウン新浦安」というマンションと戸建てからなる自治会で、2年間会長を務めました。この街区には保育園と介護老人ホームも併設され、「ゆりかごから墓場まで」をコンセプトに設計されています。戸建てに住みながら約250世帯の暮らしを支える仕組みを運営する中で、「タイムレス」という言葉と真剣に向き合うことになりました。</p>
+        <p>タイムレスとは何か。時間に左右されないとは、どういう構造なのか。</p>
+        <p>並行して、SoulCarrierという活動で遺骨帰還や無縁墓の調査に携わる中、「記憶は驚くほど簡単に消える」という現実を目の当たりにしました。墓石は100年で風化し、クラウドサービスは10年で終了し、誰かが覚えていなければ存在は消える。</p>
+        <p>そして、私財を投じて国内外でオフグリッド生活を実践しました。マウイ島でのトレーラーハウス生活、山中湖での車中泊キャンプ。電力も水も通信も、意図的に社会インフラから切り離し、「依存ゼロ」とは何かを家族とともに身体で検証する日々。机上の設計ではなく、実際に暮らしの中で持続可能性を試し続けて得た構造です。</p>
+
+        <div class="offgrid-gallery">
+            <figure>
+                <img src="asset/offgrid-maui-power.jpg" alt="マウイ島でのオフグリッド電源システム" loading="lazy">
+                <figcaption>マウイ島：ソーラー＋ジェネレーター＋ポータブル電源</figcaption>
+            </figure>
+            <figure>
+                <img src="asset/offgrid-yamanakako-setup.jpg" alt="山中湖での車中泊オフグリッドセットアップ" loading="lazy">
+                <figcaption>山中湖：車中泊での依存ゼロ検証</figcaption>
+            </figure>
+        </div>
+        <p><strong>「消える理由」を構造的に排除すれば、残る。</strong></p>
+        <p>この単純な原理を、エンジニアとして20年培った設計思想と、自らの生活で検証した持続可能性の知見で形にしたのがトキストレージです。</p>
+    </section>
+
+    <!-- Toro Ruins -->
+    <section class="legacy-section">
+        <p>登呂遺跡を訪れたとき、ふと思いました。もし縄文人がトキストレージを持っていたら——土器と一緒に、彼らの暮らしや価値観、想いも伝わっていたはずです。</p>
+        <p>私たちは1000年後の人々にとっての「縄文人」になる。何を残すかは、今を生きる私たちが決められます。</p>
+    </section>
+
+    <!-- Section 1: The Question -->
+    <section class="legacy-section">
+        <h2>問いの設定</h2>
+        <p>「1000年残る」と言うのは簡単です。しかし、1000年後に本当に残っているかどうかを、誰が検証できるでしょうか。</p>
+        <p>この問いに対する私たちの答えは、<strong>「検証可能性」ではなく「構造的必然性」で設計する</strong>というものです。</p>
+        <p>1000年後に「残っている確率」を高めるのではなく、<strong>「消える理由」を一つずつ潰していく</strong>。逆説的ですが、これが最も誠実なアプローチだと考えています。</p>
+    </section>
+
+    <!-- Section 2: Dependency Analysis -->
+    <section class="legacy-section">
+        <h2>依存関係の分析</h2>
+        <p>デジタルサービスが消える理由を分解すると、以下の依存関係が見えてきます。</p>
+
+        <table class="spec-table">
+            <tr>
+                <th>依存対象</th>
+                <td>一般的なクラウドサービス</td>
+            </tr>
+            <tr>
+                <th>サーバー</th>
+                <td>AWS, GCP, Azure等のインフラ</td>
+            </tr>
+            <tr>
+                <th>ドメイン</th>
+                <td>年間更新、レジストラの存続</td>
+            </tr>
+            <tr>
+                <th>決済</th>
+                <td>サブスクリプション継続</td>
+            </tr>
+            <tr>
+                <th>運営会社</th>
+                <td>倒産・買収・方針変更リスク</td>
+            </tr>
+            <tr>
+                <th>技術スタック</th>
+                <td>フレームワーク・言語の陳腐化</td>
+            </tr>
+            <tr>
+                <th>読取機器</th>
+                <td>専用アプリ・専用デバイス</td>
+            </tr>
+        </table>
+
+        <p>S&amp;P 500企業の平均寿命は、1958年の61年から現在は20年未満に縮小しています（McKinsey調査）。世界最大級の企業でさえこの水準。100年後に存在するサービスを予測することは、構造的に不可能です。</p>
+
+        <div class="highlight-box">
+            <p><strong>トキストレージの設計原則：</strong>上記の依存関係を<strong>すべてゼロ</strong>にする。サーバー不要、ドメイン不要、サブスクリプション不要、専用アプリ不要。製品単体で完結する構造。</p>
+        </div>
+    </section>
+
+    <!-- Section 3: Physical Layer -->
+    <section class="legacy-section">
+        <h2>物理層：石英ガラス</h2>
+
+        <h3>素材特性</h3>
+
+        <div class="offgrid-gallery">
+            <figure>
+                <img src="asset/quartz-glass-round.jpg" alt="石英ガラスに刻印されたメッセージ" loading="lazy">
+                <figcaption>丸型石英ガラス：メッセージ刻印</figcaption>
+            </figure>
+            <figure>
+                <img src="asset/quartz-glass-sample.jpg" alt="石英ガラスの金属蒸着・QRコード刻印サンプル" loading="lazy">
+                <figcaption>金属蒸着テスト＋QRコード＋家紋</figcaption>
+            </figure>
+        </div>
+
+        <table class="spec-table">
+            <tr>
+                <th>素材</th>
+                <td>合成石英ガラス（SiO₂ 99.9%以上）</td>
+            </tr>
+            <tr>
+                <th>理論寿命</th>
+                <td>数億年（日立×京大 2012年実証）</td>
+            </tr>
+            <tr>
+                <th>耐熱温度</th>
+                <td>1000℃以上</td>
+            </tr>
+            <tr>
+                <th>耐水性</th>
+                <td>完全防水（化学的に安定）</td>
+            </tr>
+            <tr>
+                <th>耐薬品性</th>
+                <td>酸・アルカリに強い</td>
+            </tr>
+            <tr>
+                <th>紫外線</th>
+                <td>劣化なし</td>
+            </tr>
+        </table>
+
+        <h3>比較：御影石（一般的な墓石）</h3>
+        <table class="spec-table">
+            <tr>
+                <th>素材</th>
+                <td>花崗岩（御影石）</td>
+            </tr>
+            <tr>
+                <th>実用寿命</th>
+                <td>100〜200年</td>
+            </tr>
+            <tr>
+                <th>劣化要因</th>
+                <td>風化、酸性雨、苔、凍結融解</td>
+            </tr>
+            <tr>
+                <th>刻字の可読性</th>
+                <td>50〜100年で劣化</td>
+            </tr>
+        </table>
+
+        <p>石英ガラスは半導体製造のフォトマスク基板にも使われる高純度素材です。「石だから永遠」という誤解に対し、物性レベルでの優位性を持ちます。</p>
+    </section>
+
+    <!-- Section 4: Data Layer -->
+    <section class="legacy-section">
+        <h2>データ層：QRコード</h2>
+
+        <h3>規格の永続性</h3>
+        <table class="spec-table">
+            <tr>
+                <th>開発</th>
+                <td>1994年 デンソーウェーブ（日本）</td>
+            </tr>
+            <tr>
+                <th>国際規格</th>
+                <td>ISO/IEC 18004</td>
+            </tr>
+            <tr>
+                <th>実績</th>
+                <td>30年以上の普及・後方互換性維持</td>
+            </tr>
+            <tr>
+                <th>読取機器</th>
+                <td>スマートフォンのカメラ（専用アプリ不要）</td>
+            </tr>
+            <tr>
+                <th>特許</th>
+                <td>オープン化済み（無償利用可）</td>
+            </tr>
+        </table>
+
+        <div class="highlight-box">
+            <p><strong>読取機器の進化予測：</strong>カメラとディスプレイは、人間の「目」のインターフェースとして100年後も存在すると予測します。形状は変わっても、「光学的にパターンを認識する」という原理は不変。QRコードの仕様はISO規格として固定されており、将来の機器でも読み取り可能な構造です。</p>
+        </div>
+
+        <h3>5Dメモリクリスタルとの比較</h3>
+        <p>サウサンプトン大学が開発した5Dメモリクリスタルは、理論上138億年のデータ保存が可能です。しかし：</p>
+        <ul class="legacy-list">
+            <li>
+                <span class="list-num">1</span>
+                <div class="list-content">
+                    <h4>読取に専用光学機器が必要</h4>
+                    <p>フェムト秒レーザーによる書き込み、偏光顕微鏡による読み取り。一般消費者が所有する機器では読めない。</p>
+                </div>
+            </li>
+            <li>
+                <span class="list-num">2</span>
+                <div class="list-content">
+                    <h4>個人向け販売なし</h4>
+                    <p>データセンター向けアーカイブ用途。1枚数十万円〜数百万円規模。</p>
+                </div>
+            </li>
+            <li>
+                <span class="list-num">3</span>
+                <div class="list-content">
+                    <h4>読取インフラの依存</h4>
+                    <p>専用機器の製造・維持が止まれば、データは物理的に存在しても「読めない」状態に。</p>
+                </div>
+            </li>
+        </ul>
+        <p>トキストレージは「1000年」という控えめな数字を採用していますが、これは物理的寿命ではなく、<strong>読取可能性を含めた実用寿命</strong>の数字です。</p>
+    </section>
+
+    <!-- Section 5: Hosting Layer -->
+    <section class="legacy-section">
+        <h2>ホスティング層：GitHub Pages</h2>
+        <p>QRコードから誘導されるメモリアルページは、GitHub Pages上でホスティングされています。</p>
+
+        <h3>なぜGitHub Pagesか</h3>
+        <table class="spec-table">
+            <tr>
+                <th>運営</th>
+                <td>Microsoft（2018年買収、75億ドル）</td>
+            </tr>
+            <tr>
+                <th>時価総額</th>
+                <td>約3兆ドル（2024年時点）</td>
+            </tr>
+            <tr>
+                <th>開発者数</th>
+                <td>1億人以上（世界最大の開発者プラットフォーム）</td>
+            </tr>
+            <tr>
+                <th>Arctic Code Vault</th>
+                <td>北極圏の永久凍土にソースコードを物理保存（1000年保存プロジェクト）</td>
+            </tr>
+            <tr>
+                <th>コスト</th>
+                <td>静的サイトは無料ホスティング</td>
+            </tr>
+        </table>
+
+        <div class="philosophy-box">
+            <h3>ARCTIC CODE VAULT</h3>
+            <p>GitHubは2020年、アクティブな公開リポジトリを北極圏の永久凍土に物理保存しました。フィルムに書き込まれたソースコードは、1000年以上の保存を想定しています。</p>
+            <p>この「1000年保存」という姿勢を持つプラットフォームを、私たちはホスティング先として選んでいます。</p>
+        </div>
+
+        <h3>静的サイトの優位性</h3>
+        <div class="code-block">
+<span class="comment">// メモリアルページの構造</span>
+{
+  <span class="key">"server"</span>: <span class="value">"不要"</span>,
+  <span class="key">"database"</span>: <span class="value">"不要"</span>,
+  <span class="key">"backend"</span>: <span class="value">"不要"</span>,
+  <span class="key">"dependencies"</span>: <span class="number">0</span>,
+  <span class="key">"monthly_cost"</span>: <span class="number">0</span>,
+  <span class="key">"format"</span>: <span class="value">"HTML/CSS/JS"</span>
+}
+        </div>
+        <p>メモリアルページは純粋な静的HTMLです。サーバーサイドの処理がなく、データベースへの接続もありません。GitHub Pagesが仮に消えても、HTMLファイル一式があれば、どのWebサーバーでも再現可能です。</p>
+    </section>
+
+    <!-- Section 6: Founder Independence -->
+    <section class="legacy-section">
+        <h2>創業者不在でも動く設計</h2>
+        <p>1000年という時間軸では、創業者の存在を前提にできません。トキストレージは、<strong>創業者が明日いなくなっても機能し続ける</strong>構造を持っています。</p>
+
+        <div class="diagram">
+            <p class="diagram-title">製品の動作に必要な要素</p>
+            <div class="diagram-flow">
+                <div class="diagram-node highlight">
+                    <h4>石英ガラス</h4>
+                    <p>物理的に存在</p>
+                </div>
+                <span class="diagram-arrow">+</span>
+                <div class="diagram-node highlight">
+                    <h4>QRコード</h4>
+                    <p>ISO規格で読取</p>
+                </div>
+                <span class="diagram-arrow">+</span>
+                <div class="diagram-node highlight">
+                    <h4>スマートフォン</h4>
+                    <p>汎用デバイス</p>
+                </div>
+                <span class="diagram-arrow">=</span>
+                <div class="diagram-node">
+                    <h4>記録の閲覧</h4>
+                    <p>創業者不要</p>
+                </div>
+            </div>
+        </div>
+
+        <h3>依存しないもの</h3>
+        <ul class="legacy-list">
+            <li>
+                <span class="list-num">1</span>
+                <div class="list-content">
+                    <h4>サブスクリプション</h4>
+                    <p>月額課金なし。買い切りで完結。支払いが止まっても製品は機能し続ける。</p>
+                </div>
+            </li>
+            <li>
+                <span class="list-num">2</span>
+                <div class="list-content">
+                    <h4>専用アプリ</h4>
+                    <p>標準カメラアプリで読取可能。App Storeの審査やOS互換性に依存しない。</p>
+                </div>
+            </li>
+            <li>
+                <span class="list-num">3</span>
+                <div class="list-content">
+                    <h4>アカウント・パスワード</h4>
+                    <p>認証なしで閲覧可能。パスワードの紛失・相続問題が発生しない。</p>
+                </div>
+            </li>
+            <li>
+                <span class="list-num">4</span>
+                <div class="list-content">
+                    <h4>運営会社の存続</h4>
+                    <p>TokiStorageが消えても、石英ガラス×QRコード×GitHub Pagesの組み合わせは機能する。</p>
+                </div>
+            </li>
+        </ul>
+
+        <div class="highlight-box">
+            <p><strong>最悪のシナリオ：</strong>GitHub Pagesが消え、ドメインが失効した場合でも、QRコードに刻まれたデータは「エラーなく読める形式」で存在し続けます。テキストデータは直接埋め込み、画像データはBase64エンコードでQRコード内に保持。外部依存ゼロの設計です。</p>
+        </div>
+    </section>
+
+    <!-- Section 7: SLA -->
+    <section class="legacy-section">
+        <h2>SLA 100% × 1000年</h2>
+        <p>通常のSLA（Service Level Agreement）は「99.9%の稼働率」のような形で表現されます。0.1%のダウンタイムは、年間約9時間。</p>
+        <p>トキストレージのSLAは異なります。</p>
+
+        <div class="philosophy-box">
+            <h3>トキストレージのSLA</h3>
+            <p><strong>可用性：100%</strong>（サーバーがないため、ダウンタイムという概念がない）</p>
+            <p><strong>データ永続性：物理的破壊がない限り100%</strong>（石英ガラスの物性に依存）</p>
+            <p><strong>期間：製品の物理的寿命</strong>（理論値：数億年）</p>
+        </div>
+
+        <p>これは「保証」ではありません。構造的にそうなっている、という記述です。サーバーがなければダウンしない。物理的に刻まれていれば消えない。依存がなければ終了しない。</p>
+    </section>
+
+    <!-- Section 8: National Diet Library -->
+    <section class="legacy-section">
+        <h2>国立国会図書館への納本</h2>
+        <p>トキストレージで制作されたメモリアルページは、PDFとして国立国会図書館に納本されます。</p>
+
+        <table class="spec-table">
+            <tr>
+                <th>機関</th>
+                <td>国立国会図書館（National Diet Library）</td>
+            </tr>
+            <tr>
+                <th>根拠法</th>
+                <td>国立国会図書館法（1948年制定）</td>
+            </tr>
+            <tr>
+                <th>保存方針</th>
+                <td>永久保存（廃棄なし）</td>
+            </tr>
+            <tr>
+                <th>蔵書数</th>
+                <td>約4,700万点（2023年時点）</td>
+            </tr>
+        </table>
+
+        <p>石英ガラス（物理層）、GitHub Pages（デジタル層）、国立国会図書館（制度層）。三重の冗長性により、どれか一つが失われても記録は残り続けます。</p>
+
+        <div class="highlight-box">
+            <p><strong>文字通りの「タイムレス」：</strong>国立国会図書館は、日本国が存続する限り記録を保存し続ける制度的インフラです。個人の存在証明が、国家レベルのアーカイブに組み込まれます。</p>
+        </div>
+    </section>
+
+    <!-- Section 9: For Legacy Owners -->
+    <section class="legacy-section">
+        <h2>レガシーオーナーへ</h2>
+        <p>このページをここまで読んでいるあなたは、「1000年」という時間軸を本気で考えている人だと思います。</p>
+        <p>トキストレージは、すべての人に向けたサービスではありません。「石英ガラスに何か刻んでもらえる」以上の価値を感じない人には、ただの高価な記念品に見えるでしょう。</p>
+        <p>しかし、このページの技術的構造を理解し、「依存ゼロ」という設計思想に共鳴する人には、トキストレージが何をしようとしているかが伝わるはずです。</p>
+
+        <div class="philosophy-box">
+            <h3>存在証明の民主化</h3>
+            <p>歴史に名を残せるのは、王侯貴族、偉人、有名人だけ。普通の人の存在は、3世代で忘れ去られる。</p>
+            <p>この「記憶の不平等」を、技術で解決する。それがトキストレージの思想です。</p>
+            <p>1000年後の誰かが、あなたの存在を知ることができる。そのための構造を、私たちは本気で設計しています。</p>
+        </div>
+    </section>
+
+    <!-- CTA -->
+    <section class="legacy-cta">
+        <h2>お問い合わせ</h2>
+        <p>技術的な質問、設計思想についての議論、事業提携のご相談など。</p>
+        <div class="cta-contact">
+            <strong>TokiStorage</strong><br>
+            佐藤 卓也<br><br>
+            Email: <a href="mailto:business@satotakuya.jp">business@satotakuya.jp</a><br>
+            面談予約: <a href="https://line.me/R/oaMessage/@897glsbz/?%E4%B8%89%E4%B8%96%E4%BB%A3%E3%83%97%E3%83%A9%E3%83%B3%E3%81%AB%E3%81%A4%E3%81%84%E3%81%A6%E7%9B%B8%E8%AB%87%E3%81%97%E3%81%9F%E3%81%84%E3%81%A7%E3%81%99" target="_blank" rel="noopener">LINE</a>
+        </div>
+    </section>
+
+</main>
+
+<footer class="legacy-footer">
+    <p>関連: <span id="essay-nav-links"></span></p>
+    <p>&copy; 2026 TokiStorage All rights reserved.</p>
+</footer>
+
+<script src="essay-nav.js?v=20260209"></script>
+</body>
+</html>

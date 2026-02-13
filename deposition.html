@@ -1,0 +1,619 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>石英への金属蒸着技術と周辺技術 | トキストレージ</title>
+    <meta name="robots" content="noindex, nofollow">
+    <meta name="description" content="QRコードを石英ガラスに刻む技術——金属蒸着、レーザー加工、そしてナノスケール構造制御。存在証明を1000年残すための技術基盤を解説する。">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Shippori+Mincho:wght@400;500;600;700&family=Zen+Kaku+Gothic+New:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --toki-violet: #7C3AED;
+            --toki-violet-dark: #6D28D9;
+            --toki-violet-pale: #F5F3FF;
+            --accent-purple: #8B5CF6;
+            --bg-white: #FFFFFF;
+            --bg-section: #EDE9FE;
+            --text-primary: #1E293B;
+            --text-secondary: #475569;
+            --text-muted: #94A3B8;
+            --border: #E2E8F0;
+            --font-display: 'Shippori Mincho', serif;
+            --font-body: 'Zen Kaku Gothic New', sans-serif;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        html { scroll-behavior: smooth; }
+
+        body {
+            font-family: var(--font-body);
+            font-weight: 400;
+            background: var(--bg-white);
+            color: var(--text-primary);
+            line-height: 2;
+            font-size: 16px;
+        }
+
+        /* Navigation */
+        .article-nav {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 1000;
+            background: rgba(255,255,255,0.95);
+            backdrop-filter: blur(12px);
+            border-bottom: 1px solid var(--border);
+            padding: 0.6rem 1.2rem;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 1rem;
+        }
+        .article-nav .nav-brand {
+            font-family: var(--font-display);
+            font-size: 0.9rem;
+            font-weight: 600;
+            color: var(--toki-violet);
+            text-decoration: none;
+            white-space: nowrap;
+        }
+        .article-nav .nav-right {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+        .article-nav .nav-label {
+            font-size: 0.6rem;
+            color: var(--text-muted);
+            letter-spacing: 0.08em;
+        }
+        .article-nav .lang-switch {
+            font-size: 0.75rem;
+            color: var(--toki-violet);
+            text-decoration: none;
+            padding: 0.3rem 0.6rem;
+            border: 1px solid var(--toki-violet);
+            border-radius: 4px;
+        }
+        .article-nav .lang-switch:hover {
+            background: var(--toki-violet);
+            color: #fff;
+        }
+
+        /* Article Container */
+        .article-container {
+            max-width: 680px;
+            margin: 0 auto;
+            padding: 7rem 2rem 4rem;
+        }
+
+        /* Article Header */
+        .article-header {
+            margin-bottom: 3rem;
+            padding-bottom: 2rem;
+            border-bottom: 1px solid var(--border);
+        }
+        .article-category {
+            font-size: 0.7rem;
+            color: var(--toki-violet);
+            letter-spacing: 0.15em;
+            margin-bottom: 1rem;
+        }
+        .article-header h1 {
+            font-family: var(--font-display);
+            font-size: 1.8rem;
+            font-weight: 700;
+            line-height: 1.5;
+            margin-bottom: 1.5rem;
+        }
+        .article-subtitle {
+            font-size: 0.95rem;
+            color: var(--text-secondary);
+            line-height: 1.9;
+        }
+
+        /* Article Content */
+        .article-content h2 {
+            font-family: var(--font-display);
+            font-size: 1.3rem;
+            font-weight: 600;
+            margin: 3rem 0 1.5rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 2px solid var(--toki-violet-pale);
+        }
+        .article-content h3 {
+            font-family: var(--font-display);
+            font-size: 1.1rem;
+            font-weight: 600;
+            margin: 2rem 0 1rem;
+            color: var(--toki-violet-dark);
+        }
+        .article-content p {
+            margin-bottom: 1.5rem;
+        }
+        .article-content blockquote {
+            border-left: 3px solid var(--toki-violet);
+            padding-left: 1.5rem;
+            margin: 2rem 0;
+            font-family: var(--font-display);
+            color: var(--text-secondary);
+        }
+        .article-content blockquote cite {
+            display: block;
+            font-size: 0.85rem;
+            margin-top: 0.75rem;
+            font-style: normal;
+            color: var(--text-muted);
+        }
+        .article-content ul, .article-content ol {
+            margin: 1.5rem 0;
+            padding-left: 1.5rem;
+        }
+        .article-content li {
+            margin-bottom: 0.75rem;
+        }
+
+        /* Core Message */
+        .core-message {
+            background: var(--toki-violet-pale);
+            border-left: 4px solid var(--toki-violet);
+            padding: 1.5rem;
+            margin: 2rem 0;
+            font-size: 0.95rem;
+        }
+
+        /* Key Point */
+        .key-point {
+            background: linear-gradient(135deg, var(--toki-violet-pale) 0%, #fff 100%);
+            border: 1px solid var(--toki-violet);
+            border-radius: 8px;
+            padding: 1.5rem;
+            margin: 2rem 0;
+            text-align: center;
+        }
+        .key-point p {
+            font-family: var(--font-display);
+            font-size: 1.1rem;
+            color: var(--toki-violet-dark);
+            margin: 0;
+        }
+
+        /* Tech Card */
+        .tech-card {
+            background: var(--bg-section);
+            border-radius: 8px;
+            padding: 1.5rem;
+            margin: 2rem 0;
+        }
+        .tech-card h4 {
+            font-family: var(--font-display);
+            font-size: 1rem;
+            color: var(--toki-violet);
+            margin-bottom: 0.75rem;
+        }
+        .tech-card p {
+            font-size: 0.9rem;
+            margin-bottom: 0.5rem;
+        }
+        .tech-card p:last-child {
+            margin-bottom: 0;
+        }
+
+        /* Process Flow */
+        .process-flow {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1rem;
+            margin: 2rem 0;
+        }
+        .process-step {
+            flex: 1;
+            min-width: 150px;
+            background: var(--toki-violet-pale);
+            border-radius: 8px;
+            padding: 1rem;
+            text-align: center;
+            position: relative;
+        }
+        .process-step::after {
+            content: '→';
+            position: absolute;
+            right: -0.8rem;
+            top: 50%;
+            transform: translateY(-50%);
+            color: var(--toki-violet);
+            font-weight: bold;
+        }
+        .process-step:last-child::after {
+            display: none;
+        }
+        .process-step .step-num {
+            font-family: var(--font-display);
+            font-size: 1.5rem;
+            font-weight: 600;
+            color: var(--toki-violet);
+        }
+        .process-step .step-label {
+            font-size: 0.85rem;
+            color: var(--text-secondary);
+        }
+
+        /* Stat Box */
+        .stat-box {
+            display: flex;
+            align-items: baseline;
+            gap: 0.5rem;
+            margin: 1.5rem 0;
+            padding: 1rem;
+            background: var(--toki-violet-pale);
+            border-radius: 8px;
+        }
+        .stat-box .number {
+            font-family: var(--font-display);
+            font-size: 2rem;
+            font-weight: 600;
+            color: var(--toki-violet);
+        }
+        .stat-box .unit {
+            font-size: 0.9rem;
+            color: var(--text-secondary);
+        }
+
+        /* Disclaimer */
+        .disclaimer {
+            font-size: 0.8rem;
+            color: var(--text-muted);
+            font-style: italic;
+            margin-bottom: 2rem;
+        }
+
+        /* Footer */
+        .article-footer {
+            margin-top: 4rem;
+            padding-top: 2rem;
+            border-top: 1px solid var(--border);
+            text-align: center;
+        }
+        .article-footer p {
+            font-size: 0.8rem;
+            color: var(--text-muted);
+            margin-bottom: 1rem;
+        }
+        .article-footer a {
+            color: var(--toki-violet);
+            text-decoration: none;
+        }
+        .article-footer a:hover {
+            text-decoration: underline;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .article-container { padding: 6rem 1.2rem 3rem; }
+            .article-header h1 { font-size: 1.5rem; }
+            .article-nav .nav-label { display: none; }
+            .process-step::after { display: none; }
+        }
+
+        @media print {
+            .article-nav { display: none; }
+            .article-container { padding-top: 2rem; }
+        }
+    </style>
+</head>
+<body>
+
+<nav class="article-nav">
+    <a href="index.html" class="nav-brand">トキストレージ</a>
+    <div class="nav-right">
+        <span class="nav-label">技術 / TECHNOLOGY</span>
+        <a href="deposition-en.html" class="lang-switch">EN</a>
+    </div>
+</nav>
+
+<main class="article-container">
+
+    <header class="article-header">
+        <p class="article-category">ESSAY — 材料工学と製造技術</p>
+        <h1>石英への金属蒸着技術と周辺技術</h1>
+        <p class="article-subtitle">
+            QRコードを石英ガラスに刻む技術——金属蒸着、レーザー加工、そしてナノスケール構造制御。<br>
+            存在証明を1000年残すための技術基盤を解説する。
+        </p>
+    </header>
+
+    <article class="article-content">
+
+        <div class="core-message">
+            <strong>この記事で言いたいこと：</strong>石英ガラスにQRコードを刻む技術は、従来は高額な設備が必要とされてきた。しかし私たちは、市販の素材とファイバーレーザーを使って金属蒸着を実現する手法を開発し、技術の「民主化」を達成した。
+        </div>
+
+        <p class="disclaimer">※本稿は技術解説であり、特定の製造プロセスの詳細を開示するものではありません。</p>
+
+        <h2>1. なぜ石英に「刻む」必要があるのか</h2>
+
+        <p>情報を1000年残すには、二つの条件が必要である。</p>
+
+        <p>第一に、媒体が1000年以上の物理的安定性を持つこと。これは石英ガラスによって満たされる。</p>
+
+        <p>第二に、情報が1000年以上読み取り可能であること。これは「刻む」技術によって実現される。</p>
+
+        <h3>インクの問題</h3>
+
+        <p>もし石英ガラスにインクで印刷したらどうなるか。インクは有機化合物であり、紫外線、酸化、温度変化によって劣化する。数十年で退色し、数百年で判読不能になる可能性が高い。</p>
+
+        <p>石英という永続的な媒体を選んでも、情報の記録方法が脆弱であれば意味がない。</p>
+
+        <h3>「刻む」という解決</h3>
+
+        <p>「刻む」とは、石英ガラス自体の構造を変化させることである。これにより、情報は石英と一体化し、石英が存在する限り情報も存在し続ける。</p>
+
+        <p>具体的な方法はいくつかある。</p>
+
+        <ul>
+            <li><strong>金属薄膜蒸着</strong>——金属をナノスケールで堆積させる</li>
+            <li><strong>レーザー加工</strong>——レーザーで石英表面を改質する</li>
+            <li><strong>イオン注入</strong>——イオンを石英内部に打ち込む</li>
+            <li><strong>フェムト秒レーザー</strong>——超短パルスで内部構造を変化させる</li>
+        </ul>
+
+        <p>トキストレージでは、これらの技術を組み合わせて使用している。</p>
+
+
+        <h2>2. 金属蒸着技術</h2>
+
+        <p>金属蒸着（metal deposition）は、半導体製造の基盤技術である。</p>
+
+        <h3>真空蒸着の原理</h3>
+
+        <p>真空チャンバー内で金属を加熱すると、金属は気化する。気化した金属原子は直進し、対象物（基板）の表面に付着する。これを繰り返すことで、ナノメートル単位の薄膜が形成される。</p>
+
+        <div class="process-flow">
+            <div class="process-step">
+                <div class="step-num">1</div>
+                <div class="step-label">真空チャンバー</div>
+            </div>
+            <div class="process-step">
+                <div class="step-num">2</div>
+                <div class="step-label">金属加熱</div>
+            </div>
+            <div class="process-step">
+                <div class="step-num">3</div>
+                <div class="step-label">気化・飛行</div>
+            </div>
+            <div class="process-step">
+                <div class="step-num">4</div>
+                <div class="step-label">堆積・成膜</div>
+            </div>
+        </div>
+
+        <h3>スパッタリング</h3>
+
+        <p>スパッタリングは、蒸着のもう一つの方法である。</p>
+
+        <p>ターゲット金属にイオンを衝突させ、金属原子を弾き出す。弾き出された原子が基板に付着して薄膜を形成する。蒸着より緻密で均一な膜が得られる。</p>
+
+        <div class="stat-box">
+            <span class="number">10〜100</span>
+            <span class="unit">nm——一般的な金属薄膜の厚さ（ナノメートル）</span>
+        </div>
+
+        <h3>金属の選択</h3>
+
+        <p>どの金属を使うかは、用途によって異なる。</p>
+
+        <div class="tech-card">
+            <h4>金属薄膜の特性比較</h4>
+            <p><strong>金（Au）</strong>——化学的に最も安定。高価だが酸化しない。</p>
+            <p><strong>銀（Ag）</strong>——反射率が高い。ただし硫化（変色）する。</p>
+            <p><strong>クロム（Cr）</strong>——硬度が高く耐摩耗性に優れる。</p>
+            <p><strong>アルミニウム（Al）</strong>——安価だが酸化膜を形成。</p>
+            <p><strong>チタン（Ti）</strong>——密着性が高く下地層として使用。</p>
+        </div>
+
+        <p>トキストレージでは、耐久性と可読性のバランスを考慮して金属の組み合わせを設計している。</p>
+
+
+        <h2>3. 技術の民主化——私たちのアプローチ</h2>
+
+        <p>前節で説明した従来の金属蒸着技術は、真空チャンバーやスパッタリング装置など、高額な設備を必要とする。これらは半導体工場や研究機関には存在するが、一般には入手困難である。</p>
+
+        <p>私たちは、この障壁を打破する方法を開発した。</p>
+
+        <h3>市販素材の活用</h3>
+
+        <p>私たちが使用するのは、市販で調達可能な石英ガラスプレートと真鍮である。特殊な素材ではなく、入手しやすい一般的な材料を選んだ。</p>
+
+        <h3>ファイバーレーザーによる蒸着</h3>
+
+        <p>石英ガラスプレートの下に真鍮を固定し、石英ガラスの上面からファイバーレーザーで彫刻する。レーザーの熱エネルギーが真鍮を局所的に蒸発させ、その蒸気が石英ガラス表面に付着する。</p>
+
+        <p>これにより、任意の形状——QRコードを含む——を石英ガラス上に金属蒸着できることを確認した。</p>
+
+        <div class="key-point">
+            <p>真空チャンバー不要。<br>市販素材＋ファイバーレーザーで金属蒸着を実現。</p>
+        </div>
+
+        <h3>民主化の意義</h3>
+
+        <p>従来、金属蒸着は「専門家しかできない技術」とされてきた。高額な設備、クリーンルーム、専門知識——これらがハードルとなり、技術は一部の人々に独占されていた。</p>
+
+        <p>私たちのアプローチは、このハードルを大幅に下げる。ファイバーレーザー加工機は、中小企業やメイカースペースでも導入が進んでいる。素材は市販品。</p>
+
+        <p>「存在証明を1000年残す」という夢を、より多くの人々の手に届けること——それが技術の民主化である。</p>
+
+
+        <h2>4. パターニング技術</h2>
+
+        <p>金属薄膜を全面に蒸着しただけでは、QRコードにならない。特定のパターンを形成する必要がある。</p>
+
+        <h3>フォトリソグラフィ</h3>
+
+        <p>半導体製造で使われる標準的なパターニング技術である。</p>
+
+        <ol>
+            <li>基板に感光性樹脂（フォトレジスト）を塗布</li>
+            <li>マスクを通して紫外線を照射</li>
+            <li>露光部（または未露光部）を現像で除去</li>
+            <li>金属蒸着またはエッチング</li>
+            <li>レジストを除去</li>
+        </ol>
+
+        <p>この方法で、マイクロメートル〜ナノメートル精度のパターンが形成できる。</p>
+
+        <h3>レーザー直接描画</h3>
+
+        <p>マスクを使わず、レーザービームで直接パターンを描く方法もある。</p>
+
+        <p>少量多品種の製造に適しており、トキストレージのように一点ごとに異なるQRコードを刻む場合に有効である。</p>
+
+        <div class="stat-box">
+            <span class="number">1〜10</span>
+            <span class="unit">μm——レーザー描画の一般的な分解能（マイクロメートル）</span>
+        </div>
+
+        <h3>QRコードの解像度</h3>
+
+        <p>QRコードは、21×21〜177×177のセル（モジュール）で構成される。バージョン1（最小）で21×21=441セル、バージョン40（最大）で177×177=31,329セル。</p>
+
+        <p>10mm角のQRコードでセルサイズを計算すると、バージョン10（57×57セル）で約175μm/セル。現在の技術で十分に製造可能なサイズである。</p>
+
+
+        <h2>5. 保護技術</h2>
+
+        <p>金属薄膜を石英ガラス表面に形成しただけでは、物理的摩耗や化学的変化のリスクがある。長期保存には保護層が必要である。</p>
+
+        <h3>オーバーコート</h3>
+
+        <p>金属パターンの上に、透明な保護膜を形成する。</p>
+
+        <ul>
+            <li><strong>SiO₂膜</strong>——石英と同じ材料なので親和性が高い</li>
+            <li><strong>Si₃N₄膜</strong>——窒化ケイ素。硬度が高く耐摩耗性に優れる</li>
+            <li><strong>ダイヤモンドライクカーボン（DLC）</strong>——ダイヤモンドに近い硬度</li>
+        </ul>
+
+        <p>これらの保護膜もまた、蒸着やCVD（化学気相成長法）で形成される。</p>
+
+        <h3>エンカプセレーション</h3>
+
+        <p>より確実な保護として、石英ガラス同士を融着させる方法がある。金属パターンを形成した石英ガラスの上に、もう一枚の石英ガラスを重ねて高温で融着する。</p>
+
+        <p>これにより、金属パターンは石英ガラスに「封入」され、外部環境から完全に遮断される。</p>
+
+        <div class="key-point">
+            <p>金属薄膜 ＋ 保護層 ＋ 石英基板<br>この三層構造が、1000年保存を可能にする。</p>
+        </div>
+
+
+        <h2>6. フェムト秒レーザー技術</h2>
+
+        <p>より先進的な技術として、フェムト秒レーザーによる石英ガラス内部への情報記録がある。</p>
+
+        <h3>フェムト秒とは</h3>
+
+        <p>フェムト秒（fs）は10⁻¹⁵秒——1000兆分の1秒である。この超短時間にパルスを発するレーザーを「フェムト秒レーザー」と呼ぶ。</p>
+
+        <div class="stat-box">
+            <span class="number">10⁻¹⁵</span>
+            <span class="unit">秒——フェムト秒の時間スケール</span>
+        </div>
+
+        <h3>多光子吸収</h3>
+
+        <p>通常、石英ガラスは可視光やUVを透過する。しかしフェムト秒レーザーの超高強度パルスでは、「多光子吸収」という現象が起きる。</p>
+
+        <p>複数の光子が同時に吸収され、石英ガラス内部の構造が局所的に変化する。これにより、石英ガラスの表面ではなく内部に情報を記録できる。</p>
+
+        <h3>5次元データストレージ</h3>
+
+        <p>英国サウサンプトン大学の研究チームは、フェムト秒レーザーを使って石英ガラスに「5次元」でデータを記録する技術を開発した。</p>
+
+        <p>3次元の位置（x, y, z）に加え、レーザーで形成されるナノ構造の「サイズ」と「向き」を情報として使う。これにより、1枚のディスクに数百テラバイトのデータを記録できる可能性がある。</p>
+
+        <div class="tech-card">
+            <h4>5次元記録の原理</h4>
+            <p><strong>x, y, z</strong>——3次元空間位置</p>
+            <p><strong>サイズ</strong>——ナノ構造の大きさ（読み取り光の強度変化）</p>
+            <p><strong>向き</strong>——ナノ構造の方向（読み取り光の偏光変化）</p>
+        </div>
+
+        <p>この技術は「永遠のデータ保存」と呼ばれ、数十億年の保存も理論的には可能とされている。</p>
+
+
+        <h2>7. 読み取り技術</h2>
+
+        <p>情報を記録しても、読み取れなければ意味がない。1000年後にも読み取り可能であることが重要である。</p>
+
+        <h3>QRコードの利点</h3>
+
+        <p>QRコードを選んだ理由の一つが、「読み取り技術の普遍性」である。</p>
+
+        <p>QRコードは、カメラとソフトウェアがあれば読み取れる。特殊な読み取り装置は不要である。スマートフォンという既存インフラがそのまま使える。</p>
+
+        <p>1000年後にスマートフォンが存在するかは不明だが、「光学的にパターンを認識してデコードする」という原理は残るだろう。QRコードの仕様は公開されており、将来の技術者が再実装することは容易である。</p>
+
+        <h3>誤り訂正</h3>
+
+        <p>QRコードには誤り訂正機能が組み込まれている。コードの一部が損傷しても、残りの情報から元のデータを復元できる。</p>
+
+        <p>誤り訂正レベルは4段階あり、最高レベル（H）では30%まで損傷しても復元可能である。1000年の間に多少の劣化があっても、情報は読み取れる設計になっている。</p>
+
+        <h3>可視性の確保</h3>
+
+        <p>金属薄膜によるQRコードは、光の反射差を利用して読み取る。金属部分は光を反射し、石英部分は透過する。このコントラストが可読性を生む。</p>
+
+        <p>金属の選択、膜厚の設計、保護層の光学特性——これらすべてが、1000年後の可読性を考慮して最適化されている。</p>
+
+
+        <h2>8. 技術の信頼性と民主化</h2>
+
+        <p>トキストレージで使われている基盤技術は、新開発ではない。半導体製造、光学機器、航空宇宙産業で数十年にわたって使われてきた実績のある技術である。</p>
+
+        <h3>実績のある原理</h3>
+
+        <p>金属蒸着、レーザー加工、QRコード——これらはすべて、世界中で日常的に使われている技術である。その信頼性は実績で証明されている。</p>
+
+        <h3>私たちのイノベーション</h3>
+
+        <p>私たちの貢献は、これらの原理を「誰でもアクセスできる形」に再構築したことである。</p>
+
+        <p>市販の石英ガラスプレート、真鍮、そしてファイバーレーザー加工機——これらの組み合わせで、従来は専門設備が必要だった金属蒸着を実現した。</p>
+
+        <div class="key-point">
+            <p>「技術の民主化」<br>高度な技術を、より多くの人々の手に届ける——それがトキストレージのイノベーションである。</p>
+        </div>
+
+
+        <h2>結論——技術者へ</h2>
+
+        <p>この記事を読んでいるあなたが技術者なら、一つ提案がある。</p>
+
+        <p>「それは専門機材がないとできない」と言われたとき、本当にそうか疑ってほしい。</p>
+
+        <p>金属蒸着は真空チャンバーが必要だと言われていた。私たちは、市販の石英ガラス、真鍮板、ファイバーレーザーで実現した。音声をQRコードに入れるのは不可能だと言われていた。私たちは、Opusと独自圧縮で30秒を達成した。</p>
+
+        <p>「民主化」とは、技術を特権から解放することである。高価な設備を安価な工夫に置き換える。専門家だけの領域を、誰でも挑戦できる場所に変える。</p>
+
+        <p>あなたの専門分野にも、民主化を待っている技術があるはずだ。「それは高すぎる」「それは難しすぎる」と言われているものの中に、実はシンプルな解決策が眠っているかもしれない。</p>
+
+        <p>私たちはその可能性を信じている。もしあなたも同じ志を持つなら、一緒に「閉じた技術」を開いていこう。</p>
+
+        <p>連絡を待っている。</p>
+
+    </article>
+
+    <footer class="article-footer">
+        <p id="essay-nav-links"></p>
+        <p style="margin-top: 2rem; font-size: 0.75rem;">&copy; 2026 TokiStorage</p>
+    </footer>
+
+</main>
+
+<script src="essay-nav.js?v=20260209"></script>
+</body>
+</html>

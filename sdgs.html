@@ -1,0 +1,253 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SDGsと存在証明——持続可能な記録のあり方 | トキストレージ</title>
+    <meta name="robots" content="noindex, nofollow">
+    <meta name="description" content="国連SDGs（持続可能な開発目標）の観点から存在証明を考察する。記録の持続可能性、文化遺産の保存、デジタル格差と普遍的アクセス。">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Shippori+Mincho:wght@400;500;600;700&family=Zen+Kaku+Gothic+New:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --toki-teal: #0D9488;
+            --toki-teal-dark: #0F766E;
+            --toki-teal-pale: #F0FDFA;
+            --bg-white: #FFFFFF;
+            --bg-section: #CCFBF1;
+            --text-primary: #1E293B;
+            --text-secondary: #475569;
+            --text-muted: #94A3B8;
+            --border: #E2E8F0;
+            --font-display: 'Shippori Mincho', serif;
+            --font-body: 'Zen Kaku Gothic New', sans-serif;
+        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        html { scroll-behavior: smooth; }
+        body { font-family: var(--font-body); font-weight: 400; background: var(--bg-white); color: var(--text-primary); line-height: 2; font-size: 16px; }
+        .article-nav { position: fixed; top: 0; left: 0; right: 0; z-index: 1000; background: rgba(255,255,255,0.95); backdrop-filter: blur(12px); border-bottom: 1px solid var(--border); padding: 0.6rem 1.2rem; display: flex; align-items: center; justify-content: space-between; }
+        .article-nav .nav-brand { font-family: var(--font-display); font-size: 0.9rem; font-weight: 600; color: var(--toki-teal); text-decoration: none; }
+        .article-nav .nav-right { display: flex; align-items: center; gap: 1rem; }
+        .article-nav .nav-label { font-size: 0.6rem; color: var(--text-muted); letter-spacing: 0.08em; }
+        .article-nav .lang-switch { font-size: 0.75rem; color: var(--toki-teal); text-decoration: none; padding: 0.3rem 0.6rem; border: 1px solid var(--toki-teal); border-radius: 4px; }
+        .article-nav .lang-switch:hover { background: var(--toki-teal); color: #fff; }
+        .article-container { max-width: 680px; margin: 0 auto; padding: 7rem 2rem 4rem; }
+        .article-header { margin-bottom: 3rem; padding-bottom: 2rem; border-bottom: 1px solid var(--border); }
+        .article-category { font-size: 0.7rem; color: var(--toki-teal); letter-spacing: 0.15em; margin-bottom: 1rem; }
+        .article-header h1 { font-family: var(--font-display); font-size: 1.8rem; font-weight: 600; line-height: 1.5; margin-bottom: 1rem; }
+        .article-subtitle { font-size: 0.95rem; color: var(--text-secondary); line-height: 1.8; }
+        .article-content h2 { font-family: var(--font-display); font-size: 1.25rem; font-weight: 600; margin: 3rem 0 1.5rem; padding-bottom: 0.5rem; border-bottom: 1px solid var(--border); }
+        .article-content h3 { font-family: var(--font-display); font-size: 1.1rem; font-weight: 500; margin: 2rem 0 1rem; }
+        .article-content p { margin-bottom: 1.5rem; text-align: justify; }
+        .article-content blockquote { margin: 2rem 0; padding: 1.5rem 2rem; background: var(--bg-section); border-left: 3px solid var(--toki-teal); font-style: italic; }
+        .article-content blockquote cite { display: block; font-size: 0.85rem; color: var(--text-muted); font-style: normal; margin-top: 0.5rem; }
+        .article-content ul { margin: 1.5rem 0; padding-left: 1.5rem; }
+        .article-content li { margin-bottom: 0.75rem; }
+        .key-point { background: var(--toki-teal-pale); padding: 1.5rem 2rem; border-radius: 8px; margin: 2rem 0; }
+        .key-point p { margin-bottom: 0; font-size: 0.95rem; }
+        .core-message { background: linear-gradient(135deg, var(--toki-teal-pale) 0%, #CCFBF1 100%); border-left: 4px solid var(--toki-teal); padding: 1.2rem 1.5rem; margin: 0 0 1.5rem 0; border-radius: 0 8px 8px 0; font-size: 0.95rem; line-height: 1.8; }
+        .disclaimer { font-size: 0.8rem; color: var(--text-muted); margin-bottom: 2rem; padding-bottom: 1rem; border-bottom: 1px solid var(--border); }
+        .sdg-box { background: #fff; border: 2px solid var(--toki-teal); border-radius: 8px; padding: 1.2rem 1.5rem; margin: 1.5rem 0; }
+        .sdg-box h4 { font-family: var(--font-display); font-size: 1rem; font-weight: 600; color: var(--toki-teal); margin-bottom: 0.5rem; }
+        .sdg-box p { margin-bottom: 0; font-size: 0.9rem; }
+        .references { margin-top: 4rem; padding-top: 2rem; border-top: 1px solid var(--border); }
+        .references h2 { font-size: 1rem; margin-bottom: 1.5rem; }
+        .references ul { list-style: none; padding: 0; }
+        .references li { font-size: 0.85rem; color: var(--text-secondary); margin-bottom: 0.75rem; padding-left: 1.5rem; text-indent: -1.5rem; }
+        .article-footer { margin-top: 4rem; padding-top: 2rem; border-top: 1px solid var(--border); text-align: center; }
+        .article-footer p { font-size: 0.8rem; color: var(--text-muted); margin-bottom: 1rem; }
+        .article-footer a { color: var(--toki-teal); text-decoration: none; }
+        @media (max-width: 768px) { .article-container { padding: 6rem 1.2rem 3rem; } .article-header h1 { font-size: 1.5rem; } .article-nav .nav-label { display: none; } }
+        @media print { .article-nav { display: none; } .article-container { padding-top: 2rem; } }
+    </style>
+</head>
+<body>
+
+<nav class="article-nav">
+    <a href="index.html" class="nav-brand">トキストレージ</a>
+    <div class="nav-right">
+        <span class="nav-label">SDGs</span>
+        <a href="sdgs-en.html" class="lang-switch">EN</a>
+    </div>
+</nav>
+
+<main class="article-container">
+    <header class="article-header">
+        <p class="article-category">エッセイ——持続可能性と記録</p>
+        <h1>SDGsと存在証明<br>——持続可能な記録のあり方</h1>
+        <p class="article-subtitle">
+            2030年を目標とする持続可能な開発目標（SDGs）——<br>
+            その観点から「存在証明」を考えると、何が見えてくるか。記録の持続可能性という問いを考察する。
+        </p>
+    </header>
+
+    <article class="article-content">
+        <div class="core-message">
+            <strong>この記事で言いたいこと：</strong>SDGs（持続可能な開発目標）は経済・社会・環境の調和を目指すが、「記録の持続可能性」という視点は見落とされがちである。デジタル記録の短命さ、維持コストの問題、文化遺産の保存——存在証明もまた、持続可能であるべきだ。トキストレージは、SDGsの複数の目標に貢献しうる。
+        </div>
+        <p class="disclaimer">本稿は学術的考察であり、SDGsの公式見解を代表するものではありません。</p>
+
+        <h2>1. SDGsとは何か</h2>
+        <p>2015年、国連で採択された「持続可能な開発目標」（Sustainable Development Goals: SDGs）は、2030年までに達成すべき17の目標と169のターゲットを定めている。</p>
+        <h3>17の目標</h3>
+        <p>貧困の撲滅、飢餓ゼロ、健康と福祉、質の高い教育、ジェンダー平等、安全な水、クリーンエネルギー、働きがいと経済成長、産業と技術革新、不平等の是正、持続可能な都市、責任ある消費と生産、気候変動対策、海の豊かさ、陸の豊かさ、平和と公正、パートナーシップ——これらが相互に連関しながら、持続可能な世界の実現を目指す。</p>
+        <h3>「誰一人取り残さない」</h3>
+        <p>SDGsの中核理念は「Leave No One Behind（誰一人取り残さない）」である。開発の恩恵がすべての人に届くこと。周縁化された人々、脆弱な立場にある人々も含めて、誰もが尊厳を持って生きられる社会。</p>
+        <h3>記録という盲点</h3>
+        <p>しかしSDGsの議論において、「記録の持続可能性」という視点は十分に扱われていない。記録がなければ、存在証明ができない。存在証明がなければ、サービスを受けられない。記録の問題は、SDGsのあらゆる目標に関わる基盤的課題である。</p>
+
+        <h2>2. 記録の持続可能性という問題</h2>
+        <p>現代の記録システムは、持続可能とは言いがたい。</p>
+        <h3>デジタル記録の短命さ</h3>
+        <p>デジタルデータの寿命は驚くほど短い。ハードディスクは5〜10年、SSDは10年程度、クラウドサービスは企業の存続に依存する。フォーマットの陳腐化も問題だ。20年前のファイル形式を今日開けるとは限らない。</p>
+        <h3>維持コストの問題</h3>
+        <p>デジタル記録を維持するには、継続的なコストがかかる。サーバー代、電力、管理人件費、セキュリティ対策——これらを永続的に負担できる主体は限られる。企業は倒産し、組織は解散し、国家さえも変容する。</p>
+        <h3>アクセス格差</h3>
+        <p>デジタル記録へのアクセスには、電力、インターネット、デバイス、リテラシーが必要である。これらを持たない人々は、デジタル社会から排除される。「誰一人取り残さない」という理念と、デジタル化一辺倒の記録システムは矛盾する。</p>
+
+        <div class="key-point">
+            <p>現代の記録システムは、短命で、維持コストが高く、アクセス格差を生む。これはSDGsの理念と相容れない。</p>
+        </div>
+
+        <h2>3. SDGs目標11——持続可能な都市とコミュニティ</h2>
+        <p>目標11は「包摂的で安全かつ強靱（レジリエント）で持続可能な都市及び人間居住を実現する」ことを掲げる。</p>
+
+        <div class="sdg-box">
+            <h4>ターゲット11.4</h4>
+            <p>世界の文化遺産及び自然遺産の保護・保全の努力を強化する。</p>
+        </div>
+
+        <h3>文化遺産としての記録</h3>
+        <p>家族の歴史、地域の記憶、コミュニティの物語——これらは文化遺産である。しかし多くの場合、これらは体系的に保存されていない。個人の死、家族の離散、地域の過疎化とともに、記録は失われていく。</p>
+        <h3>災害とレジリエンス</h3>
+        <p>災害時、記録は失われやすい。火災、洪水、地震——物理的な記録も、ローカルなデジタル記録も、災害に対して脆弱である。戸籍、不動産登記、医療記録——これらが失われたとき、人々は存在証明に苦しむ。</p>
+        <h3>トキストレージの貢献</h3>
+        <p>石英ガラスは火災に強く（耐熱1000℃以上）、水に侵されず、経年劣化しない。分散保管により、災害による全損リスクを軽減できる。文化遺産の保存と、災害レジリエンスの両面で、目標11に貢献しうる。</p>
+
+        <h2>4. SDGs目標12——つくる責任 つかう責任</h2>
+        <p>目標12は「持続可能な消費と生産のパターンを確保する」ことを目指す。</p>
+
+        <div class="sdg-box">
+            <h4>ターゲット12.5</h4>
+            <p>2030年までに、廃棄物の発生防止、削減、再生利用及び再利用により、廃棄物の発生を大幅に削減する。</p>
+        </div>
+
+        <h3>デジタル機器の廃棄問題</h3>
+        <p>デジタル記録を維持するには、定期的な機器の更新が必要である。古いハードディスク、使えなくなったスマートフォン、陳腐化したサーバー——これらは電子廃棄物（e-waste）となる。世界の電子廃棄物は年間5,000万トンを超え、増加の一途をたどっている。</p>
+        <h3>維持不要という価値</h3>
+        <p>トキストレージは、一度刻めば維持管理が不要である。電力も、定期的な更新も、クラウド契約も必要ない。「作って終わり」という製品設計は、継続的な消費を前提とする現代経済では珍しい。</p>
+        <h3>1000年という時間軸</h3>
+        <p>1000年保存できる記録媒体は、その間の機器更新、電力消費、廃棄物を発生させない。長寿命製品という概念を極限まで推し進めた形である。</p>
+
+        <h2>5. SDGs目標16——平和と公正をすべての人に</h2>
+        <p>目標16は「持続可能な開発のための平和で包摂的な社会を促進し、すべての人々に司法へのアクセスを提供し、あらゆるレベルにおいて効果的で説明責任のある包摂的な制度を構築する」ことを目指す。</p>
+
+        <div class="sdg-box">
+            <h4>ターゲット16.9</h4>
+            <p>2030年までに、すべての人々に出生登録を含む法的な身分証明を提供する。</p>
+        </div>
+
+        <h3>11億人の「存在しない人々」</h3>
+        <p>世界には、公的な身分証明を持たない人が約11億人いるとされる。出生届が出されていない、難民として記録を失った、行政システムの外にいる——彼らは公的には「存在しない」。医療、教育、金融サービス、投票——あらゆる権利へのアクセスが制限される。</p>
+        <h3>記録がなければ権利がない</h3>
+        <p>「記録がない」ことは「権利がない」ことに直結する。相続、土地所有、婚姻関係——これらの証明ができなければ、法的保護を受けられない。記録は権利の基盤である。</p>
+        <h3>行政に依存しない記録</h3>
+        <p>トキストレージは、行政システムに依存しない存在証明を可能にする。国家が崩壊しても、行政が機能しなくても、石英ガラスに刻まれた記録は残る。脆弱な立場にある人々にとって、これは権利を守る手段となりうる。</p>
+
+        <h2>6. SDGs目標13——気候変動に具体的な対策を</h2>
+        <p>目標13は「気候変動及びその影響を軽減するための緊急対策を講じる」ことを求める。</p>
+
+        <div class="sdg-box">
+            <h4>ターゲット13.1</h4>
+            <p>すべての国々において、気候関連災害や自然災害に対する強靱性（レジリエンス）及び適応の能力を強化する。</p>
+        </div>
+
+        <h3>気候変動と記録の喪失</h3>
+        <p>気候変動は、記録の喪失リスクを高める。海面上昇による沿岸地域の浸水、熱波によるサーバーの障害、頻発する自然災害——デジタルインフラは気候変動に対して脆弱である。</p>
+        <h3>エネルギー消費の問題</h3>
+        <p>データセンターは大量の電力を消費する。世界のデータセンターの電力消費は、全世界の電力消費の1〜1.5%を占め、航空産業に匹敵するCO2を排出している。データ量の増加とともに、この負荷は増大する。</p>
+        <h3>ゼロエネルギー保存</h3>
+        <p>トキストレージは、保存に電力を必要としない。刻印時には電力を使うが、その後1000年間はエネルギーフリーで保存される。データセンター依存の記録システムとは根本的に異なるアプローチである。</p>
+
+        <h2>7. SDGs目標10——不平等の是正</h2>
+        <p>目標10は「国内及び国家間の不平等を是正する」ことを目指す。</p>
+
+        <div class="sdg-box">
+            <h4>ターゲット10.2</h4>
+            <p>2030年までに、年齢、性別、障害、人種、民族、出自、宗教、あるいは経済的地位その他の状況に関わりなく、すべての人々の能力強化及び社会的、経済的及び政治的な包含を促進する。</p>
+        </div>
+
+        <h3>デジタル・デバイド</h3>
+        <p>デジタル記録へのアクセスは、不平等を反映する。高速インターネット、最新デバイス、デジタルリテラシー——これらは富裕層に偏在している。デジタル化が進むほど、持たざる者は排除される。</p>
+        <h3>読み取りの普遍性</h3>
+        <p>石英ガラスに刻まれた記録は、顕微鏡があれば読み取れる。高度な技術や特殊なソフトウェアは必要ない。デジタルフォーマットの陳腐化も関係ない。テクノロジーの進化に左右されない普遍的なアクセス。</p>
+        <h3>世代間の不平等</h3>
+        <p>デジタル記録は、現世代の都合で管理される。サービス終了、フォーマット変更、データ移行——これらの決定に、将来世代は関与できない。1000年保存という時間軸は、世代間の不平等を緩和する。</p>
+
+        <h2>8. 「誰一人取り残さない」記録</h2>
+        <p>SDGsの中核理念「Leave No One Behind」を記録に適用すると、何が求められるか。</p>
+        <h3>アクセスの普遍性</h3>
+        <p>特定の技術、インフラ、リテラシーを前提としない記録。電力がなくても、インターネットがなくても、専門知識がなくても、読み取れる形式。</p>
+        <h3>持続可能なコスト</h3>
+        <p>富裕層だけでなく、すべての人が存在証明を残せること。維持費が継続的にかからないこと。一度の支出で完結すること。</p>
+        <h3>時間的包摂</h3>
+        <p>現在の人々だけでなく、将来の世代も含めた「誰一人取り残さない」。今日の記録が、100年後、500年後、1000年後の人々にも読み取れること。</p>
+        <h3>制度外の人々</h3>
+        <p>行政システムの外にいる人々——難民、無国籍者、ホームレス——彼らも存在証明を残せること。公的制度に依存しない記録手段。</p>
+
+        <blockquote>
+            <p>「持続可能な記録とは、現在の技術的・経済的・制度的制約を超えて、すべての人の存在を証明できる記録である。」</p>
+        </blockquote>
+
+        <h2>9. SDGsの限界と記録の問題</h2>
+        <p>SDGsの枠組み自体にも限界がある。</p>
+        <h3>2030年という時間軸</h3>
+        <p>SDGsの目標年は2030年である。しかし持続可能性の真の意味は、より長い時間軸を必要とする。2030年に達成しても、2050年、2100年に維持できなければ意味がない。</p>
+        <h3>測定可能性への偏り</h3>
+        <p>SDGsは測定可能な指標を重視する。しかし存在証明の価値は数値化しにくい。失われた記録、忘れられた人々、消えた物語——これらは統計に現れない。</p>
+        <h3>個人の尊厳</h3>
+        <p>SDGsは主に集団的・統計的な改善を目指す。しかし存在証明は究極的に個人の問題である。一人ひとりの人生、一人ひとりの物語。集団的指標では捉えられない価値がある。</p>
+
+        <h2>10. 持続可能な存在証明に向けて</h2>
+        <p>SDGsの観点から見た、持続可能な存在証明のあり方を考える。</p>
+        <h3>多層的なアプローチ</h3>
+        <p>デジタル記録とアナログ記録の併用。クラウドと物理媒体の両方。短期的なアクセス性と長期的な保存性のバランス。一つの方法に依存しない、多層的な記録戦略。</p>
+        <h3>コミュニティの役割</h3>
+        <p>個人だけでは持続可能な記録は難しい。家族、地域、コミュニティが記録を共有し、継承する仕組み。分散保管は、コミュニティによる相互保存の一形態である。</p>
+        <h3>技術と人間の関係</h3>
+        <p>技術は手段であって目的ではない。石英ガラスという技術も、人間の存在を証明するための手段に過ぎない。技術に依存しすぎず、人間の記憶や物語も大切にする。</p>
+        <h3>世代を超えた責任</h3>
+        <p>私たちには、過去の世代から受け継いだ記録を守り、将来の世代に伝える責任がある。SDGsが掲げる「誰一人取り残さない」は、時間軸を超えた連帯でもある。</p>
+
+        <h2>結論——記録の持続可能性という課題</h2>
+        <p>SDGsは、経済・社会・環境の持続可能性を追求する。しかし「記録の持続可能性」という視点は、十分に議論されていない。</p>
+        <p>記録がなければ、存在証明ができない。存在証明がなければ、権利を主張できない。権利がなければ、SDGsの恩恵を受けられない。記録の問題は、SDGsのあらゆる目標の基盤に関わる。</p>
+        <p>現代のデジタル記録システムは、短命で、維持コストが高く、アクセス格差を生み、エネルギーを消費する。これはSDGsの理念と矛盾する。</p>
+        <p>トキストレージは、一つの解答を提示する。維持費ゼロ、エネルギーフリー、1000年保存、普遍的読み取り——SDGsの複数の目標に貢献しうる技術的アプローチ。</p>
+        <p>しかし技術だけでは十分ではない。コミュニティの関与、制度の整備、世代を超えた連帯——持続可能な記録には、人間的な基盤も必要である。</p>
+        <p>「誰一人取り残さない」という理念を記録に適用するとき、私たちは問われる。現在生きている人だけでなく、過去に生きた人々、これから生まれてくる人々——すべての人の存在を、どう証明し、どう伝えていくか。</p>
+        <p>それは技術の問題であると同時に、倫理の問題であり、社会の問題であり、文明の問題である。</p>
+
+        <section class="references">
+            <h2>参考文献</h2>
+            <ul>
+                <li>United Nations. (2015). <em>Transforming our world: the 2030 Agenda for Sustainable Development.</em></li>
+                <li>World Bank. (2021). <em>ID4D Global Dataset.</em></li>
+                <li>Forti, V. et al. (2020). <em>The Global E-waste Monitor 2020.</em> United Nations University.</li>
+                <li>International Energy Agency. (2022). <em>Data Centres and Data Transmission Networks.</em></li>
+                <li>UNESCO. (2015). <em>Recommendation concerning the Preservation of, and Access to, Documentary Heritage Including in Digital Form.</em></li>
+                <li>蟹江憲史. (2020). 『SDGs（持続可能な開発目標）』中公新書.</li>
+            </ul>
+        </section>
+    </article>
+
+    <footer class="article-footer">
+        <p id="essay-nav-links"></p>
+        <p style="margin-top: 2rem; font-size: 0.75rem;">&copy; 2026 TokiStorage</p>
+    </footer>
+</main>
+
+<script src="essay-nav.js?v=20260209"></script>
+</body>
+</html>

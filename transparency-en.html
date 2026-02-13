@@ -1,0 +1,595 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Before You Decide, Question Everything | TokiStorage</title>
+    <meta name="description" content="We list every reason this project might look suspicious — and answer all of them. Read this before you decide.">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Shippori+Mincho:wght@400;500;600;700&family=Zen+Kaku+Gothic+New:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --toki-blue: #2563EB;
+            --toki-blue-dark: #1D4ED8;
+            --toki-blue-pale: #EFF6FF;
+            --bg-white: #FFFFFF;
+            --bg-section: #F8FAFC;
+            --bg-warm: #FFFBF5;
+            --text-primary: #1E293B;
+            --text-secondary: #475569;
+            --text-muted: #94A3B8;
+            --border: #E2E8F0;
+            --amber: #D97706;
+            --amber-pale: #FEF3C7;
+            --amber-border: #F59E0B;
+            --green: #059669;
+            --green-pale: #ECFDF5;
+            --font-display: 'Shippori Mincho', serif;
+            --font-body: 'Zen Kaku Gothic New', sans-serif;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        html { scroll-behavior: smooth; }
+
+        body {
+            font-family: var(--font-body);
+            font-weight: 400;
+            background: var(--bg-white);
+            color: var(--text-primary);
+            line-height: 2;
+            font-size: 16px;
+        }
+
+        .article-nav {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 1000;
+            background: rgba(255,255,255,0.95);
+            backdrop-filter: blur(12px);
+            border-bottom: 1px solid var(--border);
+            padding: 0.6rem 1.2rem;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 1rem;
+        }
+        .article-nav .nav-brand {
+            font-family: var(--font-display);
+            font-size: 0.9rem;
+            font-weight: 600;
+            color: var(--toki-blue);
+            text-decoration: none;
+            white-space: nowrap;
+        }
+        .article-nav .nav-right {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+        .article-nav .lang-switch {
+            font-size: 0.75rem;
+            color: var(--toki-blue);
+            text-decoration: none;
+            padding: 0.3rem 0.6rem;
+            border: 1px solid var(--toki-blue);
+            border-radius: 4px;
+        }
+        .article-nav .lang-switch:hover {
+            background: var(--toki-blue);
+            color: #fff;
+        }
+        .nav-back {
+            font-size: 0.75rem;
+            color: var(--text-secondary);
+            text-decoration: none;
+        }
+        .nav-back:hover {
+            color: var(--toki-blue);
+        }
+
+        .article-container {
+            max-width: 720px;
+            margin: 0 auto;
+            padding: 7rem 2rem 4rem;
+        }
+
+        .article-header {
+            margin-bottom: 3rem;
+            padding-bottom: 2rem;
+            border-bottom: 1px solid var(--border);
+        }
+        .article-category {
+            font-size: 0.7rem;
+            color: var(--amber);
+            letter-spacing: 0.15em;
+            margin-bottom: 1rem;
+        }
+        .article-header h1 {
+            font-family: var(--font-display);
+            font-size: 1.8rem;
+            font-weight: 700;
+            line-height: 1.5;
+            margin-bottom: 1rem;
+        }
+        .article-subtitle {
+            font-size: 1rem;
+            color: var(--text-secondary);
+            margin-bottom: 1.5rem;
+        }
+
+        .article-body h2 {
+            font-family: var(--font-display);
+            font-size: 1.3rem;
+            font-weight: 600;
+            margin: 3rem 0 1.5rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 1px solid var(--border);
+        }
+        .article-body h3 {
+            font-family: var(--font-display);
+            font-size: 1.1rem;
+            font-weight: 600;
+            margin: 2rem 0 1rem;
+            color: var(--text-primary);
+        }
+        .article-body p {
+            margin-bottom: 1.5rem;
+            text-align: justify;
+        }
+        .article-body strong {
+            font-weight: 600;
+        }
+        .article-body ul, .article-body ol {
+            margin: 0 0 1.5rem 1.5rem;
+        }
+        .article-body li {
+            margin-bottom: 0.5rem;
+        }
+
+        .concern-box {
+            background: var(--bg-warm);
+            border: 1px solid #F3E8D0;
+            border-radius: 8px;
+            padding: 1.5rem 2rem;
+            margin: 2rem 0;
+        }
+        .concern-label {
+            font-size: 0.7rem;
+            font-weight: 600;
+            color: var(--amber);
+            letter-spacing: 0.1em;
+            margin-bottom: 0.5rem;
+        }
+        .concern-box blockquote {
+            font-family: var(--font-display);
+            font-size: 1.05rem;
+            font-style: italic;
+            color: var(--text-primary);
+            border: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        .answer-box {
+            background: var(--green-pale);
+            border-left: 3px solid var(--green);
+            padding: 1.5rem 2rem;
+            margin: 1rem 0 2rem;
+            border-radius: 0 8px 8px 0;
+        }
+        .answer-label {
+            font-size: 0.7rem;
+            font-weight: 600;
+            color: var(--green);
+            letter-spacing: 0.1em;
+            margin-bottom: 0.5rem;
+        }
+        .answer-box p {
+            margin-bottom: 0.8rem;
+        }
+        .answer-box p:last-child {
+            margin-bottom: 0;
+        }
+
+        .promise-box {
+            background: var(--toki-blue-pale);
+            border: 2px solid var(--toki-blue);
+            border-radius: 8px;
+            padding: 2rem;
+            margin: 2rem 0;
+            text-align: center;
+        }
+        .promise-box h3 {
+            color: var(--toki-blue);
+            margin-top: 0;
+        }
+        .promise-box p {
+            text-align: center;
+        }
+
+        .verify-box {
+            background: var(--bg-section);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            padding: 1.5rem 2rem;
+            margin: 2rem 0;
+        }
+        .verify-box h3 {
+            font-size: 1rem;
+            margin-top: 0;
+        }
+        .verify-box a {
+            color: var(--toki-blue);
+        }
+
+        .article-footer {
+            margin-top: 4rem;
+            padding-top: 2rem;
+            border-top: 1px solid var(--border);
+        }
+        .article-footer-links {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1rem;
+            justify-content: center;
+            margin-top: 1rem;
+        }
+        .article-footer-links a {
+            color: var(--toki-blue);
+            text-decoration: none;
+            font-size: 0.85rem;
+            padding: 0.4rem 1rem;
+            border: 1px solid var(--border);
+            border-radius: 6px;
+        }
+        .article-footer-links a:hover {
+            background: var(--toki-blue-pale);
+            border-color: var(--toki-blue);
+        }
+
+        .structural-note {
+            display: inline-block;
+            font-size: 0.7rem;
+            background: var(--amber-pale);
+            color: var(--amber);
+            padding: 0.15rem 0.5rem;
+            border-radius: 3px;
+            font-weight: 600;
+            letter-spacing: 0.05em;
+            margin-left: 0.3rem;
+            vertical-align: middle;
+        }
+
+        .article-body blockquote {
+            background: var(--bg-section);
+            border-left: 3px solid var(--toki-blue);
+            padding: 1.2rem 1.5rem;
+            margin: 2rem 0;
+            font-style: italic;
+        }
+        .article-body blockquote p {
+            margin-bottom: 0.5rem;
+        }
+        .article-body blockquote p:last-child {
+            margin-bottom: 0;
+        }
+
+        @media (max-width: 600px) {
+            .article-container {
+                padding: 5rem 1.2rem 3rem;
+            }
+            .article-header h1 {
+                font-size: 1.4rem;
+            }
+            .concern-box, .answer-box, .promise-box, .verify-box {
+                padding: 1.2rem;
+            }
+        }
+    </style>
+</head>
+<body>
+
+<nav class="article-nav">
+    <a href="index-en.html" class="nav-brand">TokiStorage</a>
+    <div class="nav-right">
+        <a href="index-en.html" class="nav-back">Back to Top</a>
+        <a href="transparency.html" class="lang-switch" aria-label="日本語に切り替え">JA</a>
+    </div>
+</nav>
+
+<article class="article-container">
+    <header class="article-header">
+        <p class="article-category">TRANSPARENCY</p>
+        <h1>Before You Decide, Question Everything</h1>
+        <p class="article-subtitle">Your instinct that this project might be "too good to be true" is healthy.<br>Here are the concerns we've identified ourselves — and our answers to every one.</p>
+    </header>
+
+    <div class="article-body">
+        <h2>Why This Page Exists</h2>
+
+        <p>TokiStorage has structural elements that can understandably raise red flags from the outside:</p>
+
+        <ul>
+            <li>It deals with death and memory — the most emotionally sensitive territory</li>
+            <li>It promises "1,000 years" — a timescale no one alive can verify</li>
+            <li>It involves islands and old houses — keywords that overlap with real estate scams</li>
+            <li>It's a young project without the social proof of a large corporation</li>
+        </ul>
+
+        <p>Feeling cautious about these things is a sign of healthy judgment.</p>
+
+        <p>Most companies hide concerns like these. We chose to <strong>list them all ourselves and answer every one</strong>. Because the biggest fuel for distrust is the suspicion that something is being hidden.</p>
+
+        <p>This page was written for people who haven't signed up yet — or who are on the fence. If you read this and decide "no thanks," that's a perfectly valid conclusion.</p>
+
+        <!-- ======================================= -->
+        <h2>1. "Is this a scam?"</h2>
+
+        <div class="concern-box">
+            <p class="concern-label">HOW IT MIGHT LOOK FROM THE OUTSIDE</p>
+            <blockquote>Emotionally compelling story, then an expensive product. Talk of buying islands, 1,000-year promises.<br>This matches the pattern of fraud or MLM schemes.</blockquote>
+        </div>
+
+        <div class="answer-box">
+            <p class="answer-label">OUR ANSWER</p>
+            <p>Honestly: the pattern overlap is real.</p>
+            <p>That's precisely why we make the following clear:</p>
+            <ul>
+                <li><strong>There is no referral program, affiliate system, or multi-level structure.</strong> No one earns money by introducing others</li>
+                <li><strong>The founder's full name, address, and background are public.</strong> This is not an anonymous operation. See the <a href="profile.html">founder's profile</a></li>
+                <li><strong>Legal business registration and commercial transaction disclosures are published.</strong> Verify at our <a href="tokushoho-en.html">legal information</a> page</li>
+                <li><strong>We link to consumer protection resources at the bottom of this page.</strong> If something feels wrong, consult a third party. We welcome that</li>
+            </ul>
+        </div>
+
+        <!-- ======================================= -->
+        <h2>2. "Where does the money go?"</h2>
+
+        <div class="concern-box">
+            <p class="concern-label">HOW IT MIGHT LOOK FROM THE OUTSIDE</p>
+            <blockquote>$333, $3,333, $33,333. That's a lot.<br>Is the founder profiting unfairly? Am I getting real value?</blockquote>
+        </div>
+
+        <div class="answer-box">
+            <p class="answer-label">OUR ANSWER</p>
+            <p>Here's a rough breakdown of the Personal Plan ($333):</p>
+            <ul>
+                <li>Quartz glass material and processing</li>
+                <li>QR code design and engraving</li>
+                <li>Dedicated case, packaging, and shipping</li>
+                <li>Online consultation labor (30 min x 2 sessions)</li>
+                <li>Storage infrastructure reserve fund</li>
+                <li>Operating expenses (communications, system maintenance)</li>
+            </ul>
+            <p>For reference: a typical gravestone in Japan costs $3,000–$13,000, scattering of ashes costs $300–$2,000, and tree burials cost $1,300–$5,000. $333 is cost-based pricing for physically preserving a memory for 1,000 years.</p>
+            <p>The Voice Memorial Course ($33,333) includes a 6-month, 12-session bespoke program. The per-session cost is reasonable for consulting services, and it includes genealogy research, professional voice recording, and two-site distributed storage.</p>
+            <p><strong>We plan to publish an annual financial report.</strong></p>
+        </div>
+
+        <!-- ======================================= -->
+        <h2>3. "Is 1,000 years really possible?"</h2>
+
+        <div class="concern-box">
+            <p class="concern-label">HOW IT MIGHT LOOK FROM THE OUTSIDE</p>
+            <blockquote>1,000 years is an absurd claim. No way to verify it.<br>No company lasts 1,000 years.</blockquote>
+        </div>
+
+        <div class="answer-box">
+            <p class="answer-label">OUR ANSWER</p>
+            <p><strong>"1,000 years" is a theoretical value based on quartz glass material properties — not a product warranty.</strong> This is stated clearly in the <a href="index-en.html#solution">scientific evidence section</a> and the site disclaimer.</p>
+            <p>The supporting evidence:</p>
+            <ul>
+                <li>Hitachi and Kyoto University demonstrated data preservation of over 300 million years using laser recording on quartz glass (2012)</li>
+                <li>Quartz glass (SiO₂) withstands temperatures above 1,000°C and is chemically extremely stable</li>
+                <li>QR codes are an ISO international standard (since 1994) with 30+ years of proven use</li>
+            </ul>
+            <p>No company lasts 1,000 years — you're absolutely right. <strong>That's exactly why we chose a physical medium that depends on no server, no electricity, and no company.</strong> Records engraved in quartz glass remain readable with just a smartphone camera, even if our company ceases to exist.</p>
+            <p>Additionally, we adopt a "Shikinen Sengu" model — migrating data to the latest medium every 20 years — to guard against technological obsolescence.</p>
+        </div>
+
+        <!-- ======================================= -->
+        <h2>4. "Are you profiting from death?"</h2>
+
+        <div class="concern-box">
+            <p class="concern-label">HOW IT MIGHT LOOK FROM THE OUTSIDE</p>
+            <blockquote>Exploiting grief and loss to sell to emotionally vulnerable people.<br>Make them cry, then sell — a classic technique.</blockquote>
+        </div>
+
+        <div class="answer-box">
+            <p class="answer-label">OUR ANSWER</p>
+            <p>"Death × commerce" inherently carries tension. <span class="structural-note">Structural — cannot be eliminated</span></p>
+            <p>This is the same structural tension that exists in the funeral industry, the gravestone industry, and the insurance industry. We acknowledge this tension and draw the following lines:</p>
+            <ul>
+                <li><strong>We do not engage in grief marketing.</strong> We don't run ads timed around funerals or death anniversaries</li>
+                <li><strong>We don't use fear appeals.</strong> No copy that threatens "your memory will be forgotten" or "everything will disappear"</li>
+                <li><strong>There's no rush.</strong> We build in cooling-off time. We don't ask for payment in the moment of emotional impact</li>
+                <li><strong>TokiStorage is not the only option.</strong> Scattering, tree burials, digital memorials, oral tradition — there are many ways to preserve memory. We are just one of them</li>
+            </ul>
+            <p>This project started with the founder's personal loss of his dog Pearl. <a href="index-en.html#philosophy">Read the full story here.</a> We don't "profit from death" — we challenge the inequality of memory. If that distinction doesn't come through, the failure is in our communication.</p>
+        </div>
+
+        <!-- ======================================= -->
+        <h2>5. "Is this a religion or cult?"</h2>
+
+        <div class="concern-box">
+            <p class="concern-label">HOW IT MIGHT LOOK FROM THE OUTSIDE</p>
+            <blockquote>"Democratizing proof of existence," "engraving the soul," "resonance" — lots of spiritual language.<br>Will I be drawn into a closed community?</blockquote>
+        </div>
+
+        <div class="answer-box">
+            <p class="answer-label">OUR ANSWER</p>
+            <p><strong>This is not a religion. No specific belief system is required.</strong></p>
+            <ul>
+                <li>There are no initiation rituals, doctrines, scriptures, or spiritual leaders</li>
+                <li>SoulCarrier "Resonance Circle" membership can be cancelled anytime (one click, no pushback)</li>
+                <li>Our partnerships with Ise Shrine and Enryaku-ji reflect respect for cultural continuity systems — not religious devotion</li>
+                <li>The philosophical language in our essays is a natural result of thinking on a 1,000-year timescale. But we never ask you to believe any of it</li>
+            </ul>
+            <p>A useful test: The moment you're asked to "believe" something, it becomes religion. We will never say "believe us." We will always say "verify us."</p>
+        </div>
+
+        <!-- ======================================= -->
+        <h2>6. "What if I want out?"</h2>
+
+        <div class="concern-box">
+            <p class="concern-label">HOW IT MIGHT LOOK FROM THE OUTSIDE</p>
+            <blockquote>Once I pay, am I locked in?<br>Can I really cancel and get a refund?</blockquote>
+        </div>
+
+        <div class="answer-box">
+            <p class="answer-label">OUR ANSWER</p>
+            <p><strong>Before production begins, you receive a full refund — no questions asked.</strong></p>
+            <ul>
+                <li>Cancellation with full refund is available before the engraving process starts</li>
+                <li>After production begins, a refund minus actual costs incurred is provided</li>
+                <li>SoulCarrier "Resonance Circle" can be left immediately. No retention emails, no follow-up calls</li>
+                <li>We will never send "won't you come back?" messages to former members</li>
+            </ul>
+            <p><strong>The ability to leave is the foundation of trust.</strong> "Staying" means nothing within a system you can't escape. Knowing you can leave at any time and choosing to stay anyway — that is genuine resonance.</p>
+        </div>
+
+        <!-- ======================================= -->
+        <h2>7. "Can I trust the person behind this?"</h2>
+
+        <div class="concern-box">
+            <p class="concern-label">HOW IT MIGHT LOOK FROM THE OUTSIDE</p>
+            <blockquote>Who runs this? Is there a real organization behind it?</blockquote>
+        </div>
+
+        <div class="answer-box">
+            <p class="answer-label">OUR ANSWER</p>
+            <p>Founder Takuya Sato publishes everything under his real name:</p>
+            <ul>
+                <li>Name, address, background: <a href="profile.html">Founder Profile</a></li>
+                <li>Commercial transaction disclosure: <a href="tokushoho-en.html">Legal Information</a></li>
+                <li>Registration: Sole proprietorship filed Feb 11, 2026 (Ichikawa Tax Office) / Blue return registered</li>
+                <li>Social media (X, LinkedIn, Facebook): all under real name</li>
+                <li>Activity record: Real people speaking under their real names in the <a href="index-en.html#testimonials">Voices of Resonance</a> section</li>
+            </ul>
+            <p>20+ years of engineering career (including semiconductor manufacturing equipment), community leadership as head of a 250-household neighborhood association in Urayasu, survey of 5,000 gravestones in Gunma Prefecture, repatriation activities in Hawaii — all verifiable through the parties involved.</p>
+        </div>
+
+        <!-- ======================================= -->
+        <h2>8. "Where's the track record?"</h2>
+
+        <div class="concern-box">
+            <p class="concern-label">HOW IT MIGHT LOOK FROM THE OUTSIDE</p>
+            <blockquote>A new project with no social proof.<br>No major brand or corporation backing it.</blockquote>
+        </div>
+
+        <div class="answer-box">
+            <p class="answer-label">OUR ANSWER</p>
+            <p>You're right. This is a young project without the track record of an established corporation. <span class="structural-note">Needs time</span></p>
+            <p>However, the following achievements already exist:</p>
+            <ul>
+                <li><strong>Ise Grand Shrine</strong>: Dedication to the Shikinen Sengu. 20-year name inscription achieved (January 2026)</li>
+                <li><strong>Enryaku-ji Temple</strong>: Dedication to the Konpon Chudo restoration. Permanent name inscription (January 2026)</li>
+                <li><strong>Japan-Hawaii Immigration Museum</strong> (Yamaguchi): MOU signed</li>
+                <li><strong>Niho Island Hawaii Immigration Museum</strong> (Hiroshima): Commissioned for academic material collection</li>
+                <li><strong>JICA Yokohama</strong>: In discussion with deputy director</li>
+                <li><strong>Shibuya Ward</strong> (Hawaii sister city): In discussion with relevant department</li>
+                <li>3,000+ engraving tests completed</li>
+                <li>310,000+ impressions on X (formerly Twitter)</li>
+            </ul>
+            <p>Rather than hiding the fact that we're small, we choose to show everything precisely because we're small. This page is proof of that choice.</p>
+        </div>
+
+        <!-- ======================================= -->
+        <h2>9. "Am I being emotionally manipulated?"</h2>
+
+        <div class="concern-box">
+            <p class="concern-label">WHAT MIGHT BE HAPPENING INSIDE YOU</p>
+            <blockquote>I was moved by the story. But I feel both moved and cautious at the same time.<br>Maybe I'm the kind of person who's easily taken in.</blockquote>
+        </div>
+
+        <div class="answer-box">
+            <p class="answer-label">OUR ANSWER</p>
+            <p><strong>Feeling both moved and cautious at the same time is healthy.</strong> <span class="structural-note">No need to resolve this</span></p>
+            <p>Someone who feels only one would worry us more. Moved without caution is blind faith; caution without being moved is dismissal. Both existing together means you're using your judgment.</p>
+            <p>So here's what we ask:</p>
+            <ul>
+                <li><strong>Don't decide today.</strong> This project will be here tomorrow</li>
+                <li><strong>Talk to someone about it.</strong> "I found this thing — what do you think?" If it's hard to explain, try: "A project that preserves someone's memory in quartz glass for 1,000 years"</li>
+                <li><strong>Sleep on this page.</strong> If you still find yourself thinking about it the next morning, that's interest — not impulse</li>
+            </ul>
+        </div>
+
+        <!-- ======================================= -->
+        <h2>10. What We Commit to Never Doing</h2>
+
+        <div class="promise-box">
+            <h3>Seven Promises</h3>
+            <p style="text-align:left;">
+                1. We will <strong>never</strong> create referral rewards, affiliate programs, or multi-level structures<br>
+                2. We will <strong>never</strong> run ads timed around funerals or death anniversaries<br>
+                3. We will <strong>never</strong> use fear of being forgotten to pressure purchases<br>
+                4. We will <strong>never</strong> contact former members to ask them to return<br>
+                5. We will <strong>never</strong> hide inconvenient information<br>
+                6. We will <strong>never</strong> say "believe us" (we say "verify us")<br>
+                7. We will <strong>never</strong> delete this page
+            </p>
+        </div>
+
+        <!-- ======================================= -->
+        <h2>Verify for Yourself</h2>
+
+        <p>Our words alone are not enough. Use these third-party resources to verify independently.</p>
+
+        <div class="verify-box">
+            <h3>Third-Party Verification</h3>
+            <ul>
+                <li><strong>Founder's social media</strong>: <a href="https://www.linkedin.com/in/satotakuya" target="_blank" rel="noopener">LinkedIn</a>, <a href="https://x.com/tokistorage" target="_blank" rel="noopener">X (formerly Twitter)</a> — review the activity history yourself</li>
+                <li><strong>Legal information</strong>: <a href="tokushoho-en.html">Specified Commercial Transactions Act disclosure</a></li>
+                <li><strong>Scientific basis for quartz glass</strong>: Search "Hitachi Kyoto University quartz glass data storage" for the original research and coverage</li>
+                <li><strong>Contact our partners directly</strong>: Japan-Hawaii Immigration Museum, JICA Yokohama — you are welcome to verify our partnerships</li>
+            </ul>
+        </div>
+
+        <div class="verify-box">
+            <h3>If You Have Concerns</h3>
+            <ul>
+                <li><strong>Japan Consumer Affairs Agency</strong>: <a href="https://www.caa.go.jp/en/" target="_blank" rel="noopener">caa.go.jp</a></li>
+                <li><strong>National Consumer Affairs Center of Japan</strong>: <a href="https://www.kokusen.go.jp/e-hello/" target="_blank" rel="noopener">kokusen.go.jp</a></li>
+                <li><strong>Your local consumer protection agency</strong>: We encourage you to consult any relevant authority in your country</li>
+            </ul>
+            <p>We genuinely welcome you consulting these organizations. Having third parties in the verification process is healthy and appropriate.</p>
+        </div>
+
+        <!-- ======================================= -->
+        <h2>Final Words</h2>
+
+        <p>This page was born from a structural analysis of <a href="trust-design-en.html">37 concern items</a>. For those who may not be the right fit, we <a href="not-for-you-en.html">say so honestly</a>.</p>
+
+        <p>We will never say "believe us."</p>
+
+        <p><strong>"Verify us."</strong> That's what we'll keep saying.</p>
+
+        <p>If you verify and decide "no" — that's right.<br>
+        If you verify and find yourself still curious — reach out anytime.</p>
+
+        <p>We respect your judgment.</p>
+    </div>
+
+    <footer class="article-footer">
+        <p style="text-align:center; font-size: 0.85rem; color: var(--text-muted);">This page is updated regularly. New concerns are added as they arise.</p>
+        <div class="article-footer-links">
+            <a href="trust-design-en.html">Trust Design: 37 Items</a>
+            <a href="not-for-you-en.html">Not For Everyone</a>
+            <a href="index-en.html">TokiStorage Home</a>
+            <a href="index-en.html#pricing">Pricing</a>
+            <a href="index-en.html#faq">FAQ</a>
+            <a href="profile.html">Founder Profile</a>
+            <a href="tokushoho-en.html">Legal Information</a>
+            <a href="privacy-en.html">Privacy Policy</a>
+        </div>
+        <p id="essay-nav-links" style="font-size: 0.8rem; margin-top: 2rem; line-height: 2;"></p>
+        <p style="margin-top: 2rem; font-size: 0.75rem; color: var(--text-muted);">&copy; 2026 TokiStorage</p>
+    </footer>
+</article>
+
+<script src="essay-nav.js?v=20260211"></script>
+</body>
+</html>

@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Media and Proof of Existence — Coverage, Records, and Digital Traces | TokiStorage</title>
+    <meta name="robots" content="noindex, nofollow">
+    <meta name="description" content="Newspapers, television, social media, Wikipedia—media has the power to determine who existed. Examining those who are covered and those who are not, and the meaning of digital traces.">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Shippori+Mincho:wght@400;500;600;700&family=Zen+Kaku+Gothic+New:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --toki-rose: #E11D48;
+            --toki-rose-dark: #BE123C;
+            --toki-rose-pale: #FFF1F2;
+            --bg-white: #FFFFFF;
+            --bg-section: #FEF2F2;
+            --text-primary: #1E293B;
+            --text-secondary: #475569;
+            --text-muted: #94A3B8;
+            --border: #E2E8F0;
+            --font-display: 'Shippori Mincho', serif;
+            --font-body: 'Zen Kaku Gothic New', sans-serif;
+        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        html { scroll-behavior: smooth; }
+        body { font-family: var(--font-body); font-weight: 400; background: var(--bg-white); color: var(--text-primary); line-height: 2; font-size: 16px; }
+        .article-nav { position: fixed; top: 0; left: 0; right: 0; z-index: 1000; background: rgba(255,255,255,0.95); backdrop-filter: blur(12px); border-bottom: 1px solid var(--border); padding: 0.6rem 1.2rem; display: flex; align-items: center; justify-content: space-between; }
+        .article-nav .nav-brand { font-family: var(--font-display); font-size: 0.9rem; font-weight: 600; color: var(--toki-rose); text-decoration: none; }
+        .article-nav .nav-right { display: flex; align-items: center; gap: 1rem; }
+        .article-nav .nav-label { font-size: 0.6rem; color: var(--text-muted); letter-spacing: 0.08em; }
+        .article-nav .lang-switch { font-size: 0.75rem; color: var(--toki-rose); text-decoration: none; padding: 0.3rem 0.6rem; border: 1px solid var(--toki-rose); border-radius: 4px; }
+        .article-nav .lang-switch:hover { background: var(--toki-rose); color: #fff; }
+        .article-container { max-width: 680px; margin: 0 auto; padding: 7rem 2rem 4rem; }
+        .article-header { margin-bottom: 3rem; padding-bottom: 2rem; border-bottom: 1px solid var(--border); }
+        .article-category { font-size: 0.7rem; color: var(--toki-rose); letter-spacing: 0.15em; margin-bottom: 1rem; }
+        .article-header h1 { font-family: var(--font-display); font-size: 1.8rem; font-weight: 600; line-height: 1.5; margin-bottom: 1rem; }
+        .article-subtitle { font-size: 0.95rem; color: var(--text-secondary); line-height: 1.8; }
+        .article-content h2 { font-family: var(--font-display); font-size: 1.25rem; font-weight: 600; margin: 3rem 0 1.5rem; padding-bottom: 0.5rem; border-bottom: 1px solid var(--border); }
+        .article-content h3 { font-family: var(--font-display); font-size: 1.1rem; font-weight: 500; margin: 2rem 0 1rem; }
+        .article-content p { margin-bottom: 1.5rem; text-align: justify; }
+        .article-content blockquote { margin: 2rem 0; padding: 1.5rem 2rem; background: var(--bg-section); border-left: 3px solid var(--toki-rose); font-style: italic; }
+        .article-content blockquote cite { display: block; font-size: 0.85rem; color: var(--text-muted); font-style: normal; margin-top: 0.5rem; }
+        .article-content ul { margin: 1.5rem 0; padding-left: 1.5rem; }
+        .article-content li { margin-bottom: 0.75rem; }
+        .key-point { background: var(--toki-rose-pale); padding: 1.5rem 2rem; border-radius: 8px; margin: 2rem 0; }
+        .key-point p { margin-bottom: 0; font-size: 0.95rem; }
+        .core-message { background: linear-gradient(135deg, var(--toki-rose-pale) 0%, #FFE4E6 100%); border-left: 4px solid var(--toki-rose); padding: 1.2rem 1.5rem; margin: 0 0 1.5rem 0; border-radius: 0 8px 8px 0; font-size: 0.95rem; line-height: 1.8; }
+        .disclaimer { font-size: 0.8rem; color: var(--text-muted); margin-bottom: 2rem; padding-bottom: 1rem; border-bottom: 1px solid var(--border); }
+        .references { margin-top: 4rem; padding-top: 2rem; border-top: 1px solid var(--border); }
+        .references h2 { font-size: 1rem; margin-bottom: 1.5rem; }
+        .references ul { list-style: none; padding: 0; }
+        .references li { font-size: 0.85rem; color: var(--text-secondary); margin-bottom: 0.75rem; padding-left: 1.5rem; text-indent: -1.5rem; }
+        .article-footer { margin-top: 4rem; padding-top: 2rem; border-top: 1px solid var(--border); text-align: center; }
+        .article-footer p { font-size: 0.8rem; color: var(--text-muted); margin-bottom: 1rem; }
+        .article-footer a { color: var(--toki-rose); text-decoration: none; }
+        @media (max-width: 768px) { .article-container { padding: 6rem 1.2rem 3rem; } .article-header h1 { font-size: 1.5rem; } .article-nav .nav-label { display: none; } }
+        @media print { .article-nav { display: none; } .article-container { padding-top: 2rem; } }
+    </style>
+</head>
+<body>
+
+<nav class="article-nav">
+    <a href="index-en.html" class="nav-brand">TokiStorage</a>
+    <div class="nav-right">
+        <span class="nav-label">MEDIA STUDIES</span>
+        <a href="media.html" class="lang-switch">JP</a>
+    </div>
+</nav>
+
+<main class="article-container">
+    <header class="article-header">
+        <p class="article-category">ESSAY — MEDIA AND RECORDS</p>
+        <h1>Media and Proof of Existence<br>— Coverage, Records, and Digital Traces</h1>
+        <p class="article-subtitle">
+            Newspapers, television, social media, Wikipedia—media has the power to determine "who existed."<br>
+            Examining those who are covered and those who are not, and the new forms of proof of existence digital traces bring.
+        </p>
+    </header>
+
+    <article class="article-content">
+        <div class="core-message">
+            <strong>Key Message:</strong> Being covered by media is one of the most powerful forms of proof of existence in modern times. However, media is selective. Those not covered may be treated as if they "never existed" socially.
+        </div>
+        <p class="disclaimer">This essay is an academic analysis and does not criticize any specific media or reporting practices.</p>
+
+        <h2>1. Media and the Visibility of Existence</h2>
+        <p>Media is a device that makes existence visible.</p>
+        <p>Appearing on television, being in newspapers, going viral on social media—these are proof that "society has recognized that existence." Conversely, those not covered by media are socially "invisible."</p>
+
+        <blockquote>
+            <p>"What does not appear in media is as good as non-existent. In modern society, existence is visibility."</p>
+            <cite>— Adapted from Nick Couldry, "Media, Society, World"</cite>
+        </blockquote>
+
+        <h3>Those Covered and Those Not</h3>
+        <p>People who appear in news are those deemed socially "important." Politicians, executives, criminals, victims, experts—their existence is validated by media.</p>
+        <p>However, most people never appear in news. The daily lives of "ordinary people" are considered to have no news value. Their existence is not proven by media.</p>
+
+        <h2>2. Obituaries — Existence Proven by Death</h2>
+        <p>Newspaper obituary sections are places where existence is proven through death.</p>
+        <h3>Celebrity Obituaries</h3>
+        <p>When celebrities die, newspapers report their careers, achievements, and character. This becomes an official record of "how this person lived and what they accomplished."</p>
+        <h3>Death Notices for Ordinary People</h3>
+        <p>Even ordinary people can leave their names in newspapers through death notices. Local newspaper death notice sections function as places for proof of existence in local communities.</p>
+        <h3>Deaths Without Obituaries</h3>
+        <p>However, not all deaths are reported. Solitary deaths, deaths without connections—deaths not covered by media are deaths not recorded socially.</p>
+
+        <div class="key-point">
+            <p>Obituaries are the final social recognition that "this person existed." However, obituaries are only for some people, and many deaths go unreported.</p>
+        </div>
+
+        <h2>3. Wikipedia and "Notability"</h2>
+        <p>Wikipedia is an encyclopedia that determines "who is important" in modern times.</p>
+        <h3>Notability Criteria</h3>
+        <p>Creating a Wikipedia article requires "notability." Notability means "being mentioned independently by reliable sources."</p>
+        <p>In other words, only people already covered by media can be on Wikipedia. Those not covered by media are deleted as "lacking notability."</p>
+        <h3>The Meaning of Being on Wikipedia</h3>
+        <p>Having a Wikipedia article is one of the most powerful forms of proof of existence today. Searchable, citable, referenceable—it is proof that "this person is socially recognized."</p>
+        <h3>Those Not Included</h3>
+        <p>However, those on Wikipedia are a tiny fraction of the world's population. Most people are deemed to "lack notability" and have no article. Their existence is not recorded in this modern encyclopedia.</p>
+
+        <h2>4. Social Media and Digital Traces</h2>
+        <p>Social media has brought democratization of proof of existence.</p>
+        <h3>The Era When Anyone Can Broadcast</h3>
+        <p>Twitter, Instagram, TikTok, YouTube—anyone can create an account and broadcast their existence. "Visibility," which once could only be obtained through media coverage, can now be created by oneself.</p>
+        <h3>Followers as Validation</h3>
+        <p>Follower counts, likes, view counts—these are quantification of "your existence being recognized." Having many followers becomes proof of social presence.</p>
+        <h3>Vulnerability of Digital Traces</h3>
+        <p>However, proof of existence through social media has vulnerabilities. Account suspension, service termination, data loss—digital traces depend on platform survival.</p>
+
+        <blockquote>
+            <p>"Social media has democratized proof of existence, but that proof depends on platforms—private companies. If they disappear, your digital existence disappears too."</p>
+        </blockquote>
+
+        <h2>5. Newspaper Archives and Permanence</h2>
+        <p>Newspapers are one of the most permanent media.</p>
+        <h3>Microfilm and Digital Archives</h3>
+        <p>Past newspapers are preserved as microfilm and digital archives. Newspaper articles from over 100 years ago can be searched and read.</p>
+        <p>Having your name in a newspaper means being permanently recorded in these archives. Your existence is transmitted to posterity in searchable form.</p>
+        <h3>Letters to the Editor</h3>
+        <p>The most common way for ordinary people to leave their names in newspapers is through letters to the editor. "Reader's Voice," "My Opinion"—if published in these sections, even ordinary people can leave their names in newspaper archives.</p>
+
+        <h2>6. Podcasts and YouTube — Becoming Your Own Media</h2>
+        <p>Technological advancement has brought an era where anyone can become "media."</p>
+        <h3>The Explosion of Self-Broadcasting</h3>
+        <p>Over 500 hours of video are uploaded to YouTube every minute. Millions of podcasts exist. This is an explosive increase in the act of "recording and broadcasting one's voice and image."</p>
+        <h3>Value as Records</h3>
+        <p>This content can function as proof of existence. Face, voice, thoughts, daily life—these are recorded as video and audio and remain on the internet.</p>
+        <h3>Limitations of Platform Dependence</h3>
+        <p>However, here too is the problem of platform dependence. If YouTube changes its policies, videos can be deleted. If services end, all content may disappear.</p>
+
+        <div class="key-point">
+            <p>Self-mediatization has expanded opportunities for proof of existence, but those records depend on platforms. To achieve true permanence, records must be left outside platforms.</p>
+        </div>
+
+        <h2>7. Media Selection and "Invisible Existence"</h2>
+        <p>Media selects what to cover and what not to cover.</p>
+        <h3>News Value</h3>
+        <p>Coverage requires "news value." Novelty, impact, prominence, human interest—events that don't meet these criteria are not covered.</p>
+        <h3>Uncovered People</h3>
+        <p>The socially vulnerable, minorities, rural areas, daily life—these are often excluded from coverage as having "no news value." Their existence is not proven by media.</p>
+        <h3>Gaps in History</h3>
+        <p>Past media is similar. Newspapers, magazines, broadcasting—people not recorded in these have also fallen out of historical records. Women, workers, colonized peoples—their existence has been made "invisible" by media selection.</p>
+
+        <h2>8. TokiStorage's Position — Proof of Existence Beyond Media</h2>
+        <p>Proof of existence through media has structural limitations.</p>
+        <ul>
+            <li><strong>Selection</strong>: Media only covers those with "news value"</li>
+            <li><strong>Dependence</strong>: Digital media depends on platform survival</li>
+            <li><strong>Temporality</strong>: Virality is momentary, news flows past</li>
+            <li><strong>Other-determined</strong>: Whether to be covered is not for the individual to decide</li>
+        </ul>
+        <p>TokiStorage attempts to transcend these limitations.</p>
+        <ul>
+            <li><strong>Non-selective</strong>: "News value" is not required. Available to anyone</li>
+            <li><strong>Non-dependent</strong>: Physical preservation not dependent on specific platforms</li>
+            <li><strong>Permanent</strong>: Designed for 1000-year scale preservation</li>
+            <li><strong>Self-determined</strong>: What to leave is chosen by the individual</li>
+        </ul>
+        <p>Even without media coverage, even without being on Wikipedia, one can leave proof that "I was here." That is the democratization of proof of existence.</p>
+
+        <h2>Conclusion — Beyond Visibility</h2>
+        <p>Media is a powerful device that makes existence visible. Being covered, broadcasting on social media, being on Wikipedia—these are forms of proof of existence in modern times.</p>
+        <p>However, media is selective. Those without "news value," people without "notability" are not proven by media. Their existence is socially "invisible."</p>
+        <p>That is why proof of existence independent of media is necessary. A system where one can leave proof that "I was here" even without being covered, without going viral.</p>
+        <p>Media visibility is temporary. But physical records can be permanent. In 1000 years, today's social media will not exist. But proof of existence inscribed on quartz glass can remain.</p>
+        <p>Beyond visibility, toward permanence—that is the new form of proof of existence in the media age.</p>
+
+        <section class="references">
+            <h2>References</h2>
+            <ul>
+                <li>Couldry, N. (2012). <em>Media, Society, World: Social Theory and Digital Media Practice.</em> Polity.</li>
+                <li>Castells, M. (2009). <em>Communication Power.</em> Oxford University Press.</li>
+                <li>van Dijck, J. (2013). <em>The Culture of Connectivity: A Critical History of Social Media.</em> Oxford University Press.</li>
+                <li>Reagle, J. (2010). <em>Good Faith Collaboration: The Culture of Wikipedia.</em> MIT Press.</li>
+                <li>Bruns, A. (2008). <em>Blogs, Wikipedia, Second Life, and Beyond: From Production to Produsage.</em> Peter Lang.</li>
+            </ul>
+        </section>
+    </article>
+
+    <footer class="article-footer">
+        <p id="essay-nav-links"></p>
+        <p style="margin-top: 2rem; font-size: 0.75rem;">&copy; 2026 TokiStorage</p>
+    </footer>
+</main>
+
+<script src="essay-nav.js?v=20260209"></script>
+</body>
+</html>

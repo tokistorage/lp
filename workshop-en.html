@@ -1,0 +1,558 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pearl Soap Workshop | TokiStorage</title>
+    <meta name="description" content="Pearl Soap Workshop -- a handmade soap experience even children can enjoy. A gift that brings joy and is never refused. Education that nurtures self-esteem and builds connections.">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Shippori+Mincho:wght@400;500;600;700&family=Zen+Kaku+Gothic+New:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="index.css">
+    <style>
+        .workshop-page { padding: 6rem 2rem 4rem; }
+        .workshop-inner { max-width: 720px; margin: 0 auto; }
+        .workshop-inner h1 {
+            font-family: var(--font-display);
+            font-size: 1.8rem;
+            font-weight: 600;
+            color: var(--text-primary);
+            margin-bottom: 0.3rem;
+            text-align: center;
+        }
+        .workshop-tagline {
+            text-align: center;
+            font-family: var(--font-display);
+            font-size: 0.92rem;
+            color: var(--text-secondary);
+            margin-bottom: 2.5rem;
+            line-height: 1.8;
+        }
+        .workshop-section {
+            margin-bottom: 3rem;
+        }
+        .workshop-section h2 {
+            font-family: var(--font-display);
+            font-size: 1.15rem;
+            font-weight: 600;
+            color: var(--text-primary);
+            margin-bottom: 1rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 2px solid var(--toki-gold);
+        }
+        .workshop-section p,
+        .workshop-section li {
+            font-size: 0.88rem;
+            color: var(--text-secondary);
+            line-height: 1.9;
+        }
+        .workshop-lead {
+            background: var(--bg-page);
+            border: 1px solid var(--border);
+            border-radius: 1rem;
+            padding: 2rem;
+            margin-bottom: 3rem;
+        }
+        .workshop-lead p {
+            font-size: 0.9rem;
+            color: var(--text-secondary);
+            line-height: 2;
+            margin-bottom: 0.8rem;
+        }
+        .workshop-lead p:last-child { margin-bottom: 0; }
+
+        /* Appeal cards */
+        .appeal-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 1.2rem;
+            margin-top: 1.5rem;
+        }
+        .appeal-card {
+            background: var(--bg-page);
+            border: 1px solid var(--border);
+            border-radius: 0.8rem;
+            padding: 1.5rem;
+        }
+        .appeal-card h3 {
+            font-family: var(--font-display);
+            font-size: 0.95rem;
+            font-weight: 600;
+            color: var(--toki-gold);
+            margin-bottom: 0.6rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        .appeal-card p {
+            font-size: 0.85rem;
+            color: var(--text-secondary);
+            line-height: 1.8;
+        }
+
+        /* Reason list */
+        .reason-list {
+            list-style: none;
+            padding: 0;
+            margin: 1.5rem 0;
+        }
+        .reason-list li {
+            background: var(--bg-page);
+            border-left: 4px solid var(--toki-gold);
+            padding: 1.2rem 1.5rem;
+            margin-bottom: 1rem;
+            border-radius: 0 0.5rem 0.5rem 0;
+        }
+        .reason-list li h4 {
+            font-family: var(--font-display);
+            font-size: 0.95rem;
+            font-weight: 600;
+            color: var(--text-primary);
+            margin-bottom: 0.4rem;
+        }
+        .reason-list li p {
+            font-size: 0.85rem;
+            margin: 0;
+        }
+
+        /* Workshop flow */
+        .flow-timeline {
+            position: relative;
+            padding-left: 2rem;
+            margin: 1.5rem 0;
+        }
+        .flow-timeline::before {
+            content: "";
+            position: absolute;
+            left: 0.7rem;
+            top: 0.5rem;
+            bottom: 0.5rem;
+            width: 2px;
+            background: linear-gradient(to bottom, var(--toki-gold), var(--toki-blue));
+            border-radius: 1px;
+        }
+        .flow-item {
+            position: relative;
+            margin-bottom: 1.5rem;
+            padding: 1rem 1.2rem;
+            background: var(--bg-page);
+            border: 1px solid var(--border);
+            border-radius: 0.6rem;
+        }
+        .flow-item:last-child { margin-bottom: 0; }
+        .flow-item::before {
+            content: "";
+            position: absolute;
+            left: -1.55rem;
+            top: 1.2rem;
+            width: 0.7rem;
+            height: 0.7rem;
+            background: var(--toki-gold);
+            border-radius: 50%;
+            border: 2px solid #fff;
+            box-shadow: 0 0 0 2px var(--toki-gold);
+        }
+        .flow-item .flow-time {
+            font-size: 0.75rem;
+            color: var(--toki-gold);
+            font-weight: 600;
+            margin-bottom: 0.3rem;
+        }
+        .flow-item h4 {
+            font-family: var(--font-display);
+            font-size: 0.92rem;
+            font-weight: 600;
+            color: var(--text-primary);
+            margin-bottom: 0.3rem;
+        }
+        .flow-item p {
+            font-size: 0.82rem;
+            color: var(--text-secondary);
+            line-height: 1.7;
+            margin: 0;
+        }
+
+        /* Educational value */
+        .education-box {
+            background: var(--toki-gold-pale);
+            border: 1px solid var(--toki-gold);
+            border-radius: 1rem;
+            padding: 2rem;
+            margin: 2rem 0;
+        }
+        .education-box h3 {
+            font-family: var(--font-display);
+            font-size: 1rem;
+            font-weight: 600;
+            color: var(--text-primary);
+            margin-bottom: 1rem;
+            text-align: center;
+        }
+        .education-points {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1rem;
+        }
+        .education-point {
+            background: #fff;
+            border-radius: 0.6rem;
+            padding: 1rem;
+            text-align: center;
+        }
+        .education-point .point-icon {
+            font-size: 1.4rem;
+            margin-bottom: 0.4rem;
+        }
+        .education-point h4 {
+            font-family: var(--font-display);
+            font-size: 0.85rem;
+            font-weight: 600;
+            color: var(--text-primary);
+            margin-bottom: 0.3rem;
+        }
+        .education-point p {
+            font-size: 0.78rem;
+            color: var(--text-muted);
+            line-height: 1.6;
+            margin: 0;
+        }
+
+        /* Venue options */
+        .venue-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1rem;
+            margin-top: 1rem;
+        }
+        .venue-card {
+            background: var(--bg-page);
+            border: 1px solid var(--border);
+            border-radius: 0.6rem;
+            padding: 1rem;
+            text-align: center;
+        }
+        .venue-card h4 {
+            font-family: var(--font-display);
+            font-size: 0.85rem;
+            font-weight: 600;
+            color: var(--text-primary);
+            margin-bottom: 0.3rem;
+        }
+        .venue-card p {
+            font-size: 0.78rem;
+            color: var(--text-muted);
+            line-height: 1.6;
+            margin: 0;
+        }
+
+        /* CTA */
+        .workshop-cta {
+            text-align: center;
+            margin-top: 3rem;
+            padding: 2rem;
+            background: var(--toki-gold-pale);
+            border: 1px solid var(--toki-gold);
+            border-radius: 1rem;
+        }
+        .workshop-cta h3 {
+            font-family: var(--font-display);
+            font-size: 1rem;
+            color: var(--text-primary);
+            margin-bottom: 0.8rem;
+        }
+        .workshop-cta p {
+            font-size: 0.85rem;
+            color: var(--text-secondary);
+            margin-bottom: 1.2rem;
+        }
+        .workshop-cta a.cta-button {
+            display: inline-block;
+            background: #06C755;
+            color: #fff;
+            padding: 0.8rem 2rem;
+            border-radius: 0.5rem;
+            text-decoration: none;
+            font-size: 0.9rem;
+            font-weight: 500;
+            transition: background 0.3s ease;
+        }
+        .workshop-cta a.cta-button:hover { background: #05a847; }
+
+        .workshop-back {
+            text-align: center;
+            margin-top: 2.5rem;
+        }
+        .workshop-back a {
+            color: var(--toki-blue);
+            text-decoration: none;
+            font-size: 0.85rem;
+            margin: 0 0.8rem;
+        }
+        .workshop-back a:hover { text-decoration: underline; }
+
+        /* Supplementary note */
+        .workshop-note {
+            background: var(--bg-page);
+            border: 1px solid var(--border);
+            border-radius: 0.8rem;
+            padding: 1.2rem 1.5rem;
+            margin: 1.5rem 0;
+            font-size: 0.82rem;
+            color: var(--text-muted);
+            line-height: 1.8;
+        }
+    </style>
+</head>
+<body>
+
+<nav class="toki-nav">
+    <span class="nav-logo"><a href="index-en.html">TokiStorage</a> / <a href="pearl-soap-en.html">Pearl Soap</a> / Workshop</span>
+</nav>
+
+<main class="workshop-page">
+    <div class="workshop-inner">
+        <h1>Pearl Soap Workshop</h1>
+        <p class="workshop-tagline">
+            The joy of making, the joy of giving,<br>
+            the joy of being appreciated.<br>
+            A handmade soap class where you experience all three.
+        </p>
+
+        <div class="workshop-lead">
+            <p>The Pearl Soap Workshop is more than just a "craft experience."</p>
+            <p>You make something with your own hands, then give it to someone you care about. When they light up with happiness, your own sense of self-worth grows.</p>
+            <p>Anyone can participate, from children to adults. All materials and tools are provided, so you come empty-handed and leave with a finished creation. And above all -- what you make becomes a gift that brings joy and is never refused.</p>
+        </div>
+
+        <!-- The appeal of handmade soap -->
+        <section class="workshop-section">
+            <h2>The appeal of handmade soap</h2>
+            <p>Why soap, among all the crafts you could choose? Handmade soap has unique qualities that set it apart from other creative activities.</p>
+
+            <div class="appeal-grid">
+                <div class="appeal-card">
+                    <h3>Practical and useful</h3>
+                    <p>Your creation becomes something you actually use. It is not just a decoration -- it finds a place in your daily hand-washing routine. As the soap is used up, moments of remembering the maker and the giver naturally arise.</p>
+                </div>
+                <div class="appeal-card">
+                    <h3>No way to fail</h3>
+                    <p>With the MP soap base method, you simply melt and pour into a mold. No chemical reactions to wait for, and you take home a finished product the same day. Even first-timers are guaranteed a beautiful result.</p>
+                </div>
+                <div class="appeal-card">
+                    <h3>Scent creates lasting memories</h3>
+                    <p>Smell is the sense most deeply tied to memory. The coconut fragrance weaves together the experience of the workshop day and the smile of the person who receives your gift.</p>
+                </div>
+                <div class="appeal-card">
+                    <h3>Just the right cost</h3>
+                    <p>Not too expensive, not too cheap. It does not burden the recipient, yet conveys the warmth of something handmade -- the perfect balance for a gift.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Why Pearl Soap? -->
+        <section class="workshop-section">
+            <h2>Why Pearl Soap?</h2>
+            <p>Among all handmade soaps, there are clear reasons Pearl Soap is chosen as a gift.</p>
+
+            <ul class="reason-list">
+                <li>
+                    <h4>Even children can make it</h4>
+                    <p>There are no complicated steps. Elementary schoolers, kindergarteners -- anyone can make it with a little adult guidance. The sense of accomplishment from "I made this myself" is a powerful joy, regardless of age.</p>
+                </li>
+                <li>
+                    <h4>It delights the recipient</h4>
+                    <p>The paw-print shape is universally adored by people of all ages and genders. The moment you say "I made this for you," the recipient's face breaks into a smile. Witnessing that reaction becomes a foundational experience for the maker.</p>
+                </li>
+                <li>
+                    <h4>It is never refused</h4>
+                    <p>Soap is a consumable -- it gets used up. It takes no storage space, and there are few allergy concerns. It is a gift that people are happy to receive, never thinking "I don't need this."</p>
+                </li>
+                <li>
+                    <h4>It carries a message</h4>
+                    <p>Pearl Soap embodies the sentiment "Thank you for being here." It lets you shape gratitude that is hard to put into words and deliver it as something tangible. It is not just soap -- it is a vessel for your feelings.</p>
+                </li>
+            </ul>
+        </section>
+
+        <!-- Educational value -->
+        <section class="workshop-section">
+            <h2>Education that nurtures self-esteem and builds connections</h2>
+            <p>The Pearl Soap Workshop is more than a craft session. For children, it is an educational experience that cultivates the skills needed to thrive in society.</p>
+
+            <div class="education-box">
+                <h3>Skills nurtured through the workshop</h3>
+                <div class="education-points">
+                    <div class="education-point">
+                        <div class="point-icon">&#x1F64C;</div>
+                        <h4>Self-esteem</h4>
+                        <p>The experience of having something you made bring joy to others fosters the feeling that "I have value."</p>
+                    </div>
+                    <div class="education-point">
+                        <div class="point-icon">&#x1F91D;</div>
+                        <h4>Relationship skills</h4>
+                        <p>Through the act of giving, children learn how to connect with others and express gratitude.</p>
+                    </div>
+                    <div class="education-point">
+                        <div class="point-icon">&#x1F4AB;</div>
+                        <h4>Creativity</h4>
+                        <p>Choosing colors, adjusting scents, deciding on wrapping -- each small decision cultivates creative thinking.</p>
+                    </div>
+                    <div class="education-point">
+                        <div class="point-icon">&#x1F331;</div>
+                        <h4>Social awareness</h4>
+                        <p>The mindset of "making something for someone" nurtures awareness of being part of a community.</p>
+                    </div>
+                </div>
+            </div>
+
+            <p>There is a world of difference between giving something you bought and giving something you made with your own hands. The Pearl Soap Workshop is a first step for children in learning the power of building meaningful connections.</p>
+        </section>
+
+        <!-- Workshop flow -->
+        <section class="workshop-section">
+            <h2>Workshop flow</h2>
+            <p>A 60-minute program. All materials and tools are provided. Just show up empty-handed.</p>
+
+            <div class="flow-timeline">
+                <div class="flow-item">
+                    <div class="flow-time">0:00 - 0:10</div>
+                    <h4>Opening</h4>
+                    <p>Share the story behind Pearl Soap and the spirit of "Thank you for being here." Take a moment to think about who you want to give your soap to and why.</p>
+                </div>
+                <div class="flow-item">
+                    <div class="flow-time">0:10 - 0:15</div>
+                    <h4>Materials &amp; Tools Explanation</h4>
+                    <p>Introduction to the MP soap base, essential oils, colorants, and molds. Review key safety points for working with the materials.</p>
+                </div>
+                <div class="flow-item">
+                    <div class="flow-time">0:15 - 0:35</div>
+                    <h4>Making Time</h4>
+                    <p>Melt the soap base, add color and fragrance, then pour into the molds. Everyone helps each other while having fun creating together.</p>
+                </div>
+                <div class="flow-item">
+                    <div class="flow-time">0:35 - 0:45</div>
+                    <h4>Waiting for Solidification</h4>
+                    <p>While the soap sets, prepare the packaging. Choose an organza drawstring pouch and create a message label.</p>
+                </div>
+                <div class="flow-item">
+                    <div class="flow-time">0:45 - 0:55</div>
+                    <h4>Wrapping &amp; Finishing</h4>
+                    <p>Remove the solidified soap from the mold, place it in a drawstring pouch, and seal it in an OPP bag. Your gift is complete.</p>
+                </div>
+                <div class="flow-item">
+                    <div class="flow-time">0:55 - 1:00</div>
+                    <h4>Closing</h4>
+                    <p>Show off your finished creations and share who you plan to give them to. Take your gift home with "Thank you for being here" in your heart.</p>
+                </div>
+            </div>
+
+            <div class="workshop-note">
+                Times are approximate and can be adjusted based on group size and age range. Children must be accompanied by a parent or guardian.
+            </div>
+        </section>
+
+        <!-- Venue options -->
+        <section class="workshop-section">
+            <h2>Venue options</h2>
+            <p>Workshops can be held in a wide variety of locations and settings.</p>
+
+            <div class="venue-grid">
+                <div class="venue-card">
+                    <h4>Hotels &amp; Ryokan</h4>
+                    <p>As an experience program for guests</p>
+                </div>
+                <div class="venue-card">
+                    <h4>Shopping Malls</h4>
+                    <p>At event spaces in department stores and malls</p>
+                </div>
+                <div class="venue-card">
+                    <h4>Retail Stores</h4>
+                    <p>As a craft class or workshop corner event</p>
+                </div>
+                <div class="venue-card">
+                    <h4>Cafes &amp; Restaurants</h4>
+                    <p>As a hands-on experience paired with a meal</p>
+                </div>
+                <div class="venue-card">
+                    <h4>Corporations &amp; Organizations</h4>
+                    <p>For employee wellness events or team building</p>
+                </div>
+                <div class="venue-card">
+                    <h4>Schools &amp; Educational Institutions</h4>
+                    <p>As an extracurricular lesson or PTA activity</p>
+                </div>
+            </div>
+
+            <div class="workshop-note">
+                Group size, duration, and required materials can all be customized to your needs. Feel free to reach out to discuss.
+            </div>
+        </section>
+
+        <!-- CTA -->
+        <div class="workshop-cta">
+            <h3>Interested in hosting a workshop?</h3>
+            <p>"I'd love to try this at my venue." "I want to hear more."<br>Ask us anything about formats, costs, and preparation.</p>
+            <a href="https://line.me/R/oaMessage/@897glsbz/?Pearl%20Soap%E3%83%AF%E3%83%BC%E3%82%AF%E3%82%B7%E3%83%A7%E3%83%83%E3%83%97%E3%81%AB%E3%81%A4%E3%81%84%E3%81%A6%E7%9B%B8%E8%AB%87%E3%81%97%E3%81%9F%E3%81%84%E3%81%A7%E3%81%99" target="_blank" rel="noopener" class="cta-button">Chat with us on LINE</a>
+        </div>
+
+        <div class="workshop-back">
+            <a href="how-to-make-en.html">&larr; How to Make</a>
+            <a href="pearl-soap-en.html">Pearl Soap</a>
+            <a href="ambassador-en.html">Certified Ambassador</a>
+            <a href="index-en.html">TokiStorage &rarr;</a>
+        </div>
+    </div>
+</main>
+
+<footer class="toki-footer">
+    <div class="footer-inner">
+        <div class="footer-brand">
+            <h3>TokiStorage</h3>
+            <p>Eternal memorial engraved in quartz glass.<br>No server, no maintenance.<br>Proof of existence, delivered a thousand years forward.</p>
+        </div>
+        <div class="footer-links-group">
+            <h4>Links</h4>
+            <a href="index-en.html">About TokiStorage</a>
+            <a href="index-en.html#pricing">Pricing</a>
+            <a href="index-en.html#faq">FAQ</a>
+            <a href="index-en.html#cta">Contact</a>
+            <a href="pitch-deck-en.html">Investor Deck</a>
+            <a href="legacy-en.html">1000-Year Design Philosophy</a>
+            <a href="kids-en.html">For Kids</a>
+            <a href="infographic-en.html">Ecosystem Overview</a>
+        </div>
+        <div class="footer-links-group">
+            <h4>Proposals</h4>
+            <a href="partnership-en.html">Partnership Proposal</a>
+            <a href="client-proposal-en.html">Client Proposal</a>
+            <a href="government-proposal-en.html">Government Proposal</a>
+            <a href="patronage-en.html">Patronage</a>
+        </div>
+        <div class="footer-links-group">
+            <h4>Related</h4>
+            <span class="footer-sub-links"><a href="../index.html">SoulCarrier Resonance Circle</a> (<a href="../movement/Membership_Guide_EN.pdf">Enrollment</a> / <a href="../movement/BasicAgreement.pdf">Agreement</a> / <a href="../movement/Bylaws_EN.pdf">Bylaws</a>)</span>
+            <span class="footer-sub-links"><a href="pearl-soap-en.html">Pearl Soap</a> (<a href="how-to-make-en.html">How to Make</a> / <a href="workshop-en.html">Workshop</a> / <a href="ambassador-en.html">Ambassador</a> / <a href="100-scenes-en.html">100 Scenes</a>)</span>
+            <span class="footer-sub-links"><a href="workaway-en.html">Workaway Consulting</a> (<a href="workaway-proposal-en.html">Proposal</a>)</span>
+            <a href="offgrid-en.html">Off-Grid Consulting</a>
+            <a href="https://voice-memorial-qr.onrender.com/" target="_blank" rel="noopener">Voice QR Tech Demo</a>
+        </div>
+        <div class="footer-links-group">
+            <h4>Legal</h4>
+            <a href="tokushoho-en.html">Specified Commercial Transactions Act</a>
+            <a href="privacy-en.html">Privacy Policy</a>
+        </div>
+        <div class="footer-links-group">
+            <h4>Company</h4>
+            <p class="footer-company">TokiStorage<br>Takuya Sato<br>2-11-13 Akemi, Urayasu, Chiba 279-0014, Japan<br>(Relocating to Sado City, spring 2026)</p>
+            <a href="https://www.linkedin.com/in/satotakuya" target="_blank" rel="noopener"><svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" style="vertical-align:-2px;margin-right:4px"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 01-2.063-2.065 2.064 2.064 0 112.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg>satotakuya</a>
+            <a href="https://x.com/tokistorage" target="_blank" rel="noopener"><svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" style="vertical-align:-2px;margin-right:4px"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>@tokistorage</a>
+        </div>
+    </div>
+    <div class="footer-bottom">
+        <p class="footer-disclaimer">*TokiStorage is a record preservation product. It is not a substitute for a cemetery or gravestone under the Graveyard and Burial Act. "1,000 years" is a theoretical value based on quartz glass material properties, not a product warranty period. Pearl Soap is not for sale.</p>
+        <p>&copy; 2026 TokiStorage / TokiStorage All rights reserved.</p>
+    </div>
+</footer>
+
+</body>
+</html>

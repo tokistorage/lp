@@ -1,0 +1,513 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Workaway導入運用支援コンサル | トキストレージ</title>
+    <meta name="description" content="Workaway導入運用支援コンサル — 地方の宿泊施設・農家・事業者向けに、Workawayホスト登録から運用までをトータルサポート。国際交流を通じた地域活性化を支援します。">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Shippori+Mincho:wght@400;500;600;700&family=Zen+Kaku+Gothic+New:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="index.css">
+    <style>
+        .wa-page { padding: 6rem 2rem 4rem; }
+        .wa-inner { max-width: 700px; margin: 0 auto; }
+        .wa-inner h1 {
+            font-family: var(--font-display);
+            font-size: 1.6rem;
+            font-weight: 600;
+            color: var(--text-primary);
+            margin-bottom: 0.3rem;
+            text-align: center;
+        }
+        .wa-tagline {
+            text-align: center;
+            font-family: var(--font-display);
+            font-size: 0.92rem;
+            color: var(--text-secondary);
+            margin-bottom: 2.5rem;
+            line-height: 1.8;
+        }
+        .wa-section {
+            margin-bottom: 2.5rem;
+        }
+        .wa-section h2 {
+            font-family: var(--font-display);
+            font-size: 1.05rem;
+            font-weight: 600;
+            color: var(--text-primary);
+            margin-bottom: 0.8rem;
+            padding-bottom: 0.4rem;
+            border-bottom: 1px solid var(--border);
+        }
+        .wa-section p,
+        .wa-section li {
+            font-size: 0.88rem;
+            color: var(--text-secondary);
+            line-height: 1.9;
+        }
+        .wa-section ul {
+            padding-left: 1.5rem;
+            margin-bottom: 1rem;
+        }
+        .wa-section li { margin-bottom: 0.3rem; }
+        .wa-features {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1.2rem;
+            margin-top: 1rem;
+        }
+        .wa-feature-card {
+            background: var(--bg-page);
+            border: 1px solid var(--border);
+            border-radius: 0.8rem;
+            padding: 1.2rem;
+            text-align: center;
+        }
+        .wa-feature-card .feature-icon {
+            font-size: 1.6rem;
+            margin-bottom: 0.5rem;
+        }
+        .wa-feature-card h3 {
+            font-family: var(--font-display);
+            font-size: 0.88rem;
+            font-weight: 600;
+            color: var(--text-primary);
+            margin-bottom: 0.3rem;
+        }
+        .wa-feature-card p {
+            font-size: 0.78rem;
+            color: var(--text-muted);
+            line-height: 1.6;
+        }
+        .wa-story {
+            background: var(--bg-page);
+            border: 1px solid var(--border);
+            border-radius: 1rem;
+            padding: 1.8rem;
+            margin: 2rem 0;
+        }
+        .wa-story p {
+            font-size: 0.88rem;
+            color: var(--text-secondary);
+            line-height: 1.9;
+            margin-bottom: 0.8rem;
+        }
+        .wa-story p:last-child { margin-bottom: 0; }
+        .wa-personas {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 1rem;
+            margin-top: 1rem;
+        }
+        .wa-persona-card {
+            background: var(--bg-page);
+            border: 1px solid var(--border);
+            border-radius: 0.8rem;
+            padding: 1.2rem 1.5rem;
+        }
+        .wa-persona-card h3 {
+            font-family: var(--font-display);
+            font-size: 0.92rem;
+            font-weight: 600;
+            color: var(--text-primary);
+            margin-bottom: 0.4rem;
+        }
+        .wa-persona-card p {
+            font-size: 0.82rem;
+            color: var(--text-muted);
+            line-height: 1.7;
+        }
+        .wa-flow {
+            counter-reset: flow-step;
+            margin-top: 1rem;
+        }
+        .wa-flow-step {
+            display: flex;
+            gap: 1rem;
+            align-items: flex-start;
+            margin-bottom: 1.2rem;
+        }
+        .wa-flow-step::before {
+            counter-increment: flow-step;
+            content: counter(flow-step);
+            flex-shrink: 0;
+            width: 2rem;
+            height: 2rem;
+            background: var(--toki-blue);
+            color: #fff;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.82rem;
+            font-weight: 600;
+        }
+        .wa-flow-step div h3 {
+            font-family: var(--font-display);
+            font-size: 0.88rem;
+            font-weight: 600;
+            color: var(--text-primary);
+            margin-bottom: 0.2rem;
+        }
+        .wa-flow-step div p {
+            font-size: 0.82rem;
+            color: var(--text-muted);
+            line-height: 1.7;
+        }
+        .wa-pricing {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 1.2rem;
+            margin-top: 1rem;
+        }
+        .wa-pricing-card {
+            background: var(--bg-page);
+            border: 1px solid var(--border);
+            border-radius: 0.8rem;
+            padding: 1.5rem;
+        }
+        .wa-pricing-card.recommended {
+            border-color: var(--toki-blue);
+            box-shadow: 0 0 0 1px var(--toki-blue);
+        }
+        .wa-pricing-card h3 {
+            font-family: var(--font-display);
+            font-size: 0.95rem;
+            font-weight: 600;
+            color: var(--text-primary);
+            margin-bottom: 0.3rem;
+        }
+        .wa-pricing-card .price {
+            font-family: var(--font-display);
+            font-size: 1.3rem;
+            font-weight: 700;
+            color: var(--toki-blue);
+            margin-bottom: 0.8rem;
+        }
+        .wa-pricing-card .price span {
+            font-size: 0.75rem;
+            font-weight: 400;
+            color: var(--text-muted);
+        }
+        .wa-pricing-card ul {
+            padding-left: 1.2rem;
+            margin: 0;
+        }
+        .wa-pricing-card li {
+            font-size: 0.78rem;
+            color: var(--text-secondary);
+            line-height: 1.8;
+            margin-bottom: 0.2rem;
+        }
+        .wa-badge {
+            display: inline-block;
+            background: var(--toki-blue);
+            color: #fff;
+            font-size: 0.7rem;
+            padding: 0.15rem 0.6rem;
+            border-radius: 1rem;
+            margin-bottom: 0.5rem;
+            font-weight: 500;
+        }
+        .wa-cta {
+            text-align: center;
+            margin-top: 3rem;
+            padding: 2rem;
+            background: var(--toki-blue-pale);
+            border-radius: 1rem;
+        }
+        .wa-cta p {
+            font-family: var(--font-display);
+            font-size: 0.92rem;
+            color: var(--text-secondary);
+            margin-bottom: 1rem;
+            line-height: 1.8;
+        }
+        .wa-cta a {
+            display: inline-block;
+            background: var(--toki-blue);
+            color: #fff;
+            padding: 0.7rem 2rem;
+            border-radius: 0.5rem;
+            text-decoration: none;
+            font-size: 0.85rem;
+            font-weight: 500;
+            transition: background 0.3s ease;
+        }
+        .wa-cta a:hover { background: var(--toki-blue-dark); }
+        .wa-back {
+            text-align: center;
+            margin-top: 2.5rem;
+        }
+        .wa-back a {
+            color: var(--toki-blue);
+            text-decoration: none;
+            font-size: 0.85rem;
+        }
+        .wa-back a:hover { text-decoration: underline; }
+        .wa-note {
+            font-size: 0.75rem !important;
+            color: var(--text-muted) !important;
+            margin-top: 0.5rem;
+        }
+        .wa-story-photos {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 0.8rem;
+            margin: 1.2rem 0;
+        }
+        .wa-story-photos figure { margin: 0; }
+        .wa-story-photos img {
+            width: 100%;
+            border-radius: 0.5rem;
+            aspect-ratio: 4/3;
+            object-fit: cover;
+        }
+        .wa-story-photos figcaption {
+            font-size: 0.7rem;
+            color: var(--text-muted);
+            margin-top: 0.3rem;
+            line-height: 1.4;
+        }
+        @media (max-width: 520px) {
+            .wa-story-photos { grid-template-columns: 1fr; }
+        }
+    </style>
+</head>
+<body>
+
+<nav class="toki-nav">
+    <span class="nav-logo"><a href="index.html">トキストレージ</a> / Workaway導入支援</span>
+</nav>
+
+<main class="wa-page">
+    <div class="wa-inner">
+        <h1>Workaway導入運用支援コンサル</h1>
+        <p class="wa-tagline">
+            「うちなんかに来る人いるの？」<br>
+            ——います。世界は、あなたの日常に興味があります。<br>
+            始め方がわからないだけ。一緒にやりましょう。
+        </p>
+
+        <div class="wa-features">
+            <div class="wa-feature-card">
+                <div class="feature-icon">&#x1F30F;</div>
+                <h3>世界中から人が来る</h3>
+                <p>Workawayは170カ国以上のトラベラーが登録する国際交流プラットフォームです。</p>
+            </div>
+            <div class="wa-feature-card">
+                <div class="feature-icon">&#x1F91D;</div>
+                <h3>ボランティアベース</h3>
+                <p>1日5時間程度のお手伝いと引き換えに、宿泊と食事を提供。給与支払い不要です。</p>
+            </div>
+            <div class="wa-feature-card">
+                <div class="feature-icon">&#x1F3E1;</div>
+                <h3>地域活性化</h3>
+                <p>過疎地域にも海外からの訪問者が増え、多文化交流が地域の新たな活力になります。</p>
+            </div>
+        </div>
+
+        <div class="wa-story">
+            <p>2025年、代表・佐藤卓也はWorkawayゲストとしてマウイ島の東端から西端まで滞在。各地のホストのもとで働きながら暮らす中で、ゲスト同士の会話や交流を通じてWorkawayの魅力と可能性を確信しました。滞在先ではオフグリッド環境の構築支援も行い、ホスト運営に必要なインフラ整備の知見も蓄積しています。</p>
+            <div class="wa-story-photos">
+                <figure>
+                    <img src="asset/IMG_2724-2.jpeg" alt="マウイ島でのWorkaway活動" loading="lazy">
+                    <figcaption>マウイでのホスト支援作業</figcaption>
+                </figure>
+                <figure>
+                    <img src="asset/IMG_2671.jpeg" alt="Pearl Soapの配布準備" loading="lazy">
+                    <figcaption>ゲスト・ホストへの石鹸配布</figcaption>
+                </figure>
+                <figure>
+                    <img src="asset/IMG_3353.jpeg" alt="マウイの滞在先の屋外スペース" loading="lazy">
+                    <figcaption>滞在先の屋外ワークスペース</figcaption>
+                </figure>
+            </div>
+            <p>この経験を経て、日本でも自らホストとして活動しながら、Workawayホストを増やすことを決意。ゲスト・ホスト双方の視点を持つからこそできる、実体験に基づいた導入・運用支援サービスを提供しています。</p>
+            <p>「英語が不安」「どう始めればいいかわからない」「トラブルが心配」——そうした声に応えるため、登録からプロフィール作成、ゲスト対応、トラブルシューティングまで、伴走してサポートします。</p>
+            <p>現在は2026年春の佐渡島移転を準備しながら、三重県のNPO法人へのWorkaway導入支援を進行中。マウイでの経験だけでなく、日本の地域で実際にホスト立ち上げを進めている現場の知見が、このサービスの土台になっています。</p>
+        </div>
+
+        <div class="wa-section">
+            <h2>Workawayとは</h2>
+            <p>Workawayは、ホスト（受入側）とワーカウェイヤー（旅行者）をつなぐ国際的なプラットフォームです。旅行者は1日約5時間のお手伝い（農作業、清掃、語学交流など）を行い、ホストは宿泊場所と食事を提供します。</p>
+            <ul>
+                <li>170カ国以上から登録者あり</li>
+                <li>給与の支払いは不要（ボランティアベース）</li>
+                <li>文化交流・語学練習の機会</li>
+                <li>農家、ゲストハウス、個人宅など多様なホスト形態</li>
+            </ul>
+        </div>
+
+        <div class="wa-section">
+            <h2>こんな不安、ありませんか？</h2>
+            <div class="wa-personas">
+                <div class="wa-persona-card">
+                    <h3>「過疎地域だし、他の観光地に勝てない」</h3>
+                    <p>Workawayゲストが求めているのは観光名所ではありません。地元の暮らしに入り込む体験です。過疎だからこそ、都市では味わえないリアルな生活に価値があります。</p>
+                </div>
+                <div class="wa-persona-card">
+                    <h3>「うちに魅力的な要素なんてあるのかな」</h3>
+                    <p>畑仕事、薪割り、味噌づくり、犬の散歩——あなたの「普通の日常」が、海の向こうの誰かにとっては一生に一度の体験です。魅力は外から見たほうが見つかります。</p>
+                </div>
+                <div class="wa-persona-card">
+                    <h3>「インフルエンサーに頼んだ方が早いのでは」</h3>
+                    <p>バズは一瞬、Workawayは継続です。一人のゲストが良いレビューを残せば、次のゲストが来る。口コミの循環が、広告費ゼロで回り始めます。</p>
+                </div>
+                <div class="wa-persona-card">
+                    <h3>「英語できないし、トラブルが怖い」</h3>
+                    <p>マウイでゲストとして過ごした経験から言えば、片言でも伝わります。翻訳ツールもあります。そして、困ったときに相談できる相手がいれば——それがこのサービスです。</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="wa-section">
+            <h2>4つのフェーズ</h2>
+            <p>現在、三重県のNPO法人がこのプログラムを通じてWorkaway導入を進めています。</p>
+            <div class="wa-flow">
+                <div class="wa-flow-step">
+                    <div>
+                        <h3>Assessment — 現状把握</h3>
+                        <p>無料セッション×2回。受入環境・目的・不安点をじっくりお聞きし、Workawayがあなたに合うかどうかを一緒に見極めます。ここで「やっぱり違うな」と思えば、それでOKです。</p>
+                    </div>
+                </div>
+                <div class="wa-flow-step">
+                    <div>
+                        <h3>Discovery — 魅力の発見（2ヶ月）</h3>
+                        <p>あなたの「普通の日常」の中から、海外ゲストに刺さるポイントを発掘。プロフィールの設計、写真の選び方、他ホストとの差別化を一緒に考えます。</p>
+                    </div>
+                </div>
+                <div class="wa-flow-step">
+                    <div>
+                        <h3>Implement — 立ち上げ（2ヶ月）</h3>
+                        <p>Workaway登録・プロフィール作成（日英）・ハウスルール整備・居住スペース準備。公開からゲスト募集開始までを実行します。</p>
+                    </div>
+                </div>
+                <div class="wa-flow-step">
+                    <div>
+                        <h3>Operate — 運用定着（2ヶ月）</h3>
+                        <p>初回ゲストの受入サポート、メッセージ対応のレクチャー、トラブルシューティング。自走できるようになるまで伴走します。</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="wa-section">
+            <h2>料金</h2>
+            <div class="wa-pricing">
+                <div class="wa-pricing-card">
+                    <h3>Assessment</h3>
+                    <div class="price">0<span>円</span></div>
+                    <ul>
+                        <li>無料セッション×2回</li>
+                        <li>現状ヒアリング</li>
+                        <li>Workaway適性の見極め</li>
+                        <li>方針提案</li>
+                    </ul>
+                </div>
+                <div class="wa-pricing-card recommended">
+                    <span class="wa-badge">Discovery + Implement + Operate</span>
+                    <h3>全フェーズ一括</h3>
+                    <div class="price">88,000<span>円（税込）/ 6ヶ月</span></div>
+                    <ul>
+                        <li>魅力発掘・プロフィール設計</li>
+                        <li>Workaway登録・プロフィール作成（日英）</li>
+                        <li>ハウスルール・受入準備</li>
+                        <li>初回ゲスト受入サポート</li>
+                        <li>メール・チャット相談（6ヶ月）</li>
+                        <li>トラブルシューティング</li>
+                    </ul>
+                </div>
+            </div>
+            <p class="wa-note">※Assessmentは無料です。まずお話しして、合わないと思えばそこで終了できます。<br>※価格は予告なく変更される場合があります。法人向けカスタムプランもご相談ください。<br>※交通費・宿泊費（現地同行の場合）・Workaway登録料（ホスト年会費）等は別途実費精算となります。</p>
+
+            <div class="wa-story">
+                <p><strong>88,000円で何が変わるか</strong></p>
+                <p>英語プロフィールの翻訳・作成を外注すれば数万円。コンサルに集客戦略を頼めば月額数万〜十数万円。求人サイトに掲載すれば年間数十万円。Workawayは、これらを置き換えます。</p>
+                <p>月あたり約14,700円。6ヶ月後には自走できる状態を目指すので、継続課金はありません。そして一度レビューが付けば、広告費ゼロで次のゲストが来る循環が始まります。</p>
+                <p>仮にアルバイトを1人雇えば、時給1,000円×5時間×20日＝月10万円。Workawayゲストは宿泊と食事の提供だけ。人件費の差額を考えれば、導入支援の88,000円は初月で回収できる計算です。</p>
+            </div>
+        </div>
+
+        <div class="wa-section">
+            <h2>なぜ私たちがこれをやるのか</h2>
+            <p>トキストレージの使命は「存在証明」——人と場所の記憶を千年先へ届けること。しかし記録するだけでは足りません。記録されるべき新しい出会いと物語を生み出す仕組みが必要です。Workaway支援は、その仕組みそのものです。</p>
+            <h3>SoulCarrier（共鳴の会）とのシナジー</h3>
+            <p>私たちが運営するSoulCarrierは、「共鳴」をテーマに人と人をつなぐコミュニティです。Workawayもまた、ホストとゲストが同じ空間で時間を共有し、言語や文化を超えて共鳴し合う場。SoulCarrierで培った「つながりの設計」のノウハウが、Workawayホストの受け入れ体制づくりにそのまま活きています。</p>
+            <h3>Pearl Soapから学んだこと</h3>
+            <p>Pearl Soapは、ギフトエコノミーの考え方を実践するプロジェクトです。大量の広告費ではなく、手渡しと口コミで関係性を築く。この草の根的なアプローチは、Workawayの本質と重なります。レビューが次のゲストを呼び、ゲストが地域の魅力を世界に伝える——広告に頼らない循環型の集客は、Pearl Soapで私たちが実証してきたことです。</p>
+            <h3>パートナーシップ</h3>
+            <p>私たちはコンサルタントとクライアントの関係で終わりたくありません。6ヶ月の伴走を経て自走できるようになったホストは、私たちのパートナーになります。地域のホスト同士がつながり、ゲストを紹介し合い、ノウハウを共有する。そんなホストネットワークを一緒に育てていくことが、このコンサルの先にある未来です。</p>
+        </div>
+
+        <div class="wa-cta">
+            <p>Workaway、始めてみませんか？<br>まずは無料相談からお気軽にどうぞ。</p>
+            <a href="https://line.me/R/oaMessage/@897glsbz/?Workaway%E5%B0%8E%E5%85%A5%E3%81%AB%E3%81%A4%E3%81%84%E3%81%A6%E7%9B%B8%E8%AB%87%E3%81%97%E3%81%9F%E3%81%84%E3%81%A7%E3%81%99" target="_blank" rel="noopener">LINEで相談する</a>
+            <p style="margin-top: 1.5rem; font-size: 0.82rem;"><a href="workaway-proposal.html" style="background: none; color: var(--toki-blue); padding: 0;">ご提案資料（PDF印刷対応）→</a></p>
+        </div>
+
+        <div class="wa-back">
+            <a href="index.html">&larr; トキストレージ トップへ戻る</a>
+        </div>
+    </div>
+</main>
+
+<footer class="toki-footer">
+    <div class="footer-inner">
+        <div class="footer-brand">
+            <h3>トキストレージ</h3>
+            <p>想いを1000年先へ届ける5次元記録</p>
+        </div>
+        <div class="footer-links-group">
+            <h4>リンク</h4>
+            <a href="index.html">トキストレージとは</a>
+            <a href="index.html#pricing">料金プラン</a>
+            <a href="index.html#faq">よくある質問</a>
+            <a href="index.html#cta">お問い合わせ</a>
+            <a href="profile.html">代表プロフィール</a>
+            <a href="pitch-deck.html">投資家向け資料</a>
+            <a href="legacy.html">1000年の設計思想</a>
+            <a href="kids.html">お子さま向けページ</a>
+            <a href="infographic.html">エコシステム全体像</a>
+        </div>
+        <div class="footer-links-group">
+            <h4>提案</h4>
+            <a href="partnership.html">パートナーシップ提案</a>
+            <a href="client-proposal.html">クライアント提案</a>
+            <a href="government-proposal.html">行政提案</a>
+            <a href="patronage.html">パトロネージ</a>
+        </div>
+        <div class="footer-links-group">
+            <h4>関連サービス</h4>
+            <span class="footer-sub-links"><a href="../index-ja.html">SoulCarrier 共鳴の会</a>（<a href="../movement/入会のご案内.pdf">入会案内</a>／<a href="../movement/BasicAgreement.pdf">合意書</a>／<a href="../movement/Soul_Carrier規約.pdf">規約</a>）</span>
+            <span class="footer-sub-links"><a href="pearl-soap.html">Pearl Soap</a>（<a href="how-to-make.html">作り方</a>／<a href="workshop.html">ワークショップ</a>／<a href="ambassador.html">アンバサダー</a>／<a href="100-scenes.html">100のシーン</a>）</span>
+            <span class="footer-sub-links"><a href="workaway.html">Workaway導入支援</a>（<a href="workaway-proposal.html">提案書</a>）</span>
+            <a href="offgrid.html">オフグリッド構築支援</a>
+            <a href="https://voice-memorial-qr.onrender.com/" target="_blank" rel="noopener">Voice QR 技術デモ</a>
+        </div>
+        <div class="footer-links-group">
+            <h4>法的情報</h4>
+            <a href="tokushoho.html">特定商取引法に基づく表示</a>
+            <a href="privacy.html">プライバシーポリシー</a>
+        </div>
+        <div class="footer-links-group">
+            <h4>運営</h4>
+            <p class="footer-company">TokiStorage<br>佐藤卓也<br>〒279-0014 千葉県浦安市明海2-11-13<br>（2026年春〜 佐渡市へ移転予定）</p>
+            <a href="https://www.linkedin.com/in/satotakuya" target="_blank" rel="noopener"><svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" style="vertical-align:-2px;margin-right:4px"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 01-2.063-2.065 2.064 2.064 0 112.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg>satotakuya</a>
+            <a href="https://x.com/tokistorage" target="_blank" rel="noopener"><svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" style="vertical-align:-2px;margin-right:4px"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>@tokistorage</a>
+            <a href="https://www.facebook.com/tokistorage" target="_blank" rel="noopener"><svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" style="vertical-align:-2px;margin-right:4px"><path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/></svg>@tokistorage</a>
+            <a href="https://www.instagram.com/tokistorage" target="_blank" rel="noopener"><svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" style="vertical-align:-2px;margin-right:4px"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.052.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 100 12.324 6.162 6.162 0 000-12.324zM12 16a4 4 0 110-8 4 4 0 010 8zm6.406-11.845a1.44 1.44 0 100 2.881 1.44 1.44 0 000-2.881z"/></svg>@tokistorage</a>
+            <a href="https://www.tiktok.com/@tokistorage" target="_blank" rel="noopener"><svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" style="vertical-align:-2px;margin-right:4px"><path d="M12.525.02c1.31-.02 2.61-.01 3.91-.02.08 1.53.63 3.09 1.75 4.17 1.12 1.11 2.7 1.62 4.24 1.79v4.03c-1.44-.05-2.89-.35-4.2-.97-.57-.26-1.1-.59-1.62-.93-.01 2.92.01 5.84-.02 8.75-.08 1.4-.54 2.79-1.35 3.94-1.31 1.92-3.58 3.17-5.91 3.21-1.43.08-2.86-.31-4.08-1.03-2.02-1.19-3.44-3.37-3.65-5.71-.02-.5-.03-1-.01-1.49.18-1.9 1.12-3.72 2.58-4.96 1.66-1.44 3.98-2.13 6.15-1.72.02 1.48-.04 2.96-.04 4.44-.99-.32-2.15-.23-3.02.37-.63.41-1.11 1.04-1.36 1.75-.21.51-.15 1.07-.14 1.61.24 1.64 1.82 3.02 3.5 2.87 1.12-.01 2.19-.66 2.77-1.61.19-.33.4-.67.41-1.06.1-1.79.06-3.57.07-5.36.01-4.03-.01-8.05.02-12.07z"/></svg>@tokistorage</a>
+            <a href="https://www.youtube.com/@tokistorage" target="_blank" rel="noopener"><svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" style="vertical-align:-2px;margin-right:4px"><path d="M23.498 6.186a3.016 3.016 0 00-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 00.502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 002.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 002.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/></svg>@tokistorage</a>
+            <a href="https://zenn.dev/idev" target="_blank" rel="noopener"><svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" style="vertical-align:-2px;margin-right:4px"><path d="M3 3h18v4h-9l9 10v4H3v-4h9L3 7z"/></svg>idev</a>
+        </div>
+    </div>
+    <div class="footer-bottom">
+        <p class="footer-disclaimer">※トキストレージは記録保存を目的とした製品です。墓地埋葬法上の墓地・墓石の代替となるものではありません。「1000年」は石英ガラスの素材特性に基づく理論値であり、製品保証期間ではありません。分散保管はお客様の製品（複製）をお預かりするサービスであり、倉庫業法に基づく倉庫業には該当しません。QRコードは株式会社デンソーウェーブの登録商標です。</p>
+        <p>&copy; 2026 トキストレージ / TokiStorage. All rights reserved.</p>
+    </div>
+</footer>
+
+</body>
+</html>

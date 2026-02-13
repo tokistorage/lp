@@ -1,0 +1,976 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Honest Answers to 37 Concerns — Trust Design | Toki Storage</title>
+    <meta name="robots" content="noindex, nofollow">
+    <meta name="description" content="We identified 37 concerns people might have about Toki Storage — and wrote honest answers to each. Some we can address; others are structural. Here's how we think about both.">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Shippori+Mincho:wght@400;500;600;700&family=Zen+Kaku+Gothic+New:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --toki-blue: #2563EB;
+            --toki-blue-dark: #1D4ED8;
+            --toki-blue-pale: #EFF6FF;
+            --bg-white: #FFFFFF;
+            --bg-section: #F8FAFC;
+            --bg-warm: #FFFBF5;
+            --text-primary: #1E293B;
+            --text-secondary: #475569;
+            --text-muted: #94A3B8;
+            --border: #E2E8F0;
+            --amber: #D97706;
+            --amber-pale: #FEF3C7;
+            --amber-border: #F59E0B;
+            --green: #059669;
+            --green-pale: #ECFDF5;
+            --font-display: 'Shippori Mincho', serif;
+            --font-body: 'Zen Kaku Gothic New', sans-serif;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        html { scroll-behavior: smooth; }
+
+        body {
+            font-family: var(--font-body);
+            font-weight: 400;
+            background: var(--bg-white);
+            color: var(--text-primary);
+            line-height: 2;
+            font-size: 16px;
+        }
+
+        .article-nav {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 1000;
+            background: rgba(255,255,255,0.95);
+            backdrop-filter: blur(12px);
+            border-bottom: 1px solid var(--border);
+            padding: 0.6rem 1.2rem;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 1rem;
+        }
+        .article-nav .nav-brand {
+            font-family: var(--font-display);
+            font-size: 0.9rem;
+            font-weight: 600;
+            color: var(--toki-blue);
+            text-decoration: none;
+            white-space: nowrap;
+        }
+        .article-nav .nav-right {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+        .nav-back {
+            font-size: 0.75rem;
+            color: var(--text-secondary);
+            text-decoration: none;
+        }
+        .nav-back:hover { color: var(--toki-blue); }
+        .article-nav .lang-switch {
+            font-size: 0.75rem;
+            color: var(--toki-blue);
+            text-decoration: none;
+            padding: 0.3rem 0.6rem;
+            border: 1px solid var(--toki-blue);
+            border-radius: 4px;
+        }
+        .article-nav .lang-switch:hover {
+            background: var(--toki-blue);
+            color: #fff;
+        }
+
+        .article-container {
+            max-width: 720px;
+            margin: 0 auto;
+            padding: 7rem 2rem 4rem;
+        }
+
+        .article-header {
+            margin-bottom: 3rem;
+            padding-bottom: 2rem;
+            border-bottom: 1px solid var(--border);
+        }
+        .article-category {
+            font-size: 0.7rem;
+            color: var(--amber);
+            letter-spacing: 0.15em;
+            margin-bottom: 1rem;
+        }
+        .article-header h1 {
+            font-family: var(--font-display);
+            font-size: 1.8rem;
+            font-weight: 700;
+            line-height: 1.5;
+            margin-bottom: 1rem;
+        }
+        .article-subtitle {
+            font-size: 1rem;
+            color: var(--text-secondary);
+            margin-bottom: 1.5rem;
+        }
+
+        .article-body h2 {
+            font-family: var(--font-display);
+            font-size: 1.3rem;
+            font-weight: 600;
+            margin: 3rem 0 1.5rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 1px solid var(--border);
+        }
+        .article-body h3 {
+            font-family: var(--font-display);
+            font-size: 1.05rem;
+            font-weight: 600;
+            margin: 2rem 0 0.8rem;
+            color: var(--text-primary);
+        }
+        .article-body p {
+            margin-bottom: 1.5rem;
+            text-align: justify;
+        }
+        .article-body strong { font-weight: 600; }
+        .article-body ul, .article-body ol {
+            margin: 0 0 1.5rem 1.5rem;
+        }
+        .article-body li { margin-bottom: 0.5rem; }
+
+        .concern-box {
+            background: var(--bg-warm);
+            border: 1px solid #F3E8D0;
+            border-radius: 8px;
+            padding: 1rem 1.5rem;
+            margin: 1rem 0;
+        }
+        .concern-label {
+            font-size: 0.7rem;
+            font-weight: 600;
+            color: var(--amber);
+            letter-spacing: 0.1em;
+            margin-bottom: 0.3rem;
+        }
+        .concern-box p.cause-text {
+            font-size: 0.95rem;
+            color: var(--text-secondary);
+            margin-bottom: 0;
+        }
+
+        .answer-box {
+            background: var(--green-pale);
+            border-left: 3px solid var(--green);
+            padding: 1rem 1.5rem;
+            margin: 0.5rem 0 2rem;
+            border-radius: 0 8px 8px 0;
+        }
+        .answer-label {
+            font-size: 0.7rem;
+            font-weight: 600;
+            color: var(--green);
+            letter-spacing: 0.1em;
+            margin-bottom: 0.3rem;
+        }
+        .answer-box ul {
+            margin: 0.5rem 0 0 1.2rem;
+        }
+        .answer-box li {
+            margin-bottom: 0.4rem;
+            font-size: 0.92rem;
+        }
+
+        .structural-note {
+            display: inline-block;
+            font-size: 0.7rem;
+            background: var(--amber-pale);
+            color: var(--amber);
+            padding: 0.15rem 0.5rem;
+            border-radius: 3px;
+            font-weight: 600;
+            letter-spacing: 0.05em;
+            margin-left: 0.3rem;
+            vertical-align: middle;
+        }
+
+        .lock-intro {
+            font-size: 0.9rem;
+            font-weight: 600;
+            color: var(--amber);
+            margin-bottom: 0.5rem;
+        }
+
+        .article-intro {
+            background: var(--bg-section);
+            border-radius: 8px;
+            padding: 1.2rem 1.5rem;
+            margin-top: 1.5rem;
+            font-size: 0.9rem;
+            color: var(--text-secondary);
+            line-height: 1.9;
+        }
+
+        .comparison-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 2rem 0;
+            font-size: 0.85rem;
+        }
+        .comparison-table th {
+            background: var(--bg-section);
+            font-family: var(--font-display);
+            font-weight: 600;
+            padding: 0.6rem 0.8rem;
+            text-align: left;
+            border-bottom: 2px solid var(--toki-blue);
+        }
+        .comparison-table td {
+            padding: 0.6rem 0.8rem;
+            border-bottom: 1px solid var(--border);
+            vertical-align: top;
+        }
+
+        .cross-cutting {
+            background: var(--toki-blue-pale);
+            border: 1px solid var(--toki-blue);
+            border-radius: 8px;
+            padding: 1.5rem 2rem;
+            margin: 1.5rem 0;
+        }
+        .cross-cutting h3 {
+            color: var(--toki-blue);
+            margin-top: 0;
+        }
+        .cross-cutting ul {
+            margin: 0.5rem 0 0 1.2rem;
+        }
+        .cross-cutting li {
+            margin-bottom: 0.4rem;
+            font-size: 0.92rem;
+        }
+
+        .article-footer {
+            margin-top: 4rem;
+            padding-top: 2rem;
+            border-top: 1px solid var(--border);
+        }
+        .article-footer-links {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1rem;
+            justify-content: center;
+            margin-top: 1rem;
+        }
+        .article-footer-links a {
+            color: var(--toki-blue);
+            text-decoration: none;
+            font-size: 0.85rem;
+            padding: 0.4rem 1rem;
+            border: 1px solid var(--border);
+            border-radius: 6px;
+        }
+        .article-footer-links a:hover {
+            background: var(--toki-blue-pale);
+            border-color: var(--toki-blue);
+        }
+
+        @media (max-width: 600px) {
+            .article-container { padding: 5rem 1.2rem 3rem; }
+            .article-header h1 { font-size: 1.4rem; }
+            .concern-box, .answer-box, .cross-cutting { padding: 1rem; }
+            .comparison-table { font-size: 0.78rem; }
+        }
+    </style>
+</head>
+<body>
+
+<nav class="article-nav">
+    <a href="index-en.html" class="nav-brand">Toki Storage</a>
+    <div class="nav-right">
+        <a href="transparency-en.html" class="nav-back">Back to Transparency</a>
+        <a href="trust-design.html" class="lang-switch" aria-label="日本語に切り替え">JA</a>
+    </div>
+</nav>
+
+<article class="article-container">
+    <header class="article-header">
+        <p class="article-category">TRUST DESIGN</p>
+        <h1>Honest Answers to 37 Concerns</h1>
+        <p class="article-subtitle">We identified every concern people might have about Toki Storage — and wrote them down ourselves.<br>Some we can address (✅). Others are structural and won't go away (🔒). We're honest about both.</p>
+        <div class="article-intro">
+            <p style="margin-bottom:0;">We wrote this document before anyone asked us to. These aren't perfect answers — they're an honest record of how we're thinking right now. As new concerns arise, we'll add them here.</p>
+        </div>
+    </header>
+
+    <div class="article-body">
+
+        <!-- ===== A. Emotional Exploitation ===== -->
+        <h2>A. Emotional Concerns (5 Items)</h2>
+
+        <h3>A-1. ✅ "They're profiting from death"</h3>
+        <div class="concern-box">
+            <p class="concern-label">WHY THIS HAPPENS</p>
+            <p class="cause-text">Visitors reach the pricing page before understanding the philosophy</p>
+        </div>
+        <div class="answer-box">
+            <p class="answer-label">WHAT WE'RE DOING</p>
+            <ul>
+                <li>Redesign LP/ad funnels to follow "philosophy → empathy → how to participate" sequence</li>
+                <li>Move pricing to a standalone page, accessible only after philosophy content</li>
+                <li>Replace all "Buy Now" CTAs with "Learn More" on the top page</li>
+                <li>Place the founder's personal motivation (pet loss experience) in the first view</li>
+            </ul>
+        </div>
+
+        <h3>A-2. ✅ "It looks like an emotional sales technique"</h3>
+        <div class="concern-box">
+            <p class="concern-label">WHY THIS HAPPENS</p>
+            <p class="cause-text">Emotional content and purchase flows are placed too close together</p>
+        </div>
+        <div class="answer-box">
+            <p class="answer-label">WHAT WE'RE DOING</p>
+            <ul>
+                <li>Completely separate purchase links from essay/video pages (no CTAs on the same page)</li>
+                <li>End emotional content with links to related essays only</li>
+                <li>Create a dedicated "How to Participate" page with factual, non-emotional tone</li>
+                <li>Present user reviews as independent content, not as sales tools</li>
+            </ul>
+        </div>
+
+        <h3>A-3. ✅ "They're targeting vulnerable people"</h3>
+        <div class="concern-box">
+            <p class="concern-label">WHY THIS HAPPENS</p>
+            <p class="cause-text">Reaching people at times that look like grief marketing</p>
+        </div>
+        <div class="answer-box">
+            <p class="answer-label">WHAT WE'RE DOING</p>
+            <ul>
+                <li>Formalize and publish a policy banning targeted ads around funerals or death anniversaries</li>
+                <li>Display "You don't have to decide today" permanently in all page footers</li>
+                <li>Expand free content (essays, workshop records, philosophy notes) so value is received without payment</li>
+                <li>Clearly state the cooling-off period (free cancellation within 30 days of application)</li>
+            </ul>
+        </div>
+
+        <h3>A-4. ✅ "They're exploiting survivors' guilt"</h3>
+        <div class="concern-box">
+            <p class="concern-label">WHY THIS HAPPENS</p>
+            <p class="cause-text">Reads as fear appeal: "Your loved one will be forgotten if you do nothing"</p>
+        </div>
+        <div class="answer-box">
+            <p class="answer-label">WHAT WE'RE DOING</p>
+            <ul>
+                <li>Audit and remove all fear-triggering words ("forgotten," "erased," etc.) from copy</li>
+                <li>Unify messaging around "giving shape to memories that already exist" (positive frame)</li>
+                <li>State explicitly: "Memories endure without Soul Carrier. We are just one option among many"</li>
+                <li>Provide honest links to alternatives (scattering, tree burial, digital archives, etc.)</li>
+            </ul>
+        </div>
+
+        <h3>A-5. 🔒 "Commerce around death is inherently fraught" <span class="structural-note">Structural</span></h3>
+        <p class="lock-intro">This concern is structural — it won't go away. But we can face it through disclosure.</p>
+        <div class="answer-box">
+            <p class="answer-label">WHAT WE'RE DOING</p>
+            <ul>
+                <li>Create a "Our Structural Contradictions" page, articulating the death × commerce tension ourselves</li>
+                <li>Acknowledge we share the same structure as the funeral and gravestone industries; differentiate on transparency, refunds, and open governance</li>
+                <li>Commission annual "Ethics Review Reports" from an independent third party</li>
+            </ul>
+        </div>
+
+        <!-- ===== B. Pricing Distrust ===== -->
+        <h2>B. Pricing Concerns (6 Items)</h2>
+
+        <h3>B-1. ✅ "Not worth the price"</h3>
+        <div class="concern-box">
+            <p class="concern-label">WHY THIS HAPPENS</p>
+            <p class="cause-text">Unclear what the payment covers</p>
+        </div>
+        <div class="answer-box">
+            <p class="answer-label">WHAT WE'RE DOING</p>
+            <ul>
+                <li>Display "Where Your Payment Goes" as a visual breakdown (pie chart) for all plans</li>
+                <li>Example breakdown: quartz glass processing X%, island preservation X%, operations X%, reserve fund X%</li>
+                <li>Create photo-documented pages explaining materials and processing steps</li>
+                <li>Adopt "We don't hide costs" policy, listing market prices of key materials alongside ours</li>
+            </ul>
+        </div>
+
+        <h3>B-2. ✅ "Why this price range?"</h3>
+        <div class="concern-box">
+            <p class="concern-label">WHY THIS HAPPENS</p>
+            <p class="cause-text">No comparison axis with similar services</p>
+        </div>
+        <div class="answer-box">
+            <p class="answer-label">WHAT WE'RE DOING</p>
+            <ul>
+                <li>Create a "Comparison with Other Memorial Options" page (gravestones, scattering, tree burial, digital memorials)</li>
+                <li>Break down Soul Carrier costs by process step</li>
+                <li>Publish 1,000-year preservation cost calculations (geological stability, maintenance frequency)</li>
+                <li>Offer free/low-cost participation for those who find it expensive (essay contributions, workshop attendance)</li>
+            </ul>
+        </div>
+
+        <h3>B-3. ✅ "Are there hidden costs?"</h3>
+        <div class="concern-box">
+            <p class="concern-label">WHY THIS HAPPENS</p>
+            <p class="cause-text">Unknown whether additional charges will appear later</p>
+        </div>
+        <div class="answer-box">
+            <p class="answer-label">WHAT WE'RE DOING</p>
+            <ul>
+                <li>State "No additional charges will ever occur" in bold at the top of the pricing page</li>
+                <li>Pre-list any possible scenario where additional costs could arise (if any exist)</li>
+                <li>Rewrite the Specified Commercial Transactions page from "unreadable legal text" to "plain language"</li>
+                <li>Prepare 10+ FAQ entries in the format "Will I be charged extra if...?"</li>
+            </ul>
+        </div>
+
+        <h3>B-4. ✅ "Is it a donation or a purchase?"</h3>
+        <div class="concern-box">
+            <p class="concern-label">WHY THIS HAPPENS</p>
+            <p class="cause-text">Patronage model is unfamiliar to most consumers</p>
+        </div>
+        <div class="answer-box">
+            <p class="answer-label">WHAT WE'RE DOING</p>
+            <ul>
+                <li>State explicitly: "This is not a donation. There is a clear deliverable (quartz glass encapsulation + 1,000-year preservation)"</li>
+                <li>Clarify legal classification (sales contract or consignment) and publish contract templates</li>
+                <li>Clearly separate patronage-type plans from standard purchase plans, explaining the legal nature of each</li>
+                <li>Specify refund policies for each plan type</li>
+            </ul>
+        </div>
+
+        <h3>B-5. ✅ "Is the operator profiting too much?"</h3>
+        <div class="concern-box">
+            <p class="concern-label">WHY THIS HAPPENS</p>
+            <p class="cause-text">Financial information is not disclosed</p>
+        </div>
+        <div class="answer-box">
+            <p class="answer-label">WHAT WE'RE DOING</p>
+            <ul>
+                <li>Publish annual income/expenditure reports (revenue, expenses, reserve balance)</li>
+                <li>Disclose founder/team compensation ranges</li>
+                <li>Introduce external accounting audits and publish audit reports</li>
+                <li>Clarify profit allocation (preservation infrastructure, R&D, community returns)</li>
+            </ul>
+        </div>
+
+        <h3>B-6. 🔒 "Will there be enough money in 1,000 years?" <span class="structural-note">Structural</span></h3>
+        <p class="lock-intro">This concern is structural — it won't go away. But we can build trust through thoughtful systems.</p>
+        <div class="answer-box">
+            <p class="answer-label">WHAT WE'RE DOING</p>
+            <ul>
+                <li>Publish detailed financial sustainability model (trust structure, reserve fund, distributed preservation)</li>
+                <li>Document "What happens if we go bankrupt" scenarios and countermeasures (trust transfer, open-sourcing, etc.)</li>
+                <li>Establish an independent trust account separating operating expenses from preservation reserves</li>
+                <li>Publish milestone plans for 10, 50, 100, 500, and 1,000 years</li>
+            </ul>
+        </div>
+
+        <!-- ===== C. Scale Skepticism ===== -->
+        <h2>C. Scale Concerns (5 Items)</h2>
+
+        <h3>C-1. ✅ "1,000 years is absurd"</h3>
+        <div class="concern-box">
+            <p class="concern-label">WHY THIS HAPPENS</p>
+            <p class="cause-text">Human intuition cannot grasp 1,000 years</p>
+        </div>
+        <div class="answer-box">
+            <p class="answer-label">WHAT WE'RE DOING</p>
+            <ul>
+                <li>Create a "Why 1,000 Years" page with geological and materials science evidence</li>
+                <li>Publish quartz glass durability data (accelerated degradation tests, etc.)</li>
+                <li>Show concrete examples of things that have lasted 1,000+ years (Horyuji Temple, Venice, Shosoin Repository)</li>
+                <li>Design and state fallback guarantees ("What if it doesn't last 1,000 years" — 100-year guarantee + renewal system)</li>
+            </ul>
+        </div>
+
+        <h3>C-2. ✅ "Buying an island is unrealistic"</h3>
+        <div class="concern-box">
+            <p class="concern-label">WHY THIS HAPPENS</p>
+            <p class="cause-text">Island = luxury/extravagance image</p>
+        </div>
+        <div class="answer-box">
+            <p class="answer-label">WHAT WE'RE DOING</p>
+            <ul>
+                <li>Publish island selection criteria (geological stability, access, legal conditions, community relations)</li>
+                <li>Show actual island costs (rural land is orders of magnitude cheaper than urban land)</li>
+                <li>Present precedents (Lanai Island regeneration, Naoshima Art Project, Gunkanjima preservation)</li>
+                <li>Reframe from "owning an island" to "co-managing with the local community"</li>
+            </ul>
+        </div>
+
+        <h3>C-3. ✅ "No track record, only big visions"</h3>
+        <div class="concern-box">
+            <p class="concern-label">WHY THIS HAPPENS</p>
+            <p class="cause-text">Deliverables and activity history are insufficiently visible</p>
+        </div>
+        <div class="answer-box">
+            <p class="answer-label">WHAT WE'RE DOING</p>
+            <ul>
+                <li>Create an activity timeline showing all activities chronologically from founding to present</li>
+                <li>Regularly publish documentary-style photo/video content (monthly activity reports)</li>
+                <li>Publish actual quartz glass photos and processing videos</li>
+                <li>Periodically add early participant testimonials (anonymous OK)</li>
+                <li>Regularly publish honest status reports: "This is how far we've gotten"</li>
+            </ul>
+        </div>
+
+        <h3>C-4. ✅ "What if nothing ever gets delivered?"</h3>
+        <div class="concern-box">
+            <p class="concern-label">WHY THIS HAPPENS</p>
+            <p class="cause-text">The process from application to delivery is invisible</p>
+        </div>
+        <div class="answer-box">
+            <p class="answer-label">WHAT WE'RE DOING</p>
+            <ul>
+                <li>Visualize post-order steps (application → receipt confirmation → production start → encapsulation → inspection → shipping/storage)</li>
+                <li>Build automatic notification system for each step</li>
+                <li>Share production-process photos at each step (via account page or email)</li>
+                <li>State delay response flow and compensation policy explicitly</li>
+            </ul>
+        </div>
+
+        <h3>C-5. 🔒 "What if the project is discontinued?" <span class="structural-note">Structural</span></h3>
+        <p class="lock-intro">This concern is structural — it won't go away. But we can design fail-safes to address it.</p>
+        <div class="answer-box">
+            <p class="answer-label">WHAT WE'RE DOING</p>
+            <ul>
+                <li>Formally develop and publish a Business Continuity Plan (BCP)</li>
+                <li>Document succession plans for when the operator is absent (corporate entity, trust, community transfer)</li>
+                <li>Progressively open-source all data, blueprints, and processes</li>
+                <li>Position "a system that continues without us" as the core design philosophy</li>
+            </ul>
+        </div>
+
+        <!-- ===== D. Information Asymmetry ===== -->
+        <h2>D. Information Visibility (4 Items) — All ✅</h2>
+
+        <h3>D-1. ✅ "Who is running this?"</h3>
+        <div class="concern-box">
+            <p class="concern-label">WHY THIS HAPPENS</p>
+            <p class="cause-text">Operator information is scattered and insufficient</p>
+        </div>
+        <div class="answer-box">
+            <p class="answer-label">WHAT WE'RE DOING</p>
+            <ul>
+                <li>Create a "Team" page with the founder's background, photo, and motivation</li>
+                <li>Publish corporate information (registration, articles of incorporation summary)</li>
+                <li>List advisors and collaborators with their comments</li>
+                <li>Place contact information (email, address, phone) in all page footers</li>
+            </ul>
+        </div>
+
+        <h3>D-2. ✅ "Are they only showing favorable information?"</h3>
+        <div class="concern-box">
+            <p class="concern-label">WHY THIS HAPPENS</p>
+            <p class="cause-text">No negative information is visible</p>
+        </div>
+        <div class="answer-box">
+            <p class="answer-label">WHAT WE'RE DOING</p>
+            <ul>
+                <li>Add a permanent "What didn't work" section to activity reports</li>
+                <li>Publish responses to external criticism and concerns in FAQ format</li>
+                <li>Publish a policy of not deleting negative SNS/review comments and responding honestly</li>
+                <li>Include a "This Year's Failures and Lessons" section in annual reports</li>
+            </ul>
+        </div>
+
+        <h3>D-3. ✅ "The contract terms are confusing"</h3>
+        <div class="concern-box">
+            <p class="concern-label">WHY THIS HAPPENS</p>
+            <p class="cause-text">Legal documents are hard to read or find</p>
+        </div>
+        <div class="answer-box">
+            <p class="answer-label">WHAT WE'RE DOING</p>
+            <ul>
+                <li>Publish contracts in two versions: "formal legal version" and "plain-language summary"</li>
+                <li>Write the summary version as bullet points + Q&A</li>
+                <li>Highlight key clauses (cancellation terms, refund terms, storage obligations, disclaimers)</li>
+                <li>Provide a pre-contract "5 Things You Need to Know" checklist</li>
+            </ul>
+        </div>
+
+        <h3>D-4. ✅ "Will they even respond to inquiries?"</h3>
+        <div class="concern-box">
+            <p class="concern-label">WHY THIS HAPPENS</p>
+            <p class="cause-text">Communication structure is invisible</p>
+        </div>
+        <div class="answer-box">
+            <p class="answer-label">WHAT WE'RE DOING</p>
+            <ul>
+                <li>State response time targets (e.g., initial response within 48 hours)</li>
+                <li>Send automatic confirmation emails with the handling process</li>
+                <li>Develop FAQ/Help Center for self-service resolution of common questions</li>
+                <li>Hold monthly open Q&A sessions (online) where anyone can ask questions</li>
+            </ul>
+        </div>
+
+        <!-- ===== E. Social Concerns ===== -->
+        <h2>E. Social Concerns (4 Items)</h2>
+
+        <h3>E-1. ✅ "It seems religious" / "It seems like a cult"</h3>
+        <div class="concern-box">
+            <p class="concern-label">WHY THIS HAPPENS</p>
+            <p class="cause-text">Highly spiritual language + impression of a closed community</p>
+        </div>
+        <div class="answer-box">
+            <p class="answer-label">WHAT WE'RE DOING</p>
+            <ul>
+                <li>Create a clear "Our Position" page declaring this is not a religion</li>
+                <li>Repeatedly explain that no specific belief system is assumed</li>
+                <li>Publish community decision-making processes (meeting minutes, voting records)</li>
+                <li>Establish an open-visit policy where outsiders can visit anytime</li>
+                <li>Never create "hard to leave" structures (withdrawal in one click, no retention efforts)</li>
+            </ul>
+        </div>
+
+        <h3>E-2. ✅ "I can't explain it to friends"</h3>
+        <div class="concern-box">
+            <p class="concern-label">WHY THIS HAPPENS</p>
+            <p class="cause-text">No concise one-line explanation exists</p>
+        </div>
+        <div class="answer-box">
+            <p class="answer-label">WHAT WE'RE DOING</p>
+            <ul>
+                <li>Prepare an official "30-second explanation" (e.g., "A project that preserves precious memories in quartz glass for 1,000 years")</li>
+                <li>Design a "shareable page" (short URL, share card, 30-second overview video)</li>
+                <li>Leverage media coverage as "This is how third parties describe us"</li>
+                <li>Create a "Common Misunderstandings" page preemptively answering friends' likely questions</li>
+            </ul>
+        </div>
+
+        <h3>E-3. ✅ "Indistinguishable from scams or MLM"</h3>
+        <div class="concern-box">
+            <p class="concern-label">WHY THIS HAPPENS</p>
+            <p class="cause-text">Structural similarity to known scam patterns</p>
+        </div>
+        <div class="answer-box">
+            <p class="answer-label">WHAT WE'RE DOING</p>
+            <ul>
+                <li>Proactively create a "How We Differ from Scams" page, honestly listing similarities and differences</li>
+                <li>Declare that referral programs, affiliate systems, and multi-level structures will never be adopted</li>
+                <li>Feature review comments from third-party organizations (lawyers, consumer groups, etc.)</li>
+                <li>Proactively place consumer protection hotline links on our own site</li>
+            </ul>
+        </div>
+
+        <h3>E-4. 🔒 "Too new for social proof" <span class="structural-note">Time needed</span></h3>
+        <p class="lock-intro">This concern is structural — it won't go away on its own. Time will help, and we have strategies for the meantime.</p>
+        <div class="answer-box">
+            <p class="answer-label">WHAT WE'RE DOING</p>
+            <ul>
+                <li>Don't hide "We're still a small project" — honestly publish current community size</li>
+                <li>Honor early participants as "Founding Members" and regularly share their voices</li>
+                <li>Prioritize academic/research partnerships to build "experts are interested" credibility</li>
+                <li>Strategically pursue media coverage to increase third-party articles</li>
+                <li>Use open-source/open-data strategy ("show everything") as a substitute for social proof</li>
+            </ul>
+        </div>
+
+        <!-- ===== F. Cultural Sensitivity ===== -->
+        <h2>F. Cultural Sensitivity (4 Items)</h2>
+
+        <h3>F-1. ✅ "Appropriating Japanese mourning culture"</h3>
+        <div class="concern-box">
+            <p class="concern-label">WHY THIS HAPPENS</p>
+            <p class="cause-text">Insufficient explanation of cultural context</p>
+        </div>
+        <div class="answer-box">
+            <p class="answer-label">WHAT WE'RE DOING</p>
+            <ul>
+                <li>Formally document respect for cultural roots ("What Influenced Us" page)</li>
+                <li>Publish dialogue records with Japanese mourning culture experts (monks, folklorists, etc.)</li>
+                <li>Clarify the position of "not denying existing mourning practices"</li>
+                <li>Build and make visible cooperative relationships with local temples and funeral professionals</li>
+            </ul>
+        </div>
+
+        <h3>F-2. ✅ "Exploiting Hawaiian/Pacific cultures"</h3>
+        <div class="concern-box">
+            <p class="concern-label">WHY THIS HAPPENS</p>
+            <p class="cause-text">Legitimate concern about commercial use of indigenous culture</p>
+        </div>
+        <div class="answer-box">
+            <p class="answer-label">WHAT WE'RE DOING</p>
+            <ul>
+                <li>Publish the consultation process with Native Hawaiian communities</li>
+                <li>Invite a cultural advisor (Native Hawaiian) to the team</li>
+                <li>Establish and disclose a revenue-sharing mechanism for indigenous cultural preservation funds</li>
+                <li>Demonstrate "walking with culture" rather than "using culture" through concrete actions</li>
+            </ul>
+        </div>
+
+        <h3>F-3. ✅ "Cherry-picking from multiple cultures"</h3>
+        <div class="concern-box">
+            <p class="concern-label">WHY THIS HAPPENS</p>
+            <p class="cause-text">Multiple cultural elements coexisting looks like shallow eclecticism</p>
+        </div>
+        <div class="answer-box">
+            <p class="answer-label">WHAT WE'RE DOING</p>
+            <ul>
+                <li>Explain individually why each cultural element was incorporated</li>
+                <li>Present historical examples of cross-cultural memorial practices with academic citations</li>
+                <li>Establish a policy: elements belonging to a specific culture are used only with that culture's practitioners' involvement</li>
+                <li>Periodically receive external cultural sensitivity reviews (cultural anthropologists, etc.)</li>
+            </ul>
+        </div>
+
+        <h3>F-4. 🔒 "Outsiders shouldn't meddle in certain domains" <span class="structural-note">Structural</span></h3>
+        <p class="lock-intro">This concern is structural — it won't go away. It can only be answered through genuine co-creation with local stakeholders.</p>
+        <div class="answer-box">
+            <p class="answer-label">WHAT WE'RE DOING</p>
+            <ul>
+                <li>Establish local advisory boards in each project region (Sado, Maui, etc.)</li>
+                <li>Regularly collect and publish local residents' voices</li>
+                <li>Officially acknowledge "outsider awareness" and institutionalize humility</li>
+                <li>Concretize benefit-sharing models with local communities (job creation, infrastructure, cultural preservation)</li>
+            </ul>
+        </div>
+
+        <!-- ===== G. Technical & Operational ===== -->
+        <h2>G. Technical & Operational (5 Items) — All ✅</h2>
+
+        <h3>G-1. ✅ "Will quartz glass really last 1,000 years?"</h3>
+        <div class="concern-box">
+            <p class="concern-label">WHY THIS HAPPENS</p>
+            <p class="cause-text">Technical evidence is unclear</p>
+        </div>
+        <div class="answer-box">
+            <p class="answer-label">WHAT WE'RE DOING</p>
+            <ul>
+                <li>Create a page scientifically explaining quartz glass properties (melting point, weatherability, chemical stability)</li>
+                <li>Cite accelerated degradation test results and academic papers</li>
+                <li>Accumulate and publish aging records of actual quartz glass specimens (5 years, 10 years, ...)</li>
+                <li>Feature review comments from materials science experts</li>
+            </ul>
+        </div>
+
+        <h3>G-2. ✅ "Is the storage location safe?"</h3>
+        <div class="concern-box">
+            <p class="concern-label">WHY THIS HAPPENS</p>
+            <p class="cause-text">Storage environment details are unknown</p>
+        </div>
+        <div class="answer-box">
+            <p class="answer-label">WHAT WE'RE DOING</p>
+            <ul>
+                <li>Publish geological data for candidate storage sites (seismic risk, sea level projections, volcanic activity)</li>
+                <li>Explain the distributed storage strategy (identical data at multiple locations)</li>
+                <li>Publish storage facility design specifications (seismic resistance, waterproofing, temperature/humidity control)</li>
+                <li>Publish periodic inspection reports (annual or semi-annual)</li>
+            </ul>
+        </div>
+
+        <h3>G-3. ✅ "Won't digital data disappear?"</h3>
+        <div class="concern-box">
+            <p class="concern-label">WHY THIS HAPPENS</p>
+            <p class="cause-text">Legitimate concern about digital preservation fragility</p>
+        </div>
+        <div class="answer-box">
+            <p class="answer-label">WHAT WE'RE DOING</p>
+            <ul>
+                <li>Clearly explain the "physical + digital dual storage" strategy</li>
+                <li>Publish digital backup methods (distributed storage, periodic migration)</li>
+                <li>Explicitly state the logic: "Digital isn't forever — that's exactly why quartz glass exists"</li>
+                <li>Publish technology roadmap (migration plan every 10 years)</li>
+            </ul>
+        </div>
+
+        <h3>G-4. ✅ "Is the security adequate?"</h3>
+        <div class="concern-box">
+            <p class="concern-label">WHY THIS HAPPENS</p>
+            <p class="cause-text">Anxiety about handling of personal/family data</p>
+        </div>
+        <div class="answer-box">
+            <p class="answer-label">WHAT WE'RE DOING</p>
+            <ul>
+                <li>Rewrite the privacy policy in "readable language"</li>
+                <li>Publish data encryption and storage methods for technical audiences</li>
+                <li>Publish an access permissions table: "Who can access which data"</li>
+                <li>Pursue third-party security certification (ISMS, etc.) and publish progress</li>
+                <li>Pre-publish data breach response procedures (notification, compensation, prevention)</li>
+            </ul>
+        </div>
+
+        <h3>G-5. ✅ "Does the team have enough expertise?"</h3>
+        <div class="concern-box">
+            <p class="concern-label">WHY THIS HAPPENS</p>
+            <p class="cause-text">Team capabilities are invisible</p>
+        </div>
+        <div class="answer-box">
+            <p class="answer-label">WHAT WE'RE DOING</p>
+            <ul>
+                <li>Publish team members' skill sets and backgrounds</li>
+                <li>Diagram partnership structure with external experts (glass artisans, geologists, IT engineers, etc.)</li>
+                <li>Share technical challenges and solutions in blog format</li>
+                <li>Build an open-source community engagement structure to accept external contributors</li>
+            </ul>
+        </div>
+
+        <!-- ===== H. Self-Doubt ===== -->
+        <h2>H. Personal Hesitation (4 Items)</h2>
+
+        <h3>H-1. ✅ "Am I the gullible type?"</h3>
+        <div class="concern-box">
+            <p class="concern-label">WHY THIS HAPPENS</p>
+            <p class="cause-text">Doubting oneself for being moved → becoming defensive</p>
+        </div>
+        <div class="answer-box">
+            <p class="answer-label">WHAT WE'RE DOING</p>
+            <ul>
+                <li>Permanently display "Don't decide immediately just because you're moved" next to CTAs</li>
+                <li>Place the cooling-off period (30-day full refund) in the most prominent position</li>
+                <li>Officially recommend: "Please consult with people around you before deciding"</li>
+                <li>Provide a "10 Things to Check Before Applying" checklist</li>
+            </ul>
+        </div>
+
+        <h3>H-2. ✅ "Is my judgment clouded by excitement?"</h3>
+        <div class="concern-box">
+            <p class="concern-label">WHY THIS HAPPENS</p>
+            <p class="cause-text">Decision-making is requested right after emotional content</p>
+        </div>
+        <div class="answer-box">
+            <p class="answer-label">WHAT WE'RE DOING</p>
+            <ul>
+                <li>Insert a "cool-headed information page" (FAQ, comparison table, responses to criticism) between emotional content and application</li>
+                <li>Display the message: "You don't have to decide today. This project will still be here tomorrow"</li>
+                <li>Create an intermediate step where email registration alone allows exit, enabling later reconsideration</li>
+                <li>Consider a policy of not accepting on-the-spot applications at events</li>
+            </ul>
+        </div>
+
+        <h3>H-3. ✅ "Should I spend this money on something else?"</h3>
+        <div class="concern-box">
+            <p class="concern-label">WHY THIS HAPPENS</p>
+            <p class="cause-text">Difficult to justify spending on memorialization</p>
+        </div>
+        <div class="answer-box">
+            <p class="answer-label">WHAT WE'RE DOING</p>
+            <ul>
+                <li>Place "How to Participate for Free" prominently (essay contributions, volunteering, sharing)</li>
+                <li>Offer a minimum-price plan and/or installment payment options</li>
+                <li>Clearly message: "You're part of us even without paying"</li>
+                <li>Show spending comparisons (average gravestone cost of several million yen vs. ¥50,000)</li>
+            </ul>
+        </div>
+
+        <h3>H-4. 🔒 "Feeling moved and suspicious at the same time" <span class="structural-note">No need to eliminate</span></h3>
+        <p class="lock-intro">This tension won't go away — and we don't think it needs to. We'd rather affirm it.</p>
+        <div class="answer-box">
+            <p class="answer-label">WHAT WE'RE DOING</p>
+            <ul>
+                <li>Officially message: "Feeling both is healthy"</li>
+                <li>On the "Question Everything" page, list and respond to all 37 items ourselves (this document's web version)</li>
+                <li>Create an "Information for Questioning Us" section with links to third-party verification tools (corporate registry, consumer hotlines, etc.)</li>
+                <li>Feature "Why I Chose to Participate Anyway" as existing member interview content</li>
+            </ul>
+        </div>
+
+        <!-- ===== Cross-Cutting Measures ===== -->
+        <h2>Cross-Cutting Measures (Effective Across All Categories)</h2>
+
+        <div class="cross-cutting">
+            <h3>X-1. "Question Everything" Page</h3>
+            <ul>
+                <li>Present all 37 items as-is, with responses and measures for each</li>
+                <li>Create a "How to Verify This Project Isn't a Scam" section</li>
+                <li>Update regularly and respond to new concerns as they arise</li>
+            </ul>
+        </div>
+
+        <div class="cross-cutting">
+            <h3>X-2. Radical Transparency</h3>
+            <ul>
+                <li>Publish annual financial reports</li>
+                <li>Publish decision-making meeting minutes</li>
+                <li>Publish failure cases</li>
+                <li>Publish external audit reports</li>
+                <li>Progressively open-source the codebase</li>
+            </ul>
+        </div>
+
+        <div class="cross-cutting">
+            <h3>X-3. Encounter Journey Design</h3>
+            <ul>
+                <li>Philosophy content → Activity record → Participant voices → FAQ → How to participate → Pricing</li>
+                <li>When running ads, direct only to essays/philosophy pages (ban direct product page advertising)</li>
+                <li>SNS posts focus on activity reports and reflections; product announcements limited to once per month</li>
+            </ul>
+        </div>
+
+        <div class="cross-cutting">
+            <h3>X-4. Making "You Can Leave" Visible</h3>
+            <ul>
+                <li>Keep withdrawal/cancellation procedures to 3 steps or fewer</li>
+                <li>Display refund policy permanently in all page footers</li>
+                <li>Formalize a "No retention" policy</li>
+                <li>Declare: we will never send "Won't you come back?" tracking emails to former members</li>
+            </ul>
+        </div>
+
+        <div class="cross-cutting">
+            <h3>X-5. Amplifying Third-Party Voices</h3>
+            <ul>
+                <li>Actively accept media interviews</li>
+                <li>Expand academic institution partnerships</li>
+                <li>Establish an advisory board of cultural anthropologists, geologists, and ethicists</li>
+                <li>Proactively request voluntary reviews from consumer organizations</li>
+            </ul>
+        </div>
+
+        <!-- ===== What We've Done So Far ===== -->
+        <h2>What We've Done So Far</h2>
+        <p>Not everything here is a future plan. Some items are already in place. Here's an honest snapshot of where we are.</p>
+
+        <div class="answer-box">
+            <p class="answer-label">IMPLEMENTED</p>
+            <ul>
+                <li>Publishing this document itself (the prototype for X-1, the "Question Everything" page)</li>
+                <li>Publishing "<a href="transparency-en.html">Before You Decide</a>" — honest answers to 10 key concerns</li>
+                <li>Publishing "<a href="not-for-you-en.html">Not For Everyone</a>" — honestly telling people when we're not the right fit</li>
+                <li>Replacing "Buy Now" CTAs with "Learn More" / "Start by Knowing" on the top page (A-1)</li>
+                <li>Completely separating purchase links from essay/video pages (A-2)</li>
+                <li>Ending emotional content with links to related essays only (A-2)</li>
+                <li>Building a library of free content — essays, philosophy notes — accessible without payment (A-3)</li>
+            </ul>
+        </div>
+
+        <div class="concern-box">
+            <p class="concern-label">IN PROGRESS</p>
+            <ul>
+                <li>Auditing and replacing fear-triggering words with positive framing across all copy (A-4)</li>
+                <li>Philosophy-first journey design (X-3) — gradually restructuring site navigation</li>
+                <li>Open-sourcing the codebase (X-2, C-5) — currently on GitHub</li>
+                <li>Honest disclosure about being a small, early-stage project (E-4)</li>
+            </ul>
+        </div>
+
+        <p style="font-style: italic; color: var(--text-muted); margin-top: 2rem;">Everything else is a future plan. We'll update this document as we make progress.</p>
+
+    </div>
+
+    <footer class="article-footer">
+        <p style="text-align:center; font-size: 0.85rem; color: var(--text-muted);">This document is reviewed periodically and updated as new concerns or progress arise.</p>
+        <div class="article-footer-links">
+            <a href="transparency-en.html">Before You Decide</a>
+            <a href="not-for-you-en.html">Not For Everyone</a>
+            <a href="index-en.html">Toki Storage Home</a>
+            <a href="index-en.html#pricing">Pricing</a>
+            <a href="index-en.html#faq">FAQ</a>
+        </div>
+        <p id="essay-nav-links" style="font-size: 0.8rem; margin-top: 2rem; line-height: 2;"></p>
+        <p style="margin-top: 2rem; font-size: 0.75rem; color: var(--text-muted);">&copy; 2026 TokiStorage</p>
+    </footer>
+</article>
+
+<script src="essay-nav.js?v=20260211"></script>
+</body>
+</html>

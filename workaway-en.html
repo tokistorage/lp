@@ -1,0 +1,512 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Workaway Hosting Consulting | TokiStorage</title>
+    <meta name="description" content="Workaway Hosting Consulting — Full support for rural accommodations, farms, and businesses to start and run Workaway hosting. Revitalize your community through international exchange.">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Shippori+Mincho:wght@400;500;600;700&family=Zen+Kaku+Gothic+New:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="index.css">
+    <style>
+        .wa-page { padding: 6rem 2rem 4rem; }
+        .wa-inner { max-width: 700px; margin: 0 auto; }
+        .wa-inner h1 {
+            font-family: var(--font-display);
+            font-size: 1.6rem;
+            font-weight: 600;
+            color: var(--text-primary);
+            margin-bottom: 0.3rem;
+            text-align: center;
+        }
+        .wa-tagline {
+            text-align: center;
+            font-family: var(--font-display);
+            font-size: 0.92rem;
+            color: var(--text-secondary);
+            margin-bottom: 2.5rem;
+            line-height: 1.8;
+        }
+        .wa-section {
+            margin-bottom: 2.5rem;
+        }
+        .wa-section h2 {
+            font-family: var(--font-display);
+            font-size: 1.05rem;
+            font-weight: 600;
+            color: var(--text-primary);
+            margin-bottom: 0.8rem;
+            padding-bottom: 0.4rem;
+            border-bottom: 1px solid var(--border);
+        }
+        .wa-section p,
+        .wa-section li {
+            font-size: 0.88rem;
+            color: var(--text-secondary);
+            line-height: 1.9;
+        }
+        .wa-section ul {
+            padding-left: 1.5rem;
+            margin-bottom: 1rem;
+        }
+        .wa-section li { margin-bottom: 0.3rem; }
+        .wa-features {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1.2rem;
+            margin-top: 1rem;
+        }
+        .wa-feature-card {
+            background: var(--bg-page);
+            border: 1px solid var(--border);
+            border-radius: 0.8rem;
+            padding: 1.2rem;
+            text-align: center;
+        }
+        .wa-feature-card .feature-icon {
+            font-size: 1.6rem;
+            margin-bottom: 0.5rem;
+        }
+        .wa-feature-card h3 {
+            font-family: var(--font-display);
+            font-size: 0.88rem;
+            font-weight: 600;
+            color: var(--text-primary);
+            margin-bottom: 0.3rem;
+        }
+        .wa-feature-card p {
+            font-size: 0.78rem;
+            color: var(--text-muted);
+            line-height: 1.6;
+        }
+        .wa-story {
+            background: var(--bg-page);
+            border: 1px solid var(--border);
+            border-radius: 1rem;
+            padding: 1.8rem;
+            margin: 2rem 0;
+        }
+        .wa-story p {
+            font-size: 0.88rem;
+            color: var(--text-secondary);
+            line-height: 1.9;
+            margin-bottom: 0.8rem;
+        }
+        .wa-story p:last-child { margin-bottom: 0; }
+        .wa-personas {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 1rem;
+            margin-top: 1rem;
+        }
+        .wa-persona-card {
+            background: var(--bg-page);
+            border: 1px solid var(--border);
+            border-radius: 0.8rem;
+            padding: 1.2rem 1.5rem;
+        }
+        .wa-persona-card h3 {
+            font-family: var(--font-display);
+            font-size: 0.92rem;
+            font-weight: 600;
+            color: var(--text-primary);
+            margin-bottom: 0.4rem;
+        }
+        .wa-persona-card p {
+            font-size: 0.82rem;
+            color: var(--text-muted);
+            line-height: 1.7;
+        }
+        .wa-flow {
+            counter-reset: flow-step;
+            margin-top: 1rem;
+        }
+        .wa-flow-step {
+            display: flex;
+            gap: 1rem;
+            align-items: flex-start;
+            margin-bottom: 1.2rem;
+        }
+        .wa-flow-step::before {
+            counter-increment: flow-step;
+            content: counter(flow-step);
+            flex-shrink: 0;
+            width: 2rem;
+            height: 2rem;
+            background: var(--toki-blue);
+            color: #fff;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.82rem;
+            font-weight: 600;
+        }
+        .wa-flow-step div h3 {
+            font-family: var(--font-display);
+            font-size: 0.88rem;
+            font-weight: 600;
+            color: var(--text-primary);
+            margin-bottom: 0.2rem;
+        }
+        .wa-flow-step div p {
+            font-size: 0.82rem;
+            color: var(--text-muted);
+            line-height: 1.7;
+        }
+        .wa-pricing {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 1.2rem;
+            margin-top: 1rem;
+        }
+        .wa-pricing-card {
+            background: var(--bg-page);
+            border: 1px solid var(--border);
+            border-radius: 0.8rem;
+            padding: 1.5rem;
+        }
+        .wa-pricing-card.recommended {
+            border-color: var(--toki-blue);
+            box-shadow: 0 0 0 1px var(--toki-blue);
+        }
+        .wa-pricing-card h3 {
+            font-family: var(--font-display);
+            font-size: 0.95rem;
+            font-weight: 600;
+            color: var(--text-primary);
+            margin-bottom: 0.3rem;
+        }
+        .wa-pricing-card .price {
+            font-family: var(--font-display);
+            font-size: 1.3rem;
+            font-weight: 700;
+            color: var(--toki-blue);
+            margin-bottom: 0.8rem;
+        }
+        .wa-pricing-card .price span {
+            font-size: 0.75rem;
+            font-weight: 400;
+            color: var(--text-muted);
+        }
+        .wa-pricing-card ul {
+            padding-left: 1.2rem;
+            margin: 0;
+        }
+        .wa-pricing-card li {
+            font-size: 0.78rem;
+            color: var(--text-secondary);
+            line-height: 1.8;
+            margin-bottom: 0.2rem;
+        }
+        .wa-badge {
+            display: inline-block;
+            background: var(--toki-blue);
+            color: #fff;
+            font-size: 0.7rem;
+            padding: 0.15rem 0.6rem;
+            border-radius: 1rem;
+            margin-bottom: 0.5rem;
+            font-weight: 500;
+        }
+        .wa-cta {
+            text-align: center;
+            margin-top: 3rem;
+            padding: 2rem;
+            background: var(--toki-blue-pale);
+            border-radius: 1rem;
+        }
+        .wa-cta p {
+            font-family: var(--font-display);
+            font-size: 0.92rem;
+            color: var(--text-secondary);
+            margin-bottom: 1rem;
+            line-height: 1.8;
+        }
+        .wa-cta a {
+            display: inline-block;
+            background: var(--toki-blue);
+            color: #fff;
+            padding: 0.7rem 2rem;
+            border-radius: 0.5rem;
+            text-decoration: none;
+            font-size: 0.85rem;
+            font-weight: 500;
+            transition: background 0.3s ease;
+        }
+        .wa-cta a:hover { background: var(--toki-blue-dark); }
+        .wa-back {
+            text-align: center;
+            margin-top: 2.5rem;
+        }
+        .wa-back a {
+            color: var(--toki-blue);
+            text-decoration: none;
+            font-size: 0.85rem;
+        }
+        .wa-back a:hover { text-decoration: underline; }
+        .wa-note {
+            font-size: 0.75rem !important;
+            color: var(--text-muted) !important;
+            margin-top: 0.5rem;
+        }
+        .wa-story-photos {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 0.8rem;
+            margin: 1.2rem 0;
+        }
+        .wa-story-photos figure { margin: 0; }
+        .wa-story-photos img {
+            width: 100%;
+            border-radius: 0.5rem;
+            aspect-ratio: 4/3;
+            object-fit: cover;
+        }
+        .wa-story-photos figcaption {
+            font-size: 0.7rem;
+            color: var(--text-muted);
+            margin-top: 0.3rem;
+            line-height: 1.4;
+        }
+        @media (max-width: 520px) {
+            .wa-story-photos { grid-template-columns: 1fr; }
+        }
+    </style>
+</head>
+<body>
+
+<nav class="toki-nav">
+    <span class="nav-logo"><a href="index-en.html">TokiStorage</a> / Workaway Consulting</span>
+</nav>
+
+<main class="wa-page">
+    <div class="wa-inner">
+        <h1>Workaway Hosting Consulting</h1>
+        <p class="wa-tagline">
+            "Would anyone really come to a place like ours?"<br>
+            — Yes. The world is curious about your everyday life.<br>
+            You just need someone to show you how to start.
+        </p>
+
+        <div class="wa-features">
+            <div class="wa-feature-card">
+                <div class="feature-icon">&#x1F30F;</div>
+                <h3>Global Reach</h3>
+                <p>Workaway connects you with travelers from 170+ countries seeking meaningful cultural exchange.</p>
+            </div>
+            <div class="wa-feature-card">
+                <div class="feature-icon">&#x1F91D;</div>
+                <h3>Volunteer-Based</h3>
+                <p>Guests help about 5 hours a day in exchange for accommodation and meals. No wages required.</p>
+            </div>
+            <div class="wa-feature-card">
+                <div class="feature-icon">&#x1F3E1;</div>
+                <h3>Community Revival</h3>
+                <p>International visitors bring new energy to rural areas, creating multicultural connections.</p>
+            </div>
+        </div>
+
+        <div class="wa-story">
+            <p>In 2025, founder Takuya Sato traveled across Maui — from east to west — as a Workaway guest. Living and working alongside hosts, exchanging stories with fellow travelers, he became convinced of Workaway's remarkable appeal and potential. He also helped hosts set up off-grid infrastructure, building practical knowledge of what it takes to run a hosting operation in remote areas.</p>
+            <div class="wa-story-photos">
+                <figure>
+                    <img src="asset/IMG_2724-2.jpeg" alt="Workaway activities in Maui" loading="lazy">
+                    <figcaption>Supporting hosts in Maui</figcaption>
+                </figure>
+                <figure>
+                    <img src="asset/IMG_2671.jpeg" alt="Pearl Soap gifts for hosts and guests" loading="lazy">
+                    <figcaption>Sharing Pearl Soap with hosts & guests</figcaption>
+                </figure>
+                <figure>
+                    <img src="asset/IMG_3353.jpeg" alt="Outdoor workspace at a Maui host site" loading="lazy">
+                    <figcaption>Outdoor workspace at a host site</figcaption>
+                </figure>
+            </div>
+            <p>That experience inspired him to host in Japan while actively working to grow the Workaway host community. Having been on both sides — guest and host — he offers consulting grounded in firsthand experience.</p>
+            <p>"My English isn't good enough." "I don't know where to start." "What if something goes wrong?" — We built this service to answer these real concerns, walking alongside you from registration to guest communication and troubleshooting.</p>
+            <p>Currently preparing to relocate to Sado Island in spring 2026, while actively supporting an NPO in Mie Prefecture with their Workaway onboarding. This service is grounded not only in the Maui experience, but in real, ongoing host launch work in rural Japan.</p>
+        </div>
+
+        <div class="wa-section">
+            <h2>What is Workaway?</h2>
+            <p>Workaway is an international platform connecting hosts with travelers (Workawayers). Travelers volunteer about 5 hours per day — helping with farming, cleaning, language exchange, and more — while hosts provide accommodation and meals.</p>
+            <ul>
+                <li>Members from 170+ countries</li>
+                <li>No wages needed (volunteer basis)</li>
+                <li>Cultural exchange and language practice</li>
+                <li>Diverse host types: farms, guesthouses, private homes, and more</li>
+            </ul>
+        </div>
+
+        <div class="wa-section">
+            <h2>Sound Familiar?</h2>
+            <div class="wa-personas">
+                <div class="wa-persona-card">
+                    <h3>"We're a rural area — we can't compete with tourist hotspots"</h3>
+                    <p>Workaway guests aren't looking for tourist attractions. They want to live inside local life. A depopulated village offers what no city can — a raw, authentic daily experience.</p>
+                </div>
+                <div class="wa-persona-card">
+                    <h3>"I can't think of anything attractive to offer"</h3>
+                    <p>Fieldwork, chopping firewood, making miso, walking the dog — your "ordinary routine" is a once-in-a-lifetime experience for someone across the ocean. Your appeal is easier to see from the outside.</p>
+                </div>
+                <div class="wa-persona-card">
+                    <h3>"Wouldn't hiring an influencer be faster?"</h3>
+                    <p>Viral moments fade; Workaway keeps going. One guest leaves a good review, and the next one comes. A word-of-mouth cycle starts spinning — at zero advertising cost.</p>
+                </div>
+                <div class="wa-persona-card">
+                    <h3>"My English isn't good enough, and I'm afraid of trouble"</h3>
+                    <p>From firsthand experience as a guest in Maui: broken English works. Translation tools help. And when you're stuck, having someone to turn to — that's what this service is for.</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="wa-section">
+            <h2>Four Phases</h2>
+            <p>An NPO in Mie Prefecture is currently going through this program to launch their Workaway hosting.</p>
+            <div class="wa-flow">
+                <div class="wa-flow-step">
+                    <div>
+                        <h3>Assessment — Understanding Your Situation</h3>
+                        <p>Two free sessions. We listen carefully to your environment, goals, and concerns, and help you decide if Workaway is right for you. If it's not a fit, that's perfectly fine.</p>
+                    </div>
+                </div>
+                <div class="wa-flow-step">
+                    <div>
+                        <h3>Discovery — Finding Your Appeal (2 months)</h3>
+                        <p>We uncover what makes your "ordinary life" extraordinary to international guests. Profile strategy, photo selection, and differentiation from other hosts.</p>
+                    </div>
+                </div>
+                <div class="wa-flow-step">
+                    <div>
+                        <h3>Implement — Getting Started (2 months)</h3>
+                        <p>Workaway registration, profile creation (EN/JP), house rules, living space preparation. From going live to receiving your first applications.</p>
+                    </div>
+                </div>
+                <div class="wa-flow-step">
+                    <div>
+                        <h3>Operate — Running Smoothly (2 months)</h3>
+                        <p>First guest onboarding support, message coaching, troubleshooting. We walk alongside you until you can run it on your own.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="wa-section">
+            <h2>Pricing</h2>
+            <div class="wa-pricing">
+                <div class="wa-pricing-card">
+                    <h3>Assessment</h3>
+                    <div class="price">&yen;0</div>
+                    <ul>
+                        <li>2 free sessions</li>
+                        <li>Situation assessment</li>
+                        <li>Workaway fit evaluation</li>
+                        <li>Strategy proposal</li>
+                    </ul>
+                </div>
+                <div class="wa-pricing-card recommended">
+                    <span class="wa-badge">Discovery + Implement + Operate</span>
+                    <h3>All Phases</h3>
+                    <div class="price">&yen;88,000 <span>(tax incl.) / 6 months</span></div>
+                    <ul>
+                        <li>Appeal discovery & profile strategy</li>
+                        <li>Workaway registration & profile (EN/JP)</li>
+                        <li>House rules & preparation</li>
+                        <li>First guest onboarding support</li>
+                        <li>Email & chat support (6 months)</li>
+                        <li>Troubleshooting assistance</li>
+                    </ul>
+                </div>
+            </div>
+            <p class="wa-note">*Assessment is free. If it's not a fit after our sessions, you can stop there with no obligation.<br>*Prices are subject to change without notice. Custom plans for organizations available upon request.<br>*Travel, accommodation (for on-site visits), and Workaway host membership fee are billed separately at actual cost.</p>
+
+            <div class="wa-story">
+                <p><strong>What does &yen;88,000 actually get you?</strong></p>
+                <p>Outsourcing an English profile alone costs tens of thousands of yen. A marketing consultant runs several tens of thousands per month. Job listing sites cost hundreds of thousands per year. Workaway replaces all of these.</p>
+                <p>That's about &yen;14,700 per month. After 6 months, the goal is for you to run it independently — no recurring fees. And once you have reviews, the next guest comes at zero advertising cost.</p>
+                <p>If you hired one part-timer at &yen;1,000/hour &times; 5 hours &times; 20 days, that's &yen;100,000/month. A Workaway guest only needs a place to stay and meals. In terms of labor cost savings alone, the &yen;88,000 pays for itself in the first month.</p>
+            </div>
+        </div>
+
+        <div class="wa-section">
+            <h2>Why We Do This</h2>
+            <p>TokiStorage's mission is "proof of existence" — carrying memories of people and places a thousand years into the future. But preserving records isn't enough. We need a way to create new encounters and stories worth recording. Workaway consulting is exactly that mechanism.</p>
+            <h3>Synergy with SoulCarrier</h3>
+            <p>SoulCarrier is a community we run, built around the theme of "resonance" — connecting people to people. Workaway is the same kind of space: hosts and guests sharing time together, resonating across languages and cultures. The connection design know-how we've built through SoulCarrier directly applies to helping hosts create welcoming environments for Workaway guests.</p>
+            <h3>What We Learned from Pearl Soap</h3>
+            <p>Pearl Soap is our project built on the gift economy philosophy. Instead of heavy advertising spend, we build relationships through hand-to-hand sharing and word of mouth. This grassroots approach mirrors the essence of Workaway. Reviews bring the next guest, and guests share your region's story with the world — ad-free, organic growth is exactly what we've proven works through Pearl Soap.</p>
+            <h3>Partnership</h3>
+            <p>We don't want to end at a consultant-client relationship. After 6 months of guided support, hosts who can run independently become our partners. Hosts across regions connect with each other, refer guests, and share know-how. Building this host network together is the future beyond this consulting engagement.</p>
+        </div>
+
+        <div class="wa-cta">
+            <p>Ready to start hosting on Workaway?<br>Begin with a free consultation.</p>
+            <a href="https://calendly.com/pearlmemorial/pearlmemorialsession" target="_blank" rel="noopener">Book a Free Consultation</a>
+        </div>
+
+        <div class="wa-back">
+            <a href="index-en.html">&larr; Back to TokiStorage</a>
+        </div>
+    </div>
+</main>
+
+<footer class="toki-footer">
+    <div class="footer-inner">
+        <div class="footer-brand">
+            <h3>TokiStorage</h3>
+            <p>Eternal memorial engraved in quartz glass.<br>No server, no maintenance.<br>Proof of existence, delivered a thousand years forward.</p>
+        </div>
+        <div class="footer-links-group">
+            <h4>Links</h4>
+            <a href="index-en.html">About TokiStorage</a>
+            <a href="index-en.html#pricing">Pricing</a>
+            <a href="index-en.html#faq">FAQ</a>
+            <a href="index-en.html#cta">Contact</a>
+            <a href="pitch-deck-en.html">Investor Deck</a>
+            <a href="legacy-en.html">1000-Year Design Philosophy</a>
+            <a href="kids-en.html">For Kids</a>
+            <a href="infographic-en.html">Ecosystem Overview</a>
+        </div>
+        <div class="footer-links-group">
+            <h4>Proposals</h4>
+            <a href="partnership-en.html">Partnership Proposal</a>
+            <a href="client-proposal-en.html">Client Proposal</a>
+            <a href="government-proposal-en.html">Government Proposal</a>
+            <a href="patronage-en.html">Patronage</a>
+        </div>
+        <div class="footer-links-group">
+            <h4>Related</h4>
+            <span class="footer-sub-links"><a href="../index.html">SoulCarrier Resonance Circle</a> (<a href="../movement/Membership_Guide_EN.pdf">Enrollment</a> / <a href="../movement/BasicAgreement.pdf">Agreement</a> / <a href="../movement/Bylaws_EN.pdf">Bylaws</a>)</span>
+            <a href="pearl-soap-en.html">Pearl Soap</a>
+            <a href="100-scenes.html">100 Scenes</a>
+            <a href="workaway-en.html">Workaway Consulting</a>
+            <a href="offgrid-en.html">Off-Grid Consulting</a>
+            <a href="https://voice-memorial-qr.onrender.com/" target="_blank" rel="noopener">Voice QR Tech Demo</a>
+        </div>
+        <div class="footer-links-group">
+            <h4>Legal</h4>
+            <a href="tokushoho-en.html">Specified Commercial Transactions Act</a>
+            <a href="privacy-en.html">Privacy Policy</a>
+        </div>
+        <div class="footer-links-group">
+            <h4>Company</h4>
+            <p class="footer-company">TokiStorage<br>Takuya Sato<br>2-11-13 Akemi, Urayasu, Chiba 279-0014, Japan<br>(Relocating to Sado City, spring 2026)</p>
+            <a href="https://www.linkedin.com/in/satotakuya" target="_blank" rel="noopener"><svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" style="vertical-align:-2px;margin-right:4px"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 01-2.063-2.065 2.064 2.064 0 112.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg>satotakuya</a>
+            <a href="https://x.com/tokistorage" target="_blank" rel="noopener"><svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" style="vertical-align:-2px;margin-right:4px"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>@tokistorage</a>
+            <a href="https://www.facebook.com/tokistorage" target="_blank" rel="noopener"><svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" style="vertical-align:-2px;margin-right:4px"><path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/></svg>@tokistorage</a>
+            <a href="https://www.instagram.com/tokistorage" target="_blank" rel="noopener"><svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" style="vertical-align:-2px;margin-right:4px"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.052.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 100 12.324 6.162 6.162 0 000-12.324zM12 16a4 4 0 110-8 4 4 0 010 8zm6.406-11.845a1.44 1.44 0 100 2.881 1.44 1.44 0 000-2.881z"/></svg>@tokistorage</a>
+            <a href="https://www.tiktok.com/@tokistorage" target="_blank" rel="noopener"><svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" style="vertical-align:-2px;margin-right:4px"><path d="M12.525.02c1.31-.02 2.61-.01 3.91-.02.08 1.53.63 3.09 1.75 4.17 1.12 1.11 2.7 1.62 4.24 1.79v4.03c-1.44-.05-2.89-.35-4.2-.97-.57-.26-1.1-.59-1.62-.93-.01 2.92.01 5.84-.02 8.75-.08 1.4-.54 2.79-1.35 3.94-1.31 1.92-3.58 3.17-5.91 3.21-1.43.08-2.86-.31-4.08-1.03-2.02-1.19-3.44-3.37-3.65-5.71-.02-.5-.03-1-.01-1.49.18-1.9 1.12-3.72 2.58-4.96 1.66-1.44 3.98-2.13 6.15-1.72.02 1.48-.04 2.96-.04 4.44-.99-.32-2.15-.23-3.02.37-.63.41-1.11 1.04-1.36 1.75-.21.51-.15 1.07-.14 1.61.24 1.64 1.82 3.02 3.5 2.87 1.12-.01 2.19-.66 2.77-1.61.19-.33.4-.67.41-1.06.1-1.79.06-3.57.07-5.36.01-4.03-.01-8.05.02-12.07z"/></svg>@tokistorage</a>
+            <a href="https://www.youtube.com/@tokistorage" target="_blank" rel="noopener"><svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" style="vertical-align:-2px;margin-right:4px"><path d="M23.498 6.186a3.016 3.016 0 00-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 00.502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 002.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 002.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/></svg>@tokistorage</a>
+            <a href="https://zenn.dev/idev" target="_blank" rel="noopener"><svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" style="vertical-align:-2px;margin-right:4px"><path d="M3 3h18v4h-9l9 10v4H3v-4h9L3 7z"/></svg>idev</a>
+        </div>
+    </div>
+    <div class="footer-bottom">
+        <p class="footer-disclaimer">*TokiStorage is a record preservation product. It is not a substitute for a cemetery or gravestone under the Graveyard and Burial Act. "1,000 years" is a theoretical value based on quartz glass material properties, not a product warranty period. Distributed storage is a service that holds customer replicas and does not constitute warehousing under the Warehousing Business Act. QR Code is a registered trademark of Denso Wave Incorporated.</p>
+        <p>&copy; 2026 TokiStorage / TokiStorage All rights reserved.</p>
+    </div>
+</footer>
+
+</body>
+</html>

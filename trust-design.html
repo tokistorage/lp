@@ -1,0 +1,976 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>37の不安に、正直にこたえる — 信頼設計 | トキストレージ</title>
+    <meta name="robots" content="noindex, nofollow">
+    <meta name="description" content="トキストレージに対して感じうる不安や疑問を、私たち自身で洗い出しました。解消できるものと構造的に残るものを正直に分け、それぞれへの考えと取り組みをまとめています。">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Shippori+Mincho:wght@400;500;600;700&family=Zen+Kaku+Gothic+New:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --toki-blue: #2563EB;
+            --toki-blue-dark: #1D4ED8;
+            --toki-blue-pale: #EFF6FF;
+            --bg-white: #FFFFFF;
+            --bg-section: #F8FAFC;
+            --bg-warm: #FFFBF5;
+            --text-primary: #1E293B;
+            --text-secondary: #475569;
+            --text-muted: #94A3B8;
+            --border: #E2E8F0;
+            --amber: #D97706;
+            --amber-pale: #FEF3C7;
+            --amber-border: #F59E0B;
+            --green: #059669;
+            --green-pale: #ECFDF5;
+            --font-display: 'Shippori Mincho', serif;
+            --font-body: 'Zen Kaku Gothic New', sans-serif;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        html { scroll-behavior: smooth; }
+
+        body {
+            font-family: var(--font-body);
+            font-weight: 400;
+            background: var(--bg-white);
+            color: var(--text-primary);
+            line-height: 2;
+            font-size: 16px;
+        }
+
+        .article-nav {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 1000;
+            background: rgba(255,255,255,0.95);
+            backdrop-filter: blur(12px);
+            border-bottom: 1px solid var(--border);
+            padding: 0.6rem 1.2rem;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 1rem;
+        }
+        .article-nav .nav-brand {
+            font-family: var(--font-display);
+            font-size: 0.9rem;
+            font-weight: 600;
+            color: var(--toki-blue);
+            text-decoration: none;
+            white-space: nowrap;
+        }
+        .article-nav .nav-right {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+        .nav-back {
+            font-size: 0.75rem;
+            color: var(--text-secondary);
+            text-decoration: none;
+        }
+        .nav-back:hover { color: var(--toki-blue); }
+        .article-nav .lang-switch {
+            font-size: 0.75rem;
+            color: var(--toki-blue);
+            text-decoration: none;
+            padding: 0.3rem 0.6rem;
+            border: 1px solid var(--toki-blue);
+            border-radius: 4px;
+        }
+        .article-nav .lang-switch:hover {
+            background: var(--toki-blue);
+            color: #fff;
+        }
+
+        .article-container {
+            max-width: 720px;
+            margin: 0 auto;
+            padding: 7rem 2rem 4rem;
+        }
+
+        .article-header {
+            margin-bottom: 3rem;
+            padding-bottom: 2rem;
+            border-bottom: 1px solid var(--border);
+        }
+        .article-category {
+            font-size: 0.7rem;
+            color: var(--amber);
+            letter-spacing: 0.15em;
+            margin-bottom: 1rem;
+        }
+        .article-header h1 {
+            font-family: var(--font-display);
+            font-size: 1.8rem;
+            font-weight: 700;
+            line-height: 1.5;
+            margin-bottom: 1rem;
+        }
+        .article-subtitle {
+            font-size: 1rem;
+            color: var(--text-secondary);
+            margin-bottom: 1.5rem;
+        }
+
+        .article-body h2 {
+            font-family: var(--font-display);
+            font-size: 1.3rem;
+            font-weight: 600;
+            margin: 3rem 0 1.5rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 1px solid var(--border);
+        }
+        .article-body h3 {
+            font-family: var(--font-display);
+            font-size: 1.05rem;
+            font-weight: 600;
+            margin: 2rem 0 0.8rem;
+            color: var(--text-primary);
+        }
+        .article-body p {
+            margin-bottom: 1.5rem;
+            text-align: justify;
+        }
+        .article-body strong { font-weight: 600; }
+        .article-body ul, .article-body ol {
+            margin: 0 0 1.5rem 1.5rem;
+        }
+        .article-body li { margin-bottom: 0.5rem; }
+
+        .concern-box {
+            background: var(--bg-warm);
+            border: 1px solid #F3E8D0;
+            border-radius: 8px;
+            padding: 1rem 1.5rem;
+            margin: 1rem 0;
+        }
+        .concern-label {
+            font-size: 0.7rem;
+            font-weight: 600;
+            color: var(--amber);
+            letter-spacing: 0.1em;
+            margin-bottom: 0.3rem;
+        }
+        .concern-box p.cause-text {
+            font-size: 0.95rem;
+            color: var(--text-secondary);
+            margin-bottom: 0;
+        }
+
+        .answer-box {
+            background: var(--green-pale);
+            border-left: 3px solid var(--green);
+            padding: 1rem 1.5rem;
+            margin: 0.5rem 0 2rem;
+            border-radius: 0 8px 8px 0;
+        }
+        .answer-label {
+            font-size: 0.7rem;
+            font-weight: 600;
+            color: var(--green);
+            letter-spacing: 0.1em;
+            margin-bottom: 0.3rem;
+        }
+        .answer-box ul {
+            margin: 0.5rem 0 0 1.2rem;
+        }
+        .answer-box li {
+            margin-bottom: 0.4rem;
+            font-size: 0.92rem;
+        }
+
+        .structural-note {
+            display: inline-block;
+            font-size: 0.7rem;
+            background: var(--amber-pale);
+            color: var(--amber);
+            padding: 0.15rem 0.5rem;
+            border-radius: 3px;
+            font-weight: 600;
+            letter-spacing: 0.05em;
+            margin-left: 0.3rem;
+            vertical-align: middle;
+        }
+
+        .lock-intro {
+            font-size: 0.9rem;
+            font-weight: 600;
+            color: var(--amber);
+            margin-bottom: 0.5rem;
+        }
+
+        .article-intro {
+            background: var(--bg-section);
+            border-radius: 8px;
+            padding: 1.2rem 1.5rem;
+            margin-top: 1.5rem;
+            font-size: 0.9rem;
+            color: var(--text-secondary);
+            line-height: 1.9;
+        }
+
+        .comparison-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 2rem 0;
+            font-size: 0.85rem;
+        }
+        .comparison-table th {
+            background: var(--bg-section);
+            font-family: var(--font-display);
+            font-weight: 600;
+            padding: 0.6rem 0.8rem;
+            text-align: left;
+            border-bottom: 2px solid var(--toki-blue);
+        }
+        .comparison-table td {
+            padding: 0.6rem 0.8rem;
+            border-bottom: 1px solid var(--border);
+            vertical-align: top;
+        }
+
+        .cross-cutting {
+            background: var(--toki-blue-pale);
+            border: 1px solid var(--toki-blue);
+            border-radius: 8px;
+            padding: 1.5rem 2rem;
+            margin: 1.5rem 0;
+        }
+        .cross-cutting h3 {
+            color: var(--toki-blue);
+            margin-top: 0;
+        }
+        .cross-cutting ul {
+            margin: 0.5rem 0 0 1.2rem;
+        }
+        .cross-cutting li {
+            margin-bottom: 0.4rem;
+            font-size: 0.92rem;
+        }
+
+        .article-footer {
+            margin-top: 4rem;
+            padding-top: 2rem;
+            border-top: 1px solid var(--border);
+        }
+        .article-footer-links {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1rem;
+            justify-content: center;
+            margin-top: 1rem;
+        }
+        .article-footer-links a {
+            color: var(--toki-blue);
+            text-decoration: none;
+            font-size: 0.85rem;
+            padding: 0.4rem 1rem;
+            border: 1px solid var(--border);
+            border-radius: 6px;
+        }
+        .article-footer-links a:hover {
+            background: var(--toki-blue-pale);
+            border-color: var(--toki-blue);
+        }
+
+        @media (max-width: 600px) {
+            .article-container { padding: 5rem 1.2rem 3rem; }
+            .article-header h1 { font-size: 1.4rem; }
+            .concern-box, .answer-box, .cross-cutting { padding: 1rem; }
+            .comparison-table { font-size: 0.78rem; }
+        }
+    </style>
+</head>
+<body>
+
+<nav class="article-nav">
+    <a href="index.html" class="nav-brand">トキストレージ</a>
+    <div class="nav-right">
+        <a href="transparency.html" class="nav-back">透明性ページへ</a>
+        <a href="trust-design-en.html" class="lang-switch" aria-label="Switch to English">EN</a>
+    </div>
+</nav>
+
+<article class="article-container">
+    <header class="article-header">
+        <p class="article-category">TRUST DESIGN</p>
+        <h1>37の不安に、正直にこたえる</h1>
+        <p class="article-subtitle">トキストレージに対して感じうる不安や疑問を、私たち自身で洗い出しました。<br>解消できるもの（✅）と、構造的に残り続けるもの（🔒）を正直に分けています。</p>
+        <div class="article-intro">
+            <p style="margin-bottom:0;">このドキュメントは、外部から指摘される前に自分たちで書いたものです。完璧な回答ではありません。「今の時点で、私たちはこう考えている」という記録です。新しい懸念が出てきたら、ここに追加していきます。</p>
+        </div>
+    </header>
+
+    <div class="article-body">
+
+        <!-- ===== A. 感情面の不安 ===== -->
+        <h2>A. 感情面の不安（5項目）</h2>
+
+        <h3>A-1. ✅「大切な人の死を商売にしている」と感じる</h3>
+        <div class="concern-box">
+            <p class="concern-label">こう感じる理由</p>
+            <p class="cause-text">商品ページに先に到達し、理念を知る前に価格を見る</p>
+        </div>
+        <div class="answer-box">
+            <p class="answer-label">私たちの取り組み</p>
+            <ul>
+                <li>LP・広告の導線を「理念 → 共感 → 参加方法」の順に再設計する</li>
+                <li>価格表を独立ページ化し、理念コンテンツからの遷移でのみ到達可能にする</li>
+                <li>トップページから「今すぐ購入」系CTAを撤去し、「もっと知る」に差し替え</li>
+                <li>ファーストビューに創設者の動機（個人的な喪失体験）を配置する</li>
+            </ul>
+        </div>
+
+        <h3>A-2. ✅「泣かせてから売るテクニック」に見える</h3>
+        <div class="concern-box">
+            <p class="concern-label">こう感じる理由</p>
+            <p class="cause-text">感動コンテンツと購入導線が近接している</p>
+        </div>
+        <div class="answer-box">
+            <p class="answer-label">私たちの取り組み</p>
+            <ul>
+                <li>エッセイ・動画ページから購入リンクを完全に分離する（同一ページ内にCTAを置かない）</li>
+                <li>感動コンテンツの末尾は「関連エッセイへの導線」のみにする</li>
+                <li>購入導線には独立した「参加の仕方」ページを設け、感情的表現を抑えた事務的トーンで書く</li>
+                <li>ユーザーレビューや体験談は「売り」目的ではなく独立コンテンツとして掲載する</li>
+            </ul>
+        </div>
+
+        <h3>A-3. ✅「弱っている人をターゲットにしている」</h3>
+        <div class="concern-box">
+            <p class="concern-label">こう感じる理由</p>
+            <p class="cause-text">グリーフ（悲嘆）マーケティングに見えるタイミングでリーチする</p>
+        </div>
+        <div class="answer-box">
+            <p class="answer-label">私たちの取り組み</p>
+            <ul>
+                <li>葬儀直後・命日前後のターゲティング広告を禁止するポリシーを明文化・公開する</li>
+                <li>「今すぐ決めなくていい」を全ページのフッターに常設する</li>
+                <li>無料で完結するコンテンツ（エッセイ、ワークショップ記録、哲学ノート）を充実させ、支払いなしでも価値を受け取れる状態をつくる</li>
+                <li>冷却期間（申込後30日間のキャンセル無料）を明示する</li>
+            </ul>
+        </div>
+
+        <h3>A-4. ✅「遺族の罪悪感を利用している」</h3>
+        <div class="concern-box">
+            <p class="concern-label">こう感じる理由</p>
+            <p class="cause-text">「何もしないと故人が忘れられる」という恐怖訴求に読める</p>
+        </div>
+        <div class="answer-box">
+            <p class="answer-label">私たちの取り組み</p>
+            <ul>
+                <li>コピーから「忘れられる」「消える」等の恐怖喚起ワードを全面監査・除去する</li>
+                <li>代わりに「すでにある記憶を形にする」というポジティブフレームに統一する</li>
+                <li>「Soul Carrierを使わなくても記憶は残る。私たちはその選択肢の一つにすぎない」と明記する</li>
+                <li>競合・代替手段（散骨、樹木葬、デジタルアーカイブ等）への誠実なリンク集を設ける</li>
+            </ul>
+        </div>
+
+        <h3>A-5. 🔒「死を扱う商業は根本的に緊張を孕む」<span class="structural-note">構造的に消えない</span></h3>
+        <p class="lock-intro">この懸念は構造的に消えません。でも、開示することで向き合えます。</p>
+        <div class="answer-box">
+            <p class="answer-label">私たちの取り組み</p>
+            <ul>
+                <li>「私たちが持つ構造的矛盾」ページを作り、「死×商業」の緊張を自ら言語化する</li>
+                <li>葬儀業界・墓石業界と同じ構造であることを認め、差別化ポイント（透明性・返金・オープンガバナンス）を対比表示する</li>
+                <li>年次で「倫理レビュー報告書」を第三者委員に依頼し公開する</li>
+            </ul>
+        </div>
+
+        <!-- ===== B. 料金に関する不安 ===== -->
+        <h2>B. 料金に関する不安（6項目）</h2>
+
+        <h3>B-1. ✅「対価に見合わない」と感じる</h3>
+        <div class="concern-box">
+            <p class="concern-label">こう感じる理由</p>
+            <p class="cause-text">支払い額に対して何が行われるか不透明</p>
+        </div>
+        <div class="answer-box">
+            <p class="answer-label">私たちの取り組み</p>
+            <ul>
+                <li>全プラン共通で「あなたの支払いの内訳」をビジュアル（円グラフ）で表示する</li>
+                <li>内訳例: 石英ガラス加工費 ○%、島嶼保管維持費 ○%、運営人件費 ○%、準備金 ○%</li>
+                <li>材料費・加工工程の写真付き解説ページを作成する</li>
+                <li>「原価を隠さない」ポリシーを掲げ、主要材料の市場価格を併記する</li>
+            </ul>
+        </div>
+
+        <h3>B-2. ✅「なぜこの価格帯なのかわからない」</h3>
+        <div class="concern-box">
+            <p class="concern-label">こう感じる理由</p>
+            <p class="cause-text">類似サービスとの比較軸がない</p>
+        </div>
+        <div class="answer-box">
+            <p class="answer-label">私たちの取り組み</p>
+            <ul>
+                <li>「他の追悼手段との比較」ページを設ける（墓石、散骨、樹木葬、デジタル追悼の価格帯を並列）</li>
+                <li>Soul Carrierの「何にお金がかかるか」を工程別にブレイクダウンして説明する</li>
+                <li>1000年保管のコスト試算根拠（地質学的安定性、メンテナンス頻度）を公開する</li>
+                <li>「高い」と感じた人向けに、無料・低価格で参加できる方法（エッセイ寄稿、ワークショップ参加）を提示する</li>
+            </ul>
+        </div>
+
+        <h3>B-3. ✅「隠れたコストがあるのでは」</h3>
+        <div class="concern-box">
+            <p class="concern-label">こう感じる理由</p>
+            <p class="cause-text">初期費用以外の請求が不明</p>
+        </div>
+        <div class="answer-box">
+            <p class="answer-label">私たちの取り組み</p>
+            <ul>
+                <li>「追加費用は一切発生しません」を料金ページの最上部に太字で明記する</li>
+                <li>万が一追加費用が発生する場合のシナリオ（あれば）を事前に全列挙する</li>
+                <li>特定商取引法ページの表記を「読ませない法的文書」から「読める日本語」に書き直す</li>
+                <li>FAQ形式で「〇〇のときは追加費用がかかりますか？」を10パターン以上用意する</li>
+            </ul>
+        </div>
+
+        <h3>B-4. ✅「寄付なのか購入なのか曖昧」</h3>
+        <div class="concern-box">
+            <p class="concern-label">こう感じる理由</p>
+            <p class="cause-text">パトロネージモデルが日本の消費者には馴染みが薄い</p>
+        </div>
+        <div class="answer-box">
+            <p class="answer-label">私たちの取り組み</p>
+            <ul>
+                <li>「これは寄付ではありません。明確な対価（石英ガラスへの封入＋1000年保管）があります」と明記する</li>
+                <li>法的な分類（売買契約 or 委託契約）を明確にし、契約書テンプレートを公開する</li>
+                <li>パトロネージ型プランと通常購入型プランを明確に分け、それぞれの法的性質を説明する</li>
+                <li>返金ポリシーを種別ごとに明記する</li>
+            </ul>
+        </div>
+
+        <h3>B-5. ✅「運営者が儲けすぎているのでは」</h3>
+        <div class="concern-box">
+            <p class="concern-label">こう感じる理由</p>
+            <p class="cause-text">財務情報が非公開</p>
+        </div>
+        <div class="answer-box">
+            <p class="answer-label">私たちの取り組み</p>
+            <ul>
+                <li>年次収支報告書を公開する（収入・支出・準備金残高）</li>
+                <li>創設者・運営チームの報酬レンジを開示する</li>
+                <li>外部会計監査を導入し、監査報告書を公開する</li>
+                <li>利益の使途（保管インフラ投資、研究開発、コミュニティ還元）を明示する</li>
+            </ul>
+        </div>
+
+        <h3>B-6. 🔒「1000年後にお金が足りるのか」<span class="structural-note">構造的に消えない</span></h3>
+        <p class="lock-intro">この懸念は構造的に消えません。でも、仕組みで信頼を積み上げることはできます。</p>
+        <div class="answer-box">
+            <p class="answer-label">私たちの取り組み</p>
+            <ul>
+                <li>財務持続性モデル（信託方式、積立方式、分散保管方式）の詳細を公開する</li>
+                <li>「もし運営が破綻したら」のシナリオと対策を明文化する（信託への移管、オープンソース化等）</li>
+                <li>独立した信託口座の設立を検討し、運営費と保管積立金を分離する</li>
+                <li>10年・50年・100年・500年・1000年のマイルストーン計画を公開する</li>
+            </ul>
+        </div>
+
+        <!-- ===== C. 規模に関する不安 ===== -->
+        <h2>C. 規模に関する不安（5項目）</h2>
+
+        <h3>C-1. ✅「1000年は大風呂敷すぎる」</h3>
+        <div class="concern-box">
+            <p class="concern-label">こう感じる理由</p>
+            <p class="cause-text">人間の直感で1000年をイメージできない</p>
+        </div>
+        <div class="answer-box">
+            <p class="answer-label">私たちの取り組み</p>
+            <ul>
+                <li>「なぜ1000年か」を地質学・材料科学の根拠から説明するページを作る</li>
+                <li>石英ガラスの耐久性データ（加速劣化試験等）を掲載する</li>
+                <li>「1000年続いているもの」の具体例リスト（法隆寺、ヴェネツィア、正倉院）を示し、不可能ではないことを伝える</li>
+                <li>「もし1000年もたなかったら」の代替保証（100年保証＋更新制度等）を設計・明示する</li>
+            </ul>
+        </div>
+
+        <h3>C-2. ✅「島を買うなんて現実離れしている」</h3>
+        <div class="concern-box">
+            <p class="concern-label">こう感じる理由</p>
+            <p class="cause-text">島嶼＝豪華・浪費のイメージ</p>
+        </div>
+        <div class="answer-box">
+            <p class="answer-label">私たちの取り組み</p>
+            <ul>
+                <li>島嶼選定の基準（地質安定性、アクセス、法的条件、地域との関係）を公開する</li>
+                <li>実際の島のコスト感（過疎地域の土地は都市部より桁違いに安い事実）を示す</li>
+                <li>先行事例（ラナイ島再生、直島アートプロジェクト、軍艦島保全）を紹介する</li>
+                <li>「島を所有する」ではなく「地域と共同管理する」フレームに言い換える</li>
+            </ul>
+        </div>
+
+        <h3>C-3. ✅「実績がないのにビジョンだけ大きい」</h3>
+        <div class="concern-box">
+            <p class="concern-label">こう感じる理由</p>
+            <p class="cause-text">成果物や活動実績の見せ方が不十分</p>
+        </div>
+        <div class="answer-box">
+            <p class="answer-label">私たちの取り組み</p>
+            <ul>
+                <li>活動タイムラインを作成し、設立から現在までのすべての活動を時系列で公開する</li>
+                <li>写真・動画のドキュメンタリー的コンテンツを定期発信する（月次活動レポート）</li>
+                <li>石英ガラスの実物写真、加工プロセス動画を公開する</li>
+                <li>初期参加者の声（匿名可）を定期的に追加する</li>
+                <li>「今はここまでしかできていない」の正直な現状報告を定期公開する</li>
+            </ul>
+        </div>
+
+        <h3>C-4. ✅「結局、何も届かないのでは」</h3>
+        <div class="concern-box">
+            <p class="concern-label">こう感じる理由</p>
+            <p class="cause-text">申込から成果物受領までの過程が見えない</p>
+        </div>
+        <div class="answer-box">
+            <p class="answer-label">私たちの取り組み</p>
+            <ul>
+                <li>注文後のステップを「見える化」する（申込 → 受領確認 → 制作開始 → 封入 → 検品 → 発送/保管開始）</li>
+                <li>各ステップで自動通知を送る仕組みを構築する</li>
+                <li>制作過程の写真をステップごとに共有する（マイページ or メール）</li>
+                <li>「進捗が遅れたら」の対応フローと補償ポリシーを明示する</li>
+            </ul>
+        </div>
+
+        <h3>C-5. 🔒「プロジェクトが中断されたらどうなる」<span class="structural-note">構造的に消えない</span></h3>
+        <p class="lock-intro">この懸念は構造的に消えません。でも、フェイルセーフを設計することはできます。</p>
+        <div class="answer-box">
+            <p class="answer-label">私たちの取り組み</p>
+            <ul>
+                <li>「事業継続計画（BCP）」を正式に策定し公開する</li>
+                <li>運営者不在時の承継プラン（法人格、信託、コミュニティへの移管）を明文化する</li>
+                <li>データ・設計図・プロセスすべてのオープンソース化を段階的に進める</li>
+                <li>「私たちがいなくなっても続けられる仕組み」を設計思想の中核として発信する</li>
+            </ul>
+        </div>
+
+        <!-- ===== D. 情報非対称 ===== -->
+        <h2>D. 情報の見えにくさ（4項目）— すべて✅</h2>
+
+        <h3>D-1. ✅「運営者が誰かわからない」</h3>
+        <div class="concern-box">
+            <p class="concern-label">こう感じる理由</p>
+            <p class="cause-text">運営主体の情報が分散・不十分</p>
+        </div>
+        <div class="answer-box">
+            <p class="answer-label">私たちの取り組み</p>
+            <ul>
+                <li>「チーム紹介」ページを作成し、創設者の経歴・顔写真・動機を掲載する</li>
+                <li>法人情報（登記簿、定款サマリー）を公開する</li>
+                <li>アドバイザー・協力者の一覧と各人のコメントを掲載する</li>
+                <li>連絡先（メール、所在地、電話）を全ページのフッターに設置する</li>
+            </ul>
+        </div>
+
+        <h3>D-2. ✅「都合の良い情報だけ出しているのでは」</h3>
+        <div class="concern-box">
+            <p class="concern-label">こう感じる理由</p>
+            <p class="cause-text">ネガティブ情報が皆無</p>
+        </div>
+        <div class="answer-box">
+            <p class="answer-label">私たちの取り組み</p>
+            <ul>
+                <li>「うまくいかなかったこと」セクションを活動報告に常設する</li>
+                <li>外部からの批判・懸念に対する回答をFAQ形式で公開する</li>
+                <li>SNSやレビューでの否定的コメントに対し、削除せず誠実に回答するポリシーを公開する</li>
+                <li>年次報告書に「今年の失敗と学び」セクションを設ける</li>
+            </ul>
+        </div>
+
+        <h3>D-3. ✅「契約内容がわかりにくい」</h3>
+        <div class="concern-box">
+            <p class="concern-label">こう感じる理由</p>
+            <p class="cause-text">法的文書が読みにくい、または見つけにくい</p>
+        </div>
+        <div class="answer-box">
+            <p class="answer-label">私たちの取り組み</p>
+            <ul>
+                <li>契約書を「法律家向け正式版」と「誰でも読める要約版」の2バージョンで公開する</li>
+                <li>要約版は箇条書き＋Q&A形式にする</li>
+                <li>重要条項（解約条件、返金条件、保管義務、免責事項）をハイライト表示する</li>
+                <li>契約前に「これだけは知っておいてほしい5つのこと」チェックリストを提示する</li>
+            </ul>
+        </div>
+
+        <h3>D-4. ✅「問い合わせしても返事が来なさそう」</h3>
+        <div class="concern-box">
+            <p class="concern-label">こう感じる理由</p>
+            <p class="cause-text">コミュニケーション体制が見えない</p>
+        </div>
+        <div class="answer-box">
+            <p class="answer-label">私たちの取り組み</p>
+            <ul>
+                <li>問い合わせ応答時間の目安（例: 48時間以内に初回応答）を明記する</li>
+                <li>自動返信メールで受付確認＋対応フローを即時通知する</li>
+                <li>FAQ・ヘルプセンターを整備し、よくある質問は自己解決可能にする</li>
+                <li>月1回のオープンQ&Aセッション（オンライン）を開催し、誰でも質問できる場を作る</li>
+            </ul>
+        </div>
+
+        <!-- ===== E. 社会的懸念 ===== -->
+        <h2>E. 社会的懸念（4項目）</h2>
+
+        <h3>E-1. ✅「宗教っぽい」「カルトっぽい」</h3>
+        <div class="concern-box">
+            <p class="concern-label">こう感じる理由</p>
+            <p class="cause-text">精神性の高い言語 + 閉鎖的コミュニティの印象</p>
+        </div>
+        <div class="answer-box">
+            <p class="answer-label">私たちの取り組み</p>
+            <ul>
+                <li>宗教ではないことを明確に宣言するページを設ける（「私たちの立場」）</li>
+                <li>特定の信仰体系を前提としない設計であることを繰り返し説明する</li>
+                <li>コミュニティの意思決定プロセスを公開する（議事録、投票記録）</li>
+                <li>外部の人間がいつでも訪問・見学できるオープンポリシーを設ける</li>
+                <li>「入ったら抜けにくい」構造を一切作らない（退会は1クリック、引き止めなし）</li>
+            </ul>
+        </div>
+
+        <h3>E-2. ✅「友人に説明できない」</h3>
+        <div class="concern-box">
+            <p class="concern-label">こう感じる理由</p>
+            <p class="cause-text">一言で伝わるフレーズがない</p>
+        </div>
+        <div class="answer-box">
+            <p class="answer-label">私たちの取り組み</p>
+            <ul>
+                <li>「30秒で伝わる説明」を公式に用意する（例: 「大切な人の記憶を石英ガラスに封じて、1000年残すプロジェクト」）</li>
+                <li>「友人に送れるページ」を設計する（短いURL、シェアカード、概要動画30秒版）</li>
+                <li>メディア掲載実績を「第三者がこう説明しています」として活用する</li>
+                <li>「よくある誤解」ページを作り、友人から返ってきそうな疑問に先回りして答える</li>
+            </ul>
+        </div>
+
+        <h3>E-3. ✅「詐欺やマルチ商法との区別がつかない」</h3>
+        <div class="concern-box">
+            <p class="concern-label">こう感じる理由</p>
+            <p class="cause-text">構造的に類似パターンがある</p>
+        </div>
+        <div class="answer-box">
+            <p class="answer-label">私たちの取り組み</p>
+            <ul>
+                <li>「詐欺との違い」ページを自ら作成し、類似点と相違点を正直に列挙する</li>
+                <li>紹介制度・アフィリエイト・マルチレベルの仕組みを一切導入しないことを宣言する</li>
+                <li>第三者機関（弁護士、消費者団体等）によるレビューコメントを掲載する</li>
+                <li>消費者庁・国民生活センターの相談窓口リンクを自ら設置する</li>
+            </ul>
+        </div>
+
+        <h3>E-4. 🔒「新しすぎて社会的証明がない」<span class="structural-note">時間が必要</span></h3>
+        <p class="lock-intro">この懸念は構造的に消えません。時間とともに変わっていくものですが、それまでの戦略があります。</p>
+        <div class="answer-box">
+            <p class="answer-label">私たちの取り組み</p>
+            <ul>
+                <li>「まだ小さいプロジェクトです」を隠さず、現在のコミュニティ規模を正直に公開する</li>
+                <li>初期参加者を「創設メンバー」として尊重し、彼らの声を定期発信する</li>
+                <li>学術機関・研究者との連携を優先し、「専門家が関心を持っている」実績を積む</li>
+                <li>メディア露出を計画的に狙い、第三者視点の記事を増やす</li>
+                <li>オープンソース・オープンデータ戦略で「全部見せる」ことで社会的証明の代替とする</li>
+            </ul>
+        </div>
+
+        <!-- ===== F. 文化的配慮 ===== -->
+        <h2>F. 文化的配慮（4項目）</h2>
+
+        <h3>F-1. ✅「日本の弔い文化を勝手に使っている」</h3>
+        <div class="concern-box">
+            <p class="concern-label">こう感じる理由</p>
+            <p class="cause-text">文化的コンテキストの説明不足</p>
+        </div>
+        <div class="answer-box">
+            <p class="answer-label">私たちの取り組み</p>
+            <ul>
+                <li>文化的ルーツへのリスペクトを明文化する（「私たちが影響を受けたもの」ページ）</li>
+                <li>日本の弔い文化の専門家（僧侶、民俗学者等）との対話記録を公開する</li>
+                <li>「既存の弔いを否定しない」立場を明確にする</li>
+                <li>地域の寺社・葬儀関係者との協力関係を構築し、可視化する</li>
+            </ul>
+        </div>
+
+        <h3>F-2. ✅「ハワイ・太平洋の文化を収奪している」</h3>
+        <div class="concern-box">
+            <p class="concern-label">こう感じる理由</p>
+            <p class="cause-text">先住民文化の商業利用に対する正当な懸念</p>
+        </div>
+        <div class="answer-box">
+            <p class="answer-label">私たちの取り組み</p>
+            <ul>
+                <li>ハワイ先住民コミュニティとの協議プロセスを公開する</li>
+                <li>文化的アドバイザー（Native Hawaiian）をチームに招聘する</li>
+                <li>収益の一部を先住民文化保全基金に拠出する仕組みを設け、金額を開示する</li>
+                <li>「文化を使う」のではなく「文化と共に歩む」姿勢を、具体的な行動で示す</li>
+            </ul>
+        </div>
+
+        <h3>F-3. ✅「複数文化を都合よくミックスしている」</h3>
+        <div class="concern-box">
+            <p class="concern-label">こう感じる理由</p>
+            <p class="cause-text">多文化要素の併存が浅い折衷に見える</p>
+        </div>
+        <div class="answer-box">
+            <p class="answer-label">私たちの取り組み</p>
+            <ul>
+                <li>各文化要素を「なぜ取り入れたか」個別に説明する</li>
+                <li>文化横断的な追悼の歴史的事例を研究ベースで紹介する（学術引用つき）</li>
+                <li>特定の文化に属する要素は、その文化の当事者の協力のもとでのみ使用するポリシーを策定する</li>
+                <li>文化的配慮の外部レビュー（文化人類学者等）を定期的に受ける</li>
+            </ul>
+        </div>
+
+        <h3>F-4. 🔒「外国人/部外者が口出しすべきでない領域がある」<span class="structural-note">構造的に消えない</span></h3>
+        <p class="lock-intro">この懸念は構造的に消えません。当事者との共創でしか、応えていくことができません。</p>
+        <div class="answer-box">
+            <p class="answer-label">私たちの取り組み</p>
+            <ul>
+                <li>プロジェクトの各地域（佐渡、マウイ等）に地元アドバイザリーボードを設置する</li>
+                <li>地元住民の声を定期的に収集し、公開する</li>
+                <li>「部外者である自覚」を公式に表明し、謙虚な姿勢を制度化する</li>
+                <li>地域との利益共有モデル（雇用創出、インフラ貢献、文化保全支援）を具体化する</li>
+            </ul>
+        </div>
+
+        <!-- ===== G. 技術・運営 ===== -->
+        <h2>G. 技術・運営（5項目）— すべて✅</h2>
+
+        <h3>G-1. ✅「石英ガラスが本当に1000年もつのか」</h3>
+        <div class="concern-box">
+            <p class="concern-label">こう感じる理由</p>
+            <p class="cause-text">技術的根拠が不明</p>
+        </div>
+        <div class="answer-box">
+            <p class="answer-label">私たちの取り組み</p>
+            <ul>
+                <li>石英ガラスの物性データ（融点、耐候性、化学的安定性）を科学的に説明するページを作る</li>
+                <li>加速劣化試験の結果や学術論文を引用する</li>
+                <li>実際の石英ガラス標本の経年変化記録を蓄積・公開する（5年、10年、…）</li>
+                <li>材料科学の専門家によるレビューコメントを掲載する</li>
+            </ul>
+        </div>
+
+        <h3>G-2. ✅「保管場所が安全なのか」</h3>
+        <div class="concern-box">
+            <p class="concern-label">こう感じる理由</p>
+            <p class="cause-text">保管環境の詳細が不明</p>
+        </div>
+        <div class="answer-box">
+            <p class="answer-label">私たちの取り組み</p>
+            <ul>
+                <li>保管候補地の地質データ（地震リスク、海面上昇予測、火山活動）を公開する</li>
+                <li>分散保管戦略（複数拠点に同一データを保管）を説明する</li>
+                <li>保管施設の設計仕様（耐震、防水、温湿度管理）を公開する</li>
+                <li>定期点検レポートを公開する（年次 or 半年次）</li>
+            </ul>
+        </div>
+
+        <h3>G-3. ✅「デジタルデータは消えるのでは」</h3>
+        <div class="concern-box">
+            <p class="concern-label">こう感じる理由</p>
+            <p class="cause-text">デジタル保存の脆弱性への正当な懸念</p>
+        </div>
+        <div class="answer-box">
+            <p class="answer-label">私たちの取り組み</p>
+            <ul>
+                <li>「物理＋デジタルの二重保管」戦略を明確に説明する</li>
+                <li>デジタル部分のバックアップ方式（分散ストレージ、定期マイグレーション）を公開する</li>
+                <li>「デジタルは永遠ではないからこそ石英ガラスがある」というロジックを明示する</li>
+                <li>技術ロードマップ（10年ごとのマイグレーション計画）を公開する</li>
+            </ul>
+        </div>
+
+        <h3>G-4. ✅「セキュリティは大丈夫か」</h3>
+        <div class="concern-box">
+            <p class="concern-label">こう感じる理由</p>
+            <p class="cause-text">個人情報・遺族データの取り扱いへの不安</p>
+        </div>
+        <div class="answer-box">
+            <p class="answer-label">私たちの取り組み</p>
+            <ul>
+                <li>プライバシーポリシーを「読める日本語」で書き直す</li>
+                <li>データの暗号化方式・保管方式を技術者向けに公開する</li>
+                <li>「どのデータを誰がアクセスできるか」のアクセス権限表を公開する</li>
+                <li>情報セキュリティの第三者認証（ISMS等）の取得を検討・公開する</li>
+                <li>データ漏洩時の対応フロー（通知、補償、再発防止）を事前に公開する</li>
+            </ul>
+        </div>
+
+        <h3>G-5. ✅「運営チームの技術力は足りているか」</h3>
+        <div class="concern-box">
+            <p class="concern-label">こう感じる理由</p>
+            <p class="cause-text">チームのケイパビリティが見えない</p>
+        </div>
+        <div class="answer-box">
+            <p class="answer-label">私たちの取り組み</p>
+            <ul>
+                <li>チームメンバーのスキルセット・経歴を公開する</li>
+                <li>外部パートナー（ガラス職人、地質学者、IT技術者等）との連携体制を図示する</li>
+                <li>技術的なチャレンジとその解決過程をブログ形式で発信する</li>
+                <li>オープンソースコミュニティとの連携を進め、外部貢献者を受け入れる体制を作る</li>
+            </ul>
+        </div>
+
+        <!-- ===== H. 自己認識の揺らぎ ===== -->
+        <h2>H. ご自身の中で起きる迷い（4項目）</h2>
+
+        <h3>H-1. ✅「自分は騙されやすいタイプなのでは」</h3>
+        <div class="concern-box">
+            <p class="concern-label">こう感じる理由</p>
+            <p class="cause-text">感動した自分を疑う → 防衛的になる</p>
+        </div>
+        <div class="answer-box">
+            <p class="answer-label">私たちの取り組み</p>
+            <ul>
+                <li>「感動しても即決しないでください」をCTAの隣に常設する</li>
+                <li>冷却期間（30日間全額返金）を最も目立つ位置に配置する</li>
+                <li>「周りの人に相談してから決めてください」と公式に推奨する</li>
+                <li>チェックリスト「申し込む前に確認すべき10のこと」を提供する</li>
+            </ul>
+        </div>
+
+        <h3>H-2. ✅「高揚感で判断が曇っているのでは」</h3>
+        <div class="concern-box">
+            <p class="concern-label">こう感じる理由</p>
+            <p class="cause-text">感動コンテンツ直後に意思決定を求められる</p>
+        </div>
+        <div class="answer-box">
+            <p class="answer-label">私たちの取り組み</p>
+            <ul>
+                <li>感動コンテンツ → 申込の間に「冷静な情報ページ」（FAQ、比較表、批判への回答）を挟む</li>
+                <li>「今日決めなくても、このプロジェクトは明日もあります」メッセージを表示する</li>
+                <li>メール登録だけで離脱できる中間ステップを設け、後日改めて検討できるようにする</li>
+                <li>イベント会場での即決申込を受け付けないポリシーを検討する</li>
+            </ul>
+        </div>
+
+        <h3>H-3. ✅「これに払うなら他のことに使うべきでは」</h3>
+        <div class="concern-box">
+            <p class="concern-label">こう感じる理由</p>
+            <p class="cause-text">追悼に対する支出の正当化が難しい</p>
+        </div>
+        <div class="answer-box">
+            <p class="answer-label">私たちの取り組み</p>
+            <ul>
+                <li>「無料で参加する方法」を目立つ位置に配置する（エッセイ寄稿、ボランティア、情報拡散）</li>
+                <li>最小金額プラン or 分割払いオプションを用意する</li>
+                <li>「払わなくても仲間です」というメッセージを明確にする</li>
+                <li>支出の比較対象を示す（墓石の平均費用○○万円との比較）</li>
+            </ul>
+        </div>
+
+        <h3>H-4. 🔒「感動と警戒が同時に存在する矛盾」<span class="structural-note">消す必要なし</span></h3>
+        <p class="lock-intro">この矛盾は消えません。でも、消す必要もないと思っています。むしろ肯定したい。</p>
+        <div class="answer-box">
+            <p class="answer-label">私たちの取り組み</p>
+            <ul>
+                <li>「両方感じているあなたは、健全です」というメッセージを公式に発信する</li>
+                <li>「疑ってください」ページで、37項目すべてを自ら列挙し回答する（このドキュメントのWeb版）</li>
+                <li>「私たちを疑うための情報」セクションを設け、第三者チェックツール（法人登記確認、消費者相談窓口等）へのリンクを貼る</li>
+                <li>「それでも参加を選んだ理由」を既存メンバーのインタビュー形式で掲載する</li>
+            </ul>
+        </div>
+
+        <!-- ===== 横断施策 ===== -->
+        <h2>横断施策（全カテゴリに効くもの）</h2>
+
+        <div class="cross-cutting">
+            <h3>X-1. 「疑ってください」ページの新設</h3>
+            <ul>
+                <li>37項目をそのまま掲載し、各項目に対する回答と対策を書く</li>
+                <li>「このプロジェクトが詐欺でないことを証明する方法」セクションを設ける</li>
+                <li>定期的に更新し、新たな懸念にも対応する</li>
+            </ul>
+        </div>
+
+        <div class="cross-cutting">
+            <h3>X-2. ラジカル・トランスペアレンシー（過激な透明性）</h3>
+            <ul>
+                <li>年次財務報告書の公開</li>
+                <li>意思決定議事録の公開</li>
+                <li>失敗事例の公開</li>
+                <li>外部監査報告書の公開</li>
+                <li>コードベースの段階的オープンソース化</li>
+            </ul>
+        </div>
+
+        <div class="cross-cutting">
+            <h3>X-3. 出会いの導線設計</h3>
+            <ul>
+                <li>理念コンテンツ → 活動実績 → 参加者の声 → FAQ → 参加方法 → 価格</li>
+                <li>広告出稿時はエッセイ・哲学ページへの誘導のみ（商品ページへの直接広告を禁止）</li>
+                <li>SNS発信は活動報告と思索が中心、商品告知は月1回以下</li>
+            </ul>
+        </div>
+
+        <div class="cross-cutting">
+            <h3>X-4. 「辞められる」の可視化</h3>
+            <ul>
+                <li>退会・キャンセルの手順を最大3ステップ以内にする</li>
+                <li>返金ポリシーを全ページのフッターに常設する</li>
+                <li>「引き止めない」ポリシーを明文化する</li>
+                <li>退会者への追跡連絡（「戻ってきませんか？」系メール）を送らないことを宣言する</li>
+            </ul>
+        </div>
+
+        <div class="cross-cutting">
+            <h3>X-5. 第三者の声を増やす</h3>
+            <ul>
+                <li>メディア取材を積極的に受け入れる</li>
+                <li>学術機関との連携を拡大する</li>
+                <li>文化人類学者、地質学者、倫理学者のアドバイザリーボードを設置する</li>
+                <li>消費者団体への自主的なレビュー依頼を行う</li>
+            </ul>
+        </div>
+
+        <!-- ===== これまでの取り組み ===== -->
+        <h2>これまでに実施したこと</h2>
+        <p>37項目のうち、すでに着手・実施しているものがあります。すべてが完了しているわけではありませんが、現時点の状況を正直にお伝えします。</p>
+
+        <div class="answer-box">
+            <p class="answer-label">実施済み</p>
+            <ul>
+                <li>このドキュメント自体の公開（X-1「疑ってください」ページの原型）</li>
+                <li>「<a href="transparency.html">決める前に、疑ってください</a>」ページの公開 — 10の代表的懸念への回答</li>
+                <li>「<a href="not-for-you.html">向いていない方へ</a>」ページの公開 — 合わない方に正直にお伝えするページ</li>
+                <li>トップページのCTAを「今すぐ購入」から「詳しく見る」「まず知る」に変更（A-1）</li>
+                <li>エッセイ・動画ページから購入リンクを完全に分離（A-2）</li>
+                <li>感動コンテンツの末尾は関連エッセイへの導線のみに統一（A-2）</li>
+                <li>無料で読めるコンテンツ（エッセイ、哲学ノート）の充実（A-3）</li>
+            </ul>
+        </div>
+
+        <div class="concern-box">
+            <p class="concern-label">着手中</p>
+            <ul>
+                <li>恐怖喚起ワード（「忘れられる」「消える」等）の全面監査と、ポジティブフレームへの書き換え（A-4）</li>
+                <li>理念ファーストの導線設計（X-3）— サイト構造の段階的な改善</li>
+                <li>コードベースのオープンソース化（X-2, C-5）— GitHubで公開中</li>
+                <li>「まだ小さいプロジェクトです」という正直な開示（E-4）</li>
+            </ul>
+        </div>
+
+        <p style="font-style: italic; color: var(--text-muted); margin-top: 2rem;">それ以外の項目は、今後の取り組みです。進展があればこのドキュメントを更新します。</p>
+
+    </div>
+
+    <footer class="article-footer">
+        <p style="text-align:center; font-size: 0.85rem; color: var(--text-muted);">このドキュメントは定期的に見直し、新しい懸念や進展があれば更新します。</p>
+        <div class="article-footer-links">
+            <a href="transparency.html">疑ってください</a>
+            <a href="not-for-you.html">向いていない方へ</a>
+            <a href="index.html">トキストレージ トップ</a>
+            <a href="index.html#pricing">料金プラン</a>
+            <a href="index.html#faq">よくある質問</a>
+        </div>
+        <p id="essay-nav-links" style="font-size: 0.8rem; margin-top: 2rem; line-height: 2;"></p>
+        <p style="margin-top: 2rem; font-size: 0.75rem; color: var(--text-muted);">&copy; 2026 TokiStorage</p>
+    </footer>
+</article>
+
+<script src="essay-nav.js?v=20260211"></script>
+</body>
+</html>
