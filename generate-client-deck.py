@@ -57,6 +57,7 @@ FONT_JP = "IPAPGothic"
 FONT_EN = "Calibri"
 
 OUT_DIR = os.path.dirname(os.path.abspath(__file__))
+ICON_PATH = os.path.join(OUT_DIR, "asset", "tokistorage-icon-circle.png")
 
 
 # ── Helpers ────────────────────────────────────────────────────────────
@@ -472,6 +473,9 @@ def build_cover(prs, d):
     add_rect(slide, 0, 0, SLIDE_W, SLIDE_H, fill=DARK_BG)
     # Subtle gradient effect via darker bottom strip
     add_rect(slide, 0, SLIDE_H - Inches(1.5), SLIDE_W, Inches(1.5), fill=DARK_BG2)
+    # Icon top-right
+    if os.path.exists(ICON_PATH):
+        slide.shapes.add_picture(ICON_PATH, SLIDE_W - Inches(1.6), Inches(0.4), Inches(1.0), Inches(1.0))
     add_textbox(slide, Inches(1), Inches(0.7), Inches(5), Inches(0.35),
                 c["label"], font, 11, GOLD, align=PP_ALIGN.LEFT)
     add_textbox(slide, Inches(1), Inches(1.4), Inches(8), Inches(1.5),
@@ -833,6 +837,9 @@ if __name__ == "__main__":
         print(f"[{lang.upper()}] Generating PPTX...")
         pptx = generate(lang)
         print(f"[{lang.upper()}] Converting to PDF...")
-        convert_to_pdf(pptx)
+        try:
+            convert_to_pdf(pptx)
+        except FileNotFoundError:
+            print(f"  SKIP PDF (LibreOffice not found). PPTX saved: {pptx}")
 
     print("\nDone!")
