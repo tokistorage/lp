@@ -5,7 +5,7 @@
  */
 (function() {
     // Google Apps Script Web App URL（デプロイ後に差し替え）
-    var API_URL = 'https://script.google.com/macros/s/AKfycbw3DRQdtdwdhj400cg8gQCxgwV1jz65cDWiAK35HHak6WmwcPo6c9S2wYoA6tjmIaGNdw/exec';
+    var API_URL = 'https://script.google.com/macros/s/AKfycbzd1eWFuiJafgUqcDMe7ronRlrf1BdnV3phdZJPd2pjVhMJgFvhfOciHft68impdou8/exec';
 
     var isEn = document.documentElement.lang === 'en';
     var t = {
@@ -161,7 +161,7 @@
             fetch(API_URL, {
                 method: 'POST',
                 mode: 'no-cors',
-                headers: { 'Content-Type': 'application/json' },
+                headers: { 'Content-Type': 'text/plain' },
                 body: JSON.stringify(payload)
             })
             .then(function() {
