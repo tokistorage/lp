@@ -5,7 +5,7 @@
  */
 (function() {
     // Google Apps Script Web App URL（デプロイ後に差し替え）
-    var API_URL = 'GAS_WEB_APP_URL';
+    var API_URL = 'https://script.google.com/macros/s/AKfycbwetxQRGFom3dOIG0N_TKAz1ofsH68589gQyA8m5CIc37IMLRHz87IdjnJ9wjYmLw8sRg/exec';
 
     var isEn = document.documentElement.lang === 'en';
     var t = {
