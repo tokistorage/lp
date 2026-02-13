@@ -4,7 +4,7 @@
  * Google Apps Script経由でメール送信 + スプレッドシート記録
  */
 (function() {
-    var API_URL = 'https://script.google.com/macros/s/AKfycbyUeRTkR7NgW8Yuak5Gug7lWBizHS_g3l9waX5aIJgdrT2yVf2nQgrYnS6KkaJkrXkP/exec';
+    var API_URL = 'https://script.google.com/macros/s/AKfycbzkTrsYn9dYkOnLDEFdOTqZUiUptqI-3suVe7TJ5qZFF4oZupOq07sBJslNrkDOFjjj/exec';
 
     var isEn = document.documentElement.lang === 'en';
     var t = {
