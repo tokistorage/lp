@@ -103,15 +103,28 @@
         var ctaLinks = document.querySelectorAll(
             'a[href*="line.me/R/oaMessage"], a[href*="calendly.com"]'
         );
-        if (ctaLinks.length === 0) return;
 
-        // Replace button text/appearance (remove LINE/Calendly branding)
+        // Replace LINE/Calendly links with contact CTA
         ctaLinks.forEach(function(link) {
             link.removeAttribute('target');
             link.removeAttribute('rel');
             link.href = '#contact';
             link.innerHTML = mailIcon + ' ' + t.cta;
         });
+
+        // If no LINE/Calendly links, inject CTA before essay-nav-links
+        if (ctaLinks.length === 0) {
+            var essayNav = document.getElementById('essay-nav-links');
+            if (essayNav) {
+                var ctaDiv = document.createElement('div');
+                ctaDiv.className = 'essay-contact-cta';
+                ctaDiv.innerHTML = '<a href="#contact" class="essay-contact-btn">' + mailIcon + ' ' + t.cta + '</a>';
+                essayNav.parentNode.insertBefore(ctaDiv, essayNav);
+                ctaLinks = ctaDiv.querySelectorAll('a');
+            } else {
+                return;
+            }
+        }
 
         var overlay = buildModal();
         var form = document.getElementById('contactForm');

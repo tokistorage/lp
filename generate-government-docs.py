@@ -136,7 +136,7 @@ def generate_overview():
         "所在地",
         "千葉県浦安市明海2-11-13（2026年春 新潟県佐渡市へ移転予定）",
     )
-    pdf.label_value("連絡先", "business@satotakuya.jp")
+    pdf.label_value("連絡先", "tokistorage1000@gmail.com")
     pdf.ln(1)
 
     # ── Divider ──
@@ -309,7 +309,7 @@ def generate_estimate():
         "千葉県浦安市明海2-11-13（2026年春 新潟県佐渡市へ移転予定）",
         ln=True,
     )
-    pdf.cell(0, 5, "business@satotakuya.jp", ln=True)
+    pdf.cell(0, 5, "tokistorage1000@gmail.com", ln=True)
 
     out = os.path.join(OUT_DIR, "government-template-estimate.pdf")
     pdf.output(out)
