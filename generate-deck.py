@@ -292,7 +292,7 @@ CONTENT = {
             "label": "Our Offering",
             "cards": [
                 ("Q", "石英ガラス記録技術",
-                 "金属蒸着によるQRコード刻印。サーバー・電源ゼロ。SLA 100%、1000年保証。スマホカメラで読取可能。"),
+                 "金属蒸着によるQRコード刻印。サーバー・電源ゼロ。SLA 100%、1000年耐久（理論値）。スマホカメラで読取可能。"),
                 ("U", "200+ ユースケース（業界別整理済み）",
                  "終活・婚礼・寺社・学校・企業・自治体・NGO・ホテル・航空。提案書にそのまま転用可能な粒度。"),
                 ("E", "70+ 思想エッセイ（9領域）",
@@ -419,7 +419,7 @@ CONTENT = {
             "label": "Our Offering",
             "cards": [
                 ("Q", "Quartz glass recording",
-                 "QR codes inscribed via metal deposition. Zero servers, zero power. SLA 100%, guaranteed 1,000 years. Readable by any smartphone camera."),
+                 "QR codes inscribed via metal deposition. Zero servers, zero power. SLA 100%, 1,000-year durability (theoretical). Readable by any smartphone camera."),
                 ("U", "200+ use cases (organized by industry)",
                  "End-of-life, weddings, temples, schools, corporations, municipalities, NGOs, hotels, airlines. Ready for direct proposal integration."),
                 ("E", "70+ philosophical essays (9 domains)",
