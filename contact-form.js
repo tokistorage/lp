@@ -18,7 +18,7 @@
         successTitle:isEn ? 'Message Sent'                   : '送信完了',
         successMsg:  isEn ? 'We will reply within 24 hours.' : '24時間以内にご連絡いたします。',
         errorTitle:  isEn ? 'Send Failed'                    : '送信に失敗しました',
-        errorMsg:    isEn ? 'Please try again later.'        : 'もう一度お試しください。',
+        errorMsg:    isEn ? 'Please try again, or contact us directly at:' : 'もう一度お試しいただくか、こちらに直接ご連絡ください：',
         close:       isEn ? 'Close'                          : '閉じる',
         placeholder: isEn ? 'Please tell us what you\'d like to discuss.' : 'ご相談内容をお書きください。',
         cta:         isEn ? 'Contact Us'                     : 'お問い合わせ'
@@ -77,6 +77,7 @@
                     '<div class="contact-result-icon">!</div>' +
                     '<h3>' + t.errorTitle + '</h3>' +
                     '<p>' + t.errorMsg + '</p>' +
+                    '<p class="contact-fallback-email"><a href="mailto:tokistorage1000@gmail.com">tokistorage1000@gmail.com</a></p>' +
                     '<button class="contact-result-close" id="contactErrorClose">' + t.close + '</button>' +
                 '</div>' +
             '</div>';
