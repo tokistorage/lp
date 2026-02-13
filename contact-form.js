@@ -24,6 +24,18 @@
         cta:         isEn ? 'Contact Us'                     : 'お問い合わせ'
     };
 
+    // Cookie helpers
+    function getCookie(name) {
+        var match = document.cookie.match(new RegExp('(^| )' + name + '=([^;]+)'));
+        return match ? decodeURIComponent(match[2]) : '';
+    }
+
+    function setCookie(name, value, days) {
+        var d = new Date();
+        d.setTime(d.getTime() + days * 86400000);
+        document.cookie = name + '=' + encodeURIComponent(value) + ';expires=' + d.toUTCString() + ';path=/;SameSite=Lax';
+    }
+
     // Collect device/browser info
     function getDeviceInfo() {
         var ua = navigator.userAgent;
@@ -134,8 +146,17 @@
         var errorPanel = document.getElementById('contactError');
 
         function openModal(context) {
+            var nameInput = form.querySelector('input[name="name"]');
+            var contactInput = form.querySelector('input[name="contact"]');
             var textarea = form.querySelector('textarea[name="message"]');
+
+            // Auto-fill from cookies
+            var savedName = getCookie('toki_name');
+            var savedContact = getCookie('toki_contact');
+            if (nameInput && savedName) nameInput.value = savedName;
+            if (contactInput && savedContact) contactInput.value = savedContact;
             if (textarea && context) textarea.value = context;
+
             form.style.display = '';
             successPanel.classList.remove('active');
             errorPanel.classList.remove('active');
@@ -145,8 +166,11 @@
             overlay.offsetHeight;
             document.body.style.overflow = 'hidden';
             setTimeout(function() {
-                var firstInput = form.querySelector('input[name="name"]');
-                if (firstInput) firstInput.focus();
+                if (savedName && savedContact) {
+                    if (textarea) textarea.focus();
+                } else if (nameInput) {
+                    nameInput.focus();
+                }
             }, 100);
         }
 
@@ -207,6 +231,9 @@
                 body: JSON.stringify(payload)
             })
             .then(function() {
+                // Save name & contact to cookies (730 days)
+                setCookie('toki_name', payload.name, 730);
+                setCookie('toki_contact', payload.contact, 730);
                 form.style.display = 'none';
                 successPanel.classList.add('active');
                 form.reset();
