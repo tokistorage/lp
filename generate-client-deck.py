@@ -279,12 +279,27 @@ CONTENT = {
             "bar": "対話から生まれる、3つの具体的な成果物。千年先まで届く「かたち」をお届けします。",
             "label": "Deliverables",
             "items": [
-                (TOKI_BLUE_PALE, "Q", "石英ガラスの存在証明",
-                 "あなたの物語が刻まれた石英ガラス。サーバー・電源不要、1000年耐久（理論値）。スマートフォンのカメラで読み取り可能なQRコード付き。"),
+                (TOKI_BLUE_PALE, "Q", "三層分散保管による存在証明",
+                 "物理層（石英ガラス/ラミネート）・国家層（国立国会図書館 法定納本）・民間層（GitHub）。3-2-1ルールに完全準拠。単一障害点ゼロ。"),
                 (GOLD_PALE, "D", "デジタルコンパニオン",
                  "QRコードを読み取ると表示されるデジタルページ。テキスト、写真、音声、映像を含む、存在証明のリッチな体験版。"),
                 (GREEN_PALE, "R", "思想フレームワークレポート",
                  "あなたの存在証明を、70以上の思想エッセイの文脈に位置づけたレポート。「なぜ残すのか」の知的な裏付け。"),
+            ],
+            "footer": "Timeless Consulting",
+        },
+        "pricing": {
+            "bar": "体験プラン5,000円から——あなたに合ったかたちで始められます",
+            "label": "Investment Guide",
+            "items": [
+                (TOKI_BLUE_PALE, "T", "体験プラン — ¥5,000（税込）",
+                 "三層保管をA4ラミネートで体験。声のQRコード→ラミネート＋NDL納本＋GitHub格納。まずはここから。"),
+                (TOKI_BLUE_PALE, "Q", "個人プラン — ¥50,000（税込）",
+                 "石英ガラスに刻印。年あたり50円の存在証明。1000年耐久（理論値）。"),
+                (GOLD_PALE, "F", "三世代プラン — ¥550,000（税込・推奨）",
+                 "家族3名分＋佐渡島での現地刻印体験。お墓・仏壇の代替として。最も選ばれるプラン。"),
+                (GREEN_PALE, "V", "ボイスメモリアル — ¥5,550,000（税込）",
+                 "完全オーダーメイド。音声復元・専用デザイン・プレミアム体験のすべてを含む。"),
             ],
             "footer": "Timeless Consulting",
         },
@@ -294,7 +309,8 @@ CONTENT = {
             "name": "佐藤卓也 \u2014 TokiStorage 代表",
             "bio": "大手コンサルティングファームでの経験を経て、半導体製造装置のエンジニアリング20年超。タイムレスタウン新浦安（250世帯）の自治会長として「ゆりかごから墓場まで」のコミュニティ運営を経験。SoulCarrier活動で「記憶が消える恐怖」を目の当たりにし、TokiStorageを着想。マウイ・山中湖でのオフグリッド実証を経て、制度に依存しない千年設計の技術を完成。70以上の思想エッセイを執筆し、9つの知的領域から存在証明の意味を探究し続けている。",
             "tags": ["元Big4ファーム", "半導体エンジニアリング 20年+", "自治会長（250世帯）",
-                     "SoulCarrier主宰", "70+思想エッセイ執筆", "オフグリッド実証済み", "佐渡島移住予定（2026春）"],
+                     "SoulCarrier主宰", "70+思想エッセイ執筆", "オフグリッド実証済み", "佐渡島移住予定（2026春）",
+                     "伊勢神宮 式年遷宮奉納（2026）", "比叡山延暦寺 不滅の法灯奉納（2026）"],
             "story": "愛犬パールのお墓とともに、家族でパールハーバーを訪れました。平和を願う声を音声QRとして刻んだプレートを持って。そこで気がつきました——時を超えた願いは、愛や平和への想いに変容する。一人でも多くの方と分かち合いたい。TokiStorageをきっかけに、時を超えた変容をご一緒できれば幸いです。",
             "footer": "Timeless Consulting",
         },
@@ -388,12 +404,27 @@ CONTENT = {
             "bar": "Three tangible outcomes from a meaningful dialogue. Forms that reach a millennium.",
             "label": "Deliverables",
             "items": [
-                (TOKI_BLUE_PALE, "Q", "Quartz Glass Proof of Existence",
-                 "Your story inscribed in quartz glass. No servers, no power needed. Guaranteed for 1,000 years. QR code readable by any smartphone."),
+                (TOKI_BLUE_PALE, "Q", "Three-Layer Distributed Proof of Existence",
+                 "Physical (quartz glass/laminate), National (National Diet Library legal deposit), Private (GitHub). Fully 3-2-1 compliant. Zero single points of failure."),
                 (GOLD_PALE, "D", "Digital Companion",
                  "A digital page accessed via QR code scan. A rich experience including text, photos, audio, and video of your proof of existence."),
                 (GREEN_PALE, "R", "Philosophical Framework Report",
                  "A report placing your proof of existence in the context of 70+ philosophical essays. Intellectual grounding for \"why preserve.\""),
+            ],
+            "footer": "Timeless Consulting",
+        },
+        "pricing": {
+            "bar": "Starting from \u00a55,000 ($33) \u2014 begin in whatever way feels right for you",
+            "label": "Investment Guide",
+            "items": [
+                (TOKI_BLUE_PALE, "T", "Trial Plan \u2014 \u00a55,000 ($33)",
+                 "Experience three-layer storage with A4 laminate. Voice QR \u2192 laminate + NDL deposit + GitHub. Start here."),
+                (TOKI_BLUE_PALE, "Q", "Individual Plan \u2014 \u00a550,000 ($330)",
+                 "Inscribed on quartz glass. \u00a550 per year for proof of existence. 1,000-year durability (theoretical)."),
+                (GOLD_PALE, "F", "Three-Generation \u2014 \u00a5550,000 ($3,600, recommended)",
+                 "Three family members + on-site inscription on Sado Island. An alternative to traditional graves."),
+                (GREEN_PALE, "V", "Voice Memorial \u2014 \u00a55,550,000 ($36,500)",
+                 "Fully bespoke. Voice restoration, custom design, and the complete premium experience."),
             ],
             "footer": "Timeless Consulting",
         },
@@ -403,7 +434,8 @@ CONTENT = {
             "name": "Takuya Sato \u2014 Founder, TokiStorage",
             "bio": "Former Big Four consultant \u2014 understands executive dialogue and strategic thinking from the inside. 20+ years in semiconductor manufacturing engineering. Former president of Timeless Town Shin-Urayasu residents' association (250 households). Through SoulCarrier's work with unclaimed graves, witnessed firsthand how memories vanish \u2014 and conceived TokiStorage. Validated off-grid, institution-free 1,000-year design through testing in Maui and Lake Yamanakako. Author of 70+ philosophical essays exploring proof of existence across 9 intellectual domains.",
             "tags": ["Big Four Alumni", "Semiconductor engineering 20+ yrs", "Community president (250 households)",
-                     "SoulCarrier founder", "70+ philosophical essays", "Off-grid validated", "Relocating to Sado Island (Spring 2026)"],
+                     "SoulCarrier founder", "70+ philosophical essays", "Off-grid validated", "Relocating to Sado Island (Spring 2026)",
+                     "Ise Grand Shrine offering (2026)", "Enryaku-ji Eternal Light offering (2026)"],
             "story": "I visited Pearl Harbor with my family, carrying a plate inscribed with a voice QR code of our prayers for peace\u2014alongside the remains of our beloved dog, Pearl. That's when it hit me: wishes that transcend time transform into something greater\u2014love, peace, hope. I want to share that transformation with as many people as possible. Through TokiStorage, I hope to walk that journey across time together with you.",
             "footer": "Timeless Consulting",
         },
@@ -577,6 +609,24 @@ def build_slide6(prs, d):
     add_footer(slide, s["footer"], 6, font)
 
 
+def build_pricing(prs, d):
+    """Investment Guide: 4 items"""
+    slide = add_blank_slide(prs)
+    font = d["font"]
+    s = d["pricing"]
+    add_action_bar(slide, s["bar"], font)
+    add_section_label(slide, s["label"], font, Inches(0.8))
+    item_w = Inches(8.6)
+    item_h = Inches(0.88)
+    gap = Inches(0.1)
+    start_y = Inches(1.2)
+    x = Inches(0.5)
+    for i, (bg, icon, title, body) in enumerate(s["items"]):
+        y = start_y + i * (item_h + gap)
+        draw_deliverable_item(slide, x, y, item_w, item_h, bg, icon, title, body, font)
+    add_footer(slide, s["footer"], 7, font)
+
+
 def build_slide7(prs, d):
     """Founder profile"""
     slide = add_blank_slide(prs)
@@ -644,7 +694,7 @@ def build_slide7(prs, d):
             add_textbox(slide, sx + Inches(0.25), sy + Inches(0.08), sw - Inches(0.35), sh - Inches(0.16),
                         s["story"], font, story_font, TEXT_PRIMARY, bold=False)
 
-    add_footer(slide, s["footer"], 7, font)
+    add_footer(slide, s["footer"], 8, font)
 
 
 def _draw_avatar_fallback(slide, ax, ay, asize, d, font):
@@ -697,7 +747,7 @@ def build_slide8(prs, d):
     add_textbox(slide, Inches(4), stripe_y, Inches(2), Inches(0.35),
                 "Confidential", font, 9, TEXT_MUTED, align=PP_ALIGN.CENTER)
     add_textbox(slide, SLIDE_W - Inches(1), stripe_y, Inches(0.5), Inches(0.35),
-                "8", font, 9, TEXT_MUTED, bold=True, align=PP_ALIGN.RIGHT)
+                "9", font, 9, TEXT_MUTED, bold=True, align=PP_ALIGN.RIGHT)
 
 
 def build_slide9(prs, d):
@@ -713,7 +763,7 @@ def build_slide9(prs, d):
                 s["body"], font, 9, TEXT_SECONDARY)
     add_textbox(slide, Inches(1), SLIDE_H - Inches(1.2), Inches(8), Inches(0.3),
                 s["copyright"], font, 8, TEXT_MUTED)
-    add_footer(slide, s["footer_left"], 9, font)
+    add_footer(slide, s["footer_left"], 10, font)
 
 
 # ══════════════════════════════════════════════════════════════════════
@@ -724,14 +774,15 @@ def generate(lang):
     d = CONTENT[lang]
     prs = new_prs()
     build_cover(prs, d)
-    build_slide2(prs, d)
-    build_slide3(prs, d)
-    build_slide4(prs, d)
-    build_slide5(prs, d)
-    build_slide6(prs, d)
-    build_slide7(prs, d)
-    build_slide8(prs, d)
-    build_slide9(prs, d)
+    build_slide2(prs, d)       # Why This Question
+    build_slide3(prs, d)       # Our Approach
+    build_slide4(prs, d)       # Process
+    build_slide5(prs, d)       # Who This Is For
+    build_slide6(prs, d)       # Deliverables
+    build_pricing(prs, d)      # Investment Guide (NEW)
+    build_slide7(prs, d)       # Founder
+    build_slide8(prs, d)       # Next Steps
+    build_slide9(prs, d)       # Disclaimer
 
     pptx_path = os.path.join(OUT_DIR, f"{d['filename']}.pptx")
     prs.save(pptx_path)

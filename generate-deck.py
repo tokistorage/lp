@@ -291,8 +291,8 @@ CONTENT = {
             "bar": "TokiStorageは技術・ユースケース・思想基盤・展開網の4つを「設計思想ごと」提供できる",
             "label": "Our Offering",
             "cards": [
-                ("Q", "石英ガラス記録技術",
-                 "金属蒸着によるQRコード刻印。サーバー・電源ゼロ。SLA 100%、1000年耐久（理論値）。スマホカメラで読取可能。"),
+                ("Q", "三層分散保管アーキテクチャ",
+                 "物理層（石英ガラス/ラミネート）・国家層（国立国会図書館 法定納本）・民間層（GitHub）。3-2-1バックアップルールに完全準拠。単一障害点ゼロ。"),
                 ("U", "200+ ユースケース（業界別整理済み）",
                  "終活・婚礼・寺社・学校・企業・自治体・NGO・ホテル・航空。提案書にそのまま転用可能な粒度。"),
                 ("E", "70+ 思想エッセイ（9領域）",
@@ -312,7 +312,19 @@ CONTENT = {
                 ("インフラ", "サーバー・電源（利便性の源泉）", "不要（GitHub分散管理）"),
                 ("読み取り", "専用アプリ / ログイン", "スマホのカメラだけ"),
                 ("文化的厚み", "機能・利便性が価値の中心", "70+ エッセイ＋贈与経済の実践"),
+                ("保管構造", "クラウド一極集中", "三層分散保管（物理/国家/民間）・3-2-1ルール準拠"),
                 ("社会的接点", "プラットフォームとしての貢献", "SoulCarrier（無縁墓・遺骨送還活動）"),
+            ],
+            "footer": "TokiStorage \u2014 協業提案",
+        },
+        "pricing": {
+            "bar": "体験プラン5,000円からスタートできる——エントリー障壁が極めて低い提案設計",
+            "label": "Pricing",
+            "cards": [
+                ("体験プラン", "¥5,000（税込）", "三層保管をA4ラミネートで体験。声のQRコード→ラミネート＋NDL納本＋GitHub格納。"),
+                ("個人プラン", "¥50,000（税込）", "石英ガラスに刻印。年あたり50円。1000年耐久（理論値）の存在証明。"),
+                ("三世代プラン", "¥550,000（税込・推奨）", "家族3名分＋佐渡島での現地刻印体験。お墓・仏壇の代替として。"),
+                ("ボイスメモリアル", "¥5,550,000（税込）", "完全オーダーメイド。音声復元・専用デザイン・プレミアム体験。"),
             ],
             "footer": "TokiStorage \u2014 協業提案",
         },
@@ -333,6 +345,17 @@ CONTENT = {
                  "存在証明を軸に新規事業を共同立ち上げ。技術・思想・ユースケースはTokiStorage、市場アクセス・信用・スケールは貴社。",
                  "例：メモリアルテック新規事業 / 企業向け永続アーカイブサービス"),
             ],
+            "footer": "TokiStorage \u2014 協業提案",
+        },
+        "traction": {
+            "bar": "主要AI 3社と文化機関が独立に評価——社会的信頼が構築されている",
+            "label": "Traction & Trust",
+            "ai_cards": [
+                ("Claude / Anthropic", "三層構造の設計評価", "「三層構造は単一障害点を排除し、情報の生存率を極限まで高めている」"),
+                ("Gemini / Google", "制度活用の高度さ", "「法制度のアーキテクチャを逆手に取った高度なデザイン」"),
+                ("ChatGPT / OpenAI", "コストパフォーマンス", "「年間50円のコストは驚異的な価値」"),
+            ],
+            "trust": "伊勢神宮 式年遷宮奉納（2026）/ 比叡山延暦寺 根本中堂 不滅の法灯奉納（2026）/ 個人事業開業届出済（2026.2.11）",
             "footer": "TokiStorage \u2014 協業提案",
         },
         "s6": {
@@ -418,8 +441,8 @@ CONTENT = {
             "bar": "TokiStorage delivers technology, use cases, intellectual foundation, and distribution as a unified design philosophy",
             "label": "Our Offering",
             "cards": [
-                ("Q", "Quartz glass recording",
-                 "QR codes inscribed via metal deposition. Zero servers, zero power. SLA 100%, 1,000-year durability (theoretical). Readable by any smartphone camera."),
+                ("Q", "Three-Layer Distributed Storage",
+                 "Physical (quartz glass/laminate), National (National Diet Library legal deposit), Private (GitHub). Fully compliant with the 3-2-1 backup rule. Zero single points of failure."),
                 ("U", "200+ use cases (organized by industry)",
                  "End-of-life, weddings, temples, schools, corporations, municipalities, NGOs, hotels, airlines. Ready for direct proposal integration."),
                 ("E", "70+ philosophical essays (9 domains)",
@@ -439,7 +462,19 @@ CONTENT = {
                 ("Infrastructure", "Servers & power (source of convenience)", "None required (GitHub distributed)"),
                 ("Reading", "App / login required", "Any smartphone camera"),
                 ("Cultural depth", "Functionality & convenience at the core", "70+ essays + gift economy practice"),
+                ("Storage structure", "Cloud-centralized", "Three-layer distributed (physical/national/private) \u2014 3-2-1 rule compliant"),
                 ("Social impact", "Platform-level contribution", "SoulCarrier (unclaimed graves mission)"),
+            ],
+            "footer": "TokiStorage \u2014 Partnership Proposal",
+        },
+        "pricing": {
+            "bar": "Starting from \u00a55,000 ($33) \u2014 an exceptionally low entry barrier for your proposals",
+            "label": "Pricing",
+            "cards": [
+                ("Trial Plan", "\u00a55,000 ($33)", "Experience three-layer storage with A4 laminate. Voice QR \u2192 laminate + NDL deposit + GitHub."),
+                ("Individual Plan", "\u00a550,000 ($330)", "Inscribed on quartz glass. \u00a550 per year. 1,000-year durability (theoretical)."),
+                ("Three-Generation", "\u00a5550,000 ($3,600)", "Three family members + on-site inscription on Sado Island. Recommended."),
+                ("Voice Memorial", "\u00a55,550,000 ($36,500)", "Fully bespoke. Voice restoration, custom design, premium experience."),
             ],
             "footer": "TokiStorage \u2014 Partnership Proposal",
         },
@@ -460,6 +495,17 @@ CONTENT = {
                  "Launch a new venture together. We bring technology, philosophy, and use cases. You bring market access, credibility, and scale.",
                  "E.g.: Memorial-tech startup / Enterprise perpetual archive service"),
             ],
+            "footer": "TokiStorage \u2014 Partnership Proposal",
+        },
+        "traction": {
+            "bar": "Three major AI platforms and cultural institutions have independently validated us",
+            "label": "Traction & Trust",
+            "ai_cards": [
+                ("Claude / Anthropic", "Architecture Design", "\"The three-layer architecture eliminates single points of failure and maximizes information survival probability\""),
+                ("Gemini / Google", "Institutional Design", "\"A sophisticated design that leverages the architecture of legal systems\""),
+                ("ChatGPT / OpenAI", "Cost Performance", "\"An annual cost of \u00a550 is extraordinary value\""),
+            ],
+            "trust": "Ise Grand Shrine offering (2026) / Mt. Hiei Enryaku-ji Eternal Light offering (2026) / Sole proprietorship registered (Feb 11, 2026)",
             "footer": "TokiStorage \u2014 Partnership Proposal",
         },
         "s6": {
@@ -604,6 +650,65 @@ def build_slide4(prs, d):
     add_footer(slide, s["footer"], 4, font)
 
 
+def build_pricing(prs, d):
+    """Pricing overview: 4 cards in 2x2 grid"""
+    slide = add_blank_slide(prs)
+    font = d["font"]
+    s = d["pricing"]
+    add_action_bar(slide, s["bar"], font)
+    add_section_label(slide, s["label"], font, Inches(0.8))
+    card_w = Inches(4.3)
+    card_h = Inches(1.95)
+    gap_x = Inches(0.25)
+    gap_y = Inches(0.15)
+    start_x = Inches(0.5)
+    start_y = Inches(1.15)
+    for i, (name, price, body) in enumerate(s["cards"]):
+        col = i % 2
+        row = i // 2
+        x = start_x + col * (card_w + gap_x)
+        y = start_y + row * (card_h + gap_y)
+        add_rect(slide, x, y, card_w, card_h, fill=WHITE, border_color=BORDER)
+        add_textbox(slide, x + Inches(0.15), y + Inches(0.1), card_w - Inches(0.3), Inches(0.3),
+                    name, font, 12, TEXT_PRIMARY, bold=True)
+        add_textbox(slide, x + Inches(0.15), y + Inches(0.42), card_w - Inches(0.3), Inches(0.35),
+                    price, font, 14, TOKI_BLUE, bold=True)
+        add_textbox(slide, x + Inches(0.15), y + Inches(0.85), card_w - Inches(0.3), card_h - Inches(0.95),
+                    body, font, 10, TEXT_SECONDARY)
+    add_footer(slide, s["footer"], 5, font)
+
+
+def build_traction(prs, d):
+    """Traction & Trust: 3 AI cards + trust callout"""
+    slide = add_blank_slide(prs)
+    font = d["font"]
+    s = d["traction"]
+    add_action_bar(slide, s["bar"], font)
+    add_section_label(slide, s["label"], font, Inches(0.8))
+    card_w = Inches(2.85)
+    card_h = Inches(2.2)
+    gap = Inches(0.23)
+    start_x = Inches(0.5)
+    y = Inches(1.15)
+    for i, (platform, title, quote) in enumerate(s["ai_cards"]):
+        x = start_x + i * (card_w + gap)
+        add_rect(slide, x, y, card_w, card_h, fill=WHITE, border_color=BORDER)
+        add_textbox(slide, x + Inches(0.15), y + Inches(0.1), card_w - Inches(0.3), Inches(0.25),
+                    platform, font, 9, TOKI_BLUE, bold=True)
+        add_textbox(slide, x + Inches(0.15), y + Inches(0.4), card_w - Inches(0.3), Inches(0.3),
+                    title, font, 11, TEXT_PRIMARY, bold=True)
+        add_textbox(slide, x + Inches(0.15), y + Inches(0.75), card_w - Inches(0.3), card_h - Inches(0.85),
+                    quote, font, 10, TEXT_SECONDARY)
+    # Trust callout
+    cx, cy = Inches(0.5), Inches(3.55)
+    cw, ch = Inches(8.6), Inches(0.7)
+    add_rect(slide, cx, cy, cw, ch, fill=GOLD_PALE)
+    add_rect(slide, cx, cy, Inches(0.06), ch, fill=GOLD)
+    add_textbox(slide, cx + Inches(0.25), cy + Inches(0.1), cw - Inches(0.35), ch - Inches(0.2),
+                s["trust"], font, 10, TEXT_SECONDARY, anchor=MSO_ANCHOR.MIDDLE)
+    add_footer(slide, s["footer"], 7, font)
+
+
 def build_slide5(prs, d):
     """Partnership models: 3 rows"""
     slide = add_blank_slide(prs)
@@ -619,7 +724,7 @@ def build_slide5(prs, d):
     for i, (badge, color, title, body, ex) in enumerate(s["models"]):
         y = start_y + i * (item_h + gap)
         draw_model_item(slide, x, y, item_w, item_h, badge, color, title, body, ex, font)
-    add_footer(slide, s["footer"], 5, font)
+    add_footer(slide, s["footer"], 6, font)
 
 
 def build_slide6(prs, d):
@@ -651,7 +756,7 @@ def build_slide6(prs, d):
                 s["callout_title"], font, 11, TEXT_PRIMARY, bold=True)
     add_textbox(slide, cx + Inches(0.25), cy + Inches(0.45), cw - Inches(0.35), ch - Inches(0.55),
                 s["callout_body"], font, 10, TEXT_SECONDARY)
-    add_footer(slide, s["footer"], 6, font)
+    add_footer(slide, s["footer"], 8, font)
 
 
 def build_slide7(prs, d):
@@ -675,7 +780,7 @@ def build_slide7(prs, d):
         x = start_x + col * (card_w + gap_x)
         y = start_y + row * (card_h + gap_y)
         draw_sector_card(slide, x, y, card_w, card_h, icon, title, body, font)
-    add_footer(slide, s["footer"], 7, font)
+    add_footer(slide, s["footer"], 9, font)
 
 
 def build_slide8(prs, d):
@@ -735,7 +840,7 @@ def build_slide8(prs, d):
                 s["ind_title"], font, 10, TEXT_PRIMARY, bold=True)
     add_textbox(slide, cx + Inches(0.25), cy + Inches(0.44), cw - Inches(0.35), ch - Inches(0.52),
                 s["ind_body"], font, 10, TEXT_SECONDARY)
-    add_footer(slide, s["footer"], 8, font)
+    add_footer(slide, s["footer"], 10, font)
 
 
 def _draw_avatar_fallback(slide, ax, ay, asize, d, font):
@@ -788,7 +893,7 @@ def build_slide9(prs, d):
     add_textbox(slide, Inches(4), stripe_y, Inches(2), Inches(0.35),
                 "Confidential", font, 9, TEXT_MUTED, align=PP_ALIGN.CENTER)
     add_textbox(slide, SLIDE_W - Inches(1), stripe_y, Inches(0.5), Inches(0.35),
-                "9", font, 9, TEXT_MUTED, bold=True, align=PP_ALIGN.RIGHT)
+                "11", font, 9, TEXT_MUTED, bold=True, align=PP_ALIGN.RIGHT)
 
 
 def build_slide10(prs, d):
@@ -804,7 +909,7 @@ def build_slide10(prs, d):
                 s["body"], font, 9, TEXT_SECONDARY)
     add_textbox(slide, Inches(1), SLIDE_H - Inches(1.2), Inches(8), Inches(0.3),
                 s["copyright"], font, 8, TEXT_MUTED)
-    add_footer(slide, s["footer_left"], 10, font)
+    add_footer(slide, s["footer_left"], 12, font)
 
 
 # ══════════════════════════════════════════════════════════════════════
@@ -815,15 +920,17 @@ def generate(lang):
     d = CONTENT[lang]
     prs = new_prs()
     build_cover(prs, d)
-    build_slide2(prs, d)
-    build_slide3(prs, d)
-    build_slide4(prs, d)
-    build_slide5(prs, d)
-    build_slide6(prs, d)
-    build_slide7(prs, d)
-    build_slide8(prs, d)
-    build_slide9(prs, d)
-    build_slide10(prs, d)
+    build_slide2(prs, d)       # Background
+    build_slide3(prs, d)       # Solution
+    build_slide4(prs, d)       # Positioning
+    build_pricing(prs, d)      # Pricing (NEW)
+    build_slide5(prs, d)       # Partnership Models
+    build_traction(prs, d)     # Traction & Trust (NEW)
+    build_slide6(prs, d)       # Revenue Flow
+    build_slide7(prs, d)       # Client Fit
+    build_slide8(prs, d)       # Team & Independence
+    build_slide9(prs, d)       # Next Steps
+    build_slide10(prs, d)      # Disclaimer
 
     pptx_path = os.path.join(OUT_DIR, f"{d['filename']}.pptx")
     prs.save(pptx_path)
