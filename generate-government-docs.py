@@ -5,7 +5,16 @@ from fpdf import FPDF
 import os
 
 OUT_DIR = os.path.dirname(os.path.abspath(__file__))
-FONT_PATH = "/usr/share/fonts/opentype/ipafont-gothic/ipagp.ttf"
+ICON_PATH = os.path.join(OUT_DIR, "asset", "tokistorage-icon-circle.png")
+
+# Font detection: macOS → Linux fallback
+_FONT_CANDIDATES = [
+    "/System/Library/Fonts/ヒラギノ角ゴシック W3.ttc",
+    "/usr/share/fonts/opentype/ipafont-gothic/ipagp.ttf",
+    "/usr/share/fonts/truetype/ipafont-gothic/ipagp.ttf",
+]
+FONT_PATH = next((p for p in _FONT_CANDIDATES if os.path.exists(p)),
+                  "/usr/share/fonts/opentype/ipafont-gothic/ipagp.ttf")
 
 # Colors — toki blue accent instead of emerald
 TOKI_BLUE = (37, 99, 235)       # #2563EB
@@ -46,11 +55,15 @@ class GovPDF(FPDF):
         self.set_fill_color(*TOKI_BLUE)
         self.rect(0, 0, 210, 3, "F")
 
-        self.set_y(12)
-        # Company name
+        self.set_y(10)
+        # Icon + Company name
+        if os.path.exists(ICON_PATH):
+            self.image(ICON_PATH, x=15, y=8, w=12)
+        self.set_xy(29, 10)
         self.set_font("JP", "B", 9)
         self.set_text_color(*DARK)
         self.cell(0, 5, "TokiStorage（佐藤卓也）", ln=True, align="L")
+        self.set_x(29)
         self.set_font("JP", "", 7)
         self.set_text_color(*SECONDARY)
         self.cell(0, 4, "TokiStorage", ln=True, align="L")
