@@ -15,16 +15,16 @@
 var NOTIFY_EMAIL = 'business@satotakuya.jp';
 
 function doPost(e) {
+  var sheet = SpreadsheetApp.getActiveSpreadsheet().getActiveSheet();
+
+  // ヘッダー行がなければ作成
+  if (sheet.getLastRow() === 0) {
+    sheet.appendRow(['日時', '名前', '連絡先', 'メッセージ', 'ページ', 'URL', 'ステータス']);
+  }
+
   try {
-    var data = JSON.parse(e.postData.contents);
-
-    // スプレッドシートに記録
-    var sheet = SpreadsheetApp.getActiveSpreadsheet().getActiveSheet();
-
-    // ヘッダー行がなければ作成
-    if (sheet.getLastRow() === 0) {
-      sheet.appendRow(['日時', '名前', '連絡先', 'メッセージ', 'ページ', 'URL']);
-    }
+    var raw = e.postData.contents;
+    var data = JSON.parse(raw);
 
     sheet.appendRow([
       new Date(),
@@ -32,7 +32,8 @@ function doPost(e) {
       data.contact || '',
       data.message || '',
       data.page || '',
-      data.url || ''
+      data.url || '',
+      'OK'
     ]);
 
     // メール通知
@@ -51,6 +52,17 @@ function doPost(e) {
       .setMimeType(ContentService.MimeType.JSON);
 
   } catch (err) {
+    // エラーもシートに記録（デバッグ用）
+    sheet.appendRow([
+      new Date(),
+      'ERROR',
+      err.toString(),
+      e.postData ? e.postData.contents : 'no postData',
+      e.postData ? e.postData.type : 'no type',
+      '',
+      'ERROR'
+    ]);
+
     return ContentService
       .createTextOutput(JSON.stringify({ success: false, error: err.toString() }))
       .setMimeType(ContentService.MimeType.JSON);
