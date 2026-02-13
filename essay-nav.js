@@ -48,6 +48,7 @@
     { id: 'realestate', ja: '不動産', en: 'Real Estate' },
     { id: 'esg', ja: 'ESG/GX', en: 'ESG/GX' },
     { id: 'sdgs', ja: 'SDGs', en: 'SDGs' },
+    { id: 'no-competition', ja: '競合不在の作り方', en: 'No Competition' },
 
     // ── 文化・社会活動 ──
     { id: 'education', ja: '教育', en: 'Education' },
