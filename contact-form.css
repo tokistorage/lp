@@ -1,0 +1,214 @@
+/* =============================================
+   TokiStorage Contact Form Modal
+   LINE相談リンクのPC対応フォーム
+   ============================================= */
+
+/* Overlay */
+.contact-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.5);
+    z-index: 1100;
+    display: none;
+    align-items: center;
+    justify-content: center;
+    padding: 1rem;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
+.contact-overlay.active {
+    display: flex;
+    opacity: 1;
+}
+
+/* Modal */
+.contact-modal {
+    background: var(--bg-white, #fff);
+    border-radius: 0.75rem;
+    max-width: 480px;
+    width: 100%;
+    max-height: 90vh;
+    overflow-y: auto;
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.15);
+    position: relative;
+    transform: translateY(20px);
+    transition: transform 0.3s ease;
+}
+
+.contact-overlay.active .contact-modal {
+    transform: translateY(0);
+}
+
+/* Header */
+.contact-header {
+    padding: 1.5rem 1.5rem 0;
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+}
+
+.contact-header h2 {
+    font-family: var(--font-display, 'Shippori Mincho', serif);
+    font-size: 1.25rem;
+    color: var(--text-primary, #1E293B);
+    line-height: 1.5;
+}
+
+.contact-close {
+    background: none;
+    border: none;
+    font-size: 1.5rem;
+    cursor: pointer;
+    color: var(--text-muted, #94A3B8);
+    padding: 0.25rem;
+    line-height: 1;
+    transition: color 0.2s ease;
+    flex-shrink: 0;
+}
+
+.contact-close:hover {
+    color: var(--text-primary, #1E293B);
+}
+
+/* Form */
+.contact-form {
+    padding: 1.25rem 1.5rem 1.5rem;
+}
+
+.contact-field {
+    margin-bottom: 1rem;
+}
+
+.contact-field label {
+    display: block;
+    font-size: 0.85rem;
+    font-weight: 500;
+    color: var(--text-secondary, #475569);
+    margin-bottom: 0.35rem;
+}
+
+.contact-field label .required {
+    color: #EF4444;
+    margin-left: 0.25rem;
+}
+
+.contact-field input,
+.contact-field textarea {
+    width: 100%;
+    padding: 0.7rem 0.9rem;
+    border: 1px solid var(--border, #E2E8F0);
+    border-radius: 0.4rem;
+    font-family: var(--font-body, 'Zen Kaku Gothic New', sans-serif);
+    font-size: 0.95rem;
+    color: var(--text-primary, #1E293B);
+    background: var(--bg-white, #fff);
+    transition: border-color 0.2s ease, box-shadow 0.2s ease;
+    line-height: 1.6;
+}
+
+.contact-field input:focus,
+.contact-field textarea:focus {
+    outline: none;
+    border-color: var(--toki-blue, #2563EB);
+    box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1);
+}
+
+.contact-field textarea {
+    resize: vertical;
+    min-height: 80px;
+}
+
+/* Honeypot (hidden from users, visible to bots) */
+.contact-hp {
+    position: absolute;
+    left: -9999px;
+    opacity: 0;
+    height: 0;
+    width: 0;
+    overflow: hidden;
+}
+
+/* Submit button */
+.contact-submit {
+    display: block;
+    width: 100%;
+    padding: 0.85rem 1.5rem;
+    background: var(--toki-blue, #2563EB);
+    color: #fff;
+    border: none;
+    border-radius: 0.4rem;
+    font-family: var(--font-body, 'Zen Kaku Gothic New', sans-serif);
+    font-size: 1rem;
+    font-weight: 500;
+    cursor: pointer;
+    transition: background 0.3s ease, transform 0.2s ease;
+    margin-top: 0.5rem;
+}
+
+.contact-submit:hover {
+    background: var(--toki-blue-dark, #1D4ED8);
+    transform: translateY(-1px);
+}
+
+.contact-submit:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+    transform: none;
+}
+
+/* Success / Error states */
+.contact-result {
+    padding: 2.5rem 1.5rem;
+    text-align: center;
+    display: none;
+}
+
+.contact-result.active {
+    display: block;
+}
+
+.contact-result-icon {
+    font-size: 2.5rem;
+    margin-bottom: 0.75rem;
+}
+
+.contact-result h3 {
+    font-family: var(--font-display, 'Shippori Mincho', serif);
+    font-size: 1.15rem;
+    color: var(--text-primary, #1E293B);
+    margin-bottom: 0.5rem;
+}
+
+.contact-result p {
+    font-size: 0.9rem;
+    color: var(--text-secondary, #475569);
+    line-height: 1.7;
+}
+
+.contact-result-close {
+    display: inline-block;
+    margin-top: 1.25rem;
+    padding: 0.6rem 2rem;
+    background: var(--bg-section, #F1F5F9);
+    color: var(--text-primary, #1E293B);
+    border: none;
+    border-radius: 0.4rem;
+    font-family: var(--font-body, 'Zen Kaku Gothic New', sans-serif);
+    font-size: 0.9rem;
+    cursor: pointer;
+    transition: background 0.2s ease;
+}
+
+.contact-result-close:hover {
+    background: var(--border, #E2E8F0);
+}
+
+@media (max-width: 768px) {
+    .contact-modal {
+        max-height: 85vh;
+    }
+}
