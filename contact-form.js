@@ -5,7 +5,7 @@
  */
 (function() {
     // Google Apps Script Web App URL（デプロイ後に差し替え）
-    var API_URL = 'https://script.google.com/macros/s/AKfycbzd1eWFuiJafgUqcDMe7ronRlrf1BdnV3phdZJPd2pjVhMJgFvhfOciHft68impdou8/exec';
+    var API_URL = 'https://script.google.com/macros/s/AKfycbxT4qDzuqokRgHTdD9mgdANkUz_zsLuezd2yAfa_YiU6F9jfXhjWkWo3DV4niWUP366/exec';
 
     var isEn = document.documentElement.lang === 'en';
     var t = {
