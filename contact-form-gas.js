@@ -46,7 +46,7 @@ function handlePageview(ss, data) {
       '日時', 'VisitorID', 'ページ', 'パス', '流入元',
       'デバイス', '画面', '言語', 'リファラー', 'タイムゾーン'
     ]);
-    sheet.appendRow([
+    var row = [
       new Date(),
       data.vid || '',
       data.page || '',
@@ -57,7 +57,9 @@ function handlePageview(ss, data) {
       data.lang || '',
       data.referrer || '',
       data.timezone || ''
-    ]);
+    ];
+    sheet.insertRowAfter(1);
+    sheet.getRange(2, 1, 1, row.length).setValues([row]);
   } catch (sheetErr) {
     // シート書き込み失敗は無視
   }
@@ -75,7 +77,7 @@ function handleContact(ss, data) {
       'デバイス', '画面', 'ビューポート', 'UA', '言語', 'リファラー', 'タイムゾーン',
       'ステータス'
     ]);
-    sheet.appendRow([
+    var row = [
       new Date(),
       data.name || '',
       data.contact || '',
@@ -90,7 +92,9 @@ function handleContact(ss, data) {
       data.referrer || '',
       data.timezone || '',
       'OK'
-    ]);
+    ];
+    sheet.insertRowAfter(1);
+    sheet.getRange(2, 1, 1, row.length).setValues([row]);
   } catch (sheetErr) {
     // シート書き込み失敗してもメールは送る
   }
