@@ -1,0 +1,258 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Uptime &amp; External Dependencies — Infrastructure Design for Millennium Preservation | TokiStorage</title>
+    <meta name="robots" content="noindex, nofollow">
+    <meta name="description" content="A 99.9% SLA means 8.7 hours of downtime per year. Over a millennium, every external dependency will eventually break. How TokiStorage designs for failure.">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Shippori+Mincho:wght@400;500;600;700&family=Zen+Kaku+Gothic+New:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="contact-form.css">
+    <style>
+        :root {
+            --toki-slate: #334155;
+            --toki-slate-dark: #1E293B;
+            --toki-slate-pale: #F1F5F9;
+            --accent-green: #10B981;
+            --accent-red: #EF4444;
+            --bg-white: #FFFFFF;
+            --bg-section: #E2E8F0;
+            --text-primary: #1E293B;
+            --text-secondary: #475569;
+            --text-muted: #94A3B8;
+            --border: #E2E8F0;
+            --font-display: 'Shippori Mincho', serif;
+            --font-body: 'Zen Kaku Gothic New', sans-serif;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        html { scroll-behavior: smooth; }
+        body { font-family: var(--font-body); font-weight: 400; background: var(--bg-white); color: var(--text-primary); line-height: 2; font-size: 16px; }
+        .article-nav { position: fixed; top: 0; left: 0; right: 0; z-index: 1000; background: rgba(255,255,255,0.95); backdrop-filter: blur(12px); border-bottom: 1px solid var(--border); padding: 0.6rem 1.2rem; display: flex; align-items: center; justify-content: space-between; }
+        .article-nav .nav-brand { font-family: var(--font-display); font-size: 0.9rem; font-weight: 600; color: var(--toki-slate); text-decoration: none; }
+        .article-nav .nav-right { display: flex; align-items: center; gap: 1rem; }
+        .article-nav .nav-label { font-size: 0.6rem; color: var(--text-muted); letter-spacing: 0.08em; }
+        .article-nav .lang-switch { font-size: 0.75rem; color: var(--toki-slate); text-decoration: none; padding: 0.3rem 0.6rem; border: 1px solid var(--toki-slate); border-radius: 4px; }
+        .article-nav .lang-switch:hover { background: var(--toki-slate); color: #fff; }
+        .article-container { max-width: 680px; margin: 0 auto; padding: 7rem 2rem 4rem; }
+        .article-header { margin-bottom: 3rem; padding-bottom: 2rem; border-bottom: 1px solid var(--border); }
+        .article-category { font-size: 0.7rem; color: var(--toki-slate); letter-spacing: 0.15em; margin-bottom: 1rem; }
+        .article-header h1 { font-family: var(--font-display); font-size: 1.8rem; font-weight: 600; line-height: 1.5; margin-bottom: 1rem; }
+        .article-subtitle { font-size: 0.95rem; color: var(--text-secondary); line-height: 1.8; }
+        .article-content h2 { font-family: var(--font-display); font-size: 1.25rem; font-weight: 600; margin: 3rem 0 1.5rem; padding-bottom: 0.5rem; border-bottom: 1px solid var(--border); }
+        .article-content h3 { font-family: var(--font-display); font-size: 1.1rem; font-weight: 500; margin: 2rem 0 1rem; }
+        .article-content p { margin-bottom: 1.5rem; text-align: justify; }
+        .article-content blockquote { margin: 2rem 0; padding: 1.5rem 2rem; background: var(--toki-slate-pale); border-left: 3px solid var(--toki-slate); font-style: italic; }
+        .article-content blockquote cite { display: block; font-size: 0.85rem; color: var(--text-muted); font-style: normal; margin-top: 0.5rem; }
+        .article-content ul, .article-content ol { margin: 1.5rem 0; padding-left: 1.5rem; }
+        .article-content li { margin-bottom: 0.75rem; }
+        .key-point { background: var(--toki-slate-pale); padding: 1.5rem 2rem; border-radius: 8px; margin: 2rem 0; }
+        .key-point p { margin-bottom: 0; font-size: 0.95rem; }
+        .core-message { background: linear-gradient(135deg, var(--toki-slate-pale) 0%, var(--bg-section) 100%); border-left: 4px solid var(--toki-slate); padding: 1.2rem 1.5rem; margin: 0 0 1.5rem 0; border-radius: 0 8px 8px 0; font-size: 0.95rem; line-height: 1.8; }
+        .disclaimer { font-size: 0.8rem; color: var(--text-muted); margin-bottom: 2rem; padding-bottom: 1rem; border-bottom: 1px solid var(--border); }
+        .sla-table { width: 100%; border-collapse: collapse; margin: 1.5rem 0; font-size: 0.9rem; }
+        .sla-table th, .sla-table td { padding: 0.6rem 1rem; border: 1px solid var(--border); text-align: left; }
+        .sla-table th { background: var(--toki-slate-pale); font-weight: 600; font-size: 0.8rem; }
+        .sla-table td:last-child { text-align: right; }
+        .references { margin-top: 4rem; padding-top: 2rem; border-top: 1px solid var(--border); }
+        .references h2 { font-size: 1rem; margin-bottom: 1.5rem; }
+        .references ul { list-style: none; padding: 0; }
+        .references li { font-size: 0.85rem; color: var(--text-secondary); margin-bottom: 0.75rem; padding-left: 1.5rem; text-indent: -1.5rem; }
+        .article-footer { margin-top: 4rem; padding-top: 2rem; border-top: 1px solid var(--border); text-align: center; }
+        .article-footer p { font-size: 0.8rem; color: var(--text-muted); margin-bottom: 1rem; }
+        .article-footer a { color: var(--toki-slate); text-decoration: none; }
+        @media (max-width: 768px) { .article-container { padding: 6rem 1.2rem 3rem; } .article-header h1 { font-size: 1.5rem; } .article-nav .nav-label { display: none; } .sla-table { font-size: 0.8rem; } .sla-table th, .sla-table td { padding: 0.4rem 0.6rem; } }
+        @media print { .article-nav { display: none; } .article-container { padding-top: 2rem; } }
+    </style>
+</head>
+<body>
+
+<nav class="article-nav">
+    <a href="index-en.html" class="nav-brand">TokiStorage</a>
+    <div class="nav-right">
+        <span class="nav-label">Uptime &amp; Dependencies</span>
+        <a href="uptime.html" class="lang-switch">JP</a>
+    </div>
+</nav>
+
+<main class="article-container">
+    <header class="article-header">
+        <p class="article-category">ESSAY — TECHNICAL DESIGN</p>
+        <h1>Uptime &amp; External Dependencies<br>— Why Millennium Preservation Cannot Rely on External Services</h1>
+        <p class="article-subtitle">
+            A 99.9% SLA means 8.7 hours of downtime per year.<br>
+            At millennium scale, every external dependency will eventually sever.<br>
+            This design philosophy extends to every layer — even a contact form.
+        </p>
+    </header>
+
+    <article class="article-content">
+        <div class="core-message">
+            <strong>Key thesis:</strong> External dependencies are convenient in the short term but become inevitable failure points over time. Designing for a millennium requires isolating every failure mode and eliminating single points of failure.
+        </div>
+        <p class="disclaimer">This essay explains TokiStorage's design philosophy. It is not intended as criticism of any specific service.</p>
+
+        <h2>1. The Illusion of 99.9%</h2>
+
+        <p>Cloud service sales materials are filled with numbers like "99.9% SLA" and "99.99% uptime." They look rock-solid. But convert them to time, and the picture changes.</p>
+
+        <table class="sla-table">
+            <thead>
+                <tr><th>SLA</th><th>Annual Downtime</th><th>10-Year Total</th><th>100-Year Total</th></tr>
+            </thead>
+            <tbody>
+                <tr><td>99%</td><td>3.65 days</td><td>36.5 days</td><td>365 days (1 year)</td></tr>
+                <tr><td>99.9%</td><td>8.7 hours</td><td>87 hours</td><td>36.5 days</td></tr>
+                <tr><td>99.99%</td><td>52.6 min</td><td>8.7 hours</td><td>3.65 days</td></tr>
+                <tr><td>99.999%</td><td>5.26 min</td><td>52.6 min</td><td>8.7 hours</td></tr>
+            </tbody>
+        </table>
+
+        <p>Many consider 99.9% to be "near perfect." But over 100 years, that translates to 36.5 days — more than a full month of total downtime. And this assumes the service still exists in 100 years.</p>
+
+        <div class="key-point">
+            <p>An SLA is a promise of uptime, not a promise of existence. Whether the service will still be operating in 100 years is outside the scope of any SLA.</p>
+        </div>
+
+        <h2>2. The Chain of External Dependencies</h2>
+
+        <p>Modern web services carry a staggering number of external dependencies. Consider a typical stack:</p>
+
+        <ul>
+            <li><strong>Hosting</strong>: AWS / GCP / Azure</li>
+            <li><strong>Domain</strong>: Registrar (annual renewal required)</li>
+            <li><strong>SSL Certificates</strong>: Certificate Authority</li>
+            <li><strong>Email Delivery</strong>: SendGrid / Mailgun</li>
+            <li><strong>Payments</strong>: Stripe / PayPal</li>
+            <li><strong>Authentication</strong>: Auth0 / Firebase Auth</li>
+            <li><strong>Chat</strong>: LINE API / Intercom</li>
+            <li><strong>Scheduling</strong>: Calendly / Acuity</li>
+        </ul>
+
+        <p>If any single one of these goes down, some part of the user experience breaks. And SaaS companies shutting down within a decade is hardly unusual. Even Google has killed countless products — Google+, Google Reader, Hangouts, and the list goes on.</p>
+
+        <h3>Dependency Chains Fail Probabilistically</h3>
+
+        <p>Suppose five external services each have a 99.9% uptime SLA. The probability that all five are simultaneously operational:</p>
+
+        <blockquote>
+            <p>0.999 × 0.999 × 0.999 × 0.999 × 0.999 = 0.995 = 99.5%</p>
+            <cite>— Annual downtime expands to 43.8 hours (~1.8 days)</cite>
+        </blockquote>
+
+        <p>The more external dependencies you add, the more exponentially your system-wide uptime degrades. This is not theory — it is arithmetic.</p>
+
+        <h2>3. TokiStorage's Design Principles</h2>
+
+        <p>At millennium scale, every external service can cease to exist. From this premise, the design principles become clear.</p>
+
+        <h3>Principle 1: Minimize External Dependencies</h3>
+
+        <p>TokiStorage's three-layer distributed storage is designed so each layer survives independently.</p>
+
+        <ul>
+            <li><strong>Physical Layer</strong> (quartz glass / laminate) — Requires no power, no servers. Readable with human eyes and a smartphone camera</li>
+            <li><strong>National Layer</strong> (National Diet Library legal deposit) — Persists as long as the law exists. No server costs</li>
+            <li><strong>Private Layer</strong> (GitHub / Arctic Code Vault) — Distributed hosting with physical copies in the Arctic</li>
+        </ul>
+
+        <p>The physical layer is not a service at all. The national layer is a legal institution that cannot be shut down by a corporate business decision. Only the private layer is a service — and if GitHub disappears, the other two layers remain.</p>
+
+        <h3>Principle 2: Isolate Failure Modes</h3>
+
+        <p>The failure modes of the three layers are mutually independent:</p>
+
+        <ul>
+            <li>A quartz glass disc physically shattering</li>
+            <li>The National Diet Library Act being repealed</li>
+            <li>GitHub shutting down its business</li>
+        </ul>
+
+        <p>These events do not correlate. An earthquake that breaks the glass does not change the law. A company going bankrupt does not close the library. Because failure modes are independent, the probability of total loss approaches zero.</p>
+
+        <h3>Principle 3: Design Fallbacks</h3>
+
+        <p>This principle extends beyond core infrastructure. It applies to every touchpoint — even a contact form.</p>
+
+        <p>TokiStorage previously used LINE Official Account and Calendly for customer inquiries. Both had structural problems:</p>
+
+        <ul>
+            <li><strong>LINE</strong> — On desktop, it redirects to LINE's website, causing drop-off. As a messaging app API, no SLA is published</li>
+            <li><strong>Calendly</strong> — A startup SaaS with limited business continuity guarantees. An excessive external dependency for a booking function</li>
+        </ul>
+
+        <p>The current system uses a static JavaScript form backed by Google Apps Script. The form UI itself is a static file served from GitHub Pages. If GAS goes down, the form still renders, and a direct email address is shown as fallback.</p>
+
+        <div class="key-point">
+            <p>Normal flow: Form submission → GAS → Email notification + Spreadsheet logging<br>
+            Failure flow: GAS outage → Error screen displays email address directly → Contact via copy-paste or mailto<br><br>
+            Even when the external dependency (GAS) fails, the communication channel never fully breaks. This is fallback design.</p>
+        </div>
+
+        <h2>4. How to Read an SLA</h2>
+
+        <p>When evaluating an SLA, never look at the number alone. Check the following:</p>
+
+        <ol>
+            <li><strong>Scope</strong> — What is actually guaranteed? "Server uptime" and "API response" are different things</li>
+            <li><strong>Compensation</strong> — What happens on SLA breach? Usually service credits (billing refunds), not data loss compensation</li>
+            <li><strong>Existence Assumption</strong> — Every SLA implicitly assumes "as long as the service continues to operate." When the service shuts down, the SLA vanishes</li>
+            <li><strong>Dependency Chain</strong> — What external services does the provider itself depend on? Their dependency's SLA breach is not included in your SLA calculation</li>
+        </ol>
+
+        <h2>5. Google Workspace — A Pragmatic Choice</h2>
+
+        <p>There are specific reasons TokiStorage chose Google Apps Script as the contact form backend:</p>
+
+        <ul>
+            <li><strong>99.9% SLA</strong> — Officially guaranteed under Google Workspace</li>
+            <li><strong>Infrastructure Scale</strong> — A Gmail outage makes global headlines. Failure detection is effectively free</li>
+            <li><strong>Free Tier</strong> — GAS execution, Gmail delivery, and Spreadsheet logging all fit within the free tier</li>
+            <li><strong>No Monthly Limits</strong> — Unlike Web3Forms' 250/month cap, GAS email sending allows 100/day on personal accounts</li>
+        </ul>
+
+        <p>But the same principle applies here. Rather than fully depending on Google, a fallback (direct email display) is prepared for when Google goes down. External dependency cannot be reduced to absolute zero, but an alternative path must always be designed.</p>
+
+        <h2>6. The Quiet Standard of Millennium Design</h2>
+
+        <p>Ultimately, the design philosophy of millennium preservation begins with one premise: "Everything will eventually break."</p>
+
+        <p>Servers will eventually stop. Companies will eventually disappear. Laws can be amended. That is precisely why the system is designed so that when one layer breaks, others survive. When one service goes down, communication is never severed.</p>
+
+        <blockquote>
+            <p>"Everything fails, all the time."</p>
+            <cite>— Werner Vogels, CTO of Amazon Web Services</cite>
+        </blockquote>
+
+        <p>The CTO of AWS himself acknowledges it. Everything fails, all the time. Accepting this fact and designing systems that continue to function despite failure — that is millennium-scale infrastructure design, and the philosophy that runs through every layer of TokiStorage.</p>
+
+        <div class="key-point">
+            <p>Uptime is an indicator of trust, but not a guarantee of survival. When designing for a millennium, the question is not "how rarely does it fail?" but "when it fails, what remains?"</p>
+        </div>
+
+        <section class="references">
+            <h2>References</h2>
+            <ul>
+                <li>Google Workspace Service Level Agreement — https://workspace.google.com/terms/sla.html</li>
+                <li>US-CERT: Data Backup Options — 3-2-1 Backup Rule (2012)</li>
+                <li>Werner Vogels, "Everything Fails All the Time" — AWS re:Invent Keynote</li>
+                <li>Killed by Google — https://killedbygoogle.com/ — A catalog of discontinued Google services</li>
+                <li>National Diet Library Act (Act No. 5 of 1948) — Legal Deposit System</li>
+                <li>GitHub Arctic Code Vault — https://archiveprogram.github.com/</li>
+            </ul>
+        </section>
+    </article>
+
+    <footer class="article-footer">
+        <p>TokiStorage — Proof of Existence, Delivered to the Next Millennium</p>
+        <p id="essay-nav-links"></p>
+        <p style="margin-top: 2rem; font-size: 0.75rem;">&copy; 2026 TokiStorage</p>
+    </footer>
+</main>
+
+<script src="essay-nav.js?v=20260213"></script>
+<script src="contact-form.js"></script>
+</body>
+</html>
