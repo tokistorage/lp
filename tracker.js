@@ -3,7 +3,7 @@
  * Cookie UUIDでユニークユーザー識別、GASにビーコン送信
  */
 (function() {
-    var API_URL = 'https://script.google.com/macros/s/AKfycbzkTrsYn9dYkOnLDEFdOTqZUiUptqI-3suVe7TJ5qZFF4oZupOq07sBJslNrkDOFjjj/exec';
+    var API_URL = 'https://script.google.com/macros/s/AKfycbwqw5USebrZxY_I0HW7dz3408k2k1xUvBMf--k96rt4oz_UomqlHDt49EG-O3qEzFPy/exec';
 
     // Cookie helper
     function getCookie(name) {
