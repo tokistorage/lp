@@ -50,7 +50,18 @@
         return 'direct';
     }
 
+    // Bot / crawler detection
+    function isBot() {
+        var ua = navigator.userAgent;
+        if (/bot|crawl|spider|slurp|facebook|twitter|linkedin|whatsapp|telegram|discord|preview|fetch|curl|wget|headless|phantom|selenium|puppeteer|lighthouse|pagespeed|pingdom|uptimerobot|monitor/i.test(ua)) return true;
+        if (navigator.webdriver) return true;
+        if (!window.localStorage) return true;
+        return false;
+    }
+
     function track() {
+        if (isBot()) return;
+
         var isMobile = /Mobi|Android|iPhone|iPad|iPod/i.test(navigator.userAgent);
         var payload = {
             type: 'pageview',
