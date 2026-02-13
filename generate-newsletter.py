@@ -20,6 +20,7 @@ from fpdf import FPDF
 # ── Paths ──────────────────────────────────────────────────────────────
 SCRIPT_DIR = os.path.dirname(os.path.abspath(__file__))
 OUT_DIR = os.path.join(SCRIPT_DIR, "newsletter")
+ICON_PATH = os.path.join(SCRIPT_DIR, "asset", "tokistorage-icon-circle.png")
 
 # Font detection: macOS → Linux fallback
 FONT_CANDIDATES = [
@@ -177,8 +178,12 @@ def generate_vol1():
     pdf.accent_bar()
     pdf.set_auto_page_break(auto=False)
 
+    # Icon
+    if os.path.exists(ICON_PATH):
+        pdf.image(ICON_PATH, x=80, y=12, w=50)
+
     # Publication name
-    pdf.set_y(35)
+    pdf.set_y(68)
     pdf.set_font("JP", "", 10)
     pdf.set_text_color(*TOKI_BLUE)
     pdf.cell(0, 6, PUBLICATION_NAME, align="C", new_x="LMARGIN", new_y="NEXT")
@@ -188,7 +193,7 @@ def generate_vol1():
     pdf.set_text_color(*MUTED)
     pdf.cell(0, 5, f"第{volume}巻 第{issue_num}号（通巻第{serial}号）", align="C",
              new_x="LMARGIN", new_y="NEXT")
-    pdf.ln(20)
+    pdf.ln(10)
 
     # Title
     pdf.set_font("JP", "B", 28)
