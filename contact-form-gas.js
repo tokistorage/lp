@@ -12,7 +12,7 @@
  * 6. デプロイURLをコピーし、contact-form.js の API_URL を差し替え
  */
 
-var NOTIFY_EMAIL = 'business@satotakuya.jp';
+var NOTIFY_EMAIL = 'tokistorage1000@gmail.com';
 
 function doPost(e) {
   var sheet = SpreadsheetApp.getActiveSpreadsheet().getActiveSheet();
