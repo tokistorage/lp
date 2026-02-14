@@ -27,6 +27,7 @@
     { id: 'religion', ja: '宗教・神話', en: 'Religion' },
     { id: 'existentialism', ja: '存在主義経済', en: 'Existentialism' },
     { id: 'dimension', ja: '5次元という視点', en: 'The Fifth Dimension' },
+    { id: 'shiseikan', ja: '死生観の醸成', en: 'Cultivating a View of Life & Death' },
 
     // ── 社会制度（小→大）──
     { id: 'organization', ja: '組織', en: 'Organizations' },
