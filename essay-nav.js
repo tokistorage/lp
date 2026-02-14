@@ -15,6 +15,7 @@
     { id: 'emotion', ja: '感情の変容', en: 'Emotions as Transformation' },
     { id: 'backcasting', ja: '逆算思考と自己変容', en: 'Backcasting & Self-Transformation' },
     { id: 'boundary', ja: 'システム境界', en: 'System Boundaries' },
+    { id: 'peace', ja: '万人の平和感', en: 'Peace for All' },
 
     // ── 人生の節目 ──
     { id: 'lifecycle', ja: '生老病死', en: 'Life Cycle' },
