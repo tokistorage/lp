@@ -69,6 +69,7 @@
     { id: 'space', ja: '宇宙', en: 'Space' },
 
     // ── 技術・設計 ──
+    { id: 'coach', ja: 'タイムレスコーチ', en: 'Timeless Coach' },
     { id: 'future', ja: 'AI時代', en: 'AI Era' },
     { id: 'perspective', ja: '視座の本質', en: 'The Essence of Perspective' },
     { id: 'chief-timeless', ja: 'Chief Timeless Officer', en: 'Chief Timeless Officer' },
