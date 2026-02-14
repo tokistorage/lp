@@ -1,0 +1,455 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" type="image/png" sizes="32x32" href="asset/favicon-32.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="asset/apple-touch-icon.png">
+    <title>高額商材の受容——肯定感が規定する金銭価値の世界 | トキストレージ</title>
+    <meta name="robots" content="noindex, nofollow">
+    <meta name="description" content="価格を受け入れられるかどうかは、商品の品質ではなく、自分自身の肯定感が決めている。オープンハウスで価格基準を書き換え、世界をまたいだ視座で価格設計に向き合う。">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Shippori+Mincho:wght@400;500;600;700&family=Zen+Kaku+Gothic+New:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --toki-blue: #2563EB;
+            --toki-blue-dark: #1D4ED8;
+            --toki-blue-pale: #EFF6FF;
+            --bg-white: #FFFFFF;
+            --bg-section: #F8FAFC;
+            --text-primary: #1E293B;
+            --text-secondary: #475569;
+            --text-muted: #94A3B8;
+            --border: #E2E8F0;
+            --accent: #7E22CE;
+            --accent-pale: #FAF5FF;
+            --font-display: 'Shippori Mincho', serif;
+            --font-body: 'Zen Kaku Gothic New', sans-serif;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        html { scroll-behavior: smooth; }
+
+        body {
+            font-family: var(--font-body);
+            font-weight: 400;
+            background: var(--bg-white);
+            color: var(--text-primary);
+            line-height: 2;
+            font-size: 16px;
+        }
+
+        /* Navigation */
+        .article-nav {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 1000;
+            background: rgba(255,255,255,0.95);
+            backdrop-filter: blur(12px);
+            border-bottom: 1px solid var(--border);
+            padding: 0.6rem 1.2rem;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 1rem;
+        }
+        .article-nav .nav-brand {
+            font-family: var(--font-display);
+            font-size: 0.9rem;
+            font-weight: 600;
+            color: var(--toki-blue);
+            text-decoration: none;
+            white-space: nowrap;
+        }
+        .article-nav .nav-right {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+        .article-nav .nav-label {
+            font-size: 0.6rem;
+            color: var(--text-muted);
+            letter-spacing: 0.08em;
+        }
+        .article-nav .lang-switch {
+            font-size: 0.75rem;
+            color: var(--toki-blue);
+            text-decoration: none;
+            padding: 0.3rem 0.6rem;
+            border: 1px solid var(--toki-blue);
+            border-radius: 4px;
+        }
+        .article-nav .lang-switch:hover {
+            background: var(--toki-blue);
+            color: #fff;
+        }
+
+        /* Article Container */
+        .article-container {
+            max-width: 680px;
+            margin: 0 auto;
+            padding: 7rem 2rem 4rem;
+        }
+
+        /* Article Header */
+        .article-header {
+            margin-bottom: 3rem;
+            padding-bottom: 2rem;
+            border-bottom: 1px solid var(--border);
+        }
+        .article-category {
+            font-size: 0.7rem;
+            color: var(--accent);
+            letter-spacing: 0.15em;
+            margin-bottom: 1rem;
+        }
+        .article-header h1 {
+            font-family: var(--font-display);
+            font-size: 1.8rem;
+            font-weight: 600;
+            line-height: 1.5;
+            margin-bottom: 1rem;
+        }
+        .article-subtitle {
+            font-size: 0.95rem;
+            color: var(--text-secondary);
+            line-height: 1.8;
+        }
+
+        /* Article Content */
+        .article-content h2 {
+            font-family: var(--font-display);
+            font-size: 1.25rem;
+            font-weight: 600;
+            margin: 3rem 0 1.5rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 1px solid var(--border);
+        }
+        .article-content h3 {
+            font-family: var(--font-display);
+            font-size: 1.1rem;
+            font-weight: 500;
+            margin: 2rem 0 1rem;
+            color: var(--text-primary);
+        }
+        .article-content p {
+            margin-bottom: 1.5rem;
+            text-align: justify;
+        }
+        .article-content blockquote {
+            margin: 2rem 0;
+            padding: 1.5rem 2rem;
+            background: var(--bg-section);
+            border-left: 3px solid var(--accent);
+            font-style: italic;
+        }
+        .article-content blockquote p {
+            margin-bottom: 0.5rem;
+        }
+        .article-content blockquote cite {
+            display: block;
+            font-size: 0.85rem;
+            color: var(--text-muted);
+            font-style: normal;
+            margin-top: 0.5rem;
+        }
+        .article-content ul, .article-content ol {
+            margin: 1.5rem 0;
+            padding-left: 1.5rem;
+        }
+        .article-content li {
+            margin-bottom: 0.75rem;
+        }
+
+        /* Key Point Box */
+        .key-point {
+            background: var(--accent-pale);
+            border-left: 4px solid var(--accent);
+            padding: 1.5rem 2rem;
+            border-radius: 0 8px 8px 0;
+            margin: 2rem 0;
+        }
+        .key-point p {
+            margin-bottom: 0;
+            font-size: 0.95rem;
+        }
+
+        /* Core Message */
+        .core-message {
+            background: linear-gradient(135deg, var(--accent-pale) 0%, #F3E8FF 100%);
+            border-left: 4px solid var(--accent);
+            padding: 1.2rem 1.5rem;
+            margin: 0 0 1.5rem 0;
+            border-radius: 0 8px 8px 0;
+            font-size: 0.95rem;
+            line-height: 1.8;
+        }
+
+        /* References */
+        .references {
+            margin-top: 3rem;
+            padding-top: 2rem;
+            border-top: 1px solid var(--border);
+        }
+        .references h2 {
+            border-bottom: none !important;
+            margin-top: 0 !important;
+        }
+        .references ul {
+            list-style: none;
+            padding-left: 0;
+        }
+        .references li {
+            font-size: 0.85rem;
+            color: var(--text-secondary);
+            padding-left: 1.2rem;
+            position: relative;
+        }
+        .references li::before {
+            content: "–";
+            position: absolute;
+            left: 0;
+        }
+
+        /* Footer */
+        .article-footer {
+            margin-top: 3rem;
+            padding-top: 2rem;
+            border-top: 1px solid var(--border);
+            text-align: center;
+        }
+
+        @media (max-width: 768px) {
+            .article-container { padding: 5rem 1.2rem 3rem; }
+            .article-header h1 { font-size: 1.4rem; }
+            .article-nav .nav-label { display: none; }
+        }
+
+        @media print {
+            .article-nav { display: none; }
+            .article-container { padding-top: 2rem; }
+        }
+        .nav-brand::before {
+            content: '';
+            display: inline-block;
+            width: 20px;
+            height: 20px;
+            background: url('asset/tokistorage-icon-512.png') no-repeat center / contain;
+            vertical-align: -3px;
+            margin-right: 5px;
+        }
+    </style>
+    <link rel="stylesheet" href="contact-form.css">
+    <meta property="og:image" content="https://tokistorage.github.io/lp/asset/tokistorage-icon-512.png">
+    <meta property="og:image:width" content="512">
+    <meta property="og:image:height" content="512">
+</head>
+<body>
+
+<nav class="article-nav">
+    <a href="index.html" class="nav-brand">トキストレージ</a>
+    <div class="nav-right">
+        <span class="nav-label">PRICE ACCEPTANCE</span>
+        <a href="price-acceptance-en.html" class="lang-switch">EN</a>
+    </div>
+</nav>
+
+<main class="article-container">
+
+    <header class="article-header">
+        <div class="article-category">ESSAY — 経済・財産</div>
+        <h1>高額商材の受容——肯定感が規定する金銭価値の世界</h1>
+        <p class="article-subtitle">
+            価格を受け入れられるかどうかは、商品の品質が決めているのではない。<br>
+            自分自身の肯定感——「自分にはその価値がある」という確信——が決めている。<br>
+            オープンハウスで価格基準を書き換え、世界をまたいだ視座で価格設計に向き合う。
+        </p>
+    </header>
+
+    <article class="article-content">
+
+        <!-- Chapter 1 -->
+        <h2>1. 価格受容性の正体——なぜ「高い」と感じるのか</h2>
+
+        <p>同じ商品を見て、ある人は「高い」と言い、別の人は「妥当だ」と言う。さらに別の人は「安い」と言う。商品は変わっていない。変わっているのは、見ている人の内側だ。</p>
+
+        <p>マーケティングの教科書は、価格受容性を「知覚価値」で説明する。商品の機能、ブランド、希少性、競合との比較——これらの総合として知覚価値が決まり、価格がその範囲内であれば受容されると。しかし、この説明には決定的な欠落がある。</p>
+
+        <p>知覚価値を判定しているのは、誰か。自分自身だ。そして自分自身が持つ判定基準は、どこから来ているのか。</p>
+
+        <p>年収か。資産か。それも一因だが、本質ではない。年収が同じでも、数十万円の商品を躊躇なく購入する人と、数千円の出費に悩む人がいる。この差を生んでいるのは、経済力ではなく、自己肯定感だ。「自分にはこの価格帯のものを手にする価値がある」——この内的確信の有無が、価格受容性の正体である。</p>
+
+        <!-- Chapter 2 -->
+        <h2>2. 肯定感と金銭価値——内なる天井が外の価格を決める</h2>
+
+        <p>自己肯定感が低い状態では、高額商材に対して「自分には分不相応だ」という判断が自動的に起動する。これは経済的な合理判断ではない。感情的な自己検閲だ。</p>
+
+        <p>別稿「システム境界」で論じた「他人の目」の幻想と、構造は同じだ。他人は自分の買い物を大して気にしていない。しかし、「こんな高いものを買って、身の程知らずだと思われるのではないか」という仮想の視線が、購買行動を抑制する。価格の問題ではなく、恥じらいの問題だ。</p>
+
+        <p>逆に、自己肯定感が高い状態では、価格は「自分への投資」として受容される。高額であること自体が、自分の決断の重みを示す証拠になる。同じ100万円が、肯定感の低い人には「失う100万円」に見え、肯定感の高い人には「自分に対する100万円の宣言」に見える。</p>
+
+        <p>問題は、この肯定感がどこから来るかだ。生まれつきの性格か。成功体験の蓄積か。もちろんそれらも寄与する。しかし、最も直接的で、最も再現可能な方法がある。</p>
+
+        <p>自分の生活空間の価格基準を、物理的に書き換えることだ。</p>
+
+        <div class="key-point">
+            <p>価格受容性の天井は、商品の側にはない。自分の内側にある。その天井を上げるには、天井の高い空間に身体を置く必要がある。</p>
+        </div>
+
+        <!-- Chapter 3 -->
+        <h2>3. オープンハウスという装置——価格基準の書き換え</h2>
+
+        <p>不動産のオープンハウスは、本来、物件の購入検討者を対象とした内覧会だ。しかし、その機能は物件の評価だけにとどまらない。オープンハウスは、価格基準を書き換える装置として機能する。</p>
+
+        <p>5,000万円の物件のオープンハウスに行く。リビングの広さ、キッチンの仕様、窓からの眺望を体感する。5,000万円の空間が、身体に入る。次に、1億円の物件のオープンハウスに行く。天井高、素材の質感、庭の広さが、5,000万円の物件とは明確に違う。1億円の空間が、身体に入る。</p>
+
+        <p>この過程で起きているのは、物件の比較ではない。自分の内部の価格目盛りの再校正だ。5,000万円が「高額」だった感覚が、1億円を体験した後では「中間帯」に移動する。目盛りが伸びる。天井が上がる。</p>
+
+        <p>重要なのは、実際に購入する必要がないということだ。身体をその空間に置くだけで、価格基準は書き換わる。カタログを見るのではなく、その場に立つ。写真を見るのではなく、天井を見上げる。「想像と体験は常に違う」——この原理が、ここでも働いている。</p>
+
+        <!-- Chapter 4 -->
+        <h2>4. 国内の物件見学——日常の延長で天井を上げる</h2>
+
+        <p>まず、国内のオープンハウスから始める。</p>
+
+        <p>東京都心のタワーマンション。湾岸エリアの高層階。広尾や松濤の戸建て。軽井沢や葉山の別荘地。これらのオープンハウスは、定期的に開催されている。予約すれば、誰でも見学できる。購入する予定がなくても、だ。</p>
+
+        <p>1億円、3億円、5億円。価格が上がるにつれて、空間の質が変わる。しかし、もっと重要なのは、その空間に立っている自分の感覚が変わることだ。最初の1億円の物件では落ち着かなかった自分が、何件か見学した後には、5億円の空間でも自然に呼吸できるようになる。</p>
+
+        <p>これは「慣れ」だが、単なる慣れではない。「自分がこの空間にいていい」という肯定感が、体験の反復によって醸成されている。身体が高額帯の空間を受容し始めている。</p>
+
+        <!-- Chapter 5 -->
+        <h2>5. オアフ島——ロアリッジとカハラの世界</h2>
+
+        <p>国内の天井を上げた後、その天井をさらに書き換える場所がある。ハワイだ。</p>
+
+        <p>オアフ島のロアリッジ。ダイヤモンドヘッドの裏手、ホノルルの街を見下ろす丘陵地帯に広がる住宅地だ。ここの物件は、日本の高級住宅地とは次元が異なる。敷地面積、天井高、プールの大きさ、そして何より、窓の外に広がる太平洋と山稜の景観。$3M、$5M、$10M——ドル建ての数字が、円建ての感覚をさらに押し上げる。</p>
+
+        <p>カハラ。オバマ元大統領も滞在したカハラ・ホテルの周辺に広がる、オアフ島屈指の高級住宅地。ビーチフロントの邸宅。プライベートアクセスの砂浜。ゲートコミュニティの静寂。ここでは$10Mが「エントリープライス」だ。</p>
+
+        <p>これらの物件を見学するとき、起きていることは国内と同じだが、規模が違う。$10M——日本円で15億円前後——の空間に身体を置いたとき、国内で5億円の物件に感じていた「高額感」が、相対的に縮小する。基準が、太平洋のスケールで書き換わる。</p>
+
+        <blockquote>
+            <p>「ロアリッジの丘から見えるのは、ホノルルの街ではない。自分がこれまで『高い』と思っていたものの小ささだ。」</p>
+        </blockquote>
+
+        <!-- Chapter 6 -->
+        <h2>6. マウイ島——オロワルとカパルアの世界</h2>
+
+        <p>オアフ島が「都市の富」だとすれば、マウイ島は「自然の富」だ。</p>
+
+        <p>オロワル。マウイ島の西海岸、ラハイナの南に位置するエリア。2023年のラハイナ大火で周辺は甚大な被害を受けたが、オロワルの海岸線は独特の静けさを保っている。ここの物件は、オーシャンフロントの土地そのものに価値がある。建物ではなく、地球の縁に立つ権利に対して価格がつく。</p>
+
+        <p>カパルア。マウイ島の北西端、リッツ・カールトンが位置するリゾートエリア。ゴルフコース、ビーチ、山稜に囲まれた限定的な区画。ここでの不動産は「所有」というより「地球の一角を預かる」感覚に近い。$5M、$15M、$25M。数字が大きくなるにつれて、価格の意味そのものが変わっていく。</p>
+
+        <p>マウイの物件を見学した後に起きる変化は、単なる天井の上昇ではない。価格の意味の変容だ。$25M——約37億円——の物件を見た後、「100万円は高い」という判断がどれだけ狭い基準から出ているかを、身体が知る。頭ではなく、身体が知る。そこに立ったからだ。</p>
+
+        <div class="key-point">
+            <p>オアフ島は都市の富を見せる。マウイ島は自然の富を見せる。両方を体験した後、「高い」という言葉の意味が変わる。それは数字の大小ではなく、何に対して価格を払うのかという問いに変わる。</p>
+        </div>
+
+        <!-- Chapter 7 -->
+        <h2>7. 生活空間が価格基準を規定する——アンカリングの身体版</h2>
+
+        <p>行動経済学に「アンカリング効果」という概念がある。最初に提示された数字が、その後の判断の基準点（アンカー）になるという認知バイアスだ。</p>
+
+        <p>オープンハウスで起きていることは、このアンカリングの身体版だ。しかし、通常のアンカリングが一時的な認知の歪みであるのに対し、身体を空間に置くアンカリングは、持続的に基準を書き換える。なぜなら、空間の記憶は身体に残るからだ。</p>
+
+        <p>カハラのビーチフロントに立った記憶。カパルアの崖上から見た太平洋の記憶。これらは消えない。そして、次に価格を見たとき、その記憶が無意識にアンカーとして機能する。</p>
+
+        <p>逆に言えば、自分の生活空間が狭い価格帯に閉じている限り、価格受容性は上がらない。ワンルームのアパートで暮らし、コンビニで買い物をし、チェーン店で食事をしている人の価格アンカーは、その空間が規定する。それ自体は何も悪くない。しかし、その空間だけが「普通」だと信じている限り、高額商材は永遠に「高い」のままだ。</p>
+
+        <p>価格基準を変えたければ、身体を置く空間を変える。これが最も直接的な方法だ。</p>
+
+        <!-- Chapter 8 -->
+        <h2>8. 世界を行き来するコスト——視座の獲得費用</h2>
+
+        <p>「オープンハウスを見に行けばいいのはわかった。しかし、ハワイの物件を見に行く費用は誰が出すのか。」</p>
+
+        <p>当然の疑問だ。東京からホノルルへの往復航空券、宿泊費、レンタカー、食費。一週間の滞在で数十万円はかかる。マウイ島まで足を延ばせば、さらに加算される。この費用は、誰かが負担しなければならない。</p>
+
+        <p>ここで問いを転換する。この数十万円は「旅費」なのか、「投資」なのか。</p>
+
+        <p>ロアリッジの丘に立って価格基準が書き換わったとき、その人が今後の人生で行うすべての価格判断が変わる。自分の商品・サービスの価格設計が変わる。「この価格では高すぎるのではないか」という自己検閲が緩む。価格を上げることで得られる収益の差分は、渡航費用を何倍にもして返ってくる。</p>
+
+        <p>世界を行き来するコストは、旅費ではない。視座の獲得費用だ。そしてこの視座は、一度獲得すれば失われない。航空券は消えるが、カパルアの崖上で得た身体感覚は残る。</p>
+
+        <blockquote>
+            <p>「世界を見に行く費用を『旅行代』と計上する人は、一生旅行者のままだ。『研修費』と計上する人は、帰国後に価格設計が変わる。」</p>
+        </blockquote>
+
+        <!-- Chapter 9 -->
+        <h2>9. 世界をまたいだ社会課題と向き合う——価格の背景にあるもの</h2>
+
+        <p>ハワイの物件を見学する過程で、もうひとつ得られるものがある。世界規模の社会課題との接触だ。</p>
+
+        <p>ラハイナの大火。気候変動。海面上昇。ハワイの先住民の土地権利問題。観光産業と地域住民の軋轢。水資源の枯渇。これらは$10Mの物件のリビングから見える景色の、すぐ外側にある現実だ。</p>
+
+        <p>高額物件を見学するということは、富の集中と社会的不均衡の最前線に立つということでもある。カハラの邸宅の美しさと、ワイアナエの住宅問題は、同じオアフ島の上に共存している。カパルアのリゾートの静けさと、ラハイナの復興の困難さは、同じマウイ島の上に共存している。</p>
+
+        <p>この共存を目撃することが、価格設計に深みを加える。自分の商品やサービスの価格に、何を含めるのか。利益だけか。社会課題への応答も含めるのか。ESGやSDGsを標語としてではなく、カハラの邸宅とワイアナエの現実の落差として体感した人は、価格の中に「社会への還元」を自然に組み込むようになる。</p>
+
+        <p>価格を上げることは、自分だけが豊かになることではない。価格を上げることで得た余剰を、社会課題に向けることができる。高額商材の受容は、利己的な行為ではなく、社会との接続を拡大する行為でもある。</p>
+
+        <!-- Chapter 10 -->
+        <h2>10. 価格設計への反映——自分の商材をどう値付けするか</h2>
+
+        <p>ここまでの体験を経て、自分の商品やサービスの価格設計に戻る。</p>
+
+        <p>渡航前の自分であれば、「この価格では誰も買わないのではないか」と設定していた金額がある。しかし、ロアリッジの丘に立ち、カパルアの崖上から太平洋を見た後の自分は、同じ金額に対して別の判断を下す。「この価格は、私が提供する価値に対して妥当だ。」</p>
+
+        <p>この変化は、自信の問題ではない。基準の問題だ。自信は揺れる。しかし、身体に刻まれた空間の記憶は揺れない。$25Mの物件に立った記憶がある人は、50万円の商品を「高い」とは感じない。自分の商品の価格として50万円を提示することに、恥じらいを感じない。</p>
+
+        <p>価格設計において最も危険なのは、「自分が受容できない価格をつける」ことだ。自分が「高い」と感じている価格を顧客に提示すると、その躊躇が伝わる。声のトーンに、表情に、文面の言い回しに、「本当はこの価格に確信がない」というシグナルが漏れる。顧客はそれを察知し、価格に不安を感じる。</p>
+
+        <p>逆に、自分が完全に受容している価格を提示するとき、そこには一切の躊躇がない。その確信が顧客に伝わり、価格そのものが信頼のシグナルになる。</p>
+
+        <div class="key-point">
+            <p>価格設計の出発点は、市場調査でも競合分析でもない。自分自身がその価格を受容できるかどうかだ。受容できていない価格は、どれだけ論理的に正しくても、提示する際に揺れる。揺れは伝播する。だからまず、自分の価格基準を書き換える。</p>
+        </div>
+
+        <!-- Chapter 11 -->
+        <h2>11. 受容する自己を手に入れる——肯定感の循環</h2>
+
+        <p>価格基準が書き換わり、自分の商品に適切な価格をつけられるようになったとき、ひとつの循環が始まる。</p>
+
+        <p>高い価格を受容した自分は、その価格に見合う価値を提供しようとする。提供される価値が上がると、顧客の満足度が上がる。満足した顧客からのフィードバックが、自己肯定感をさらに強化する。強化された肯定感が、次の価格設計に反映される。</p>
+
+        <p>この循環は、最初の一歩——オープンハウスに足を運び、身体の基準を書き換える——から始まる。しかし、一度始まれば、自走する。</p>
+
+        <p>トキストレージが提供するタイムレスコンサルティングの価格。パールソープの価格。タイムレスコーチ認定の価格。これらの価格設計は、浦安の護岸やハワイの物件見学を通じて書き換えられた基準の上に立っている。「この価格は妥当か」という問いに対して、「この価格は、私たちが提供する永続性に対して、妥当だ」と確信を持って答えられる。その確信の根拠は、市場調査ではなく、身体の記憶だ。</p>
+
+        <blockquote>
+            <p>「高い」と感じるのは、商品の問題ではなく、自分の天井の問題だ。天井を上げるには、天井の高い場所に行く。行って、立って、呼吸する。それだけで、内なる基準は書き換わる。書き換わった基準で値付けをする。値付けに躊躇がないとき、価格は信頼になる。</p>
+        </blockquote>
+
+        <!-- References -->
+        <section class="references">
+            <h2>参考文献</h2>
+            <ul>
+                <li>Kahneman, D. & Tversky, A. (1974). "Judgment under Uncertainty: Heuristics and Biases." <em>Science</em>, 185(4157), 1124–1131.</li>
+                <li>Ariely, D. (2008). <em>Predictably Irrational.</em> HarperCollins.（邦訳『予想どおりに不合理』）</li>
+                <li>Veblen, T. (1899). <em>The Theory of the Leisure Class.</em> Macmillan.（邦訳『有閑階級の理論』）</li>
+                <li>Bourdieu, P. (1979). <em>La Distinction.</em> Minuit.（邦訳『ディスタンクシオン』）</li>
+                <li>Rosenberg, M. (1965). <em>Society and the Adolescent Self-Image.</em> Princeton University Press.</li>
+                <li>Thaler, R. H. (2015). <em>Misbehaving: The Making of Behavioral Economics.</em> W. W. Norton.（邦訳『行動経済学の逆襲』）</li>
+            </ul>
+        </section>
+
+    </article>
+
+    <footer class="article-footer">
+        <p id="essay-nav-links"></p>
+        <p style="margin-top: 2rem; font-size: 0.75rem;">&copy; 2026 TokiStorage</p>
+    </footer>
+
+</main>
+
+<script src="contact-form.js"></script>
+<script src="essay-nav.js?v=20260213"></script>
+<script src="tracker.js"></script>
+</body>
+</html>

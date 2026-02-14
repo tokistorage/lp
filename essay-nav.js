@@ -45,6 +45,7 @@
     { id: 'novelty-soap', ja: 'ノベルティ石鹸', en: 'Novelty Soap' },
     { id: 'fragrance', ja: '香りの科学', en: 'Science of Scent' },
     { id: 'advertising', ja: '広告とROI', en: 'Advertising & ROI' },
+    { id: 'price-acceptance', ja: '高額商材の受容', en: 'Price Acceptance' },
     { id: 'finance', ja: '金融', en: 'Finance' },
     { id: 'ownership', ja: '所有権', en: 'Ownership' },
     { id: 'realestate', ja: '不動産', en: 'Real Estate' },
