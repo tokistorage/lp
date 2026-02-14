@@ -17,6 +17,7 @@
     { id: 'boundary', ja: 'システム境界', en: 'System Boundaries' },
     { id: 'peace', ja: '万人の平和感', en: 'Peace for All' },
     { id: 'meiwaku', ja: '迷惑の構造', en: 'The Structure of Meiwaku' },
+    { id: 'satiation', ja: '飽きと変容', en: 'Satiation & Transformation' },
 
     // ── 人生の節目 ──
     { id: 'lifecycle', ja: '生老病死', en: 'Life Cycle' },
