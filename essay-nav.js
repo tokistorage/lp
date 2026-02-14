@@ -14,6 +14,7 @@
     { id: 'pathology', ja: '継承の病理', en: 'Pathology' },
     { id: 'emotion', ja: '感情の変容', en: 'Emotions as Transformation' },
     { id: 'backcasting', ja: '逆算思考と自己変容', en: 'Backcasting & Self-Transformation' },
+    { id: 'boundary', ja: 'システム境界', en: 'System Boundaries' },
 
     // ── 人生の節目 ──
     { id: 'lifecycle', ja: '生老病死', en: 'Life Cycle' },

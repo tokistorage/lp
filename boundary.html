@@ -1,0 +1,470 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" type="image/png" sizes="32x32" href="asset/favicon-32.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="asset/apple-touch-icon.png">
+    <title>システム境界——境界を知るには境界に立つこと | トキストレージ</title>
+    <meta name="robots" content="noindex, nofollow">
+    <meta name="description" content="境界は地図の上にある線ではない。立ってみなければわからない。浦安市の護岸の淵を歩くとき、自分が他人の目を気にしていることに気づく。そして、気にしない人を観察する。">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Shippori+Mincho:wght@400;500;600;700&family=Zen+Kaku+Gothic+New:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --toki-blue: #2563EB;
+            --toki-blue-dark: #1D4ED8;
+            --toki-blue-pale: #EFF6FF;
+            --bg-white: #FFFFFF;
+            --bg-section: #F8FAFC;
+            --text-primary: #1E293B;
+            --text-secondary: #475569;
+            --text-muted: #94A3B8;
+            --border: #E2E8F0;
+            --accent: #0F766E;
+            --accent-pale: #F0FDFA;
+            --font-display: 'Shippori Mincho', serif;
+            --font-body: 'Zen Kaku Gothic New', sans-serif;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        html { scroll-behavior: smooth; }
+
+        body {
+            font-family: var(--font-body);
+            font-weight: 400;
+            background: var(--bg-white);
+            color: var(--text-primary);
+            line-height: 2;
+            font-size: 16px;
+        }
+
+        /* Navigation */
+        .article-nav {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 1000;
+            background: rgba(255,255,255,0.95);
+            backdrop-filter: blur(12px);
+            border-bottom: 1px solid var(--border);
+            padding: 0.6rem 1.2rem;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 1rem;
+        }
+        .article-nav .nav-brand {
+            font-family: var(--font-display);
+            font-size: 0.9rem;
+            font-weight: 600;
+            color: var(--toki-blue);
+            text-decoration: none;
+            white-space: nowrap;
+        }
+        .article-nav .nav-right {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+        .article-nav .nav-label {
+            font-size: 0.6rem;
+            color: var(--text-muted);
+            letter-spacing: 0.08em;
+        }
+        .article-nav .lang-switch {
+            font-size: 0.75rem;
+            color: var(--toki-blue);
+            text-decoration: none;
+            padding: 0.3rem 0.6rem;
+            border: 1px solid var(--toki-blue);
+            border-radius: 4px;
+        }
+        .article-nav .lang-switch:hover {
+            background: var(--toki-blue);
+            color: #fff;
+        }
+
+        /* Article Container */
+        .article-container {
+            max-width: 680px;
+            margin: 0 auto;
+            padding: 7rem 2rem 4rem;
+        }
+
+        /* Article Header */
+        .article-header {
+            margin-bottom: 3rem;
+            padding-bottom: 2rem;
+            border-bottom: 1px solid var(--border);
+        }
+        .article-category {
+            font-size: 0.7rem;
+            color: var(--accent);
+            letter-spacing: 0.15em;
+            margin-bottom: 1rem;
+        }
+        .article-header h1 {
+            font-family: var(--font-display);
+            font-size: 1.8rem;
+            font-weight: 600;
+            line-height: 1.5;
+            margin-bottom: 1rem;
+        }
+        .article-subtitle {
+            font-size: 0.95rem;
+            color: var(--text-secondary);
+            line-height: 1.8;
+        }
+
+        /* Article Content */
+        .article-content h2 {
+            font-family: var(--font-display);
+            font-size: 1.25rem;
+            font-weight: 600;
+            margin: 3rem 0 1.5rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 1px solid var(--border);
+        }
+        .article-content h3 {
+            font-family: var(--font-display);
+            font-size: 1.1rem;
+            font-weight: 500;
+            margin: 2rem 0 1rem;
+            color: var(--text-primary);
+        }
+        .article-content p {
+            margin-bottom: 1.5rem;
+            text-align: justify;
+        }
+        .article-content blockquote {
+            margin: 2rem 0;
+            padding: 1.5rem 2rem;
+            background: var(--bg-section);
+            border-left: 3px solid var(--accent);
+            font-style: italic;
+        }
+        .article-content blockquote p {
+            margin-bottom: 0.5rem;
+        }
+        .article-content blockquote cite {
+            display: block;
+            font-size: 0.85rem;
+            color: var(--text-muted);
+            font-style: normal;
+            margin-top: 0.5rem;
+        }
+        .article-content ul, .article-content ol {
+            margin: 1.5rem 0;
+            padding-left: 1.5rem;
+        }
+        .article-content li {
+            margin-bottom: 0.75rem;
+        }
+
+        /* Key Point Box */
+        .key-point {
+            background: var(--accent-pale);
+            border-left: 4px solid var(--accent);
+            padding: 1.5rem 2rem;
+            border-radius: 0 8px 8px 0;
+            margin: 2rem 0;
+        }
+        .key-point p {
+            margin-bottom: 0;
+            font-size: 0.95rem;
+        }
+
+        /* Core Message */
+        .core-message {
+            background: linear-gradient(135deg, var(--accent-pale) 0%, #CCFBF1 100%);
+            border-left: 4px solid var(--accent);
+            padding: 1.2rem 1.5rem;
+            margin: 0 0 1.5rem 0;
+            border-radius: 0 8px 8px 0;
+            font-size: 0.95rem;
+            line-height: 1.8;
+        }
+
+        /* References */
+        .references {
+            margin-top: 3rem;
+            padding-top: 2rem;
+            border-top: 1px solid var(--border);
+        }
+        .references h2 {
+            border-bottom: none !important;
+            margin-top: 0 !important;
+        }
+        .references ul {
+            list-style: none;
+            padding-left: 0;
+        }
+        .references li {
+            font-size: 0.85rem;
+            color: var(--text-secondary);
+            padding-left: 1.2rem;
+            position: relative;
+        }
+        .references li::before {
+            content: "–";
+            position: absolute;
+            left: 0;
+        }
+
+        /* Footer */
+        .article-footer {
+            margin-top: 3rem;
+            padding-top: 2rem;
+            border-top: 1px solid var(--border);
+            text-align: center;
+        }
+
+        @media (max-width: 768px) {
+            .article-container { padding: 5rem 1.2rem 3rem; }
+            .article-header h1 { font-size: 1.4rem; }
+            .article-nav .nav-label { display: none; }
+        }
+
+        @media print {
+            .article-nav { display: none; }
+            .article-container { padding-top: 2rem; }
+        }
+        .nav-brand::before {
+            content: '';
+            display: inline-block;
+            width: 20px;
+            height: 20px;
+            background: url('asset/tokistorage-icon-512.png') no-repeat center / contain;
+            vertical-align: -3px;
+            margin-right: 5px;
+        }
+    </style>
+    <link rel="stylesheet" href="contact-form.css">
+    <meta property="og:image" content="https://tokistorage.github.io/lp/asset/tokistorage-icon-512.png">
+    <meta property="og:image:width" content="512">
+    <meta property="og:image:height" content="512">
+</head>
+<body>
+
+<nav class="article-nav">
+    <a href="index.html" class="nav-brand">トキストレージ</a>
+    <div class="nav-right">
+        <span class="nav-label">BOUNDARY</span>
+        <a href="boundary-en.html" class="lang-switch">EN</a>
+    </div>
+</nav>
+
+<main class="article-container">
+    <header class="article-header">
+        <p class="article-category">エッセイ——システム思考と身体知</p>
+        <h1>システム境界<br>——境界を知るには境界に立つこと</h1>
+        <p class="article-subtitle">
+            境界は地図の上にある線ではない。<br>
+            想像と体験は常に違う。<br>
+            家族、社会、国家、世界——あらゆるシステムには境界がある。<br>
+            しかしその境界がどこにあるかは、立ってみなければわからない。<br>
+            浦安市の護岸の淵を歩いたとき、最初に見えたのは海ではなく、自分自身だった。
+        </p>
+    </header>
+
+    <article class="article-content">
+
+        <div class="core-message">
+            <p>境界を知る唯一の方法は、境界に立つことだ。地図で見た境界と、足で立った境界は、同じものではない。</p>
+        </div>
+
+        <!-- Chapter 1 -->
+        <h2>1. システム境界とは何か——「内」と「外」を分ける見えない線</h2>
+
+        <p>あらゆるシステムには境界がある。</p>
+
+        <p>システム工学では、境界（boundary）はシステムの「内」と「外」を分ける線として定義される。細胞には細胞膜がある。家族には「うち」と「よそ」がある。企業には組織図の内と外がある。国家には国境がある。大気圏の外は宇宙だ。</p>
+
+        <p>しかし、これらの境界を「知っている」とはどういうことか。</p>
+
+        <p>細胞膜の構造を教科書で学ぶことと、顕微鏡で観察することは違う。国境を地図で見ることと、実際に国境線をまたぐことは違う。大気圏の厚さを数値で知ることと、ハレアカラの山頂で雲の上に立つことは違う。</p>
+
+        <p>境界についての知識と、境界についての体感には、常に乖離がある。そしてシステムを本当に理解するためには、知識ではなく体感が必要だ。</p>
+
+        <blockquote>
+            <p>「システムの振る舞いを予測したければ、境界条件を知れ。境界条件を知りたければ、境界に立て。」</p>
+        </blockquote>
+
+        <!-- Chapter 2 -->
+        <h2>2. 想像と体験は常に違う——なぜ境界を「想像」できないのか</h2>
+
+        <p>人は境界を想像できると思い込んでいる。しかし、想像と体験は常に違う。</p>
+
+        <p>高所恐怖症でなくても、ビルの屋上の縁に立てば足がすくむ。Google Earthで崖を見ても足はすくまない。その差は「情報の有無」ではなく「身体の関与」の差だ。境界の近くに身体を置いたとき、脳は想像モードから生存モードに切り替わる。心拍数が上がり、注意力が研ぎ澄まされ、周囲への感覚が鋭敏になる。</p>
+
+        <p>これは進化的に合理的だ。境界は危険の在り処だから。サバンナの端、森の切れ目、川の縁——そこには捕食者がいるかもしれない。境界に立つと脳が覚醒するのは、人類が数百万年かけて獲得した生存のためのプログラムだ。</p>
+
+        <p>この生存プログラムが、境界を「体感」に変える。想像では起動しないシステムが、境界に立った瞬間に起動する。だから境界について語るには、境界に立つしかない。</p>
+
+        <div class="key-point">
+            <p>想像は安全な場所から行う行為だ。体感は安全の外縁に身を置く行為だ。この差は小さく見えて、根本的に異なる認知を生む。境界を知るとは、この認知の切り替えを経験することである。</p>
+        </div>
+
+        <!-- Chapter 3 -->
+        <h2>3. 家族の境界——「うち」はどこで終わるのか</h2>
+
+        <p>最も身近なシステム境界は、家族だ。</p>
+
+        <p>「うちの子」「うちの親」「うちでは」——日本語の「うち」は、家族というシステムの内側を示す言葉だ。しかし、その「うち」がどこで終わるのかは、案外曖昧だ。配偶者はうちか。義理の親はうちか。離婚した元配偶者は。亡くなった祖父母は。ペットは。</p>
+
+        <p>この問いに対する答えは、人によって異なる。そして、その答えは頭で考えているときと、実際に境界的な場面に直面したときとで変わる。</p>
+
+        <p>遺産の分配。介護の責任。冠婚葬祭に誰を呼ぶか。これらは家族の境界を可視化する装置だ。「うちの範囲」を意識しないまま暮らしていた人が、葬儀の席順を決める瞬間に、自分が抱いていた「うち」の輪郭を初めて知る。</p>
+
+        <p>境界は、問われるまで見えない。そして問われるのは、たいてい境界で何かが起きたときだ。</p>
+
+        <!-- Chapter 4 -->
+        <h2>4. 社会の境界——コミュニティの「端」に立つ</h2>
+
+        <p>社会の境界はさらに曖昧だ。</p>
+
+        <p>自治会の範囲はどこまでか。町内会の隣は、同じ社会か別の社会か。250世帯のマンション自治会の会長をしていると、この境界が日常的に問われる。隣接するマンションの住人は「うち」か「よそ」か。ゴミ置場を共有しているとき、境界はどこにあるのか。</p>
+
+        <p>社会の境界は、物理的な壁ではなく、「責任の範囲」として現れる。「ここからここまでは私たちの問題」「それはそちらの問題」——この線引きが社会の境界だ。そしてこの線は、書面上の取り決めと、実感としての「ここまで」がしばしば乖離する。</p>
+
+        <p>境界の実感は、トラブルが起きたときに明確になる。騒音問題、駐車場の使い方、ゴミの分別——これらの摩擦は、社会の境界を体感させる装置として機能している。平穏なときには見えない境界が、摩擦の熱で浮かび上がる。</p>
+
+        <!-- Chapter 5 -->
+        <h2>5. 国家の境界——パスポートが示す「あなたはどこの人か」</h2>
+
+        <p>国境は、最も明示的なシステム境界だ。パスポートコントロールの列に並んだとき、自分が「日本国民」というシステムの構成要素であることを身体的に自覚する。</p>
+
+        <p>入国審査官の前に立つ。パスポートを差し出す。審査官の目が書類と顔を行き来する。この数秒間に、「あなたはこのシステムの外の人間か、内の人間か」を判定されている。境界の実感がこれほど直接的に身体に届く経験は少ない。</p>
+
+        <p>しかし、国境を越える体験は、入国審査だけではない。言語が変わる。通貨が変わる。道路の走行車線が変わる場所もある。コンビニの品揃えが変わる。空気の匂いが変わる。これらすべてが、「自分が別のシステムに入った」という体感を積み重ねる。</p>
+
+        <p>国家の境界を知るには、越えるしかない。地図を見ても、ニュースを読んでも、その境界が自分にとって何を意味するかは、パスポートコントロールの列に並ぶまでわからない。</p>
+
+        <!-- Chapter 6 -->
+        <h2>6. 世界の境界——大気圏という最後の膜</h2>
+
+        <p>最も大きなシステム境界は、地球の大気圏だ。</p>
+
+        <p>カーマン・ラインと呼ばれる高度100キロメートルが、大気圏と宇宙空間の境界として国際的に定義されている。しかしこの定義は便宜的なもので、実際の大気は徐々に薄くなり、明確な線は存在しない。</p>
+
+        <p>ハレアカラの山頂で雲の上に立ったとき、この境界の一端を体感する。標高3,000メートルでは、大気圏の約30%がすでに下にある。空は地上から見るよりも暗い青になり、昼間でも明るい星が見えることがある。宇宙が、すこし近い。</p>
+
+        <p>地球というシステムの境界は、宇宙飛行士だけのものではない。標高が上がるにつれて空気が薄くなり、気圧が下がり、呼吸が変わる——この身体的な変化の連続が、大気圏という膜の厚みを体感させる。</p>
+
+        <div class="key-point">
+            <p>家族、社会、国家、世界。スケールは違うが、構造は同じだ。すべてのシステムには境界があり、境界は立ってみるまでわからない。そして境界に立ったとき、見えるのはシステムの外側ではなく、自分自身の位置である。</p>
+        </div>
+
+        <!-- Chapter 7 -->
+        <h2>7. 護岸の淵を歩く——浦安という身近な境界</h2>
+
+        <p>哲学的な話を、足元に戻す。</p>
+
+        <p>浦安市の海沿いには、護岸が延々と続いている。東京湾に面したコンクリートの縁。柵がある場所もあれば、ない場所もある。その淵を歩く。</p>
+
+        <p>護岸の淵は、陸と海のシステム境界だ。コンクリートの上は人間の領域。その先は海水の領域。境界の幅は、コンクリートの縁のわずか数センチだ。</p>
+
+        <p>その数センチの上を歩いてみる。</p>
+
+        <p>歩いてみると、すぐにわかることがある。足の裏の感覚が変わる。地面の中央を歩くときには意識しない「端」の感覚が、身体全体に広がる。風が気になる。波の音が大きくなる。一歩一歩が、普段の歩行とは違う集中を要求する。</p>
+
+        <p>これがシステム境界の体感だ。地図で見ればただの海岸線。しかし縁に立てば、そこは「内」と「外」が接する緊張の場所になる。数センチの境界が、身体に伝える情報量は、数キロメートルの安全圏を歩くときの比ではない。</p>
+
+        <blockquote>
+            <p>「淵を歩くとき、足は地面を探っているのではない。自分の限界を探っている。」</p>
+        </blockquote>
+
+        <!-- Chapter 8 -->
+        <h2>8. 自己責任という前提——境界に立つための条件</h2>
+
+        <p>護岸の淵を歩くことは、危険を伴う。落ちれば怪我をする。場所によっては命に関わる。だからこそ、ここで明確にしておく。境界に立つことは、自己責任が前提だ。</p>
+
+        <p>現代社会は、境界を柵で覆い、警告看板を立て、人を境界から遠ざける方向に設計されている。それは正しい。安全は守られるべきだ。しかし、すべての境界から人を遠ざけた結果、私たちは境界の体感を失った。</p>
+
+        <p>子どもの頃、木に登り、川に入り、塀の上を歩いた。それらはすべて「境界に立つ」行為だった。落ちるかもしれないという緊張の中で、身体が境界を学んでいた。現代の子どもたちは、その機会を構造的に奪われている。</p>
+
+        <p>境界に立つことを推奨しているのではない。境界に立つ経験が、システムの理解にとって不可欠であるという事実を述べている。その経験をどう得るかは、各自の判断に委ねられる。リスクを引き受ける覚悟のない境界体験は、体験ではなく見学だ。</p>
+
+        <div class="key-point">
+            <p>自己責任は免責の言い訳ではない。「ここから先は自分の判断である」という宣言だ。境界に立つとき、その一歩を自分で決める。決めたことの結果を自分で引き受ける。この構造こそが、境界体験を身体知に変える。</p>
+        </div>
+
+        <!-- Chapter 9 -->
+        <h2>9. 他人の目を気にする自分——境界が映し出す自意識</h2>
+
+        <p>護岸の淵を歩いていると、最初に気づくのは海でも風でもない。他人の視線だ。</p>
+
+        <p>「あの人、なんであんな端を歩いているんだろう」——そう思われているのではないかという意識が、真っ先に浮かぶ。危ないことをしている自分を見られている。変な人だと思われているかもしれない。この自意識が、足を淵から遠ざけようとする。</p>
+
+        <p>境界に立つことの最初の障壁は、物理的な危険ではない。「他人にどう見られるか」という社会的な圧力だ。</p>
+
+        <p>これは重要な発見だ。人は、境界に立つことを「危険だから」避けているのではない。「人に見られるから」避けている。安全の問題ではなく、体面の問題だ。もし周囲に誰もいなければ、多くの人がもう少し淵に近づけるだろう。物理的なリスクは変わらないのに、心理的なリスクが減るだけで行動が変わる。</p>
+
+        <p>この事実が示すのは、私たちが思っている以上に、自分の行動が「他人の目」によって規定されているということだ。境界に立つことは、外部のシステムを知る行為であると同時に、自分の内部のシステム——社会的な自己監視のメカニズム——を知る行為でもある。</p>
+
+        <blockquote>
+            <p>「境界に立ったとき、最初に見えるのは向こう側ではない。自分がどちら側を向いているかだ。」</p>
+        </blockquote>
+
+        <!-- Chapter 10 -->
+        <h2>10. 他人を気にしない人の観察——境界で出会うもうひとつの自由</h2>
+
+        <p>護岸の淵にいると、もうひとつの発見がある。</p>
+
+        <p>自分が他人の目を気にして淵を避けている横で、まったく気にせず淵を歩く人がいる。釣り人。ランニングをしている人。子どもを連れた親。彼らは護岸の端をためらいなく歩き、座り、立ち止まる。</p>
+
+        <p>彼らを観察していると、ある種の自由が見える。それは「他人の目」というシステムの境界の外に、すでにいる人たちだ。彼らにとって淵は特別な場所ではなく、日常の延長線上にある場所にすぎない。</p>
+
+        <p>この差はどこから来るのか。おそらく、繰り返しだ。境界に何度も立つことで、最初に感じた緊張——他人の視線への意識——が薄れ、境界が「特別な場所」から「場所」に変わる。彼らは境界を克服したのではない。境界を日常化したのだ。</p>
+
+        <p>これは、あらゆるシステム境界に適用できる洞察だ。初めて海外に行ったときの緊張と、50回目の出国の平静さ。初めて管理職になったときの不安と、10年目の自然体。境界は、反復によって日常になる。しかし、最初の一歩——最初に淵に立つ瞬間——は、誰もが通らなければならない。</p>
+
+        <div class="key-point">
+            <p>他人の目を気にする自分を発見すること。そして他人の目を気にしない他者を観察すること。この二つの体験が同時に起きるのが、境界に立つことの最大の価値だ。外のシステムを見ていたはずが、自分という内のシステムが見えてくる。</p>
+        </div>
+
+        <!-- Chapter 11 -->
+        <h2>11. 境界と永続化——なぜ「淵に立った経験」を刻むのか</h2>
+
+        <p>浦安の護岸で得た体感は、翌日にはぼやける。一週間後には「そういえば歩いたな」程度の記憶になる。一ヶ月後には、日常の中に完全に埋もれる。</p>
+
+        <p>しかし、護岸の淵で気づいた「自分は他人の目を気にしている」という発見は、単なるエピソードではない。それは自分のシステムの構造に関する発見だ。自分の行動を規定しているのは、物理的な制約ではなく社会的な視線であるという構造的な事実。この発見こそが、永続化に値する。</p>
+
+        <p>「未来の自分は、今の自分に何を言うか」——この問いに向き合うとき、境界の体験が効いてくる。未来の自分という境界に立つことで、今の自分のシステムが見えるからだ。未来と現在の境界に立ったとき、最初に見えるのは未来の風景ではなく、今の自分がどちら側を向いているか、だ。</p>
+
+        <p>護岸の淵で見つけた自意識。ハレアカラの雲の上で見つけた有限性。iPhoneが映した見えない光。これらはすべて「境界に立ったからこそ見えたもの」だ。そして、その体感を言葉に変え、三層に刻むことで、体感は消えずに残る。</p>
+
+        <blockquote>
+            <p>「境界に立つことは一瞬で終わる。しかし、境界で見えた自分を言語化し、刻むことで、その一瞬は永続する。境界に立ち続ける必要はない。立ったことを、残せばいい。」</p>
+        </blockquote>
+
+        <!-- References -->
+        <section class="references">
+            <h2>参考文献</h2>
+            <ul>
+                <li>Meadows, D. H. (2008). <em>Thinking in Systems: A Primer.</em> Chelsea Green Publishing.（邦訳『世界はシステムで動く』）</li>
+                <li>Bateson, G. (1972). <em>Steps to an Ecology of Mind.</em> University of Chicago Press.（邦訳『精神の生態学』）</li>
+                <li>Kahneman, D. (2011). <em>Thinking, Fast and Slow.</em> Farrar, Straus and Giroux.（邦訳『ファスト＆スロー』）</li>
+                <li>Gibson, J. J. (1979). <em>The Ecological Approach to Visual Perception.</em> Houghton Mifflin.（邦訳『生態学的視覚論』）</li>
+                <li>Goffman, E. (1959). <em>The Presentation of Self in Everyday Life.</em> Anchor Books.（邦訳『行為と演技』）</li>
+                <li>Luhmann, N. (1984). <em>Soziale Systeme.</em> Suhrkamp.（邦訳『社会システム理論』）</li>
+            </ul>
+        </section>
+
+    </article>
+
+    <footer class="article-footer">
+        <p id="essay-nav-links"></p>
+        <p style="margin-top: 2rem; font-size: 0.75rem;">&copy; 2026 TokiStorage</p>
+    </footer>
+
+</main>
+
+<script src="contact-form.js"></script>
+<script src="essay-nav.js?v=20260213"></script>
+<script src="tracker.js"></script>
+</body>
+</html>
