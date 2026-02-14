@@ -68,6 +68,7 @@
     { id: 'animal-welfare', ja: '動物愛護', en: 'Animal Welfare' },
     { id: 'ecology', ja: '生態系', en: 'Ecology' },
     { id: 'geology', ja: '地質学', en: 'Geology' },
+    { id: 'turtle', ja: '亀が導く永続性', en: 'Turtle & Permanence' },
     { id: 'urayasu', ja: '浦安という地の利', en: 'Urayasu' },
     { id: 'hyoutanjima', ja: 'ひょうたん島の蓋然性', en: 'The Probability of Gourd Island' },
     { id: 'space', ja: '宇宙', en: 'Space' },
