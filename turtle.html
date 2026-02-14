@@ -1,0 +1,455 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" type="image/png" sizes="32x32" href="asset/favicon-32.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="asset/apple-touch-icon.png">
+    <title>亀が導く永続性——東洋と西洋を統べる長寿の記号 | トキストレージ</title>
+    <meta name="robots" content="noindex, nofollow">
+    <meta name="description" content="日本の地名と設備に根づく亀。ハワイの海で出会うホヌ。マウイ島パイアで鶴と亀の童話が現実になり、満徳寺の浜辺で海亀の大群と海岸侵食を目撃する。亀という記号が、東洋と西洋をまたいで永続性を指し示す。">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Shippori+Mincho:wght@400;500;600;700&family=Zen+Kaku+Gothic+New:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --toki-blue: #2563EB;
+            --toki-blue-dark: #1D4ED8;
+            --toki-blue-pale: #EFF6FF;
+            --bg-white: #FFFFFF;
+            --bg-section: #F8FAFC;
+            --text-primary: #1E293B;
+            --text-secondary: #475569;
+            --text-muted: #94A3B8;
+            --border: #E2E8F0;
+            --accent: #065F46;
+            --accent-pale: #ECFDF5;
+            --font-display: 'Shippori Mincho', serif;
+            --font-body: 'Zen Kaku Gothic New', sans-serif;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        html { scroll-behavior: smooth; }
+
+        body {
+            font-family: var(--font-body);
+            font-weight: 400;
+            background: var(--bg-white);
+            color: var(--text-primary);
+            line-height: 2;
+            font-size: 16px;
+        }
+
+        /* Navigation */
+        .article-nav {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 1000;
+            background: rgba(255,255,255,0.95);
+            backdrop-filter: blur(12px);
+            border-bottom: 1px solid var(--border);
+            padding: 0.6rem 1.2rem;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 1rem;
+        }
+        .article-nav .nav-brand {
+            font-family: var(--font-display);
+            font-size: 0.9rem;
+            font-weight: 600;
+            color: var(--toki-blue);
+            text-decoration: none;
+            white-space: nowrap;
+        }
+        .article-nav .nav-right {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+        .article-nav .nav-label {
+            font-size: 0.6rem;
+            color: var(--text-muted);
+            letter-spacing: 0.08em;
+        }
+        .article-nav .lang-switch {
+            font-size: 0.75rem;
+            color: var(--toki-blue);
+            text-decoration: none;
+            padding: 0.3rem 0.6rem;
+            border: 1px solid var(--toki-blue);
+            border-radius: 4px;
+        }
+        .article-nav .lang-switch:hover {
+            background: var(--toki-blue);
+            color: #fff;
+        }
+
+        /* Article Container */
+        .article-container {
+            max-width: 680px;
+            margin: 0 auto;
+            padding: 7rem 2rem 4rem;
+        }
+
+        /* Article Header */
+        .article-header {
+            margin-bottom: 3rem;
+            padding-bottom: 2rem;
+            border-bottom: 1px solid var(--border);
+        }
+        .article-category {
+            font-size: 0.7rem;
+            color: var(--accent);
+            letter-spacing: 0.15em;
+            margin-bottom: 1rem;
+        }
+        .article-header h1 {
+            font-family: var(--font-display);
+            font-size: 1.8rem;
+            font-weight: 600;
+            line-height: 1.5;
+            margin-bottom: 1rem;
+        }
+        .article-subtitle {
+            font-size: 0.95rem;
+            color: var(--text-secondary);
+            line-height: 1.8;
+        }
+
+        /* Article Content */
+        .article-content h2 {
+            font-family: var(--font-display);
+            font-size: 1.25rem;
+            font-weight: 600;
+            margin: 3rem 0 1.5rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 1px solid var(--border);
+        }
+        .article-content h3 {
+            font-family: var(--font-display);
+            font-size: 1.1rem;
+            font-weight: 500;
+            margin: 2rem 0 1rem;
+            color: var(--text-primary);
+        }
+        .article-content p {
+            margin-bottom: 1.5rem;
+            text-align: justify;
+        }
+        .article-content blockquote {
+            margin: 2rem 0;
+            padding: 1.5rem 2rem;
+            background: var(--bg-section);
+            border-left: 3px solid var(--accent);
+            font-style: italic;
+        }
+        .article-content blockquote p {
+            margin-bottom: 0.5rem;
+        }
+        .article-content blockquote cite {
+            display: block;
+            font-size: 0.85rem;
+            color: var(--text-muted);
+            font-style: normal;
+            margin-top: 0.5rem;
+        }
+        .article-content ul, .article-content ol {
+            margin: 1.5rem 0;
+            padding-left: 1.5rem;
+        }
+        .article-content li {
+            margin-bottom: 0.75rem;
+        }
+
+        /* Key Point Box */
+        .key-point {
+            background: var(--accent-pale);
+            border-left: 4px solid var(--accent);
+            padding: 1.5rem 2rem;
+            border-radius: 0 8px 8px 0;
+            margin: 2rem 0;
+        }
+        .key-point p {
+            margin-bottom: 0;
+            font-size: 0.95rem;
+        }
+
+        /* Core Message */
+        .core-message {
+            background: linear-gradient(135deg, var(--accent-pale) 0%, #D1FAE5 100%);
+            border-left: 4px solid var(--accent);
+            padding: 1.2rem 1.5rem;
+            margin: 0 0 1.5rem 0;
+            border-radius: 0 8px 8px 0;
+            font-size: 0.95rem;
+            line-height: 1.8;
+        }
+
+        /* References */
+        .references {
+            margin-top: 3rem;
+            padding-top: 2rem;
+            border-top: 1px solid var(--border);
+        }
+        .references h2 {
+            border-bottom: none !important;
+            margin-top: 0 !important;
+        }
+        .references ul {
+            list-style: none;
+            padding-left: 0;
+        }
+        .references li {
+            font-size: 0.85rem;
+            color: var(--text-secondary);
+            padding-left: 1.2rem;
+            position: relative;
+        }
+        .references li::before {
+            content: "–";
+            position: absolute;
+            left: 0;
+        }
+
+        /* Footer */
+        .article-footer {
+            margin-top: 3rem;
+            padding-top: 2rem;
+            border-top: 1px solid var(--border);
+            text-align: center;
+        }
+
+        @media (max-width: 768px) {
+            .article-container { padding: 5rem 1.2rem 3rem; }
+            .article-header h1 { font-size: 1.4rem; }
+            .article-nav .nav-label { display: none; }
+        }
+
+        @media print {
+            .article-nav { display: none; }
+            .article-container { padding-top: 2rem; }
+        }
+        .nav-brand::before {
+            content: '';
+            display: inline-block;
+            width: 20px;
+            height: 20px;
+            background: url('asset/tokistorage-icon-512.png') no-repeat center / contain;
+            vertical-align: -3px;
+            margin-right: 5px;
+        }
+    </style>
+    <link rel="stylesheet" href="contact-form.css">
+    <meta property="og:image" content="https://tokistorage.github.io/lp/asset/tokistorage-icon-512.png">
+    <meta property="og:image:width" content="512">
+    <meta property="og:image:height" content="512">
+</head>
+<body>
+
+<nav class="article-nav">
+    <a href="index.html" class="nav-brand">トキストレージ</a>
+    <div class="nav-right">
+        <span class="nav-label">TURTLE</span>
+        <a href="turtle-en.html" class="lang-switch">EN</a>
+    </div>
+</nav>
+
+<main class="article-container">
+
+    <header class="article-header">
+        <div class="article-category">ESSAY — 自然・宇宙</div>
+        <h1>亀が導く永続性——東洋と西洋を統べる長寿の記号</h1>
+        <p class="article-subtitle">
+            日本の地名と暮らしに根づく亀。ハワイの海を泳ぐホヌ。<br>
+            マウイ島パイアで鶴と亀の童話が現実になり、<br>
+            満徳寺の浜辺で海亀の大群と海岸侵食が永続性の意味を問い直す。
+        </p>
+    </header>
+
+    <article class="article-content">
+
+        <!-- Chapter 1 -->
+        <h2>1. 亀という記号——なぜ人類は亀に永続を見たのか</h2>
+
+        <p>亀は遅い。しかし、長く生きる。</p>
+
+        <p>この単純な事実が、人類の文化の中で繰り返し意味を与えられてきた。速さではなく持続。瞬発力ではなく耐久力。亀は、時間に対する勝利の象徴として、世界中の文明に現れる。</p>
+
+        <p>ヒンドゥー教では、世界は巨大な亀の背の上に乗っている。中国では玄武——北を守る亀と蛇の合体した霊獣——が、四神の一角を占める。ギリシャ神話では、ヘルメスが亀の甲羅からリラ（竪琴）を作った。アメリカ先住民の一部は、北米大陸を「タートル・アイランド」と呼ぶ。</p>
+
+        <p>東洋でも西洋でも、亀は「世界を支えるもの」として語られてきた。速く走る動物ではなく、ゆっくりと、しかし確実に在り続ける存在。人類が永続性に名前をつけるとき、なぜか亀の形を選ぶ。</p>
+
+        <!-- Chapter 2 -->
+        <h2>2. 日本の地名に根づく亀——見えない長寿の祈り</h2>
+
+        <p>日本の地名には、亀が静かに棲んでいる。</p>
+
+        <p>亀戸（東京都江東区）。亀有（東京都葛飾区）。亀岡（京都府）。亀山（三重県）。亀田（新潟県）。亀島、亀井、亀崎——全国に散らばる亀の地名は、枚挙にいとまがない。</p>
+
+        <p>これらの地名の多くは、地形が亀の甲羅に似ていた、亀が多く生息していた、あるいは長寿と繁栄を祈って名づけられた、とされる。いずれの由来であっても、共通しているのは、亀が「良い場所の印」として機能していることだ。人が住み、町ができ、名前を与えるとき、亀の記号が選ばれた。それは意識的な祈りというより、文化のDNAに組み込まれた長寿への希求だ。</p>
+
+        <p>浦安の亀公園もその系譜にある。別稿「浦安という地の利」で触れた貝殻のモニュメントが立つこの公園は、「亀」の名を冠している。漁師町の記憶と長寿の祈りが、子どもたちの遊び場に重なっている。</p>
+
+        <!-- Chapter 3 -->
+        <h2>3. 暮らしの中の亀——設備と装飾に宿る記号</h2>
+
+        <p>地名だけではない。日本の暮らしの中には、亀が至るところに潜んでいる。</p>
+
+        <p>神社の手水舎に亀の彫刻。石灯籠の台座に亀の姿。婚礼の引き出物に亀の文様。年賀状に鶴と亀。祝い事の席に亀甲文様の器。千歳飴の袋に描かれた亀。七五三の帯に織り込まれた亀。</p>
+
+        <p>亀は日常の中で「祝いの背景」として機能している。主役ではない。しかし、祝い事のあらゆる場面で、亀は静かに存在している。見えているのに意識されない。意識されないのに、外すと違和感が生じる。空気のような存在だが、空気がなければ人は呼吸できないように、亀がなければ祝いの場は成立しない。</p>
+
+        <p>この「見えないが不可欠」という性質が、亀の記号としての本質だ。永続性も同じだ。日常の中では意識されない。しかし、永続性が失われたとき——大切なものが消えたとき——その不在が激しい痛みとして顕在化する。</p>
+
+        <div class="key-point">
+            <p>亀は祝いの場に必ずいる。しかし主役にはならない。この控えめな遍在こそが、亀が永続性の記号である理由だ。永続性は、そこにある間は気づかれない。なくなったときに初めて、それがすべてを支えていたことがわかる。</p>
+        </div>
+
+        <!-- Chapter 4 -->
+        <h2>4. ハワイのホヌ——聖なるものとして泳ぐ亀</h2>
+
+        <p>ハワイに渡ると、亀は文様から生き物に変わる。</p>
+
+        <p>ホヌ（Honu）。ハワイアオウミガメ。ハワイの海岸で日光浴をし、珊瑚礁の間を泳ぎ、砂浜に上がって眠る。ハワイでは、ホヌに触れることは法律で禁じられている。近づきすぎることも違法だ。ホヌは保護動物であると同時に、ハワイの先住民にとって「アウマクア」——祖先の化身、守護霊——として崇められている。</p>
+
+        <p>日本では亀は文様として壁に貼りつき、装飾として器に描かれる。ハワイでは亀は海を泳ぎ、砂浜に上がり、人間と同じ空間を共有している。記号が、生命になる。この変換が、亀の意味を一段深くする。</p>
+
+        <p>日本の神社で亀の彫刻を見るとき、そこに宿るのは「長寿の概念」だ。ハワイの砂浜でホヌを見るとき、そこにいるのは「長寿を生きている存在」だ。概念から実体へ。記号から生命へ。この移行を身体で経験したとき、永続性は抽象的な思想ではなく、目の前で呼吸している現実になる。</p>
+
+        <!-- Chapter 5 -->
+        <h2>5. パイアの鶴と亀——童話が現実になる場所</h2>
+
+        <p>マウイ島の北海岸、パイア。サーファーの町として知られるこの小さな集落で、日本の童話が現実になった。</p>
+
+        <p>「鶴は千年、亀は万年。」</p>
+
+        <p>この祝い言葉は、日本人なら誰でも知っている。しかし、それを「知っている」ことと「体験する」ことの間には、護岸の淵と同じだけの距離がある。</p>
+
+        <p>パイアのホヌ・コテージ。名前にホヌ（亀）を冠した宿泊施設に滞在した。そしてパイアの浜辺を歩くと、ホヌが砂浜に上がっていた。亀が、そこにいた。さらに、パイアの町を歩いていると、鶴を目にする機会があった。鶴と亀が、同じ場所にいる。</p>
+
+        <p>「鶴は千年、亀は万年」——この言葉を、鶴と亀の両方がいる場所で口にしたとき、言葉の意味が変わった。千年と万年は「長い時間」の誇張表現ではなく、目の前で呼吸している生命の時間のスケールとして響いた。鶴も亀も、実際にここにいる。千年も万年も、概念ではなく、彼らが過去から現在まで繋いできた生命の連鎖の長さとして感じられた。</p>
+
+        <blockquote>
+            <p>「童話は、現実の圧縮だ。『鶴は千年、亀は万年』は、長寿への祈りではなく、長寿を生きている存在への観察報告だったのかもしれない。」</p>
+        </blockquote>
+
+        <!-- Chapter 6 -->
+        <h2>6. ホヌ・コテージで向き合った童話の意味</h2>
+
+        <p>ホヌ・コテージの夜、童話について考えた。</p>
+
+        <p>浦島太郎。亀を助けた漁師が、竜宮城で時間を超越し、帰還後に玉手箱を開けて老人になる。この物語を子どもの頃に聞いたとき、教訓は「約束を守りなさい」だった。玉手箱を開けてはいけないと言われたのに開けたから罰を受けた、と。</p>
+
+        <p>しかし、ホヌが実際にいる場所で浦島太郎を思い出すと、物語の意味が変わる。浦島太郎が亀に連れられて行ったのは、「永続の側」だ。竜宮城では時間が流れない。永続の世界だ。そこから人間の世界に戻ったとき、玉手箱を開けた瞬間に、溜まっていた時間が一気に押し寄せる。</p>
+
+        <p>これは罰の話ではない。永続の世界と有限の世界の間に、不可逆な境界があるという話だ。亀は、その境界を行き来できる存在として描かれている。海の中（永続の側）と陸の上（有限の側）を自在に移動する。亀は長寿の象徴であると同時に、永続と有限の境界を渡る案内人なのだ。</p>
+
+        <p>ホヌ・コテージで夜の波音を聞きながら、この構造に気づいた。トキストレージがやっていることは、浦島太郎の亀と同じだ。有限の世界にいる人の言葉を、永続の側に運ぶ。三層保管とは、竜宮城への入口なのかもしれない。</p>
+
+        <div class="key-point">
+            <p>浦島太郎の物語で、亀は罰を与える存在ではない。永続と有限の境界を渡る案内人だ。亀に導かれて永続の側に触れ、有限の側に帰還する。その体験を経て、人は自分の時間の有限性を知る。亀は、永続を見せることで有限を教える。</p>
+        </div>
+
+        <!-- Chapter 7 -->
+        <h2>7. 満徳寺の海亀——仏教と亀の交差点</h2>
+
+        <p>パイアには、満徳寺（Mantokuji Soto Zen Mission）がある。曹洞宗の寺院だ。マウイ島のサトウキビ農園で働いた日系移民が建てた寺で、100年以上の歴史を持つ。</p>
+
+        <p>満徳寺の近くの浜辺では、海亀の大群に出会うことがある。ハワイの他のビーチでも海亀は見られるが、パイアの海亀は群れで上陸する。十数頭、ときにはそれ以上のホヌが、砂浜に並んで日光浴をしている。</p>
+
+        <p>仏教寺院の傍らで、海亀の大群が砂浜に並ぶ。この光景は、意図されたものではない。寺の立地と海亀の習性が、偶然に重なった結果だ。しかし、偶然が意味を生むことがある。</p>
+
+        <p>曹洞宗の教えの核心に「只管打坐」——ただ座る——がある。目的を持たず、ただ座る。海亀もまた、ただ砂浜にいる。獲物を狙っているのでも、敵から逃げているのでもない。ただ、そこにいる。陽を浴び、呼吸し、存在している。仏教の実践と海亀の在り方が、同じ場所で重なっている。</p>
+
+        <p>日本から太平洋を渡った仏教と、太平洋を回遊する海亀が、パイアの砂浜で出会う。東洋の思想と、億年の生命の歴史が、同じ砂の上に並んでいる。</p>
+
+        <!-- Chapter 8 -->
+        <h2>8. 海岸侵食——永続の象徴が直面する有限</h2>
+
+        <p>しかし、パイアの浜辺は永遠ではない。</p>
+
+        <p>海岸侵食。波と潮流によって砂浜が削られ、陸地が後退していく現象。マウイ島の北海岸は、特に侵食が進んでいる地域のひとつだ。海面上昇と暴風雨の頻度増加により、侵食のスピードは加速している。</p>
+
+        <p>ホヌが上陸する砂浜が、少しずつ消えている。長寿の象徴が日光浴をする場所そのものが、有限だ。亀は万年を生きるかもしれない。しかし、亀が上がる砂浜は、万年を待たずに消えるかもしれない。</p>
+
+        <p>この事実は、永続性に対する重要な問いを突きつける。永続するのは「存在」なのか「場所」なのか。亀は生き続けるかもしれないが、亀がいた場所は消える。言葉は残るかもしれないが、言葉が刻まれた媒体は劣化する。永続性とは、存在そのものの永続ではなく、場所や媒体を乗り換えながら続いていくことではないか。</p>
+
+        <p>三層保管——クラウド、物理媒体、地中——は、この問いに対する構造的な回答だ。ひとつの場所が消えても、別の場所に残っている。砂浜が侵食されても、亀は別の砂浜に上がる。永続とは、ひとつの場所にしがみつくことではなく、複数の場所に分散して存在し続けることだ。</p>
+
+        <div class="key-point">
+            <p>パイアの海岸侵食は、永続の象徴であるホヌに「場所の有限性」を突きつけている。しかし亀は、砂浜が消えれば別の砂浜に上がる。永続とは、変わらないことではない。場所を移しながら在り続けることだ。三層保管は、亀の知恵の構造化である。</p>
+        </div>
+
+        <!-- Chapter 9 -->
+        <h2>9. 東洋と西洋を亀で統べる——文化を超える記号</h2>
+
+        <p>ここで、亀が繋いできた文化の糸を束ねる。</p>
+
+        <p>日本の亀：地名に棲み、文様に宿り、童話で境界を渡る案内人を務める。「亀は万年」の祈りが、暮らしの隅々に編み込まれている。</p>
+
+        <p>ハワイの亀：ホヌとして海を泳ぎ、アウマクアとして祖先の化身となり、法律で保護され、砂浜で人間と空間を共有する。記号ではなく、聖なる生命として存在する。</p>
+
+        <p>ヒンドゥーの亀：世界を背負う。大地そのものの基盤として、最も根源的な支えの役割を担う。</p>
+
+        <p>ギリシャの亀：甲羅が楽器になる。硬い殻が音を生み、音が文化を生む。防御の器官が、創造の器になる。</p>
+
+        <p>アメリカ先住民の亀：大地そのものが亀の背。タートル・アイランドの住人は、亀の上に暮らしている。</p>
+
+        <p>これらの文化は、互いに直接的な影響関係を持たない場合も多い。にもかかわらず、亀に「永続」「基盤」「聖性」を見出した点で一致している。これは文化の伝播ではなく、人類に共通する認知の構造だ。遅く、硬く、長く生きるもの——この三つの属性を持つ存在を見たとき、人間の脳は「世界を支えるもの」というカテゴリに分類する。</p>
+
+        <p>亀は、翻訳を必要としない記号だ。日本人がハワイでホヌを見たとき、「ああ、亀だ」と感じる。その「ああ」の中に、千年万年の祈りと、アウマクアの聖性が、言語を超えて重なる。東洋と西洋を統べる記号があるとすれば、亀はその最有力候補だ。</p>
+
+        <blockquote>
+            <p>「亀は世界中で崇められている。しかし、亀自身はそのことを知らない。知らないまま、ただ在り続ける。これが永続の本質だ。崇められるために在るのではない。在り続けた結果、崇められるのだ。」</p>
+        </blockquote>
+
+        <!-- Chapter 10 -->
+        <h2>10. 亀とトキ——永続性への案内人</h2>
+
+        <p>浦安の亀公園から始まった旅が、パイアの満徳寺に至り、ここで閉じる。</p>
+
+        <p>亀公園の貝殻モニュメントは、漁業権放棄の記憶を留めていた。ハワイのホヌは、永続を生きる存在として海を泳いでいた。パイアの鶴と亀は、童話を現実に変えた。満徳寺の浜辺では、仏教と海亀が出会っていた。そして海岸侵食が、場所の有限性と存在の永続性の違いを教えてくれた。</p>
+
+        <p>これらすべてに共通しているのは、亀が「永続性への案内人」として機能していることだ。浦島太郎を竜宮城に導いたように、亀は人間を「永続の側」に連れていく。しかし、竜宮城に住み続けることはできない。人間は有限の世界に帰還しなければならない。</p>
+
+        <p>帰還した後に何をするか。玉手箱を開けて老いるのか。それとも、永続の側で見たものを言葉にし、刻むのか。</p>
+
+        <p>トキストレージは、後者を選ぶ人のための場所だ。亀に導かれて永続に触れた体験を、三層に刻む。砂浜が侵食されても、言葉は残る。場所が消えても、記憶は分散して生き続ける。亀が砂浜を移るように、言葉は媒体を移りながら永続する。</p>
+
+        <p>「トキ」——時——という名の中に、亀の歩みが響いている。速くはない。しかし、止まらない。</p>
+
+        <div class="key-point">
+            <p>亀は永続性の象徴ではない。永続性への案内人だ。亀に導かれて永続の側に触れ、有限の世界に帰還し、見たものを刻む。この行為の連鎖が、トキストレージの根底にある。亀が導き、人が刻み、三層が守る。浦安の亀公園からパイアの浜辺まで、亀はずっとそこにいた。</p>
+        </div>
+
+        <!-- References -->
+        <section class="references">
+            <h2>参考文献</h2>
+            <ul>
+                <li>Campbell, J. (1949). <em>The Hero with a Thousand Faces.</em> Pantheon Books.（邦訳『千の顔をもつ英雄』）</li>
+                <li>Pukui, M. K. & Elbert, S. H. (1986). <em>Hawaiian Dictionary.</em> University of Hawaii Press.</li>
+                <li>Balazs, G. H. & Chaloupka, M. (2004). "Thirty-year recovery trend in the once depleted Hawaiian green sea turtle stock." <em>Biological Conservation</em>, 117(5), 491–498.</li>
+                <li>柳田國男 (1947).『地名の研究』. 定本柳田國男集 第20巻. 筑摩書房.</li>
+                <li>三浦佑之 (2006).『浦島太郎の文学史』. 五柳書院.</li>
+                <li>Suzuki, S. (1970). <em>Zen Mind, Beginner's Mind.</em> Weatherhill.（邦訳『禅マインド ビギナーズ・マインド』）</li>
+                <li>Fletcher, C. H. et al. (2012). "National Assessment of Shoreline Change: Historical Shoreline Change in the Hawaiian Islands." USGS Open-File Report 2011–1051.</li>
+            </ul>
+        </section>
+
+    </article>
+
+    <footer class="article-footer">
+        <p id="essay-nav-links"></p>
+        <p style="margin-top: 2rem; font-size: 0.75rem;">&copy; 2026 TokiStorage</p>
+    </footer>
+
+</main>
+
+<script src="contact-form.js"></script>
+<script src="essay-nav.js?v=20260213"></script>
+<script src="tracker.js"></script>
+</body>
+</html>
