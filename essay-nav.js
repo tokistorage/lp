@@ -58,6 +58,7 @@
     { id: 'platform', ja: 'プラットフォームの視界', en: 'Platform View' },
     { id: 'global-niche', ja: 'グローバルニッチ', en: 'Global Niche' },
     { id: 'ecosystem', ja: 'エコシステムの再定義', en: 'Redefining the Ecosystem' },
+    { id: 'free-strategy', ja: 'フリー戦略の逆説', en: 'The Paradox of Free' },
 
     // ── 文化・社会活動 ──
     { id: 'education', ja: '教育', en: 'Education' },
