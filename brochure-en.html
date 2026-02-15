@@ -1,0 +1,422 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" type="image/png" sizes="32x32" href="asset/favicon-32.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="asset/apple-touch-icon.png">
+    <title>Brochure | TokiStorage</title>
+    <meta name="description" content="TokiStorage brochure. Three-layer distributed storage carries your voice and memory 1,000 years into the future. Democratizing Proof of Existence.">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Shippori+Mincho:wght@400;500;600;700&family=Zen+Kaku+Gothic+New:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --toki-blue: #2563EB;
+            --toki-blue-pale: #EFF6FF;
+            --bg-white: #FFFFFF;
+            --bg-page: #F8FAFC;
+            --text-primary: #1E293B;
+            --text-secondary: #475569;
+            --text-muted: #94A3B8;
+            --border: #E2E8F0;
+            --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.05);
+            --shadow-md: 0 4px 16px rgba(0, 0, 0, 0.06);
+            --font-display: 'Shippori Mincho', serif;
+            --font-body: 'Zen Kaku Gothic New', sans-serif;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        html { scroll-behavior: smooth; }
+
+        body {
+            font-family: var(--font-body);
+            font-weight: 400;
+            background: var(--bg-page);
+            color: var(--text-primary);
+            line-height: 1.8;
+            font-size: 16px;
+        }
+
+        .br-nav {
+            position: fixed;
+            top: 0; left: 0; right: 0;
+            z-index: 1000;
+            background: rgba(255,255,255,0.95);
+            backdrop-filter: blur(12px);
+            border-bottom: 1px solid var(--border);
+            padding: 0.6rem 1.2rem;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+        .br-nav .nav-brand {
+            font-family: var(--font-display);
+            font-size: 0.9rem;
+            font-weight: 600;
+            color: var(--toki-blue);
+            text-decoration: none;
+        }
+        .br-nav .nav-right {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+        .br-nav .nav-label {
+            font-size: 0.6rem;
+            color: var(--text-muted);
+            letter-spacing: 0.08em;
+        }
+        .br-nav .lang-switch {
+            font-size: 0.75rem;
+            color: var(--toki-blue);
+            text-decoration: none;
+            padding: 0.3rem 0.6rem;
+            border: 1px solid var(--toki-blue);
+            border-radius: 4px;
+        }
+        .br-nav .lang-switch:hover {
+            background: var(--toki-blue);
+            color: #fff;
+        }
+
+        .brochure {
+            max-width: 720px;
+            margin: 0 auto;
+            padding: 5rem 1.5rem 2rem;
+        }
+
+        .br-header {
+            text-align: center;
+            margin-bottom: 2rem;
+            padding-bottom: 1.5rem;
+            border-bottom: 1px solid var(--border);
+        }
+        .br-header .company {
+            font-family: var(--font-display);
+            font-size: 1.6rem;
+            font-weight: 700;
+            color: var(--text-primary);
+            margin-bottom: 0.2rem;
+        }
+        .br-header .sub {
+            font-size: 0.85rem;
+            color: var(--text-muted);
+        }
+
+        .tagline {
+            text-align: center;
+            margin-bottom: 1.5rem;
+        }
+        .tagline h1 {
+            font-family: var(--font-display);
+            font-size: 1.7rem;
+            font-weight: 700;
+            color: var(--toki-blue);
+            margin-bottom: 0.5rem;
+        }
+        .tagline .hook {
+            font-family: var(--font-display);
+            font-size: 1.1rem;
+            color: var(--text-primary);
+            margin-bottom: 0.5rem;
+        }
+        .tagline .hook-sub {
+            font-size: 0.9rem;
+            color: var(--text-secondary);
+            max-width: 580px;
+            margin: 0 auto;
+        }
+
+        .section-heading {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            margin: 2rem 0 1rem;
+        }
+        .section-heading::before {
+            content: '';
+            width: 3px;
+            height: 1.2rem;
+            background: var(--toki-blue);
+            border-radius: 2px;
+            flex-shrink: 0;
+        }
+        .section-heading h2 {
+            font-family: var(--font-display);
+            font-size: 1.15rem;
+            font-weight: 600;
+            color: var(--text-primary);
+        }
+
+        .layers-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 1rem;
+            margin-bottom: 0.5rem;
+        }
+        .layer-card {
+            background: var(--toki-blue-pale);
+            border: 1px solid var(--border);
+            border-radius: 10px;
+            padding: 1.2rem 1rem;
+            text-align: center;
+        }
+        .layer-card .layer-name {
+            font-family: var(--font-display);
+            font-weight: 600;
+            color: var(--toki-blue);
+            font-size: 0.95rem;
+            margin-bottom: 0.3rem;
+        }
+        .layer-card .layer-sub {
+            font-weight: 500;
+            font-size: 0.8rem;
+            color: var(--text-primary);
+            margin-bottom: 0.3rem;
+        }
+        .layer-card .layer-desc {
+            font-size: 0.75rem;
+            color: var(--text-secondary);
+            line-height: 1.6;
+        }
+
+        .tokiqr-box {
+            background: var(--bg-white);
+            border: 1px solid var(--border);
+            border-radius: 10px;
+            padding: 1.2rem 1.5rem;
+            margin-bottom: 0.5rem;
+        }
+        .tokiqr-box ul {
+            list-style: none;
+            padding: 0;
+        }
+        .tokiqr-box li {
+            font-size: 0.9rem;
+            color: var(--text-primary);
+            padding: 0.2rem 0;
+        }
+        .tokiqr-box li::before {
+            content: '\2022';
+            color: var(--toki-blue);
+            font-weight: bold;
+            margin-right: 0.5rem;
+        }
+        .tokiqr-box .try-link {
+            display: inline-block;
+            margin-top: 0.5rem;
+            font-size: 0.85rem;
+            color: var(--toki-blue);
+            text-decoration: none;
+        }
+        .tokiqr-box .try-link:hover { text-decoration: underline; }
+
+        .areas { margin-bottom: 0.5rem; }
+        .area-row {
+            display: flex;
+            gap: 0.75rem;
+            padding: 0.4rem 0;
+        }
+        .area-label {
+            font-weight: 600;
+            color: var(--toki-blue);
+            font-size: 0.85rem;
+            min-width: 6rem;
+            flex-shrink: 0;
+        }
+        .area-desc {
+            font-size: 0.85rem;
+            color: var(--text-secondary);
+        }
+
+        .pricing-line {
+            font-size: 0.9rem;
+            color: var(--text-primary);
+            margin-bottom: 0.2rem;
+        }
+        .pricing-note {
+            font-size: 0.8rem;
+            color: var(--text-muted);
+        }
+
+        .contact-section {
+            margin-top: 2rem;
+            padding-top: 1.5rem;
+            border-top: 1px solid var(--border);
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            gap: 2rem;
+        }
+        .contact-info .contact-name {
+            font-family: var(--font-display);
+            font-size: 1.1rem;
+            font-weight: 600;
+            color: var(--text-primary);
+            margin-bottom: 0.3rem;
+        }
+        .contact-info p {
+            font-size: 0.85rem;
+            color: var(--text-secondary);
+            line-height: 1.7;
+        }
+        .contact-info a {
+            color: var(--toki-blue);
+            text-decoration: none;
+        }
+        .contact-info a:hover { text-decoration: underline; }
+
+        .pdf-download {
+            text-align: center;
+            margin-top: 2rem;
+            padding: 1.5rem;
+            background: var(--toki-blue-pale);
+            border-radius: 10px;
+        }
+        .pdf-download p {
+            font-size: 0.85rem;
+            color: var(--text-secondary);
+            margin-bottom: 0.75rem;
+        }
+        .pdf-download a {
+            display: inline-block;
+            padding: 0.6rem 1.5rem;
+            background: var(--toki-blue);
+            color: #fff;
+            text-decoration: none;
+            border-radius: 6px;
+            font-size: 0.9rem;
+            font-weight: 500;
+        }
+        .pdf-download a:hover { background: #1D4ED8; }
+
+        .br-footer {
+            text-align: center;
+            margin-top: 2rem;
+            padding: 1.5rem 0;
+            font-size: 0.8rem;
+            color: var(--text-muted);
+        }
+        .br-footer a {
+            color: var(--toki-blue);
+            text-decoration: none;
+            margin: 0 0.5rem;
+        }
+        .br-footer a:hover { text-decoration: underline; }
+
+        @media (max-width: 600px) {
+            .layers-grid { grid-template-columns: 1fr; }
+            .contact-section { flex-direction: column; }
+            .tagline h1 { font-size: 1.4rem; }
+            .br-header .company { font-size: 1.3rem; }
+        }
+
+        @media print {
+            .br-nav, .pdf-download, .br-footer { display: none; }
+            .brochure { padding-top: 1rem; max-width: 100%; }
+            body { background: white; }
+        }
+    </style>
+    <meta property="og:image" content="https://tokistorage.github.io/lp/asset/tokistorage-icon-512.png">
+    <meta property="og:image:width" content="512">
+    <meta property="og:image:height" content="512">
+</head>
+<body>
+
+<nav class="br-nav">
+    <a href="index-en.html" class="nav-brand">TokiStorage</a>
+    <div class="nav-right">
+        <span class="nav-label">BROCHURE</span>
+        <a href="brochure.html" class="lang-switch">JA</a>
+    </div>
+</nav>
+
+<main class="brochure">
+
+    <div class="br-header">
+        <div class="company">TokiStorage</div>
+        <div class="sub">Voice Preservation for 1,000 Years</div>
+    </div>
+
+    <div class="tagline">
+        <h1>Democratizing Proof of Existence</h1>
+        <p class="hook">Can you name your great-grandparents?</p>
+        <p class="hook-sub">Only a handful make it into history. Ordinary people are forgotten in three generations.<br>Three-layer distributed storage carries your voice and memory 1,000 years into the future.</p>
+    </div>
+
+    <div class="section-heading"><h2>Three-Layer Distributed Storage</h2></div>
+    <div class="layers-grid">
+        <div class="layer-card">
+            <div class="layer-name">Physical</div>
+            <div class="layer-sub">Quartz Glass &amp; Laminate</div>
+            <div class="layer-desc">1,000-year durability<br>Delivered to you</div>
+        </div>
+        <div class="layer-card">
+            <div class="layer-name">National</div>
+            <div class="layer-sub">National Diet Library</div>
+            <div class="layer-desc">Permanent preservation<br>under Japanese law</div>
+        </div>
+        <div class="layer-card">
+            <div class="layer-name">Private</div>
+            <div class="layer-sub">GitHub Arctic Code Vault</div>
+            <div class="layer-desc">Global distribution +<br>Arctic archive</div>
+        </div>
+    </div>
+
+    <div class="section-heading"><h2>TokiQR &mdash; Voice Encoded in a QR Code</h2></div>
+    <div class="tokiqr-box">
+        <ul>
+            <li>Proprietary audio codec technology (PCT international patent pending)</li>
+            <li>Up to 30 seconds of voice in a single QR code</li>
+            <li>No server required &mdash; plays offline on any smartphone</li>
+        </ul>
+        <a href="https://tokistorage.github.io/qr/" class="try-link">Try it free now &rarr;</a>
+    </div>
+
+    <div class="section-heading"><h2>Service Areas</h2></div>
+    <div class="areas">
+        <div class="area-row">
+            <span class="area-label">Personal</span>
+            <span class="area-desc">Wedding vows, legacy messages, family records, growth milestones</span>
+        </div>
+        <div class="area-row">
+            <span class="area-label">Business</span>
+            <span class="area-desc">Hospitality voice, brand stories, corporate heritage</span>
+        </div>
+        <div class="area-row">
+            <span class="area-label">Government</span>
+            <span class="area-desc">Cultural asset preservation, disaster messages, oral history</span>
+        </div>
+    </div>
+
+    <div class="section-heading"><h2>Pricing</h2></div>
+    <p class="pricing-line">TokiQR (Voice QR creation): <strong>Free</strong> &nbsp;|&nbsp; Three-Layer Plan: from <strong>&yen;5,000</strong> &nbsp;|&nbsp; Quartz Glass: from <strong>&yen;50,000</strong></p>
+    <p class="pricing-note">See our <a href="index-en.html#pricing" style="color: var(--toki-blue); text-decoration: none;">website</a> for detailed pricing plans</p>
+
+    <div class="contact-section">
+        <div class="contact-info">
+            <div class="contact-name">TokiStorage</div>
+            <p>Takuya Sato, Founder</p>
+            <p>Urayasu, Chiba, Japan (relocating to Sado Island, Spring 2026)</p>
+            <p><a href="https://tokistorage.github.io/lp/">tokistorage.github.io/lp/</a></p>
+            <p><a href="mailto:tokistorage1000@gmail.com">tokistorage1000@gmail.com</a></p>
+        </div>
+    </div>
+
+    <div class="pdf-download">
+        <p>Printable A4 brochure (PDF)</p>
+        <a href="brochure/tokistorage-brochure-en.pdf" download>Download PDF</a>
+    </div>
+
+    <footer class="br-footer">
+        <a href="index-en.html">&larr; TokiStorage Home</a>
+        <a href="index-en.html#contact">Contact</a>
+        <p>&copy; 2026 TokiStorage. All rights reserved.</p>
+    </footer>
+
+</main>
+
+<script src="tracker.js"></script>
+</body>
+</html>
