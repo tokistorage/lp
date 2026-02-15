@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Replace generic Voice QR sections with per-usecase custom descriptions."""
+"""Replace generic TokiQR sections with per-usecase custom descriptions."""
 
 import glob
 import os
@@ -7,10 +7,10 @@ import re
 
 from voice_qr_descriptions import DESCRIPTIONS_JA, DESCRIPTIONS_EN
 
-# Regex to match the existing Voice QR section (both JP and EN)
+# Regex to match the existing TokiQR section (both JP and EN)
 SECTION_RE = re.compile(
     r'\n\s*<section class="usecase-section">\s*'
-    r'<h2>(?:Voice QRで「声」も残す|Add Voice with Voice QR)</h2>.*?'
+    r'<h2>(?:TokiQRで「声」も残す|Add Voice with TokiQR)</h2>.*?'
     r'</section>\s*\n',
     re.DOTALL
 )
@@ -18,9 +18,9 @@ SECTION_RE = re.compile(
 def make_section_ja(desc):
     return f'''
     <section class="usecase-section">
-        <h2>Voice QRで「声」も残す</h2>
+        <h2>TokiQRで「声」も残す</h2>
         <p>{desc}</p>
-        <p style="margin-top:0.5rem;"><a href="https://tokistorage.github.io/qr/" style="color:var(--theme-color); font-weight:500;">Voice QRを試す &rarr;</a></p>
+        <p style="margin-top:0.5rem;"><a href="https://tokistorage.github.io/qr/" style="color:var(--theme-color); font-weight:500;">TokiQRを試す &rarr;</a></p>
     </section>
 
 '''
@@ -28,9 +28,9 @@ def make_section_ja(desc):
 def make_section_en(desc):
     return f'''
     <section class="usecase-section">
-        <h2>Add Voice with Voice QR</h2>
+        <h2>Add Voice with TokiQR</h2>
         <p>{desc}</p>
-        <p style="margin-top:0.5rem;"><a href="https://tokistorage.github.io/qr/" style="color:var(--theme-color); font-weight:500;">Try Voice QR &rarr;</a></p>
+        <p style="margin-top:0.5rem;"><a href="https://tokistorage.github.io/qr/" style="color:var(--theme-color); font-weight:500;">Try TokiQR &rarr;</a></p>
     </section>
 
 '''
@@ -99,7 +99,7 @@ def main():
         for m in missing:
             print(f"  {m}")
     if no_section:
-        print(f"No Voice QR section found ({len(no_section)}):")
+        print(f"No TokiQR section found ({len(no_section)}):")
         for n in no_section:
             print(f"  {n}")
 

@@ -312,7 +312,7 @@ CONTENT = {
             "tags": ["元Big4ファーム", "半導体エンジニアリング 20年+", "自治会長（250世帯）",
                      "SoulCarrier主宰", "70+思想エッセイ執筆", "オフグリッド実証済み", "佐渡島移住予定（2026春）",
                      "伊勢神宮 式年遷宮奉納（2026）", "比叡山延暦寺 不滅の法灯奉納（2026）"],
-            "story": "愛犬パールのお墓とともに、家族でパールハーバーを訪れました。平和を願う声を音声QRとして刻んだプレートを持って。そこで気がつきました——時を超えた願いは、愛や平和への想いに変容する。一人でも多くの方と分かち合いたい。TokiStorageをきっかけに、時を超えた変容をご一緒できれば幸いです。",
+            "story": "愛犬パールのお墓とともに、家族でパールハーバーを訪れました。平和を願う声をTokiQRとして刻んだプレートを持って。そこで気がつきました——時を超えた願いは、愛や平和への想いに変容する。一人でも多くの方と分かち合いたい。TokiStorageをきっかけに、時を超えた変容をご一緒できれば幸いです。",
             "footer": "Timeless Consulting",
         },
         "s8": {
@@ -419,7 +419,7 @@ CONTENT = {
             "label": "Investment Guide",
             "items": [
                 (TOKI_BLUE_PALE, "T", "Trial Plan \u2014 \u00a55,000 ($33)",
-                 "Experience three-layer storage with A4 laminate. Voice QR \u2192 laminate + NDL deposit + GitHub. Start here."),
+                 "Experience three-layer storage with A4 laminate. TokiQR \u2192 laminate + NDL deposit + GitHub. Start here."),
                 (TOKI_BLUE_PALE, "Q", "Individual Plan \u2014 \u00a550,000 ($330)",
                  "Inscribed on quartz glass. \u00a550 per year for proof of existence. 1,000-year durability (theoretical)."),
                 (GOLD_PALE, "F", "Three-Generation \u2014 \u00a5550,000 ($3,600, recommended)",
