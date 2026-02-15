@@ -463,7 +463,57 @@ def generate_vol1():
 
     pdf.divider()
 
-    # Section 5: 今後の予定
+    # Section 5: エッセイ紹介
+    pdf.section_heading("エッセイ紹介 ── なぜ、こう設計したのか")
+    pdf.body(
+        "トキストレージの設計思想は、一連のエッセイとして公開しています。"
+        "創刊号に関連する3本をご紹介します。"
+    )
+
+    essays = [
+        ("30秒音声の世界",
+         "QRコードに音声を刻める時間が2秒から30秒に拡張されたとき、"
+         "変わったのは数字ではなく、体験の質だった。"
+         "2秒では「声が出た」という技術実証。30秒では「想いを残せた」という存在証明。"),
+        ("3-2-1ルール ── 三層分散保管の根拠",
+         "「3-2-1ルール」はデータバックアップの世界標準であり、"
+         "半世紀にわたり実証されてきた原則である。"
+         "トキストレージの三層分散保管は、この原則を「データ保全」から「存在証明」へと拡張した設計である。"),
+        ("公開主義 ── 構造的に隠せない設計",
+         "組織は秘密を持つと、その管理にリソースを奪われる。"
+         "トキストレージは「隠さない」のではなく「構造的に隠せない」設計を採用した。"
+         "QRコードを石英に刻むという行為自体が、公開性の物理的な宣言である。"),
+    ]
+
+    for title, excerpt in essays:
+        y = pdf.get_y()
+        pdf.set_fill_color(*BG_LIGHT)
+        pdf.set_draw_color(*BORDER)
+        # Estimate box height
+        lines = len(excerpt) / 55 + 2
+        h = max(lines * 5 + 14, 22)
+        pdf.rect(MARGIN, y, CONTENT_W, h, "DF")
+        pdf.set_xy(MARGIN + 5, y + 3)
+        pdf.set_font("JP", "B", 9)
+        pdf.set_text_color(*TOKI_BLUE)
+        pdf.cell(CONTENT_W - 10, 5, title, new_x="LMARGIN", new_y="NEXT")
+        pdf.set_x(MARGIN + 5)
+        pdf.set_font("JP", "", 8.5)
+        pdf.set_text_color(*SECONDARY)
+        pdf.multi_cell(CONTENT_W - 10, 4.5, excerpt)
+        pdf.set_y(y + h + 3)
+
+    pdf.ln(1)
+    pdf.set_font("JP", "", 8)
+    pdf.set_text_color(*MUTED)
+    pdf.set_x(MARGIN)
+    pdf.cell(CONTENT_W, 5,
+             f"全エッセイは {PUBLISHER_URL} からお読みいただけます。",
+             new_x="LMARGIN", new_y="NEXT")
+
+    pdf.divider()
+
+    # Section 6: 今後の予定
     pdf.section_heading("今後の予定")
     pdf.body(
         "次号以降、以下の内容を予定しています：\n\n"
