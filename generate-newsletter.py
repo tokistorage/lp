@@ -475,62 +475,7 @@ def generate_vol1():
     pdf.ln(4)
 
     # ═══════════════════════════════════════════════════════════════════
-    # LAST PAGE: Back Cover
-    # ═══════════════════════════════════════════════════════════════════
-    pdf.add_page()
-    pdf.accent_bar()
-    pdf.set_auto_page_break(auto=False)
-
-    pdf.set_y(35)
-
-    # NDL deposit declaration
-    pdf.set_font("JP", "B", 12)
-    pdf.set_text_color(*DARK)
-    pdf.cell(0, 8, "国立国会図書館 納本宣言", align="C", new_x="LMARGIN", new_y="NEXT")
-    pdf.ln(6)
-
-    decl_w = 200
-    decl_x = (PAGE_W - decl_w) / 2
-    pdf.set_font("JP", "", 9)
-    pdf.set_text_color(*SECONDARY)
-    pdf.set_x(decl_x)
-    pdf.multi_cell(decl_w, 6, (
-        "本誌は、国立国会図書館法（第25条の4）に基づき、"
-        "オンライン資料として国立国会図書館に納本されます。\n\n"
-        "This publication is deposited with the National Diet Library "
-        "of Japan under Article 25-4 of the National Diet Library Law."
-    ), align="C")
-
-    pdf.ln(12)
-    pdf.divider()
-
-    # Next issue preview
-    pdf.ln(4)
-    pdf.set_font("JP", "B", 10)
-    pdf.set_text_color(*DARK)
-    pdf.cell(0, 7, "次号予告", align="C", new_x="LMARGIN", new_y="NEXT")
-    pdf.ln(2)
-    pdf.set_font("JP", "", 9)
-    pdf.set_text_color(*SECONDARY)
-    pdf.set_x(decl_x)
-    pdf.multi_cell(decl_w, 6, (
-        f"第{volume}巻 第{issue_num + 1}号（通巻第{serial + 1}号）は、"
-        "ご利用者さまの声（TokiQR）の掲載と、佐渡島物理保管拠点の進捗報告を予定しています。"
-    ), align="C")
-
-    pdf.ln(12)
-
-    # Copyright
-    pdf.set_font("JP", "", 8)
-    pdf.set_text_color(*MUTED)
-    pdf.cell(0, 5, "© 2026 TokiStorage（佐藤卓也）. All rights reserved.", align="C",
-             new_x="LMARGIN", new_y="NEXT")
-    pdf.cell(0, 5, PUBLISHER_URL, align="C", new_x="LMARGIN", new_y="NEXT")
-
-    pdf._footer_line(f"{PUBLICATION_NAME_JA}　第{volume}巻 第{issue_num}号　裏表紙")
-
-    # ═══════════════════════════════════════════════════════════════════
-    # TokiQR Cover Page (扉ページ) — inserted before the actual TokiQR
+    # TokiQR Cover Page (扉ページ) — before the actual TokiQR print page
     # ═══════════════════════════════════════════════════════════════════
     pdf.add_page()
     pdf.accent_bar()
@@ -585,6 +530,61 @@ def generate_vol1():
              align="C", new_x="LMARGIN", new_y="NEXT")
 
     pdf._footer_line(f"{PUBLICATION_NAME_JA}　巻末 TokiQR")
+
+    # ═══════════════════════════════════════════════════════════════════
+    # LAST PAGE: Back Cover (must be last — merge inserts TokiQR before this)
+    # ═══════════════════════════════════════════════════════════════════
+    pdf.add_page()
+    pdf.accent_bar()
+    pdf.set_auto_page_break(auto=False)
+
+    pdf.set_y(35)
+
+    # NDL deposit declaration
+    pdf.set_font("JP", "B", 12)
+    pdf.set_text_color(*DARK)
+    pdf.cell(0, 8, "国立国会図書館 納本宣言", align="C", new_x="LMARGIN", new_y="NEXT")
+    pdf.ln(6)
+
+    decl_w = 200
+    decl_x = (PAGE_W - decl_w) / 2
+    pdf.set_font("JP", "", 9)
+    pdf.set_text_color(*SECONDARY)
+    pdf.set_x(decl_x)
+    pdf.multi_cell(decl_w, 6, (
+        "本誌は、国立国会図書館法（第25条の4）に基づき、"
+        "オンライン資料として国立国会図書館に納本されます。\n\n"
+        "This publication is deposited with the National Diet Library "
+        "of Japan under Article 25-4 of the National Diet Library Law."
+    ), align="C")
+
+    pdf.ln(12)
+    pdf.divider()
+
+    # Next issue preview
+    pdf.ln(4)
+    pdf.set_font("JP", "B", 10)
+    pdf.set_text_color(*DARK)
+    pdf.cell(0, 7, "次号予告", align="C", new_x="LMARGIN", new_y="NEXT")
+    pdf.ln(2)
+    pdf.set_font("JP", "", 9)
+    pdf.set_text_color(*SECONDARY)
+    pdf.set_x(decl_x)
+    pdf.multi_cell(decl_w, 6, (
+        f"第{volume}巻 第{issue_num + 1}号（通巻第{serial + 1}号）は、"
+        "ご利用者さまの声（TokiQR）の掲載と、佐渡島物理保管拠点の進捗報告を予定しています。"
+    ), align="C")
+
+    pdf.ln(12)
+
+    # Copyright
+    pdf.set_font("JP", "", 8)
+    pdf.set_text_color(*MUTED)
+    pdf.cell(0, 5, "© 2026 TokiStorage（佐藤卓也）. All rights reserved.", align="C",
+             new_x="LMARGIN", new_y="NEXT")
+    pdf.cell(0, 5, PUBLISHER_URL, align="C", new_x="LMARGIN", new_y="NEXT")
+
+    pdf._footer_line(f"{PUBLICATION_NAME_JA}　第{volume}巻 第{issue_num}号　裏表紙")
 
     # ═══════════════════════════════════════════════════════════════════
     # Output — generate base PDF, then merge TokiQR page before back cover
