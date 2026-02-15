@@ -87,6 +87,7 @@
     { id: 'akashic-record', ja: 'アカシックレコード', en: 'Akashic Record' },
     { id: 'legacy', ja: '技術設計', en: 'Technical Design' },
     { id: 'deposition', ja: '金属蒸着', en: 'Deposition' },
+    { id: '30seconds', ja: '30秒音声の世界', en: '30 Seconds of Voice' },
     { id: 'voice-future', ja: '音声復元', en: 'Voice Restoration' },
     { id: 'backup-rule', ja: '3-2-1ルール', en: '3-2-1 Backup Rule' },
     { id: 'uptime', ja: '稼働率と外部依存', en: 'Uptime & Dependencies' },
