@@ -56,6 +56,7 @@
     { id: 'sdgs', ja: 'SDGs', en: 'SDGs' },
     { id: 'no-competition', ja: '競合不在の作り方', en: 'No Competition' },
     { id: 'platform', ja: 'プラットフォームの視界', en: 'Platform View' },
+    { id: 'global-niche', ja: 'グローバルニッチ', en: 'Global Niche' },
 
     // ── 文化・社会活動 ──
     { id: 'education', ja: '教育', en: 'Education' },
