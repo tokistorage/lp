@@ -1,0 +1,324 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" type="image/png" sizes="32x32" href="asset/favicon-32.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="asset/apple-touch-icon.png">
+    <title>TokiStorage | Manifesto ── Mission &amp; Values</title>
+    <meta name="robots" content="noindex, nofollow">
+    <meta name="description" content="TokiStorage's mission: 'Existence, a thousand years forward.' Our ten values that guide everything we do.">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Shippori+Mincho:wght@400;500;600;700&family=Zen+Kaku+Gothic+New:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --toki-blue: #2563EB;
+            --toki-blue-light: #3B82F6;
+            --toki-blue-dark: #1D4ED8;
+            --toki-blue-pale: #EFF6FF;
+            --gold: #C9A962;
+            --bg-white: #FFFFFF;
+            --bg-page: #F8FAFC;
+            --bg-section: #F1F5F9;
+            --text-primary: #1E293B;
+            --text-secondary: #475569;
+            --text-muted: #94A3B8;
+            --border: #E2E8F0;
+            --font-display: 'Shippori Mincho', serif;
+            --font-body: 'Zen Kaku Gothic New', sans-serif;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        html { scroll-behavior: smooth; }
+
+        body {
+            font-family: var(--font-body);
+            font-weight: 400;
+            background: var(--bg-white);
+            color: var(--text-primary);
+            line-height: 1.9;
+            font-size: 16px;
+        }
+
+        /* Navigation */
+        .manifesto-nav {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 1000;
+            background: rgba(255,255,255,0.95);
+            backdrop-filter: blur(12px);
+            border-bottom: 1px solid var(--border);
+            padding: 0.6rem 1.2rem;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 1rem;
+        }
+        .manifesto-nav .nav-brand {
+            font-family: var(--font-display);
+            font-size: 0.9rem;
+            font-weight: 600;
+            color: var(--toki-blue);
+            text-decoration: none;
+            white-space: nowrap;
+            flex-shrink: 0;
+        }
+        .manifesto-nav .nav-brand::before {
+            content: '';
+            display: inline-block;
+            width: 20px;
+            height: 20px;
+            background: url('asset/tokistorage-icon-512.png') no-repeat center / contain;
+            vertical-align: -3px;
+            margin-right: 5px;
+        }
+        .manifesto-nav .nav-right {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+        .manifesto-nav .nav-label {
+            font-size: 0.6rem;
+            color: var(--text-muted);
+            letter-spacing: 0.08em;
+            text-align: right;
+            line-height: 1.4;
+        }
+        .manifesto-nav .lang-switch {
+            font-size: 0.75rem;
+            color: var(--toki-blue);
+            text-decoration: none;
+            padding: 0.3rem 0.6rem;
+            border: 1px solid var(--toki-blue);
+            border-radius: 4px;
+        }
+        .manifesto-nav .lang-switch:hover {
+            background: var(--toki-blue);
+            color: #fff;
+        }
+
+        /* Main Content */
+        .manifesto-content {
+            max-width: 720px;
+            margin: 0 auto;
+            padding: 8rem 2rem 4rem;
+        }
+
+        /* Hero - Mission */
+        .manifesto-hero {
+            text-align: center;
+            margin-bottom: 5rem;
+            padding-bottom: 3rem;
+            border-bottom: 1px solid var(--border);
+        }
+        .manifesto-hero .hero-label {
+            font-size: 0.7rem;
+            color: var(--text-muted);
+            letter-spacing: 0.2em;
+            margin-bottom: 1.5rem;
+        }
+        .manifesto-hero h1 {
+            font-family: var(--font-display);
+            font-size: 2.4rem;
+            font-weight: 700;
+            line-height: 1.5;
+            margin-bottom: 0.5rem;
+            letter-spacing: 0.04em;
+        }
+        .manifesto-hero .hero-rinen {
+            font-family: var(--font-display);
+            font-size: 0.85rem;
+            color: var(--text-muted);
+            letter-spacing: 0.15em;
+            margin-top: 1rem;
+        }
+
+        /* Section Header */
+        .manifesto-section-header {
+            text-align: center;
+            margin-bottom: 4rem;
+        }
+        .manifesto-section-header h2 {
+            font-family: var(--font-display);
+            font-size: 1.5rem;
+            font-weight: 600;
+            letter-spacing: 0.1em;
+            margin-bottom: 0.5rem;
+        }
+        .manifesto-section-header .section-sub {
+            font-size: 0.8rem;
+            color: var(--text-muted);
+            letter-spacing: 0.05em;
+        }
+
+        /* Value Items */
+        .value-item {
+            margin-bottom: 3.5rem;
+        }
+        .value-item:last-child {
+            margin-bottom: 0;
+        }
+        .value-number {
+            font-family: var(--font-display);
+            font-size: 0.75rem;
+            color: var(--toki-blue);
+            letter-spacing: 0.1em;
+            margin-bottom: 0.5rem;
+        }
+        .value-title {
+            font-family: var(--font-display);
+            font-size: 1.2rem;
+            font-weight: 600;
+            line-height: 1.6;
+            margin-bottom: 0.8rem;
+            color: var(--text-primary);
+        }
+        .value-body {
+            font-size: 0.95rem;
+            color: var(--text-secondary);
+            line-height: 2;
+        }
+        .value-body strong {
+            color: var(--text-primary);
+        }
+
+        /* Divider between items */
+        .value-item + .value-item {
+            padding-top: 3.5rem;
+            border-top: 1px solid var(--border);
+        }
+
+        /* Footer */
+        .manifesto-footer {
+            text-align: center;
+            margin-top: 5rem;
+            padding: 3rem 2rem;
+            border-top: 1px solid var(--border);
+            font-size: 0.75rem;
+            color: var(--text-muted);
+        }
+        .manifesto-footer a {
+            color: var(--toki-blue);
+            text-decoration: none;
+        }
+        .manifesto-footer a:hover {
+            text-decoration: underline;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .manifesto-content { padding: 6rem 1.2rem 3rem; }
+            .manifesto-hero h1 { font-size: 1.8rem; }
+            .value-title { font-size: 1.05rem; }
+            .value-item { margin-bottom: 2.5rem; }
+            .value-item + .value-item { padding-top: 2.5rem; }
+        }
+
+        @media print {
+            .manifesto-nav { display: none; }
+            .manifesto-content { padding-top: 2rem; }
+        }
+    </style>
+    <link rel="stylesheet" href="contact-form.css">
+    <meta property="og:image" content="https://tokistorage.github.io/lp/asset/tokistorage-icon-512.png">
+    <meta property="og:image:width" content="512">
+    <meta property="og:image:height" content="512">
+</head>
+<body>
+
+<nav class="manifesto-nav">
+    <a href="index-en.html" class="nav-brand">TokiStorage</a>
+    <div class="nav-right">
+        <span class="nav-label">MANIFESTO</span>
+        <a href="manifesto.html" class="lang-switch">JA</a>
+    </div>
+</nav>
+
+<main class="manifesto-content">
+
+    <header class="manifesto-hero">
+        <p class="hero-label">TOKISTORAGE MISSION</p>
+        <h1>Existence, a Thousand Years Forward.</h1>
+        <p class="hero-rinen">── 存在を、千年先へ。──</p>
+    </header>
+
+    <div class="manifesto-section-header">
+        <h2>Ten Values</h2>
+        <p class="section-sub">What we believe</p>
+    </div>
+
+    <article class="value-item">
+        <p class="value-number">I</p>
+        <h3 class="value-title">Every person's existence deserves to endure a thousand years</h3>
+        <p class="value-body">Wealth and fame are irrelevant. The simple fact that someone lived is a record worthy of reaching the future. Opening the proof of existence to everyone is where we begin.</p>
+    </article>
+
+    <article class="value-item">
+        <p class="value-number">II</p>
+        <h3 class="value-title">Guard with three layers; depend on none</h3>
+        <p class="value-body">Quartz glass, the National Diet Library, and the GitHub Arctic Code Vault. We entrust records to three layers built on different principles. The loss of any single point never means the loss of the record.</p>
+    </article>
+
+    <article class="value-item">
+        <p class="value-number">III</p>
+        <h3 class="value-title">Permanence that requires maintenance is not permanence</h3>
+        <p class="value-body">We do not demand a thousand years of payments for a thousand years of preservation. Only a design that completes in a single act and endures without anyone's intervention deserves to be called truly permanent.</p>
+    </article>
+
+    <article class="value-item">
+        <p class="value-number">IV</p>
+        <h3 class="value-title">Give first</h3>
+        <p class="value-body">Like Pearl Soap, we begin by offering without expecting anything in return. Giving breeds trust, and trust carries stories forward. Money is convenient, but it cannot reach the heart or memory.</p>
+    </article>
+
+    <article class="value-item">
+        <p class="value-number">V</p>
+        <h3 class="value-title">A thousand-year perspective reveals what is essential</h3>
+        <p class="value-body">We are not swayed by quarterly results. Viewed from a thousand years hence, competition vanishes, trends fade, and only the essential remains. The choice of time horizon is itself the strongest differentiation.</p>
+    </article>
+
+    <article class="value-item">
+        <p class="value-number">VI</p>
+        <h3 class="value-title">The memory of a place speaks louder than numbers</h3>
+        <p class="value-body">The fact that a Suwa Shrine has stood in the same spot for centuries is more eloquent than any hazard-map score. We honor the experiential knowledge of those who came before and inherit the wisdom that lives with the land.</p>
+    </article>
+
+    <article class="value-item">
+        <p class="value-number">VII</p>
+        <h3 class="value-title">Some things are born only at crossroads</h3>
+        <p class="value-body">Semiconductors, consulting, cemetery research, repatriation of remains. Each discipline can be studied alone, yet what emerges from their intersection cannot be engineered. We take quiet pride in structural uniqueness.</p>
+    </article>
+
+    <article class="value-item">
+        <p class="value-number">VIII</p>
+        <h3 class="value-title">Place new coordinates outside the frame</h3>
+        <p class="value-body">We do not compete with existing clouds. We do not fit inside existing funerary customs. We do not fight within existing capitalism. By standing beyond the frame, we see value no one else has noticed.</p>
+    </article>
+
+    <article class="value-item">
+        <p class="value-number">IX</p>
+        <h3 class="value-title">Records grow in value with time</h3>
+        <p class="value-body">Data degrades and clouds disappear. Yet a single voice etched in quartz becomes history after a hundred years and a testament of civilization after a thousand. What we deliver is the only record that appreciates with time.</p>
+    </article>
+
+    <article class="value-item">
+        <p class="value-number">X</p>
+        <h3 class="value-title">Inscribe the present for someone in the future</h3>
+        <p class="value-body">TokiStorage is not a gravestone company. It is the act of helping people alive today find meaning in their own existence. When someone a thousand years from now touches your voice, it becomes solidarity across time.</p>
+    </article>
+
+    <footer class="manifesto-footer">
+        <p id="essay-nav-links"></p>
+        <p>&copy; 2026 TokiStorage All rights reserved.</p>
+    </footer>
+
+</main>
+
+<script src="essay-nav.js?v=20260209"></script>
+<script src="contact-form.js"></script>
+<script src="tracker.js"></script>
+</body>
+</html>

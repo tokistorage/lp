@@ -181,6 +181,7 @@ TEMPLATE = '''<!DOCTYPE html>
             <a href="usecases-en.html">Use Cases</a>
             <a href="index-en.html#pricing">Pricing</a>
             <a href="index-en.html#faq">FAQ</a>
+            <a href="manifesto-en.html">Manifesto</a>
         </div>
         <div class="footer-links-group">
             <h4>Legal</h4>
