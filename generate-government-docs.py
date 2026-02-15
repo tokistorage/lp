@@ -147,7 +147,7 @@ def generate_overview():
     pdf.label_value("事業者名", "TokiStorage（屋号）/ 佐藤卓也")
     pdf.label_value_multi(
         "所在地",
-        "千葉県浦安市明海2-11-13（2026年春 新潟県佐渡市へ移転予定）",
+        "千葉県浦安市明海2-11-13（佐渡島に物理保管拠点を設置予定）",
     )
     pdf.label_value("連絡先", "tokistorage1000@gmail.com")
     pdf.ln(1)
@@ -319,7 +319,7 @@ def generate_estimate():
     pdf.set_text_color(*SECONDARY)
     pdf.cell(
         0, 5,
-        "千葉県浦安市明海2-11-13（2026年春 新潟県佐渡市へ移転予定）",
+        "千葉県浦安市明海2-11-13（佐渡島に物理保管拠点を設置予定）",
         ln=True,
     )
     pdf.cell(0, 5, "tokistorage1000@gmail.com", ln=True)

@@ -273,7 +273,7 @@ def generate_ja(qr_path):
     pdf.set_text_color(*SECONDARY)
     pdf.cell(0, 5, "代表：佐藤卓也", new_x="LMARGIN", new_y="NEXT")
     pdf.set_x(MARGIN)
-    pdf.cell(0, 5, "〒279-0014 千葉県浦安市明海2-11-13（2026年春〜 佐渡市へ移転予定）",
+    pdf.cell(0, 5, "〒279-0014 千葉県浦安市明海2-11-13（佐渡島に物理保管拠点を設置予定）",
              new_x="LMARGIN", new_y="NEXT")
     pdf.set_x(MARGIN)
     pdf.set_font("JP", "", 8)
@@ -458,7 +458,7 @@ def generate_en(qr_path):
     pdf.set_text_color(*SECONDARY)
     pdf.cell(0, 5, "Takuya Sato, Founder", new_x="LMARGIN", new_y="NEXT")
     pdf.set_x(MARGIN)
-    pdf.cell(0, 5, "Urayasu, Chiba, Japan (relocating to Sado Island, Spring 2026)",
+    pdf.cell(0, 5, "Urayasu, Chiba, Japan (planning to establish a physical storage base on Sado Island)",
              new_x="LMARGIN", new_y="NEXT")
     pdf.set_x(MARGIN)
     pdf.set_font("JP", "", 8)
