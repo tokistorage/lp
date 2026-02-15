@@ -1,0 +1,324 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" type="image/png" sizes="32x32" href="asset/favicon-32.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="asset/apple-touch-icon.png">
+    <title>トキストレージ | マニフェスト ── 理念と価値観</title>
+    <meta name="robots" content="noindex, nofollow">
+    <meta name="description" content="トキストレージの理念「存在を、千年先へ。」と、私たちが信じる価値観十ヶ条。">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Shippori+Mincho:wght@400;500;600;700&family=Zen+Kaku+Gothic+New:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --toki-blue: #2563EB;
+            --toki-blue-light: #3B82F6;
+            --toki-blue-dark: #1D4ED8;
+            --toki-blue-pale: #EFF6FF;
+            --gold: #C9A962;
+            --bg-white: #FFFFFF;
+            --bg-page: #F8FAFC;
+            --bg-section: #F1F5F9;
+            --text-primary: #1E293B;
+            --text-secondary: #475569;
+            --text-muted: #94A3B8;
+            --border: #E2E8F0;
+            --font-display: 'Shippori Mincho', serif;
+            --font-body: 'Zen Kaku Gothic New', sans-serif;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        html { scroll-behavior: smooth; }
+
+        body {
+            font-family: var(--font-body);
+            font-weight: 400;
+            background: var(--bg-white);
+            color: var(--text-primary);
+            line-height: 1.9;
+            font-size: 16px;
+        }
+
+        /* Navigation */
+        .manifesto-nav {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 1000;
+            background: rgba(255,255,255,0.95);
+            backdrop-filter: blur(12px);
+            border-bottom: 1px solid var(--border);
+            padding: 0.6rem 1.2rem;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 1rem;
+        }
+        .manifesto-nav .nav-brand {
+            font-family: var(--font-display);
+            font-size: 0.9rem;
+            font-weight: 600;
+            color: var(--toki-blue);
+            text-decoration: none;
+            white-space: nowrap;
+            flex-shrink: 0;
+        }
+        .manifesto-nav .nav-brand::before {
+            content: '';
+            display: inline-block;
+            width: 20px;
+            height: 20px;
+            background: url('asset/tokistorage-icon-512.png') no-repeat center / contain;
+            vertical-align: -3px;
+            margin-right: 5px;
+        }
+        .manifesto-nav .nav-right {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+        .manifesto-nav .nav-label {
+            font-size: 0.6rem;
+            color: var(--text-muted);
+            letter-spacing: 0.08em;
+            text-align: right;
+            line-height: 1.4;
+        }
+        .manifesto-nav .lang-switch {
+            font-size: 0.75rem;
+            color: var(--toki-blue);
+            text-decoration: none;
+            padding: 0.3rem 0.6rem;
+            border: 1px solid var(--toki-blue);
+            border-radius: 4px;
+        }
+        .manifesto-nav .lang-switch:hover {
+            background: var(--toki-blue);
+            color: #fff;
+        }
+
+        /* Main Content */
+        .manifesto-content {
+            max-width: 720px;
+            margin: 0 auto;
+            padding: 8rem 2rem 4rem;
+        }
+
+        /* Hero - 理念 */
+        .manifesto-hero {
+            text-align: center;
+            margin-bottom: 5rem;
+            padding-bottom: 3rem;
+            border-bottom: 1px solid var(--border);
+        }
+        .manifesto-hero .hero-label {
+            font-size: 0.7rem;
+            color: var(--text-muted);
+            letter-spacing: 0.2em;
+            margin-bottom: 1.5rem;
+        }
+        .manifesto-hero h1 {
+            font-family: var(--font-display);
+            font-size: 2.4rem;
+            font-weight: 700;
+            line-height: 1.5;
+            margin-bottom: 0.5rem;
+            letter-spacing: 0.08em;
+        }
+        .manifesto-hero .hero-rinen {
+            font-family: var(--font-display);
+            font-size: 0.85rem;
+            color: var(--text-muted);
+            letter-spacing: 0.15em;
+            margin-top: 1rem;
+        }
+
+        /* Section Header */
+        .manifesto-section-header {
+            text-align: center;
+            margin-bottom: 4rem;
+        }
+        .manifesto-section-header h2 {
+            font-family: var(--font-display);
+            font-size: 1.5rem;
+            font-weight: 600;
+            letter-spacing: 0.1em;
+            margin-bottom: 0.5rem;
+        }
+        .manifesto-section-header .section-sub {
+            font-size: 0.8rem;
+            color: var(--text-muted);
+            letter-spacing: 0.05em;
+        }
+
+        /* Value Items */
+        .value-item {
+            margin-bottom: 3.5rem;
+        }
+        .value-item:last-child {
+            margin-bottom: 0;
+        }
+        .value-number {
+            font-family: var(--font-display);
+            font-size: 0.75rem;
+            color: var(--toki-blue);
+            letter-spacing: 0.1em;
+            margin-bottom: 0.5rem;
+        }
+        .value-title {
+            font-family: var(--font-display);
+            font-size: 1.2rem;
+            font-weight: 600;
+            line-height: 1.6;
+            margin-bottom: 0.8rem;
+            color: var(--text-primary);
+        }
+        .value-body {
+            font-size: 0.95rem;
+            color: var(--text-secondary);
+            line-height: 2;
+        }
+        .value-body strong {
+            color: var(--text-primary);
+        }
+
+        /* Divider between items */
+        .value-item + .value-item {
+            padding-top: 3.5rem;
+            border-top: 1px solid var(--border);
+        }
+
+        /* Footer */
+        .manifesto-footer {
+            text-align: center;
+            margin-top: 5rem;
+            padding: 3rem 2rem;
+            border-top: 1px solid var(--border);
+            font-size: 0.75rem;
+            color: var(--text-muted);
+        }
+        .manifesto-footer a {
+            color: var(--toki-blue);
+            text-decoration: none;
+        }
+        .manifesto-footer a:hover {
+            text-decoration: underline;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .manifesto-content { padding: 6rem 1.2rem 3rem; }
+            .manifesto-hero h1 { font-size: 1.8rem; }
+            .value-title { font-size: 1.05rem; }
+            .value-item { margin-bottom: 2.5rem; }
+            .value-item + .value-item { padding-top: 2.5rem; }
+        }
+
+        @media print {
+            .manifesto-nav { display: none; }
+            .manifesto-content { padding-top: 2rem; }
+        }
+    </style>
+    <link rel="stylesheet" href="contact-form.css">
+    <meta property="og:image" content="https://tokistorage.github.io/lp/asset/tokistorage-icon-512.png">
+    <meta property="og:image:width" content="512">
+    <meta property="og:image:height" content="512">
+</head>
+<body>
+
+<nav class="manifesto-nav">
+    <a href="index.html" class="nav-brand">トキストレージ</a>
+    <div class="nav-right">
+        <span class="nav-label">MANIFESTO</span>
+        <a href="manifesto-en.html" class="lang-switch">EN</a>
+    </div>
+</nav>
+
+<main class="manifesto-content">
+
+    <header class="manifesto-hero">
+        <p class="hero-label">トキストレージ 理念</p>
+        <h1>存在を、千年先へ。</h1>
+        <p class="hero-rinen">── EXISTENCE, A THOUSAND YEARS FORWARD ──</p>
+    </header>
+
+    <div class="manifesto-section-header">
+        <h2>価値観 十ヶ条</h2>
+        <p class="section-sub">私たちが信じていること</p>
+    </div>
+
+    <article class="value-item">
+        <p class="value-number">第一条</p>
+        <h3 class="value-title">すべての人の存在は、千年残す価値がある</h3>
+        <p class="value-body">富も名声も関係ない。「ここに生きた」という事実そのものが、未来に届けられるべき記録である。存在の証明を万人に開くことが、私たちの出発点である。</p>
+    </article>
+
+    <article class="value-item">
+        <p class="value-number">第二条</p>
+        <h3 class="value-title">三つの層で守り、一つにも依存しない</h3>
+        <p class="value-body">石英ガラス、国立国会図書館、GitHub Arctic Code Vault。原理の異なる三つの層に記録を預ける。いかなる一点の消失も、記録の消滅を意味しない。</p>
+    </article>
+
+    <article class="value-item">
+        <p class="value-number">第三条</p>
+        <h3 class="value-title">維持費のかかる永続は、永続ではない</h3>
+        <p class="value-body">千年の保存に千年の課金を求めない。一度の行為で完結し、誰の手も借りずに残り続ける設計だけが、本当の永続に値する。</p>
+    </article>
+
+    <article class="value-item">
+        <p class="value-number">第四条</p>
+        <h3 class="value-title">まず、与える</h3>
+        <p class="value-body">パールソープのように、見返りを求めず差し出すことから始める。贈与が信頼を生み、信頼が物語を運ぶ。お金は便利だが、心と記憶には届かない。</p>
+    </article>
+
+    <article class="value-item">
+        <p class="value-number">第五条</p>
+        <h3 class="value-title">千年の視座が、本質を浮かび上がらせる</h3>
+        <p class="value-body">四半期の成果に惑わされない。千年先から今を見れば、競争は消え、流行は霞み、本質だけが残る。時間軸の選択そのものが、最も強い差別化である。</p>
+    </article>
+
+    <article class="value-item">
+        <p class="value-number">第六条</p>
+        <h3 class="value-title">土地の記憶は、数字を超える</h3>
+        <p class="value-body">諏訪神社が数百年そこに在り続けた事実は、ハザードマップの数値より雄弁である。先人の経験知を尊び、土地と共に在る知恵を受け継ぐ。</p>
+    </article>
+
+    <article class="value-item">
+        <p class="value-number">第七条</p>
+        <h3 class="value-title">交差点にしか生まれないものがある</h3>
+        <p class="value-body">半導体、コンサルティング、墓地調査、遺骨送還。一つひとつは学べても、その交差から生まれるものは設計できない。構造的な唯一性を、静かに誇る。</p>
+    </article>
+
+    <article class="value-item">
+        <p class="value-number">第八条</p>
+        <h3 class="value-title">枠組みの外側に、新しい座標を置く</h3>
+        <p class="value-body">既存のクラウドと競わない。既存の葬送に収まらない。既存の資本主義の内側で戦わない。枠組みを超えた場所に立つことで、まだ誰も見ていない価値が見える。</p>
+    </article>
+
+    <article class="value-item">
+        <p class="value-number">第九条</p>
+        <h3 class="value-title">記録は、時と共に価値を増す</h3>
+        <p class="value-body">データは劣化し、クラウドは消える。しかし石英に刻まれた一人の声は、百年後に歴史となり、千年後に文明の証となる。私たちが届けるのは、時間と共に増価する唯一の記録である。</p>
+    </article>
+
+    <article class="value-item">
+        <p class="value-number">第十条</p>
+        <h3 class="value-title">未来の誰かのために、今を刻む</h3>
+        <p class="value-body">トキストレージは墓石屋ではない。今を生きる人が、自分の存在に意味を見出すための営みである。千年後の誰かがあなたの声に触れたとき、それは時を超えた連帯になる。</p>
+    </article>
+
+    <footer class="manifesto-footer">
+        <p id="essay-nav-links"></p>
+        <p>&copy; 2026 TokiStorage All rights reserved.</p>
+    </footer>
+
+</main>
+
+<script src="essay-nav.js?v=20260209"></script>
+<script src="contact-form.js"></script>
+<script src="tracker.js"></script>
+</body>
+</html>
