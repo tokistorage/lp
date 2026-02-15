@@ -5,7 +5,7 @@ Numbering scheme (designed for 1000+ years of publication):
   - Volume (巻): Year count from inaugural year (2026 = Vol.1)
   - Number (号): Sequential within year (No.1, No.2, ...)
   - Serial (通巻): Overall sequential number across all years
-  - File naming: YYYY-NN (e.g., 2026-01, 2026-02, 2027-01)
+  - File naming: YYYY-MM (publication month, e.g., 2026-02, 2026-06, 2027-01)
 
 Layout: A4 landscape (297mm × 210mm) — matches TokiQR print output.
 
@@ -165,6 +165,7 @@ class NewsletterPDF(FPDF):
 def generate_vol1():
     """Generate Vol.1 No.1 (創刊号) — February 2026."""
     year = 2026
+    month = 2
     issue_num = 1
     serial = 1
     volume = year - INAUGURAL_YEAR + 1  # Vol.1
@@ -281,7 +282,7 @@ def generate_vol1():
         ("刊行頻度", "不定期（年複数回の刊行を予定）"),
         ("フォーマット", "PDF（電子書籍等・オンライン資料）"),
         ("根拠法", "国立国会図書館法 第25条・第25条の4"),
-        ("採番体系", "年-号番号（YYYY-NN） ※1000年発行を想定"),
+        ("採番体系", "年-月（YYYY-MM） ※1000年発行を想定"),
         ("ISSN", "未申請（今後申請予定）"),
     ]
 
@@ -317,7 +318,7 @@ def generate_vol1():
         "・巻（Volume）＝ 創刊年（2026年）からの年数（2026年＝第1巻、2027年＝第2巻…）\n"
         "・号（Number）＝ 同一年内の連番（第1号、第2号…）\n"
         "・通巻（Serial）＝ 全号を通じた連番（5桁、最大99,999号＝年50回×2,000年相当）\n"
-        "・ファイル名＝ YYYY-NN形式（例：2026-01, 3026-12）"
+        "・ファイル名＝ YYYY-MM形式（発行月。例：2026-02, 3026-12）"
     )
     pdf.multi_cell(CONTENT_W, 5, numbering_text)
 
@@ -464,10 +465,8 @@ def generate_vol1():
     pdf.section_heading("今後の予定")
     pdf.body(
         "次号以降、以下の内容を予定しています：\n\n"
-        "・ご利用者さまの声（許諾をいただいたTokiQRコードの掲載）\n"
-        "・技術アップデート（圧縮率の改善、新フォーマット対応等）\n"
-        "・QRコードサンプル（スマートフォンで読み取り、再生体験が可能）\n"
-        "・分散保管の進捗報告（佐渡・マウイの物理保管拠点の状況）\n"
+        "・ご利用者さまの声（許諾をいただいたTokiQRの掲載）\n"
+        "・佐渡島 物理保管拠点の構築報告\n"
         "・パートナー・協賛者のご紹介"
     )
 
@@ -514,7 +513,7 @@ def generate_vol1():
     pdf.set_x(decl_x)
     pdf.multi_cell(decl_w, 6, (
         f"第{volume}巻 第{issue_num + 1}号（通巻第{serial + 1}号）は、"
-        "技術デモQRコードの掲載と、佐渡拠点の進捗報告を予定しています。"
+        "ご利用者さまの声（TokiQR）の掲載と、佐渡島物理保管拠点の進捗報告を予定しています。"
     ), align="C")
 
     pdf.ln(12)
@@ -529,10 +528,67 @@ def generate_vol1():
     pdf._footer_line(f"{PUBLICATION_NAME_JA}　第{volume}巻 第{issue_num}号　裏表紙")
 
     # ═══════════════════════════════════════════════════════════════════
+    # TokiQR Cover Page (扉ページ) — inserted before the actual TokiQR
+    # ═══════════════════════════════════════════════════════════════════
+    pdf.add_page()
+    pdf.accent_bar()
+    pdf.set_auto_page_break(auto=False)
+
+    pdf.set_y(30)
+
+    # Section number + title
+    pdf.set_font("JP", "", 9)
+    pdf.set_text_color(*TOKI_BLUE)
+    pdf.cell(0, 6, "── 巻末セクション ──", align="C", new_x="LMARGIN", new_y="NEXT")
+    pdf.ln(6)
+
+    pdf.set_font("JP", "B", 20)
+    pdf.set_text_color(*DARK)
+    pdf.cell(0, 14, "TokiQR：代表メッセージ", align="C", new_x="LMARGIN", new_y="NEXT")
+    pdf.ln(8)
+
+    desc_w = 220
+    desc_x = (PAGE_W - desc_w) / 2
+    pdf.set_font("JP", "", 9.5)
+    pdf.set_text_color(*SECONDARY)
+    pdf.set_x(desc_x)
+    pdf.multi_cell(desc_w, 6, (
+        "創刊号の巻末として、トキストレージ代表 佐藤卓也による最初のTokiQRを掲載します。\n"
+        "次のページに印刷されたQRコードをスマートフォンでスキャンすると、"
+        "代表の肉声を再生できます。"
+    ), align="C")
+
+    pdf.ln(6)
+
+    # Key message box
+    box_w = 240
+    box_x = (PAGE_W - box_w) / 2
+    box_y = pdf.get_y()
+    pdf.set_fill_color(*BG_LIGHT)
+    pdf.set_draw_color(*BORDER)
+    pdf.rect(box_x, box_y, box_w, 30, "DF")
+    pdf.set_xy(box_x + 10, box_y + 5)
+    pdf.set_font("JP", "B", 9)
+    pdf.set_text_color(*DARK)
+    pdf.multi_cell(box_w - 20, 6, (
+        "サーバーは不要です。データはQRコード内に完全に埋め込まれています。\n"
+        "インターネット接続があればスマートフォンだけで再生可能。\n"
+        "100年後でも、このQRコードが残っていれば声は蘇ります。"
+    ), align="C")
+
+    pdf.set_y(box_y + 36)
+    pdf.set_font("JP", "", 8)
+    pdf.set_text_color(*MUTED)
+    pdf.cell(0, 5, "読み取りのコツ：カメラを3倍ズームにして、少し離してスキャンすると認識しやすくなります。",
+             align="C", new_x="LMARGIN", new_y="NEXT")
+
+    pdf._footer_line(f"{PUBLICATION_NAME_JA}　巻末 TokiQR")
+
+    # ═══════════════════════════════════════════════════════════════════
     # Output — generate base PDF, then merge TokiQR page before back cover
     # ═══════════════════════════════════════════════════════════════════
     os.makedirs(OUT_DIR, exist_ok=True)
-    filename = f"{year}-{issue_num:02d}.pdf"
+    filename = f"{year}-{month:02d}.pdf"
     out_path = os.path.join(OUT_DIR, filename)
 
     # Find TokiQR representative PDF
@@ -546,7 +602,6 @@ def generate_vol1():
     if tokiqr_pdf_path:
         # Write base newsletter to temp file, then merge with TokiQR
         from pypdf import PdfReader, PdfWriter
-        import tempfile
 
         tmp_path = out_path + ".tmp"
         pdf.output(tmp_path)
@@ -556,11 +611,11 @@ def generate_vol1():
         tokiqr = PdfReader(tokiqr_pdf_path)
         writer = PdfWriter()
 
-        # Insert all pages except the last (back cover)
+        # All pages except the last (back cover) — includes the TokiQR cover page
         for i in range(len(newsletter.pages) - 1):
             writer.add_page(newsletter.pages[i])
 
-        # Insert TokiQR page(s)
+        # Insert TokiQR print page(s) after the cover page
         for page in tokiqr.pages:
             writer.add_page(page)
         print(f"  TokiQR merged: {tokiqr_pdf_path}")
