@@ -485,23 +485,41 @@ def generate_vol1():
          "QRコードを石英に刻むという行為自体が、公開性の物理的な宣言である。"),
     ]
 
+    # Disable auto page break during essay boxes to prevent mid-box splits
+    pdf.set_auto_page_break(auto=False)
+
     for title, excerpt in essays:
+        # Measure box height: title (7mm) + text + padding
+        pdf.set_font("JP", "", 8.5)
+        text_w = CONTENT_W - 10
+        chars_per_line = int(text_w / 3)  # ~8.5pt Japanese ≈ 3mm per char
+        n_lines = 0
+        for paragraph in excerpt.split("\n"):
+            n_lines += max(1, -(-len(paragraph) // chars_per_line))
+        text_h = n_lines * 4.5
+        box_h = 3 + 7 + text_h + 5  # top pad + title + text + bottom pad
+
+        # Force page break if box won't fit
+        if pdf.get_y() + box_h > PAGE_H - 18:
+            pdf.add_page()
+            pdf.accent_bar()
+
         y = pdf.get_y()
         pdf.set_fill_color(*BG_LIGHT)
         pdf.set_draw_color(*BORDER)
-        # Estimate box height
-        lines = len(excerpt) / 55 + 2
-        h = max(lines * 5 + 14, 22)
-        pdf.rect(MARGIN, y, CONTENT_W, h, "DF")
+        pdf.rect(MARGIN, y, CONTENT_W, box_h, "DF")
         pdf.set_xy(MARGIN + 5, y + 3)
         pdf.set_font("JP", "B", 9)
         pdf.set_text_color(*TOKI_BLUE)
-        pdf.cell(CONTENT_W - 10, 5, title, new_x="LMARGIN", new_y="NEXT")
+        pdf.cell(text_w, 7, title, new_x="LMARGIN", new_y="NEXT")
         pdf.set_x(MARGIN + 5)
         pdf.set_font("JP", "", 8.5)
         pdf.set_text_color(*SECONDARY)
-        pdf.multi_cell(CONTENT_W - 10, 4.5, excerpt)
-        pdf.set_y(y + h + 3)
+        pdf.multi_cell(text_w, 4.5, excerpt)
+        pdf.set_y(y + box_h + 3)
+
+    # Re-enable auto page break
+    pdf.set_auto_page_break(auto=True, margin=20)
 
     pdf.ln(1)
     pdf.set_font("JP", "", 8)
