@@ -7,6 +7,8 @@ Numbering scheme (designed for 1000+ years of publication):
   - Serial (通巻): Overall sequential number across all years
   - File naming: YYYY-NN (e.g., 2026-01, 2026-02, 2027-01)
 
+Layout: A4 landscape (297mm × 210mm) — matches TokiQR print output.
+
 Usage:
   python3 generate-newsletter.py              # Generate Vol.1 No.1
   python3 generate-newsletter.py 2026 2 2     # Generate 2026, No.2, serial #2
@@ -21,6 +23,7 @@ from fpdf import FPDF
 SCRIPT_DIR = os.path.dirname(os.path.abspath(__file__))
 OUT_DIR = os.path.join(SCRIPT_DIR, "newsletter")
 ICON_PATH = os.path.join(SCRIPT_DIR, "asset", "tokistorage-icon-circle.png")
+TOKIQR_DIR = os.path.join(SCRIPT_DIR, "tokiqr")
 
 # Font detection: macOS → Linux fallback
 FONT_CANDIDATES = [
@@ -73,20 +76,27 @@ PUBLISHER_URL = "https://tokistorage.github.io/lp/"
 PUBLISHER_EMAIL = "tokistorage1000@gmail.com"
 
 
+# ── Layout constants (A4 landscape: 297mm × 210mm) ───────────────────
+PAGE_W = 297
+PAGE_H = 210
+MARGIN = 15
+CONTENT_W = PAGE_W - MARGIN * 2   # 267mm
+
+
 # ── PDF Class ──────────────────────────────────────────────────────────
 class NewsletterPDF(FPDF):
     """Newsletter PDF with Japanese font support and consistent styling."""
 
     def __init__(self):
-        super().__init__()
+        super().__init__(orientation="L", format="A4")
         self.add_font("JP", "", FONT_PATH)
         self.add_font("JP", "B", FONT_BOLD_PATH or FONT_PATH)
-        self.set_auto_page_break(auto=True, margin=25)
+        self.set_auto_page_break(auto=True, margin=20)
 
     def _footer_line(self, text):
-        self.set_y(-20)
+        self.set_y(-15)
         self.set_draw_color(*BORDER)
-        self.line(15, self.get_y(), 195, self.get_y())
+        self.line(MARGIN, self.get_y(), PAGE_W - MARGIN, self.get_y())
         self.ln(3)
         self.set_font("JP", "", 6.5)
         self.set_text_color(*MUTED)
@@ -95,38 +105,37 @@ class NewsletterPDF(FPDF):
     def accent_bar(self):
         """Top accent bar in TokiStorage blue."""
         self.set_fill_color(*TOKI_BLUE)
-        self.rect(0, 0, 210, 3.5, "F")
+        self.rect(0, 0, PAGE_W, 3.5, "F")
 
     def section_heading(self, title):
         self.ln(3)
         self.set_font("JP", "B", 11)
         self.set_text_color(*DARK)
-        # Blue left bar
         y = self.get_y()
         self.set_fill_color(*TOKI_BLUE)
-        self.rect(15, y, 3, 7, "F")
-        self.set_x(22)
+        self.rect(MARGIN, y, 3, 7, "F")
+        self.set_x(MARGIN + 7)
         self.cell(0, 7, title, new_x="LMARGIN", new_y="NEXT")
         self.ln(2)
 
     def body(self, text):
         self.set_font("JP", "", 9)
         self.set_text_color(*SECONDARY)
-        self.set_x(15)
-        self.multi_cell(180, 5.5, text)
+        self.set_x(MARGIN)
+        self.multi_cell(CONTENT_W, 5.5, text)
         self.ln(2)
 
     def body_bold(self, text):
         self.set_font("JP", "B", 9)
         self.set_text_color(*DARK)
-        self.set_x(15)
-        self.multi_cell(180, 5.5, text)
+        self.set_x(MARGIN)
+        self.multi_cell(CONTENT_W, 5.5, text)
         self.ln(1)
 
     def meta_row(self, label, value, label_w=42):
         self.set_font("JP", "", 8)
         self.set_text_color(*MUTED)
-        self.set_x(15)
+        self.set_x(MARGIN)
         self.cell(label_w, 6, label, align="L")
         self.set_font("JP", "", 9)
         self.set_text_color(*DARK)
@@ -135,7 +144,7 @@ class NewsletterPDF(FPDF):
     def divider(self):
         self.ln(2)
         self.set_draw_color(*BORDER)
-        self.line(15, self.get_y(), 195, self.get_y())
+        self.line(MARGIN, self.get_y(), PAGE_W - MARGIN, self.get_y())
         self.ln(4)
 
     def info_box(self, text):
@@ -143,15 +152,13 @@ class NewsletterPDF(FPDF):
         y = self.get_y()
         self.set_fill_color(*BG_LIGHT)
         self.set_draw_color(*BORDER)
-        # Measure height first
         self.set_font("JP", "", 8.5)
-        # Calculate approximate height
-        lines = len(text) / 38 + text.count("\n")
+        lines = len(text) / 55 + text.count("\n")
         h = max(lines * 5 + 8, 16)
-        self.rect(15, y, 180, h, "DF")
-        self.set_xy(20, y + 3)
+        self.rect(MARGIN, y, CONTENT_W, h, "DF")
+        self.set_xy(MARGIN + 5, y + 3)
         self.set_text_color(*SECONDARY)
-        self.multi_cell(170, 5, text)
+        self.multi_cell(CONTENT_W - 10, 5, text)
         self.set_y(y + h + 2)
 
 
@@ -180,7 +187,7 @@ def generate_vol1():
 
     # Icon
     if os.path.exists(ICON_PATH):
-        pdf.image(ICON_PATH, x=80, y=12, w=50)
+        pdf.image(ICON_PATH, x=(PAGE_W - 50) / 2, y=12, w=50)
 
     # Publication name
     pdf.set_y(68)
@@ -193,7 +200,7 @@ def generate_vol1():
     pdf.set_text_color(*MUTED)
     pdf.cell(0, 5, f"第{volume}巻 第{issue_num}号（通巻第{serial}号）", align="C",
              new_x="LMARGIN", new_y="NEXT")
-    pdf.ln(10)
+    pdf.ln(8)
 
     # Title
     pdf.set_font("JP", "B", 28)
@@ -206,7 +213,7 @@ def generate_vol1():
     pdf.cell(0, 7, "── 声を、国家の永久保存記録にする ──", align="C",
              new_x="LMARGIN", new_y="NEXT")
 
-    pdf.ln(25)
+    pdf.ln(12)
 
     # Date and issue info
     pdf.set_font("JP", "", 9)
@@ -216,24 +223,26 @@ def generate_vol1():
     pdf.cell(0, 6, f"Vol.{volume}  No.{issue_num}  Serial #{serial:05d}", align="C",
              new_x="LMARGIN", new_y="NEXT")
 
-    pdf.ln(30)
+    pdf.ln(15)
 
     # Publisher info box
+    box_w = 160
+    box_x = (PAGE_W - box_w) / 2
     pdf.set_draw_color(*BORDER)
     box_y = pdf.get_y()
-    pdf.rect(40, box_y, 130, 40, "D")
-    pdf.set_xy(45, box_y + 5)
+    pdf.rect(box_x, box_y, box_w, 35, "D")
+    pdf.set_xy(box_x + 5, box_y + 4)
     pdf.set_font("JP", "B", 9)
     pdf.set_text_color(*DARK)
-    pdf.cell(120, 6, "発行者", align="C", new_x="LMARGIN", new_y="NEXT")
-    pdf.set_x(45)
+    pdf.cell(box_w - 10, 6, "発行者", align="C", new_x="LMARGIN", new_y="NEXT")
+    pdf.set_x(box_x + 5)
     pdf.set_font("JP", "", 9)
     pdf.set_text_color(*SECONDARY)
-    pdf.cell(120, 6, PUBLISHER, align="C", new_x="LMARGIN", new_y="NEXT")
-    pdf.set_x(45)
-    pdf.cell(120, 6, PUBLISHER_ADDRESS, align="C", new_x="LMARGIN", new_y="NEXT")
-    pdf.set_x(45)
-    pdf.cell(120, 6, PUBLISHER_URL, align="C", new_x="LMARGIN", new_y="NEXT")
+    pdf.cell(box_w - 10, 6, PUBLISHER, align="C", new_x="LMARGIN", new_y="NEXT")
+    pdf.set_x(box_x + 5)
+    pdf.cell(box_w - 10, 6, PUBLISHER_ADDRESS, align="C", new_x="LMARGIN", new_y="NEXT")
+    pdf.set_x(box_x + 5)
+    pdf.cell(box_w - 10, 6, PUBLISHER_URL, align="C", new_x="LMARGIN", new_y="NEXT")
 
     # Footer
     pdf._footer_line(f"{PUBLICATION_NAME_JA}　第{volume}巻 第{issue_num}号（通巻第{serial}号）　2026年2月")
@@ -282,27 +291,27 @@ def generate_vol1():
         fill = i % 2 == 0
         if fill:
             pdf.set_fill_color(*BG_LIGHT)
-            pdf.rect(15, y, 180, 8, "F")
-        pdf.set_xy(18, y)
+            pdf.rect(MARGIN, y, CONTENT_W, 8, "F")
+        pdf.set_xy(MARGIN + 3, y)
         pdf.set_font("JP", "B", 8)
         pdf.set_text_color(*MUTED)
-        pdf.cell(45, 8, label)
+        pdf.cell(50, 8, label)
         pdf.set_font("JP", "", 9)
         pdf.set_text_color(*DARK)
         pdf.cell(0, 8, value, new_x="LMARGIN", new_y="NEXT")
 
-    pdf.ln(8)
+    pdf.ln(6)
     pdf.divider()
 
     # Numbering system explanation
     pdf.set_font("JP", "B", 9)
     pdf.set_text_color(*DARK)
-    pdf.set_x(15)
+    pdf.set_x(MARGIN)
     pdf.cell(0, 6, "採番体系について", new_x="LMARGIN", new_y="NEXT")
     pdf.ln(1)
     pdf.set_font("JP", "", 8)
     pdf.set_text_color(*SECONDARY)
-    pdf.set_x(15)
+    pdf.set_x(MARGIN)
     numbering_text = (
         "本ニュースレターは、1000年以上の継続発行を想定した採番体系を採用しています。\n"
         "・巻（Volume）＝ 創刊年（2026年）からの年数（2026年＝第1巻、2027年＝第2巻…）\n"
@@ -310,7 +319,7 @@ def generate_vol1():
         "・通巻（Serial）＝ 全号を通じた連番（5桁、最大99,999号＝年50回×2,000年相当）\n"
         "・ファイル名＝ YYYY-NN形式（例：2026-01, 3026-12）"
     )
-    pdf.multi_cell(180, 5, numbering_text)
+    pdf.multi_cell(CONTENT_W, 5, numbering_text)
 
     pdf._footer_line(f"{PUBLICATION_NAME_JA}　奥付")
 
@@ -319,9 +328,9 @@ def generate_vol1():
     # ═══════════════════════════════════════════════════════════════════
     pdf.add_page()
     pdf.accent_bar()
-    pdf.set_auto_page_break(auto=True, margin=25)
+    pdf.set_auto_page_break(auto=True, margin=20)
 
-    pdf.set_y(15)
+    pdf.set_y(12)
 
     # Section 1: 発刊にあたって
     pdf.section_heading("発刊にあたって")
@@ -364,29 +373,32 @@ def generate_vol1():
     pdf.set_fill_color(*BG_LIGHT)
     pdf.set_draw_color(*BORDER)
 
-    # Header
-    pdf.set_x(15)
+    # Header — columns sized for landscape
+    col_layer = 35
+    col_medium = 80
+    col_desc = CONTENT_W - col_layer - col_medium
+    pdf.set_x(MARGIN)
     pdf.set_font("JP", "B", 8)
     pdf.set_text_color(*DARK)
     pdf.set_fill_color(*TOKI_BLUE)
     pdf.set_text_color(*WHITE)
-    pdf.cell(30, 7, "  層", fill=True)
-    pdf.cell(55, 7, "  媒体", fill=True)
-    pdf.cell(95, 7, "  特徴", fill=True)
+    pdf.cell(col_layer, 7, "  層", fill=True)
+    pdf.cell(col_medium, 7, "  媒体", fill=True)
+    pdf.cell(col_desc, 7, "  特徴", fill=True)
     pdf.ln()
 
     for i, (layer, medium, desc) in enumerate(layers):
         fill = i % 2 == 0
         if fill:
             pdf.set_fill_color(*BG_LIGHT)
-        pdf.set_x(15)
+        pdf.set_x(MARGIN)
         pdf.set_font("JP", "B", 8)
         pdf.set_text_color(*DARK)
-        pdf.cell(30, 7, "  " + layer, fill=fill)
+        pdf.cell(col_layer, 7, "  " + layer, fill=fill)
         pdf.set_font("JP", "", 8)
         pdf.set_text_color(*SECONDARY)
-        pdf.cell(55, 7, "  " + medium, fill=fill)
-        pdf.cell(95, 7, "  " + desc, fill=fill)
+        pdf.cell(col_medium, 7, "  " + medium, fill=fill)
+        pdf.cell(col_desc, 7, "  " + desc, fill=fill)
         pdf.ln()
 
     pdf.ln(3)
@@ -414,8 +426,8 @@ def generate_vol1():
     pdf.ln(1)
     pdf.set_font("JP", "B", 10)
     pdf.set_text_color(*TOKI_BLUE)
-    pdf.set_x(15)
-    pdf.cell(180, 8, "[声]  ->  [QRコード]  ->  [PDF]  ->  [国会図書館]", align="C",
+    pdf.set_x(MARGIN)
+    pdf.cell(CONTENT_W, 8, "[声]  ->  [QRコード]  ->  [PDF]  ->  [国会図書館]", align="C",
              new_x="LMARGIN", new_y="NEXT")
     pdf.ln(3)
 
@@ -468,7 +480,7 @@ def generate_vol1():
     pdf.accent_bar()
     pdf.set_auto_page_break(auto=False)
 
-    pdf.set_y(40)
+    pdf.set_y(35)
 
     # NDL deposit declaration
     pdf.set_font("JP", "B", 12)
@@ -476,17 +488,19 @@ def generate_vol1():
     pdf.cell(0, 8, "国立国会図書館 納本宣言", align="C", new_x="LMARGIN", new_y="NEXT")
     pdf.ln(6)
 
+    decl_w = 200
+    decl_x = (PAGE_W - decl_w) / 2
     pdf.set_font("JP", "", 9)
     pdf.set_text_color(*SECONDARY)
-    pdf.set_x(30)
-    pdf.multi_cell(150, 6, (
+    pdf.set_x(decl_x)
+    pdf.multi_cell(decl_w, 6, (
         "本誌は、国立国会図書館法（第25条の4）に基づき、"
         "オンライン資料として国立国会図書館に納本されます。\n\n"
         "This publication is deposited with the National Diet Library "
         "of Japan under Article 25-4 of the National Diet Library Law."
     ), align="C")
 
-    pdf.ln(20)
+    pdf.ln(12)
     pdf.divider()
 
     # Next issue preview
@@ -497,13 +511,13 @@ def generate_vol1():
     pdf.ln(2)
     pdf.set_font("JP", "", 9)
     pdf.set_text_color(*SECONDARY)
-    pdf.set_x(30)
-    pdf.multi_cell(150, 6, (
+    pdf.set_x(decl_x)
+    pdf.multi_cell(decl_w, 6, (
         f"第{volume}巻 第{issue_num + 1}号（通巻第{serial + 1}号）は、"
         "技術デモQRコードの掲載と、佐渡拠点の進捗報告を予定しています。"
     ), align="C")
 
-    pdf.ln(20)
+    pdf.ln(12)
 
     # Copyright
     pdf.set_font("JP", "", 8)
@@ -515,13 +529,54 @@ def generate_vol1():
     pdf._footer_line(f"{PUBLICATION_NAME_JA}　第{volume}巻 第{issue_num}号　裏表紙")
 
     # ═══════════════════════════════════════════════════════════════════
-    # Output
+    # Output — generate base PDF, then merge TokiQR page before back cover
     # ═══════════════════════════════════════════════════════════════════
     os.makedirs(OUT_DIR, exist_ok=True)
     filename = f"{year}-{issue_num:02d}.pdf"
     out_path = os.path.join(OUT_DIR, filename)
-    pdf.output(out_path)
-    print(f"  -> {out_path}")
+
+    # Find TokiQR representative PDF
+    tokiqr_pdf_path = None
+    if os.path.isdir(TOKIQR_DIR):
+        for f in sorted(os.listdir(TOKIQR_DIR)):
+            if f.endswith(".pdf"):
+                tokiqr_pdf_path = os.path.join(TOKIQR_DIR, f)
+                break
+
+    if tokiqr_pdf_path:
+        # Write base newsletter to temp file, then merge with TokiQR
+        from pypdf import PdfReader, PdfWriter
+        import tempfile
+
+        tmp_path = out_path + ".tmp"
+        pdf.output(tmp_path)
+        print(f"  Base PDF: {tmp_path}")
+
+        newsletter = PdfReader(tmp_path)
+        tokiqr = PdfReader(tokiqr_pdf_path)
+        writer = PdfWriter()
+
+        # Insert all pages except the last (back cover)
+        for i in range(len(newsletter.pages) - 1):
+            writer.add_page(newsletter.pages[i])
+
+        # Insert TokiQR page(s)
+        for page in tokiqr.pages:
+            writer.add_page(page)
+        print(f"  TokiQR merged: {tokiqr_pdf_path}")
+
+        # Append back cover
+        writer.add_page(newsletter.pages[-1])
+
+        with open(out_path, "wb") as f:
+            writer.write(f)
+        os.remove(tmp_path)
+    else:
+        pdf.output(out_path)
+        print("  (No TokiQR PDF found — skipped merge)")
+
+    size_kb = os.path.getsize(out_path) / 1024
+    print(f"  -> {out_path} ({size_kb:.1f} KB)")
     return out_path
 
 
