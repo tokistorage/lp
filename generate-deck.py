@@ -472,7 +472,7 @@ CONTENT = {
             "bar": "Starting from \u00a55,000 ($33) \u2014 an exceptionally low entry barrier for your proposals",
             "label": "Pricing",
             "cards": [
-                ("Trial Plan", "\u00a55,000 ($33)", "Experience three-layer storage with A4 laminate. Voice QR \u2192 laminate + NDL deposit + GitHub."),
+                ("Trial Plan", "\u00a55,000 ($33)", "Experience three-layer storage with A4 laminate. TokiQR \u2192 laminate + NDL deposit + GitHub."),
                 ("Individual Plan", "\u00a550,000 ($330)", "Inscribed on quartz glass. \u00a550 per year. 1,000-year durability (theoretical)."),
                 ("Three-Generation", "\u00a5550,000 ($3,600)", "Three family members + on-site inscription on Sado Island. Recommended."),
                 ("Voice Memorial", "\u00a55,550,000 ($36,500)", "Fully bespoke. Voice restoration, custom design, premium experience."),
