@@ -261,13 +261,13 @@ def generate_vol1():
     pdf.set_text_color(*DARK)
     pdf.cell(0, 10, "奥付（Colophon）", align="C", new_x="LMARGIN", new_y="NEXT")
 
-    pdf.ln(4)
+    pdf.ln(2)
     pdf.set_font("JP", "", 8)
     pdf.set_text_color(*MUTED)
     pdf.cell(0, 5, "国立国会図書館法に基づく納本に必要な刊行情報", align="C",
              new_x="LMARGIN", new_y="NEXT")
 
-    pdf.ln(8)
+    pdf.ln(5)
 
     # Colophon data table
     colophon_data = [
@@ -302,7 +302,7 @@ def generate_vol1():
         pdf.set_text_color(*DARK)
         pdf.cell(0, 8, value, new_x="LMARGIN", new_y="NEXT")
 
-    pdf.ln(6)
+    pdf.ln(3)
     pdf.divider()
 
     # Numbering system explanation
@@ -310,7 +310,6 @@ def generate_vol1():
     pdf.set_text_color(*DARK)
     pdf.set_x(MARGIN)
     pdf.cell(0, 6, "採番体系について", new_x="LMARGIN", new_y="NEXT")
-    pdf.ln(1)
     pdf.set_font("JP", "", 8)
     pdf.set_text_color(*SECONDARY)
     pdf.set_x(MARGIN)
@@ -322,7 +321,7 @@ def generate_vol1():
         "・ファイル名＝ YYYY-MM形式（発行月。例：2026-02, 3026-12）\n"
         "1000年で50巻。伊勢神宮の遷宮と同じ周期で、記録を次世代に受け渡していきます。"
     )
-    pdf.multi_cell(CONTENT_W, 5, numbering_text)
+    pdf.multi_cell(CONTENT_W, 4.5, numbering_text)
 
     pdf._footer_line(f"{PUBLICATION_NAME_JA}　奥付")
 
@@ -470,25 +469,29 @@ def generate_vol1():
         "創刊号に関連する3本をご紹介します。"
     )
 
+    base_url = "https://tokistorage.github.io/lp/"
     essays = [
         ("30秒音声の世界",
          "QRコードに音声を刻める時間が2秒から30秒に拡張されたとき、"
          "変わったのは数字ではなく、体験の質だった。"
-         "2秒では「声が出た」という技術実証。30秒では「想いを残せた」という存在証明。"),
+         "2秒では「声が出た」という技術実証。30秒では「想いを残せた」という存在証明。",
+         f"{base_url}30seconds.html"),
         ("3-2-1ルール ── 三層分散保管の根拠",
          "「3-2-1ルール」はデータバックアップの世界標準であり、"
          "半世紀にわたり実証されてきた原則である。"
-         "トキストレージの三層分散保管は、この原則を「データ保全」から「存在証明」へと拡張した設計である。"),
+         "トキストレージの三層分散保管は、この原則を「データ保全」から「存在証明」へと拡張した設計である。",
+         f"{base_url}backup-rule.html"),
         ("公開主義 ── 構造的に隠せない設計",
          "組織は秘密を持つと、その管理にリソースを奪われる。"
          "トキストレージは「隠さない」のではなく「構造的に隠せない」設計を採用した。"
-         "QRコードを石英に刻むという行為自体が、公開性の物理的な宣言である。"),
+         "QRコードを石英に刻むという行為自体が、公開性の物理的な宣言である。",
+         f"{base_url}openness.html"),
     ]
 
     # Disable auto page break during essay boxes to prevent mid-box splits
     pdf.set_auto_page_break(auto=False)
 
-    for title, excerpt in essays:
+    for title, excerpt, url in essays:
         # Measure box height: title (7mm) + text + padding
         pdf.set_font("JP", "", 8.5)
         text_w = CONTENT_W - 10
@@ -511,7 +514,7 @@ def generate_vol1():
         pdf.set_xy(MARGIN + 5, y + 3)
         pdf.set_font("JP", "B", 9)
         pdf.set_text_color(*TOKI_BLUE)
-        pdf.cell(text_w, 7, title, new_x="LMARGIN", new_y="NEXT")
+        pdf.cell(text_w, 7, title, new_x="LMARGIN", new_y="NEXT", link=url)
         pdf.set_x(MARGIN + 5)
         pdf.set_font("JP", "", 8.5)
         pdf.set_text_color(*SECONDARY)
