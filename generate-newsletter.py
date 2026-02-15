@@ -1,10 +1,10 @@
 #!/usr/bin/env python3
 """Generate TokiStorage NDL Newsletter PDFs (国立国会図書館寄贈用ニュースレター).
 
-Numbering scheme (designed for 1000+ years of publication):
-  - Volume (巻): Year count from inaugural year (2026 = Vol.1)
-  - Number (号): Sequential within year (No.1, No.2, ...)
-  - Serial (通巻): Overall sequential number across all years
+Numbering scheme (designed for 1000+ years, 式年遷宮型):
+  - Volume (巻): 20-year cycle from 2026 (Vol.1 = 2026–2045, Vol.2 = 2046–2065, ...)
+  - Number (号): Sequential within volume (resets each 遷宮 cycle)
+  - Serial (通巻): Overall sequential number across all volumes
   - File naming: YYYY-MM (publication month, e.g., 2026-02, 2026-06, 2027-01)
 
 Layout: A4 landscape (297mm × 210mm) — matches TokiQR print output.
@@ -68,6 +68,7 @@ EMERALD = (22, 163, 74)         # #16a34a
 
 # ── Publication constants ──────────────────────────────────────────────
 INAUGURAL_YEAR = 2026
+VOLUME_SPAN = 20  # 式年遷宮型: 1巻 = 20年
 PUBLICATION_NAME = "TokiStorage Newsletter"
 PUBLICATION_NAME_JA = "トキストレージ ニュースレター"
 PUBLISHER = "TokiStorage（佐藤卓也）"
@@ -166,9 +167,9 @@ def generate_vol1():
     """Generate Vol.1 No.1 (創刊号) — February 2026."""
     year = 2026
     month = 2
-    issue_num = 1
-    serial = 1
-    volume = year - INAUGURAL_YEAR + 1  # Vol.1
+    issue_num = 1   # 巻内通し番号 (resets each 遷宮 cycle)
+    serial = 1      # 全巻通し番号 (never resets)
+    volume = (year - INAUGURAL_YEAR) // VOLUME_SPAN + 1  # Vol.1 = 2026–2045
 
     pdf = NewsletterPDF()
 
@@ -282,7 +283,7 @@ def generate_vol1():
         ("刊行頻度", "不定期（年複数回の刊行を予定）"),
         ("フォーマット", "PDF（電子書籍等・オンライン資料）"),
         ("根拠法", "国立国会図書館法 第25条・第25条の4"),
-        ("採番体系", "年-月（YYYY-MM） ※1000年発行を想定"),
+        ("採番体系", "式年遷宮型（1巻＝20年） ※1000年発行を想定"),
         ("ISSN", "未申請（今後申請予定）"),
     ]
 
@@ -314,11 +315,12 @@ def generate_vol1():
     pdf.set_text_color(*SECONDARY)
     pdf.set_x(MARGIN)
     numbering_text = (
-        "本ニュースレターは、1000年以上の継続発行を想定した採番体系を採用しています。\n"
-        "・巻（Volume）＝ 創刊年（2026年）からの年数（2026年＝第1巻、2027年＝第2巻…）\n"
-        "・号（Number）＝ 同一年内の連番（第1号、第2号…）\n"
-        "・通巻（Serial）＝ 全号を通じた連番（5桁、最大99,999号＝年50回×2,000年相当）\n"
-        "・ファイル名＝ YYYY-MM形式（発行月。例：2026-02, 3026-12）"
+        "本ニュースレターは、式年遷宮に倣い1巻＝20年の周期で採番しています。\n"
+        "・巻（Volume）＝ 20年周期（第1巻＝2026–2045年、第2巻＝2046–2065年…）\n"
+        "・号（Number）＝ 巻内の通し番号（遷宮ごとにリセット）\n"
+        "・通巻（Serial）＝ 全巻を通じた連番（5桁、最大99,999号）\n"
+        "・ファイル名＝ YYYY-MM形式（発行月。例：2026-02, 3026-12）\n"
+        "1000年で50巻。伊勢神宮の遷宮と同じ周期で、記録を次世代に受け渡していきます。"
     )
     pdf.multi_cell(CONTENT_W, 5, numbering_text)
 
