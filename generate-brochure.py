@@ -202,7 +202,7 @@ def generate_ja(qr_path):
         "PCT国際特許手続き中の独自音声符号化技術",
         "QR1枚に最大30秒の声を記録",
         "サーバー不要・オフライン再生・スマートフォンだけで再生可能",
-        "印刷対応・OEMライセンス利用可能",
+        "印刷対応・自社サービスへの組み込み自由",
         "無料で今すぐ体験 → tokistorage.github.io/qr/",
     ]
     pdf.set_xy(MARGIN + 6, y_box + 4)
@@ -391,7 +391,7 @@ def generate_en(qr_path):
         "Proprietary audio codec technology (PCT international patent pending)",
         "Up to 30 seconds of voice in a single QR code",
         "No server required \u2014 plays offline on any smartphone",
-        "Print-ready \u00b7 OEM licensing available",
+        "Print-ready \u00b7 free to integrate into your own service",
         "Try it free now \u2192 tokistorage.github.io/qr/",
     ]
     pdf.set_xy(MARGIN + 6, y_box + 4)
