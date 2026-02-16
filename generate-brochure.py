@@ -100,12 +100,12 @@ class BrochurePDF(FPDF):
             self.set_y(y)
         y_pos = self.get_y()
         self.set_fill_color(*TOKI_BLUE)
-        self.rect(MARGIN, y_pos, 3, 6, "F")
+        self.rect(MARGIN, y_pos, 3, 7, "F")
         self.set_xy(MARGIN + 6, y_pos)
-        self.set_font("JP", "B", 10)
+        self.set_font("JP", "B", 11)
         self.set_text_color(*DARK)
-        self.cell(0, 6, text, new_x="LMARGIN", new_y="NEXT")
-        self.ln(2)
+        self.cell(0, 7, text, new_x="LMARGIN", new_y="NEXT")
+        self.ln(3)
 
 
 def generate_ja(qr_path):
@@ -114,48 +114,49 @@ def generate_ja(qr_path):
     pdf.accent_bar()
 
     # ── Header: Icon + Company Name ────────────────────────────────────
-    pdf.set_y(8)
+    pdf.set_y(10)
     if os.path.exists(ICON_PATH):
-        pdf.image(ICON_PATH, x=MARGIN, y=8, w=12)
-    pdf.set_xy(MARGIN + 15, 8)
-    pdf.set_font("JP", "B", 16)
+        pdf.image(ICON_PATH, x=MARGIN, y=10, w=14)
+    pdf.set_xy(MARGIN + 17, 10)
+    pdf.set_font("JP", "B", 18)
     pdf.set_text_color(*DARK)
-    pdf.cell(0, 8, "TokiStorage", new_x="LMARGIN", new_y="NEXT")
-    pdf.set_x(MARGIN + 15)
-    pdf.set_font("JP", "", 8)
+    pdf.cell(0, 9, "TokiStorage", new_x="LMARGIN", new_y="NEXT")
+    pdf.set_x(MARGIN + 17)
+    pdf.set_font("JP", "", 9)
     pdf.set_text_color(*SECONDARY)
     pdf.cell(0, 5, "トキストレージ", new_x="LMARGIN", new_y="NEXT")
 
     # ── Tagline ────────────────────────────────────────────────────────
-    pdf.ln(3)
-    pdf.set_font("JP", "B", 18)
+    pdf.ln(6)
+    pdf.set_font("JP", "B", 22)
     pdf.set_text_color(*TOKI_BLUE)
     pdf.set_x(MARGIN)
-    pdf.cell(CONTENT_W, 10, "存在証明の民主化", align="C", new_x="LMARGIN", new_y="NEXT")
+    pdf.cell(CONTENT_W, 12, "存在証明の民主化", align="C", new_x="LMARGIN", new_y="NEXT")
 
     # ── Hook ───────────────────────────────────────────────────────────
-    pdf.ln(2)
-    pdf.set_font("JP", "", 10)
+    pdf.ln(4)
+    pdf.set_font("JP", "", 12)
     pdf.set_text_color(*DARK)
     pdf.set_x(MARGIN)
-    pdf.cell(CONTENT_W, 6, "あなたの曾祖父母の名前を、言えますか？", align="C",
+    pdf.cell(CONTENT_W, 7, "あなたの曾祖父母の名前を、言えますか？", align="C",
              new_x="LMARGIN", new_y="NEXT")
-    pdf.set_font("JP", "", 8.5)
+    pdf.ln(1)
+    pdf.set_font("JP", "", 9.5)
     pdf.set_text_color(*SECONDARY)
     pdf.set_x(MARGIN)
-    pdf.cell(CONTENT_W, 5,
+    pdf.cell(CONTENT_W, 6,
              "歴史に名を残せるのは一握り。普通の人の存在は、3世代で忘れ去られる。",
              align="C", new_x="LMARGIN", new_y="NEXT")
     pdf.set_x(MARGIN)
-    pdf.cell(CONTENT_W, 5,
+    pdf.cell(CONTENT_W, 6,
              "三層の分散保管で、声と記憶を1000年先に届ける。それがトキストレージです。",
              align="C", new_x="LMARGIN", new_y="NEXT")
 
     # ── Three-Layer Architecture ───────────────────────────────────────
-    pdf.ln(4)
+    pdf.ln(7)
     pdf.section_title("三層分散保管アーキテクチャ")
 
-    col_w = (CONTENT_W - 6) / 3  # 3 columns with 3mm gaps
+    col_w = (CONTENT_W - 8) / 3  # 3 columns with 4mm gaps
     y_top = pdf.get_y()
     layers = [
         ("物理層", "石英ガラス・ラミネート", "1000年耐久\n手元に届く実物"),
@@ -164,35 +165,35 @@ def generate_ja(qr_path):
     ]
 
     for i, (title, subtitle, desc) in enumerate(layers):
-        x = MARGIN + i * (col_w + 3)
-        box_h = 34
+        x = MARGIN + i * (col_w + 4)
+        box_h = 40
         # Background
         pdf.set_fill_color(*TOKI_BLUE_PALE)
         pdf.set_draw_color(*BORDER)
         pdf.rect(x, y_top, col_w, box_h, "DF")
         # Title
-        pdf.set_xy(x + 2, y_top + 2)
-        pdf.set_font("JP", "B", 9)
+        pdf.set_xy(x + 2, y_top + 3)
+        pdf.set_font("JP", "B", 10)
         pdf.set_text_color(*TOKI_BLUE)
-        pdf.cell(col_w - 4, 5, title, align="C", new_x="LMARGIN", new_y="NEXT")
+        pdf.cell(col_w - 4, 6, title, align="C", new_x="LMARGIN", new_y="NEXT")
         # Subtitle
         pdf.set_x(x + 2)
-        pdf.set_font("JP", "B", 7.5)
+        pdf.set_font("JP", "B", 8.5)
         pdf.set_text_color(*DARK)
-        pdf.cell(col_w - 4, 5, subtitle, align="C", new_x="LMARGIN", new_y="NEXT")
+        pdf.cell(col_w - 4, 6, subtitle, align="C", new_x="LMARGIN", new_y="NEXT")
         # Description
-        pdf.set_xy(x + 3, y_top + 14)
-        pdf.set_font("JP", "", 7)
+        pdf.set_xy(x + 3, y_top + 18)
+        pdf.set_font("JP", "", 8)
         pdf.set_text_color(*SECONDARY)
-        pdf.multi_cell(col_w - 6, 4, desc, align="C")
+        pdf.multi_cell(col_w - 6, 5, desc, align="C")
 
-    pdf.set_y(y_top + 38)
+    pdf.set_y(y_top + 46)
 
     # ── TokiQR Highlight ──────────────────────────────────────────────
     pdf.section_title("TokiQR ── 声を刻むQRコード")
 
     y_box = pdf.get_y()
-    box_h = 28
+    box_h = 36
     pdf.set_fill_color(*BG_LIGHT)
     pdf.set_draw_color(*BORDER)
     pdf.rect(MARGIN, y_box, CONTENT_W, box_h, "DF")
@@ -203,14 +204,14 @@ def generate_ja(qr_path):
         "サーバー不要・オフライン再生・スマートフォンだけで再生可能",
         "無料で今すぐ体験 → tokistorage.github.io/qr/",
     ]
-    pdf.set_xy(MARGIN + 5, y_box + 3)
-    pdf.set_font("JP", "", 8)
+    pdf.set_xy(MARGIN + 6, y_box + 4)
+    pdf.set_font("JP", "", 9.5)
     pdf.set_text_color(*DARK)
     for item in items:
-        pdf.set_x(MARGIN + 5)
-        pdf.cell(CONTENT_W - 10, 5.5, f"・{item}", new_x="LMARGIN", new_y="NEXT")
+        pdf.set_x(MARGIN + 6)
+        pdf.cell(CONTENT_W - 12, 7, f"・{item}", new_x="LMARGIN", new_y="NEXT")
 
-    pdf.set_y(y_box + box_h + 4)
+    pdf.set_y(y_box + box_h + 6)
 
     # ── Service Areas ─────────────────────────────────────────────────
     pdf.section_title("事業領域")
@@ -221,67 +222,66 @@ def generate_ja(qr_path):
         ("行政向け", "文化財音声保存、防災メッセージ、地域の語り部記録"),
     ]
 
-    y_start = pdf.get_y()
-    for i, (label, desc) in enumerate(areas):
+    for label, desc in areas:
         pdf.set_x(MARGIN)
-        pdf.set_font("JP", "B", 8)
+        pdf.set_font("JP", "B", 9.5)
         pdf.set_text_color(*TOKI_BLUE)
-        pdf.cell(25, 5, label)
-        pdf.set_font("JP", "", 8)
+        pdf.cell(28, 7, label)
+        pdf.set_font("JP", "", 9.5)
         pdf.set_text_color(*SECONDARY)
-        pdf.cell(CONTENT_W - 25, 5, desc, new_x="LMARGIN", new_y="NEXT")
+        pdf.cell(CONTENT_W - 28, 7, desc, new_x="LMARGIN", new_y="NEXT")
 
-    pdf.ln(4)
+    pdf.ln(6)
 
     # ── Pricing Summary ───────────────────────────────────────────────
     pdf.section_title("料金")
 
     pdf.set_x(MARGIN)
-    pdf.set_font("JP", "", 8)
+    pdf.set_font("JP", "", 9.5)
     pdf.set_text_color(*DARK)
-    pdf.cell(CONTENT_W, 5,
+    pdf.cell(CONTENT_W, 6,
              "TokiQR（音声QRコード作成）: 無料｜三層保管プラン: ¥5,000〜｜石英ガラス: ¥50,000〜",
              new_x="LMARGIN", new_y="NEXT")
     pdf.set_x(MARGIN)
-    pdf.set_font("JP", "", 7)
+    pdf.set_font("JP", "", 8)
     pdf.set_text_color(*MUTED)
-    pdf.cell(CONTENT_W, 4,
+    pdf.cell(CONTENT_W, 5,
              "詳しい料金プランはWebサイトをご覧ください",
              new_x="LMARGIN", new_y="NEXT")
 
-    pdf.ln(4)
+    pdf.ln(6)
 
     # ── Divider ────────────────────────────────────────────────────────
     pdf.set_draw_color(*BORDER)
     pdf.line(MARGIN, pdf.get_y(), PAGE_W - MARGIN, pdf.get_y())
-    pdf.ln(4)
+    pdf.ln(6)
 
     # ── Contact Footer ────────────────────────────────────────────────
     # QR code on the right
-    qr_size = 24
+    qr_size = 28
     qr_x = PAGE_W - MARGIN - qr_size
     qr_y = pdf.get_y()
     pdf.image(qr_path, x=qr_x, y=qr_y, w=qr_size)
 
     # Contact info on the left
     pdf.set_xy(MARGIN, qr_y)
-    pdf.set_font("JP", "B", 10)
+    pdf.set_font("JP", "B", 11)
     pdf.set_text_color(*DARK)
-    pdf.cell(0, 6, "TokiStorage ／ トキストレージ", new_x="LMARGIN", new_y="NEXT")
+    pdf.cell(0, 7, "TokiStorage ／ トキストレージ", new_x="LMARGIN", new_y="NEXT")
     pdf.set_x(MARGIN)
-    pdf.set_font("JP", "", 8)
+    pdf.set_font("JP", "", 9)
     pdf.set_text_color(*SECONDARY)
-    pdf.cell(0, 5, "代表：佐藤卓也", new_x="LMARGIN", new_y="NEXT")
+    pdf.cell(0, 6, "代表：佐藤卓也", new_x="LMARGIN", new_y="NEXT")
     pdf.set_x(MARGIN)
-    pdf.cell(0, 5, "〒279-0014 千葉県浦安市明海2-11-13（佐渡島に物理保管拠点を設置予定）",
+    pdf.cell(0, 6, "〒279-0014 千葉県浦安市明海2-11-13（佐渡島に物理保管拠点を設置予定）",
              new_x="LMARGIN", new_y="NEXT")
     pdf.set_x(MARGIN)
-    pdf.set_font("JP", "", 8)
+    pdf.set_font("JP", "", 9)
     pdf.set_text_color(*TOKI_BLUE)
-    pdf.cell(0, 5, f"Web: {SITE_URL}", link=SITE_URL,
+    pdf.cell(0, 6, f"Web: {SITE_URL}", link=SITE_URL,
              new_x="LMARGIN", new_y="NEXT")
     pdf.set_x(MARGIN)
-    pdf.cell(0, 5, f"Email: {EMAIL}", link=f"mailto:{EMAIL}",
+    pdf.cell(0, 6, f"Email: {EMAIL}", link=f"mailto:{EMAIL}",
              new_x="LMARGIN", new_y="NEXT")
 
     # ── Bottom bar ─────────────────────────────────────────────────────
@@ -305,49 +305,50 @@ def generate_en(qr_path):
     pdf.accent_bar()
 
     # ── Header: Icon + Company Name ────────────────────────────────────
-    pdf.set_y(8)
+    pdf.set_y(10)
     if os.path.exists(ICON_PATH):
-        pdf.image(ICON_PATH, x=MARGIN, y=8, w=12)
-    pdf.set_xy(MARGIN + 15, 8)
-    pdf.set_font("JP", "B", 16)
+        pdf.image(ICON_PATH, x=MARGIN, y=10, w=14)
+    pdf.set_xy(MARGIN + 17, 10)
+    pdf.set_font("JP", "B", 18)
     pdf.set_text_color(*DARK)
-    pdf.cell(0, 8, "TokiStorage", new_x="LMARGIN", new_y="NEXT")
-    pdf.set_x(MARGIN + 15)
-    pdf.set_font("JP", "", 8)
+    pdf.cell(0, 9, "TokiStorage", new_x="LMARGIN", new_y="NEXT")
+    pdf.set_x(MARGIN + 17)
+    pdf.set_font("JP", "", 9)
     pdf.set_text_color(*SECONDARY)
     pdf.cell(0, 5, "Voice Preservation for 1,000 Years", new_x="LMARGIN", new_y="NEXT")
 
     # ── Tagline ────────────────────────────────────────────────────────
-    pdf.ln(3)
-    pdf.set_font("JP", "B", 17)
+    pdf.ln(6)
+    pdf.set_font("JP", "B", 21)
     pdf.set_text_color(*TOKI_BLUE)
     pdf.set_x(MARGIN)
-    pdf.cell(CONTENT_W, 10, "Democratizing Proof of Existence", align="C",
+    pdf.cell(CONTENT_W, 12, "Democratizing Proof of Existence", align="C",
              new_x="LMARGIN", new_y="NEXT")
 
     # ── Hook ───────────────────────────────────────────────────────────
-    pdf.ln(2)
-    pdf.set_font("JP", "", 10)
+    pdf.ln(4)
+    pdf.set_font("JP", "", 12)
     pdf.set_text_color(*DARK)
     pdf.set_x(MARGIN)
-    pdf.cell(CONTENT_W, 6, "Can you name your great-grandparents?", align="C",
+    pdf.cell(CONTENT_W, 7, "Can you name your great-grandparents?", align="C",
              new_x="LMARGIN", new_y="NEXT")
-    pdf.set_font("JP", "", 8.5)
+    pdf.ln(1)
+    pdf.set_font("JP", "", 9.5)
     pdf.set_text_color(*SECONDARY)
     pdf.set_x(MARGIN)
-    pdf.cell(CONTENT_W, 5,
+    pdf.cell(CONTENT_W, 6,
              "Only a handful make it into history. Ordinary people are forgotten in three generations.",
              align="C", new_x="LMARGIN", new_y="NEXT")
     pdf.set_x(MARGIN)
-    pdf.cell(CONTENT_W, 5,
+    pdf.cell(CONTENT_W, 6,
              "Three-layer distributed storage carries your voice and memory 1,000 years into the future.",
              align="C", new_x="LMARGIN", new_y="NEXT")
 
     # ── Three-Layer Architecture ───────────────────────────────────────
-    pdf.ln(4)
+    pdf.ln(7)
     pdf.section_title("Three-Layer Distributed Storage")
 
-    col_w = (CONTENT_W - 6) / 3
+    col_w = (CONTENT_W - 8) / 3
     y_top = pdf.get_y()
     layers = [
         ("Physical", "Quartz Glass & Laminate", "1,000-year durability\nDelivered to you"),
@@ -356,31 +357,31 @@ def generate_en(qr_path):
     ]
 
     for i, (title, subtitle, desc) in enumerate(layers):
-        x = MARGIN + i * (col_w + 3)
-        box_h = 34
+        x = MARGIN + i * (col_w + 4)
+        box_h = 40
         pdf.set_fill_color(*TOKI_BLUE_PALE)
         pdf.set_draw_color(*BORDER)
         pdf.rect(x, y_top, col_w, box_h, "DF")
-        pdf.set_xy(x + 2, y_top + 2)
-        pdf.set_font("JP", "B", 9)
+        pdf.set_xy(x + 2, y_top + 3)
+        pdf.set_font("JP", "B", 10)
         pdf.set_text_color(*TOKI_BLUE)
-        pdf.cell(col_w - 4, 5, title, align="C", new_x="LMARGIN", new_y="NEXT")
+        pdf.cell(col_w - 4, 6, title, align="C", new_x="LMARGIN", new_y="NEXT")
         pdf.set_x(x + 2)
-        pdf.set_font("JP", "B", 7.5)
+        pdf.set_font("JP", "B", 8.5)
         pdf.set_text_color(*DARK)
-        pdf.cell(col_w - 4, 5, subtitle, align="C", new_x="LMARGIN", new_y="NEXT")
-        pdf.set_xy(x + 3, y_top + 14)
-        pdf.set_font("JP", "", 7)
+        pdf.cell(col_w - 4, 6, subtitle, align="C", new_x="LMARGIN", new_y="NEXT")
+        pdf.set_xy(x + 3, y_top + 18)
+        pdf.set_font("JP", "", 8)
         pdf.set_text_color(*SECONDARY)
-        pdf.multi_cell(col_w - 6, 4, desc, align="C")
+        pdf.multi_cell(col_w - 6, 5, desc, align="C")
 
-    pdf.set_y(y_top + 38)
+    pdf.set_y(y_top + 46)
 
     # ── TokiQR Highlight ──────────────────────────────────────────────
     pdf.section_title("TokiQR \u2014 Voice Encoded in a QR Code")
 
     y_box = pdf.get_y()
-    box_h = 28
+    box_h = 36
     pdf.set_fill_color(*BG_LIGHT)
     pdf.set_draw_color(*BORDER)
     pdf.rect(MARGIN, y_box, CONTENT_W, box_h, "DF")
@@ -391,14 +392,14 @@ def generate_en(qr_path):
         "No server required \u2014 plays offline on any smartphone",
         "Try it free now \u2192 tokistorage.github.io/qr/",
     ]
-    pdf.set_xy(MARGIN + 5, y_box + 3)
-    pdf.set_font("JP", "", 8)
+    pdf.set_xy(MARGIN + 6, y_box + 4)
+    pdf.set_font("JP", "", 9.5)
     pdf.set_text_color(*DARK)
     for item in items:
-        pdf.set_x(MARGIN + 5)
-        pdf.cell(CONTENT_W - 10, 5.5, f"\u2022 {item}", new_x="LMARGIN", new_y="NEXT")
+        pdf.set_x(MARGIN + 6)
+        pdf.cell(CONTENT_W - 12, 7, f"\u2022 {item}", new_x="LMARGIN", new_y="NEXT")
 
-    pdf.set_y(y_box + box_h + 4)
+    pdf.set_y(y_box + box_h + 6)
 
     # ── Service Areas ─────────────────────────────────────────────────
     pdf.section_title("Service Areas")
@@ -411,62 +412,62 @@ def generate_en(qr_path):
 
     for label, desc in areas:
         pdf.set_x(MARGIN)
-        pdf.set_font("JP", "B", 8)
+        pdf.set_font("JP", "B", 9.5)
         pdf.set_text_color(*TOKI_BLUE)
-        pdf.cell(25, 5, label)
-        pdf.set_font("JP", "", 8)
+        pdf.cell(28, 7, label)
+        pdf.set_font("JP", "", 9.5)
         pdf.set_text_color(*SECONDARY)
-        pdf.cell(CONTENT_W - 25, 5, desc, new_x="LMARGIN", new_y="NEXT")
+        pdf.cell(CONTENT_W - 28, 7, desc, new_x="LMARGIN", new_y="NEXT")
 
-    pdf.ln(4)
+    pdf.ln(6)
 
     # ── Pricing Summary ───────────────────────────────────────────────
     pdf.section_title("Pricing")
 
     pdf.set_x(MARGIN)
-    pdf.set_font("JP", "", 8)
+    pdf.set_font("JP", "", 9.5)
     pdf.set_text_color(*DARK)
-    pdf.cell(CONTENT_W, 5,
+    pdf.cell(CONTENT_W, 6,
              "TokiQR (Voice QR creation): Free | Three-Layer Plan: from \u00a55,000 | Quartz Glass: from \u00a550,000",
              new_x="LMARGIN", new_y="NEXT")
     pdf.set_x(MARGIN)
-    pdf.set_font("JP", "", 7)
+    pdf.set_font("JP", "", 8)
     pdf.set_text_color(*MUTED)
-    pdf.cell(CONTENT_W, 4,
+    pdf.cell(CONTENT_W, 5,
              "See our website for detailed pricing plans",
              new_x="LMARGIN", new_y="NEXT")
 
-    pdf.ln(4)
+    pdf.ln(6)
 
     # ── Divider ────────────────────────────────────────────────────────
     pdf.set_draw_color(*BORDER)
     pdf.line(MARGIN, pdf.get_y(), PAGE_W - MARGIN, pdf.get_y())
-    pdf.ln(4)
+    pdf.ln(6)
 
     # ── Contact Footer ────────────────────────────────────────────────
-    qr_size = 24
+    qr_size = 28
     qr_x = PAGE_W - MARGIN - qr_size
     qr_y = pdf.get_y()
     pdf.image(qr_path, x=qr_x, y=qr_y, w=qr_size)
 
     pdf.set_xy(MARGIN, qr_y)
-    pdf.set_font("JP", "B", 10)
+    pdf.set_font("JP", "B", 11)
     pdf.set_text_color(*DARK)
-    pdf.cell(0, 6, "TokiStorage", new_x="LMARGIN", new_y="NEXT")
+    pdf.cell(0, 7, "TokiStorage", new_x="LMARGIN", new_y="NEXT")
     pdf.set_x(MARGIN)
-    pdf.set_font("JP", "", 8)
+    pdf.set_font("JP", "", 9)
     pdf.set_text_color(*SECONDARY)
-    pdf.cell(0, 5, "Takuya Sato, Founder", new_x="LMARGIN", new_y="NEXT")
+    pdf.cell(0, 6, "Takuya Sato, Founder", new_x="LMARGIN", new_y="NEXT")
     pdf.set_x(MARGIN)
-    pdf.cell(0, 5, "Urayasu, Chiba, Japan (planning to establish a physical storage base on Sado Island)",
+    pdf.cell(0, 6, "Urayasu, Chiba, Japan (planning to establish a physical storage base on Sado Island)",
              new_x="LMARGIN", new_y="NEXT")
     pdf.set_x(MARGIN)
-    pdf.set_font("JP", "", 8)
+    pdf.set_font("JP", "", 9)
     pdf.set_text_color(*TOKI_BLUE)
-    pdf.cell(0, 5, f"Web: {SITE_URL}", link=SITE_URL,
+    pdf.cell(0, 6, f"Web: {SITE_URL}", link=SITE_URL,
              new_x="LMARGIN", new_y="NEXT")
     pdf.set_x(MARGIN)
-    pdf.cell(0, 5, f"Email: {EMAIL}", link=f"mailto:{EMAIL}",
+    pdf.cell(0, 6, f"Email: {EMAIL}", link=f"mailto:{EMAIL}",
              new_x="LMARGIN", new_y="NEXT")
 
     # ── Bottom bar ─────────────────────────────────────────────────────
