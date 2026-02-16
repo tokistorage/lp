@@ -1,0 +1,434 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" type="image/png" sizes="32x32" href="asset/favicon-32.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="asset/apple-touch-icon.png">
+    <title>What Global Niche Businesses Need from Payments | TokiStorage</title>
+    <meta name="robots" content="index, follow">
+    <meta name="description" content="Global niche businesses don't fail because they can't sell — they fail because they can't get paid. On the structural disconnect in cross-border payments, and why Wise bridges the gap.">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Shippori+Mincho:wght@400;500;600;700&family=Zen+Kaku+Gothic+New:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --toki-blue: #2563EB;
+            --toki-blue-dark: #1D4ED8;
+            --toki-blue-pale: #EFF6FF;
+            --accent-blue: #3B82F6;
+            --bg-white: #FFFFFF;
+            --text-primary: #1E293B;
+            --text-secondary: #475569;
+            --text-muted: #94A3B8;
+            --border: #E2E8F0;
+            --font-display: 'Shippori Mincho', serif;
+            --font-body: 'Zen Kaku Gothic New', sans-serif;
+        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        html { scroll-behavior: smooth; }
+        body { font-family: var(--font-body); font-weight: 400; background: var(--bg-white); color: var(--text-primary); line-height: 2; font-size: 16px; }
+
+        .article-nav { position: fixed; top: 0; left: 0; right: 0; z-index: 1000; background: rgba(255,255,255,0.95); backdrop-filter: blur(12px); border-bottom: 1px solid var(--border); padding: 0.6rem 1.2rem; display: flex; align-items: center; justify-content: space-between; gap: 1rem; }
+        .article-nav .nav-brand { font-family: var(--font-display); font-size: 0.9rem; font-weight: 600; color: var(--toki-blue); text-decoration: none; white-space: nowrap; }
+        .article-nav .nav-brand::before { content: ''; display: inline-block; width: 20px; height: 20px; background: url('asset/tokistorage-icon-512.png') no-repeat center / contain; vertical-align: -3px; margin-right: 5px; }
+        .article-nav .nav-right { display: flex; align-items: center; gap: 1rem; }
+        .article-nav .nav-label { font-size: 0.6rem; color: var(--text-muted); letter-spacing: 0.08em; }
+        .article-nav .lang-switch { font-size: 0.75rem; color: var(--toki-blue); text-decoration: none; padding: 0.3rem 0.6rem; border: 1px solid var(--toki-blue); border-radius: 4px; }
+        .article-nav .lang-switch:hover { background: var(--toki-blue); color: #fff; }
+
+        .article-container { max-width: 680px; margin: 0 auto; padding: 7rem 2rem 4rem; }
+        .article-header { margin-bottom: 3rem; padding-bottom: 2rem; border-bottom: 1px solid var(--border); }
+        .article-category { font-size: 0.7rem; color: var(--toki-blue); letter-spacing: 0.15em; margin-bottom: 1rem; }
+        .article-header h1 { font-family: var(--font-display); font-size: 1.8rem; font-weight: 700; line-height: 1.5; margin-bottom: 1.5rem; }
+        .article-subtitle { font-size: 0.95rem; color: var(--text-secondary); line-height: 1.9; }
+
+        .article-content h2 { font-family: var(--font-display); font-size: 1.3rem; font-weight: 600; margin: 3rem 0 1.5rem; padding-bottom: 0.5rem; border-bottom: 2px solid var(--toki-blue-pale); }
+        .article-content h3 { font-family: var(--font-display); font-size: 1.1rem; font-weight: 600; margin: 2rem 0 1rem; color: var(--toki-blue-dark); }
+        .article-content p { margin-bottom: 1.5rem; }
+        .article-content blockquote { border-left: 3px solid var(--toki-blue); padding-left: 1.5rem; margin: 2rem 0; font-family: var(--font-display); color: var(--text-secondary); }
+        .article-content ul { margin: 1.5rem 0; padding-left: 1.5rem; }
+        .article-content li { margin-bottom: 0.75rem; }
+
+        .core-message { background: var(--toki-blue-pale); border-left: 4px solid var(--toki-blue); padding: 1.5rem; margin: 2rem 0; font-size: 0.95rem; }
+        .key-point { background: linear-gradient(135deg, var(--toki-blue-pale) 0%, #fff 100%); border: 1px solid var(--accent-blue); border-radius: 8px; padding: 1.5rem; margin: 2rem 0; text-align: center; }
+        .key-point p { font-family: var(--font-display); font-size: 1.1rem; color: var(--toki-blue-dark); margin: 0; }
+
+        .mapping-table { width: 100%; border-collapse: collapse; margin: 2rem 0; font-size: 0.9rem; }
+        .mapping-table th { background: var(--toki-blue); color: #fff; padding: 0.8rem 1rem; text-align: left; font-weight: 500; }
+        .mapping-table td { padding: 0.8rem 1rem; border-bottom: 1px solid var(--border); }
+        .mapping-table tr:nth-child(even) td { background: var(--toki-blue-pale); }
+
+        .comparison { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin: 2rem 0; }
+        .comparison-card { padding: 1.5rem; border-radius: 8px; }
+        .comparison-card.before { background: #F1F5F9; border: 1px solid var(--border); }
+        .comparison-card.after { background: var(--toki-blue-pale); border: 1px solid var(--toki-blue); }
+        .comparison-card h4 { font-family: var(--font-display); font-size: 0.95rem; margin-bottom: 0.5rem; }
+        .comparison-card p { font-size: 0.85rem; color: var(--text-secondary); margin-bottom: 0.5rem; }
+
+        .article-footer { margin-top: 4rem; padding-top: 2rem; border-top: 1px solid var(--border); text-align: center; }
+        .article-footer p { font-size: 0.8rem; color: var(--text-muted); margin-bottom: 1rem; }
+        .article-footer a { color: var(--toki-blue); text-decoration: none; }
+        .article-footer a:hover { text-decoration: underline; }
+
+        @media (max-width: 768px) {
+            .article-container { padding: 6rem 1.2rem 3rem; }
+            .article-header h1 { font-size: 1.5rem; }
+            .article-nav .nav-label { display: none; }
+            .comparison { grid-template-columns: 1fr; }
+            .mapping-table { font-size: 0.8rem; }
+            .mapping-table th, .mapping-table td { padding: 0.5rem 0.6rem; }
+        }
+        @media print { .article-nav { display: none; } .article-container { padding-top: 2rem; } }
+    </style>
+    <link rel="stylesheet" href="contact-form.css">
+    <meta property="og:image" content="https://tokistorage.github.io/lp/asset/tokistorage-icon-512.png">
+    <meta property="og:image:width" content="512">
+    <meta property="og:image:height" content="512">
+</head>
+<body>
+
+<nav class="article-nav">
+    <a href="index-en.html" class="nav-brand">TokiStorage</a>
+    <div class="nav-right">
+        <span class="nav-label">Economy / Finance</span>
+        <a href="payment.html" class="lang-switch">JA</a>
+    </div>
+</nav>
+
+<main class="article-container">
+
+    <header class="article-header">
+        <p class="article-category">ESSAY &mdash; Payments &amp; Business Architecture</p>
+        <h1>What Global Niche Businesses Need from Payments<br><span style="font-size: 0.6em; font-weight: 400; color: var(--text-secondary);">&mdash;&mdash; The structural disconnect between payers and receivers</span></h1>
+        <p class="article-subtitle">
+            Global niche businesses don't fail because they can't sell.<br>
+            They fail because they can't get paid.
+        </p>
+    </header>
+
+    <article class="article-content">
+
+        <div class="core-message">
+            <strong>The core argument:</strong> For global niche businesses, the choice of payment method is not an operational detail — it is the architecture of the business itself. Financial infrastructure in Japan and the US is optimized for domestic transactions and structurally incapable of serving low-volume cross-border commerce. PayPal and Stripe each have walls they cannot climb. Cryptocurrency is ideal in theory but impractical today. Wise is, at present, the only tool that threads the needle.
+        </div>
+
+        <h2>1. What Is a Global Niche?</h2>
+
+        <p>A global niche is a business whose customers are scattered across the world in small numbers. The market is tiny in any single country. But add them all up, and it's a viable business.</p>
+
+        <p>Consider a service that inscribes QR codes onto quartz glass for thousand-year preservation. Ten customers in Japan, five in the US, three in Germany, two in Australia. No single country has enough demand to call it a "market." But globally, the business works.</p>
+
+        <p>The problem is that while technology and logistics have made it possible to "add up the world," payments have not kept pace.</p>
+
+        <p>Enterprise-grade international payment infrastructure exists — SWIFT networks, correspondent banking, multi-currency treasury management. But these are built for millions of dollars in monthly volume. They don't serve a business selling a few thousand-yen items per month.</p>
+
+        <p>Domestic payments, on the other hand, are frictionless. A tap on PayPay in Japan, a Zelle transfer in the US. But these stop at the border. A customer in Germany cannot use PayPay.</p>
+
+        <p>Global niche businesses fall into the gap between enterprise infrastructure and local payments. Neither world serves them. This "payment void" kills transactions that should otherwise happen.</p>
+
+        <h2>2. The Payment Landscape in Japan</h2>
+
+        <p>Japan has one of the most sophisticated domestic payment systems in the world.</p>
+
+        <h3>Domestic Excellence</h3>
+
+        <p>Bank transfers settle instantly through the Zengin Network. Convenience store payments are available 24/7. QR payments (PayPay, LINE Pay, Rakuten Pay) take seconds. Credit card adoption is rising steadily.</p>
+
+        <p>Within Japan, payment friction is essentially zero.</p>
+
+        <h3>The Cliff at the Border</h3>
+
+        <p>But beyond that domestic excellence, there's a cliff.</p>
+
+        <p>Sending money abroad through a Japanese bank costs &yen;2,500&ndash;6,000+ in fees. This is a flat fee regardless of the amount. Sending &yen;5,000 for a product with &yen;4,000 in fees makes no economic sense.</p>
+
+        <p>On top of that, exchange rates carry a 2&ndash;4% markup. The difference between the bank's quoted rate and the actual mid-market rate is absorbed as margin — separate from the stated fee.</p>
+
+        <p>Then there are correspondent bank fees. Japanese banks rarely connect directly to foreign banks. An intermediary bank deducts $15&ndash;30 from the transfer. The deduction amount is unknown in advance. The amount sent and the amount received are different numbers.</p>
+
+        <blockquote>
+            <p>Japanese banks are optimized for Japan. They are not built to connect to the world.</p>
+        </blockquote>
+
+        <h3>Receiving Is Equally Painful</h3>
+
+        <p>Receiving an international transfer into a Japanese bank account incurs &yen;1,500&ndash;2,500 in inward remittance fees. Exchange rate markups apply on top. If someone sends $50, the recipient might receive &yen;6,800 or &yen;7,200 — the exact amount is unknown until it arrives.</p>
+
+        <h2>3. The Payment Landscape in the US</h2>
+
+        <p>The US payment infrastructure is also domestically optimized — but in a different shape.</p>
+
+        <h3>Card Culture and ACH</h3>
+
+        <p>The US is a credit card culture. Almost every transaction — from coffee to cars — runs on cards. ACH (Automated Clearing House) handles payroll, utility bills, and recurring transfers. Zelle provides instant bank-to-bank transfers. Venmo dominates peer-to-peer payments.</p>
+
+        <p>Domestically, payments just work.</p>
+
+        <h3>The Border Problem</h3>
+
+        <p>Cross-border, the story changes. SWIFT transfers cost $25&ndash;50 per transaction. Settlement takes 2&ndash;5 business days. Correspondent banks may deduct additional fees.</p>
+
+        <p>Credit card international transaction fees run 2.9%+. For international cards, processors charge 3.6% or more — on top of the card network's own currency conversion margin.</p>
+
+        <p>Zelle, Venmo, ACH — all US-only. They don't reach beyond the dollar zone.</p>
+
+        <blockquote>
+            <p>US payments are optimized for the dollar zone. Receiving Japanese yen is not a use case they were designed for.</p>
+        </blockquote>
+
+        <p>Japan and the US — the world's two largest economies — each have payment systems optimized for their own currency, with a structural gap between them. For large corporations, the treasury department absorbs this cost. For a global niche, this gap extinguishes transactions.</p>
+
+        <h2>4. Options and Constraints for the Payer</h2>
+
+        <p>What options does a global niche customer — the payer — actually have?</p>
+
+        <table class="mapping-table">
+            <tr>
+                <th>Method</th>
+                <th>Fees</th>
+                <th>Speed</th>
+                <th>User Experience</th>
+            </tr>
+            <tr>
+                <td>Bank wire (international)</td>
+                <td>$20&ndash;50+</td>
+                <td>2&ndash;5 business days</td>
+                <td>Complex. SWIFT/IBAN required</td>
+            </tr>
+            <tr>
+                <td>Credit card</td>
+                <td>3&ndash;5% (incl. FX)</td>
+                <td>Instant</td>
+                <td>Easy. But fees are opaque</td>
+            </tr>
+            <tr>
+                <td>PayPal</td>
+                <td>4.4% + fixed</td>
+                <td>Instant</td>
+                <td>Easy. But freeze risk</td>
+            </tr>
+            <tr>
+                <td>Cryptocurrency</td>
+                <td>0.1&ndash;5%</td>
+                <td>Minutes to hours</td>
+                <td>Wallet required. High barrier</td>
+            </tr>
+            <tr>
+                <td>Wise</td>
+                <td>0.3&ndash;1%</td>
+                <td>Same day to 1 business day</td>
+                <td>Easy. Feels like a local transfer</td>
+            </tr>
+        </table>
+
+        <p>Bank wires are a non-starter. No customer pays $40 in fees for a $35 product. Credit cards are easy to use but require the receiver to build a payment system (more on that below). PayPal has brand recognition but high fees and freeze risk. Cryptocurrency requires a wallet that most people don't have.</p>
+
+        <p>What matters most to the payer is this: <em>they shouldn't have to do anything special</em>. No new app to install. No new concept to learn. Just send money from their regular bank account, the way they normally would. Wise's local account numbers make this possible. To a customer in Germany, it's just a SEPA transfer. To a customer in the US, it's just an ACH transfer.</p>
+
+        <h2>5. Options and Constraints for the Receiver</h2>
+
+        <p>The payment problem is more severe on the receiving side than the paying side.</p>
+
+        <h3>Stripe</h3>
+
+        <p>Stripe is the best tool developers have ever seen. The API design, the documentation, the dashboard — all beautiful. Credit card payments can be integrated in a few lines of code.</p>
+
+        <p>But Stripe is built for "e-commerce businesses of a certain scale." There are no fixed fees. But international card processing costs 3.6%+. On a $35 product, $1.26 disappears. For a business with a few orders per month, the overhead of managing the dashboard (tax settings, webhooks, receipt management) becomes a mental burden that outweighs the revenue.</p>
+
+        <p>Furthermore, distributing revenue to partners requires Stripe Connect — which requires each partner to have their own Stripe account. Asking a partner who gets one order every few months to "please set up a Stripe account" is an unreasonable demand.</p>
+
+        <h3>PayPal</h3>
+
+        <p>PayPal is the world's most recognized online payment method. Its brand alone creates trust. When a customer thinks "I can pay with PayPal, so it's safe," that brand power is real.</p>
+
+        <p>But from the receiver's perspective, PayPal has a different face.</p>
+
+        <p>Account freezes happen without warning. Adding a donation button to a website triggered additional verification requirements. Even after responding, restrictions took weeks to lift. Cases of funds being held for 180 days have been documented.</p>
+
+        <p>The fee structure is opaque. The surface rate is 3.5% + fixed fee, but the exchange rate carries an additional 2&ndash;3% markup. The effective fee can exceed 6%. On a $35 product, more than $2 disappears. And the breakdown is only visible if you read the transaction details carefully.</p>
+
+        <blockquote>
+            <p>PayPal is trusted by customers. Whether it deserves the trust of sellers is a different question.</p>
+        </blockquote>
+
+        <h3>Bank Accounts</h3>
+
+        <p>Holding local bank accounts in each currency zone would solve the receiving fee problem. ACH in the US, SEPA in Europe, Faster Payments in the UK — all have minimal fees for domestic transfers.</p>
+
+        <p>But for a sole proprietor based in Japan, opening a US bank account is practically impossible. You need an SSN or ITIN. A corporation can obtain an EIN and open an account, but the cost of incorporation and maintenance doesn't justify a few orders per month. Europe's KYC regulations have also tightened, making non-resident account opening increasingly difficult.</p>
+
+        <h3>Wise</h3>
+
+        <p>Wise provides local account numbers in 10+ currencies from a single account. USD (ACH routing + account number), EUR (IBAN), GBP (Sort Code), AUD (BSB), SGD, NZD, and more. From Japan, you can tell a US customer "send to this ACH account number." From their perspective, it's a domestic transfer — with domestic fees (often zero).</p>
+
+        <p>Receiving fees are zero. Currency conversion costs 0.3&ndash;1%, applied at the mid-market rate — no hidden markup. Fees are shown exactly before the transfer is made. "Unknown amount upon arrival" is eliminated.</p>
+
+        <h2>6. The Walls PayPal and Stripe Cannot Climb</h2>
+
+        <p>PayPal and Stripe are excellent services in their respective domains. But for the payment needs of a global niche, each has structural walls.</p>
+
+        <h3>PayPal's Wall — Opacity and Risk</h3>
+
+        <p>PayPal's fundamental problem is that it introduces risks beyond the business owner's control.</p>
+
+        <p>Account freezes are at PayPal's discretion. The criteria are not disclosed. If transaction patterns are deemed "unusual," funds are locked without notice. A global niche with three transactions per month looks "unusual" to PayPal's algorithms by definition.</p>
+
+        <p>Exchange fee opacity is also serious. PayPal's exchange rate adds a 2.5&ndash;4% margin to the mid-market rate. This is displayed as "the exchange rate," not as "a fee" — making it structurally difficult for users to understand the true cost.</p>
+
+        <p>And fund holds. New accounts or changes in transaction patterns can trigger holds of up to 180 days. A $35 sale locked up for six months. For a global niche's cash flow, this is devastating.</p>
+
+        <h3>Stripe's Wall — The Scale Assumption</h3>
+
+        <p>Stripe's wall is different in nature. Stripe is transparent, fair, and technically beautiful. The issue is the gap between Stripe's assumed business scale and the reality of a global niche.</p>
+
+        <p>Stripe is "embedded payments." You integrate Stripe into your website or app, and customers pay with credit cards. The experience is flawless. But the prerequisites — building the website, configuring Stripe, automating tax processing, managing webhooks — represent over-investment for a business with single-digit monthly orders.</p>
+
+        <p>The partner distribution problem compounds this. Stripe Connect can split payments among multiple recipients. But each recipient needs a Stripe account. Asking small-scale partners worldwide to set up Stripe accounts is unrealistic.</p>
+
+        <blockquote>
+            <p>Stripe is the best tool there is. Provided your business is the size Stripe expects.</p>
+        </blockquote>
+
+        <h2>7. Wise as the Common Thread</h2>
+
+        <p>Wise started as a remittance service. But its essence is a platform that resolves the structural inefficiencies of global financial infrastructure.</p>
+
+        <h3>The Real Exchange Rate</h3>
+
+        <p>Wise uses the mid-market rate — the same rate you see when you Google "1 USD to JPY." The interbank rate with zero markup. Where banks and PayPal add 2&ndash;4% margin, Wise adds zero.</p>
+
+        <h3>Transparent Fees</h3>
+
+        <p>Wise shows the exact fee and delivery amount before you send. Not an estimate — the confirmed amount. No "by the way, a correspondent bank deducted some fees" surprises after the fact.</p>
+
+        <h3>Multi-Currency Account</h3>
+
+        <p>A single Wise account holds 50+ currencies. Convert when you need to, at the rate you can see. Hold balances in the currencies your customers pay in.</p>
+
+        <h3>Local Account Numbers</h3>
+
+        <p>This is Wise's decisive advantage. USD (ACH routing + account number), EUR (IBAN), GBP (Sort Code + account number), AUD (BSB), SGD, NZD, and more — local account details in 10+ currencies.</p>
+
+        <p>From Japan, you can give US customers an ACH account number. They send via ACH — a domestic transfer with domestic fees (often zero). German customers get an IBAN for SEPA transfers. UK customers get a Sort Code. The payer never has to deal with international transfers.</p>
+
+        <h3>Wise Tags</h3>
+
+        <p>A Wise tag is a unique identifier — like @tokistorage. It doubles as a payment link: wise.com/pay/tokistorage. This serves simultaneously as a partner ID and a payment address. If you know a partner's Wise tag, you can send their revenue share instantly. No new system needed. Wise itself is the identity system and the payment rail.</p>
+
+        <h3>Regulation and Licensing</h3>
+
+        <p>Wise holds financial licenses in every major market. FinCEN-registered money services business in the US, with state-level Money Transmitter licenses. FCA-authorized in the UK. Central bank-supervised in Belgium for the EU. Registered as a funds transfer service provider in Japan.</p>
+
+        <p>The "sudden account freeze" risk that plagues PayPal is structurally lower with Wise. Wise intermediates transfers rather than holding pooled funds.</p>
+
+        <div class="comparison">
+            <div class="comparison-card before">
+                <h4>Traditional Structure</h4>
+                <p>Paying: International bank wire ($30+ fee)</p>
+                <p>Receiving: Inward remittance fee ($15+)</p>
+                <p>Exchange: 2&ndash;4% markup (invisible)</p>
+                <p>Partner payout: Separate wire (more fees)</p>
+                <p><strong>Total cost: 15&ndash;20% of transaction</strong></p>
+            </div>
+            <div class="comparison-card after">
+                <h4>Wise Structure</h4>
+                <p>Paying: Local transfer (near-zero fee)</p>
+                <p>Receiving: Wise local account (zero fee)</p>
+                <p>Exchange: Mid-market rate + 0.3&ndash;1%</p>
+                <p>Partner payout: Wise tag instant transfer</p>
+                <p><strong>Total cost: Under 1% of transaction</strong></p>
+            </div>
+        </div>
+
+        <h2>8. Cryptocurrency — The Gap Between Ideal and Reality</h2>
+
+        <p>Cryptocurrency comes closest to the ideal of global payments. No borders. No intermediaries. Minimal fees. Programmable.</p>
+
+        <p>But as a payment method for today, the gap between the ideal and the reality is deep.</p>
+
+        <h3>Volatility</h3>
+
+        <p>Receive the equivalent of &yen;5,000 in Bitcoin today. Tomorrow it might be worth &yen;4,200. Or &yen;5,800. For a thin-margin global niche, this uncertainty is an unacceptable risk.</p>
+
+        <p>Stablecoins (USDC, USDT) eliminate the volatility problem. But stablecoins introduce different problems.</p>
+
+        <h3>Tax Complexity</h3>
+
+        <p>In Japan, cryptocurrency gains are taxed as miscellaneous income — up to 55% (including resident tax). If you receive &yen;5,000 in BTC and convert to yen with a currency gain, that gain is taxable. Each transaction requires cost-basis tracking and annual tax reporting.</p>
+
+        <p>In the US, cryptocurrency is subject to capital gains tax. The difference between the price at receipt and the price at conversion is taxable. Even a few transactions per month create non-trivial tax accounting burden.</p>
+
+        <h3>The Literacy Barrier</h3>
+
+        <p>The most fundamental problem is that cryptocurrency requires literacy from the customer. Creating a wallet, managing private keys, understanding gas fees, choosing a network (Ethereum? Polygon? Solana?) — for a customer who just wants to buy a &yen;5,000 product, these are excessive prerequisites.</p>
+
+        <p>Some customers say they "want to pay in crypto." But the subset who can actually do it — who have a wallet, can select the right network, and send to the correct address — is vanishingly small.</p>
+
+        <blockquote>
+            <p>Cryptocurrency may be the future of payments. But it is not a way to receive today's revenue today.</p>
+        </blockquote>
+
+        <h2>9. Bridging the Structural Disconnect</h2>
+
+        <p>What does a global niche business actually need from a payment method?</p>
+
+        <table class="mapping-table">
+            <tr>
+                <th>Requirement</th>
+                <th>Why It Matters</th>
+            </tr>
+            <tr>
+                <td>Works for small amounts ($35+)</td>
+                <td>Low transaction value. Fixed fees destroy margins</td>
+            </tr>
+            <tr>
+                <td>Fees don't eat the transaction</td>
+                <td>Thin margins. Fees above 5% kill the business model</td>
+            </tr>
+            <tr>
+                <td>No special literacy required from the payer</td>
+                <td>Customers want the product, not a payment education</td>
+            </tr>
+            <tr>
+                <td>Receiver doesn't need entities/accounts in each country</td>
+                <td>Sole proprietors can't incorporate globally</td>
+            </tr>
+            <tr>
+                <td>No account freeze or fund hold risk</td>
+                <td>Irregular transaction patterns get flagged as "unusual"</td>
+            </tr>
+            <tr>
+                <td>Partner revenue sharing works within the same system</td>
+                <td>No capacity to manage separate payment and distribution systems</td>
+            </tr>
+        </table>
+
+        <p>Banks fail requirements 1 and 2. Credit cards (Stripe) fail 2, 4, and 6. PayPal fails 2 and 5. Cryptocurrency fails 3.</p>
+
+        <p>Wise satisfies all six. It is, at present, the only practical option.</p>
+
+        <p>This is not because Wise is "the best service." It's because Wise happens to occupy the exact position that global niche businesses need — neither enterprise international payment infrastructure nor a domestic payment extension, but the layer that fills the void between them.</p>
+
+        <div class="key-point">
+            <p>Global niche businesses don't fail because they can't sell.<br>They don't fail because they can't deliver.<br>They fail because they can't get paid.<br><br>When the structural disconnect in payments is bridged,<br>a business that directly connects a few customers across the world becomes viable.</p>
+        </div>
+
+        <p>The choice of payment method is not an operational detail. It is the architecture of the business itself. Not how you sell, but how you get paid. The answer to this question determines whether a global niche can exist.</p>
+
+        <p class="disclaimer" style="font-size: 0.8rem; color: var(--text-muted); margin-top: 3rem;">Disclaimer: This essay does not recommend or endorse any specific financial service. It is an analysis of payment structure for global niche businesses. Fees and terms for all services mentioned are subject to change.</p>
+
+    </article>
+
+    <footer class="article-footer">
+        <p id="essay-nav-links"></p>
+        <p style="margin-top: 2rem; font-size: 0.75rem;">&copy; 2026 TokiStorage</p>
+    </footer>
+
+</main>
+
+<script src="contact-form.js"></script>
+<script src="essay-nav.js?v=20260217"></script>
+<script src="tracker.js"></script>
+</body>
+</html>

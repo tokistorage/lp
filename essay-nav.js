@@ -60,6 +60,7 @@
     { id: 'ecosystem', ja: 'エコシステムの再定義', en: 'Redefining the Ecosystem' },
     { id: 'free-strategy', ja: 'フリー戦略の逆説', en: 'The Paradox of Free' },
     { id: 'brochure-essay', ja: 'ブローシャの限界と超越', en: 'The Limits of the Brochure' },
+    { id: 'payment', ja: '決済手段', en: 'Payment Methods' },
 
     // ── 文化・社会活動 ──
     { id: 'education', ja: '教育', en: 'Education' },
