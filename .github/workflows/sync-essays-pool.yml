@@ -1,0 +1,117 @@
+name: Sync essays pool
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - '*.html'
+
+jobs:
+  sync:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+      pull-requests: write
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Detect new essays and update pool
+        id: detect
+        run: |
+          # essays-pool.json の既存IDリスト
+          POOL_IDS=$(jq -r '.essays[].id' newsletter/essays-pool.json)
+
+          # エッセイ候補のHTMLファイル（JA版のみ、除外パターン適用）
+          CANDIDATES=$(ls *.html 2>/dev/null \
+            | grep -v -- '-en\.html$' \
+            | grep -v '^usecase-' \
+            | grep -v '^newsletter' \
+            | grep -v '^index' \
+            | grep -v '^details' \
+            | grep -v '^tokushoho' \
+            | grep -v '^usecases' \
+            | grep -v '^brochure' \
+            | grep -v '^deck' \
+            | grep -v '^pitch-deck' \
+            | grep -v '^infographic' \
+            | grep -v '^thanks' \
+            | grep -v '^privacy' \
+            | grep -v '^payment' \
+            | grep -v '^profile' \
+            | grep -v '^contact' \
+            | grep -v '^client-proposal' \
+            | grep -v '^government-proposal' \
+            | grep -v '^workaway-proposal' \
+            | sed 's/\.html$//')
+
+          ADDED=0
+          ADDED_LIST=""
+
+          for ID in $CANDIDATES; do
+            # プール内に既にあるかチェック
+            if echo "$POOL_IDS" | grep -q "^${ID}$"; then
+              continue
+            fi
+
+            # <title>タグからタイトル抽出
+            TITLE=$(grep -oP '<title>\K[^<]+' "${ID}.html" | head -1 \
+              | sed 's/ | トキストレージ$//' \
+              | sed 's/ | TokiStorage$//' \
+              | sed 's/ | Pearl Soap.*$//' \
+              | sed 's/ | 佐藤卓也$//')
+
+            if [ -z "$TITLE" ]; then
+              TITLE="$ID"
+            fi
+
+            # EN版の存在チェック
+            HAS_EN=false
+            [ -f "${ID}-en.html" ] && HAS_EN=true
+
+            # essays-pool.json に追加（テーマは untagged）
+            jq --arg id "$ID" \
+               --arg title "$TITLE" \
+               --argjson has_en "$HAS_EN" \
+              '.essays += [{"id": $id, "title_ja": $title, "theme": "untagged", "has_en": $has_en, "featured_in": []}]' \
+              newsletter/essays-pool.json > tmp.json && mv tmp.json newsletter/essays-pool.json
+
+            ADDED=$((ADDED + 1))
+            ADDED_LIST="${ADDED_LIST}\n- ${ID}: ${TITLE}"
+            echo "Added: $ID ($TITLE)"
+          done
+
+          echo "added=$ADDED" >> "$GITHUB_OUTPUT"
+          # multiline output
+          {
+            echo "list<<EOF"
+            echo -e "$ADDED_LIST"
+            echo "EOF"
+          } >> "$GITHUB_OUTPUT"
+
+      - name: Create PR if new essays found
+        if: steps.detect.outputs.added != '0'
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          BRANCH="auto/sync-essays-pool-$(date +%Y%m%d-%H%M%S)"
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git checkout -b "$BRANCH"
+          git add newsletter/essays-pool.json
+          git commit -m "Auto-add ${{ steps.detect.outputs.added }} new essay(s) to pool
+
+          Co-Authored-By: github-actions[bot] <github-actions[bot]@users.noreply.github.com>"
+          git push origin "$BRANCH"
+          gh pr create \
+            --title "Auto-add ${{ steps.detect.outputs.added }} new essay(s) to pool" \
+            --body "$(cat <<'PREOF'
+          ## Auto-detected new essays
+
+          ${{ steps.detect.outputs.list }}
+
+          Theme is set to \`untagged\`. Please assign appropriate themes manually in \`newsletter/essays-pool.json\`.
+          Untagged essays will not be auto-selected for newsletters until a theme is assigned.
+
+          Available themes: technology, philosophy, society, humanity, culture, business, earth, design
+          PREOF
+          )"
