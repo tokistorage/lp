@@ -295,45 +295,93 @@
         /* Print styles */
         @media print {
             @page { size: A4 landscape; margin: 0; }
-            .br-nav, .screen-actions { display: none !important; }
-            body { background: white; }
+            .br-nav, .pdf-download { display: none !important; }
+            body { background: white; font-size: 13px; line-height: 1.4; }
             .landscape-page {
                 margin: 0;
                 box-shadow: none;
                 width: 100%;
                 height: 100vh;
-                padding: 10mm 12mm;
+                padding: 7mm 10mm;
+                gap: 0 14mm;
             }
+            .br-header { padding-bottom: 4mm; margin-bottom: 3mm; }
+            .br-header .company { font-size: 1.2rem; }
+            .br-header .tagline { font-size: 0.95rem; }
+            .hook-text { font-size: 0.85rem; margin-bottom: 1mm; }
+            .hook-sub { font-size: 0.7rem; margin-bottom: 3mm; }
+            .sh { margin: 0 0 2mm; }
+            .sh h2 { font-size: 0.85rem; }
+            .layers-row { gap: 2mm; margin-bottom: 3mm; }
+            .lc { padding: 2mm; }
+            .lc .ln { font-size: 0.72rem; }
+            .lc .ls { font-size: 0.62rem; }
+            .lc .ld { font-size: 0.58rem; line-height: 1.3; }
+            .tq-box { padding: 2mm 3mm; margin-bottom: 3mm; }
+            .tq-box li { font-size: 0.7rem; padding: 0; line-height: 1.4; }
+            .tq-link { font-size: 0.65rem; }
+            .essay-qr { padding: 2mm 3mm; margin-bottom: 3mm; gap: 3mm; }
+            .essay-qr img { width: 16mm; height: 16mm; }
+            .essay-qr .eq-title { font-size: 0.7rem; }
+            .essay-qr .eq-text { font-size: 0.62rem; line-height: 1.4; }
+            .essay-qr a { font-size: 0.62rem; }
+            .areas { margin-bottom: 3mm; }
+            .area-row { padding: 0.5mm 0; }
+            .area-label { font-size: 0.7rem; }
+            .area-desc { font-size: 0.7rem; }
+            .pricing-line { font-size: 0.72rem; margin-bottom: 0; }
+            .pricing-note { font-size: 0.62rem; margin-bottom: 3mm; }
+            .payment-info { font-size: 0.68rem; margin-bottom: 3mm; }
+            .br-footer { padding-top: 2mm; font-size: 0.6rem; }
+            .br-footer .footer-copy { font-size: 0.55rem; }
         }
 
-        /* Screen actions */
-        .screen-actions {
+        /* PDF download */
+        .pdf-download {
             text-align: center;
             margin: 1rem auto 2rem;
             max-width: 297mm;
+            padding: 1.5rem;
+            background: var(--toki-blue-pale);
+            border-radius: 10px;
         }
-        .screen-actions a, .screen-actions button {
-            display: inline-block;
-            padding: 0.5rem 1.2rem;
-            margin: 0 0.3rem;
+        .pdf-download .pdf-title {
             font-size: 0.85rem;
+            color: var(--text-secondary);
+            margin-bottom: 0.75rem;
+        }
+        .pdf-download .pdf-hint {
+            font-size: 0.72rem;
+            color: var(--text-secondary);
+            margin-top: 0.6rem;
+        }
+        .pdf-buttons {
+            display: flex;
+            justify-content: center;
+            gap: 0.75rem;
+            flex-wrap: wrap;
+        }
+        .pdf-buttons a {
+            display: inline-block;
+            padding: 0.6rem 1.5rem;
             border-radius: 6px;
+            font-size: 0.9rem;
+            font-weight: 500;
             text-decoration: none;
             cursor: pointer;
             font-family: var(--font-body);
         }
-        .btn-print {
+        .pdf-buttons .btn-current {
             background: var(--toki-blue);
             color: #fff;
-            border: none;
         }
-        .btn-print:hover { background: var(--toki-blue-dark); }
-        .btn-portrait {
+        .pdf-buttons .btn-current:hover { background: var(--toki-blue-dark); }
+        .pdf-buttons .btn-other {
+            background: #fff;
             color: var(--toki-blue);
             border: 1px solid var(--toki-blue);
-            background: none;
         }
-        .btn-portrait:hover { background: var(--toki-blue-pale); }
+        .pdf-buttons .btn-other:hover { background: #DBEAFE; }
 
         /* Responsive: on narrow screens, single column */
         @media screen and (max-width: 900px) {
@@ -471,9 +519,13 @@
 
 </div>
 
-<div class="screen-actions">
-    <button class="btn-print" onclick="window.print()">Print / Save as PDF</button>
-    <a href="brochure-en.html" class="btn-portrait">Portrait Brochure</a>
+<div class="pdf-download">
+    <p class="pdf-title">Printable A4 Brochure (PDF)</p>
+    <div class="pdf-buttons">
+        <a href="javascript:void(0)" onclick="window.print()" class="btn-current">A4 Landscape PDF</a>
+        <a href="brochure-en.html" class="btn-other">A4 Portrait PDF</a>
+    </div>
+    <p class="pdf-hint">Select "Save as PDF" in the print dialog</p>
 </div>
 
 <script src="tracker.js"></script>
