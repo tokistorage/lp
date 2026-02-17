@@ -903,7 +903,7 @@ def generate_issue(year, month, issue_num, serial):
                  new_x="LMARGIN", new_y="NEXT")
         pdf.divider()
 
-    # ── Section 2: Customer Voices (list) ──
+    # ── Section 2: Customer Voices (list, grouped by product) ──
     materials = manifest.get("materials", [])
     if materials:
         pdf.section_heading("巻末 TokiQR 掲載者一覧")
@@ -911,9 +911,21 @@ def generate_issue(year, month, issue_num, serial):
             "注文時にNDL納本を選択されたお客様のTokiQRを巻末に掲載しています。"
             "QRコードをスマートフォンでスキャンすると肉声を再生できます。"
         )
-        for m in materials:
-            pdf.body_bold(f"{m['displayName']}")
-            pdf.body(f"注文番号: {m['orderId']}")
+
+        # Group by product type
+        quartz = [m for m in materials if m.get("product") == "quartz"]
+        laminate = [m for m in materials if m.get("product") != "quartz"]
+
+        if quartz:
+            pdf.body_bold("◆ クォーツガラス版")
+            for m in quartz:
+                pdf.body(f"　{m['displayName']}（{m['orderId']}）")
+
+        if laminate:
+            pdf.body_bold("◆ ラミネート版")
+            for m in laminate:
+                pdf.body(f"　{m['displayName']}（{m['orderId']}）")
+
         pdf.divider()
 
     # ═══════════════════════════════════════════════════════════════════
@@ -939,9 +951,15 @@ def generate_issue(year, month, issue_num, serial):
         pdf.set_font("JP", "", 9.5)
         pdf.set_text_color(*SECONDARY)
         pdf.set_x(desc_x)
-        names = "、".join([m["displayName"] for m in materials])
+        # Build grouped names list
+        names_parts = []
+        if quartz:
+            names_parts.append("【クォーツガラス版】" + "、".join([m["displayName"] for m in quartz]))
+        if laminate:
+            names_parts.append("【ラミネート版】" + "、".join([m["displayName"] for m in laminate]))
+        names_text = "\n".join(names_parts)
         pdf.multi_cell(desc_w, 6, (
-            f"掲載者: {names}\n"
+            f"{names_text}\n\n"
             "次のページ以降に印刷されたQRコードをスマートフォンでスキャンすると、"
             "ご利用者さまの肉声を再生できます。"
         ), align="C")
