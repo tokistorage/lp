@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" type="image/png" sizes="32x32" href="asset/favicon-32.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="asset/apple-touch-icon.png">
+    <title>ニュースレター Vol.1 No.2 第2号 | トキストレージ</title>
+    <meta name="description" content="トキストレージ ニュースレター第2号。許諾をいただいたお客様のTokiQRを掲載し、声を国家の永久保存記録にする。">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Shippori+Mincho:wght@400;500;600;700&family=Zen+Kaku+Gothic+New:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --toki-blue: #2563EB;
+            --toki-blue-dark: #1D4ED8;
+            --toki-blue-pale: #EFF6FF;
+            --bg-white: #FFFFFF;
+            --bg-section: #DBEAFE;
+            --text-primary: #1E293B;
+            --text-secondary: #475569;
+            --text-muted: #94A3B8;
+            --border: #E2E8F0;
+            --font-display: 'Shippori Mincho', serif;
+            --font-body: 'Zen Kaku Gothic New', sans-serif;
+        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        html { scroll-behavior: smooth; }
+        body { font-family: var(--font-body); font-weight: 400; background: var(--bg-white); color: var(--text-primary); line-height: 2; font-size: 16px; }
+        .article-nav { position: fixed; top: 0; left: 0; right: 0; z-index: 1000; background: rgba(255,255,255,0.95); backdrop-filter: blur(12px); border-bottom: 1px solid var(--border); padding: 0.6rem 1.2rem; display: flex; align-items: center; justify-content: space-between; }
+        .article-nav .nav-brand { font-family: var(--font-display); font-size: 0.9rem; font-weight: 600; color: var(--toki-blue); text-decoration: none; }
+        .article-nav .nav-right { display: flex; align-items: center; gap: 1rem; }
+        .article-nav .nav-label { font-size: 0.6rem; color: var(--text-muted); letter-spacing: 0.08em; }
+        .article-nav .lang-switch { font-size: 0.75rem; color: var(--toki-blue); text-decoration: none; padding: 0.3rem 0.6rem; border: 1px solid var(--toki-blue); border-radius: 4px; }
+        .article-nav .lang-switch:hover { background: var(--toki-blue); color: #fff; }
+        .article-container { max-width: 680px; margin: 0 auto; padding: 7rem 2rem 4rem; }
+        .article-header { margin-bottom: 3rem; padding-bottom: 2rem; border-bottom: 1px solid var(--border); }
+        .article-category { font-size: 0.7rem; color: var(--toki-blue); letter-spacing: 0.15em; margin-bottom: 1rem; }
+        .article-header h1 { font-family: var(--font-display); font-size: 1.8rem; font-weight: 600; line-height: 1.5; margin-bottom: 1rem; }
+        .article-subtitle { font-size: 0.95rem; color: var(--text-secondary); line-height: 1.8; }
+        .article-meta { display: flex; flex-wrap: wrap; gap: 1.5rem; font-size: 0.8rem; color: var(--text-muted); margin-top: 1rem; }
+        .article-meta span { display: flex; align-items: center; gap: 0.3rem; }
+        .article-content h2 { font-family: var(--font-display); font-size: 1.25rem; font-weight: 600; margin: 3rem 0 1.5rem; padding-bottom: 0.5rem; border-bottom: 1px solid var(--border); }
+        .article-content h3 { font-family: var(--font-display); font-size: 1.1rem; font-weight: 500; margin: 2rem 0 1rem; }
+        .article-content p { margin-bottom: 1.5rem; text-align: justify; }
+        .article-content blockquote { margin: 2rem 0; padding: 1.5rem 2rem; background: var(--bg-section); border-left: 3px solid var(--toki-blue); font-style: italic; }
+        .article-content ul { margin: 1.5rem 0; padding-left: 1.5rem; }
+        .article-content li { margin-bottom: 0.75rem; }
+        .key-point { background: var(--toki-blue-pale); padding: 1.5rem 2rem; border-radius: 8px; margin: 2rem 0; }
+        .key-point p { margin-bottom: 0; font-size: 0.95rem; }
+        .core-message { background: linear-gradient(135deg, var(--toki-blue-pale) 0%, #DBEAFE 100%); border-left: 4px solid var(--toki-blue); padding: 1.2rem 1.5rem; margin: 0 0 1.5rem 0; border-radius: 0 8px 8px 0; font-size: 0.95rem; line-height: 1.8; }
+        .draft-notice { background: #FFF3E0; border-left: 4px solid #E65100; padding: 1.2rem 1.5rem; margin: 0 0 2rem 0; border-radius: 0 8px 8px 0; font-size: 0.9rem; line-height: 1.8; color: #BF360C; }
+        .placeholder { background: #f8fafc; border: 2px dashed var(--border); border-radius: 8px; padding: 2rem; margin: 1.5rem 0; text-align: center; color: var(--text-muted); font-size: 0.9rem; }
+        .pdf-download { margin: 3rem 0; padding: 2rem; background: var(--toki-blue-pale); border: 2px solid var(--toki-blue); border-radius: 12px; text-align: center; }
+        .pdf-download h3 { font-family: var(--font-display); font-size: 1.1rem; margin-bottom: 0.5rem; color: var(--text-primary); }
+        .pdf-download p { font-size: 0.9rem; color: var(--text-secondary); margin-bottom: 1rem; }
+        .pdf-download a { display: inline-block; background: var(--toki-blue); color: #fff; padding: 0.75rem 2rem; border-radius: 8px; text-decoration: none; font-weight: 500; transition: background 0.2s; }
+        .pdf-download a:hover { background: var(--toki-blue-dark); }
+        .article-footer { margin-top: 4rem; padding-top: 2rem; border-top: 1px solid var(--border); text-align: center; }
+        .article-footer p { font-size: 0.8rem; color: var(--text-muted); margin-bottom: 1rem; }
+        .article-footer a { color: var(--toki-blue); text-decoration: none; }
+        .nav-brand::before { content: ''; display: inline-block; width: 20px; height: 20px; background: url('asset/tokistorage-icon-512.png') no-repeat center / contain; vertical-align: -3px; margin-right: 5px; }
+        @media (max-width: 768px) {
+            .article-container { padding: 6rem 1.2rem 3rem; }
+            .article-header h1 { font-size: 1.5rem; }
+            .article-nav .nav-label { display: none; }
+        }
+        @media print { .article-nav { display: none; } .article-container { padding-top: 2rem; } .pdf-download { display: none; } }
+    </style>
+    <link rel="stylesheet" href="contact-form.css">
+    <meta property="og:image" content="https://tokistorage.github.io/lp/asset/tokistorage-icon-512.png">
+    <meta property="og:image:width" content="512">
+    <meta property="og:image:height" content="512">
+</head>
+<body>
+
+<nav class="article-nav">
+    <a href="newsletters.html" class="nav-brand">ニュースレター</a>
+    <div class="nav-right">
+        <span class="nav-label">Vol. 1 ── 第2号</span>
+        <a href="newsletter-2026-04-en.html" class="lang-switch">EN</a>
+    </div>
+</nav>
+
+<main class="article-container">
+    <header class="article-header">
+        <p class="article-category">ニュースレター ── 第1巻 第2号（通巻第2号）</p>
+        <h1>第2号<br>── ご利用者の声を、永久保存記録に</h1>
+        <p class="article-subtitle">
+            許諾をいただいたお客様のTokiQRを掲載。<br>
+            あなたの声が、国立国会図書館に永久保存される号です。
+        </p>
+        <div class="article-meta">
+            <span>2026年4月（予定）</span>
+            <span>Vol.1 No.2</span>
+            <span>Serial #00002</span>
+        </div>
+    </header>
+
+    <article class="article-content">
+        <div class="draft-notice">
+            <strong>推敲中：</strong>この号は現在準備中です。内容は発行時に確定します。
+        </div>
+
+        <div class="core-message">
+            <strong>この号の意義：</strong>創刊号では代表のTokiQRのみを掲載しました。第2号からは、許諾をいただいたお客様の声が国立国会図書館に永久保存されます。ニュースレターが「媒体」としての本来の役割を果たし始める号です。
+        </div>
+
+        <h2>1. ご利用者さまの声（TokiQR）</h2>
+        <p>許諾をいただいたお客様のTokiQRを掲載します。巻末のQRコードをスマートフォンでスキャンすると、お客様の肉声を再生できます。</p>
+
+        <div class="placeholder">
+            配送済みのお客様のTokiQRが、許諾をいただき次第ここに掲載されます。<br>
+            掲載予定数は発行時に確定します。
+        </div>
+
+        <h2>2. 佐渡島 物理保管拠点の進捗</h2>
+        <p>佐渡島に設置予定の物理保管拠点について、進捗を報告します。</p>
+
+        <div class="placeholder">
+            拠点構築の進捗・写真等を掲載予定
+        </div>
+
+        <h2>3. パートナー・協賛者のご紹介</h2>
+        <p>トキストレージの活動を支えてくださるパートナーや協賛者をご紹介します。</p>
+
+        <div class="placeholder">
+            パートナー情報を掲載予定
+        </div>
+
+        <h2>4. エッセイ紹介</h2>
+        <p>創刊号以降に公開されたエッセイから、関連する記事をご紹介します。</p>
+
+        <div class="placeholder">
+            掲載エッセイを選定中
+        </div>
+
+        <h2>5. 巻末 TokiQR</h2>
+        <p>お客様のTokiQRおよび代表メッセージは、献本PDF（下記よりダウンロード可能）の巻末ページに印刷されています。スマートフォンでスキャンすると肉声を再生できます。</p>
+
+        <div class="key-point">
+            <p>サーバーは不要です。データはQRコード内に完全に埋め込まれています。インターネット接続があればスマートフォンだけで再生可能。100年後でも、このQRコードが残っていれば声は蘇ります。</p>
+        </div>
+
+        <div class="pdf-download" style="opacity: 0.5; pointer-events: none;">
+            <h3>献本PDF をダウンロード</h3>
+            <p>発行後にダウンロード可能になります</p>
+            <a href="#">準備中</a>
+        </div>
+    </article>
+
+    <footer class="article-footer">
+        <p><a href="newsletters.html">&larr; ニュースレター一覧に戻る</a></p>
+        <p><a href="index.html">トキストレージ トップページ</a></p>
+        <p>&copy; 2026 トキストレージ / TokiStorage</p>
+    </footer>
+</main>
+
+<script src="contact-form.js"></script>
+<script src="tracker.js"></script>
+</body>
+</html>

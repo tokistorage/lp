@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" type="image/png" sizes="32x32" href="asset/favicon-32.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="asset/apple-touch-icon.png">
+    <title>Newsletter Vol.1 No.2 | TokiStorage</title>
+    <meta name="description" content="TokiStorage Newsletter No. 2. Featuring consented customer TokiQR voices, permanently archived in Japan's National Diet Library.">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Shippori+Mincho:wght@400;500;600;700&family=Zen+Kaku+Gothic+New:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --toki-blue: #2563EB;
+            --toki-blue-dark: #1D4ED8;
+            --toki-blue-pale: #EFF6FF;
+            --bg-white: #FFFFFF;
+            --bg-section: #DBEAFE;
+            --text-primary: #1E293B;
+            --text-secondary: #475569;
+            --text-muted: #94A3B8;
+            --border: #E2E8F0;
+            --font-display: 'Shippori Mincho', serif;
+            --font-body: 'Zen Kaku Gothic New', sans-serif;
+        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        html { scroll-behavior: smooth; }
+        body { font-family: var(--font-body); font-weight: 400; background: var(--bg-white); color: var(--text-primary); line-height: 2; font-size: 16px; }
+        .article-nav { position: fixed; top: 0; left: 0; right: 0; z-index: 1000; background: rgba(255,255,255,0.95); backdrop-filter: blur(12px); border-bottom: 1px solid var(--border); padding: 0.6rem 1.2rem; display: flex; align-items: center; justify-content: space-between; }
+        .article-nav .nav-brand { font-family: var(--font-display); font-size: 0.9rem; font-weight: 600; color: var(--toki-blue); text-decoration: none; }
+        .article-nav .nav-right { display: flex; align-items: center; gap: 1rem; }
+        .article-nav .nav-label { font-size: 0.6rem; color: var(--text-muted); letter-spacing: 0.08em; }
+        .article-nav .lang-switch { font-size: 0.75rem; color: var(--toki-blue); text-decoration: none; padding: 0.3rem 0.6rem; border: 1px solid var(--toki-blue); border-radius: 4px; }
+        .article-nav .lang-switch:hover { background: var(--toki-blue); color: #fff; }
+        .article-container { max-width: 680px; margin: 0 auto; padding: 7rem 2rem 4rem; }
+        .article-header { margin-bottom: 3rem; padding-bottom: 2rem; border-bottom: 1px solid var(--border); }
+        .article-category { font-size: 0.7rem; color: var(--toki-blue); letter-spacing: 0.15em; margin-bottom: 1rem; }
+        .article-header h1 { font-family: var(--font-display); font-size: 1.8rem; font-weight: 600; line-height: 1.5; margin-bottom: 1rem; }
+        .article-subtitle { font-size: 0.95rem; color: var(--text-secondary); line-height: 1.8; }
+        .article-meta { display: flex; flex-wrap: wrap; gap: 1.5rem; font-size: 0.8rem; color: var(--text-muted); margin-top: 1rem; }
+        .article-meta span { display: flex; align-items: center; gap: 0.3rem; }
+        .article-content h2 { font-family: var(--font-display); font-size: 1.25rem; font-weight: 600; margin: 3rem 0 1.5rem; padding-bottom: 0.5rem; border-bottom: 1px solid var(--border); }
+        .article-content h3 { font-family: var(--font-display); font-size: 1.1rem; font-weight: 500; margin: 2rem 0 1rem; }
+        .article-content p { margin-bottom: 1.5rem; text-align: justify; }
+        .article-content blockquote { margin: 2rem 0; padding: 1.5rem 2rem; background: var(--bg-section); border-left: 3px solid var(--toki-blue); font-style: italic; }
+        .article-content ul { margin: 1.5rem 0; padding-left: 1.5rem; }
+        .article-content li { margin-bottom: 0.75rem; }
+        .key-point { background: var(--toki-blue-pale); padding: 1.5rem 2rem; border-radius: 8px; margin: 2rem 0; }
+        .key-point p { margin-bottom: 0; font-size: 0.95rem; }
+        .core-message { background: linear-gradient(135deg, var(--toki-blue-pale) 0%, #DBEAFE 100%); border-left: 4px solid var(--toki-blue); padding: 1.2rem 1.5rem; margin: 0 0 1.5rem 0; border-radius: 0 8px 8px 0; font-size: 0.95rem; line-height: 1.8; }
+        .draft-notice { background: #FFF3E0; border-left: 4px solid #E65100; padding: 1.2rem 1.5rem; margin: 0 0 2rem 0; border-radius: 0 8px 8px 0; font-size: 0.9rem; line-height: 1.8; color: #BF360C; }
+        .placeholder { background: #f8fafc; border: 2px dashed var(--border); border-radius: 8px; padding: 2rem; margin: 1.5rem 0; text-align: center; color: var(--text-muted); font-size: 0.9rem; }
+        .pdf-download { margin: 3rem 0; padding: 2rem; background: var(--toki-blue-pale); border: 2px solid var(--toki-blue); border-radius: 12px; text-align: center; }
+        .pdf-download h3 { font-family: var(--font-display); font-size: 1.1rem; margin-bottom: 0.5rem; color: var(--text-primary); }
+        .pdf-download p { font-size: 0.9rem; color: var(--text-secondary); margin-bottom: 1rem; }
+        .pdf-download a { display: inline-block; background: var(--toki-blue); color: #fff; padding: 0.75rem 2rem; border-radius: 8px; text-decoration: none; font-weight: 500; transition: background 0.2s; }
+        .pdf-download a:hover { background: var(--toki-blue-dark); }
+        .article-footer { margin-top: 4rem; padding-top: 2rem; border-top: 1px solid var(--border); text-align: center; }
+        .article-footer p { font-size: 0.8rem; color: var(--text-muted); margin-bottom: 1rem; }
+        .article-footer a { color: var(--toki-blue); text-decoration: none; }
+        .nav-brand::before { content: ''; display: inline-block; width: 20px; height: 20px; background: url('asset/tokistorage-icon-512.png') no-repeat center / contain; vertical-align: -3px; margin-right: 5px; }
+        @media (max-width: 768px) {
+            .article-container { padding: 6rem 1.2rem 3rem; }
+            .article-header h1 { font-size: 1.5rem; }
+            .article-nav .nav-label { display: none; }
+        }
+        @media print { .article-nav { display: none; } .article-container { padding-top: 2rem; } .pdf-download { display: none; } }
+    </style>
+    <link rel="stylesheet" href="contact-form.css">
+    <meta property="og:image" content="https://tokistorage.github.io/lp/asset/tokistorage-icon-512.png">
+    <meta property="og:image:width" content="512">
+    <meta property="og:image:height" content="512">
+</head>
+<body>
+
+<nav class="article-nav">
+    <a href="newsletters-en.html" class="nav-brand">Newsletter</a>
+    <div class="nav-right">
+        <span class="nav-label">Vol. 1 &mdash; No. 2</span>
+        <a href="newsletter-2026-04.html" class="lang-switch">JA</a>
+    </div>
+</nav>
+
+<main class="article-container">
+    <header class="article-header">
+        <p class="article-category">NEWSLETTER &mdash; Vol.1 No.2 (Serial #00002)</p>
+        <h1>No. 2<br>Customer Voices, Permanently Archived</h1>
+        <p class="article-subtitle">
+            Featuring consented customer TokiQR voices.<br>
+            Your voice becomes part of Japan's National Diet Library permanent collection.
+        </p>
+        <div class="article-meta">
+            <span>April 2026 (planned)</span>
+            <span>Vol.1 No.2</span>
+            <span>Serial #00002</span>
+        </div>
+    </header>
+
+    <article class="article-content">
+        <div class="draft-notice">
+            <strong>Drafting:</strong> This issue is currently in preparation. Content will be finalized upon publication.
+        </div>
+
+        <div class="core-message">
+            <strong>Significance of this issue:</strong> The inaugural issue featured only the founder's TokiQR. Starting with No. 2, consented customer voices will be permanently preserved in the National Diet Library. This is the issue where the newsletter begins fulfilling its true role as a medium.
+        </div>
+
+        <h2>1. Customer Voices (TokiQR)</h2>
+        <p>We feature TokiQR codes from customers who have given their consent. Scan the QR codes printed in the appendix PDF with your smartphone to hear their actual voices.</p>
+
+        <div class="placeholder">
+            Customer TokiQR codes will appear here as shipped orders are consented for publication.<br>
+            The number of entries will be finalized at publication.
+        </div>
+
+        <h2>2. Sado Island Physical Archive Progress</h2>
+        <p>A progress report on the physical preservation site planned for Sado Island.</p>
+
+        <div class="placeholder">
+            Construction progress and photos to be published
+        </div>
+
+        <h2>3. Partner &amp; Sponsor Introductions</h2>
+        <p>Introducing the partners and sponsors who support TokiStorage's mission.</p>
+
+        <div class="placeholder">
+            Partner information to be published
+        </div>
+
+        <h2>4. Featured Essays</h2>
+        <p>Selected essays published since the inaugural issue.</p>
+
+        <div class="placeholder">
+            Essay selection in progress
+        </div>
+
+        <h2>5. Appendix: TokiQR</h2>
+        <p>Customer TokiQR codes and the founder's message are printed on the appendix pages of the deposited PDF (downloadable below). Scan with your smartphone to play back the recorded voice.</p>
+
+        <div class="key-point">
+            <p>No server required. Data is fully embedded within the QR code. Playable with just a smartphone and internet connection. Even 100 years from now, as long as this QR code survives, the voice lives on.</p>
+        </div>
+
+        <div class="pdf-download" style="opacity: 0.5; pointer-events: none;">
+            <h3>Download Deposited PDF</h3>
+            <p>Available after publication</p>
+            <a href="#">Coming soon</a>
+        </div>
+    </article>
+
+    <footer class="article-footer">
+        <p><a href="newsletters-en.html">&larr; Back to Newsletter Archive</a></p>
+        <p><a href="index-en.html">TokiStorage Home</a></p>
+        <p>&copy; 2026 TokiStorage. All rights reserved.</p>
+    </footer>
+</main>
+
+<script src="contact-form.js"></script>
+<script src="tracker.js"></script>
+</body>
+</html>
