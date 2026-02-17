@@ -848,77 +848,127 @@ def generate_issue(year, month, issue_num, serial):
     pdf.set_auto_page_break(auto=True, margin=20)
     pdf.set_y(12)
 
-    # Section: Customer Voices
+    # ── Section 1: Essays ──
+    essays = manifest.get("essays", [])
+    if essays:
+        pdf.section_heading("エッセイ紹介")
+        pdf.body(
+            "TokiQRの技術と設計思想に関連するエッセイを厳選してご紹介します。"
+        )
+
+        base_url = "https://tokistorage.github.io/lp/"
+        pdf.set_auto_page_break(auto=False)
+
+        for essay in essays:
+            title = essay.get("title_ja", "")
+            excerpt = essay.get("excerpt_ja", "")
+            url = f"{base_url}{essay['id']}.html"
+
+            # Measure box height
+            pdf.set_font("JP", "", 8.5)
+            text_w = CONTENT_W - 10
+            chars_per_line = int(text_w / 3)
+            n_lines = 0
+            for paragraph in excerpt.split("\n"):
+                n_lines += max(1, -(-len(paragraph) // chars_per_line))
+            text_h = n_lines * 4.5
+            box_h = 3 + 7 + text_h + 5
+
+            if pdf.get_y() + box_h > PAGE_H - 18:
+                pdf.add_page()
+                pdf.accent_bar()
+
+            y = pdf.get_y()
+            pdf.set_fill_color(*BG_LIGHT)
+            pdf.set_draw_color(*BORDER)
+            pdf.rect(MARGIN, y, CONTENT_W, box_h, "DF")
+            pdf.set_xy(MARGIN + 5, y + 3)
+            pdf.set_font("JP", "B", 9)
+            pdf.set_text_color(*TOKI_BLUE)
+            pdf.cell(text_w, 7, title, new_x="LMARGIN", new_y="NEXT", link=url)
+            pdf.set_x(MARGIN + 5)
+            pdf.set_font("JP", "", 8.5)
+            pdf.set_text_color(*SECONDARY)
+            pdf.multi_cell(text_w, 4.5, excerpt)
+            pdf.set_y(y + box_h + 3)
+
+        pdf.set_auto_page_break(auto=True, margin=20)
+
+        pdf.ln(1)
+        pdf.set_font("JP", "", 8)
+        pdf.set_text_color(*MUTED)
+        pdf.set_x(MARGIN)
+        pdf.cell(CONTENT_W, 5,
+                 f"全エッセイは {PUBLISHER_URL} からお読みいただけます。",
+                 new_x="LMARGIN", new_y="NEXT")
+        pdf.divider()
+
+    # ── Section 2: Customer Voices (list) ──
     materials = manifest.get("materials", [])
     if materials:
-        pdf.section_heading("ご利用者さまの声（TokiQR）")
+        pdf.section_heading("巻末 TokiQR 掲載者一覧")
         pdf.body(
-            "許諾をいただいたお客様のTokiQRを掲載します。"
-            "巻末のQRコードをスマートフォンでスキャンすると、お客様の肉声を再生できます。"
+            "注文時にNDL納本を選択されたお客様のTokiQRを巻末に掲載しています。"
+            "QRコードをスマートフォンでスキャンすると肉声を再生できます。"
         )
         for m in materials:
             pdf.body_bold(f"{m['displayName']}")
             pdf.body(f"注文番号: {m['orderId']}")
         pdf.divider()
 
-    # Section: Sado Island
-    pdf.section_heading("佐渡島 物理保管拠点の進捗")
-    pdf.body("佐渡島に設置予定の物理保管拠点について、進捗を報告します。")
-    pdf.body("（本セクションは発行時に内容が確定します）")
-    pdf.divider()
-
-    # Section: Partners
-    pdf.section_heading("パートナー・協賛者のご紹介")
-    pdf.body("トキストレージの活動を支えてくださるパートナーや協賛者をご紹介します。")
-    pdf.body("（本セクションは発行時に内容が確定します）")
-    pdf.divider()
-
     # ═══════════════════════════════════════════════════════════════════
-    # TokiQR Cover Pages
+    # TokiQR Cover Page (巻末扉)
     # ═══════════════════════════════════════════════════════════════════
+    pdf.add_page()
+    pdf.accent_bar()
+    pdf.set_auto_page_break(auto=False)
+    pdf.set_y(30)
+    pdf.set_font("JP", "", 9)
+    pdf.set_text_color(*TOKI_BLUE)
+    pdf.cell(0, 6, "── 巻末セクション ──", align="C", new_x="LMARGIN", new_y="NEXT")
+    pdf.ln(6)
+
+    tokiqr_title = "TokiQR：ご利用者さまの声" if materials else "TokiQR：代表メッセージ"
+    pdf.set_font("JP", "B", 20)
+    pdf.set_text_color(*DARK)
+    pdf.cell(0, 14, tokiqr_title, align="C", new_x="LMARGIN", new_y="NEXT")
+    pdf.ln(8)
+
+    desc_w = 220
+    desc_x = (PAGE_W - desc_w) / 2
+    pdf.set_font("JP", "", 9.5)
+    pdf.set_text_color(*SECONDARY)
+    pdf.set_x(desc_x)
     if materials:
-        pdf.add_page()
-        pdf.accent_bar()
-        pdf.set_auto_page_break(auto=False)
-        pdf.set_y(30)
-        pdf.set_font("JP", "", 9)
-        pdf.set_text_color(*TOKI_BLUE)
-        pdf.cell(0, 6, "── 巻末セクション ──", align="C", new_x="LMARGIN", new_y="NEXT")
-        pdf.ln(6)
-        pdf.set_font("JP", "B", 20)
-        pdf.set_text_color(*DARK)
-        pdf.cell(0, 14, "TokiQR：ご利用者さまの声", align="C", new_x="LMARGIN", new_y="NEXT")
-        pdf.ln(8)
-
-        desc_w = 220
-        desc_x = (PAGE_W - desc_w) / 2
-        pdf.set_font("JP", "", 9.5)
-        pdf.set_text_color(*SECONDARY)
-        pdf.set_x(desc_x)
         names = "、".join([m["displayName"] for m in materials])
         pdf.multi_cell(desc_w, 6, (
             f"掲載者: {names}\n"
             "次のページ以降に印刷されたQRコードをスマートフォンでスキャンすると、"
             "ご利用者さまの肉声を再生できます。"
         ), align="C")
-        pdf.ln(6)
-
-        box_w = 240
-        box_x = (PAGE_W - box_w) / 2
-        box_y = pdf.get_y()
-        pdf.set_fill_color(*BG_LIGHT)
-        pdf.set_draw_color(*BORDER)
-        pdf.rect(box_x, box_y, box_w, 30, "DF")
-        pdf.set_xy(box_x + 10, box_y + 5)
-        pdf.set_font("JP", "B", 9)
-        pdf.set_text_color(*DARK)
-        pdf.multi_cell(box_w - 20, 6, (
-            "サーバーは不要です。データはQRコード内に完全に埋め込まれています。\n"
-            "インターネット接続があればスマートフォンだけで再生可能。\n"
-            "100年後でも、このQRコードが残っていれば声は蘇ります。"
+    else:
+        pdf.multi_cell(desc_w, 6, (
+            "次のページに印刷されたQRコードをスマートフォンでスキャンすると、"
+            "代表の肉声を再生できます。"
         ), align="C")
+    pdf.ln(6)
 
-        pdf._footer_line(f"{PUBLICATION_NAME_JA}　巻末 TokiQR")
+    box_w = 240
+    box_x = (PAGE_W - box_w) / 2
+    box_y = pdf.get_y()
+    pdf.set_fill_color(*BG_LIGHT)
+    pdf.set_draw_color(*BORDER)
+    pdf.rect(box_x, box_y, box_w, 30, "DF")
+    pdf.set_xy(box_x + 10, box_y + 5)
+    pdf.set_font("JP", "B", 9)
+    pdf.set_text_color(*DARK)
+    pdf.multi_cell(box_w - 20, 6, (
+        "サーバーは不要です。データはQRコード内に完全に埋め込まれています。\n"
+        "インターネット接続があればスマートフォンだけで再生可能。\n"
+        "100年後でも、このQRコードが残っていれば声は蘇ります。"
+    ), align="C")
+
+    pdf._footer_line(f"{PUBLICATION_NAME_JA}　巻末 TokiQR")
 
     # ═══════════════════════════════════════════════════════════════════
     # Back Cover
