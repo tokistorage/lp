@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" type="image/png" sizes="32x32" href="asset/favicon-32.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="asset/apple-touch-icon.png">
+    <title>Image Clarity — The Portrait That Never Fades | TokiStorage</title>
+    <meta name="robots" content="index, follow">
+    <meta name="description" content="At a Western cemetery in Maui, color photos are embedded in gravestones. The colors fade. But an image encoded in a QR code on quartz glass retains the same clarity after 1,000 years.">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Shippori+Mincho:wght@400;500;600;700&family=Zen+Kaku+Gothic+New:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --toki-blue: #2563EB;
+            --toki-blue-dark: #1D4ED8;
+            --toki-blue-pale: #EFF6FF;
+            --accent-blue: #3B82F6;
+            --bg-white: #FFFFFF;
+            --text-primary: #1E293B;
+            --text-secondary: #475569;
+            --text-muted: #94A3B8;
+            --border: #E2E8F0;
+            --font-display: 'Shippori Mincho', serif;
+            --font-body: 'Zen Kaku Gothic New', sans-serif;
+        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        html { scroll-behavior: smooth; }
+        body { font-family: var(--font-body); font-weight: 400; background: var(--bg-white); color: var(--text-primary); line-height: 2; font-size: 16px; }
+
+        .article-nav { position: fixed; top: 0; left: 0; right: 0; z-index: 1000; background: rgba(255,255,255,0.95); backdrop-filter: blur(12px); border-bottom: 1px solid var(--border); padding: 0.6rem 1.2rem; display: flex; align-items: center; justify-content: space-between; gap: 1rem; }
+        .article-nav .nav-brand { font-family: var(--font-display); font-size: 0.9rem; font-weight: 600; color: var(--toki-blue); text-decoration: none; white-space: nowrap; }
+        .article-nav .nav-brand::before { content: ''; display: inline-block; width: 20px; height: 20px; background: url('asset/tokistorage-icon-512.png') no-repeat center / contain; vertical-align: -3px; margin-right: 5px; }
+        .article-nav .nav-right { display: flex; align-items: center; gap: 1rem; }
+        .article-nav .nav-label { font-size: 0.6rem; color: var(--text-muted); letter-spacing: 0.08em; }
+        .article-nav .lang-switch { font-size: 0.75rem; color: var(--toki-blue); text-decoration: none; padding: 0.3rem 0.6rem; border: 1px solid var(--toki-blue); border-radius: 4px; }
+        .article-nav .lang-switch:hover { background: var(--toki-blue); color: #fff; }
+
+        .article-container { max-width: 680px; margin: 0 auto; padding: 7rem 2rem 4rem; }
+        .article-header { margin-bottom: 3rem; padding-bottom: 2rem; border-bottom: 1px solid var(--border); }
+        .article-category { font-size: 0.7rem; color: var(--toki-blue); letter-spacing: 0.15em; margin-bottom: 1rem; }
+        .article-header h1 { font-family: var(--font-display); font-size: 1.8rem; font-weight: 700; line-height: 1.5; margin-bottom: 1.5rem; }
+        .article-subtitle { font-size: 0.95rem; color: var(--text-secondary); line-height: 1.9; }
+
+        .article-content h2 { font-family: var(--font-display); font-size: 1.3rem; font-weight: 600; margin: 3rem 0 1.5rem; padding-bottom: 0.5rem; border-bottom: 2px solid var(--toki-blue-pale); }
+        .article-content h3 { font-family: var(--font-display); font-size: 1.1rem; font-weight: 600; margin: 2rem 0 1rem; color: var(--toki-blue-dark); }
+        .article-content p { margin-bottom: 1.5rem; }
+        .article-content blockquote { border-left: 3px solid var(--toki-blue); padding-left: 1.5rem; margin: 2rem 0; font-family: var(--font-display); color: var(--text-secondary); }
+        .article-content ul { margin: 1.5rem 0; padding-left: 1.5rem; }
+        .article-content li { margin-bottom: 0.75rem; }
+
+        .core-message { background: var(--toki-blue-pale); border-left: 4px solid var(--toki-blue); padding: 1.5rem; margin: 2rem 0; font-size: 0.95rem; }
+        .key-point { background: linear-gradient(135deg, var(--toki-blue-pale) 0%, #fff 100%); border: 1px solid var(--accent-blue); border-radius: 8px; padding: 1.5rem; margin: 2rem 0; text-align: center; }
+        .key-point p { font-family: var(--font-display); font-size: 1.1rem; color: var(--toki-blue-dark); margin: 0; }
+
+        .article-footer { margin-top: 4rem; padding-top: 2rem; border-top: 1px solid var(--border); text-align: center; }
+        .article-footer p { font-size: 0.8rem; color: var(--text-muted); margin-bottom: 1rem; }
+        .article-footer a { color: var(--toki-blue); text-decoration: none; }
+        .article-footer a:hover { text-decoration: underline; }
+
+        @media (max-width: 768px) {
+            .article-container { padding: 6rem 1.2rem 3rem; }
+            .article-header h1 { font-size: 1.5rem; }
+            .article-nav .nav-label { display: none; }
+        }
+        @media print { .article-nav { display: none; } .article-container { padding-top: 2rem; } }
+    </style>
+    <link rel="stylesheet" href="contact-form.css">
+    <meta property="og:image" content="https://tokistorage.github.io/lp/asset/tokistorage-icon-512.png">
+    <meta property="og:image:width" content="512">
+    <meta property="og:image:height" content="512">
+</head>
+<body>
+
+<nav class="article-nav">
+    <a href="index-en.html" class="nav-brand">TokiStorage</a>
+    <div class="nav-right">
+        <span class="nav-label">Technology</span>
+        <a href="image-clarity.html" class="lang-switch">JA</a>
+    </div>
+</nav>
+
+<main class="article-container">
+
+    <header class="article-header">
+        <p class="article-category">ESSAY &mdash; Technology &amp; Permanence</p>
+        <h1>Image Clarity<br><span style="font-size: 0.6em; font-weight: 400; color: var(--text-secondary);">&mdash;&mdash; The Portrait That Never Fades</span></h1>
+        <p class="article-subtitle">
+            At a Western cemetery in Maui, color photos are embedded in headstones.<br>
+            Vivid, but inevitably fading.<br>
+            What if a portrait that never fades were possible &mdash; and what technology would make it so?
+        </p>
+    </header>
+
+    <article class="article-content">
+
+        <div class="core-message">
+            <strong>The argument in brief:</strong> Physical photographs always degrade. Digital data vanishes when its medium fails. But an image encoded as a QR code and laser-etched into quartz glass retains the exact same clarity after 1,000 years. Optimizing image quality is not about aesthetics &mdash; it is about the quality of permanence itself.
+        </div>
+
+        <h2>1. What I Saw at a Cemetery in Maui</h2>
+
+        <p>While visiting Maui, Hawaii, I had the chance to walk through a Western-style cemetery.</p>
+
+        <p>Unlike Eastern gravestones, Western headstones had color photographs embedded in them. Portraits fired onto ceramic or enamel: a smiling face, a family gathering, a young man in military uniform. On cold stone, the warmth of a life once lived.</p>
+
+        <p>This is virtually unseen in Eastern funerary culture. A name, dates of birth and death, a family crest &mdash; that is what Eastern gravestones bear. The face lives in memory, not in stone.</p>
+
+        <p>But in the West, the face is preserved in stone. What someone looked like when they smiled, what their eyes conveyed &mdash; these are meant to be seen by anyone who visits the grave. The culture inscribes existence not as text but as image.</p>
+
+        <p>Those photographs were beautiful &mdash; but they were unmistakably fading.</p>
+
+        <h2>2. What It Means to Fade</h2>
+
+        <p>Even photographs fired onto ceramic lose their color under ultraviolet light and weather. Over decades, skin tones dull and blue skies turn grey. Enamel coatings last longer, but hairline cracks let moisture in, and delamination begins from the inside.</p>
+
+        <p>Maui's climate is warm, but it brings intense UV radiation and salt-laden wind. For a photograph on a headstone, it is one of the harshest environments imaginable.</p>
+
+        <p>This is not unique to cemetery photographs. Every physical image record degrades with time.</p>
+
+        <ul>
+            <li>Silver halide prints: 50 &ndash; 100 years to noticeable fading (depending on storage)</li>
+            <li>Inkjet prints: 10 &ndash; 30 years (even with archival inks)</li>
+            <li>Ceramic-fired photos: 100 &ndash; 200 years (in outdoor conditions)</li>
+            <li>Oil paintings: several centuries (but restoration is assumed)</li>
+        </ul>
+
+        <p>No matter how refined the technique, color that exists as visible light is destroyed by light itself. UV radiation breaks molecular bonds in ink. Oxygen oxidizes pigments. Moisture causes substrates to expand and contract. Color, simply by existing, is destined to disappear.</p>
+
+        <blockquote>
+            <p>Keeping a photograph "visible" is an endless war against light and chemistry. And physical photographs always lose that war.</p>
+        </blockquote>
+
+        <h2>3. The Fragility of Digital</h2>
+
+        <p>Digital photos don't degrade &mdash; so the common claim goes. And it is true that a sequence of bits does not undergo chemical change. Zeros and ones do not fade.</p>
+
+        <p>But the media that store those bits do degrade.</p>
+
+        <ul>
+            <li>Hard drives: 5 &ndash; 10 years (mechanical wear)</li>
+            <li>SSDs: 5 &ndash; 10 years (charge leakage)</li>
+            <li>Optical discs (CD/DVD): 10 &ndash; 30 years (organic dye breakdown)</li>
+            <li>USB flash drives: 5 &ndash; 10 years</li>
+            <li>Cloud storage: depends on service continuity</li>
+        </ul>
+
+        <p>Where did you save the digital photos you took in the early 2000s? On an original iPod? A Geocities server? A MySpace profile? The "My Documents" folder on Windows XP? Where is that data now?</p>
+
+        <p>The greatest enemy of digital data is not degradation but dispersion. Before the medium breaks, you lose track of where the medium is. Formats become unreadable. Services shut down. Passwords are forgotten.</p>
+
+        <p>Digital does not "resist degradation" &mdash; it degrades differently. Where a physical photo fades slowly, digital data disappears all at once, with no middle ground. What was accessible yesterday simply ceases to exist today.</p>
+
+        <h2>4. The 2,953-Byte Constraint</h2>
+
+        <p>A QR code has a hard physical ceiling on data capacity. Version 40 (the largest), error correction level L, byte mode: 2,953 bytes. Roughly 3 kilobytes.</p>
+
+        <p>A modern smartphone photo weighs 3 to 8 megabytes. The data a QR code can hold is about one-thousandth of that.</p>
+
+        <p>Can a human face be recognizable within this constraint? Intuitively, it seems impossible.</p>
+
+        <p>But through a combination of technical optimizations, it became possible.</p>
+
+        <h3>WebP Encoding and Quality Search</h3>
+
+        <p>TokiQR's image compression combines several optimizations:</p>
+
+        <ul>
+            <li><strong>WebP format:</strong> Compared to conventional JPEG, WebP achieves roughly 30% smaller file sizes at equivalent visual quality. It is an image format developed by Google for the web.</li>
+            <li><strong>Binary search for optimal quality:</strong> The quality parameter is searched algorithmically to extract the highest visual fidelity within a given byte budget. The search converges in 8 iterations.</li>
+            <li><strong>High-quality downscaling:</strong> When reducing image dimensions, a high-quality interpolation algorithm preserves contour sharpness and tonal smoothness even at very low pixel counts.</li>
+        </ul>
+
+        <p>The result: within approximately 2,100 bytes of image data, a human face is visually recognizable. The resolution is low. But you can tell whose face it is. Skin tone, hair color, the outline of an expression. Enough information to identify a person fits within fewer than 3 kilobytes.</p>
+
+        <div class="core-message">
+            <strong>What matters is not pixel count.</strong> The amount of information needed to "recognize" a human face is far less than intuition suggests. The brain reconstructs a remembered face from minimal cues &mdash; a few contours and color hints. Perfect reproduction is unnecessary. If the resolution is enough to trigger "That's them," the portrait has served its purpose.
+        </div>
+
+        <h2>5. Encoded Images Do Not Degrade</h2>
+
+        <p>This is the crux.</p>
+
+        <p>An image encoded as a QR code is binary data. A pattern of zeros and ones. A grid of black and white modules (dots).</p>
+
+        <p>This pattern is laser-etched into quartz glass. Fused quartz (SiO<sub>2</sub>) is chemically near-inert. It does not degrade under UV light. It resists both acid and alkali. Its melting point is approximately 1,700&deg;C. Under ambient conditions, it retains its form effectively forever.</p>
+
+        <p>The laser-etched dot pattern is a microstructural change within the glass. It is not a surface print. It is an internal structure. Wiping or even abrading the surface does not alter the internal pattern.</p>
+
+        <p>QR codes include error correction. Even if some modules become unreadable, Reed-Solomon coding recovers the original data. Level L tolerates 7% data loss.</p>
+
+        <p>Which means &mdash;</p>
+
+        <p>The photographs on headstones in Maui will have faded further in 50 years, in 100 years. Enamel will peel, colors will sink, and eventually the face will become unrecognizable.</p>
+
+        <p>But the image data inside a QR code etched in quartz glass will return the exact same byte sequence when scanned 1,000 years from now. The same pixel arrangement. The same colors. The same clarity. For an encoded image, the concept of "fading" does not exist.</p>
+
+        <blockquote>
+            <p>A physical photograph loses a little more every time you look at it.<br>An encoded image returns the same data no matter how many times it is read.</p>
+        </blockquote>
+
+        <h2>6. The Portrait That Never Fades</h2>
+
+        <p>What I felt at the cemetery in Maui was the intensity of a Western cultural impulse: the desire to preserve a face. A name is not enough. Dates are not enough. What someone looked like, how they smiled &mdash; that is what the culture wants carved into stone.</p>
+
+        <p>That desire transcends technology. In every era and every culture, there is a fundamental human need to hold on to the likeness of someone loved.</p>
+
+        <p>But until now, technology could not fully answer that desire. No matter how carefully a photo was fired onto ceramic, no matter how archival the ink, color faded. Physical images could not defeat time.</p>
+
+        <p>QR code &times; quartz glass offers one answer to this challenge.</p>
+
+        <p>The image quality is not perfect. Within the 2,953-byte constraint, smartphone-level resolution is out of reach. But the face is recognizable. The expression is recognizable. That the person is that person &mdash; comes through.</p>
+
+        <p>And that "coming through" &mdash; remains unchanged for 1,000 years.</p>
+
+        <div class="key-point">
+            <p>A high-resolution photo that disappears in 100 years,<br>or a low-resolution image that remains unchanged for 1,000.<br><br>Which is truly "clear"?</p>
+        </div>
+
+        <p>Clarity is not a matter of pixel count. It is whether a person's existence can be conveyed across time. A high-resolution photograph that has faded beyond recognition after a century is less clear than a low-resolution image that can still be read at the same quality after a millennium. The latter fulfills the mission of a portrait.</p>
+
+        <p>The photographs on headstones in Maui will fade. But if a quartz-glass QR code were embedded in that same headstone &mdash; someone holding a device to it 1,000 years from now would see the same face, at the same clarity, as today.</p>
+
+        <p>A portrait that never fades. It is an attempt to redefine what image clarity means.</p>
+
+    </article>
+
+    <footer class="article-footer">
+        <p id="essay-nav-links"></p>
+        <p style="margin-top: 2rem; font-size: 0.75rem;">&copy; 2026 TokiStorage</p>
+    </footer>
+
+</main>
+
+<script src="contact-form.js"></script>
+<script src="essay-nav.js?v=20260218"></script>
+<script src="tracker.js"></script>
+</body>
+</html>

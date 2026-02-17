@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" type="image/png" sizes="32x32" href="asset/favicon-32.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="asset/apple-touch-icon.png">
+    <title>画像の鮮明さ——色褪せない肖像 | トキストレージ</title>
+    <meta name="robots" content="index, follow">
+    <meta name="description" content="マウイ島の西洋墓地で見た、墓石に埋め込まれたカラー写真。色は褪せていく。だがQRコードに符号化された画像は、石英ガラスの中で1,000年後も同じ鮮明さを保つ。">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Shippori+Mincho:wght@400;500;600;700&family=Zen+Kaku+Gothic+New:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --toki-blue: #2563EB;
+            --toki-blue-dark: #1D4ED8;
+            --toki-blue-pale: #EFF6FF;
+            --accent-blue: #3B82F6;
+            --bg-white: #FFFFFF;
+            --text-primary: #1E293B;
+            --text-secondary: #475569;
+            --text-muted: #94A3B8;
+            --border: #E2E8F0;
+            --font-display: 'Shippori Mincho', serif;
+            --font-body: 'Zen Kaku Gothic New', sans-serif;
+        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        html { scroll-behavior: smooth; }
+        body { font-family: var(--font-body); font-weight: 400; background: var(--bg-white); color: var(--text-primary); line-height: 2; font-size: 16px; }
+
+        .article-nav { position: fixed; top: 0; left: 0; right: 0; z-index: 1000; background: rgba(255,255,255,0.95); backdrop-filter: blur(12px); border-bottom: 1px solid var(--border); padding: 0.6rem 1.2rem; display: flex; align-items: center; justify-content: space-between; gap: 1rem; }
+        .article-nav .nav-brand { font-family: var(--font-display); font-size: 0.9rem; font-weight: 600; color: var(--toki-blue); text-decoration: none; white-space: nowrap; }
+        .article-nav .nav-brand::before { content: ''; display: inline-block; width: 20px; height: 20px; background: url('asset/tokistorage-icon-512.png') no-repeat center / contain; vertical-align: -3px; margin-right: 5px; }
+        .article-nav .nav-right { display: flex; align-items: center; gap: 1rem; }
+        .article-nav .nav-label { font-size: 0.6rem; color: var(--text-muted); letter-spacing: 0.08em; }
+        .article-nav .lang-switch { font-size: 0.75rem; color: var(--toki-blue); text-decoration: none; padding: 0.3rem 0.6rem; border: 1px solid var(--toki-blue); border-radius: 4px; }
+        .article-nav .lang-switch:hover { background: var(--toki-blue); color: #fff; }
+
+        .article-container { max-width: 680px; margin: 0 auto; padding: 7rem 2rem 4rem; }
+        .article-header { margin-bottom: 3rem; padding-bottom: 2rem; border-bottom: 1px solid var(--border); }
+        .article-category { font-size: 0.7rem; color: var(--toki-blue); letter-spacing: 0.15em; margin-bottom: 1rem; }
+        .article-header h1 { font-family: var(--font-display); font-size: 1.8rem; font-weight: 700; line-height: 1.5; margin-bottom: 1.5rem; }
+        .article-subtitle { font-size: 0.95rem; color: var(--text-secondary); line-height: 1.9; }
+
+        .article-content h2 { font-family: var(--font-display); font-size: 1.3rem; font-weight: 600; margin: 3rem 0 1.5rem; padding-bottom: 0.5rem; border-bottom: 2px solid var(--toki-blue-pale); }
+        .article-content h3 { font-family: var(--font-display); font-size: 1.1rem; font-weight: 600; margin: 2rem 0 1rem; color: var(--toki-blue-dark); }
+        .article-content p { margin-bottom: 1.5rem; }
+        .article-content blockquote { border-left: 3px solid var(--toki-blue); padding-left: 1.5rem; margin: 2rem 0; font-family: var(--font-display); color: var(--text-secondary); }
+        .article-content ul { margin: 1.5rem 0; padding-left: 1.5rem; }
+        .article-content li { margin-bottom: 0.75rem; }
+
+        .core-message { background: var(--toki-blue-pale); border-left: 4px solid var(--toki-blue); padding: 1.5rem; margin: 2rem 0; font-size: 0.95rem; }
+        .key-point { background: linear-gradient(135deg, var(--toki-blue-pale) 0%, #fff 100%); border: 1px solid var(--accent-blue); border-radius: 8px; padding: 1.5rem; margin: 2rem 0; text-align: center; }
+        .key-point p { font-family: var(--font-display); font-size: 1.1rem; color: var(--toki-blue-dark); margin: 0; }
+
+        .article-footer { margin-top: 4rem; padding-top: 2rem; border-top: 1px solid var(--border); text-align: center; }
+        .article-footer p { font-size: 0.8rem; color: var(--text-muted); margin-bottom: 1rem; }
+        .article-footer a { color: var(--toki-blue); text-decoration: none; }
+        .article-footer a:hover { text-decoration: underline; }
+
+        @media (max-width: 768px) {
+            .article-container { padding: 6rem 1.2rem 3rem; }
+            .article-header h1 { font-size: 1.5rem; }
+            .article-nav .nav-label { display: none; }
+        }
+        @media print { .article-nav { display: none; } .article-container { padding-top: 2rem; } }
+    </style>
+    <link rel="stylesheet" href="contact-form.css">
+    <meta property="og:image" content="https://tokistorage.github.io/lp/asset/tokistorage-icon-512.png">
+    <meta property="og:image:width" content="512">
+    <meta property="og:image:height" content="512">
+</head>
+<body>
+
+<nav class="article-nav">
+    <a href="index.html" class="nav-brand">トキストレージ</a>
+    <div class="nav-right">
+        <span class="nav-label">技術 / Technology</span>
+        <a href="image-clarity-en.html" class="lang-switch">EN</a>
+    </div>
+</nav>
+
+<main class="article-container">
+
+    <header class="article-header">
+        <p class="article-category">ESSAY &mdash; 技術と永続性</p>
+        <h1>画像の鮮明さ<br><span style="font-size: 0.6em; font-weight: 400; color: var(--text-secondary);">&mdash;&mdash; 色褪せない肖像</span></h1>
+        <p class="article-subtitle">
+            マウイ島の西洋墓地で、墓石に埋め込まれたカラー写真を見た。<br>
+            鮮やかだが、確実に褪せていく色。<br>
+            もし「色褪せない肖像」が可能だとしたら——それはどんな技術で実現するのか。
+        </p>
+    </header>
+
+    <article class="article-content">
+
+        <div class="core-message">
+            <strong>この記事で言いたいこと：</strong>物理的な写真は必ず劣化する。デジタルデータも媒体が朽ちれば消える。だが、QRコードとして符号化された画像を石英ガラスに刻めば、光学的に読み取れる限り、1,000年後も初日と同じ鮮明さが保たれる。画像品質の最適化は「見た目の改善」ではなく「永続性の質」に直結する。
+        </div>
+
+        <h2>1. マウイ島の墓地で見たもの</h2>
+
+        <p>ハワイ・マウイ島を訪れたとき、西洋式の墓地を歩く機会があった。</p>
+
+        <p>東洋の墓石とは異なり、西洋の墓石にはカラー写真が埋め込まれていた。陶磁器やエナメルに焼き付けられた故人の肖像。微笑みを浮かべた顔、家族との集合写真、軍服姿のポートレート。墓石という冷たい石の上に、生きていた頃の温もりが残されている。</p>
+
+        <p>東洋の墓文化ではまず見ない光景だった。名前と生没年、家紋。それが東洋の墓石に刻まれるものだ。顔は記憶の中にあり、石には刻まない。</p>
+
+        <p>だが西洋では、顔を石に残す。その人がどんな顔で笑っていたか、どんな目をしていたかを、墓を訪れる人に伝えようとする。故人の存在を、文字ではなく映像として刻む文化がある。</p>
+
+        <p>その写真は——美しかったが、確実に褪せていた。</p>
+
+        <h2>2. 色が褪せるということ</h2>
+
+        <p>陶磁器に焼き付けた写真でさえ、紫外線と風雨に晒されれば色は変わる。数十年で肌の色がくすみ、背景の青が灰色に沈む。エナメル加工されたものは比較的長持ちするが、表面のひび割れから水分が侵入し、内側から剥離が始まる。</p>
+
+        <p>マウイの気候は温暖だが、強い紫外線と塩分を含んだ風がある。墓地の写真にとって、最も過酷な環境のひとつだ。</p>
+
+        <p>これは写真に限った話ではない。あらゆる物理的な映像記録は、時間とともに劣化する。</p>
+
+        <ul>
+            <li>銀塩写真のプリント：50〜100年で褪色（保管環境による）</li>
+            <li>インクジェットプリント：10〜30年（耐光インクでも限界がある）</li>
+            <li>陶磁器焼付：100〜200年（屋外環境下）</li>
+            <li>油彩画：数百年（ただし修復が前提）</li>
+        </ul>
+
+        <p>どれだけ技術を凝らしても、可視光として存在する色は、光そのものによって壊される。紫外線がインクの分子結合を断ち切り、酸素が顔料を酸化させ、水分が基材を膨張・収縮させる。色は、存在するだけで消えていく宿命にある。</p>
+
+        <blockquote>
+            <p>写真を「見える」状態に保つということは、光と化学変化との終わりなき戦いだ。そしてその戦いに、物理的な写真は必ず敗れる。</p>
+        </blockquote>
+
+        <h2>3. デジタルの脆さ</h2>
+
+        <p>デジタル写真は劣化しない——とよく言われる。たしかに、データとしてのビット列は化学変化しない。0と1は褪色しない。</p>
+
+        <p>だが、ビット列を保存する媒体は劣化する。</p>
+
+        <ul>
+            <li>ハードディスク：5〜10年（機械部品の摩耗）</li>
+            <li>SSD：5〜10年（電荷のリーク）</li>
+            <li>光ディスク（CD/DVD）：10〜30年（有機色素の劣化）</li>
+            <li>USBメモリ：5〜10年</li>
+            <li>クラウドストレージ：サービス存続期間に依存</li>
+        </ul>
+
+        <p>2000年代に撮影したデジタル写真を、どこに保存しただろうか。初代iPodの中か。Geocitiesのサーバーか。MySpaceのプロフィールか。Windows XPのマイドキュメントか。それらのデータは、今どこにあるだろうか。</p>
+
+        <p>デジタルデータの最大の敵は劣化ではなく、散逸だ。媒体が壊れる前に、媒体がどこにあるかわからなくなる。フォーマットが読めなくなる。サービスが終了する。アカウントのパスワードを忘れる。</p>
+
+        <p>デジタルは「劣化しない」のではなく「劣化の形が違う」のだ。物理写真がゆっくり褪色するのに対し、デジタルデータはある日突然、完全に消える。中間がない。昨日までアクセスできていたものが、今日はもう存在しない。</p>
+
+        <h2>4. 2,953バイトの制約</h2>
+
+        <p>QRコードに格納できるデータ量には、物理的な上限がある。QRコード バージョン40（最大サイズ）、誤り訂正レベルL、バイトモードで2,953バイト。これは約3キロバイトだ。</p>
+
+        <p>現代のスマートフォンで撮影した写真は、1枚あたり3〜8メガバイト。QRコードに収まるデータ量は、その約1,000分の1にすぎない。</p>
+
+        <p>この制約の中で、人の顔を認識できる画像を格納できるのか。直感的には不可能に思える。</p>
+
+        <p>だが、技術的なアプローチによって、可能になった。</p>
+
+        <h3>WebP符号化と品質探索</h3>
+
+        <p>TokiQRの画像圧縮は、複数の最適化を組み合わせている。</p>
+
+        <ul>
+            <li><strong>WebP形式の採用：</strong>従来のJPEGと比較して、同等の視覚品質で約30%小さいファイルサイズを実現する。GoogleがWeb用に開発した画像フォーマットだ。</li>
+            <li><strong>二分探索による品質最適化：</strong>画質パラメータを機械的に探索し、与えられたバイト数の上限に対して最高の品質を引き出す。8回の反復で最適値に収束する。</li>
+            <li><strong>高品質ダウンスケーリング：</strong>画像を縮小する際に、高品質な補間アルゴリズムを適用。ピクセル数が少なくても、輪郭と色調のなめらかさを維持する。</li>
+        </ul>
+
+        <p>結果として、約2,100バイトの画像データの中に、人の顔が視認できるレベルの画像を格納できる。解像度は低い。だが、誰の顔かは判別できる。肌の色、髪の色、表情の輪郭。その人がその人であることを伝えるに十分な情報が、3キロバイトに満たないデータの中に収まっている。</p>
+
+        <div class="core-message">
+            <strong>重要なのは画素数ではない。</strong>人の顔を「認識」するために必要な情報量は、直感よりもはるかに少ない。脳は、わずかな輪郭と色彩のヒントから、記憶の中の顔を呼び起こす。完璧な再現は不要だ。「この人だ」と思い出せる程度の解像度があれば、肖像としての機能は果たされる。
+        </div>
+
+        <h2>5. 符号化された画像は劣化しない</h2>
+
+        <p>ここが核心だ。</p>
+
+        <p>QRコードとして符号化された画像は、バイナリデータだ。0と1の配列。白と黒のモジュール（ドット）のパターン。</p>
+
+        <p>このパターンを石英ガラスにレーザーで刻む。石英ガラス（溶融石英、SiO<sub>2</sub>）は、化学的にほぼ不活性だ。紫外線で変質しない。酸にもアルカリにも侵されない。融点は約1,700℃。常温常圧の環境では、実質的に永久に形状を保つ。</p>
+
+        <p>レーザーで刻まれたドットパターンは、ガラス内部の微小な構造変化だ。表面の印刷ではない。内部の構造だ。したがって、表面を拭いても削っても、内部のパターンは変わらない。</p>
+
+        <p>QRコードには誤り訂正機能がある。一部のモジュールが読み取れなくても、リードソロモン符号によって元のデータを復元できる。レベルLでも7%のデータ損失に耐える。</p>
+
+        <p>つまり——</p>
+
+        <p>マウイ島の墓地にある写真は、50年後、100年後、確実に褪色している。エナメルは剥がれ、色は沈み、やがて誰の顔かわからなくなる。</p>
+
+        <p>だが、石英ガラスに刻まれたQRコードの中の画像データは、1,000年後にスキャンしても、今日と同じバイト列を返す。同じ画素配列。同じ色。同じ鮮明さ。符号化された画像には「褪色」という概念がない。</p>
+
+        <blockquote>
+            <p>物理的な写真は、見るたびに少しずつ失われていく。<br>符号化された画像は、何度読み取っても変わらない。</p>
+        </blockquote>
+
+        <h2>6. 色褪せない肖像</h2>
+
+        <p>マウイ島の墓地で感じたのは、西洋文化の「顔を残したい」という切実な願いだった。名前だけでは足りない。生没年だけでは足りない。その人がどんな顔をしていたか、どんな表情で笑っていたか——それを石に残したいという想い。</p>
+
+        <p>その想い自体は、技術を超えている。どんな時代にも、どんな文化にも、愛する人の面影を留めたいという人間の根源的な欲求がある。</p>
+
+        <p>だが、これまでの技術では、その想いに応えきれなかった。どれだけ丁寧に焼き付けても、どれだけ高品質なインクを使っても、色は褪せた。物理的な映像は、時間に勝てなかった。</p>
+
+        <p>QRコード×石英ガラスは、この問いに対するひとつの回答だ。</p>
+
+        <p>画質は完璧ではない。2,953バイトの制約の中で、スマートフォンの写真と同じ解像度は望めない。だが、その人の顔はわかる。表情はわかる。その人がその人であることは、伝わる。</p>
+
+        <p>そして、その「伝わる」品質が——1,000年、変わらない。</p>
+
+        <div class="key-point">
+            <p>高解像度だが100年で消える写真と、<br>低解像度だが1,000年変わらない画像。<br><br>どちらが「鮮明」だろうか。</p>
+        </div>
+
+        <p>鮮明さとは、画素数のことではない。時間を超えて、その人の存在が伝わるかどうかだ。100年後に褪色して判別できなくなった高解像度写真より、1,000年後も同じ品質で読み取れる低解像度画像のほうが、肖像としての使命を果たしている。</p>
+
+        <p>マウイ島の墓地の写真は、いずれ褪せる。だがもしあの墓石に、石英ガラスのQRコードが埋め込まれていたら——1,000年後にスマートフォンをかざした誰かが、その人の顔を、今日と同じ鮮明さで見ることができる。</p>
+
+        <p>色褪せない肖像。それは、画像の鮮明さを再定義する試みだ。</p>
+
+    </article>
+
+    <footer class="article-footer">
+        <p id="essay-nav-links"></p>
+        <p style="margin-top: 2rem; font-size: 0.75rem;">&copy; 2026 TokiStorage</p>
+    </footer>
+
+</main>
+
+<script src="contact-form.js"></script>
+<script src="essay-nav.js?v=20260218"></script>
+<script src="tracker.js"></script>
+</body>
+</html>
