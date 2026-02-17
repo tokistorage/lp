@@ -392,9 +392,21 @@
             .print-lower .tokiqr-box {
                 break-inside: avoid;
             }
-            /* Essay to right column */
+            /* QR pair: side-by-side layout */
+            .qr-pair {
+                column-span: all;
+                display: flex;
+                gap: 0.8rem;
+                margin-top: 0.3rem;
+            }
+            .qr-pair-item { flex: 1; }
+            .qr-pair .section-heading { margin: 0 0 0.15rem; }
+            .qr-pair .section-heading h2 { font-size: 0.88rem; }
+            .qr-pair .essay-qr-box { text-align: center !important; padding: 0.4rem; }
+            .qr-pair .essay-qr-box p { display: none; }
+            .qr-pair .essay-qr-box img { width: 50px; height: 50px; margin-bottom: 0.1rem; }
             .print-lower .essay-heading {
-                break-before: column;
+                break-before: auto;
             }
             /* Contact spans full width below columns */
             .print-lower .contact-section {
@@ -406,8 +418,6 @@
             }
             /* Hide essay link in print */
             .print-lower .try-link { display: none; }
-            /* QR box: left-align text, smaller image */
-            .print-lower .essay-qr-box { text-align: left !important; }
             .areas { margin-bottom: 0.3rem; }
             .area-row { padding: 0.12rem 0; }
             .area-label { font-size: 0.8rem; }
@@ -416,7 +426,6 @@
             .pricing-note { font-size: 0.75rem; }
             .contact-info .contact-name { font-size: 0.92rem; }
             .contact-info p { font-size: 0.8rem; line-height: 1.45; }
-            .print-lower .tokiqr-box img { width: 55px; height: 55px; margin-bottom: 0.15rem; }
             .print-lower .tokiqr-box p { font-size: 0.75rem; line-height: 1.45; margin-bottom: 0.15rem; }
         }
         /* Landscape print override (injected by JS) */
@@ -447,9 +456,13 @@
             body.landscape-mode .pricing-heading {
                 break-before: column;
             }
-            body.landscape-mode .essay-heading {
-                break-before: auto;
+            body.landscape-mode .essay-heading { break-before: auto; }
+            body.landscape-mode .qr-pair {
+                column-span: all;
+                display: flex;
+                gap: 1rem;
             }
+            body.landscape-mode .qr-pair-item { flex: 1; }
             /* Generous sizing for landscape */
             body.landscape-mode .br-header { margin-bottom: 0.7rem; padding-bottom: 0.48rem; }
             body.landscape-mode .br-header .company { font-size: 1.42rem; }
@@ -574,6 +587,8 @@
     <p class="pricing-line">石英ガラスQR: <strong>&yen;50,000</strong></p>
     <p class="pricing-note">一度のお支払いで完結。月額課金なし。<a href="index.html#pricing" style="color: var(--toki-blue); text-decoration: none;">詳細 &rarr;</a></p>
 
+    <div class="qr-pair">
+    <div class="qr-pair-item">
     <div class="section-heading"><h2>QRセットアップ</h2></div>
     <div class="tokiqr-box essay-qr-box" style="text-align: center;">
         <img src="asset/qr-setup.png" alt="セットアップページへのQRコード" class="print-only-qr" style="width: 160px; height: 160px; margin-bottom: 0.75rem;">
@@ -581,13 +596,16 @@
         <p style="font-size: 0.8rem; color: var(--text-secondary); line-height: 1.7; margin-bottom: 0.5rem;">拠点名やWiseタグを設定して、カスタムQRシールを作成。<br>印刷版ではQRコードをスキャンしてセットアップページを開けます。</p>
         <a href="https://tokistorage.github.io/qr/setup.html" class="try-link">セットアップページを開く &rarr;</a>
     </div>
-
+    </div>
+    <div class="qr-pair-item">
     <div class="section-heading essay-heading"><h2>なぜブローシャが営業を超越するのか</h2></div>
     <div class="tokiqr-box essay-qr-box" style="text-align: center;">
-        <img src="asset/qr-brochure-essay.png" alt="エッセイへのQRコード" style="width: 160px; height: 160px; margin-bottom: 0.75rem;">
+        <img src="asset/qr-brochure-essay.png" alt="エッセイへのQRコード" class="print-only-qr" style="width: 160px; height: 160px; margin-bottom: 0.75rem;">
         <p style="font-family: var(--font-display); font-size: 0.95rem; color: var(--text-primary); margin-bottom: 0.5rem;">ブローシャの限界と超越</p>
         <p style="font-size: 0.8rem; color: var(--text-secondary); line-height: 1.7; margin-bottom: 0.5rem;">普通のブローシャが超えられない壁と、TokiStorageのブローシャが持つ構造的な突破力。<br>デジタルプロモーションでは届かない「体感」の本質について。</p>
         <a href="brochure-essay.html" class="try-link">エッセイを読む &rarr;</a>
+    </div>
+    </div>
     </div>
 
     <div class="contact-section">
