@@ -63,6 +63,7 @@
     { id: 'payment', ja: '決済手段', en: 'Payment Methods' },
     { id: 'partner-boundary', ja: 'パートナーの境界線', en: 'The Partner Boundary' },
     { id: 'made-to-order', ja: '受注生産の境界', en: 'The Boundary of Made-to-Order' },
+    { id: 'post-nomad', ja: 'ポストノマド', en: 'Post-Nomad' },
 
     // ── 文化・社会活動 ──
     { id: 'education', ja: '教育', en: 'Education' },

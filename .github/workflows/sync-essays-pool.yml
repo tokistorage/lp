@@ -1,10 +1,9 @@
 name: Sync essays pool
 
 on:
-  push:
-    branches: [main]
-    paths:
-      - '*.html'
+  schedule:
+    - cron: '0 0 * * *'   # 毎日 9:00 JST (UTC 0:00)
+  workflow_dispatch:        # 手動実行可
 
 jobs:
   sync:
@@ -15,103 +14,137 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
-      - name: Detect new essays and update pool
+      - name: Detect new essays and sync
         id: detect
         run: |
-          # essays-pool.json の既存IDリスト
+          # ── 除外パターン（エッセイでないHTMLファイル） ──
+          EXCLUDE_PATTERNS=(
+            '-en\.html$'
+            '^usecase-' '^newsletter' '^index' '^details'
+            '^tokushoho' '^usecases' '^brochure' '^deck'
+            '^pitch-deck' '^infographic' '^thanks' '^privacy'
+            '^payment' '^profile' '^contact' '^client-proposal'
+            '^government-proposal' '^workaway-proposal'
+            '^100-scenes' '^pearl-soap' '^manifesto'
+            '^transparency' '^not-for-you' '^trust-design'
+            '^partnership' '^patronage' '^timeless-coach'
+          )
+
+          # エッセイ候補のHTMLファイル（JA版のみ）
+          CANDIDATES=$(ls *.html 2>/dev/null)
+          for PAT in "${EXCLUDE_PATTERNS[@]}"; do
+            CANDIDATES=$(echo "$CANDIDATES" | grep -v -- "$PAT")
+          done
+          CANDIDATES=$(echo "$CANDIDATES" | sed 's/\.html$//')
+
           POOL_IDS=$(jq -r '.essays[].id' newsletter/essays-pool.json)
+          NAV_IDS=$(grep -oP "id: '\\K[^']+" essay-nav.js)
 
-          # エッセイ候補のHTMLファイル（JA版のみ、除外パターン適用）
-          CANDIDATES=$(ls *.html 2>/dev/null \
-            | grep -v -- '-en\.html$' \
-            | grep -v '^usecase-' \
-            | grep -v '^newsletter' \
-            | grep -v '^index' \
-            | grep -v '^details' \
-            | grep -v '^tokushoho' \
-            | grep -v '^usecases' \
-            | grep -v '^brochure' \
-            | grep -v '^deck' \
-            | grep -v '^pitch-deck' \
-            | grep -v '^infographic' \
-            | grep -v '^thanks' \
-            | grep -v '^privacy' \
-            | grep -v '^payment' \
-            | grep -v '^profile' \
-            | grep -v '^contact' \
-            | grep -v '^client-proposal' \
-            | grep -v '^government-proposal' \
-            | grep -v '^workaway-proposal' \
-            | sed 's/\.html$//')
-
-          ADDED=0
+          POOL_ADDED=0
+          NAV_ADDED=0
           ADDED_LIST=""
 
           for ID in $CANDIDATES; do
-            # プール内に既にあるかチェック
-            if echo "$POOL_IDS" | grep -q "^${ID}$"; then
-              continue
+            # ── essays-pool.json 同期 ──
+            if ! echo "$POOL_IDS" | grep -q "^${ID}$"; then
+              TITLE=$(grep -oP '<title>\K[^<]+' "${ID}.html" | head -1 \
+                | sed 's/ | トキストレージ$//' \
+                | sed 's/ | TokiStorage$//' \
+                | sed 's/ | Pearl Soap.*$//' \
+                | sed 's/ | 佐藤卓也$//')
+              [ -z "$TITLE" ] && TITLE="$ID"
+
+              HAS_EN=false
+              [ -f "${ID}-en.html" ] && HAS_EN=true
+
+              jq --arg id "$ID" \
+                 --arg title "$TITLE" \
+                 --argjson has_en "$HAS_EN" \
+                '.essays += [{"id": $id, "title_ja": $title, "theme": "untagged", "has_en": $has_en, "featured_in": []}]' \
+                newsletter/essays-pool.json > tmp.json && mv tmp.json newsletter/essays-pool.json
+
+              POOL_ADDED=$((POOL_ADDED + 1))
+              ADDED_LIST="${ADDED_LIST}\n- ${ID}: ${TITLE}"
+              echo "Pool: Added $ID ($TITLE)"
             fi
 
-            # <title>タグからタイトル抽出
-            TITLE=$(grep -oP '<title>\K[^<]+' "${ID}.html" | head -1 \
-              | sed 's/ | トキストレージ$//' \
-              | sed 's/ | TokiStorage$//' \
-              | sed 's/ | Pearl Soap.*$//' \
-              | sed 's/ | 佐藤卓也$//')
+            # ── essay-nav.js 同期 ──
+            if ! echo "$NAV_IDS" | grep -q "^${ID}$"; then
+              # JA タイトル抽出
+              JA_TITLE=$(grep -oP '<title>\K[^<]+' "${ID}.html" | head -1 \
+                | sed 's/ | トキストレージ$//' \
+                | sed 's/ | TokiStorage$//' \
+                | sed 's/ | Pearl Soap.*$//' \
+                | sed 's/ | 佐藤卓也$//' \
+                | sed 's/\s*[—|].*//')
+              [ -z "$JA_TITLE" ] && JA_TITLE="$ID"
 
-            if [ -z "$TITLE" ]; then
-              TITLE="$ID"
+              # EN タイトル抽出
+              EN_TITLE="$JA_TITLE"
+              if [ -f "${ID}-en.html" ]; then
+                EN_TITLE=$(grep -oP '<title>\K[^<]+' "${ID}-en.html" | head -1 \
+                  | sed 's/ | TokiStorage$//' \
+                  | sed 's/ | トキストレージ$//' \
+                  | sed 's/\s*[—|].*//')
+                [ -z "$EN_TITLE" ] && EN_TITLE="$JA_TITLE"
+              fi
+
+              # essay-nav.js の最後の ];  の前に追加
+              # エスケープ処理
+              JA_ESC=$(echo "$JA_TITLE" | sed "s/'/\\\\'/g")
+              EN_ESC=$(echo "$EN_TITLE" | sed "s/'/\\\\'/g")
+              ENTRY="    { id: '${ID}', ja: '${JA_ESC}', en: '${EN_ESC}' },"
+
+              # 末尾の ];  の直前に挿入
+              sed -i "/^  \];$/i\\${ENTRY}" essay-nav.js
+
+              NAV_ADDED=$((NAV_ADDED + 1))
+              echo "Nav: Added $ID ($JA_TITLE / $EN_TITLE)"
             fi
-
-            # EN版の存在チェック
-            HAS_EN=false
-            [ -f "${ID}-en.html" ] && HAS_EN=true
-
-            # essays-pool.json に追加（テーマは untagged）
-            jq --arg id "$ID" \
-               --arg title "$TITLE" \
-               --argjson has_en "$HAS_EN" \
-              '.essays += [{"id": $id, "title_ja": $title, "theme": "untagged", "has_en": $has_en, "featured_in": []}]' \
-              newsletter/essays-pool.json > tmp.json && mv tmp.json newsletter/essays-pool.json
-
-            ADDED=$((ADDED + 1))
-            ADDED_LIST="${ADDED_LIST}\n- ${ID}: ${TITLE}"
-            echo "Added: $ID ($TITLE)"
           done
 
-          echo "added=$ADDED" >> "$GITHUB_OUTPUT"
-          # multiline output
+          TOTAL=$((POOL_ADDED + NAV_ADDED))
+          echo "pool_added=$POOL_ADDED" >> "$GITHUB_OUTPUT"
+          echo "nav_added=$NAV_ADDED" >> "$GITHUB_OUTPUT"
+          echo "total=$TOTAL" >> "$GITHUB_OUTPUT"
           {
             echo "list<<EOF"
             echo -e "$ADDED_LIST"
             echo "EOF"
           } >> "$GITHUB_OUTPUT"
 
-      - name: Create PR if new essays found
-        if: steps.detect.outputs.added != '0'
+      - name: Create PR if changes found
+        if: steps.detect.outputs.total != '0'
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
-          BRANCH="auto/sync-essays-pool-$(date +%Y%m%d-%H%M%S)"
+          BRANCH="auto/sync-essays-$(date +%Y%m%d-%H%M%S)"
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
           git checkout -b "$BRANCH"
-          git add newsletter/essays-pool.json
-          git commit -m "Auto-add ${{ steps.detect.outputs.added }} new essay(s) to pool
+          git add newsletter/essays-pool.json essay-nav.js
+          git commit -m "Auto-sync ${{ steps.detect.outputs.total }} essay(s) to pool/nav
 
           Co-Authored-By: github-actions[bot] <github-actions[bot]@users.noreply.github.com>"
           git push origin "$BRANCH"
-          gh pr create \
-            --title "Auto-add ${{ steps.detect.outputs.added }} new essay(s) to pool" \
-            --body "$(cat <<'PREOF'
-          ## Auto-detected new essays
 
+          BODY="## Auto-detected essays"
+          if [ "${{ steps.detect.outputs.pool_added }}" != "0" ]; then
+            BODY="$BODY
+
+          ### essays-pool.json (+${{ steps.detect.outputs.pool_added }})
           ${{ steps.detect.outputs.list }}
 
-          Theme is set to \`untagged\`. Please assign appropriate themes manually in \`newsletter/essays-pool.json\`.
-          Untagged essays will not be auto-selected for newsletters until a theme is assigned.
+          Theme: \`untagged\`. Assign themes in \`newsletter/essays-pool.json\`.
+          Available: technology, philosophy, society, humanity, culture, business, earth, design"
+          fi
+          if [ "${{ steps.detect.outputs.nav_added }}" != "0" ]; then
+            BODY="$BODY
 
-          Available themes: technology, philosophy, society, humanity, culture, business, earth, design
-          PREOF
-          )"
+          ### essay-nav.js (+${{ steps.detect.outputs.nav_added }})
+          New essays added to navigation. Reorder in \`essay-nav.js\` if needed."
+          fi
+
+          gh pr create \
+            --title "Auto-sync ${{ steps.detect.outputs.total }} essay(s)" \
+            --body "$BODY"
