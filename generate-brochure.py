@@ -138,7 +138,7 @@ def generate_ja(qr_path):
     pdf.set_font("JP", "", 12)
     pdf.set_text_color(*DARK)
     pdf.set_x(MARGIN)
-    pdf.cell(CONTENT_W, 7, "あなたの曾祖父母の名前を、言えますか？", align="C",
+    pdf.cell(CONTENT_W, 7, "あなたの曾祖父母の顔と声、わかりますか？", align="C",
              new_x="LMARGIN", new_y="NEXT")
     pdf.ln(1)
     pdf.set_font("JP", "", 9.5)
@@ -332,7 +332,7 @@ def generate_en(qr_path):
     pdf.set_font("JP", "", 12)
     pdf.set_text_color(*DARK)
     pdf.set_x(MARGIN)
-    pdf.cell(CONTENT_W, 7, "Can you name your great-grandparents?", align="C",
+    pdf.cell(CONTENT_W, 7, "Do you know your great-grandparents' face and voice?", align="C",
              new_x="LMARGIN", new_y="NEXT")
     pdf.ln(1)
     pdf.set_font("JP", "", 9.5)
