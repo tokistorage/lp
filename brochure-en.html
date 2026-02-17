@@ -338,32 +338,52 @@
             .br-nav, .pdf-download, .br-footer { display: none; }
             .brochure { padding: 0; max-width: 100%; }
             body { background: white; line-height: 1.35; font-size: 12.5px; }
-            .br-header { margin-bottom: 0.5rem; padding-bottom: 0.4rem; }
-            .br-header .company { font-size: 1.3rem; }
-            .tagline { margin-bottom: 0.5rem; }
-            .tagline h1 { font-size: 1.3rem; margin-bottom: 0.2rem; }
-            .tagline .hook { font-size: 0.95rem; margin-bottom: 0.2rem; }
-            .tagline .hook-sub { font-size: 0.75rem; }
-            .section-heading { margin: 0.6rem 0 0.4rem; }
-            .section-heading h2 { font-size: 1rem; }
-            .layers-grid { gap: 0.5rem; margin-bottom: 0.3rem; }
-            .layer-card { padding: 0.5rem 0.4rem; border-radius: 6px; }
-            .layer-card .layer-name { font-size: 0.85rem; }
-            .layer-card .layer-sub { font-size: 0.72rem; }
-            .layer-card .layer-desc { font-size: 0.68rem; }
-            .tokiqr-box { padding: 0.5rem 0.8rem; margin-bottom: 0.3rem; }
-            .tokiqr-box li { padding: 0; font-size: 0.78rem; line-height: 1.4; }
-            .tokiqr-box .try-link { font-size: 0.75rem; margin-top: 0.2rem; }
-            .areas { margin-bottom: 0.3rem; }
-            .area-row { padding: 0.1rem 0; }
-            .area-label { font-size: 0.78rem; }
-            .area-desc { font-size: 0.78rem; }
-            .pricing-line { font-size: 0.82rem; margin-bottom: 0.1rem; }
-            .pricing-note { font-size: 0.72rem; }
-            .contact-section { margin-top: 0.6rem; padding-top: 0.5rem; gap: 1rem; }
-            .contact-info .contact-name { font-size: 0.95rem; }
-            .contact-info p { font-size: 0.78rem; line-height: 1.5; }
-            .tokiqr-box img { width: 120px; height: 120px; margin-bottom: 0.4rem; }
+            .br-header { margin-bottom: 0.4rem; padding-bottom: 0.3rem; }
+            .br-header .company { font-size: 1.2rem; }
+            .tagline { margin-bottom: 0.4rem; }
+            .tagline h1 { font-size: 1.2rem; margin-bottom: 0.15rem; }
+            .tagline .hook { font-size: 0.9rem; margin-bottom: 0.15rem; }
+            .tagline .hook-sub { font-size: 0.72rem; }
+            .section-heading { margin: 0.4rem 0 0.25rem; }
+            .section-heading h2 { font-size: 0.92rem; }
+            .layers-grid { gap: 0.4rem; margin-bottom: 0.2rem; }
+            .layer-card { padding: 0.4rem 0.3rem; border-radius: 6px; }
+            .layer-card .layer-name { font-size: 0.8rem; }
+            .layer-card .layer-sub { font-size: 0.68rem; }
+            .layer-card .layer-desc { font-size: 0.62rem; }
+            .tokiqr-box { padding: 0.4rem 0.6rem; margin-bottom: 0.2rem; }
+            .tokiqr-box li { padding: 0; font-size: 0.72rem; line-height: 1.35; }
+            .tokiqr-box .try-link { font-size: 0.7rem; margin-top: 0.15rem; }
+            /* Lower half: 2-column layout */
+            .print-lower {
+                columns: 2;
+                column-gap: 6mm;
+                margin-top: 0.3rem;
+            }
+            .print-lower .section-heading,
+            .print-lower .areas,
+            .print-lower .pricing-line,
+            .print-lower .pricing-note,
+            .print-lower .contact-section,
+            .print-lower .tokiqr-box {
+                break-inside: avoid;
+            }
+            .print-lower .contact-section {
+                margin-top: 0.3rem;
+                padding-top: 0.3rem;
+                flex-direction: column;
+                gap: 0;
+            }
+            .areas { margin-bottom: 0.2rem; }
+            .area-row { padding: 0.08rem 0; }
+            .area-label { font-size: 0.72rem; }
+            .area-desc { font-size: 0.72rem; }
+            .pricing-line { font-size: 0.75rem; margin-bottom: 0.05rem; }
+            .pricing-note { font-size: 0.68rem; }
+            .contact-info .contact-name { font-size: 0.85rem; }
+            .contact-info p { font-size: 0.72rem; line-height: 1.4; }
+            .print-lower .tokiqr-box img { width: 80px; height: 80px; margin-bottom: 0.2rem; }
+            .print-lower .tokiqr-box p { font-size: 0.7rem; line-height: 1.4; margin-bottom: 0.2rem; }
         }
         /* Landscape print override (injected by JS) */
         @media print {
@@ -457,6 +477,7 @@
         <a href="https://tokistorage.github.io/qr/" class="try-link">Try it free now &rarr;</a>
     </div>
 
+    <div class="print-lower">
     <div class="section-heading"><h2>Service Areas</h2></div>
     <div class="areas">
         <div class="area-row">
@@ -494,6 +515,7 @@
         <p style="font-size: 0.8rem; color: var(--text-secondary); line-height: 1.7; margin-bottom: 0.5rem;">The walls no ordinary brochure can overcome, and the structural breakthrough TokiStorage achieves.<br>On the essence of &ldquo;physical experience&rdquo; that digital promotion can never deliver.</p>
         <a href="brochure-essay-en.html" class="try-link">Read the essay &rarr;</a>
     </div>
+    </div><!-- /.print-lower -->
 
     <div class="pdf-download">
         <p class="pdf-title">Printable A4 Brochure (PDF)</p>
