@@ -1,0 +1,481 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" type="image/png" sizes="32x32" href="asset/favicon-32.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="asset/apple-touch-icon.png">
+    <title>ブローシャ（横版） | トキストレージ</title>
+    <meta name="description" content="トキストレージのA4横版ブローシャ。三層分散保管で声と記憶を1000年先に届ける、存在証明の民主化サービス。">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Shippori+Mincho:wght@400;500;600;700&family=Zen+Kaku+Gothic+New:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --toki-blue: #2563EB;
+            --toki-blue-dark: #1D4ED8;
+            --toki-blue-pale: #EFF6FF;
+            --bg-white: #FFFFFF;
+            --bg-page: #F8FAFC;
+            --text-primary: #1E293B;
+            --text-secondary: #475569;
+            --text-muted: #94A3B8;
+            --border: #E2E8F0;
+            --font-display: 'Shippori Mincho', serif;
+            --font-body: 'Zen Kaku Gothic New', sans-serif;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            font-family: var(--font-body);
+            font-weight: 400;
+            background: var(--bg-page);
+            color: var(--text-primary);
+            line-height: 1.7;
+            font-size: 15px;
+        }
+
+        /* Navigation (screen only) */
+        .br-nav {
+            position: fixed;
+            top: 0; left: 0; right: 0;
+            z-index: 1000;
+            background: rgba(255,255,255,0.95);
+            backdrop-filter: blur(12px);
+            border-bottom: 1px solid var(--border);
+            padding: 0.6rem 1.2rem;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+        .br-nav .nav-brand {
+            font-family: var(--font-display);
+            font-size: 0.9rem;
+            font-weight: 600;
+            color: var(--toki-blue);
+            text-decoration: none;
+        }
+        .br-nav .nav-right { display: flex; align-items: center; gap: 1rem; }
+        .br-nav .nav-label { font-size: 0.6rem; color: var(--text-muted); letter-spacing: 0.08em; }
+        .br-nav .lang-switch {
+            font-size: 0.75rem;
+            color: var(--toki-blue);
+            text-decoration: none;
+            padding: 0.3rem 0.6rem;
+            border: 1px solid var(--toki-blue);
+            border-radius: 4px;
+        }
+        .br-nav .lang-switch:hover { background: var(--toki-blue); color: #fff; }
+
+        /* A4 Landscape container */
+        .landscape-page {
+            width: 297mm;
+            min-height: 210mm;
+            margin: 4rem auto 2rem;
+            background: var(--bg-white);
+            box-shadow: 0 2px 20px rgba(0,0,0,0.08);
+            padding: 12mm 14mm;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            grid-template-rows: auto 1fr auto;
+            gap: 0 20mm;
+        }
+
+        /* Header spans full width */
+        .br-header {
+            grid-column: 1 / -1;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding-bottom: 8mm;
+            border-bottom: 1px solid var(--border);
+            margin-bottom: 6mm;
+        }
+        .br-header-left {
+            display: flex;
+            align-items: baseline;
+            gap: 1rem;
+        }
+        .br-header .company {
+            font-family: var(--font-display);
+            font-size: 1.4rem;
+            font-weight: 700;
+            color: var(--text-primary);
+        }
+        .br-header .sub {
+            font-size: 0.75rem;
+            color: var(--text-muted);
+        }
+        .br-header .tagline {
+            font-family: var(--font-display);
+            font-size: 1.1rem;
+            font-weight: 600;
+            color: var(--toki-blue);
+        }
+
+        /* Left column */
+        .col-left { grid-column: 1; }
+
+        /* Right column */
+        .col-right { grid-column: 2; }
+
+        /* Section heading */
+        .sh {
+            display: flex;
+            align-items: center;
+            gap: 0.4rem;
+            margin: 0 0 4mm;
+        }
+        .sh::before {
+            content: '';
+            width: 3px;
+            height: 1rem;
+            background: var(--toki-blue);
+            border-radius: 2px;
+            flex-shrink: 0;
+        }
+        .sh h2 {
+            font-family: var(--font-display);
+            font-size: 0.95rem;
+            font-weight: 600;
+            color: var(--text-primary);
+        }
+
+        .hook-text {
+            font-family: var(--font-display);
+            font-size: 0.95rem;
+            color: var(--text-primary);
+            margin-bottom: 2mm;
+            text-align: center;
+        }
+        .hook-sub {
+            font-size: 0.78rem;
+            color: var(--text-secondary);
+            text-align: center;
+            margin-bottom: 5mm;
+        }
+
+        /* Three layers - horizontal */
+        .layers-row {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 3mm;
+            margin-bottom: 5mm;
+        }
+        .lc {
+            background: var(--toki-blue-pale);
+            border: 1px solid var(--border);
+            border-radius: 6px;
+            padding: 3mm;
+            text-align: center;
+        }
+        .lc .ln {
+            font-family: var(--font-display);
+            font-weight: 600;
+            color: var(--toki-blue);
+            font-size: 0.8rem;
+        }
+        .lc .ls {
+            font-weight: 500;
+            font-size: 0.7rem;
+            color: var(--text-primary);
+        }
+        .lc .ld {
+            font-size: 0.65rem;
+            color: var(--text-secondary);
+            line-height: 1.5;
+        }
+
+        /* TokiQR box */
+        .tq-box {
+            background: var(--bg-page);
+            border: 1px solid var(--border);
+            border-radius: 6px;
+            padding: 3mm 4mm;
+            margin-bottom: 5mm;
+        }
+        .tq-box ul {
+            list-style: none;
+            padding: 0;
+        }
+        .tq-box li {
+            font-size: 0.78rem;
+            color: var(--text-primary);
+            padding: 0.5mm 0;
+        }
+        .tq-box li::before {
+            content: '\2022';
+            color: var(--toki-blue);
+            font-weight: bold;
+            margin-right: 0.4rem;
+        }
+        .tq-link {
+            font-size: 0.75rem;
+            color: var(--toki-blue);
+            text-decoration: none;
+        }
+
+        /* Areas */
+        .area-row {
+            display: flex;
+            gap: 0.5rem;
+            padding: 1mm 0;
+        }
+        .area-label {
+            font-weight: 600;
+            color: var(--toki-blue);
+            font-size: 0.78rem;
+            min-width: 4rem;
+            flex-shrink: 0;
+        }
+        .area-desc {
+            font-size: 0.78rem;
+            color: var(--text-secondary);
+        }
+        .areas { margin-bottom: 5mm; }
+
+        /* Pricing */
+        .pricing-line {
+            font-size: 0.8rem;
+            color: var(--text-primary);
+            margin-bottom: 1mm;
+        }
+        .pricing-note {
+            font-size: 0.7rem;
+            color: var(--text-muted);
+            margin-bottom: 5mm;
+        }
+        .pricing-note a { color: var(--toki-blue); text-decoration: none; }
+
+        /* Payment */
+        .payment-info {
+            font-size: 0.75rem;
+            color: var(--text-secondary);
+            margin-bottom: 5mm;
+        }
+        .payment-info a { color: var(--toki-blue); text-decoration: none; }
+
+        /* Essay QR */
+        .essay-qr {
+            display: flex;
+            align-items: center;
+            gap: 4mm;
+            background: var(--bg-page);
+            border: 1px solid var(--border);
+            border-radius: 6px;
+            padding: 3mm 4mm;
+            margin-bottom: 5mm;
+        }
+        .essay-qr img { width: 22mm; height: 22mm; flex-shrink: 0; }
+        .essay-qr .eq-text { font-size: 0.72rem; color: var(--text-secondary); line-height: 1.6; }
+        .essay-qr .eq-title {
+            font-family: var(--font-display);
+            font-size: 0.8rem;
+            color: var(--text-primary);
+            margin-bottom: 1mm;
+        }
+        .essay-qr a { color: var(--toki-blue); text-decoration: none; font-size: 0.72rem; }
+
+        /* Footer spans full width */
+        .br-footer {
+            grid-column: 1 / -1;
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-end;
+            padding-top: 4mm;
+            border-top: 1px solid var(--border);
+            margin-top: auto;
+            font-size: 0.72rem;
+            color: var(--text-secondary);
+        }
+        .br-footer a { color: var(--toki-blue); text-decoration: none; }
+        .br-footer .footer-copy { font-size: 0.65rem; color: var(--text-muted); }
+
+        /* Print styles */
+        @media print {
+            @page { size: A4 landscape; margin: 0; }
+            .br-nav, .screen-actions { display: none !important; }
+            body { background: white; }
+            .landscape-page {
+                margin: 0;
+                box-shadow: none;
+                width: 100%;
+                height: 100vh;
+                padding: 10mm 12mm;
+            }
+        }
+
+        /* Screen actions */
+        .screen-actions {
+            text-align: center;
+            margin: 1rem auto 2rem;
+            max-width: 297mm;
+        }
+        .screen-actions a, .screen-actions button {
+            display: inline-block;
+            padding: 0.5rem 1.2rem;
+            margin: 0 0.3rem;
+            font-size: 0.85rem;
+            border-radius: 6px;
+            text-decoration: none;
+            cursor: pointer;
+            font-family: var(--font-body);
+        }
+        .btn-print {
+            background: var(--toki-blue);
+            color: #fff;
+            border: none;
+        }
+        .btn-print:hover { background: var(--toki-blue-dark); }
+        .btn-portrait {
+            color: var(--toki-blue);
+            border: 1px solid var(--toki-blue);
+            background: none;
+        }
+        .btn-portrait:hover { background: var(--toki-blue-pale); }
+
+        /* Responsive: on narrow screens, scroll horizontally */
+        @media screen and (max-width: 900px) {
+            .landscape-page {
+                width: 100%;
+                min-height: auto;
+                grid-template-columns: 1fr;
+                padding: 5rem 1.2rem 2rem;
+                margin-top: 0;
+                box-shadow: none;
+                gap: 0;
+            }
+            .br-header { flex-direction: column; align-items: flex-start; gap: 0.3rem; }
+            .col-left, .col-right { grid-column: 1; }
+            .br-footer { flex-direction: column; gap: 0.5rem; align-items: flex-start; }
+        }
+    </style>
+    <meta property="og:image" content="https://tokistorage.github.io/lp/asset/tokistorage-icon-512.png">
+    <meta property="og:image:width" content="512">
+    <meta property="og:image:height" content="512">
+</head>
+<body>
+
+<nav class="br-nav">
+    <a href="index.html" class="nav-brand">トキストレージ</a>
+    <div class="nav-right">
+        <span class="nav-label">BROCHURE / LANDSCAPE</span>
+        <a href="brochure-landscape-en.html" class="lang-switch">EN</a>
+    </div>
+</nav>
+
+<div class="landscape-page">
+
+    <header class="br-header">
+        <div class="br-header-left">
+            <div class="company">TokiStorage / トキストレージ</div>
+            <div class="sub">Voice Preservation for 1,000 Years</div>
+        </div>
+        <div class="tagline">存在証明の民主化</div>
+    </header>
+
+    <div class="col-left">
+        <p class="hook-text">あなたの曾祖父母の名前を、言えますか？</p>
+        <p class="hook-sub">歴史に名を残せるのは一握り。普通の人の存在は3世代で忘れ去られる。<br>三層の分散保管で、声と記憶を1000年先に届ける。</p>
+
+        <div class="sh"><h2>三層分散保管アーキテクチャ</h2></div>
+        <div class="layers-row">
+            <div class="lc">
+                <div class="ln">物理層</div>
+                <div class="ls">石英ガラス・ラミネート</div>
+                <div class="ld">1000年耐久・手元に届く実物</div>
+            </div>
+            <div class="lc">
+                <div class="ln">国家層</div>
+                <div class="ls">国立国会図書館</div>
+                <div class="ld">国会図書館法による永久保存</div>
+            </div>
+            <div class="lc">
+                <div class="ln">民間層</div>
+                <div class="ls">GitHub Arctic Code Vault</div>
+                <div class="ld">世界分散＋北極圏アーカイブ</div>
+            </div>
+        </div>
+
+        <div class="sh"><h2>TokiQR &mdash; 声を刻むQRコード</h2></div>
+        <div class="tq-box">
+            <ul>
+                <li>PCT国際特許手続き中の独自音声符号化技術</li>
+                <li>QR1枚に最大30秒の声を記録</li>
+                <li>サーバー不要・オフライン再生・スマホだけで再生可能</li>
+                <li>印刷対応・自社サービスへの組み込み自由</li>
+                <li>セットアップページでQRシール1枚からカスタム展開</li>
+            </ul>
+            <a href="https://tokistorage.github.io/qr/" class="tq-link">無料で今すぐ体験 &rarr;</a>
+        </div>
+
+        <div class="essay-qr">
+            <img src="asset/qr-brochure-essay.png" alt="エッセイQR">
+            <div>
+                <div class="eq-title">ブローシャの限界と超越</div>
+                <div class="eq-text">普通のブローシャが超えられない壁と、TokiStorageが持つ構造的な突破力。</div>
+                <a href="brochure-essay.html">エッセイを読む &rarr;</a>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-right">
+        <div class="sh"><h2>事業領域</h2></div>
+        <div class="areas">
+            <div class="area-row">
+                <span class="area-label">個人向け</span>
+                <span class="area-desc">結婚式の誓い、終活メッセージ、家族の記録、成長記録</span>
+            </div>
+            <div class="area-row">
+                <span class="area-label">法人向け</span>
+                <span class="area-desc">おもてなし音声、ブランドストーリー、社史・創業の想い</span>
+            </div>
+            <div class="area-row">
+                <span class="area-label">行政向け</span>
+                <span class="area-desc">文化財音声保存、防災メッセージ、地域の語り部記録</span>
+            </div>
+        </div>
+
+        <div class="sh"><h2>料金</h2></div>
+        <p class="pricing-line">TokiQR（音声QRコード作成）: <strong>無料</strong></p>
+        <p class="pricing-line">三層保管プラン: <strong>&yen;5,000〜</strong> ｜ 石英ガラス: <strong>&yen;50,000〜</strong></p>
+        <p class="pricing-note">一度のお支払いで完結。月額課金・維持費なし。<a href="index.html#pricing">詳細 &rarr;</a></p>
+
+        <div class="sh"><h2>お支払い</h2></div>
+        <p class="payment-info">Wise決済リンクをお送りします。クレジットカード・デビットカード・銀行振込に対応。Wiseアカウント不要、手数料1%以下。<a href="payment.html">なぜWiseなのか &rarr;</a></p>
+
+        <div class="sh"><h2>ご利用の流れ</h2></div>
+        <div class="tq-box">
+            <ul>
+                <li>無料相談（オンライン30分）</li>
+                <li>内容決定 &mdash; 何を残すか、一緒に考えます</li>
+                <li>Wise決済リンクでお支払い</li>
+                <li>製作・お届け（約2〜3週間）</li>
+            </ul>
+        </div>
+
+        <div class="sh"><h2>お問い合わせ</h2></div>
+        <p style="font-size: 0.78rem; color: var(--text-secondary); margin-bottom: 1mm;">代表：佐藤卓也</p>
+        <p style="font-size: 0.78rem; color: var(--text-secondary); margin-bottom: 1mm;">千葉県浦安市明海2-11-13（佐渡島に物理保管拠点を設置予定）</p>
+        <p style="font-size: 0.78rem; margin-bottom: 1mm;"><a href="mailto:tokistorage1000@gmail.com" style="color: var(--toki-blue); text-decoration: none;">tokistorage1000@gmail.com</a></p>
+        <p style="font-size: 0.78rem;"><a href="https://tokistorage.github.io/lp/" style="color: var(--toki-blue); text-decoration: none;">tokistorage.github.io/lp/</a></p>
+    </div>
+
+    <footer class="br-footer">
+        <div>
+            <span>個人事業開業届出済（2026年2月11日／市川税務署）｜ 青色申告届出済</span>
+        </div>
+        <div class="footer-copy">&copy; 2026 トキストレージ / TokiStorage</div>
+    </footer>
+
+</div>
+
+<div class="screen-actions">
+    <button class="btn-print" onclick="window.print()">印刷 / PDF保存</button>
+    <a href="brochure.html" class="btn-portrait">縦版ブローシャ</a>
+</div>
+
+<script src="tracker.js"></script>
+</body>
+</html>
