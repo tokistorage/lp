@@ -403,9 +403,9 @@
             .qr-pair-item { flex: 1; text-align: center; }
             .qr-pair .section-heading { margin: 0 0 0.15rem; text-align: center; }
             .qr-pair .section-heading h2 { font-size: 0.88rem; }
-            .qr-pair .essay-qr-box { text-align: center !important; padding: 0.4rem; }
+            .qr-pair .essay-qr-box { text-align: center !important; padding: 0.4rem; border: none; }
             .qr-pair .essay-qr-box p { display: none; }
-            .qr-pair .essay-qr-box img { width: 50px; height: 50px; margin-bottom: 0.1rem; }
+            .qr-pair .essay-qr-box img { width: 50px; height: 50px; margin: 0 auto; }
             .print-lower .essay-heading {
                 break-before: auto;
             }
@@ -431,10 +431,10 @@
         }
         /* Landscape print override (injected by JS) */
         @media print {
-            body.landscape-mode { line-height: 1.4; font-size: 12px; }
+            body.landscape-mode { line-height: 1.55; font-size: 13.5px; }
             body.landscape-mode .brochure {
                 columns: 2;
-                column-gap: 12mm;
+                column-gap: 14mm;
             }
             body.landscape-mode .print-lower {
                 display: contents;
@@ -460,51 +460,52 @@
             body.landscape-mode .essay-heading { break-before: auto; }
             /* QR pair: side-by-side within right column */
             body.landscape-mode .qr-pair {
+                column-span: none;
                 display: flex;
-                gap: 0.4rem;
-                margin: 0.15rem 0;
+                gap: 0.5rem;
+                margin: 0.25rem 0;
             }
-            body.landscape-mode .qr-pair-item { flex: 1; }
-            body.landscape-mode .qr-pair .section-heading { margin: 0 0 0.1rem; }
-            body.landscape-mode .qr-pair .section-heading h2 { font-size: 0.75rem; }
-            body.landscape-mode .qr-pair .essay-qr-box { padding: 0.2rem; margin-bottom: 0; }
-            body.landscape-mode .qr-pair .essay-qr-box img { width: 28px; height: 28px; margin-bottom: 0; }
-            /* Compact sizing for landscape */
-            body.landscape-mode .br-header { margin-bottom: 0.35rem; padding-bottom: 0.25rem; }
-            body.landscape-mode .br-header .company { font-size: 1.3rem; }
-            body.landscape-mode .tagline { margin-bottom: 0.3rem; }
-            body.landscape-mode .tagline h1 { font-size: 1.25rem; margin-bottom: 0.15rem; }
-            body.landscape-mode .tagline .hook { font-size: 0.95rem; margin-bottom: 0.15rem; }
-            body.landscape-mode .tagline .hook-sub { font-size: 0.78rem; line-height: 1.4; }
-            body.landscape-mode .section-heading { margin: 0.3rem 0 0.2rem; }
-            body.landscape-mode .section-heading h2 { font-size: 0.95rem; }
-            body.landscape-mode .layers-grid { gap: 0.35rem; margin-bottom: 0.3rem; }
-            body.landscape-mode .layer-card { padding: 0.35rem 0.4rem; }
-            body.landscape-mode .layer-card .layer-name { font-size: 0.85rem; }
-            body.landscape-mode .layer-card .layer-sub { font-size: 0.75rem; white-space: nowrap; }
-            body.landscape-mode .layer-card .layer-desc { font-size: 0.68rem; line-height: 1.45; }
-            body.landscape-mode .tokiqr-box { padding: 0.35rem 0.5rem; margin-bottom: 0.3rem; }
-            body.landscape-mode .tokiqr-box li { font-size: 0.78rem; line-height: 1.4; padding: 0.02rem 0; }
+            body.landscape-mode .qr-pair-item { flex: 1; text-align: center; }
+            body.landscape-mode .qr-pair .section-heading { margin: 0 0 0.15rem; text-align: center; }
+            body.landscape-mode .qr-pair .section-heading h2 { font-size: 0.8rem; }
+            body.landscape-mode .qr-pair .essay-qr-box { padding: 0.3rem; margin-bottom: 0; border: none; }
+            body.landscape-mode .qr-pair .essay-qr-box img { width: 32px; height: 32px; margin: 0 auto; }
+            /* Sizing for landscape */
+            body.landscape-mode .br-header { margin-bottom: 0.6rem; padding-bottom: 0.4rem; }
+            body.landscape-mode .br-header .company { font-size: 1.4rem; }
+            body.landscape-mode .tagline { margin-bottom: 0.55rem; }
+            body.landscape-mode .tagline h1 { font-size: 1.35rem; margin-bottom: 0.22rem; }
+            body.landscape-mode .tagline .hook { font-size: 1.02rem; margin-bottom: 0.22rem; }
+            body.landscape-mode .tagline .hook-sub { font-size: 0.84rem; line-height: 1.55; }
+            body.landscape-mode .section-heading { margin: 0.52rem 0 0.32rem; }
+            body.landscape-mode .section-heading h2 { font-size: 1.02rem; }
+            body.landscape-mode .layers-grid { gap: 0.55rem; margin-bottom: 0.45rem; }
+            body.landscape-mode .layer-card { padding: 0.5rem 0.48rem; }
+            body.landscape-mode .layer-card .layer-name { font-size: 0.92rem; }
+            body.landscape-mode .layer-card .layer-sub { font-size: 0.8rem; white-space: nowrap; }
+            body.landscape-mode .layer-card .layer-desc { font-size: 0.73rem; line-height: 1.55; }
+            body.landscape-mode .tokiqr-box { padding: 0.5rem 0.65rem; margin-bottom: 0.45rem; }
+            body.landscape-mode .tokiqr-box li { font-size: 0.84rem; line-height: 1.55; padding: 0.03rem 0; }
             body.landscape-mode .tokiqr-box .try-link { display: none; }
-            body.landscape-mode .print-url { font-size: 0.75rem; }
-            body.landscape-mode .area-row { padding: 0.08rem 0; }
-            body.landscape-mode .area-label { font-size: 0.78rem; }
-            body.landscape-mode .area-desc { font-size: 0.78rem; }
-            body.landscape-mode .areas { margin-bottom: 0.2rem; }
-            body.landscape-mode .pricing-line { font-size: 0.82rem; margin-bottom: 0.06rem; }
-            body.landscape-mode .pricing-note { font-size: 0.75rem; }
-            body.landscape-mode .essay-qr-box { text-align: center !important; padding: 0.3rem; }
-            body.landscape-mode .essay-qr-box img { width: 30px; height: 30px; margin-bottom: 0.05rem; }
+            body.landscape-mode .print-url { font-size: 0.8rem; }
+            body.landscape-mode .area-row { padding: 0.14rem 0; }
+            body.landscape-mode .area-label { font-size: 0.84rem; }
+            body.landscape-mode .area-desc { font-size: 0.84rem; }
+            body.landscape-mode .areas { margin-bottom: 0.35rem; }
+            body.landscape-mode .pricing-line { font-size: 0.88rem; margin-bottom: 0.1rem; }
+            body.landscape-mode .pricing-note { font-size: 0.8rem; }
+            body.landscape-mode .essay-qr-box { text-align: center !important; padding: 0.35rem; }
+            body.landscape-mode .essay-qr-box img { width: 34px; height: 34px; margin: 0 auto; }
             body.landscape-mode .essay-qr-box p { display: none; }
             body.landscape-mode .contact-section {
                 column-span: none;
-                margin-top: 0.2rem;
-                padding-top: 0.2rem;
+                margin-top: 0.5rem;
+                padding-top: 0.4rem;
                 flex-direction: column;
                 gap: 0;
             }
-            body.landscape-mode .contact-info .contact-name { font-size: 0.9rem; }
-            body.landscape-mode .contact-info p { font-size: 0.78rem; line-height: 1.4; }
+            body.landscape-mode .contact-info .contact-name { font-size: 0.98rem; }
+            body.landscape-mode .contact-info p { font-size: 0.84rem; line-height: 1.5; }
         }
     </style>
     <style id="landscape-page-style" media="not all">
@@ -591,11 +592,12 @@
     <p class="pricing-line">TokiQR（音声QRコード作成）: <strong>無料</strong></p>
     <p class="pricing-line">ラミネートQR: <strong>&yen;5,000</strong></p>
     <p class="pricing-line">石英ガラスQR: <strong>&yen;50,000</strong></p>
-    <p class="pricing-note">一度のお支払いで完結。月額課金なし。<a href="index.html#pricing" style="color: var(--toki-blue); text-decoration: none;">詳細 &rarr;</a></p>
+    <p class="pricing-note">一度のお支払いで完結。月額課金なし。</p>
+    <p class="pricing-line" style="margin-top: 0.3rem; font-size: 0.85em; color: var(--text-muted);">製品購入時の保管オプション: GitHub・国立国会図書館（無料付属） ／ 佐渡島・マウイ島（商品価格×1）</p>
 
     <div class="qr-pair">
     <div class="qr-pair-item">
-    <div class="section-heading"><h2>QRセットアップ</h2></div>
+    <div class="section-heading"><h2>パートナーセットアップ</h2></div>
     <div class="tokiqr-box essay-qr-box" style="text-align: center;">
         <img src="asset/qr-setup.png" alt="セットアップページへのQRコード" class="print-only-qr" style="width: 160px; height: 160px; margin-bottom: 0.75rem;">
         <p style="font-family: var(--font-display); font-size: 0.95rem; color: var(--text-primary); margin-bottom: 0.5rem;">今すぐセットアップ</p>
