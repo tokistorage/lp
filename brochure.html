@@ -403,7 +403,11 @@
         @media print {
             body.landscape-mode .brochure {
                 columns: 2;
-                column-gap: 10mm;
+                column-gap: 12mm;
+            }
+            body.landscape-mode .print-lower {
+                display: contents;
+                columns: auto;
             }
             body.landscape-mode .br-header,
             body.landscape-mode .tagline {
@@ -413,21 +417,49 @@
             body.landscape-mode .layers-grid,
             body.landscape-mode .tokiqr-box,
             body.landscape-mode .areas,
-            body.landscape-mode .contact-section {
+            body.landscape-mode .contact-section,
+            body.landscape-mode .pricing-line,
+            body.landscape-mode .pricing-note {
                 break-inside: avoid;
             }
-            body.landscape-mode .tagline h1 { font-size: 1.2rem; }
-            body.landscape-mode .br-header { margin-bottom: 0.3rem; padding-bottom: 0.3rem; }
+            /* Force essay to top of right column */
+            body.landscape-mode .essay-heading {
+                break-before: column;
+            }
+            /* Generous sizing for landscape */
+            body.landscape-mode .br-header { margin-bottom: 0.4rem; padding-bottom: 0.3rem; }
+            body.landscape-mode .br-header .company { font-size: 1.2rem; }
             body.landscape-mode .tagline { margin-bottom: 0.3rem; }
-            body.landscape-mode .section-heading { margin: 0.4rem 0 0.3rem; }
-            body.landscape-mode .layers-grid { gap: 0.4rem; }
-            body.landscape-mode .layer-card { padding: 0.4rem 0.3rem; }
+            body.landscape-mode .tagline h1 { font-size: 1.15rem; }
+            body.landscape-mode .tagline .hook { font-size: 0.88rem; }
+            body.landscape-mode .tagline .hook-sub { font-size: 0.72rem; }
+            body.landscape-mode .section-heading { margin: 0.35rem 0 0.2rem; }
+            body.landscape-mode .section-heading h2 { font-size: 0.88rem; }
+            body.landscape-mode .layers-grid { gap: 0.4rem; margin-bottom: 0.2rem; }
+            body.landscape-mode .layer-card { padding: 0.35rem 0.3rem; }
             body.landscape-mode .layer-card .layer-name { font-size: 0.78rem; }
             body.landscape-mode .layer-card .layer-sub { font-size: 0.65rem; }
-            body.landscape-mode .layer-card .layer-desc { font-size: 0.6rem; }
-            body.landscape-mode .tokiqr-box li { font-size: 0.72rem; }
-            body.landscape-mode .contact-section { margin-top: 0.4rem; padding-top: 0.3rem; }
-            body.landscape-mode .tokiqr-box img { width: 100px; height: 100px; margin-bottom: 0.3rem; }
+            body.landscape-mode .layer-card .layer-desc { font-size: 0.58rem; }
+            body.landscape-mode .tokiqr-box { padding: 0.35rem 0.5rem; margin-bottom: 0.2rem; }
+            body.landscape-mode .tokiqr-box li { font-size: 0.72rem; line-height: 1.35; }
+            body.landscape-mode .tokiqr-box .try-link { font-size: 0.68rem; }
+            body.landscape-mode .area-row { padding: 0.06rem 0; }
+            body.landscape-mode .area-label { font-size: 0.72rem; }
+            body.landscape-mode .area-desc { font-size: 0.72rem; }
+            body.landscape-mode .areas { margin-bottom: 0.15rem; }
+            body.landscape-mode .pricing-line { font-size: 0.75rem; margin-bottom: 0.05rem; }
+            body.landscape-mode .pricing-note { font-size: 0.65rem; }
+            body.landscape-mode .essay-qr-box { text-align: center; }
+            body.landscape-mode .essay-qr-box img { width: 90px; height: 90px; margin-bottom: 0.3rem; }
+            body.landscape-mode .essay-qr-box p { font-size: 0.7rem; line-height: 1.4; margin-bottom: 0.2rem; }
+            body.landscape-mode .contact-section {
+                margin-top: 0.4rem;
+                padding-top: 0.3rem;
+                flex-direction: column;
+                gap: 0;
+            }
+            body.landscape-mode .contact-info .contact-name { font-size: 0.85rem; }
+            body.landscape-mode .contact-info p { font-size: 0.72rem; line-height: 1.4; }
         }
     </style>
     <style id="landscape-page-style" media="not all">
@@ -509,8 +541,18 @@
     </div>
 
     <div class="section-heading"><h2>料金</h2></div>
-    <p class="pricing-line">TokiQR（音声QRコード作成）: <strong>無料</strong>　｜　三層保管プラン: <strong>&yen;5,000〜</strong>　｜　石英ガラス: <strong>&yen;50,000〜</strong></p>
-    <p class="pricing-note">詳しい料金プランは <a href="index.html#pricing" style="color: var(--toki-blue); text-decoration: none;">Webサイト</a> をご覧ください</p>
+    <p class="pricing-line">TokiQR（音声QRコード作成）: <strong>無料</strong></p>
+    <p class="pricing-line">三層保管プラン: <strong>&yen;5,000〜</strong></p>
+    <p class="pricing-line">石英ガラス: <strong>&yen;50,000〜</strong></p>
+    <p class="pricing-note">一度のお支払いで完結。月額課金なし。<a href="index.html#pricing" style="color: var(--toki-blue); text-decoration: none;">詳細 &rarr;</a></p>
+
+    <div class="section-heading essay-heading"><h2>なぜブローシャが営業を超越するのか</h2></div>
+    <div class="tokiqr-box essay-qr-box" style="text-align: center;">
+        <img src="asset/qr-brochure-essay.png" alt="エッセイへのQRコード" style="width: 160px; height: 160px; margin-bottom: 0.75rem;">
+        <p style="font-family: var(--font-display); font-size: 0.95rem; color: var(--text-primary); margin-bottom: 0.5rem;">ブローシャの限界と超越</p>
+        <p style="font-size: 0.8rem; color: var(--text-secondary); line-height: 1.7; margin-bottom: 0.5rem;">普通のブローシャが超えられない壁と、TokiStorageのブローシャが持つ構造的な突破力。<br>デジタルプロモーションでは届かない「体感」の本質について。</p>
+        <a href="brochure-essay.html" class="try-link">エッセイを読む &rarr;</a>
+    </div>
 
     <div class="contact-section">
         <div class="contact-info">
@@ -520,14 +562,6 @@
             <p><a href="https://tokistorage.github.io/lp/">tokistorage.github.io/lp/</a></p>
             <p><a href="mailto:tokistorage1000@gmail.com">tokistorage1000@gmail.com</a></p>
         </div>
-    </div>
-
-    <div class="section-heading"><h2>なぜブローシャが営業を超越するのか</h2></div>
-    <div class="tokiqr-box" style="text-align: center;">
-        <img src="asset/qr-brochure-essay.png" alt="エッセイへのQRコード" style="width: 160px; height: 160px; margin-bottom: 0.75rem;">
-        <p style="font-family: var(--font-display); font-size: 0.95rem; color: var(--text-primary); margin-bottom: 0.5rem;">ブローシャの限界と超越</p>
-        <p style="font-size: 0.8rem; color: var(--text-secondary); line-height: 1.7; margin-bottom: 0.5rem;">普通のブローシャが超えられない壁と、TokiStorageのブローシャが持つ構造的な突破力。<br>デジタルプロモーションでは届かない「体感」の本質について。</p>
-        <a href="brochure-essay.html" class="try-link">エッセイを読む &rarr;</a>
     </div>
     </div><!-- /.print-lower -->
 
