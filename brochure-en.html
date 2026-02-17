@@ -332,22 +332,72 @@
             .br-header .company { font-size: 1.3rem; }
         }
 
+        /* Portrait print */
         @media print {
-            @page { size: A4; margin: 10mm 12mm; }
+            @page { size: A4; margin: 8mm 10mm; }
             .br-nav, .pdf-download, .br-footer { display: none; }
-            .brochure { padding-top: 0; max-width: 100%; }
-            body { background: white; line-height: 1.5; font-size: 14px; }
-            .tagline { margin-bottom: 0.8rem; }
-            .tagline h1 { font-size: 1.5rem; margin-bottom: 0.3rem; }
-            .tagline .hook-sub { font-size: 0.8rem; }
-            .section-heading { margin: 1rem 0 0.6rem; }
-            .br-header { margin-bottom: 1rem; padding-bottom: 0.8rem; }
-            .layer-card { padding: 0.8rem 0.6rem; }
-            .tokiqr-box { padding: 0.8rem 1rem; }
-            .tokiqr-box li { padding: 0.1rem 0; font-size: 0.82rem; }
-            .area-row { padding: 0.2rem 0; }
-            .contact-section { margin-top: 1rem; padding-top: 0.8rem; }
+            .brochure { padding: 0; max-width: 100%; }
+            body { background: white; line-height: 1.35; font-size: 12.5px; }
+            .br-header { margin-bottom: 0.5rem; padding-bottom: 0.4rem; }
+            .br-header .company { font-size: 1.3rem; }
+            .tagline { margin-bottom: 0.5rem; }
+            .tagline h1 { font-size: 1.3rem; margin-bottom: 0.2rem; }
+            .tagline .hook { font-size: 0.95rem; margin-bottom: 0.2rem; }
+            .tagline .hook-sub { font-size: 0.75rem; }
+            .section-heading { margin: 0.6rem 0 0.4rem; }
+            .section-heading h2 { font-size: 1rem; }
+            .layers-grid { gap: 0.5rem; margin-bottom: 0.3rem; }
+            .layer-card { padding: 0.5rem 0.4rem; border-radius: 6px; }
+            .layer-card .layer-name { font-size: 0.85rem; }
+            .layer-card .layer-sub { font-size: 0.72rem; }
+            .layer-card .layer-desc { font-size: 0.68rem; }
+            .tokiqr-box { padding: 0.5rem 0.8rem; margin-bottom: 0.3rem; }
+            .tokiqr-box li { padding: 0; font-size: 0.78rem; line-height: 1.4; }
+            .tokiqr-box .try-link { font-size: 0.75rem; margin-top: 0.2rem; }
+            .areas { margin-bottom: 0.3rem; }
+            .area-row { padding: 0.1rem 0; }
+            .area-label { font-size: 0.78rem; }
+            .area-desc { font-size: 0.78rem; }
+            .pricing-line { font-size: 0.82rem; margin-bottom: 0.1rem; }
+            .pricing-note { font-size: 0.72rem; }
+            .contact-section { margin-top: 0.6rem; padding-top: 0.5rem; gap: 1rem; }
+            .contact-info .contact-name { font-size: 0.95rem; }
+            .contact-info p { font-size: 0.78rem; line-height: 1.5; }
+            .tokiqr-box img { width: 120px; height: 120px; margin-bottom: 0.4rem; }
         }
+        /* Landscape print override (injected by JS) */
+        @media print {
+            body.landscape-mode .brochure {
+                columns: 2;
+                column-gap: 10mm;
+            }
+            body.landscape-mode .br-header,
+            body.landscape-mode .tagline {
+                column-span: all;
+            }
+            body.landscape-mode .section-heading,
+            body.landscape-mode .layers-grid,
+            body.landscape-mode .tokiqr-box,
+            body.landscape-mode .areas,
+            body.landscape-mode .contact-section {
+                break-inside: avoid;
+            }
+            body.landscape-mode .tagline h1 { font-size: 1.2rem; }
+            body.landscape-mode .br-header { margin-bottom: 0.3rem; padding-bottom: 0.3rem; }
+            body.landscape-mode .tagline { margin-bottom: 0.3rem; }
+            body.landscape-mode .section-heading { margin: 0.4rem 0 0.3rem; }
+            body.landscape-mode .layers-grid { gap: 0.4rem; }
+            body.landscape-mode .layer-card { padding: 0.4rem 0.3rem; }
+            body.landscape-mode .layer-card .layer-name { font-size: 0.78rem; }
+            body.landscape-mode .layer-card .layer-sub { font-size: 0.65rem; }
+            body.landscape-mode .layer-card .layer-desc { font-size: 0.6rem; }
+            body.landscape-mode .tokiqr-box li { font-size: 0.72rem; }
+            body.landscape-mode .contact-section { margin-top: 0.4rem; padding-top: 0.3rem; }
+            body.landscape-mode .tokiqr-box img { width: 100px; height: 100px; margin-bottom: 0.3rem; }
+        }
+    </style>
+    <style id="landscape-page-style" media="not all">
+        @page { size: A4 landscape; margin: 8mm 10mm; }
     </style>
     <meta property="og:image" content="https://tokistorage.github.io/lp/asset/tokistorage-icon-512.png">
     <meta property="og:image:width" content="512">
@@ -449,7 +499,7 @@
         <p class="pdf-title">Printable A4 Brochure (PDF)</p>
         <div class="pdf-buttons">
             <a href="javascript:void(0)" onclick="window.print()" class="btn-current">A4 Portrait PDF</a>
-            <a href="brochure-landscape-en.html" class="btn-other">A4 Landscape PDF</a>
+            <a href="javascript:void(0)" onclick="printLandscape()" class="btn-other">A4 Landscape PDF</a>
         </div>
         <p class="pdf-hint">Select "Save as PDF" in the print dialog</p>
     </div>
@@ -462,6 +512,18 @@
 
 </main>
 
+<script>
+function printLandscape() {
+    document.body.classList.add('landscape-mode');
+    document.getElementById('landscape-page-style').media = 'all';
+    window.addEventListener('afterprint', function cleanup() {
+        document.body.classList.remove('landscape-mode');
+        document.getElementById('landscape-page-style').media = 'not all';
+        window.removeEventListener('afterprint', cleanup);
+    });
+    window.print();
+}
+</script>
 <script src="tracker.js"></script>
 </body>
 </html>
