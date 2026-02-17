@@ -917,58 +917,52 @@ def generate_issue(year, month, issue_num, serial):
         pdf.divider()
 
     # ═══════════════════════════════════════════════════════════════════
-    # TokiQR Cover Page (巻末扉)
+    # TokiQR Cover Page (巻末扉) — only if customer materials exist
     # ═══════════════════════════════════════════════════════════════════
-    pdf.add_page()
-    pdf.accent_bar()
-    pdf.set_auto_page_break(auto=False)
-    pdf.set_y(30)
-    pdf.set_font("JP", "", 9)
-    pdf.set_text_color(*TOKI_BLUE)
-    pdf.cell(0, 6, "── 巻末セクション ──", align="C", new_x="LMARGIN", new_y="NEXT")
-    pdf.ln(6)
-
-    tokiqr_title = "TokiQR：ご利用者さまの声" if materials else "TokiQR：代表メッセージ"
-    pdf.set_font("JP", "B", 20)
-    pdf.set_text_color(*DARK)
-    pdf.cell(0, 14, tokiqr_title, align="C", new_x="LMARGIN", new_y="NEXT")
-    pdf.ln(8)
-
-    desc_w = 220
-    desc_x = (PAGE_W - desc_w) / 2
-    pdf.set_font("JP", "", 9.5)
-    pdf.set_text_color(*SECONDARY)
-    pdf.set_x(desc_x)
     if materials:
+        pdf.add_page()
+        pdf.accent_bar()
+        pdf.set_auto_page_break(auto=False)
+        pdf.set_y(30)
+        pdf.set_font("JP", "", 9)
+        pdf.set_text_color(*TOKI_BLUE)
+        pdf.cell(0, 6, "── 巻末セクション ──", align="C", new_x="LMARGIN", new_y="NEXT")
+        pdf.ln(6)
+
+        pdf.set_font("JP", "B", 20)
+        pdf.set_text_color(*DARK)
+        pdf.cell(0, 14, "TokiQR：ご利用者さまの声", align="C", new_x="LMARGIN", new_y="NEXT")
+        pdf.ln(8)
+
+        desc_w = 220
+        desc_x = (PAGE_W - desc_w) / 2
+        pdf.set_font("JP", "", 9.5)
+        pdf.set_text_color(*SECONDARY)
+        pdf.set_x(desc_x)
         names = "、".join([m["displayName"] for m in materials])
         pdf.multi_cell(desc_w, 6, (
             f"掲載者: {names}\n"
             "次のページ以降に印刷されたQRコードをスマートフォンでスキャンすると、"
             "ご利用者さまの肉声を再生できます。"
         ), align="C")
-    else:
-        pdf.multi_cell(desc_w, 6, (
-            "次のページに印刷されたQRコードをスマートフォンでスキャンすると、"
-            "代表の肉声を再生できます。"
+        pdf.ln(6)
+
+        box_w = 240
+        box_x = (PAGE_W - box_w) / 2
+        box_y = pdf.get_y()
+        pdf.set_fill_color(*BG_LIGHT)
+        pdf.set_draw_color(*BORDER)
+        pdf.rect(box_x, box_y, box_w, 30, "DF")
+        pdf.set_xy(box_x + 10, box_y + 5)
+        pdf.set_font("JP", "B", 9)
+        pdf.set_text_color(*DARK)
+        pdf.multi_cell(box_w - 20, 6, (
+            "サーバーは不要です。データはQRコード内に完全に埋め込まれています。\n"
+            "インターネット接続があればスマートフォンだけで再生可能。\n"
+            "100年後でも、このQRコードが残っていれば声は蘇ります。"
         ), align="C")
-    pdf.ln(6)
 
-    box_w = 240
-    box_x = (PAGE_W - box_w) / 2
-    box_y = pdf.get_y()
-    pdf.set_fill_color(*BG_LIGHT)
-    pdf.set_draw_color(*BORDER)
-    pdf.rect(box_x, box_y, box_w, 30, "DF")
-    pdf.set_xy(box_x + 10, box_y + 5)
-    pdf.set_font("JP", "B", 9)
-    pdf.set_text_color(*DARK)
-    pdf.multi_cell(box_w - 20, 6, (
-        "サーバーは不要です。データはQRコード内に完全に埋め込まれています。\n"
-        "インターネット接続があればスマートフォンだけで再生可能。\n"
-        "100年後でも、このQRコードが残っていれば声は蘇ります。"
-    ), align="C")
-
-    pdf._footer_line(f"{PUBLICATION_NAME_JA}　巻末 TokiQR")
+        pdf._footer_line(f"{PUBLICATION_NAME_JA}　巻末 TokiQR")
 
     # ═══════════════════════════════════════════════════════════════════
     # Back Cover
@@ -1031,11 +1025,6 @@ def generate_issue(year, month, issue_num, serial):
         p = os.path.join(SCRIPT_DIR, m["tokiqrPdf"])
         if os.path.exists(p):
             tokiqr_pdfs.append(p)
-
-    # Also include representative TokiQR if exists
-    rep_path = os.path.join(TOKIQR_DIR, f"tokiqr-representative-{month_str}.pdf")
-    if os.path.exists(rep_path):
-        tokiqr_pdfs.append(rep_path)
 
     if tokiqr_pdfs:
         from pypdf import PdfReader, PdfWriter
