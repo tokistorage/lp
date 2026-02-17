@@ -287,6 +287,42 @@
             background: var(--toki-blue-pale);
             border-radius: 10px;
         }
+        .pdf-download .pdf-title {
+            font-size: 0.85rem;
+            color: var(--text-secondary);
+            margin-bottom: 0.75rem;
+        }
+        .pdf-download .pdf-hint {
+            font-size: 0.72rem;
+            color: var(--text-muted);
+            margin-top: 0.6rem;
+        }
+        .pdf-buttons {
+            display: flex;
+            justify-content: center;
+            gap: 0.75rem;
+            flex-wrap: wrap;
+        }
+        .pdf-buttons a {
+            display: inline-block;
+            padding: 0.6rem 1.5rem;
+            border-radius: 6px;
+            font-size: 0.9rem;
+            font-weight: 500;
+            text-decoration: none;
+            cursor: pointer;
+        }
+        .pdf-buttons .btn-current {
+            background: var(--toki-blue);
+            color: #fff;
+        }
+        .pdf-buttons .btn-current:hover { background: #1D4ED8; }
+        .pdf-buttons .btn-other {
+            background: none;
+            color: var(--toki-blue);
+            border: 1px solid var(--toki-blue);
+        }
+        .pdf-buttons .btn-other:hover { background: var(--toki-blue-pale); }
         .pdf-download p {
             font-size: 0.85rem;
             color: var(--text-secondary);
@@ -442,10 +478,12 @@
     </div>
 
     <div class="pdf-download">
-        <p>印刷用A4ブローシャ（PDF）</p>
-        <a href="javascript:void(0)" onclick="window.print()">印刷 / PDF保存</a>
-        <p style="margin-top: 0.5rem; font-size: 0.75rem; color: var(--text-muted);">印刷ダイアログで「PDFとして保存」を選択</p>
-        <p style="margin-top: 0.5rem;"><a href="brochure-landscape.html" style="font-size: 0.8rem; color: var(--toki-blue); text-decoration: none;">A4横版ブローシャ &rarr;</a></p>
+        <p class="pdf-title">印刷用A4ブローシャ（PDF）</p>
+        <div class="pdf-buttons">
+            <a href="javascript:void(0)" onclick="window.print()" class="btn-current">A4縦版 PDF保存</a>
+            <a href="brochure-landscape.html" class="btn-other">A4横版 PDF保存</a>
+        </div>
+        <p class="pdf-hint">印刷ダイアログで「PDFとして保存」を選択してください</p>
     </div>
 
     <footer class="br-footer">

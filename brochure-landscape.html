@@ -295,7 +295,7 @@
         /* Print styles */
         @media print {
             @page { size: A4 landscape; margin: 0; }
-            .br-nav, .screen-actions { display: none !important; }
+            .br-nav, .pdf-download { display: none !important; }
             body { background: white; }
             .landscape-page {
                 margin: 0;
@@ -306,34 +306,52 @@
             }
         }
 
-        /* Screen actions */
-        .screen-actions {
+        /* PDF download */
+        .pdf-download {
             text-align: center;
             margin: 1rem auto 2rem;
             max-width: 297mm;
+            padding: 1.5rem;
+            background: var(--toki-blue-pale);
+            border-radius: 10px;
         }
-        .screen-actions a, .screen-actions button {
-            display: inline-block;
-            padding: 0.5rem 1.2rem;
-            margin: 0 0.3rem;
+        .pdf-download .pdf-title {
             font-size: 0.85rem;
+            color: var(--text-secondary);
+            margin-bottom: 0.75rem;
+        }
+        .pdf-download .pdf-hint {
+            font-size: 0.72rem;
+            color: var(--text-muted);
+            margin-top: 0.6rem;
+        }
+        .pdf-buttons {
+            display: flex;
+            justify-content: center;
+            gap: 0.75rem;
+            flex-wrap: wrap;
+        }
+        .pdf-buttons a {
+            display: inline-block;
+            padding: 0.6rem 1.5rem;
             border-radius: 6px;
+            font-size: 0.9rem;
+            font-weight: 500;
             text-decoration: none;
             cursor: pointer;
             font-family: var(--font-body);
         }
-        .btn-print {
+        .pdf-buttons .btn-current {
             background: var(--toki-blue);
             color: #fff;
-            border: none;
         }
-        .btn-print:hover { background: var(--toki-blue-dark); }
-        .btn-portrait {
+        .pdf-buttons .btn-current:hover { background: var(--toki-blue-dark); }
+        .pdf-buttons .btn-other {
+            background: none;
             color: var(--toki-blue);
             border: 1px solid var(--toki-blue);
-            background: none;
         }
-        .btn-portrait:hover { background: var(--toki-blue-pale); }
+        .pdf-buttons .btn-other:hover { background: var(--toki-blue-pale); }
 
         /* Responsive: on narrow screens, scroll horizontally */
         @media screen and (max-width: 900px) {
@@ -471,9 +489,13 @@
 
 </div>
 
-<div class="screen-actions">
-    <button class="btn-print" onclick="window.print()">印刷 / PDF保存</button>
-    <a href="brochure.html" class="btn-portrait">縦版ブローシャ</a>
+<div class="pdf-download">
+    <p class="pdf-title">印刷用A4ブローシャ（PDF）</p>
+    <div class="pdf-buttons">
+        <a href="javascript:void(0)" onclick="window.print()" class="btn-current">A4横版 PDF保存</a>
+        <a href="brochure.html" class="btn-other">A4縦版 PDF保存</a>
+    </div>
+    <p class="pdf-hint">印刷ダイアログで「PDFとして保存」を選択してください</p>
 </div>
 
 <script src="tracker.js"></script>
