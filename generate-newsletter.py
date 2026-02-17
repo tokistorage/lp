@@ -708,7 +708,326 @@ def generate_vol1():
     return out_path
 
 
+def generate_issue(year, month, issue_num, serial):
+    """Generate newsletter for any issue based on manifest data.
+
+    Usage: python3 generate-newsletter.py 2026 4 2 2
+           (year=2026, month=4, issue_num=2, serial=2)
+    """
+    import json
+
+    volume = (year - INAUGURAL_YEAR) // VOLUME_SPAN + 1
+    month_str = f"{year}-{month:02d}"
+    manifest_path = os.path.join(SCRIPT_DIR, "newsletter", "materials", month_str, "manifest.json")
+
+    if not os.path.exists(manifest_path):
+        print(f"  ERROR: manifest not found: {manifest_path}")
+        sys.exit(1)
+
+    with open(manifest_path, encoding="utf-8") as f:
+        manifest = json.load(f)
+
+    pdf = NewsletterPDF()
+    pdf.set_title(f"TokiStorage Newsletter Vol.{volume} No.{issue_num}")
+    pdf.set_author("TokiStorage（佐藤卓也）")
+    pdf.set_subject("存在証明の民主化")
+    pdf.set_creator("generate-newsletter.py")
+
+    footer_text = f"{PUBLICATION_NAME_JA}　第{volume}巻 第{issue_num}号（通巻第{serial}号）　{year}年{month}月"
+
+    # ═══════════════════════════════════════════════════════════════════
+    # PAGE 1: Cover
+    # ═══════════════════════════════════════════════════════════════════
+    pdf.add_page()
+    pdf.accent_bar()
+    pdf.set_auto_page_break(auto=False)
+
+    if os.path.exists(ICON_PATH):
+        pdf.image(ICON_PATH, x=(PAGE_W - 50) / 2, y=12, w=50)
+
+    pdf.set_y(68)
+    pdf.set_font("JP", "", 10)
+    pdf.set_text_color(*TOKI_BLUE)
+    pdf.cell(0, 6, PUBLICATION_NAME, align="C", new_x="LMARGIN", new_y="NEXT")
+
+    pdf.set_font("JP", "", 8)
+    pdf.set_text_color(*MUTED)
+    pdf.cell(0, 5, f"第{volume}巻 第{issue_num}号（通巻第{serial}号）", align="C",
+             new_x="LMARGIN", new_y="NEXT")
+    pdf.ln(8)
+
+    title_ja = manifest["issue"].get("title_ja", f"第{issue_num}号")
+    pdf.set_font("JP", "B", 24)
+    pdf.set_text_color(*DARK)
+    pdf.cell(0, 18, title_ja, align="C", new_x="LMARGIN", new_y="NEXT")
+    pdf.ln(12)
+
+    pdf.set_font("JP", "", 9)
+    pdf.set_text_color(*SECONDARY)
+    pdf.cell(0, 6, f"{year}年{month}月", align="C", new_x="LMARGIN", new_y="NEXT")
+    pdf.ln(2)
+    pdf.cell(0, 6, f"Vol.{volume}  No.{issue_num}  Serial #{serial:05d}", align="C",
+             new_x="LMARGIN", new_y="NEXT")
+
+    pdf.ln(15)
+    box_w = 160
+    box_x = (PAGE_W - box_w) / 2
+    pdf.set_draw_color(*BORDER)
+    box_y = pdf.get_y()
+    pdf.rect(box_x, box_y, box_w, 35, "D")
+    pdf.set_xy(box_x + 5, box_y + 4)
+    pdf.set_font("JP", "B", 9)
+    pdf.set_text_color(*DARK)
+    pdf.cell(box_w - 10, 6, "発行者", align="C", new_x="LMARGIN", new_y="NEXT")
+    pdf.set_x(box_x + 5)
+    pdf.set_font("JP", "", 9)
+    pdf.set_text_color(*SECONDARY)
+    pdf.cell(box_w - 10, 6, PUBLISHER, align="C", new_x="LMARGIN", new_y="NEXT")
+    pdf.set_x(box_x + 5)
+    pdf.cell(box_w - 10, 6, PUBLISHER_ADDRESS, align="C", new_x="LMARGIN", new_y="NEXT")
+    pdf.set_x(box_x + 5)
+    pdf.cell(box_w - 10, 6, PUBLISHER_URL, align="C", new_x="LMARGIN", new_y="NEXT")
+
+    pdf._footer_line(footer_text)
+
+    # ═══════════════════════════════════════════════════════════════════
+    # PAGE 2: Colophon
+    # ═══════════════════════════════════════════════════════════════════
+    pdf.add_page()
+    pdf.accent_bar()
+    pdf.set_auto_page_break(auto=False)
+
+    pdf.set_y(15)
+    pdf.set_font("JP", "B", 14)
+    pdf.set_text_color(*DARK)
+    pdf.cell(0, 10, "奥付（Colophon）", align="C", new_x="LMARGIN", new_y="NEXT")
+    pdf.ln(2)
+    pdf.set_font("JP", "", 8)
+    pdf.set_text_color(*MUTED)
+    pdf.cell(0, 5, "国立国会図書館法に基づく納本に必要な刊行情報", align="C",
+             new_x="LMARGIN", new_y="NEXT")
+    pdf.ln(5)
+
+    colophon_data = [
+        ("刊行物名", PUBLICATION_NAME_JA),
+        ("英題", PUBLICATION_NAME),
+        ("巻号", f"第{volume}巻 第{issue_num}号（通巻第{serial}号）"),
+        ("発行年月日", f"{year}年（令和{year - 2018}年）{month}月"),
+        ("発行者", "佐藤卓也"),
+        ("屋号", "TokiStorage（トキストレージ）"),
+        ("発行者住所", PUBLISHER_ADDRESS),
+        ("URL", PUBLISHER_URL),
+        ("連絡先", PUBLISHER_EMAIL),
+        ("刊行頻度", "不定期（年複数回の刊行を予定）"),
+        ("フォーマット", "PDF（電子書籍等・オンライン資料）"),
+        ("根拠法", "国立国会図書館法 第25条・第25条の4"),
+        ("採番体系", "式年遷宮型（1巻＝20年） ※1000年発行を想定"),
+    ]
+
+    pdf.set_fill_color(*BG_LIGHT)
+    for i, (label, value) in enumerate(colophon_data):
+        y = pdf.get_y()
+        if i % 2 == 0:
+            pdf.set_fill_color(*BG_LIGHT)
+            pdf.rect(MARGIN, y, CONTENT_W, 8, "F")
+        pdf.set_xy(MARGIN + 3, y)
+        pdf.set_font("JP", "B", 8)
+        pdf.set_text_color(*MUTED)
+        pdf.cell(50, 8, label)
+        pdf.set_font("JP", "", 9)
+        pdf.set_text_color(*DARK)
+        pdf.cell(0, 8, value, new_x="LMARGIN", new_y="NEXT")
+
+    pdf._footer_line(f"{PUBLICATION_NAME_JA}　奥付")
+
+    # ═══════════════════════════════════════════════════════════════════
+    # PAGE 3+: Content
+    # ═══════════════════════════════════════════════════════════════════
+    pdf.add_page()
+    pdf.accent_bar()
+    pdf.set_auto_page_break(auto=True, margin=20)
+    pdf.set_y(12)
+
+    # Section: Customer Voices
+    materials = manifest.get("materials", [])
+    if materials:
+        pdf.section_heading("ご利用者さまの声（TokiQR）")
+        pdf.body(
+            "許諾をいただいたお客様のTokiQRを掲載します。"
+            "巻末のQRコードをスマートフォンでスキャンすると、お客様の肉声を再生できます。"
+        )
+        for m in materials:
+            pdf.body_bold(f"{m['displayName']}")
+            pdf.body(f"注文番号: {m['orderId']}")
+        pdf.divider()
+
+    # Section: Sado Island
+    pdf.section_heading("佐渡島 物理保管拠点の進捗")
+    pdf.body("佐渡島に設置予定の物理保管拠点について、進捗を報告します。")
+    pdf.body("（本セクションは発行時に内容が確定します）")
+    pdf.divider()
+
+    # Section: Partners
+    pdf.section_heading("パートナー・協賛者のご紹介")
+    pdf.body("トキストレージの活動を支えてくださるパートナーや協賛者をご紹介します。")
+    pdf.body("（本セクションは発行時に内容が確定します）")
+    pdf.divider()
+
+    # ═══════════════════════════════════════════════════════════════════
+    # TokiQR Cover Pages
+    # ═══════════════════════════════════════════════════════════════════
+    if materials:
+        pdf.add_page()
+        pdf.accent_bar()
+        pdf.set_auto_page_break(auto=False)
+        pdf.set_y(30)
+        pdf.set_font("JP", "", 9)
+        pdf.set_text_color(*TOKI_BLUE)
+        pdf.cell(0, 6, "── 巻末セクション ──", align="C", new_x="LMARGIN", new_y="NEXT")
+        pdf.ln(6)
+        pdf.set_font("JP", "B", 20)
+        pdf.set_text_color(*DARK)
+        pdf.cell(0, 14, "TokiQR：ご利用者さまの声", align="C", new_x="LMARGIN", new_y="NEXT")
+        pdf.ln(8)
+
+        desc_w = 220
+        desc_x = (PAGE_W - desc_w) / 2
+        pdf.set_font("JP", "", 9.5)
+        pdf.set_text_color(*SECONDARY)
+        pdf.set_x(desc_x)
+        names = "、".join([m["displayName"] for m in materials])
+        pdf.multi_cell(desc_w, 6, (
+            f"掲載者: {names}\n"
+            "次のページ以降に印刷されたQRコードをスマートフォンでスキャンすると、"
+            "ご利用者さまの肉声を再生できます。"
+        ), align="C")
+        pdf.ln(6)
+
+        box_w = 240
+        box_x = (PAGE_W - box_w) / 2
+        box_y = pdf.get_y()
+        pdf.set_fill_color(*BG_LIGHT)
+        pdf.set_draw_color(*BORDER)
+        pdf.rect(box_x, box_y, box_w, 30, "DF")
+        pdf.set_xy(box_x + 10, box_y + 5)
+        pdf.set_font("JP", "B", 9)
+        pdf.set_text_color(*DARK)
+        pdf.multi_cell(box_w - 20, 6, (
+            "サーバーは不要です。データはQRコード内に完全に埋め込まれています。\n"
+            "インターネット接続があればスマートフォンだけで再生可能。\n"
+            "100年後でも、このQRコードが残っていれば声は蘇ります。"
+        ), align="C")
+
+        pdf._footer_line(f"{PUBLICATION_NAME_JA}　巻末 TokiQR")
+
+    # ═══════════════════════════════════════════════════════════════════
+    # Back Cover
+    # ═══════════════════════════════════════════════════════════════════
+    pdf.add_page()
+    pdf.accent_bar()
+    pdf.set_auto_page_break(auto=False)
+
+    pdf.set_y(35)
+    pdf.set_font("JP", "B", 12)
+    pdf.set_text_color(*DARK)
+    pdf.cell(0, 8, "国立国会図書館 納本宣言", align="C", new_x="LMARGIN", new_y="NEXT")
+    pdf.ln(6)
+
+    decl_w = 200
+    decl_x = (PAGE_W - decl_w) / 2
+    pdf.set_font("JP", "", 9)
+    pdf.set_text_color(*SECONDARY)
+    pdf.set_x(decl_x)
+    pdf.multi_cell(decl_w, 6, (
+        "本誌は、国立国会図書館法（第25条の4）に基づき、"
+        "オンライン資料として国立国会図書館に納本されます。\n\n"
+        "This publication is deposited with the National Diet Library "
+        "of Japan under Article 25-4 of the National Diet Library Law."
+    ), align="C")
+
+    pdf.ln(12)
+    pdf.divider()
+    pdf.ln(4)
+
+    pdf.set_font("JP", "B", 10)
+    pdf.set_text_color(*DARK)
+    pdf.cell(0, 7, "次号予告", align="C", new_x="LMARGIN", new_y="NEXT")
+    pdf.ln(2)
+    pdf.set_font("JP", "", 9)
+    pdf.set_text_color(*SECONDARY)
+    pdf.set_x(decl_x)
+    pdf.multi_cell(decl_w, 6, (
+        f"第{volume}巻 第{issue_num + 1}号（通巻第{serial + 1}号）の内容は追ってお知らせします。"
+    ), align="C")
+
+    pdf.ln(12)
+    pdf.set_font("JP", "", 8)
+    pdf.set_text_color(*MUTED)
+    pdf.cell(0, 5, f"© {year} TokiStorage（佐藤卓也）. All rights reserved.", align="C",
+             new_x="LMARGIN", new_y="NEXT")
+    pdf.cell(0, 5, PUBLISHER_URL, align="C", new_x="LMARGIN", new_y="NEXT")
+
+    pdf._footer_line(f"{PUBLICATION_NAME_JA}　第{volume}巻 第{issue_num}号　裏表紙")
+
+    # ═══════════════════════════════════════════════════════════════════
+    # Output — merge TokiQR PDFs before back cover
+    # ═══════════════════════════════════════════════════════════════════
+    os.makedirs(OUT_DIR, exist_ok=True)
+    out_path = os.path.join(OUT_DIR, f"{month_str}.pdf")
+
+    # Collect all TokiQR PDFs to merge
+    tokiqr_pdfs = []
+    for m in materials:
+        p = os.path.join(SCRIPT_DIR, m["tokiqrPdf"])
+        if os.path.exists(p):
+            tokiqr_pdfs.append(p)
+
+    # Also include representative TokiQR if exists
+    rep_path = os.path.join(TOKIQR_DIR, f"tokiqr-representative-{month_str}.pdf")
+    if os.path.exists(rep_path):
+        tokiqr_pdfs.append(rep_path)
+
+    if tokiqr_pdfs:
+        from pypdf import PdfReader, PdfWriter
+
+        tmp_path = out_path + ".tmp"
+        pdf.output(tmp_path)
+        print(f"  Base PDF: {tmp_path}")
+
+        newsletter = PdfReader(tmp_path)
+        writer = PdfWriter()
+
+        for i in range(len(newsletter.pages) - 1):
+            writer.add_page(newsletter.pages[i])
+
+        for tp in tokiqr_pdfs:
+            reader = PdfReader(tp)
+            for page in reader.pages:
+                writer.add_page(page)
+            print(f"  TokiQR merged: {tp}")
+
+        writer.add_page(newsletter.pages[-1])
+
+        with open(out_path, "wb") as f:
+            writer.write(f)
+        os.remove(tmp_path)
+    else:
+        pdf.output(out_path)
+        print("  (No TokiQR PDFs found — skipped merge)")
+
+    size_kb = os.path.getsize(out_path) / 1024
+    print(f"  -> {out_path} ({size_kb:.1f} KB)")
+    return out_path
+
+
 if __name__ == "__main__":
     print("Generating TokiStorage Newsletter...")
-    generate_vol1()
+    if len(sys.argv) >= 5:
+        year = int(sys.argv[1])
+        month = int(sys.argv[2])
+        issue_num = int(sys.argv[3])
+        serial = int(sys.argv[4])
+        generate_issue(year, month, issue_num, serial)
+    else:
+        generate_vol1()
     print("Done.")
