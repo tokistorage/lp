@@ -382,12 +382,22 @@
             .print-lower .tokiqr-box {
                 break-inside: avoid;
             }
+            /* Essay to right column */
+            .print-lower .essay-heading {
+                break-before: column;
+            }
+            /* Contact spans full width below columns */
             .print-lower .contact-section {
+                column-span: all;
                 margin-top: 0.4rem;
                 padding-top: 0.35rem;
-                flex-direction: column;
-                gap: 0;
+                flex-direction: row;
+                gap: 2rem;
             }
+            /* Hide essay link in print */
+            .print-lower .try-link { display: none; }
+            /* QR box: left-align text, smaller image */
+            .print-lower .essay-qr-box { text-align: left; }
             .areas { margin-bottom: 0.25rem; }
             .area-row { padding: 0.1rem 0; }
             .area-label { font-size: 0.75rem; }
@@ -396,8 +406,8 @@
             .pricing-note { font-size: 0.7rem; }
             .contact-info .contact-name { font-size: 0.88rem; }
             .contact-info p { font-size: 0.75rem; line-height: 1.45; }
-            .print-lower .tokiqr-box img { width: 85px; height: 85px; margin-bottom: 0.25rem; }
-            .print-lower .tokiqr-box p { font-size: 0.72rem; line-height: 1.45; margin-bottom: 0.25rem; }
+            .print-lower .tokiqr-box img { width: 60px; height: 60px; margin-bottom: 0.15rem; }
+            .print-lower .tokiqr-box p { font-size: 0.72rem; line-height: 1.45; margin-bottom: 0.15rem; }
         }
         /* Landscape print override (injected by JS) */
         @media print {
