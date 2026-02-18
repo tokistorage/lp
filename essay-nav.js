@@ -113,6 +113,7 @@
     { id: 'uptime', ja: '稼働率と外部依存', en: 'Uptime & Dependencies' },
 
     // ── メタ視点 ──
+    { id: 'why-essays', ja: 'エッセイを刻む意義', en: 'The Significance of Inscribing Essays' },
     { id: 'erasure', ja: '残さない選択', en: 'Choosing Not to Leave Behind' }
   ];
 
