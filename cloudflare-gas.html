@@ -129,26 +129,22 @@
         </div>
 
 
-        <h2>1. まず認める——使っている</h2>
+        <h2>1. なぜCloudflare WorkersとGASなのか</h2>
 
-        <p>トキストレージのコードベースには、Cloudflare WorkersとGASが組み込まれている。隠す必要はない。事実として整理する。</p>
+        <p>一人で運用するプロジェクトには、一人で運用できるインフラが要る。スケールではなく、統合が必要だ。</p>
 
-        <h3>Cloudflare Workers</h3>
-        <p>注文フォームと問い合わせフォーム（QRサイト側）は、Cloudflare Workerを経由してGASに送信される。GASのexec URLは302リダイレクトを返すため、WiseのWebhook URLバリデーションに通らない。Cloudflare Workerはその中継役だ。CORSの処理も担う。</p>
+        <h3>Google Apps Script——1ファイルに収まる運用基盤</h3>
+        <p>GASを選んだ理由は明快だ。メール送信、スプレッドシート、スケジュール実行——通常なら3つの別サービスが必要な機能が、ひとつの環境に統合されている。契約不要、設定不要、コストはゼロ。</p>
+        <p>トキストレージのGASスクリプト（<code>code.gs</code>）は1,564行。注文受付、Wise入金確認、保管パイプライン自動化、日次アクセスレポート、入金リマインダー、月次パートナーレポート、ニュースレター自動生成——<strong>一人プロジェクトの運用基盤が、この1ファイルに収まっている</strong>。</p>
 
-        <h3>Google Apps Script</h3>
-        <p>GASは3つの役割を担っている。</p>
-        <ul>
-            <li><strong>注文・問い合わせの受信</strong>——フォームデータをGoogleスプレッドシートに記録し、メールで通知する</li>
-            <li><strong>アクセス解析</strong>——ページビューをCookie UUIDで識別し、スプレッドシートにログを記録する</li>
-            <li><strong>Wise Webhook</strong>——決済通知をCloudflare Worker経由で受け取る</li>
-        </ul>
+        <h3>Cloudflare Workers——52行で解決する</h3>
+        <p>Cloudflare Workerを使う理由は技術的に明確だ。GASのexec URLは302リダイレクトを返すため、WiseのWebhook URLバリデーションに通らない。52行のプロキシがこれを解決する。CORSの処理を担い、GAS再デプロイ時のURL変更もWorker側で吸収する。コストはゼロ。</p>
 
-        <p>つまり、<strong>運用のバックエンドはCloudflare Workers + GAS + Googleスプレッドシート</strong>で構成されている。これはまぎれもない外部依存だ。</p>
+        <p>つまり、<strong>運用のバックエンドはCloudflare Workers + GAS + Googleスプレッドシート</strong>で構成されている。外部依存だ。しかしこの依存は、合理的な選択の結果であって、妥協ではない。</p>
 
         <blockquote>
-            「使っていない」と言うのは簡単だ。<br>
-            「使っているが、何に依存させていないか」を言語化する方が誠実だ。
+            一人プロジェクトのインフラに必要なのは、スケールではなく、統合だ。<br>
+            GASはメール・スプレッドシート・スケジューラを一つの環境で提供する。
         </blockquote>
 
 
