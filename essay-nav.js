@@ -115,6 +115,7 @@
     { id: 'cloudflare-gas', ja: 'CloudflareとGAS', en: 'Cloudflare & GAS' },
 
     // ── メタ視点 ──
+    { id: 'preserving-words', ja: 'ことばを残す', en: 'Preserving Words' },
     { id: 'why-essays', ja: 'エッセイを刻む意義', en: 'The Significance of Inscribing Essays' },
     { id: 'erasure', ja: '残さない選択', en: 'Choosing Not to Leave Behind' }
   ];
