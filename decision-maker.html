@@ -1,0 +1,262 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" type="image/png" sizes="32x32" href="asset/favicon-32.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="asset/apple-touch-icon.png">
+    <title>責任者の決断 — 決められない組織、名前を刻む個人 | トキストレージ</title>
+    <meta name="robots" content="noindex, nofollow">
+    <meta name="description" content="責任者の決断とは、自分の名前を構造に刻む行為である。委員会の合意でも、全員の承認でもない。トキストレージのすべての設計判断には一人の名前がある。">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Shippori+Mincho:wght@400;500;600;700&family=Zen+Kaku+Gothic+New:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --toki-blue: #1E40AF;
+            --toki-blue-dark: #1E3A5F;
+            --toki-blue-pale: #EFF6FF;
+            --accent-blue: #3B82F6;
+            --bg-white: #FFFFFF;
+            --bg-section: #DBEAFE;
+            --text-primary: #1E293B;
+            --text-secondary: #475569;
+            --text-muted: #94A3B8;
+            --border: #E2E8F0;
+            --font-display: 'Shippori Mincho', serif;
+            --font-body: 'Zen Kaku Gothic New', sans-serif;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        html { scroll-behavior: smooth; }
+
+        body {
+            font-family: var(--font-body);
+            font-weight: 400;
+            background: var(--bg-white);
+            color: var(--text-primary);
+            line-height: 1.9;
+            font-size: 16px;
+        }
+
+        .article-nav {
+            position: fixed; top: 0; left: 0; right: 0; z-index: 1000;
+            background: rgba(255,255,255,0.95);
+            backdrop-filter: blur(12px);
+            border-bottom: 1px solid var(--border);
+            padding: 0.6rem 1.2rem;
+            display: flex; align-items: center; justify-content: space-between; gap: 1rem;
+        }
+        .article-nav .nav-brand {
+            font-family: var(--font-display); font-size: 0.9rem; font-weight: 600;
+            color: var(--toki-blue); text-decoration: none; white-space: nowrap; flex-shrink: 0;
+        }
+        .article-nav .nav-right { display: flex; align-items: center; gap: 1rem; }
+        .article-nav .nav-label { font-size: 0.6rem; color: var(--text-muted); letter-spacing: 0.08em; text-align: right; line-height: 1.4; }
+        .article-nav .lang-switch { font-size: 0.75rem; color: var(--toki-blue); text-decoration: none; padding: 0.3rem 0.6rem; border: 1px solid var(--toki-blue); border-radius: 4px; }
+        .article-nav .lang-switch:hover { background: var(--toki-blue); color: #fff; }
+
+        .article-container { max-width: 720px; margin: 0 auto; padding: 5rem 2rem 4rem; }
+        .article-header { margin-bottom: 3rem; }
+        .article-category { font-size: 0.7rem; letter-spacing: 0.15em; color: var(--toki-blue); margin-bottom: 0.5rem; }
+        .article-header h1 { font-family: var(--font-display); font-size: 1.8rem; font-weight: 700; line-height: 1.5; color: var(--text-primary); margin-bottom: 1rem; }
+        .article-subtitle { font-size: 0.95rem; color: var(--text-secondary); line-height: 1.8; }
+
+        .article-content h2 { font-family: var(--font-display); font-size: 1.3rem; font-weight: 600; color: var(--toki-blue-dark); margin: 3rem 0 1rem; padding-bottom: 0.5rem; border-bottom: 1px solid var(--border); }
+        .article-content h3 { font-family: var(--font-display); font-size: 1.1rem; font-weight: 600; color: var(--text-primary); margin: 2rem 0 0.8rem; }
+        .article-content p { margin-bottom: 1.2rem; text-align: justify; }
+        .article-content ul, .article-content ol { margin: 0.5rem 0 1.5rem 1.5rem; }
+        .article-content li { margin-bottom: 0.5rem; }
+        .article-content blockquote { border-left: 3px solid var(--toki-blue); padding: 1rem 1.5rem; margin: 1.5rem 0; background: var(--toki-blue-pale); font-style: italic; color: var(--text-secondary); }
+        .article-content strong { color: var(--toki-blue-dark); }
+
+        .core-message { background: var(--toki-blue-pale); border-left: 4px solid var(--toki-blue); padding: 1.2rem 1.5rem; margin: 0 0 2rem; font-size: 0.95rem; line-height: 1.8; }
+
+        .phase-table { width: 100%; border-collapse: collapse; margin: 1.5rem 0; font-size: 0.9rem; }
+        .phase-table th, .phase-table td { padding: 0.7rem 1rem; border: 1px solid var(--border); text-align: left; }
+        .phase-table th { background: var(--toki-blue-pale); font-weight: 600; color: var(--toki-blue-dark); font-size: 0.85rem; }
+        .phase-table td { vertical-align: top; }
+
+        .highlight-box { background: linear-gradient(135deg, var(--toki-blue-pale), #fff); border: 1px solid var(--accent-blue); border-radius: 8px; padding: 1.5rem; margin: 2rem 0; text-align: center; }
+        .highlight-box p { text-align: center; margin-bottom: 0.5rem; }
+        .highlight-box .big { font-family: var(--font-display); font-size: 1.3rem; font-weight: 700; color: var(--toki-blue-dark); }
+
+        .article-footer { margin-top: 4rem; padding: 2rem 0; border-top: 1px solid var(--border); font-size: 0.7rem; color: var(--text-muted); line-height: 2.2; }
+        .article-footer a { color: var(--text-muted); text-decoration: none; }
+        .article-footer a:hover { text-decoration: underline; }
+
+        @media (max-width: 768px) {
+            .article-container { padding: 6rem 1.2rem 3rem; }
+            .article-header h1 { font-size: 1.5rem; }
+            .article-nav .nav-label { display: none; }
+            .phase-table { font-size: 0.8rem; }
+            .phase-table th, .phase-table td { padding: 0.5rem 0.6rem; }
+        }
+        @media print { .article-nav { display: none; } .article-container { padding-top: 2rem; } }
+        .nav-brand::before { content: ''; display: inline-block; width: 20px; height: 20px; background: url('asset/tokistorage-icon-512.png') no-repeat center / contain; vertical-align: -3px; margin-right: 5px; }
+    </style>
+<link rel="stylesheet" href="contact-form.css">
+    <meta property="og:image" content="https://tokistorage.github.io/lp/asset/tokistorage-icon-512.png">
+    <meta property="og:image:width" content="512">
+    <meta property="og:image:height" content="512">
+</head>
+<body>
+
+<nav class="article-nav">
+    <a href="index.html" class="nav-brand">トキストレージ</a>
+    <div class="nav-right">
+        <span class="nav-label">技術・設計 / 責任者の決断</span>
+        <a href="decision-maker-en.html" class="lang-switch">EN</a>
+    </div>
+</nav>
+
+<main class="article-container">
+
+    <header class="article-header">
+        <p class="article-category">ESSAY — 技術・設計</p>
+        <h1>責任者の決断 — 決められない組織、名前を刻む個人</h1>
+        <p class="article-subtitle">
+            「誰が決めたのか」に答えられないシステムは、誰にも変えられない。
+        </p>
+    </header>
+
+    <article class="article-content">
+
+        <div class="core-message">
+            <strong>このエッセイの要点：</strong>決断とは「選ぶこと」ではなく「責任を引き受けること」である。多くの組織で、意思決定は委員会・合議・多段階承認によって希釈され、誰の決断でもなくなっている。トキストレージは一人のプロジェクトだが、すべての設計判断に一人の名前がある。それは弱さではない。構造に人格が宿る条件である。
+        </div>
+
+
+        <h2>1. 「誰が決めたのか」が答えられない組織</h2>
+
+        <p>大企業のIT部門でシステム障害が起きた後、あるいは根本的なアーキテクチャの問題が露呈した後に、こう問うことがある。「これ、誰が決めたんですか？」</p>
+
+        <p>答えが返ってこない。あるいは、こう返ってくる。「当時の委員会で検討した結果です」「関係部署の合意を得て決定しました」「以前からそういう設計でして……」</p>
+
+        <p>誰も決めていないのだ。正確には、<strong>決定に名前がついていない</strong>。委員会が決め、合議が決め、「そういう流れ」が決めた。特定の個人が「これでいく」と判断し、その判断に責任を負った形跡がない。</p>
+
+        <p>問題はここにある。誰も決めていなければ、誰も責任を負わない。誰も責任を負わなければ、誰も変えられない。変えようとしても「決定のプロセスを遡れない」ため、なぜその構造になったのかを検証する起点がない。こうして、誰も決めていない設計が、誰も触れられない聖域として残り続ける。</p>
+
+
+        <h2>2. 責任の希釈</h2>
+
+        <p>組織は自然に、責任を希釈する構造を生み出す。委員会、多段階承認フロー、合議制、コンセンサス文化。これらはいずれも、個人が「これでいく」と言い切らなくてよい仕組みである。</p>
+
+        <p>その代償は大きい。委員会の決定は、最大公約数ではなく<strong>最小公倍数の否定</strong>になる。誰かが信じているものではなく、誰も強く反対しないものが選ばれる。全員の賛成を経た決定は、誰かの確信から生まれたものではなく、誰の反対も受けなかったものに過ぎない。</p>
+
+        <blockquote>
+            全員が賛成した決定は、誰の決定でもない。
+        </blockquote>
+
+        <p>これはアーキテクチャに直接影響する。「サーバーにデータを送らない」という設計判断は、委員会で決められるものではない。誰かが「それが正しい」と確信し、その判断に名前を刻むことで初めて設計原則になる。合議は原則を生まない。合議が生むのは、妥協の産物としての仕様書だ。</p>
+
+
+        <h2>3. 決められない組織の症状</h2>
+
+        <p>決断が希釈された組織には、繰り返し現れる症状がある。一見それぞれ独立した問題に見えるが、根は同じだ。</p>
+
+        <table class="phase-table">
+            <tr>
+                <th>症状</th>
+                <th>根にある問題</th>
+                <th>関連するエッセイ</th>
+            </tr>
+            <tr>
+                <td>終わらないPoC</td>
+                <td>「進む」または「やめる」を言える人間がいない</td>
+                <td>PoCの目線</td>
+            </tr>
+            <tr>
+                <td>後付けのEA</td>
+                <td>最初の構造を誰も「これでいく」と決めなかった</td>
+                <td>設計という行為</td>
+            </tr>
+            <tr>
+                <td>後付けのセキュリティ</td>
+                <td>「これは倫理の問題だ」と誰も決断しなかった</td>
+                <td>セキュアな設計</td>
+            </tr>
+            <tr>
+                <td>多段階承認フロー</td>
+                <td>リスクを一人で評価できる人間がいない、あるいは評価したくない</td>
+                <td>設計という行為 §6</td>
+            </tr>
+        </table>
+
+        <p>終わらないPoCは、検証結果を受け入れて「やめる」または「進む」を宣言できる人間の不在が原因だ。後付けのEAは、最初のアーキテクチャを誰も決断していないから、後から体裁を整えるしかなくなる。セキュリティが後付けになるのは、セキュリティを「コストの問題」ではなく「倫理の問題」として決断した人間がいないからだ。</p>
+
+        <p>どの症状も、<strong>決断の不在</strong>という同じ病から派生している。</p>
+
+
+        <h2>4. トキストレージにおける決断</h2>
+
+        <p>トキストレージには、記録できる決断がある。抽象的な方針ではなく、具体的な判断と、その判断がアーキテクチャに与えた影響の記録だ。</p>
+
+        <h3>「サーバーにデータを送らない」</h3>
+        <p>これは一つの文だが、設計全体の根拠になった。音声のエンコード・デコードをブラウザ完結にする。バックエンドを持たない。ユーザーの音声データがネットワークを通じて外部に出ることを構造的に不可能にする。この判断から、WASM上でCodec2を動かすという技術選択が導かれ、静的サイトとしてのデプロイ方針が確定し、プライバシーの主張が検証可能な事実になった。一つの決断がアーキテクチャの形を決めた。</p>
+
+        <h3>「Opusでは不可能」</h3>
+        <p>音声QRの最初の候補はOpusだった。Web標準コーデックで、ブラウザネイティブデコードが可能。しかし2kbps以下でDTXに陥り、4kbps以上ではQRの容量に収まらない。この判定を数日で下し、Opusへの投資を打ち切った。「もう少し最適化すれば」という選択肢は存在していたが、取らなかった。判定は明確で、決断は即座だった。この決断がなければCodec2には到達していない。</p>
+
+        <h3>「コードを全公開する」</h3>
+        <p>セキュリティの主張を検証可能にするために、コードを公開した。「サーバーにデータを送らない」は、コードを見れば確認できる。「主張」ではなく「事実」にするための決断だ。これはトレードオフを伴う。競合に実装を見せることになる。それでもこの決断は正しいと判断した。その判断に名前がある。</p>
+
+        <h3>「NDL納本は編集権で制御する」</h3>
+        <p>国立国会図書館への納本にあたり、アーカイブされたコンテンツの将来的な編集をどう制御するかという問いが生じた。答えはシンプルだった。GitHubのリポジトリ権限が編集権であり、それはトキストレージが保持する。この判断で、ガバナンスの問題が一つの会話で解決した。委員会は不要だった。</p>
+
+        <p>これらの決断すべてに、一人の名前がある。創業者の。<strong>全責任は一点に集中している</strong>。これが、アーキテクチャに一貫性をもたらす条件だ。</p>
+
+
+        <h2>5. 決断のコスト</h2>
+
+        <p>決断には代償がある。間違える可能性がある。Codec2を選んだ判断が間違いだったかもしれない。コードを公開したことが競争上の不利になるかもしれない。これらのリスクは実在する。</p>
+
+        <p>しかし、決断しないことにもコストがある。そしてそのコストは、決断の失敗より見えにくい。</p>
+
+        <p>決断しない組織が抱えるコストは積み上がる。確信のないアーキテクチャは、誰も変えられない聖域になる。ガバナンスの歯のない方針は、守られない規則になる。結論の出ないPoCは、予算と時間を消費しながら何も生まない。これらは単独では小さく見える。しかし時間とともに複利で積み上がり、<strong>解きほぐすことのできない構造的負債</strong>になる。</p>
+
+        <blockquote>
+            間違った決断は修正できる。決断しなかった事実は修正できない。
+        </blockquote>
+
+        <p>間違った決断は記録として残る。「あの時こう判断したが、これが間違いだった」という学習の起点になる。決断しなかった事実は記録に残らない。「なぜそうなったのか」の問いに誰も答えられず、修正のための足がかりがない。</p>
+
+
+        <h2>6. 一人であることの意味</h2>
+
+        <p>ここで主張したいのは、一人のチームが最良だということではない。スケールには人が必要で、多様な視点には複数の人間が必要だ。それは事実だ。</p>
+
+        <p>主張したいのは、<strong>責任は個人的でなければならない</strong>ということだ。組織の規模に関わらず、すべての決断には「これを決めた人間」が存在しなければならない。</p>
+
+        <p>日本の組織には「判子を押す」という文化がある。承認の証として、文書にハンコを押す。形式としては個人の責任を示しているように見える。しかし実態は異なることが多い。ハンコを押した人間が実際にその判断を下したわけではなく、前段の合議を追認する形式として押されている。ハンコは決断の証ではなく、決断の不在を隠す儀式になっている。</p>
+
+        <p>トキストレージの利点は、一人であることではない。<strong>すべての決断に顔がある</strong>ことだ。「誰が決めたのか」を問われれば、即座に答えられる。その答えが設計の根拠になり、変更の判断基準になり、アーキテクチャの一貫性を生む。</p>
+
+
+        <h2>7. 結論 — 決断とは名前を刻むこと</h2>
+
+        <div class="highlight-box">
+            <p class="big">決断とは、自分の名前を刻むことである。</p>
+            <p>選択ではなく、責任の引き受けだ。</p>
+        </div>
+
+        <p>アーキテクチャは、それを決めた人間の確信を反映する。「サーバーにデータを送らない」という構造は、プライバシーを倫理として引き受けた個人の名前を内包している。「OpusではなくCodec2」という選択は、検証結果を受け入れた個人の判断を内包している。</p>
+
+        <p>システムのどの層についても「誰が決め、なぜ決めたのか」に答えられるとき、そのシステムには誠実さがある。設計に意図があり、意図に責任があり、責任に名前がある。</p>
+
+        <p>トキストレージのすべての設計判断には、一人の名前がある。それが、ハリボテではない構造を生む。</p>
+
+    </article>
+
+    <footer class="article-footer">
+        <p id="essay-nav-links"></p>
+        <p style="margin-top: 2rem; font-size: 0.75rem;">&copy; 2026 TokiStorage</p>
+    </footer>
+
+</main>
+
+<script src="contact-form.js"></script>
+<script src="essay-nav.js?v=20260218"></script>
+<script src="tracker.js"></script>
+</body>
+</html>

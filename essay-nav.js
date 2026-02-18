@@ -107,6 +107,7 @@
     { id: 'ssdlc', ja: 'SSDLC', en: 'SSDLC' },
     { id: 'enterprise-architecture', ja: 'エンタープライズアーキテクチャ', en: 'Enterprise Architecture' },
     { id: 'poc', ja: 'PoCの目線', en: 'The PoC Perspective' },
+    { id: 'decision-maker', ja: '責任者の決断', en: "The Decision-Maker's Resolution" },
     { id: 'backup-rule', ja: '3-2-1ルール', en: '3-2-1 Backup Rule' },
     { id: 'uv-laminate', ja: 'UVラミネート', en: 'UV Laminate' },
     { id: 'uptime', ja: '稼働率と外部依存', en: 'Uptime & Dependencies' },
