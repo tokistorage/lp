@@ -1,0 +1,444 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" type="image/png" sizes="32x32" href="asset/favicon-32.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="asset/apple-touch-icon.png">
+    <title>国家記録の意義——普通の人が国の記録に残るということ | トキストレージ</title>
+    <meta name="robots" content="noindex, nofollow">
+    <meta name="description" content="戦没者、叙勲、戸籍——国の記録に名前が残るのは特別な理由がある人だけだった。トキストレージは、5,000円のラミネートQRで、普通の人が自分の意思で国家記録に入れる道を開いた。">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Shippori+Mincho:wght@400;500;600;700&family=Zen+Kaku+Gothic+New:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --toki-blue: #1E40AF;
+            --toki-blue-dark: #1E3A5F;
+            --toki-blue-pale: #EFF6FF;
+            --accent-blue: #3B82F6;
+            --bg-white: #FFFFFF;
+            --bg-section: #DBEAFE;
+            --text-primary: #1E293B;
+            --text-secondary: #475569;
+            --text-muted: #94A3B8;
+            --border: #E2E8F0;
+            --font-display: 'Shippori Mincho', serif;
+            --font-body: 'Zen Kaku Gothic New', sans-serif;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        html { scroll-behavior: smooth; }
+
+        body {
+            font-family: var(--font-body);
+            font-weight: 400;
+            background: var(--bg-white);
+            color: var(--text-primary);
+            line-height: 1.9;
+            font-size: 16px;
+        }
+
+        /* Navigation */
+        .article-nav {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 1000;
+            background: rgba(255,255,255,0.95);
+            backdrop-filter: blur(12px);
+            border-bottom: 1px solid var(--border);
+            padding: 0.6rem 1.2rem;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 1rem;
+        }
+        .article-nav .nav-brand {
+            font-family: var(--font-display);
+            font-size: 0.9rem;
+            font-weight: 600;
+            color: var(--toki-blue);
+            text-decoration: none;
+            white-space: nowrap;
+            flex-shrink: 0;
+        }
+        .article-nav .nav-right {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+        .article-nav .nav-label {
+            font-size: 0.6rem;
+            color: var(--text-muted);
+            letter-spacing: 0.08em;
+            text-align: right;
+            line-height: 1.4;
+        }
+        .article-nav .lang-switch {
+            font-size: 0.75rem;
+            color: var(--toki-blue);
+            text-decoration: none;
+            padding: 0.3rem 0.6rem;
+            border: 1px solid var(--toki-blue);
+            border-radius: 4px;
+        }
+        .article-nav .lang-switch:hover {
+            background: var(--toki-blue);
+            color: #fff;
+        }
+
+        /* Main Content */
+        .article-container {
+            max-width: 720px;
+            margin: 0 auto;
+            padding: 5rem 2rem 4rem;
+        }
+
+        .article-header {
+            margin-bottom: 3rem;
+        }
+        .article-category {
+            font-size: 0.7rem;
+            letter-spacing: 0.15em;
+            color: var(--toki-blue);
+            margin-bottom: 0.5rem;
+        }
+        .article-header h1 {
+            font-family: var(--font-display);
+            font-size: 1.8rem;
+            font-weight: 700;
+            line-height: 1.5;
+            color: var(--text-primary);
+            margin-bottom: 1rem;
+        }
+        .article-subtitle {
+            font-size: 0.95rem;
+            color: var(--text-secondary);
+            line-height: 1.8;
+        }
+
+        .article-content h2 {
+            font-family: var(--font-display);
+            font-size: 1.3rem;
+            font-weight: 600;
+            color: var(--toki-blue-dark);
+            margin: 3rem 0 1rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 1px solid var(--border);
+        }
+        .article-content h3 {
+            font-family: var(--font-display);
+            font-size: 1.1rem;
+            font-weight: 600;
+            color: var(--text-primary);
+            margin: 2rem 0 0.8rem;
+        }
+        .article-content p {
+            margin-bottom: 1.2rem;
+            text-align: justify;
+        }
+        .article-content ul, .article-content ol {
+            margin: 0.5rem 0 1.5rem 1.5rem;
+        }
+        .article-content li {
+            margin-bottom: 0.5rem;
+        }
+        .article-content blockquote {
+            border-left: 3px solid var(--toki-blue);
+            padding: 1rem 1.5rem;
+            margin: 1.5rem 0;
+            background: var(--toki-blue-pale);
+            font-style: italic;
+            color: var(--text-secondary);
+        }
+        .article-content strong {
+            color: var(--toki-blue-dark);
+        }
+
+        .core-message {
+            background: var(--toki-blue-pale);
+            border-left: 4px solid var(--toki-blue);
+            padding: 1.2rem 1.5rem;
+            margin: 0 0 2rem;
+            font-size: 0.95rem;
+            line-height: 1.8;
+        }
+        .disclaimer {
+            font-size: 0.8rem;
+            color: var(--text-muted);
+            margin-bottom: 2rem;
+        }
+
+        .record-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 1.5rem 0;
+            font-size: 0.9rem;
+        }
+        .record-table th, .record-table td {
+            padding: 0.7rem 1rem;
+            border: 1px solid var(--border);
+            text-align: left;
+        }
+        .record-table th {
+            background: var(--toki-blue-pale);
+            font-weight: 600;
+            color: var(--toki-blue-dark);
+            font-size: 0.85rem;
+        }
+        .record-table td {
+            vertical-align: top;
+        }
+
+        .highlight-box {
+            background: linear-gradient(135deg, var(--toki-blue-pale), #fff);
+            border: 1px solid var(--accent-blue);
+            border-radius: 8px;
+            padding: 1.5rem;
+            margin: 2rem 0;
+            text-align: center;
+        }
+        .highlight-box p {
+            text-align: center;
+            margin-bottom: 0.5rem;
+        }
+        .highlight-box .big {
+            font-family: var(--font-display);
+            font-size: 1.3rem;
+            font-weight: 700;
+            color: var(--toki-blue-dark);
+        }
+
+        /* Footer */
+        .article-footer {
+            margin-top: 4rem;
+            padding: 2rem 0;
+            border-top: 1px solid var(--border);
+            font-size: 0.7rem;
+            color: var(--text-muted);
+            line-height: 2.2;
+        }
+        .article-footer a {
+            color: var(--text-muted);
+            text-decoration: none;
+        }
+        .article-footer a:hover {
+            text-decoration: underline;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .article-container { padding: 6rem 1.2rem 3rem; }
+            .article-header h1 { font-size: 1.5rem; }
+            .article-nav .nav-label { display: none; }
+            .record-table { font-size: 0.8rem; }
+            .record-table th, .record-table td { padding: 0.5rem 0.6rem; }
+        }
+
+        @media print {
+            .article-nav { display: none; }
+            .article-container { padding-top: 2rem; }
+        }
+        .nav-brand::before {
+            content: '';
+            display: inline-block;
+            width: 20px;
+            height: 20px;
+            background: url('asset/tokistorage-icon-512.png') no-repeat center / contain;
+            vertical-align: -3px;
+            margin-right: 5px;
+        }
+    </style>
+<link rel="stylesheet" href="contact-form.css">
+    <meta property="og:image" content="https://tokistorage.github.io/lp/asset/tokistorage-icon-512.png">
+    <meta property="og:image:width" content="512">
+    <meta property="og:image:height" content="512">
+</head>
+<body>
+
+<nav class="article-nav">
+    <a href="index.html" class="nav-brand">トキストレージ</a>
+    <div class="nav-right">
+        <span class="nav-label">社会制度 / NATIONAL RECORD</span>
+        <a href="national-record-en.html" class="lang-switch">EN</a>
+    </div>
+</nav>
+
+<main class="article-container">
+
+    <header class="article-header">
+        <p class="article-category">ESSAY — 社会制度</p>
+        <h1>国家記録の意義——普通の人が国の記録に残るということ</h1>
+        <p class="article-subtitle">
+            戦没者、叙勲、戸籍——国の記録に名前が残るのは、特別な理由がある人だけだった。<br>
+            トキストレージは、その壁を壊す。
+        </p>
+    </header>
+
+    <article class="article-content">
+
+        <div class="core-message">
+            <strong>この記事で言いたいこと：</strong>国の記録に名前が残ることは、歴史的に「死」「功績」「国家の手続き」のいずれかを必要としてきた。トキストレージの購入者は、自分の意思で、生きているうちに、国立国会図書館の永久保存対象に入ることができる。これは「存在証明の民主化」の構造的な実現である。
+        </div>
+
+        <p class="disclaimer">※本稿は国家記録制度に関する考察です。</p>
+
+
+        <h2>1. 国の記録に名前が残るとはどういうことか</h2>
+
+        <p>「あなたの名前は、国の記録に残っていますか？」</p>
+
+        <p>多くの人にとって、答えは「戸籍」だけだろう。生まれた、結婚した、死んだ。それ以上の情報は残らない。何を考え、何を愛し、どんな声をしていたか——そういったことは、国の記録には入らない。</p>
+
+        <p>一方で、国の記録に「人物として」名前が刻まれる人々がいる。彼らには共通点がある。<strong>特別な理由</strong>があるのだ。</p>
+
+
+        <h2>2. 国家記録に名前が残る人々</h2>
+
+        <table class="record-table">
+            <tr>
+                <th>カテゴリ</th>
+                <th>記録の形式</th>
+                <th>条件</th>
+            </tr>
+            <tr>
+                <td><strong>戦没者</strong></td>
+                <td>厚労省戦没者名簿、靖国神社祭神名簿、忠魂碑</td>
+                <td>国のために命を落とすこと</td>
+            </tr>
+            <tr>
+                <td><strong>叙勲・褒章</strong></td>
+                <td>官報に掲載、永久保存</td>
+                <td>社会的功績（長年の公務、人命救助など）</td>
+            </tr>
+            <tr>
+                <td><strong>人間国宝</strong></td>
+                <td>文化庁の認定記録</td>
+                <td>卓越した文化的技能</td>
+            </tr>
+            <tr>
+                <td><strong>特許権者</strong></td>
+                <td>特許庁の登録原簿</td>
+                <td>新規性のある発明</td>
+            </tr>
+            <tr>
+                <td><strong>裁判当事者</strong></td>
+                <td>裁判記録（国立公文書館）</td>
+                <td>訴訟に巻き込まれること</td>
+            </tr>
+            <tr>
+                <td><strong>国勢調査</strong></td>
+                <td>統計資料</td>
+                <td>個人名は匿名化される</td>
+            </tr>
+            <tr>
+                <td><strong>戸籍</strong></td>
+                <td>法務局</td>
+                <td>出生・婚姻・死亡の事実のみ</td>
+            </tr>
+        </table>
+
+        <p>共通するのは、<strong>「普通に生きただけ」では入れない</strong>ということだ。死ぬか、功績を残すか、国家の手続きに巻き込まれるか。そのいずれかが必要になる。</p>
+
+        <p>そして戸籍は——唯一すべての人に開かれた国家記録だが、記録されるのは「存在した事実」だけだ。どんな人だったかは、一行も残らない。</p>
+
+
+        <h2>3. 国立国会図書館という特異点</h2>
+
+        <p>国立国会図書館（NDL）は、日本のあらゆる出版物を収集・保存する機関である。国立国会図書館法により、国内で発行された出版物は納本が義務づけられている。</p>
+
+        <p>2024年からは、オンライン資料の収集範囲が大幅に拡大された。トキストレージのウェブサイトとニュースレターは、NDLにより<strong>収集対象として正式に確認</strong>され、定期自動収集（ウェブアーカイブ）の対象となっている。</p>
+
+        <p>ここで重要なのは、ニュースレターの内容だ。</p>
+
+        <p>トキストレージのニュースレターには、<strong>購入者のストーリーが記録される</strong>。誰がどんな想いで声を残したか。なぜ石英ガラスを選んだか。どんなメッセージを刻んだか。</p>
+
+        <p>NDLがこのニュースレターを収集するということは——</p>
+
+        <blockquote>
+            購入者の存在と想いが、国の永久保存対象になる。
+        </blockquote>
+
+
+        <h2>4. 構造が生む「二重の存在証明」</h2>
+
+        <p>整理すると、トキストレージの購入者は二重の存在証明を得ることになる。</p>
+
+        <ol>
+            <li><strong>物理層の存在証明</strong>：石英ガラスやラミネートQRに刻まれた声と肖像が、手元に届く</li>
+            <li><strong>国家層の存在証明</strong>：購入の記録がニュースレターに載り、NDLに永久保存される</li>
+        </ol>
+
+        <p>つまり、<strong>5,000円のラミネートQRを購入するだけで、その人の存在は国の記録に入る</strong>。</p>
+
+        <p>これは意図的に設計された構造である。トキストレージは創業当初からニュースレターを「事業活動の記録媒体」として位置づけ、NDLの法定納本制度に基づいて収集申請を行い、正式に確認を受けた。</p>
+
+
+        <h2>5. 歴史的文脈——誰の存在が残されてきたか</h2>
+
+        <p>人類の歴史を振り返ると、「存在が記録される人」は常に少数だった。</p>
+
+        <p>古代エジプトでは、ファラオと高官だけが名前を石に刻めた。中世ヨーロッパでは、教会の洗礼記録が唯一の存在証明だったが、それも限られた情報だ。日本では、家系図を持てたのは武家と公家だけで、庶民は寺の過去帳にかろうじて名前が残る程度だった。</p>
+
+        <p>近代になり、戸籍制度が整備されて「すべての国民」が記録されるようになった。しかし前述の通り、記録されるのは事実だけだ。</p>
+
+        <p>戦没者名簿は、この例外である。国は「この人が存在し、国のために死んだ」という事実を、名前とともに永久に記録する。戦没者の名前が刻まれた碑は、世界中にある。アメリカのベトナム戦争戦没者慰霊碑には58,000以上の名前が刻まれている。それは「名もなき個人」を「記録された存在」に変える行為だ。</p>
+
+        <p>しかし、そのためには命を差し出さなければならなかった。</p>
+
+
+        <h2>6. 民主化——命を差し出さなくていい</h2>
+
+        <p>トキストレージが実現したのは、この構造の根本的な転換だ。</p>
+
+        <p>国の記録に入るために、死ぬ必要はない。功績を残す必要もない。裁判に巻き込まれる必要もない。</p>
+
+        <div class="highlight-box">
+            <p class="big">5,000円で、あなたの存在は国の記録に残る。</p>
+            <p>ラミネートQRを購入するだけで、あなたのストーリーはニュースレターに記録され、<br>国立国会図書館に永久保存される。</p>
+        </div>
+
+        <p>これこそが「存在証明の民主化」の構造的な意味だ。かつて王侯貴族と戦没者にしか開かれていなかった「国の記録に残る」という行為が、すべての人に開かれた。</p>
+
+
+        <h2>7. 名誉としての国家記録</h2>
+
+        <p>「国の記録に残る」ことには、もうひとつの側面がある。<strong>名誉</strong>だ。</p>
+
+        <p>叙勲を受けた人は、それを誇りにする。戦没者の遺族は、名前が記録されていることに慰めを見出す。国家記録に名前が残ることは、単なる情報保存ではなく、「あなたの存在には記録する価値がある」という社会的承認でもある。</p>
+
+        <p>トキストレージの購入者も、同じ構造の中にいる。自分の声を残すという個人的な行為が、国の機関による永久保存という公的な承認を伴う。</p>
+
+        <p>しかも、この名誉は作った側だけのものではない。<strong>声を残すことを選んだ購入者自身の名誉</strong>でもある。「私は、自分の存在を次の世代に残す決断をした」——その決断が、国の記録として永久に残る。</p>
+
+
+        <h2>8. 結び——記録されるということ</h2>
+
+        <blockquote>
+            記録されなかった人は、存在しなかったことになる。<br>
+            記録された人は、1000年後にも存在し続ける。<br>
+            その境界線を、トキストレージは5,000円で越えさせる。
+        </blockquote>
+
+        <p>戸籍は「存在した事実」を残す。戦没者名簿は「命を捧げた事実」を残す。</p>
+
+        <p>トキストレージは、「どんな声をしていたか」「何を大切にしていたか」「誰を愛していたか」を残す。そしてそれが国の記録として永久に保存される。</p>
+
+        <p>これは特権ではない。すべての人の権利だ。</p>
+
+    </article>
+
+    <footer class="article-footer">
+        <p id="essay-nav-links"></p>
+        <p style="margin-top: 2rem; font-size: 0.75rem;">&copy; 2026 TokiStorage</p>
+    </footer>
+
+</main>
+
+<script src="contact-form.js"></script>
+<script src="essay-nav.js?v=20260218"></script>
+<script src="tracker.js"></script>
+</body>
+</html>

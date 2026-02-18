@@ -1,0 +1,444 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" type="image/png" sizes="32x32" href="asset/favicon-32.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="asset/apple-touch-icon.png">
+    <title>The Significance of National Records — When Ordinary People Enter the Archive | TokiStorage</title>
+    <meta name="robots" content="noindex, nofollow">
+    <meta name="description" content="War dead, honors, family registers — only those with special reasons had their names in national records. TokiStorage opens a path for anyone to enter the National Diet Library's permanent archive for 5,000 yen.">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Shippori+Mincho:wght@400;500;600;700&family=Zen+Kaku+Gothic+New:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --toki-blue: #1E40AF;
+            --toki-blue-dark: #1E3A5F;
+            --toki-blue-pale: #EFF6FF;
+            --accent-blue: #3B82F6;
+            --bg-white: #FFFFFF;
+            --bg-section: #DBEAFE;
+            --text-primary: #1E293B;
+            --text-secondary: #475569;
+            --text-muted: #94A3B8;
+            --border: #E2E8F0;
+            --font-display: 'Shippori Mincho', serif;
+            --font-body: 'Zen Kaku Gothic New', sans-serif;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        html { scroll-behavior: smooth; }
+
+        body {
+            font-family: var(--font-body);
+            font-weight: 400;
+            background: var(--bg-white);
+            color: var(--text-primary);
+            line-height: 1.9;
+            font-size: 16px;
+        }
+
+        /* Navigation */
+        .article-nav {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 1000;
+            background: rgba(255,255,255,0.95);
+            backdrop-filter: blur(12px);
+            border-bottom: 1px solid var(--border);
+            padding: 0.6rem 1.2rem;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 1rem;
+        }
+        .article-nav .nav-brand {
+            font-family: var(--font-display);
+            font-size: 0.9rem;
+            font-weight: 600;
+            color: var(--toki-blue);
+            text-decoration: none;
+            white-space: nowrap;
+            flex-shrink: 0;
+        }
+        .article-nav .nav-right {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+        .article-nav .nav-label {
+            font-size: 0.6rem;
+            color: var(--text-muted);
+            letter-spacing: 0.08em;
+            text-align: right;
+            line-height: 1.4;
+        }
+        .article-nav .lang-switch {
+            font-size: 0.75rem;
+            color: var(--toki-blue);
+            text-decoration: none;
+            padding: 0.3rem 0.6rem;
+            border: 1px solid var(--toki-blue);
+            border-radius: 4px;
+        }
+        .article-nav .lang-switch:hover {
+            background: var(--toki-blue);
+            color: #fff;
+        }
+
+        /* Main Content */
+        .article-container {
+            max-width: 720px;
+            margin: 0 auto;
+            padding: 5rem 2rem 4rem;
+        }
+
+        .article-header {
+            margin-bottom: 3rem;
+        }
+        .article-category {
+            font-size: 0.7rem;
+            letter-spacing: 0.15em;
+            color: var(--toki-blue);
+            margin-bottom: 0.5rem;
+        }
+        .article-header h1 {
+            font-family: var(--font-display);
+            font-size: 1.8rem;
+            font-weight: 700;
+            line-height: 1.5;
+            color: var(--text-primary);
+            margin-bottom: 1rem;
+        }
+        .article-subtitle {
+            font-size: 0.95rem;
+            color: var(--text-secondary);
+            line-height: 1.8;
+        }
+
+        .article-content h2 {
+            font-family: var(--font-display);
+            font-size: 1.3rem;
+            font-weight: 600;
+            color: var(--toki-blue-dark);
+            margin: 3rem 0 1rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 1px solid var(--border);
+        }
+        .article-content h3 {
+            font-family: var(--font-display);
+            font-size: 1.1rem;
+            font-weight: 600;
+            color: var(--text-primary);
+            margin: 2rem 0 0.8rem;
+        }
+        .article-content p {
+            margin-bottom: 1.2rem;
+            text-align: justify;
+        }
+        .article-content ul, .article-content ol {
+            margin: 0.5rem 0 1.5rem 1.5rem;
+        }
+        .article-content li {
+            margin-bottom: 0.5rem;
+        }
+        .article-content blockquote {
+            border-left: 3px solid var(--toki-blue);
+            padding: 1rem 1.5rem;
+            margin: 1.5rem 0;
+            background: var(--toki-blue-pale);
+            font-style: italic;
+            color: var(--text-secondary);
+        }
+        .article-content strong {
+            color: var(--toki-blue-dark);
+        }
+
+        .core-message {
+            background: var(--toki-blue-pale);
+            border-left: 4px solid var(--toki-blue);
+            padding: 1.2rem 1.5rem;
+            margin: 0 0 2rem;
+            font-size: 0.95rem;
+            line-height: 1.8;
+        }
+        .disclaimer {
+            font-size: 0.8rem;
+            color: var(--text-muted);
+            margin-bottom: 2rem;
+        }
+
+        .record-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 1.5rem 0;
+            font-size: 0.9rem;
+        }
+        .record-table th, .record-table td {
+            padding: 0.7rem 1rem;
+            border: 1px solid var(--border);
+            text-align: left;
+        }
+        .record-table th {
+            background: var(--toki-blue-pale);
+            font-weight: 600;
+            color: var(--toki-blue-dark);
+            font-size: 0.85rem;
+        }
+        .record-table td {
+            vertical-align: top;
+        }
+
+        .highlight-box {
+            background: linear-gradient(135deg, var(--toki-blue-pale), #fff);
+            border: 1px solid var(--accent-blue);
+            border-radius: 8px;
+            padding: 1.5rem;
+            margin: 2rem 0;
+            text-align: center;
+        }
+        .highlight-box p {
+            text-align: center;
+            margin-bottom: 0.5rem;
+        }
+        .highlight-box .big {
+            font-family: var(--font-display);
+            font-size: 1.3rem;
+            font-weight: 700;
+            color: var(--toki-blue-dark);
+        }
+
+        /* Footer */
+        .article-footer {
+            margin-top: 4rem;
+            padding: 2rem 0;
+            border-top: 1px solid var(--border);
+            font-size: 0.7rem;
+            color: var(--text-muted);
+            line-height: 2.2;
+        }
+        .article-footer a {
+            color: var(--text-muted);
+            text-decoration: none;
+        }
+        .article-footer a:hover {
+            text-decoration: underline;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .article-container { padding: 6rem 1.2rem 3rem; }
+            .article-header h1 { font-size: 1.5rem; }
+            .article-nav .nav-label { display: none; }
+            .record-table { font-size: 0.8rem; }
+            .record-table th, .record-table td { padding: 0.5rem 0.6rem; }
+        }
+
+        @media print {
+            .article-nav { display: none; }
+            .article-container { padding-top: 2rem; }
+        }
+        .nav-brand::before {
+            content: '';
+            display: inline-block;
+            width: 20px;
+            height: 20px;
+            background: url('asset/tokistorage-icon-512.png') no-repeat center / contain;
+            vertical-align: -3px;
+            margin-right: 5px;
+        }
+    </style>
+<link rel="stylesheet" href="contact-form.css">
+    <meta property="og:image" content="https://tokistorage.github.io/lp/asset/tokistorage-icon-512.png">
+    <meta property="og:image:width" content="512">
+    <meta property="og:image:height" content="512">
+</head>
+<body>
+
+<nav class="article-nav">
+    <a href="index-en.html" class="nav-brand">TokiStorage</a>
+    <div class="nav-right">
+        <span class="nav-label">Social Systems / NATIONAL RECORD</span>
+        <a href="national-record.html" class="lang-switch">JA</a>
+    </div>
+</nav>
+
+<main class="article-container">
+
+    <header class="article-header">
+        <p class="article-category">ESSAY — Social Systems</p>
+        <h1>The Significance of National Records — When Ordinary People Enter the Archive</h1>
+        <p class="article-subtitle">
+            War dead, honors, family registers — only those with special reasons had their names in national records.<br>
+            TokiStorage breaks that barrier.
+        </p>
+    </header>
+
+    <article class="article-content">
+
+        <div class="core-message">
+            <strong>The point of this essay:</strong> Having your name in a national record has historically required death, achievement, or involvement in state procedures. TokiStorage customers can enter the National Diet Library's permanent archive by their own choice, while alive. This is the structural realization of "democratizing proof of existence."
+        </div>
+
+        <p class="disclaimer">*This essay examines national record-keeping systems and their significance.</p>
+
+
+        <h2>1. What It Means to Be in a National Record</h2>
+
+        <p>"Is your name in a national record?"</p>
+
+        <p>For most people, the answer is limited to the family register (<em>koseki</em>). Born, married, died. Nothing more. What you thought, whom you loved, what your voice sounded like — none of that enters the national record.</p>
+
+        <p>Yet some people have their names inscribed in national records "as individuals." They share one thing in common: they all have a <strong>special reason</strong>.</p>
+
+
+        <h2>2. Who Gets into National Records</h2>
+
+        <table class="record-table">
+            <tr>
+                <th>Category</th>
+                <th>Form of Record</th>
+                <th>Requirement</th>
+            </tr>
+            <tr>
+                <td><strong>War dead</strong></td>
+                <td>Ministry of Health roster, Yasukuni Shrine register, memorial stones</td>
+                <td>Giving your life for the nation</td>
+            </tr>
+            <tr>
+                <td><strong>Honors &amp; decorations</strong></td>
+                <td>Official Gazette (<em>Kanpo</em>), permanently preserved</td>
+                <td>Distinguished social contribution</td>
+            </tr>
+            <tr>
+                <td><strong>Living National Treasures</strong></td>
+                <td>Agency for Cultural Affairs certification</td>
+                <td>Exceptional cultural skill</td>
+            </tr>
+            <tr>
+                <td><strong>Patent holders</strong></td>
+                <td>Patent Office registry</td>
+                <td>Novel invention</td>
+            </tr>
+            <tr>
+                <td><strong>Litigants</strong></td>
+                <td>Court records (National Archives)</td>
+                <td>Being involved in a lawsuit</td>
+            </tr>
+            <tr>
+                <td><strong>Census</strong></td>
+                <td>Statistical data</td>
+                <td>Individual names are anonymized</td>
+            </tr>
+            <tr>
+                <td><strong>Family register</strong></td>
+                <td>Legal Affairs Bureau</td>
+                <td>Only records birth, marriage, and death</td>
+            </tr>
+        </table>
+
+        <p>The common thread: <strong>simply living an ordinary life is not enough</strong>. You must die, achieve something extraordinary, or get caught up in state machinery.</p>
+
+        <p>And the family register — the only national record open to everyone — records nothing more than the fact that you existed. Not a single line about who you were.</p>
+
+
+        <h2>3. The National Diet Library — An Inflection Point</h2>
+
+        <p>The National Diet Library (NDL) is Japan's institution for collecting and preserving all publications. Under the National Diet Library Law, domestic publications must be deposited for permanent preservation.</p>
+
+        <p>Since 2024, the scope of online collection has been significantly expanded. TokiStorage's website and newsletters have been <strong>officially confirmed for collection</strong> by the NDL, subject to periodic automated web harvesting.</p>
+
+        <p>The critical detail is what those newsletters contain.</p>
+
+        <p>TokiStorage's newsletters <strong>document the stories of customers</strong>. Who chose to preserve their voice, and why. Why they selected quartz glass. What message they inscribed.</p>
+
+        <p>When the NDL collects these newsletters —</p>
+
+        <blockquote>
+            The customer's existence and intentions become part of the nation's permanent archive.
+        </blockquote>
+
+
+        <h2>4. The Structure of "Double Proof of Existence"</h2>
+
+        <p>To summarize, TokiStorage customers receive a double proof of existence:</p>
+
+        <ol>
+            <li><strong>Physical layer</strong>: Voice and portrait inscribed on quartz glass or laminated QR, delivered to the customer</li>
+            <li><strong>National layer</strong>: The record of purchase enters the newsletter, permanently archived by the NDL</li>
+        </ol>
+
+        <p>In other words, <strong>by purchasing a 5,000-yen laminated QR, your existence enters the national record</strong>.</p>
+
+        <p>This is an intentionally designed structure. From its founding, TokiStorage positioned its newsletters as "the documentary medium of business activity," applied for collection under the NDL's legal deposit system, and received official confirmation.</p>
+
+
+        <h2>5. Historical Context — Whose Existence Has Been Recorded?</h2>
+
+        <p>Looking back through history, "people whose existence was recorded" were always a minority.</p>
+
+        <p>In ancient Egypt, only pharaohs and high officials could have their names carved in stone. In medieval Europe, church baptism records served as the sole proof of existence — and even those were limited. In Japan, only samurai and aristocrats maintained family genealogies; commoners barely had their names listed in temple death registers.</p>
+
+        <p>In the modern era, the family register system ensured that "every citizen" was recorded. But as noted, only bare facts were preserved.</p>
+
+        <p>The war dead roster is the exception. The state permanently records "this person existed and died for the nation," name and all. Memorials inscribed with the names of fallen soldiers exist worldwide. The Vietnam Veterans Memorial in Washington bears over 58,000 names. It is an act of transforming "nameless individuals" into "recorded existences."</p>
+
+        <p>But that required giving your life.</p>
+
+
+        <h2>6. Democratization — No Life Required</h2>
+
+        <p>What TokiStorage has achieved is a fundamental inversion of this structure.</p>
+
+        <p>You don't need to die to enter a national record. You don't need to achieve greatness. You don't need to be dragged into a lawsuit.</p>
+
+        <div class="highlight-box">
+            <p class="big">For 5,000 yen, your existence enters the national record.</p>
+            <p>Simply purchase a Laminated QR, and your story will be documented in the newsletter<br>and permanently archived by the National Diet Library.</p>
+        </div>
+
+        <p>This is the structural meaning of "democratizing proof of existence." The act of "entering the national record" — once reserved for royalty, heroes, and war dead — is now open to everyone.</p>
+
+
+        <h2>7. National Records as Honor</h2>
+
+        <p>"Being in the national record" carries another dimension: <strong>honor</strong>.</p>
+
+        <p>Those who receive state decorations take pride in them. Families of war dead find solace in knowing the name is recorded. Being in a national record is not mere data storage — it is social recognition that "your existence is worth recording."</p>
+
+        <p>TokiStorage customers stand within this same structure. The personal act of preserving one's voice is accompanied by the public recognition of permanent preservation by a national institution.</p>
+
+        <p>And this honor belongs not only to the creator. It belongs equally to <strong>the customers who chose to preserve their existence</strong>. "I decided to leave my existence for the next generation" — that decision is permanently recorded in the national archive.</p>
+
+
+        <h2>8. Conclusion — To Be Recorded</h2>
+
+        <blockquote>
+            Those who were never recorded cease to have existed.<br>
+            Those who were recorded continue to exist a thousand years from now.<br>
+            TokiStorage lets you cross that line for 5,000 yen.
+        </blockquote>
+
+        <p>The family register records "the fact that you existed." The war dead roster records "the fact that you gave your life."</p>
+
+        <p>TokiStorage records what your voice sounded like, what you cherished, and whom you loved. And that record is permanently preserved as part of the national archive.</p>
+
+        <p>This is not a privilege. It is everyone's right.</p>
+
+    </article>
+
+    <footer class="article-footer">
+        <p id="essay-nav-links"></p>
+        <p style="margin-top: 2rem; font-size: 0.75rem;">&copy; 2026 TokiStorage</p>
+    </footer>
+
+</main>
+
+<script src="contact-form.js"></script>
+<script src="essay-nav.js?v=20260218"></script>
+<script src="tracker.js"></script>
+</body>
+</html>
