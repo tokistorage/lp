@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" type="image/png" sizes="32x32" href="asset/favicon-32.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="asset/apple-touch-icon.png">
+    <title>紫外線との戦い——ラミネートQRが生まれるまで | トキストレージ</title>
+    <meta name="robots" content="noindex, nofollow">
+    <meta name="description" content="墓石の風化、マウイの灼熱、サンスクリーンで白くなる人々。紫外線による劣化を身体で知り、UVフィルムラミネートに辿り着いた。">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Shippori+Mincho:wght@400;500;600;700&family=Zen+Kaku+Gothic+New:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --toki-blue: #2563EB;
+            --toki-blue-dark: #1D4ED8;
+            --toki-blue-pale: #EFF6FF;
+            --bg-white: #FFFFFF;
+            --bg-section: #F8FAFC;
+            --text-primary: #1E293B;
+            --text-secondary: #475569;
+            --text-muted: #94A3B8;
+            --border: #E2E8F0;
+            --font-display: 'Shippori Mincho', serif;
+            --font-body: 'Zen Kaku Gothic New', sans-serif;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        html { scroll-behavior: smooth; }
+
+        body {
+            font-family: var(--font-body);
+            font-weight: 400;
+            background: var(--bg-white);
+            color: var(--text-primary);
+            line-height: 2;
+            font-size: 16px;
+        }
+
+        .article-nav {
+            position: fixed; top: 0; left: 0; right: 0; z-index: 1000;
+            background: rgba(255,255,255,0.95);
+            backdrop-filter: blur(12px);
+            border-bottom: 1px solid var(--border);
+            padding: 0.6rem 1.2rem;
+            display: flex; align-items: center; justify-content: space-between; gap: 1rem;
+        }
+        .article-nav .nav-brand {
+            font-family: var(--font-display); font-size: 0.9rem; font-weight: 600;
+            color: var(--toki-blue); text-decoration: none; white-space: nowrap;
+        }
+        .article-nav .nav-right { display: flex; align-items: center; gap: 1rem; }
+        .article-nav .nav-label { font-size: 0.6rem; color: var(--text-muted); letter-spacing: 0.08em; }
+        .article-nav .lang-switch {
+            font-size: 0.75rem; color: var(--toki-blue); text-decoration: none;
+            padding: 0.3rem 0.6rem; border: 1px solid var(--toki-blue); border-radius: 4px;
+        }
+        .article-nav .lang-switch:hover { background: var(--toki-blue); color: #fff; }
+
+        .article-container { max-width: 680px; margin: 0 auto; padding: 7rem 2rem 4rem; }
+
+        .article-header { margin-bottom: 3rem; padding-bottom: 2rem; border-bottom: 1px solid var(--border); }
+        .article-category { font-size: 0.7rem; color: var(--toki-blue); letter-spacing: 0.15em; margin-bottom: 1rem; }
+        .article-header h1 { font-family: var(--font-display); font-size: 1.8rem; font-weight: 600; line-height: 1.5; margin-bottom: 1rem; }
+        .article-subtitle { font-size: 0.95rem; color: var(--text-secondary); line-height: 1.8; }
+
+        .article-content h2 { font-family: var(--font-display); font-size: 1.25rem; font-weight: 600; margin: 3rem 0 1.5rem; padding-bottom: 0.5rem; border-bottom: 1px solid var(--border); }
+        .article-content p { margin-bottom: 1.5rem; text-align: justify; }
+        .article-content blockquote { margin: 2rem 0; padding: 1.5rem 2rem; background: var(--bg-section); border-left: 3px solid var(--toki-blue); font-style: italic; }
+        .article-content blockquote p { margin-bottom: 0.5rem; }
+        .article-content ul { margin: 1.5rem 0; padding-left: 1.5rem; }
+        .article-content li { margin-bottom: 0.75rem; }
+
+        .key-point { background: var(--toki-blue-pale); padding: 1.5rem 2rem; border-radius: 8px; margin: 2rem 0; border-left: 3px solid var(--toki-blue); }
+        .key-point p { margin-bottom: 0; font-size: 0.95rem; }
+
+        .core-message { background: linear-gradient(135deg, var(--toki-blue-pale) 0%, #DBEAFE 100%); border-left: 4px solid var(--toki-blue); padding: 1.2rem 1.5rem; margin: 0 0 1.5rem 0; border-radius: 0 8px 8px 0; font-size: 0.95rem; line-height: 1.8; }
+
+        .article-footer { margin-top: 4rem; padding-top: 2rem; border-top: 1px solid var(--border); text-align: center; }
+        .article-footer p { font-size: 0.8rem; color: var(--text-muted); margin-bottom: 1rem; }
+        .article-footer a { color: var(--toki-blue); text-decoration: none; }
+        .article-footer a:hover { text-decoration: underline; }
+
+        @media (max-width: 768px) {
+            .article-container { padding: 6rem 1.2rem 3rem; }
+            .article-header h1 { font-size: 1.5rem; }
+            .article-nav .nav-label { display: none; }
+        }
+        @media print { .article-nav { display: none; } .article-container { padding-top: 2rem; } }
+        .nav-brand::before { content: ''; display: inline-block; width: 20px; height: 20px; background: url('asset/tokistorage-icon-512.png') no-repeat center / contain; vertical-align: -3px; margin-right: 5px; }
+    </style>
+<link rel="stylesheet" href="contact-form.css">
+    <meta property="og:image" content="https://tokistorage.github.io/lp/asset/tokistorage-icon-512.png">
+    <meta property="og:image:width" content="512">
+    <meta property="og:image:height" content="512">
+</head>
+<body>
+
+<nav class="article-nav">
+    <a href="index.html" class="nav-brand">トキストレージ</a>
+    <div class="nav-right">
+        <span class="nav-label">技術論 / UV LAMINATE</span>
+        <a href="uv-laminate-en.html" class="lang-switch">EN</a>
+    </div>
+</nav>
+
+<main class="article-container">
+
+    <header class="article-header">
+        <p class="article-category">ESSAY — 紫外線との戦い</p>
+        <h1>紫外線との戦い<br>——ラミネートQRが生まれるまで</h1>
+        <p class="article-subtitle">
+            石英ガラスは1,000年残る。だが誰もが石英ガラスを必要としているわけではない。<br>
+            もっと身近に、もっと手軽に、それでも確かに残る媒体。その探求は、紫外線との戦いだった。
+        </p>
+    </header>
+
+    <article class="article-content">
+
+        <div class="core-message">
+            <strong>この記事で言いたいこと：</strong>ラミネートQRは「安い代替品」ではない。紫外線による劣化を身体で知り、UVフィルムラミネートという技術に辿り着いた結果生まれた、もう一つの永続性の形だ。
+        </div>
+
+        <h2>1. 墓石が教えてくれたこと</h2>
+
+        <p>墓石は永遠の象徴だと思っていた。だが実際に墓地を歩くと、現実は違う。</p>
+
+        <p>数十年で刻まれた文字は薄れ、表面は風化し、苔が覆う。御影石のような硬い石材でさえ、雨と紫外線と温度変化の前では少しずつ崩れていく。100年も経てば、誰の墓なのかすら判読できなくなるものがある。</p>
+
+        <p>石は残る。だが刻まれた情報は消える。これは貝殻にQRを刻んだときと同じ教訓だった。「残る」と「刻んで残す」は違う。そして屋外に置かれるものにとって、最大の敵は紫外線だった。</p>
+
+        <h2>2. マウイの灼熱</h2>
+
+        <p>マウイ島を訪れたとき、紫外線の暴力性を身体で知った。</p>
+
+        <p>ハナへの道をレンタカーで走る。窓越しでさえ肌が焼ける。海岸沿いの看板は色褪せ、プラスチックの標識は白く粉を吹いている。舗装路のペイントは数年で消える。歩行者はサンスクリーンで顔が真っ白になっている。それでも足りない。</p>
+
+        <p>ハワイの紫外線は日本の2〜3倍。この環境で屋外に何かを置くということは、紫外線との終わりなき戦いを意味する。マウイに保管拠点を置くと決めたとき、この戦いに勝てる素材が必要だと確信した。</p>
+
+        <h2>3. 劣化のメカニズム</h2>
+
+        <p>紫外線が物質を壊すメカニズムは単純だ。高エネルギーの光子が分子結合を切断する。インクの色素が分解され、紙の繊維が脆くなり、プラスチックが黄変して割れる。</p>
+
+        <p>普通に印刷したQRコードを屋外に貼れば、数ヶ月で読み取れなくなる。インクジェットなら数週間かもしれない。レーザープリンタでも1年は持たない。紫外線は、人間が「印刷した」と思っているものを、容赦なく白紙に戻す。</p>
+
+        <p>石英ガラスなら問題ない。だが石英ガラスは5万円する。日常の記録——子どもの成長、旅の思い出、ちょっとした声のメッセージ——に5万円は重い。もっと手軽な選択肢が必要だった。</p>
+
+        <h2>4. UVフィルムラミネートとの出会い</h2>
+
+        <p>答えは、印刷業界にあった。屋外広告や車両ラッピングで使われるUVカットフィルムラミネート。紫外線を90%以上カットし、印刷面を物理的に封じ込める技術。</p>
+
+        <p>このフィルムで両面からQRコードを挟み込む。紫外線はフィルムで遮断される。水分も入らない。物理的な擦れからも守られる。屋内なら10年以上、屋外でも数年は読み取り可能な状態を保つ。</p>
+
+        <p>5,000円。石英ガラスの10分の1。それでいて、普通の紙に印刷するのとは桁違いの耐久性。完璧ではない。千年は持たない。だが「今この瞬間の声を、確実に残す」という用途には十分すぎる。</p>
+
+        <h2>5. 二つの永続性</h2>
+
+        <p>石英ガラスとラミネートは、対立するものではない。二つの異なる永続性だ。</p>
+
+        <p>石英ガラスは千年の永続性。文明が変わっても残る。存在そのものを刻む媒体。</p>
+
+        <p>ラミネートQRは十年の永続性。日常の声を、手軽に、確実に残す媒体。子どもが大人になるまでの間、確かに声が残っていればいい。そしていつか、その声を石英ガラスに刻み直すこともできる。</p>
+
+        <div class="key-point">
+            <p>千年の石英ガラスと、十年のラミネート。スケールは違う。だがどちらも「紫外線に勝つ」という同じ戦いの、二つの答えだ。</p>
+        </div>
+
+        <h2>6. サンスクリーンの思想</h2>
+
+        <p>マウイで見た、サンスクリーンで真っ白になった歩行者たち。あれは滑稽な光景ではなかった。紫外線という見えない脅威に対する、真剣な備えだった。</p>
+
+        <p>ラミネートQRも同じだ。目に見えない紫外線から記録を守る、透明な盾。サンスクリーンが肌を守るように、UVフィルムがQRコードを守る。</p>
+
+        <p>墓石の風化を見て劣化を知り、マウイの灼熱で紫外線の暴力性を身体に刻み、サンスクリーンの思想からUVフィルムに辿り着いた。ラミネートQRは、これらの体験が一本の線でつながった結果だ。</p>
+
+        <blockquote>
+            <p>紫外線は目に見えない。だが確実に、刻まれた記録を消していく。</p>
+            <p>墓石の文字が消えるように。看板の色が褪せるように。</p>
+            <p>その見えない敵に対する二つの答え——千年の石英ガラスと、十年のラミネート。</p>
+            <p>どちらも、声を守るための盾だ。</p>
+        </blockquote>
+
+    </article>
+
+    <footer class="article-footer">
+        <p>本稿は、ラミネートQRが生まれるまでの体験と、紫外線対策の設計思想を記したものです。</p>
+        <p id="essay-nav-links"></p>
+        <p style="margin-top: 2rem; font-size: 0.75rem;">&copy; 2026 TokiStorage</p>
+    </footer>
+
+</main>
+
+<script src="contact-form.js"></script>
+<script src="essay-nav.js?v=20260218"></script>
+<script src="tracker.js"></script>
+</body>
+</html>
