@@ -251,21 +251,56 @@
         <h3>Principle 3: Source code of dependencies is retained in-house</h3>
         <p>The GAS source code (<code>contact-form-gas.js</code>) is stored in the repository. The Cloudflare Worker source code (<code>wise-webhook-proxy.js</code>) is also in the repository. Even if the services disappear, the logic remains in our hands.</p>
 
+        <h3>Principle 4: No secret data flows through the pipeline</h3>
+        <p>Fundamentally, there is nothing in the data passing through Cloudflare Workers and GAS that would be harmful if leaked. This is the most foundational design principle of all.</p>
+
         <blockquote>
             If you use an external service, include the day it disappears in your design.<br>
-            That is the line between using and relying.
+            And never send secret data through its pipeline.
         </blockquote>
 
 
-        <h2>6. The Nature of "Free"</h2>
+        <h2>6. There Is No Data That Would Hurt If Leaked</h2>
 
-        <p>Cloudflare Workers' free tier allows 100,000 requests per day. GAS's free tier allows 100 emails per day and 6 minutes of script execution per call. For TokiStorage's scale, these are more than sufficient.</p>
+        <p>Here is what flows from the order form through the Cloudflare Worker → GAS → Google Sheets pipeline:</p>
 
-        <p>But "available for free" and "your own infrastructure" are entirely different concepts.</p>
+        <table class="phase-table">
+            <tr>
+                <th>Data</th>
+                <th>Through pipeline</th>
+                <th>Final destination</th>
+            </tr>
+            <tr>
+                <td><strong>QR URL (voice data)</strong></td>
+                <td>Sent as order info</td>
+                <td>Inscribed on physical product, published on GitHub (if opted), deposited to NDL (if opted)</td>
+            </tr>
+            <tr>
+                <td><strong>Name & address</strong></td>
+                <td>Sent as shipping info</td>
+                <td>Shipping label. Included in archive if <code>includePersonal</code> is selected</td>
+            </tr>
+            <tr>
+                <td><strong>Storage options</strong></td>
+                <td>Sent as selections</td>
+                <td>Instructions for which public preservation layers to activate</td>
+            </tr>
+            <tr>
+                <td><strong>Credit card info</strong></td>
+                <td>Never passes through</td>
+                <td>Entered and processed directly on Wise's platform (PCI DSS compliant)</td>
+            </tr>
+        </table>
 
-        <p>If your Cloudflare account is suspended, the Worker stops. If your Google account is frozen, GAS, Sheets, and Gmail all stop simultaneously. In June 2022, a major Cloudflare outage took down millions of sites — including Discord and Shopify — at once.</p>
+        <p>The voice data in the QR URL is destined to be inscribed on a physical product, optionally published on GitHub, and optionally deposited to the NDL. It is <strong>data designed for public preservation</strong>. The name and address are shipping logistics — and if the purchaser chooses, they become part of the archive too.</p>
 
-        <p>This is precisely why <strong>you must separate what you may place on free services from what you must not</strong>. Operational data may be placed there. Permanent data must not.</p>
+        <p>Credit card information never touches this pipeline. Payment is completed entirely on Wise's platform. After order confirmation, a Wise payment link is emailed to the purchaser, who enters their card details on Wise. No card number is ever recorded in the Cloudflare Worker, in GAS, or in Google Sheets.</p>
+
+        <p><strong>There is no data in the pipeline whose leakage would cause harm</strong> — and this is not coincidence but design. The fact that preserved data is public by intent, and that payment processing is delegated to an external platform — these two design decisions create the structure that makes external services safe to use.</p>
+
+        <blockquote>
+            The best security measure is to have no secrets to protect in the first place.
+        </blockquote>
 
 
         <h2>7. Conclusion — Using and Relying Are Different Things</h2>
