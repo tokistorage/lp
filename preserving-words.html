@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" type="image/png" sizes="32x32" href="asset/favicon-32.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="asset/apple-touch-icon.png">
+    <title>ことばを残す——千年を超える二千文字 | トキストレージ</title>
+    <meta name="robots" content="noindex, nofollow">
+    <meta name="description" content="どんな言葉が千年を超えて残ってきたのか。なぜ人はことばを残したいのか。そして私たちが残せることば、残したいことばとは何か。">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Shippori+Mincho:wght@400;500;600;700&family=Zen+Kaku+Gothic+New:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --toki-indigo: #4F46E5;
+            --toki-indigo-dark: #4338CA;
+            --toki-indigo-pale: #EEF2FF;
+            --bg-white: #FFFFFF;
+            --bg-section: #E0E7FF;
+            --text-primary: #1E293B;
+            --text-secondary: #475569;
+            --text-muted: #94A3B8;
+            --border: #E2E8F0;
+            --font-display: 'Shippori Mincho', serif;
+            --font-body: 'Zen Kaku Gothic New', sans-serif;
+        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        html { scroll-behavior: smooth; }
+        body { font-family: var(--font-body); font-weight: 400; background: var(--bg-white); color: var(--text-primary); line-height: 2; font-size: 16px; }
+        .article-nav { position: fixed; top: 0; left: 0; right: 0; z-index: 1000; background: rgba(255,255,255,0.95); backdrop-filter: blur(12px); border-bottom: 1px solid var(--border); padding: 0.6rem 1.2rem; display: flex; align-items: center; justify-content: space-between; }
+        .article-nav .nav-brand { font-family: var(--font-display); font-size: 0.9rem; font-weight: 600; color: var(--toki-indigo); text-decoration: none; }
+        .article-nav .nav-right { display: flex; align-items: center; gap: 1rem; }
+        .article-nav .nav-label { font-size: 0.6rem; color: var(--text-muted); letter-spacing: 0.08em; }
+        .article-nav .lang-switch { font-size: 0.75rem; color: var(--toki-indigo); text-decoration: none; padding: 0.3rem 0.6rem; border: 1px solid var(--toki-indigo); border-radius: 4px; }
+        .article-nav .lang-switch:hover { background: var(--toki-indigo); color: #fff; }
+        .article-container { max-width: 680px; margin: 0 auto; padding: 7rem 2rem 4rem; }
+        .article-header { margin-bottom: 3rem; padding-bottom: 2rem; border-bottom: 1px solid var(--border); }
+        .article-category { font-size: 0.7rem; color: var(--toki-indigo); letter-spacing: 0.15em; margin-bottom: 1rem; }
+        .article-header h1 { font-family: var(--font-display); font-size: 1.8rem; font-weight: 600; line-height: 1.5; margin-bottom: 1rem; }
+        .article-subtitle { font-size: 0.95rem; color: var(--text-secondary); line-height: 1.8; }
+        .article-content h2 { font-family: var(--font-display); font-size: 1.25rem; font-weight: 600; margin: 3rem 0 1.5rem; padding-bottom: 0.5rem; border-bottom: 1px solid var(--border); }
+        .article-content h3 { font-family: var(--font-display); font-size: 1.1rem; font-weight: 500; margin: 2rem 0 1rem; }
+        .article-content p { margin-bottom: 1.5rem; text-align: justify; }
+        .article-content blockquote { margin: 2rem 0; padding: 1.5rem 2rem; background: var(--bg-section); border-left: 3px solid var(--toki-indigo); font-style: italic; }
+        .article-content blockquote cite { display: block; font-size: 0.85rem; color: var(--text-muted); font-style: normal; margin-top: 0.5rem; }
+        .article-content ul { margin: 1.5rem 0; padding-left: 1.5rem; }
+        .article-content li { margin-bottom: 0.75rem; }
+        .key-point { background: var(--toki-indigo-pale); padding: 1.5rem 2rem; border-radius: 8px; margin: 2rem 0; }
+        .key-point p { margin-bottom: 0; font-size: 0.95rem; }
+        .core-message { background: linear-gradient(135deg, var(--toki-indigo-pale) 0%, #E0E7FF 100%); border-left: 4px solid var(--toki-indigo); padding: 1.2rem 1.5rem; margin: 0 0 1.5rem 0; border-radius: 0 8px 8px 0; font-size: 0.95rem; line-height: 1.8; }
+        .references { margin-top: 4rem; padding-top: 2rem; border-top: 1px solid var(--border); }
+        .references h2 { font-size: 1rem; margin-bottom: 1.5rem; }
+        .references ul { list-style: none; padding: 0; }
+        .references li { font-size: 0.85rem; color: var(--text-secondary); margin-bottom: 0.75rem; padding-left: 1.5rem; text-indent: -1.5rem; }
+        .article-footer { margin-top: 4rem; padding-top: 2rem; border-top: 1px solid var(--border); text-align: center; }
+        .article-footer p { font-size: 0.8rem; color: var(--text-muted); margin-bottom: 1rem; }
+        .article-footer a { color: var(--toki-indigo); text-decoration: none; }
+        @media (max-width: 768px) { .article-container { padding: 6rem 1.2rem 3rem; } .article-header h1 { font-size: 1.5rem; } .article-nav .nav-label { display: none; } }
+        @media print { .article-nav { display: none; } .article-container { padding-top: 2rem; } }
+        .nav-brand::before {
+            content: '';
+            display: inline-block;
+            width: 20px;
+            height: 20px;
+            background: url('asset/tokistorage-icon-512.png') no-repeat center / contain;
+            vertical-align: -3px;
+            margin-right: 5px;
+        }
+    </style>
+<link rel="stylesheet" href="contact-form.css">
+    <meta property="og:image" content="https://tokistorage.github.io/lp/asset/tokistorage-icon-512.png">
+    <meta property="og:image:width" content="512">
+    <meta property="og:image:height" content="512">
+</head>
+<body>
+
+<nav class="article-nav">
+    <a href="index.html" class="nav-brand">トキストレージ</a>
+    <div class="nav-right">
+        <span class="nav-label">ことばを残す</span>
+        <a href="preserving-words-en.html" class="lang-switch">EN</a>
+    </div>
+</nav>
+
+<main class="article-container">
+    <header class="article-header">
+        <p class="article-category">エッセイ——ことばと永続</p>
+        <h1>ことばを残す<br>——千年を超える二千文字</h1>
+        <p class="article-subtitle">
+            どんな言葉が千年を超えて残ってきたのか。<br>
+            なぜ人はことばを残したいのか。<br>
+            そして私たちが残せることば、残したいことばとは何か。
+        </p>
+    </header>
+
+    <article class="article-content">
+        <div class="core-message">
+            <strong>この記事で言いたいこと：</strong>千年残った言葉には共通点がある。個人的で、短く、真摯であること。長大な論文より、一行の碑文が千年を超える。私たちにも残せることばがある。二千文字あれば、一つの想いを完結させるのに十分である。
+        </div>
+
+        <h2>1. 千年残った言葉たち</h2>
+        <p>歴史の中で、どんな言葉が時を超えてきたのか。</p>
+        <h3>石に刻まれた言葉</h3>
+        <p>ロゼッタ・ストーンは紀元前196年の勅令を今に伝える。万葉集の歌碑は千三百年前の感情を刻む。ハンムラビ法典は四千年近く前の正義を語る。石に刻まれた言葉は、王朝が滅び、言語が変わっても残り続けた。</p>
+        <h3>紙に記された言葉</h3>
+        <p>正倉院の文書は千二百年前の日常を伝える。借金の証文、役人への請願、物資の目録——華やかな文学ではなく、名もなき人々の暮らしの記録が残っている。紫式部の源氏物語、清少納言の枕草子——平安の宮廷で書かれた言葉は、千年後の私たちの教科書に載っている。</p>
+        <h3>極限で書かれた言葉</h3>
+        <p>アンネ・フランクの日記は、隠れ家の中で十代の少女が書いた言葉である。特攻隊員の遺書は、死を目前にした若者が家族に宛てた最後の言葉である。ヴィクトール・フランクルは強制収容所の経験を『夜と霧』に記した。極限状態で書かれた言葉は、平穏な日常からは生まれない重みを持つ。</p>
+
+        <blockquote>
+            <p>「残った言葉に共通するのは、書き手が本気だったということだ。技巧ではない。真摯さが時を超える。」</p>
+        </blockquote>
+
+        <h2>2. なぜ人はことばを残したいのか</h2>
+        <p>声は一瞬で消える。顔は一世代で忘れられる。しかしことばは残る。</p>
+        <h3>思考を正確に伝えたい</h3>
+        <p>声で語ると曖昧になる。身振りは記録できない。しかし文字にすれば、思考は正確に伝わる。論理の筋道、感情の機微、決意の重み——文字にしか残せない精密さがある。遺言が口頭ではなく文書である理由は、ことばの正確さに信頼が置かれているからだ。</p>
+        <h3>特定の誰かに届けたい</h3>
+        <p>手紙には宛名がある。「あなたへ」という指向性が、手紙を他のどのメディアとも異なるものにしている。録音は空間に向かって話すが、手紙は一人の人間に向かって書く。その親密さが、ことばに特別な力を与える。</p>
+        <h3>自分が消えても、考えは残ってほしい</h3>
+        <p>人は肉体の有限を知っている。しかし自分の考え——人生で学んだこと、信じてきたこと、伝えたかったこと——それだけは残したいと思う。ことばは肉体を超える唯一の手段である。ソクラテスは文字を残さなかったが、プラトンが書き留めたからこそ二千四百年後の私たちに届いている。</p>
+
+        <h2>3. 残った言葉の共通点</h2>
+        <p>千年を超えた言葉を調べると、意外な共通点が見えてくる。</p>
+        <h3>個人的であること</h3>
+        <p>抽象的な議論より、具体的な想いが残る。「国家の繁栄を願う」より「母に会いたい」が胸を打つ。万葉集が千三百年読まれ続けるのは、防人が故郷の妻を想う歌、名もなき庶民が恋を嘆く歌——個人的な感情が普遍的な共感を呼ぶからだ。</p>
+        <h3>短いこと</h3>
+        <p>長大な記録より、短い言葉が残る。「吾輩は猫である」の冒頭一文、「春はあけぼの」の五文字、「I have a dream」の四語——人々が覚えているのは、いつも短い言葉だ。碑文が短いのは石の面積のせいだけではない。短い言葉には、削ぎ落とした末の本質がある。</p>
+        <h3>真摯であること</h3>
+        <p>技巧を凝らした美文より、飾りのない言葉が時を超える。特攻隊員の「お母さん」という最後の一語、アンネの「それでも人は善いと信じる」——修辞の力ではなく、書き手の真摯さが読む者の心を動かす。嘘のない言葉は、千年経っても嘘にならない。</p>
+
+        <div class="key-point">
+            <p>個人的で、短く、真摯な言葉が千年を超える。これは偶然ではない。装飾は朽ちるが、本質は残る。</p>
+        </div>
+
+        <h2>4. 私たちが残せることば</h2>
+        <p>千年残る言葉は、特別な人だけのものではない。</p>
+        <h3>子への手紙</h3>
+        <p>生まれてきてくれてありがとう。あなたが生まれた日の空の色。名前に込めた願い。親が子に伝えたいことは、いつの時代も同じである。その手紙を、子が大人になったとき、あるいは孫が祖父母を知りたくなったときに読めるように残す。それだけで、一つの存在証明が完成する。</p>
+        <h3>家族の物語</h3>
+        <p>祖父がどこで生まれ、何をして暮らし、何を大切にしていたか。祖母がどんな時代を生き、何に笑い、何に泣いたか。多くの家族が、二世代前の物語をすでに失っている。聞けるうちに聞き、書けるうちに書く。家族の物語は、文字にしなければ消える。</p>
+        <h3>感謝と謝罪</h3>
+        <p>「ありがとう」と「ごめんなさい」——言えないまま時が過ぎることがある。声に出せないなら、文字にすればいい。ことばにして残せば、届けたい相手がいつか読む。たとえ書き手がもういなくても。</p>
+        <h3>日常の記録</h3>
+        <p>今日食べたもの、今日見た景色、今日感じたこと。取るに足らない日常が、百年後には一級の歴史資料になる。正倉院の文書が貴重なのは、千二百年前の「普通の一日」が書かれているからだ。あなたの普通の一日も、千年後の誰かにとっては宝になりうる。</p>
+
+        <h2>5. 二千文字で足りる</h2>
+        <p>残したいことばに、長さは必要か。</p>
+        <h3>俳句は十七音</h3>
+        <p>「古池や蛙飛び込む水の音」——松尾芭蕉のこの十七音は三百年以上残っている。和歌は三十一音、俳句は十七音。日本文学の最高峰は、驚くほど短い。ことばの力は量ではなく密度にある。</p>
+        <h3>手紙一通の密度</h3>
+        <p>心のこもった手紙は、だいたい便箋二、三枚に収まる。日本語にして千文字から二千文字。それで十分に、想いは伝わる。むしろ長すぎる手紙は、核心がぼやける。二千文字は、一つの想いを完結させるのにちょうどいい長さである。</p>
+        <h3>QRコードの中の手紙</h3>
+        <p>Brotli圧縮により、日本語約二千文字がQRコード一枚に収まる。サーバーに依存しない。印刷すれば半永久的に残る。石英ガラスに刻めば千年を超える。便箋二、三枚分の想いが、切手サイズの正方形に凝縮される。それは現代の碑文である。</p>
+
+        <blockquote>
+            <p>「千年残った言葉はどれも短い。二千文字は、想いを刻むのに十分であり、千年を超えるのにちょうどいい。」</p>
+        </blockquote>
+
+        <h2>結論——あなたのことばを刻む</h2>
+        <p>千年残った言葉に共通するのは、個人的で、短く、真摯であることだった。</p>
+        <p>これは裏を返せば、誰にでも千年残る言葉が書けるということだ。必要なのは文才ではない。自分の想いを、飾らずに、正直に書くこと。それだけで、ことばは時を超える力を持つ。</p>
+        <p>子への手紙、家族の物語、感謝の言葉、日常の記録——残したいことばは、すでにあなたの中にある。それを文字にして、QRコードに刻み、石英ガラスに封じれば、千年後の誰かに届く。</p>
+        <p>万葉集の防人も、正倉院の役人も、アンネ・フランクも、千年後に読まれるとは思っていなかっただろう。しかし彼らの言葉は残った。真摯に書かれた言葉は、書き手の想像を超えて、時を超える。</p>
+        <p>あなたのことばを、刻んでください。</p>
+
+        <section class="references">
+            <h2>参考文献</h2>
+            <ul>
+                <li>Ong, W.J. (1982). <em>Orality and Literacy.</em> Methuen.</li>
+                <li>Goody, J. (1987). <em>The Interface Between the Written and the Oral.</em> Cambridge University Press.</li>
+                <li>Frank, A. (1947). <em>Het Achterhuis.</em> Contact Publishing.</li>
+                <li>Frankl, V.E. (1946). <em>Man's Search for Meaning.</em></li>
+                <li>中西進. (2009). 『万葉集 全訳注原文付』講談社文庫.</li>
+                <li>石川九楊. (2001). 『書の宇宙』二玄社.</li>
+            </ul>
+        </section>
+    </article>
+
+    <footer class="article-footer">
+        <p id="essay-nav-links"></p>
+        <p style="margin-top: 2rem; font-size: 0.75rem;">&copy; 2026 TokiStorage</p>
+    </footer>
+</main>
+
+<script src="contact-form.js"></script>
+<script src="essay-nav.js?v=20260219"></script>
+<script src="tracker.js"></script>
+</body>
+</html>
