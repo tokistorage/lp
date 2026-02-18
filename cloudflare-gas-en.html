@@ -129,26 +129,22 @@
         </div>
 
 
-        <h2>1. Let Us Start by Acknowledging — We Use Them</h2>
+        <h2>1. Why Cloudflare Workers and GAS</h2>
 
-        <p>TokiStorage's codebase includes Cloudflare Workers and GAS. There is nothing to hide. Here are the facts.</p>
+        <p>A project run by one person needs infrastructure that one person can operate. Not scale — integration.</p>
 
-        <h3>Cloudflare Workers</h3>
-        <p>The order and contact forms on the QR site send data through a Cloudflare Worker, which relays it to GAS. GAS's exec URL returns a 302 redirect, which fails Wise's webhook URL validation. The Cloudflare Worker serves as the intermediary, also handling CORS.</p>
+        <h3>Google Apps Script — An Entire Operations Backend in One File</h3>
+        <p>The reason for choosing GAS is straightforward. Email delivery, spreadsheet storage, scheduled execution — functions that normally require three separate services are integrated into a single environment. No contracts, no configuration, zero cost.</p>
+        <p>TokiStorage's GAS script (<code>code.gs</code>) is 1,564 lines. Order intake, Wise payment confirmation, storage pipeline automation, daily access reports, payment reminders, monthly partner reports, newsletter auto-generation — <strong>the entire operational backbone of a one-person project fits in a single file</strong>.</p>
 
-        <h3>Google Apps Script</h3>
-        <p>GAS plays three roles:</p>
-        <ul>
-            <li><strong>Order and contact intake</strong> — records form data to Google Sheets and sends email notifications</li>
-            <li><strong>Page view analytics</strong> — identifies visitors by cookie UUID and logs views to a spreadsheet</li>
-            <li><strong>Wise webhook</strong> — receives payment notifications via the Cloudflare Worker</li>
-        </ul>
+        <h3>Cloudflare Workers — Solved in 52 Lines</h3>
+        <p>The reason for using a Cloudflare Worker is technically specific. GAS's exec URL returns a 302 redirect, which fails Wise's webhook URL validation. A 52-line proxy solves this. It handles CORS and absorbs URL changes when GAS is redeployed. Zero cost.</p>
 
-        <p>In other words, <strong>the operational backend is composed of Cloudflare Workers + GAS + Google Sheets</strong>. This is undeniably an external dependency.</p>
+        <p>In short, <strong>the operational backend is Cloudflare Workers + GAS + Google Sheets</strong>. It is an external dependency. But this dependency is the result of a rational choice, not a compromise.</p>
 
         <blockquote>
-            It is easy to say "we don't use them."<br>
-            It is more honest to articulate what we use them for and what we never let them touch.
+            What a one-person project needs is not scale, but integration.<br>
+            GAS provides email, spreadsheets, and scheduling in a single environment.
         </blockquote>
 
 
