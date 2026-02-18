@@ -1,0 +1,276 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" type="image/png" sizes="32x32" href="asset/favicon-32.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="asset/apple-touch-icon.png">
+    <title>SSDLC for Proof of Existence — When Security Becomes Ethics | TokiStorage</title>
+    <meta name="robots" content="noindex, nofollow">
+    <meta name="description" content="SSDLC (Secure Software Development Lifecycle) is usually discussed as a cost. But when what you're safeguarding is proof of human existence, security ceases to be a technical requirement and becomes an ethical one. All code is open-source on GitHub — anyone can verify this commitment.">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Shippori+Mincho:wght@400;500;600;700&family=Zen+Kaku+Gothic+New:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --toki-blue: #1E40AF;
+            --toki-blue-dark: #1E3A5F;
+            --toki-blue-pale: #EFF6FF;
+            --accent-blue: #3B82F6;
+            --bg-white: #FFFFFF;
+            --bg-section: #DBEAFE;
+            --text-primary: #1E293B;
+            --text-secondary: #475569;
+            --text-muted: #94A3B8;
+            --border: #E2E8F0;
+            --font-display: 'Shippori Mincho', serif;
+            --font-body: 'Zen Kaku Gothic New', sans-serif;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        html { scroll-behavior: smooth; }
+
+        body {
+            font-family: var(--font-body);
+            font-weight: 400;
+            background: var(--bg-white);
+            color: var(--text-primary);
+            line-height: 1.9;
+            font-size: 16px;
+        }
+
+        .article-nav {
+            position: fixed; top: 0; left: 0; right: 0; z-index: 1000;
+            background: rgba(255,255,255,0.95);
+            backdrop-filter: blur(12px);
+            border-bottom: 1px solid var(--border);
+            padding: 0.6rem 1.2rem;
+            display: flex; align-items: center; justify-content: space-between; gap: 1rem;
+        }
+        .article-nav .nav-brand {
+            font-family: var(--font-display); font-size: 0.9rem; font-weight: 600;
+            color: var(--toki-blue); text-decoration: none; white-space: nowrap; flex-shrink: 0;
+        }
+        .article-nav .nav-right { display: flex; align-items: center; gap: 1rem; }
+        .article-nav .nav-label { font-size: 0.6rem; color: var(--text-muted); letter-spacing: 0.08em; text-align: right; line-height: 1.4; }
+        .article-nav .lang-switch { font-size: 0.75rem; color: var(--toki-blue); text-decoration: none; padding: 0.3rem 0.6rem; border: 1px solid var(--toki-blue); border-radius: 4px; }
+        .article-nav .lang-switch:hover { background: var(--toki-blue); color: #fff; }
+
+        .article-container { max-width: 720px; margin: 0 auto; padding: 5rem 2rem 4rem; }
+        .article-header { margin-bottom: 3rem; }
+        .article-category { font-size: 0.7rem; letter-spacing: 0.15em; color: var(--toki-blue); margin-bottom: 0.5rem; }
+        .article-header h1 { font-family: var(--font-display); font-size: 1.8rem; font-weight: 700; line-height: 1.5; color: var(--text-primary); margin-bottom: 1rem; }
+        .article-subtitle { font-size: 0.95rem; color: var(--text-secondary); line-height: 1.8; }
+
+        .article-content h2 { font-family: var(--font-display); font-size: 1.3rem; font-weight: 600; color: var(--toki-blue-dark); margin: 3rem 0 1rem; padding-bottom: 0.5rem; border-bottom: 1px solid var(--border); }
+        .article-content h3 { font-family: var(--font-display); font-size: 1.1rem; font-weight: 600; color: var(--text-primary); margin: 2rem 0 0.8rem; }
+        .article-content p { margin-bottom: 1.2rem; text-align: justify; }
+        .article-content ul, .article-content ol { margin: 0.5rem 0 1.5rem 1.5rem; }
+        .article-content li { margin-bottom: 0.5rem; }
+        .article-content blockquote { border-left: 3px solid var(--toki-blue); padding: 1rem 1.5rem; margin: 1.5rem 0; background: var(--toki-blue-pale); font-style: italic; color: var(--text-secondary); }
+        .article-content strong { color: var(--toki-blue-dark); }
+
+        .core-message { background: var(--toki-blue-pale); border-left: 4px solid var(--toki-blue); padding: 1.2rem 1.5rem; margin: 0 0 2rem; font-size: 0.95rem; line-height: 1.8; }
+
+        .phase-table { width: 100%; border-collapse: collapse; margin: 1.5rem 0; font-size: 0.9rem; }
+        .phase-table th, .phase-table td { padding: 0.7rem 1rem; border: 1px solid var(--border); text-align: left; }
+        .phase-table th { background: var(--toki-blue-pale); font-weight: 600; color: var(--toki-blue-dark); font-size: 0.85rem; }
+        .phase-table td { vertical-align: top; }
+
+        .highlight-box { background: linear-gradient(135deg, var(--toki-blue-pale), #fff); border: 1px solid var(--accent-blue); border-radius: 8px; padding: 1.5rem; margin: 2rem 0; text-align: center; }
+        .highlight-box p { text-align: center; margin-bottom: 0.5rem; }
+        .highlight-box .big { font-family: var(--font-display); font-size: 1.3rem; font-weight: 700; color: var(--toki-blue-dark); }
+
+        .article-footer { margin-top: 4rem; padding: 2rem 0; border-top: 1px solid var(--border); font-size: 0.7rem; color: var(--text-muted); line-height: 2.2; }
+        .article-footer a { color: var(--text-muted); text-decoration: none; }
+        .article-footer a:hover { text-decoration: underline; }
+
+        @media (max-width: 768px) {
+            .article-container { padding: 6rem 1.2rem 3rem; }
+            .article-header h1 { font-size: 1.5rem; }
+            .article-nav .nav-label { display: none; }
+            .phase-table { font-size: 0.8rem; }
+            .phase-table th, .phase-table td { padding: 0.5rem 0.6rem; }
+        }
+        @media print { .article-nav { display: none; } .article-container { padding-top: 2rem; } }
+        .nav-brand::before { content: ''; display: inline-block; width: 20px; height: 20px; background: url('asset/tokistorage-icon-512.png') no-repeat center / contain; vertical-align: -3px; margin-right: 5px; }
+    </style>
+<link rel="stylesheet" href="contact-form.css">
+    <meta property="og:image" content="https://tokistorage.github.io/lp/asset/tokistorage-icon-512.png">
+    <meta property="og:image:width" content="512">
+    <meta property="og:image:height" content="512">
+</head>
+<body>
+
+<nav class="article-nav">
+    <a href="index-en.html" class="nav-brand">TokiStorage</a>
+    <div class="nav-right">
+        <span class="nav-label">Technology & Design / SSDLC</span>
+        <a href="ssdlc.html" class="lang-switch">JA</a>
+    </div>
+</nav>
+
+<main class="article-container">
+
+    <header class="article-header">
+        <p class="article-category">ESSAY — Technology & Design</p>
+        <h1>SSDLC for Proof of Existence — When Security Becomes Ethics</h1>
+        <p class="article-subtitle">
+            The Secure Software Development Lifecycle is usually discussed as a cost.<br>
+            But when what you're safeguarding is proof of human existence, it becomes ethics.
+        </p>
+    </header>
+
+    <article class="article-content">
+
+        <div class="core-message">
+            <strong>The point of this essay:</strong> SSDLC is generally described as "a methodology for embedding security into the development process." For TokiStorage, SSDLC is not methodology — it is ethics. A vulnerability in code that safeguards someone's voice and record of existence is not a technical problem — it means putting that person's proof of existence at risk. And with all code published on GitHub, this security is verifiable by anyone.
+        </div>
+
+
+        <h2>1. What Is SSDLC</h2>
+
+        <p>SSDLC (Secure Software Development Lifecycle) is a development approach that embeds security into every stage of software: planning, design, implementation, testing, and operations.</p>
+
+        <p>In traditional development, security was "something added at the end." Write the code, finish the features, run a security check before release. Fix problems if found.</p>
+
+        <p>SSDLC inverts this sequence. <strong>It defines "what must be protected" at the design stage, with security as a premise at every step.</strong> Security becomes not a retroactive measure, but the design philosophy itself.</p>
+
+        <p>Major technology companies including Microsoft, Google, and Apple have adopted this approach, and it is established as an industry best practice.</p>
+
+
+        <h2>2. Why It's Usually Discussed as "Cost"</h2>
+
+        <p>For most companies, SSDLC is an additional cost. Security reviews take time. Threat modeling requires personnel. Penetration testing costs money.</p>
+
+        <p>And above all, <strong>investing in security doesn't add visible features</strong>. When users are told "this product is SSDLC-compliant," they don't know what changed.</p>
+
+        <p>This is why many startups defer SSDLC. Build features first, acquire users, and "think about security when problems arise."</p>
+
+        <p>But this calculus is only justified when the data being held is "replaceable."</p>
+
+
+        <h2>3. When What You Hold Changes, Security's Meaning Changes</h2>
+
+        <p>When an e-commerce site leaks credit card information, cards can be reissued. When a social media account is hijacked, accounts can be recreated. The damage is serious, but "substitutes" exist.</p>
+
+        <p>What TokiStorage holds cannot be substituted.</p>
+
+        <ul>
+            <li><strong>A human voice</strong> — can only be recorded while that person is alive</li>
+            <li><strong>A record of existence</strong> — the customer's story, feelings, and reasons for their choice</li>
+            <li><strong>A path to the national record</strong> — a pipeline connected to the National Diet Library's permanent archive</li>
+        </ul>
+
+        <p>If this pipeline had a vulnerability and data were tampered with. If someone's voice were swapped. If the newsletter records were rewritten.</p>
+
+        <p>That would not be a "data breach." <strong>It would mean that person's proof of existence had been contaminated.</strong></p>
+
+        <blockquote>
+            A credit card can be reissued.<br>
+            A voice may never be re-recorded.<br>
+            The voice of someone already gone — never.
+        </blockquote>
+
+
+        <h2>4. TokiStorage's SSDLC</h2>
+
+        <table class="phase-table">
+            <tr>
+                <th>Phase</th>
+                <th>General SSDLC</th>
+                <th>TokiStorage's practice</th>
+            </tr>
+            <tr>
+                <td><strong>Design</strong></td>
+                <td>Threat modeling, security requirements</td>
+                <td>Architecture where data is self-contained within the QR code. No data sent to external servers — fundamentally minimizing the attack surface</td>
+            </tr>
+            <tr>
+                <td><strong>Implementation</strong></td>
+                <td>Secure coding, code review</td>
+                <td>All code published on GitHub. Anyone worldwide can perform code review. Verifiable absence of hidden backdoors</td>
+            </tr>
+            <tr>
+                <td><strong>Testing</strong></td>
+                <td>Vulnerability scanning, penetration testing</td>
+                <td>Static site architecture structurally eliminates entire categories of server-side vulnerabilities</td>
+            </tr>
+            <tr>
+                <td><strong>Deployment</strong></td>
+                <td>Configuration management, access control</td>
+                <td>Automated CI/CD deployment via GitHub Pages. Eliminates human error risk of manual deployment</td>
+            </tr>
+            <tr>
+                <td><strong>Operations</strong></td>
+                <td>Monitoring, incident response</td>
+                <td>Git change history records and tracks every modification. Tampering is immediately detectable</td>
+            </tr>
+        </table>
+
+        <p>What stands out is that TokiStorage's SSDLC is not an approach of "adding security measures" but of <strong>"choosing an architecture where security risks structurally cannot arise."</strong></p>
+
+        <p>If data is never sent to a server, it cannot leak from a server. If code is published, hidden vulnerabilities will be found. If the site is static, server-side vulnerabilities don't exist.</p>
+
+        <p>This is not "fortifying the walls." It is a design philosophy of "minimizing the walls that need fortifying."</p>
+
+
+        <h2>5. The Synergy of Open Source and SSDLC</h2>
+
+        <p>In traditional SSDLC, security verification is performed by internal teams. From the outside, you can only trust the announcement that "this software is secure."</p>
+
+        <p>TokiStorage is different. <strong>All code is published on GitHub.</strong></p>
+
+        <p>This is equivalent to opening the SSDLC verification process to the entire world. Security researchers, developers, anyone with interest can read TokiStorage's code, search for vulnerabilities, and report them.</p>
+
+        <p>There is no need to claim "it's secure." <strong>Whether it's secure can be verified by anyone.</strong></p>
+
+        <p>This structure achieves the final stage of SSDLC — "third-party audit" — at zero cost, permanently. Not a one-time audit commissioned from an auditing firm, but continuous audit by eyes around the world.</p>
+
+
+        <h2>6. Security on a 1,000-Year Scale</h2>
+
+        <p>Typical SSDLC assumes a product lifecycle of a few years to a decade. TokiStorage aims for preservation spanning 1,000 years.</p>
+
+        <p>On a thousand-year scale, security concerns transform.</p>
+
+        <ul>
+            <li><strong>Encryption algorithms become obsolete</strong> — there is no guarantee that today's encryption will be secure in 1,000 years. That's why TokiStorage's security is guaranteed by structure, not by reliance on encryption</li>
+            <li><strong>Companies may not survive</strong> — that's why the code is published and anyone can fork it</li>
+            <li><strong>Platforms will change</strong> — that's why data is self-contained within QR codes, with no dependency on any specific platform</li>
+        </ul>
+
+        <p>This goes beyond the category of "security measures." It is <strong>existential design to ensure data remains safe a thousand years from now</strong>.</p>
+
+
+        <h2>7. Conclusion — Ethics in Every Line of Code</h2>
+
+        <div class="highlight-box">
+            <p class="big">Security is not a cost. It is ethics.</p>
+            <p>A vulnerability in code that holds proof of human existence<br>means putting that person's voice at risk.</p>
+        </div>
+
+        <p>For many companies, SSDLC is a checklist. Meet the requirements, pass the audit, prove compliance. That's valid. But for TokiStorage, SSDLC is something else.</p>
+
+        <p>What's being held is someone's voice. The voice of someone who decided "my existence is worth preserving." A voice that may never be re-recorded. Perhaps the voice of someone no longer in this world.</p>
+
+        <p>To leave a vulnerability in that code is to betray that person's decision.</p>
+
+        <p>That is why security is not something added at the end but designed from the start. Not a cost but an ethics. Not a checklist but a philosophy.</p>
+
+        <p>And that code is published on GitHub for the entire world to see.<br><strong>Whether this ethics is genuine — anyone can verify for themselves.</strong></p>
+
+    </article>
+
+    <footer class="article-footer">
+        <p id="essay-nav-links"></p>
+        <p style="margin-top: 2rem; font-size: 0.75rem;">&copy; 2026 TokiStorage</p>
+    </footer>
+
+</main>
+
+<script src="contact-form.js"></script>
+<script src="essay-nav.js?v=20260218"></script>
+<script src="tracker.js"></script>
+</body>
+</html>
