@@ -1,0 +1,336 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" type="image/png" sizes="32x32" href="asset/favicon-32.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="asset/apple-touch-icon.png">
+    <title>Global Honbinos — Born in Urayasu, Rooted Anywhere on Earth | TokiStorage</title>
+    <meta name="robots" content="noindex, nofollow">
+    <meta name="description" content="Like the honbinos clam, TokiStorage is rooted in its origin yet structurally capable of thriving anywhere on the planet. Zero fixed costs, no competition with incumbents, and a shell that lasts a thousand years.">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Shippori+Mincho:wght@400;500;600;700&family=Zen+Kaku+Gothic+New:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --toki-blue: #2563EB;
+            --toki-blue-dark: #1D4ED8;
+            --toki-blue-pale: #EFF6FF;
+            --bg-white: #FFFFFF;
+            --bg-section: #F8FAFC;
+            --text-primary: #1E293B;
+            --text-secondary: #475569;
+            --text-muted: #94A3B8;
+            --border: #E2E8F0;
+            --font-display: 'Shippori Mincho', serif;
+            --font-body: 'Zen Kaku Gothic New', sans-serif;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        html { scroll-behavior: smooth; }
+
+        body {
+            font-family: var(--font-body);
+            font-weight: 400;
+            background: var(--bg-white);
+            color: var(--text-primary);
+            line-height: 2;
+            font-size: 16px;
+        }
+
+        /* Navigation */
+        .article-nav {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 1000;
+            background: rgba(255,255,255,0.95);
+            backdrop-filter: blur(12px);
+            border-bottom: 1px solid var(--border);
+            padding: 0.6rem 1.2rem;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 1rem;
+        }
+        .article-nav .nav-brand {
+            font-family: var(--font-display);
+            font-size: 0.9rem;
+            font-weight: 600;
+            color: var(--toki-blue);
+            text-decoration: none;
+            white-space: nowrap;
+        }
+        .article-nav .nav-right {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+        .article-nav .nav-label {
+            font-size: 0.6rem;
+            color: var(--text-muted);
+            letter-spacing: 0.08em;
+        }
+        .article-nav .lang-switch {
+            font-size: 0.75rem;
+            color: var(--toki-blue);
+            text-decoration: none;
+            padding: 0.3rem 0.6rem;
+            border: 1px solid var(--toki-blue);
+            border-radius: 4px;
+        }
+        .article-nav .lang-switch:hover {
+            background: var(--toki-blue);
+            color: #fff;
+        }
+
+        /* Article Container */
+        .article-container {
+            max-width: 680px;
+            margin: 0 auto;
+            padding: 7rem 2rem 4rem;
+        }
+
+        /* Article Header */
+        .article-header {
+            margin-bottom: 3rem;
+            padding-bottom: 2rem;
+            border-bottom: 1px solid var(--border);
+        }
+        .article-category {
+            font-size: 0.7rem;
+            color: var(--toki-blue);
+            letter-spacing: 0.15em;
+            margin-bottom: 1rem;
+        }
+        .article-header h1 {
+            font-family: var(--font-display);
+            font-size: 1.8rem;
+            font-weight: 600;
+            line-height: 1.5;
+            margin-bottom: 1rem;
+        }
+        .article-subtitle {
+            font-size: 0.95rem;
+            color: var(--text-secondary);
+            line-height: 1.8;
+        }
+
+        /* Article Content */
+        .article-content h2 {
+            font-family: var(--font-display);
+            font-size: 1.25rem;
+            font-weight: 600;
+            margin: 3rem 0 1.5rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 1px solid var(--border);
+        }
+        .article-content p {
+            margin-bottom: 1.5rem;
+            text-align: justify;
+        }
+        .article-content blockquote {
+            margin: 2rem 0;
+            padding: 1.5rem 2rem;
+            background: var(--bg-section);
+            border-left: 3px solid var(--toki-blue);
+            font-style: italic;
+        }
+        .article-content blockquote p {
+            margin-bottom: 0.5rem;
+        }
+        .article-content ul {
+            margin: 1.5rem 0;
+            padding-left: 1.5rem;
+        }
+        .article-content li {
+            margin-bottom: 0.75rem;
+        }
+
+        /* Key Point Box */
+        .key-point {
+            background: var(--toki-blue-pale);
+            padding: 1.5rem 2rem;
+            border-radius: 8px;
+            margin: 2rem 0;
+            border-left: 3px solid var(--toki-blue);
+        }
+        .key-point p {
+            margin-bottom: 0;
+            font-size: 0.95rem;
+        }
+
+        /* Core Message */
+        .core-message {
+            background: linear-gradient(135deg, var(--toki-blue-pale) 0%, #DBEAFE 100%);
+            border-left: 4px solid var(--toki-blue);
+            padding: 1.2rem 1.5rem;
+            margin: 0 0 1.5rem 0;
+            border-radius: 0 8px 8px 0;
+            font-size: 0.95rem;
+            line-height: 1.8;
+        }
+
+        /* Footer */
+        .article-footer {
+            margin-top: 4rem;
+            padding-top: 2rem;
+            border-top: 1px solid var(--border);
+            text-align: center;
+        }
+        .article-footer p {
+            font-size: 0.8rem;
+            color: var(--text-muted);
+            margin-bottom: 1rem;
+        }
+        .article-footer a {
+            color: var(--toki-blue);
+            text-decoration: none;
+        }
+        .article-footer a:hover {
+            text-decoration: underline;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .article-container { padding: 6rem 1.2rem 3rem; }
+            .article-header h1 { font-size: 1.5rem; }
+            .article-nav .nav-label { display: none; }
+        }
+
+        @media print {
+            .article-nav { display: none; }
+            .article-container { padding-top: 2rem; }
+        }
+        .nav-brand::before {
+            content: '';
+            display: inline-block;
+            width: 20px;
+            height: 20px;
+            background: url('asset/tokistorage-icon-512.png') no-repeat center / contain;
+            vertical-align: -3px;
+            margin-right: 5px;
+        }
+    </style>
+<link rel="stylesheet" href="contact-form.css">
+    <meta property="og:image" content="https://tokistorage.github.io/lp/asset/tokistorage-icon-512.png">
+    <meta property="og:image:width" content="512">
+    <meta property="og:image:height" content="512">
+</head>
+<body>
+
+<nav class="article-nav">
+    <a href="index-en.html" class="nav-brand">TokiStorage</a>
+    <div class="nav-right">
+        <span class="nav-label">ECONOMICS / GLOBAL HONBINOS</span>
+        <a href="global-honbinos.html" class="lang-switch">JA</a>
+    </div>
+</nav>
+
+<main class="article-container">
+
+    <header class="article-header">
+        <p class="article-category">ESSAY — GLOBAL HONBINOS</p>
+        <h1>Global Honbinos<br>&mdash; Born in Urayasu, Rooted Anywhere on Earth</h1>
+        <p class="article-subtitle">
+            The honbinos clam settled in Tokyo Bay from North America. It found unused habitat, thrived without threatening native species, and spread across the entire bay.<br>
+            TokiStorage&rsquo;s business structure mirrors this clam with striking precision.
+        </p>
+    </header>
+
+    <article class="article-content">
+
+        <div class="core-message">
+            <strong>The point of this essay:</strong> TokiStorage doesn&rsquo;t &ldquo;aim for global expansion.&rdquo; It is structurally capable of taking root anywhere. Like the honbinos clam, it is rooted in its origin yet reproduces wherever conditions allow&mdash;anywhere on Earth.
+        </div>
+
+        <h2>1. The Honbinos Clam</h2>
+
+        <p>The honbinos clam (<em>Mercenaria mercenaria</em>) is a bivalve native to the eastern coast of North America. It arrived in Tokyo Bay via ballast water in cargo ships and was confirmed to be reproducing in large numbers around the Funabashi and Urayasu coastline in the 2000s.</p>
+
+        <p>What makes honbinos remarkable is its survival strategy. It does not compete with native species like asari or hamaguri clams. Rather than colonizing the shallow tidal flats, it settles in deeper, muddier substrates&mdash;habitat that was going unused. It does not destroy the existing ecosystem; it finds the gaps and fills them.</p>
+
+        <p>It is also remarkably resilient. It tolerates fluctuations in water temperature, salinity, and even exposure to air. That is why it could thrive in Urayasu&rsquo;s reclaimed land&mdash;an environment far removed from natural tidal flats.</p>
+
+        <h2>2. Rooted in Its Origin</h2>
+
+        <p>TokiStorage was born in Urayasu. Facing Tokyo Bay, adjacent to Disney Resort, this city is reclaimed land with the memory of a fishing village. Old and new coexist here.</p>
+
+        <p>Its storage base will be established on Sado Island. Its data is deposited with the National Diet Library. Its code is archived in GitHub&rsquo;s Arctic Code Vault. There is a place it is rooted. An origin it belongs to. And from there, it spreads across the world.</p>
+
+        <p>Just as the honbinos clam has North American seabeds as its origin yet thrives in Tokyo Bay, TokiStorage has Urayasu as its origin yet possesses the structure to take root anywhere on the planet.</p>
+
+        <h2>3. Indifferent to Environment</h2>
+
+        <p>Just as the honbinos clam is tolerant of temperature and salinity, TokiStorage&rsquo;s infrastructure is indifferent to its operating environment.</p>
+
+        <ul>
+            <li><strong>No server required</strong>&mdash;static delivery via GitHub Pages. No AWS, no GCP.</li>
+            <li><strong>Payments via Wise</strong>&mdash;covering 160+ countries and 40+ currencies. Partners receive payment in their local currency.</li>
+            <li><strong>QR codes play offline</strong>&mdash;a smartphone is all that&rsquo;s needed. No internet connection required.</li>
+            <li><strong>Bilingual by default</strong>&mdash;set <code>lang=en</code> in the setup page, and English-speaking partners can use it as-is.</li>
+        </ul>
+
+        <p>Near-zero fixed costs. No server operations. No payment system to build. Multilingual support built in. This structure parallels the honbinos clam&rsquo;s &ldquo;no special environment required&rdquo; trait. Sandy bottom or muddy substrate, slightly different water temperatures&mdash;it survives regardless.</p>
+
+        <h2>4. No Threat to Native Species</h2>
+
+        <p>Just as the honbinos clam coexists without competing with native species, TokiStorage does not threaten existing businesses. It complements them.</p>
+
+        <p>A ukulele school hands out QR stickers at recitals. A hotel delivers a welcome message by voice. A florist attaches a voice card to a bouquet. A funeral home delivers the deceased&rsquo;s voice to the bereaved family.</p>
+
+        <p>Each of these simply adds a layer to an existing business. Not competing, but elevating the value of the businesses already in place. Partners just place a QR sticker. No upfront cost. They receive 10% of every order.</p>
+
+        <div class="key-point">
+            <p>Settling beside the asari clam, without competing for its habitat, finding its own place. That is the honbinos. That is TokiStorage.</p>
+        </div>
+
+        <h2>5. Reproducing at Zero Fixed Cost</h2>
+
+        <p>The honbinos clam requires no special aquaculture facilities. It reproduces naturally. So does TokiStorage.</p>
+
+        <p>A partner places a QR sticker. A customer scans it with their smartphone. They record their voice. A QR code is generated. If they wish, they order quartz glass or a laminated print. This cycle requires no central server, no sales team, no advertising budget.</p>
+
+        <p>Hand over a single brochure. Have them scan the setup QR. The partner enters their location name and Wise tag. That&rsquo;s it&mdash;a TokiStorage outpost is born, anywhere in the world.</p>
+
+        <p>Just as honbinos reproduction requires almost no human intervention, TokiStorage&rsquo;s expansion requires minimal central control. The structure itself permits propagation.</p>
+
+        <h2>6. Urayasu as Tidal Flat</h2>
+
+        <p>It was no accident that the honbinos clam established itself on Tokyo Bay&rsquo;s reclaimed land. Reclaimed land was inhospitable for native species. That very fact created an opening for the stress-tolerant honbinos to move in.</p>
+
+        <p>TokiStorage being born in Urayasu follows the same logic. Not in a district of corporate headquarters, but next to Disney Resort, on reclaimed land where the memory of a fishing village lingers. A place with room for something new to emerge.</p>
+
+        <p>And the service born from that margin enters &ldquo;margins&rdquo; around the world. A small shop in a tourist town. A rural temple. An inn on a remote island. The places where major companies never go&mdash;that is precisely where honbinos takes root.</p>
+
+        <h2>7. A Shell That Lasts a Thousand Years</h2>
+
+        <p>The honbinos clam has a thick, durable shell. Bivalve shells have been found in shell mounds dating to the Jomon period. Shells remain long after organic matter has vanished.</p>
+
+        <p>A QR code inscribed on quartz glass works the same way. Even if servers go down, companies disappear, or civilizations transform, quartz glass endures. Voice and portrait are physically inscribed as QR codes, remaining in a playable state for a thousand years.</p>
+
+        <p>As the honbinos leaves its shell behind, TokiStorage leaves voice behind.</p>
+
+        <blockquote>
+            <p>The honbinos clam that settled in Urayasu&rsquo;s tidal flat eventually spread across all of Tokyo Bay.</p>
+            <p>TokiStorage holds the structure to spread from Urayasu across the entire planet.</p>
+            <p>Indifferent to environment, non-competitive with incumbents, reproducing at zero fixed cost, carrying a shell that lasts a thousand years.</p>
+            <p>&mdash;Global Honbinos. That is TokiStorage&rsquo;s survival strategy.</p>
+        </blockquote>
+
+    </article>
+
+    <footer class="article-footer">
+        <p>This essay examines TokiStorage&rsquo;s business structure through the lens of the honbinos clam&rsquo;s survival strategy.</p>
+        <p id="essay-nav-links"></p>
+        <p style="margin-top: 2rem; font-size: 0.75rem;">&copy; 2026 TokiStorage</p>
+    </footer>
+
+</main>
+
+<script src="contact-form.js"></script>
+<script src="essay-nav.js?v=20260218"></script>
+<script src="tracker.js"></script>
+</body>
+</html>

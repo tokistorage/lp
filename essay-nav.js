@@ -58,6 +58,7 @@
     { id: 'no-competition', ja: '競合不在の作り方', en: 'No Competition' },
     { id: 'platform', ja: 'プラットフォームの視界', en: 'Platform View' },
     { id: 'global-niche', ja: 'グローバルニッチ', en: 'Global Niche' },
+    { id: 'global-honbinos', ja: 'グローバルホンビノス', en: 'Global Honbinos' },
     { id: 'ecosystem', ja: 'エコシステムの再定義', en: 'Redefining the Ecosystem' },
     { id: 'free-strategy', ja: 'フリー戦略の逆説', en: 'The Paradox of Free' },
     { id: 'brochure-essay', ja: 'ブローシャの限界と超越', en: 'The Limits of the Brochure' },
