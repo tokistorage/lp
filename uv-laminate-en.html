@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" type="image/png" sizes="32x32" href="asset/favicon-32.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="asset/apple-touch-icon.png">
+    <title>The War Against UV — How Laminated QR Was Born | TokiStorage</title>
+    <meta name="robots" content="noindex, nofollow">
+    <meta name="description" content="Weathered tombstones, the scorching sun of Maui, pedestrians white with sunscreen. Experiencing UV degradation firsthand led to the discovery of UV film lamination.">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Shippori+Mincho:wght@400;500;600;700&family=Zen+Kaku+Gothic+New:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --toki-blue: #2563EB;
+            --toki-blue-dark: #1D4ED8;
+            --toki-blue-pale: #EFF6FF;
+            --bg-white: #FFFFFF;
+            --bg-section: #F8FAFC;
+            --text-primary: #1E293B;
+            --text-secondary: #475569;
+            --text-muted: #94A3B8;
+            --border: #E2E8F0;
+            --font-display: 'Shippori Mincho', serif;
+            --font-body: 'Zen Kaku Gothic New', sans-serif;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        html { scroll-behavior: smooth; }
+
+        body {
+            font-family: var(--font-body);
+            font-weight: 400;
+            background: var(--bg-white);
+            color: var(--text-primary);
+            line-height: 2;
+            font-size: 16px;
+        }
+
+        .article-nav {
+            position: fixed; top: 0; left: 0; right: 0; z-index: 1000;
+            background: rgba(255,255,255,0.95);
+            backdrop-filter: blur(12px);
+            border-bottom: 1px solid var(--border);
+            padding: 0.6rem 1.2rem;
+            display: flex; align-items: center; justify-content: space-between; gap: 1rem;
+        }
+        .article-nav .nav-brand {
+            font-family: var(--font-display); font-size: 0.9rem; font-weight: 600;
+            color: var(--toki-blue); text-decoration: none; white-space: nowrap;
+        }
+        .article-nav .nav-right { display: flex; align-items: center; gap: 1rem; }
+        .article-nav .nav-label { font-size: 0.6rem; color: var(--text-muted); letter-spacing: 0.08em; }
+        .article-nav .lang-switch {
+            font-size: 0.75rem; color: var(--toki-blue); text-decoration: none;
+            padding: 0.3rem 0.6rem; border: 1px solid var(--toki-blue); border-radius: 4px;
+        }
+        .article-nav .lang-switch:hover { background: var(--toki-blue); color: #fff; }
+
+        .article-container { max-width: 680px; margin: 0 auto; padding: 7rem 2rem 4rem; }
+
+        .article-header { margin-bottom: 3rem; padding-bottom: 2rem; border-bottom: 1px solid var(--border); }
+        .article-category { font-size: 0.7rem; color: var(--toki-blue); letter-spacing: 0.15em; margin-bottom: 1rem; }
+        .article-header h1 { font-family: var(--font-display); font-size: 1.8rem; font-weight: 600; line-height: 1.5; margin-bottom: 1rem; }
+        .article-subtitle { font-size: 0.95rem; color: var(--text-secondary); line-height: 1.8; }
+
+        .article-content h2 { font-family: var(--font-display); font-size: 1.25rem; font-weight: 600; margin: 3rem 0 1.5rem; padding-bottom: 0.5rem; border-bottom: 1px solid var(--border); }
+        .article-content p { margin-bottom: 1.5rem; text-align: justify; }
+        .article-content blockquote { margin: 2rem 0; padding: 1.5rem 2rem; background: var(--bg-section); border-left: 3px solid var(--toki-blue); font-style: italic; }
+        .article-content blockquote p { margin-bottom: 0.5rem; }
+        .article-content ul { margin: 1.5rem 0; padding-left: 1.5rem; }
+        .article-content li { margin-bottom: 0.75rem; }
+
+        .key-point { background: var(--toki-blue-pale); padding: 1.5rem 2rem; border-radius: 8px; margin: 2rem 0; border-left: 3px solid var(--toki-blue); }
+        .key-point p { margin-bottom: 0; font-size: 0.95rem; }
+
+        .core-message { background: linear-gradient(135deg, var(--toki-blue-pale) 0%, #DBEAFE 100%); border-left: 4px solid var(--toki-blue); padding: 1.2rem 1.5rem; margin: 0 0 1.5rem 0; border-radius: 0 8px 8px 0; font-size: 0.95rem; line-height: 1.8; }
+
+        .article-footer { margin-top: 4rem; padding-top: 2rem; border-top: 1px solid var(--border); text-align: center; }
+        .article-footer p { font-size: 0.8rem; color: var(--text-muted); margin-bottom: 1rem; }
+        .article-footer a { color: var(--toki-blue); text-decoration: none; }
+        .article-footer a:hover { text-decoration: underline; }
+
+        @media (max-width: 768px) {
+            .article-container { padding: 6rem 1.2rem 3rem; }
+            .article-header h1 { font-size: 1.5rem; }
+            .article-nav .nav-label { display: none; }
+        }
+        @media print { .article-nav { display: none; } .article-container { padding-top: 2rem; } }
+        .nav-brand::before { content: ''; display: inline-block; width: 20px; height: 20px; background: url('asset/tokistorage-icon-512.png') no-repeat center / contain; vertical-align: -3px; margin-right: 5px; }
+    </style>
+<link rel="stylesheet" href="contact-form.css">
+    <meta property="og:image" content="https://tokistorage.github.io/lp/asset/tokistorage-icon-512.png">
+    <meta property="og:image:width" content="512">
+    <meta property="og:image:height" content="512">
+</head>
+<body>
+
+<nav class="article-nav">
+    <a href="index-en.html" class="nav-brand">TokiStorage</a>
+    <div class="nav-right">
+        <span class="nav-label">TECHNICAL / UV LAMINATE</span>
+        <a href="uv-laminate.html" class="lang-switch">JA</a>
+    </div>
+</nav>
+
+<main class="article-container">
+
+    <header class="article-header">
+        <p class="article-category">ESSAY — The War Against UV</p>
+        <h1>The War Against UV<br>— How Laminated QR Was Born</h1>
+        <p class="article-subtitle">
+            Fused quartz lasts 1,000 years. But not everyone needs fused quartz.<br>
+            Something more accessible, more affordable, yet still reliably permanent. That pursuit was a war against ultraviolet light.
+        </p>
+    </header>
+
+    <article class="article-content">
+
+        <div class="core-message">
+            <strong>The point of this essay:</strong> Laminated QR is not a "cheap alternative." It is another form of permanence, born from experiencing UV degradation firsthand and arriving at UV film lamination as the answer.
+        </div>
+
+        <h2>1. What Tombstones Taught Me</h2>
+
+        <p>I used to think tombstones were symbols of eternity. But walking through graveyards, reality told a different story.</p>
+
+        <p>Within decades, inscribed characters fade, surfaces weather, and moss creeps over the stone. Even granite — one of the hardest materials available — slowly crumbles under rain, ultraviolet light, and temperature cycles. After a hundred years, some graves become unreadable. You cannot tell whose remains lie beneath.</p>
+
+        <p>The stone endures. But the information inscribed on it does not. This was the same lesson I learned when I tried engraving QR codes on seashells. "Surviving" and "preserving what is inscribed" are two different things. And for anything placed outdoors, the greatest enemy is ultraviolet radiation.</p>
+
+        <h2>2. The Scorching Sun of Maui</h2>
+
+        <p>When I visited Maui, I learned the violence of UV light through my own body.</p>
+
+        <p>Driving a rental car on the road to Hana. Even through the windows, my skin burned. Roadside signs were bleached out. Plastic markers had turned chalky white. Painted road markings vanished within a few years. Pedestrians had their faces slathered white with sunscreen. And still it was not enough.</p>
+
+        <p>UV radiation in Hawaii is two to three times stronger than in Japan. Placing anything outdoors in this environment means an endless war against ultraviolet light. When I decided to establish a storage site in Maui, I knew I needed materials that could win this war.</p>
+
+        <h2>3. The Mechanism of Degradation</h2>
+
+        <p>The mechanism by which UV destroys materials is simple. High-energy photons break molecular bonds. Ink pigments decompose. Paper fibers become brittle. Plastics yellow and crack.</p>
+
+        <p>A conventionally printed QR code placed outdoors becomes unreadable within months. Inkjet prints might last only weeks. Even laser-printed codes will not survive a year. Ultraviolet light mercilessly returns what humans consider "printed" back to blank white.</p>
+
+        <p>Fused quartz solves this problem. But fused quartz costs 50,000 yen. For everyday records — a child's growth, travel memories, a simple voice message — 50,000 yen is a heavy price. A more accessible option was needed.</p>
+
+        <h2>4. Discovering UV Film Lamination</h2>
+
+        <p>The answer came from the printing industry. UV-cut film lamination, used for outdoor advertising and vehicle wraps. A technology that blocks over 90% of ultraviolet light while physically sealing the printed surface.</p>
+
+        <p>The QR code is sandwiched between two layers of this film. UV radiation is blocked by the film. Moisture cannot penetrate. Physical abrasion is deflected. Indoors, readability is maintained for over ten years. Even outdoors, several years of scannable life is assured.</p>
+
+        <p>5,000 yen. One-tenth the cost of fused quartz. Yet with durability orders of magnitude beyond ordinary paper printing. It is not perfect. It will not last a thousand years. But for the purpose of "reliably preserving a voice from this very moment," it is more than sufficient.</p>
+
+        <h2>5. Two Forms of Permanence</h2>
+
+        <p>Fused quartz and laminate are not opposites. They are two different forms of permanence.</p>
+
+        <p>Fused quartz offers permanence measured in millennia. It endures even as civilizations change. A medium for inscribing existence itself.</p>
+
+        <p>Laminated QR offers permanence measured in decades. A medium for preserving everyday voices — easily, reliably. As long as the voice remains until a child grows up, that is enough. And someday, that voice can be re-inscribed onto fused quartz.</p>
+
+        <div class="key-point">
+            <p>Fused quartz for a thousand years. Laminate for ten. The scales are different. But both are two answers to the same war — the war against ultraviolet light.</p>
+        </div>
+
+        <h2>6. The Philosophy of Sunscreen</h2>
+
+        <p>The pedestrians in Maui, faces white with sunscreen. That was not a comical sight. It was a serious defense against an invisible threat — ultraviolet radiation.</p>
+
+        <p>Laminated QR operates on the same principle. A transparent shield protecting records from invisible UV light. Just as sunscreen protects skin, UV film protects QR codes.</p>
+
+        <p>Seeing tombstones weather taught me about degradation. Maui's scorching sun branded the violence of UV into my body. The philosophy of sunscreen led me to UV film. Laminated QR is the result of these experiences connected in a single line.</p>
+
+        <blockquote>
+            <p>Ultraviolet light is invisible. But it steadily erases inscribed records.</p>
+            <p>Just as letters on tombstones fade. Just as colors on signs bleach away.</p>
+            <p>Two answers to that invisible enemy — fused quartz for a thousand years, laminate for ten.</p>
+            <p>Both are shields to protect a voice.</p>
+        </blockquote>
+
+    </article>
+
+    <footer class="article-footer">
+        <p>This essay documents the experiences behind the creation of Laminated QR and the design philosophy of UV protection.</p>
+        <p id="essay-nav-links"></p>
+        <p style="margin-top: 2rem; font-size: 0.75rem;">&copy; 2026 TokiStorage</p>
+    </footer>
+
+</main>
+
+<script src="contact-form.js"></script>
+<script src="essay-nav.js?v=20260218"></script>
+<script src="tracker.js"></script>
+</body>
+</html>
