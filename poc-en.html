@@ -1,0 +1,278 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" type="image/png" sizes="32x32" href="asset/favicon-32.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="asset/apple-touch-icon.png">
+    <title>The PoC Perspective — Organizations That Never Finish, Individuals Who Move Forward | TokiStorage</title>
+    <meta name="robots" content="noindex, nofollow">
+    <meta name="description" content="Proof of Concept is the act of confirming whether something can be done. But in many organizations, PoC has become a ritual for postponing the decision not to act. TokiStorage's PoC became its product.">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Shippori+Mincho:wght@400;500;600;700&family=Zen+Kaku+Gothic+New:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --toki-blue: #1E40AF;
+            --toki-blue-dark: #1E3A5F;
+            --toki-blue-pale: #EFF6FF;
+            --accent-blue: #3B82F6;
+            --bg-white: #FFFFFF;
+            --bg-section: #DBEAFE;
+            --text-primary: #1E293B;
+            --text-secondary: #475569;
+            --text-muted: #94A3B8;
+            --border: #E2E8F0;
+            --font-display: 'Shippori Mincho', serif;
+            --font-body: 'Zen Kaku Gothic New', sans-serif;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        html { scroll-behavior: smooth; }
+
+        body {
+            font-family: var(--font-body);
+            font-weight: 400;
+            background: var(--bg-white);
+            color: var(--text-primary);
+            line-height: 1.9;
+            font-size: 16px;
+        }
+
+        .article-nav {
+            position: fixed; top: 0; left: 0; right: 0; z-index: 1000;
+            background: rgba(255,255,255,0.95);
+            backdrop-filter: blur(12px);
+            border-bottom: 1px solid var(--border);
+            padding: 0.6rem 1.2rem;
+            display: flex; align-items: center; justify-content: space-between; gap: 1rem;
+        }
+        .article-nav .nav-brand {
+            font-family: var(--font-display); font-size: 0.9rem; font-weight: 600;
+            color: var(--toki-blue); text-decoration: none; white-space: nowrap; flex-shrink: 0;
+        }
+        .article-nav .nav-right { display: flex; align-items: center; gap: 1rem; }
+        .article-nav .nav-label { font-size: 0.6rem; color: var(--text-muted); letter-spacing: 0.08em; text-align: right; line-height: 1.4; }
+        .article-nav .lang-switch { font-size: 0.75rem; color: var(--toki-blue); text-decoration: none; padding: 0.3rem 0.6rem; border: 1px solid var(--toki-blue); border-radius: 4px; }
+        .article-nav .lang-switch:hover { background: var(--toki-blue); color: #fff; }
+
+        .article-container { max-width: 720px; margin: 0 auto; padding: 5rem 2rem 4rem; }
+        .article-header { margin-bottom: 3rem; }
+        .article-category { font-size: 0.7rem; letter-spacing: 0.15em; color: var(--toki-blue); margin-bottom: 0.5rem; }
+        .article-header h1 { font-family: var(--font-display); font-size: 1.8rem; font-weight: 700; line-height: 1.5; color: var(--text-primary); margin-bottom: 1rem; }
+        .article-subtitle { font-size: 0.95rem; color: var(--text-secondary); line-height: 1.8; }
+
+        .article-content h2 { font-family: var(--font-display); font-size: 1.3rem; font-weight: 600; color: var(--toki-blue-dark); margin: 3rem 0 1rem; padding-bottom: 0.5rem; border-bottom: 1px solid var(--border); }
+        .article-content h3 { font-family: var(--font-display); font-size: 1.1rem; font-weight: 600; color: var(--text-primary); margin: 2rem 0 0.8rem; }
+        .article-content p { margin-bottom: 1.2rem; text-align: justify; }
+        .article-content ul, .article-content ol { margin: 0.5rem 0 1.5rem 1.5rem; }
+        .article-content li { margin-bottom: 0.5rem; }
+        .article-content blockquote { border-left: 3px solid var(--toki-blue); padding: 1rem 1.5rem; margin: 1.5rem 0; background: var(--toki-blue-pale); font-style: italic; color: var(--text-secondary); }
+        .article-content strong { color: var(--toki-blue-dark); }
+
+        .core-message { background: var(--toki-blue-pale); border-left: 4px solid var(--toki-blue); padding: 1.2rem 1.5rem; margin: 0 0 2rem; font-size: 0.95rem; line-height: 1.8; }
+
+        .phase-table { width: 100%; border-collapse: collapse; margin: 1.5rem 0; font-size: 0.9rem; }
+        .phase-table th, .phase-table td { padding: 0.7rem 1rem; border: 1px solid var(--border); text-align: left; }
+        .phase-table th { background: var(--toki-blue-pale); font-weight: 600; color: var(--toki-blue-dark); font-size: 0.85rem; }
+        .phase-table td { vertical-align: top; }
+
+        .highlight-box { background: linear-gradient(135deg, var(--toki-blue-pale), #fff); border: 1px solid var(--accent-blue); border-radius: 8px; padding: 1.5rem; margin: 2rem 0; text-align: center; }
+        .highlight-box p { text-align: center; margin-bottom: 0.5rem; }
+        .highlight-box .big { font-family: var(--font-display); font-size: 1.3rem; font-weight: 700; color: var(--toki-blue-dark); }
+
+        .article-footer { margin-top: 4rem; padding: 2rem 0; border-top: 1px solid var(--border); font-size: 0.7rem; color: var(--text-muted); line-height: 2.2; }
+        .article-footer a { color: var(--text-muted); text-decoration: none; }
+        .article-footer a:hover { text-decoration: underline; }
+
+        @media (max-width: 768px) {
+            .article-container { padding: 6rem 1.2rem 3rem; }
+            .article-header h1 { font-size: 1.5rem; }
+            .article-nav .nav-label { display: none; }
+            .phase-table { font-size: 0.8rem; }
+            .phase-table th, .phase-table td { padding: 0.5rem 0.6rem; }
+        }
+        @media print { .article-nav { display: none; } .article-container { padding-top: 2rem; } }
+        .nav-brand::before { content: ''; display: inline-block; width: 20px; height: 20px; background: url('asset/tokistorage-icon-512.png') no-repeat center / contain; vertical-align: -3px; margin-right: 5px; }
+    </style>
+<link rel="stylesheet" href="contact-form.css">
+    <meta property="og:image" content="https://tokistorage.github.io/lp/asset/tokistorage-icon-512.png">
+    <meta property="og:image:width" content="512">
+    <meta property="og:image:height" content="512">
+</head>
+<body>
+
+<nav class="article-nav">
+    <a href="index-en.html" class="nav-brand">TokiStorage</a>
+    <div class="nav-right">
+        <span class="nav-label">Technology & Design / PoC Perspective</span>
+        <a href="poc.html" class="lang-switch">JA</a>
+    </div>
+</nav>
+
+<main class="article-container">
+
+    <header class="article-header">
+        <p class="article-category">ESSAY — Technology & Design</p>
+        <h1>The PoC Perspective — Organizations That Never Finish, Individuals Who Move Forward</h1>
+        <p class="article-subtitle">
+            Proof of Concept is the act of confirming "can this be done?"<br>
+            But has it become a ritual for postponing "we won't do this"?
+        </p>
+    </header>
+
+    <article class="article-content">
+
+        <div class="core-message">
+            <strong>The point of this essay:</strong> PoC is a means of validating hypotheses and advancing to the next decision. But in many organizations, PoC has become a mechanism for avoiding decisions altogether. In TokiStorage, the codec selection process itself was a PoC, and its results directly became the product's architecture. The difference between organizations where PoC concludes and those where it doesn't is not technical skill — it's the willingness to accept verification results.
+        </div>
+
+
+        <h2>1. What Is PoC</h2>
+
+        <p>Proof of Concept. The act of testing on a small scale whether a given technology or idea is feasible.</p>
+
+        <p>A proper PoC has a clear structure.</p>
+
+        <ul>
+            <li><strong>Hypothesis</strong> — "Can this technology solve this problem?"</li>
+            <li><strong>Verification</strong> — Build it and test</li>
+            <li><strong>Verdict</strong> — It worked / It didn't</li>
+            <li><strong>Decision</strong> — Proceed / Stop / Change direction</li>
+        </ul>
+
+        <p>When these four steps complete their cycle, a PoC ends in days to weeks. The problem is that in far too many cases, this cycle never completes.</p>
+
+
+        <h2>2. The PoC That Never Ends</h2>
+
+        <p>A common scene in large enterprise IT departments.</p>
+
+        <p>"We ran a PoC. Results were promising. As a next step, we're planning a larger-scale PoC."</p>
+
+        <p>This is not PoC. <strong>It is indefinite postponement wearing the name of PoC.</strong></p>
+
+        <p>Organizations where PoC never ends share common patterns.</p>
+
+        <ul>
+            <li><strong>Ambiguous success criteria</strong> — what constitutes "success" was never defined upfront. So even when results arrive, no verdict can be reached</li>
+            <li><strong>No tolerance for failure</strong> — concluding "it didn't work" creates accountability issues. So no conclusion is drawn</li>
+            <li><strong>No decision-maker</strong> — there is no one who can say "go" or "stop" based on results. So "more verification is needed" becomes the default</li>
+            <li><strong>PoC as its own purpose</strong> — "we're experimenting with new technology" is reported as an achievement. Conclusions are not expected</li>
+        </ul>
+
+        <blockquote>
+            The purpose of PoC is not "to try."<br>
+            It is "to decide."
+        </blockquote>
+
+
+        <h2>3. TokiStorage's PoC — Opus Fails, Codec2 Emerges</h2>
+
+        <p>TokiStorage's voice QR code began with one clear PoC.</p>
+
+        <p><strong>Hypothesis</strong>: Can a human voice fit in a single QR code (maximum 2,953 bytes)?</p>
+
+        <h3>PoC 1: Opus</h3>
+        <p>The first attempt used Opus — a web-standard audio codec with native browser decoding. In theory, reducing the bitrate to 1–2 kbps should fit tens of seconds of audio into a QR code.</p>
+
+        <p>The result was unambiguous. <strong>Opus at 2 kbps and below falls into DTX (Discontinuous Transmission), outputting essentially silent frames.</strong> At 4 kbps and above, entropy is too high for compression to help — only 2–3 seconds fit in a QR. Between 2–4 kbps, no usable middle ground existed.</p>
+
+        <p>Verdict: <strong>Opus cannot solve this.</strong></p>
+
+        <h3>PoC 2: Codec2</h3>
+        <p>Next came Codec2 — an ultra-low-bitrate voice codec designed for amateur radio that maintains intelligible human speech even at the extreme low of 450 bps.</p>
+
+        <p>Result: at the 450 bps mode, approximately 29 seconds of voice fit in a single QR code. The quality is robotic, but speaker identity is recognizable and content is intelligible.</p>
+
+        <p>Verdict: <strong>Codec2 solves this.</strong></p>
+
+        <p>The entire PoC took days. There was a hypothesis, verification, a verdict, and a decision. Because the conclusion that Opus "couldn't do it" was accepted, Codec2 was reached.</p>
+
+        <blockquote>
+            "It didn't work" is not failure.<br>
+            It is the entrance to the next hypothesis.
+        </blockquote>
+
+
+        <h2>4. When PoC Becomes Architecture</h2>
+
+        <p>TokiStorage's PoC has one distinguishing feature: the PoC artifacts became part of the product itself.</p>
+
+        <table class="phase-table">
+            <tr>
+                <th>PoC Result</th>
+                <th>Product Impact</th>
+            </tr>
+            <tr>
+                <td>Opus deemed infeasible</td>
+                <td>Opus dependency eliminated from the design</td>
+            </tr>
+            <tr>
+                <td>Codec2 450 bps confirmed working</td>
+                <td>Six modes implemented (3200/2400/1600/1200/700C/450 bps)</td>
+            </tr>
+            <tr>
+                <td>QR Version 40 = 2,953 bytes</td>
+                <td>Fixed as the capacity constraint in URL design</td>
+            </tr>
+            <tr>
+                <td>Codec2 runs in WASM</td>
+                <td>Browser-only architecture confirmed</td>
+            </tr>
+        </table>
+
+        <p>In many organizations, PoC and product development are disconnected. PoC is done by a "technical validation team," whose findings are handed to a "product team" that redesigns from scratch. Half the insights from the PoC are lost in this handoff.</p>
+
+        <p>In TokiStorage, one person carries through from PoC to product, so <strong>PoC judgments directly become architectural design principles</strong>. Zero information loss.</p>
+
+
+        <h2>5. The Art of Stopping</h2>
+
+        <p>The most important function of PoC is enabling the decision to stop.</p>
+
+        <p>When it became clear that Opus could not achieve voice QR, investment in Opus was cut immediately. The option to keep searching the 2–4 kbps middle ground for optimizations existed, but the PoC verdict was clear. Structurally impossible.</p>
+
+        <p>Many organizations cannot make this "stop" decision. To justify already-invested time and budget, they continue: "with a little more optimization," "if we adjust the parameters." This is the sunk cost trap, and it is the true identity of the never-ending PoC.</p>
+
+        <p><strong>The value of PoC lies not only in "it worked." Its greatest value is in establishing "it can't" early.</strong></p>
+
+
+        <h2>6. PoC Should Be Minimal</h2>
+
+        <p>A good PoC is small. One hypothesis, one verification, one verdict.</p>
+
+        <p>"Can voice fit in a QR?" is one hypothesis. "Can Opus do it?" is one verification. "Opus can't" is one verdict. From there, the next hypothesis — "What about Codec2?" — is born.</p>
+
+        <p>One reason enterprise PoCs never end is that their scope is too large. "Can AI be applied to our business?" is not a hypothesis — it's a wish. "Can GPT-4 classify this field in this form?" is a hypothesis.</p>
+
+        <p>The smaller the hypothesis, the faster the verification, the clearer the verdict, and the easier the decision.</p>
+
+
+        <h2>7. Conclusion — PoC Is a Tool for Decisions</h2>
+
+        <div class="highlight-box">
+            <p class="big">PoC exists not to try, but to decide.</p>
+            <p>Without the willingness to accept verification results,<br>PoC will never end.</p>
+        </div>
+
+        <p>TokiStorage's voice QR code began with Opus's failure. Accepting "it didn't work" led to Codec2. Codec2 working confirmed the architecture. A confirmed architecture is why the structure stands firm today.</p>
+
+        <p>PoC is not a technology demonstration. It is a decision-making tool. Define criteria beforehand, accept results, and move forward. That cycle, repeated, builds structure that isn't a facade.</p>
+
+        <p>The question is always the same. <strong>Are you prepared to accept the PoC's results?</strong></p>
+
+    </article>
+
+    <footer class="article-footer">
+        <p id="essay-nav-links"></p>
+        <p style="margin-top: 2rem; font-size: 0.75rem;">&copy; 2026 TokiStorage</p>
+    </footer>
+
+</main>
+
+<script src="contact-form.js"></script>
+<script src="essay-nav.js?v=20260218"></script>
+<script src="tracker.js"></script>
+</body>
+</html>
