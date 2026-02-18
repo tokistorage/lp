@@ -192,7 +192,7 @@
         <p>The QR generation tool, physical manufacturing, and three-layer preservation (GitHub, NDL, physical media) are designed as independent layers. Changes in one layer don't cascade to others.</p>
 
         <h3>Principle 3: Security Is Guaranteed by Architecture</h3>
-        <p>Permanent data never goes to a server, so it can't leak from a server. Operational tasks use Cloudflare Workers and GAS for order and inquiry processing, but these services never touch the voice data inscribed in QR codes. Code is published, so hidden vulnerabilities get found. The site is static, so server-side vulnerabilities don't exist. Security isn't "added" — risks "structurally cannot arise."</p>
+        <p>Every piece of data in the pipeline is public by destination. The voice data in QR codes passes through Cloudflare Workers and GAS as part of the order process, but that data is destined for physical products, GitHub, and NDL — it is not secret. Credit card information is processed directly by Wise and never enters the pipeline. There is nothing whose leakage would cause harm. Code is published, so hidden vulnerabilities get found. The site is static, so server-side vulnerabilities don't exist. Security isn't "added" — there are no secrets to protect in the first place.</p>
 
         <h3>Principle 4: Governance Is Designed Per Layer</h3>
         <p>QR generation is client-side, so content is not screened. Physical products are private property, so they are not scanned. NDL deposit goes through newsletter editing, so content falling under prohibited uses may be declined. What is controlled, what is not, and why — all clearly defined per layer.</p>
