@@ -1,0 +1,278 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" type="image/png" sizes="32x32" href="asset/favicon-32.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="asset/apple-touch-icon.png">
+    <title>PoCの目線 — 検証が終わらない組織、検証で前に進む個人 | トキストレージ</title>
+    <meta name="robots" content="noindex, nofollow">
+    <meta name="description" content="Proof of Conceptは「できるかどうかを確かめる」行為である。しかし多くの組織でPoCは「やらない理由を延期する」儀式になっている。トキストレージは、PoCそのものがプロダクトになった。">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Shippori+Mincho:wght@400;500;600;700&family=Zen+Kaku+Gothic+New:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --toki-blue: #1E40AF;
+            --toki-blue-dark: #1E3A5F;
+            --toki-blue-pale: #EFF6FF;
+            --accent-blue: #3B82F6;
+            --bg-white: #FFFFFF;
+            --bg-section: #DBEAFE;
+            --text-primary: #1E293B;
+            --text-secondary: #475569;
+            --text-muted: #94A3B8;
+            --border: #E2E8F0;
+            --font-display: 'Shippori Mincho', serif;
+            --font-body: 'Zen Kaku Gothic New', sans-serif;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        html { scroll-behavior: smooth; }
+
+        body {
+            font-family: var(--font-body);
+            font-weight: 400;
+            background: var(--bg-white);
+            color: var(--text-primary);
+            line-height: 1.9;
+            font-size: 16px;
+        }
+
+        .article-nav {
+            position: fixed; top: 0; left: 0; right: 0; z-index: 1000;
+            background: rgba(255,255,255,0.95);
+            backdrop-filter: blur(12px);
+            border-bottom: 1px solid var(--border);
+            padding: 0.6rem 1.2rem;
+            display: flex; align-items: center; justify-content: space-between; gap: 1rem;
+        }
+        .article-nav .nav-brand {
+            font-family: var(--font-display); font-size: 0.9rem; font-weight: 600;
+            color: var(--toki-blue); text-decoration: none; white-space: nowrap; flex-shrink: 0;
+        }
+        .article-nav .nav-right { display: flex; align-items: center; gap: 1rem; }
+        .article-nav .nav-label { font-size: 0.6rem; color: var(--text-muted); letter-spacing: 0.08em; text-align: right; line-height: 1.4; }
+        .article-nav .lang-switch { font-size: 0.75rem; color: var(--toki-blue); text-decoration: none; padding: 0.3rem 0.6rem; border: 1px solid var(--toki-blue); border-radius: 4px; }
+        .article-nav .lang-switch:hover { background: var(--toki-blue); color: #fff; }
+
+        .article-container { max-width: 720px; margin: 0 auto; padding: 5rem 2rem 4rem; }
+        .article-header { margin-bottom: 3rem; }
+        .article-category { font-size: 0.7rem; letter-spacing: 0.15em; color: var(--toki-blue); margin-bottom: 0.5rem; }
+        .article-header h1 { font-family: var(--font-display); font-size: 1.8rem; font-weight: 700; line-height: 1.5; color: var(--text-primary); margin-bottom: 1rem; }
+        .article-subtitle { font-size: 0.95rem; color: var(--text-secondary); line-height: 1.8; }
+
+        .article-content h2 { font-family: var(--font-display); font-size: 1.3rem; font-weight: 600; color: var(--toki-blue-dark); margin: 3rem 0 1rem; padding-bottom: 0.5rem; border-bottom: 1px solid var(--border); }
+        .article-content h3 { font-family: var(--font-display); font-size: 1.1rem; font-weight: 600; color: var(--text-primary); margin: 2rem 0 0.8rem; }
+        .article-content p { margin-bottom: 1.2rem; text-align: justify; }
+        .article-content ul, .article-content ol { margin: 0.5rem 0 1.5rem 1.5rem; }
+        .article-content li { margin-bottom: 0.5rem; }
+        .article-content blockquote { border-left: 3px solid var(--toki-blue); padding: 1rem 1.5rem; margin: 1.5rem 0; background: var(--toki-blue-pale); font-style: italic; color: var(--text-secondary); }
+        .article-content strong { color: var(--toki-blue-dark); }
+
+        .core-message { background: var(--toki-blue-pale); border-left: 4px solid var(--toki-blue); padding: 1.2rem 1.5rem; margin: 0 0 2rem; font-size: 0.95rem; line-height: 1.8; }
+
+        .phase-table { width: 100%; border-collapse: collapse; margin: 1.5rem 0; font-size: 0.9rem; }
+        .phase-table th, .phase-table td { padding: 0.7rem 1rem; border: 1px solid var(--border); text-align: left; }
+        .phase-table th { background: var(--toki-blue-pale); font-weight: 600; color: var(--toki-blue-dark); font-size: 0.85rem; }
+        .phase-table td { vertical-align: top; }
+
+        .highlight-box { background: linear-gradient(135deg, var(--toki-blue-pale), #fff); border: 1px solid var(--accent-blue); border-radius: 8px; padding: 1.5rem; margin: 2rem 0; text-align: center; }
+        .highlight-box p { text-align: center; margin-bottom: 0.5rem; }
+        .highlight-box .big { font-family: var(--font-display); font-size: 1.3rem; font-weight: 700; color: var(--toki-blue-dark); }
+
+        .article-footer { margin-top: 4rem; padding: 2rem 0; border-top: 1px solid var(--border); font-size: 0.7rem; color: var(--text-muted); line-height: 2.2; }
+        .article-footer a { color: var(--text-muted); text-decoration: none; }
+        .article-footer a:hover { text-decoration: underline; }
+
+        @media (max-width: 768px) {
+            .article-container { padding: 6rem 1.2rem 3rem; }
+            .article-header h1 { font-size: 1.5rem; }
+            .article-nav .nav-label { display: none; }
+            .phase-table { font-size: 0.8rem; }
+            .phase-table th, .phase-table td { padding: 0.5rem 0.6rem; }
+        }
+        @media print { .article-nav { display: none; } .article-container { padding-top: 2rem; } }
+        .nav-brand::before { content: ''; display: inline-block; width: 20px; height: 20px; background: url('asset/tokistorage-icon-512.png') no-repeat center / contain; vertical-align: -3px; margin-right: 5px; }
+    </style>
+<link rel="stylesheet" href="contact-form.css">
+    <meta property="og:image" content="https://tokistorage.github.io/lp/asset/tokistorage-icon-512.png">
+    <meta property="og:image:width" content="512">
+    <meta property="og:image:height" content="512">
+</head>
+<body>
+
+<nav class="article-nav">
+    <a href="index.html" class="nav-brand">トキストレージ</a>
+    <div class="nav-right">
+        <span class="nav-label">技術・設計 / PoCの目線</span>
+        <a href="poc-en.html" class="lang-switch">EN</a>
+    </div>
+</nav>
+
+<main class="article-container">
+
+    <header class="article-header">
+        <p class="article-category">ESSAY — 技術・設計</p>
+        <h1>PoCの目線 — 検証が終わらない組織、検証で前に進む個人</h1>
+        <p class="article-subtitle">
+            Proof of Conceptは「できるかどうかを確かめる」行為である。<br>
+            しかしいつの間にか、「やらない理由を延期する」儀式になっていないか。
+        </p>
+    </header>
+
+    <article class="article-content">
+
+        <div class="core-message">
+            <strong>このエッセイの要点：</strong> PoCは仮説を検証し、次の意思決定に進むための手段である。しかし多くの組織で、PoCは意思決定を回避するための装置になっている。トキストレージでは、音声コーデックの選定そのものがPoCであり、そのPoCの結果がそのままプロダクトのアーキテクチャになった。PoCが終わる組織と終わらない組織の違いは、技術力ではなく「検証結果を受け入れる覚悟」にある。
+        </div>
+
+
+        <h2>1. PoCとは何か</h2>
+
+        <p>Proof of Concept。「概念実証」と訳される。ある技術やアイデアが実現可能かどうかを、小さく試して確かめる行為。</p>
+
+        <p>本来のPoCには明確な構造がある。</p>
+
+        <ul>
+            <li><strong>仮説</strong> — 「この技術でこの問題は解けるか」</li>
+            <li><strong>検証</strong> — 実際に作って試す</li>
+            <li><strong>判定</strong> — できた／できなかった</li>
+            <li><strong>意思決定</strong> — 進む／やめる／方向を変える</li>
+        </ul>
+
+        <p>この4ステップが回れば、PoCは数日から数週間で終わる。問題はこの4ステップが回らないケースが多すぎることだ。</p>
+
+
+        <h2>2. 終わらないPoC</h2>
+
+        <p>大企業のIT部門でよく見る光景がある。</p>
+
+        <p>「PoCをやりました。結果は良好でした。次のステップとして、より大規模なPoCを計画しています。」</p>
+
+        <p>これはPoCではない。<strong>PoCという名前の永久延期</strong>である。</p>
+
+        <p>PoCが終わらない組織には共通のパターンがある。</p>
+
+        <ul>
+            <li><strong>判定基準が曖昧</strong> — 何をもって「成功」とするかが事前に定義されていない。だから結果が出ても判定できない</li>
+            <li><strong>失敗を許容しない</strong> — 「できなかった」という結論を出すと責任問題になる。だから結論を出さない</li>
+            <li><strong>意思決定者が不在</strong> — PoCの結果を受けて「やる」「やめる」を決められる人間がいない。だから「もう少し検証が必要」と先送りされる</li>
+            <li><strong>PoCが目的化している</strong> — 「新しい技術を試している」こと自体が実績として報告される。結論は求められていない</li>
+        </ul>
+
+        <blockquote>
+            PoCの目的は「試すこと」ではない。<br>
+            「判断すること」である。
+        </blockquote>
+
+
+        <h2>3. トキストレージのPoC — Opusの挫折、Codec2の発見</h2>
+
+        <p>トキストレージの音声QRコードは、一つの明確なPoCから始まった。</p>
+
+        <p><strong>仮説</strong>：人間の声をQRコード1枚（最大2,953バイト）に収められるか。</p>
+
+        <h3>PoC 1：Opus</h3>
+        <p>最初に試したのはOpus。Web標準の音声コーデックであり、ブラウザネイティブでデコードできる。理論上、1〜2kbpsまでビットレートを下げれば数十秒の音声がQRに収まるはずだった。</p>
+
+        <p>結果は明確だった。<strong>Opusは2kbps以下でDTX（不連続送信）に陥り、実質的に無音フレームを出力する。</strong> 4kbps以上ではエントロピーが高すぎて圧縮が効かず、QRには2〜3秒しか入らない。2〜4kbpsの間には使える中間地帯が存在しなかった。</p>
+
+        <p>判定：<strong>Opusでは解けない。</strong></p>
+
+        <h3>PoC 2：Codec2</h3>
+        <p>次に試したのがCodec2。アマチュア無線向けに設計された超低ビットレート音声コーデックで、450bpsという極端な低ビットレートでも人間の音声を知覚可能な形で保持する。</p>
+
+        <p>結果：450bpsモードで約29秒の音声がQRコード1枚に収まった。音質はロボティックだが、誰が話しているかは識別でき、内容は聞き取れる。</p>
+
+        <p>判定：<strong>Codec2で解ける。</strong></p>
+
+        <p>このPoCの全体にかかった時間は数日。仮説があり、検証があり、判定があり、意思決定があった。Opusが「できなかった」という結論を受け入れたからこそ、Codec2に到達できた。</p>
+
+        <blockquote>
+            「できなかった」は失敗ではない。<br>
+            それは次の仮説への入口である。
+        </blockquote>
+
+
+        <h2>4. PoCがそのままアーキテクチャになる</h2>
+
+        <p>トキストレージのPoCには一つの特徴がある。PoCの成果物がそのままプロダクトの一部になったこと。</p>
+
+        <table class="phase-table">
+            <tr>
+                <th>PoCの成果</th>
+                <th>プロダクトへの反映</th>
+            </tr>
+            <tr>
+                <td>Opus不可の判定</td>
+                <td>Opusへの依存を設計から排除</td>
+            </tr>
+            <tr>
+                <td>Codec2 450bps動作確認</td>
+                <td>6モード（3200/2400/1600/1200/700C/450bps）の実装</td>
+            </tr>
+            <tr>
+                <td>QR Version 40で2,953バイト</td>
+                <td>URL設計の容量制約として固定</td>
+            </tr>
+            <tr>
+                <td>WASM上でCodec2が動く</td>
+                <td>ブラウザ完結アーキテクチャの確定</td>
+            </tr>
+        </table>
+
+        <p>多くの組織で、PoCとプロダクト開発は分断されている。PoCは「技術検証チーム」が行い、その結果を「プロダクトチーム」が受け取り、改めて設計し直す。PoCで得た知見の半分は、この受け渡しの過程で失われる。</p>
+
+        <p>トキストレージでは一人がPoCからプロダクトまで一貫して行うため、<strong>PoCで得た判断がそのままアーキテクチャの設計原則になる</strong>。情報の損失がゼロ。</p>
+
+
+        <h2>5. PoCが教える「やめる技術」</h2>
+
+        <p>PoCの最も重要な機能は、「やめる」判断を可能にすることである。</p>
+
+        <p>Opusで音声QRが実現できないと判明した時点で、Opusへの投資を即座に打ち切った。2〜4kbpsの中間地帯を探して最適化を続ける選択肢もあったが、PoCの判定は明確だった。構造的に不可能。</p>
+
+        <p>この「やめる」判断ができない組織は多い。すでに投資した時間と予算を正当化するために、「もう少し最適化すれば」「パラメータを調整すれば」と検証を続ける。これがサンクコストの罠であり、終わらないPoCの正体である。</p>
+
+        <p><strong>PoCの価値は「できた」にだけあるのではない。「できない」を早期に確定させることにこそ価値がある。</strong></p>
+
+
+        <h2>6. PoCの規模は最小であるべき</h2>
+
+        <p>良いPoCは小さい。仮説一つ、検証一つ、判定一つ。</p>
+
+        <p>「音声をQRに入れられるか」は一つの仮説だ。「Opusで入れられるか」は一つの検証だ。「Opusでは無理」は一つの判定だ。そこから「Codec2ならどうか」という次の仮説が生まれる。</p>
+
+        <p>大企業のPoCが終わらない理由の一つは、PoCの範囲が大きすぎることにある。「AIを業務に活用できるか」は仮説ではなく願望だ。「この帳票のこの項目をGPT-4で分類できるか」が仮説である。</p>
+
+        <p>仮説が小さいほど、検証は速く、判定は明確で、意思決定は容易になる。</p>
+
+
+        <h2>7. 結論 — PoCは判断の道具である</h2>
+
+        <div class="highlight-box">
+            <p class="big">PoCは「試す」ためではなく「決める」ためにある。</p>
+            <p>検証の結果を受け入れる覚悟がなければ、<br>PoCは永遠に終わらない。</p>
+        </div>
+
+        <p>トキストレージの音声QRコードは、Opusの挫折から始まった。「できなかった」を受け入れたからCodec2に到達し、Codec2が動いたからアーキテクチャが確定し、アーキテクチャが確定したから今日まで構造が揺れていない。</p>
+
+        <p>PoCとは技術のデモンストレーションではない。意思決定の道具である。判定基準を事前に定め、結果を受け入れ、次に進む。その繰り返しが、ハリボテではない構造を生む。</p>
+
+        <p>問いはいつも同じだ。<strong>PoCの結果を、受け入れる準備はあるか。</strong></p>
+
+    </article>
+
+    <footer class="article-footer">
+        <p id="essay-nav-links"></p>
+        <p style="margin-top: 2rem; font-size: 0.75rem;">&copy; 2026 TokiStorage</p>
+    </footer>
+
+</main>
+
+<script src="contact-form.js"></script>
+<script src="essay-nav.js?v=20260218"></script>
+<script src="tracker.js"></script>
+</body>
+</html>
