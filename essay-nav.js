@@ -108,6 +108,16 @@
 
     // ── メタ視点 ──
     { id: 'erasure', ja: '残さない選択', en: 'Choosing Not to Leave Behind' }
+    { id: 'ambassador', ja: '認定アンバサダープログラム', en: 'Certified Ambassador Program' },
+    { id: 'how-to-make', ja: 'Pearl Soapの作り方', en: 'How to Make Pearl Soap' },
+    { id: 'kids-toddler', ja: 'だいすきな ひとの こと', en: 'About People We Love' },
+    { id: 'kids', ja: '1000年後の誰かへ', en: 'To Someone 1000 Years From Now' },
+    { id: 'offgrid', ja: 'オフグリッド構築支援コンサル', en: 'オフグリッド構築支援コンサル' },
+    { id: 'soap-refill', ja: '感想を伝える', en: 'Share Your Thoughts' },
+    { id: 'timelesstown', ja: 'タイムレスタウン新浦安の皆さまへ', en: 'To the Residents of Timeless Town Shin-Urayasu' },
+    { id: 'vision-2050', ja: '2050年ビジョン', en: 'Vision 2050' },
+    { id: 'workaway', ja: 'Workaway導入運用支援コンサル', en: 'Workaway Hosting Consulting' },
+    { id: 'workshop', ja: 'Pearl Soapワークショップ', en: 'Pearl Soap Workshop' },
   ];
 
   const isEnglish = document.documentElement.lang === 'en';
