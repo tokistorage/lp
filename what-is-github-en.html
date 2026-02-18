@@ -1,0 +1,436 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" type="image/png" sizes="32x32" href="asset/favicon-32.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="asset/apple-touch-icon.png">
+    <title>What Is GitHub — Why Your Voice Is Stored in the World's Library | TokiStorage</title>
+    <meta name="robots" content="noindex, nofollow">
+    <meta name="description" content="GitHub is a code management platform used by over 100 million developers worldwide, owned by Microsoft. It stores data with full change history, tamper detection, and global replication — including backups in Arctic permafrost. Here's why TokiStorage uses it to preserve your voice.">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Shippori+Mincho:wght@400;500;600;700&family=Zen+Kaku+Gothic+New:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --toki-blue: #1E40AF;
+            --toki-blue-dark: #1E3A5F;
+            --toki-blue-pale: #EFF6FF;
+            --accent-blue: #3B82F6;
+            --bg-white: #FFFFFF;
+            --bg-section: #DBEAFE;
+            --text-primary: #1E293B;
+            --text-secondary: #475569;
+            --text-muted: #94A3B8;
+            --border: #E2E8F0;
+            --font-display: 'Shippori Mincho', serif;
+            --font-body: 'Zen Kaku Gothic New', sans-serif;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        html { scroll-behavior: smooth; }
+
+        body {
+            font-family: var(--font-body);
+            font-weight: 400;
+            background: var(--bg-white);
+            color: var(--text-primary);
+            line-height: 1.9;
+            font-size: 16px;
+        }
+
+        /* Navigation */
+        .article-nav {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 1000;
+            background: rgba(255,255,255,0.95);
+            backdrop-filter: blur(12px);
+            border-bottom: 1px solid var(--border);
+            padding: 0.6rem 1.2rem;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 1rem;
+        }
+        .article-nav .nav-brand {
+            font-family: var(--font-display);
+            font-size: 0.9rem;
+            font-weight: 600;
+            color: var(--toki-blue);
+            text-decoration: none;
+            white-space: nowrap;
+            flex-shrink: 0;
+        }
+        .article-nav .nav-right {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+        .article-nav .nav-label {
+            font-size: 0.6rem;
+            color: var(--text-muted);
+            letter-spacing: 0.08em;
+            text-align: right;
+            line-height: 1.4;
+        }
+        .article-nav .lang-switch {
+            font-size: 0.75rem;
+            color: var(--toki-blue);
+            text-decoration: none;
+            padding: 0.3rem 0.6rem;
+            border: 1px solid var(--toki-blue);
+            border-radius: 4px;
+        }
+        .article-nav .lang-switch:hover {
+            background: var(--toki-blue);
+            color: #fff;
+        }
+
+        /* Main Content */
+        .article-container {
+            max-width: 720px;
+            margin: 0 auto;
+            padding: 5rem 2rem 4rem;
+        }
+
+        .article-header {
+            margin-bottom: 3rem;
+        }
+        .article-category {
+            font-size: 0.7rem;
+            letter-spacing: 0.15em;
+            color: var(--toki-blue);
+            margin-bottom: 0.5rem;
+        }
+        .article-header h1 {
+            font-family: var(--font-display);
+            font-size: 1.8rem;
+            font-weight: 700;
+            line-height: 1.5;
+            color: var(--text-primary);
+            margin-bottom: 1rem;
+        }
+        .article-subtitle {
+            font-size: 0.95rem;
+            color: var(--text-secondary);
+            line-height: 1.8;
+        }
+
+        .article-content h2 {
+            font-family: var(--font-display);
+            font-size: 1.3rem;
+            font-weight: 600;
+            color: var(--toki-blue-dark);
+            margin: 3rem 0 1rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 1px solid var(--border);
+        }
+        .article-content h3 {
+            font-family: var(--font-display);
+            font-size: 1.1rem;
+            font-weight: 600;
+            color: var(--text-primary);
+            margin: 2rem 0 0.8rem;
+        }
+        .article-content p {
+            margin-bottom: 1.2rem;
+            text-align: justify;
+        }
+        .article-content ul, .article-content ol {
+            margin: 0.5rem 0 1.5rem 1.5rem;
+        }
+        .article-content li {
+            margin-bottom: 0.5rem;
+        }
+        .article-content blockquote {
+            border-left: 3px solid var(--toki-blue);
+            padding: 1rem 1.5rem;
+            margin: 1.5rem 0;
+            background: var(--toki-blue-pale);
+            font-style: italic;
+            color: var(--text-secondary);
+        }
+        .article-content strong {
+            color: var(--toki-blue-dark);
+        }
+
+        .core-message {
+            background: var(--toki-blue-pale);
+            border-left: 4px solid var(--toki-blue);
+            padding: 1.2rem 1.5rem;
+            margin: 0 0 2rem;
+            font-size: 0.95rem;
+            line-height: 1.8;
+        }
+
+        .comparison-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 1.5rem 0;
+            font-size: 0.9rem;
+        }
+        .comparison-table th, .comparison-table td {
+            padding: 0.7rem 1rem;
+            border: 1px solid var(--border);
+            text-align: left;
+        }
+        .comparison-table th {
+            background: var(--toki-blue-pale);
+            font-weight: 600;
+            color: var(--toki-blue-dark);
+            font-size: 0.85rem;
+        }
+        .comparison-table td {
+            vertical-align: top;
+        }
+
+        .highlight-box {
+            background: linear-gradient(135deg, var(--toki-blue-pale), #fff);
+            border: 1px solid var(--accent-blue);
+            border-radius: 8px;
+            padding: 1.5rem;
+            margin: 2rem 0;
+            text-align: center;
+        }
+        .highlight-box p {
+            text-align: center;
+            margin-bottom: 0.5rem;
+        }
+        .highlight-box .big {
+            font-family: var(--font-display);
+            font-size: 1.3rem;
+            font-weight: 700;
+            color: var(--toki-blue-dark);
+        }
+
+        /* Footer */
+        .article-footer {
+            margin-top: 4rem;
+            padding: 2rem 0;
+            border-top: 1px solid var(--border);
+            font-size: 0.7rem;
+            color: var(--text-muted);
+            line-height: 2.2;
+        }
+        .article-footer a {
+            color: var(--text-muted);
+            text-decoration: none;
+        }
+        .article-footer a:hover {
+            text-decoration: underline;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .article-container { padding: 6rem 1.2rem 3rem; }
+            .article-header h1 { font-size: 1.5rem; }
+            .article-nav .nav-label { display: none; }
+            .comparison-table { font-size: 0.8rem; }
+            .comparison-table th, .comparison-table td { padding: 0.5rem 0.6rem; }
+        }
+
+        @media print {
+            .article-nav { display: none; }
+            .article-container { padding-top: 2rem; }
+        }
+        .nav-brand::before {
+            content: '';
+            display: inline-block;
+            width: 20px;
+            height: 20px;
+            background: url('asset/tokistorage-icon-512.png') no-repeat center / contain;
+            vertical-align: -3px;
+            margin-right: 5px;
+        }
+    </style>
+<link rel="stylesheet" href="contact-form.css">
+    <meta property="og:image" content="https://tokistorage.github.io/lp/asset/tokistorage-icon-512.png">
+    <meta property="og:image:width" content="512">
+    <meta property="og:image:height" content="512">
+</head>
+<body>
+
+<nav class="article-nav">
+    <a href="index-en.html" class="nav-brand">TokiStorage</a>
+    <div class="nav-right">
+        <span class="nav-label">Technology & Design / WHAT IS GITHUB</span>
+        <a href="what-is-github.html" class="lang-switch">JA</a>
+    </div>
+</nav>
+
+<main class="article-container">
+
+    <header class="article-header">
+        <p class="article-category">ESSAY — Technology & Design</p>
+        <h1>What Is GitHub — Why Your Voice Is Stored in the World's Library</h1>
+        <p class="article-subtitle">
+            Most people think it's a service for programmers.<br>
+            But at its core, it's a system that replicates tamper-proof records across the world.
+        </p>
+    </header>
+
+    <article class="article-content">
+
+        <div class="core-message">
+            <strong>The point of this essay:</strong> GitHub is the world's largest code management platform, owned by Microsoft and used by over 100 million people. It records every change, detects tampering, and replicates data across servers worldwide. TokiStorage stores your voice on GitHub not because "it's a service for engineers" but because "it is the best existing infrastructure for transparent, permanent record-keeping."
+        </div>
+
+
+        <h2>1. In a Nutshell</h2>
+
+        <p>GitHub is <strong>a service that records the complete change history of files and makes them publicly accessible and replicable worldwide</strong>.</p>
+
+        <p>It was originally built for programmers to manage source code. Today, it hosts legal documents, academic papers, government open data, and even cooking recipes.</p>
+
+        <p>If you need a familiar analogy:</p>
+
+        <blockquote>
+            A library preserves books. GitHub preserves data.<br>
+            But unlike a library, <strong>it records exactly who changed what, and when</strong>.<br>
+            And anyone in the world can verify those records.
+        </blockquote>
+
+
+        <h2>2. Why It's Trustworthy</h2>
+
+        <h3>Scale of operations</h3>
+
+        <p>GitHub was acquired by Microsoft in 2018 for approximately $7.5 billion. It now has over 100 million users. The majority of the world's software is developed and managed on GitHub.</p>
+
+        <p>Google, Apple, Meta, Amazon, Japan's Digital Agency — major organizations worldwide rely on GitHub. From personal hobby projects to cutting-edge AI research. The sudden disappearance of this platform would be equivalent to the collapse of the world's digital infrastructure.</p>
+
+        <h3>Tamper detection</h3>
+
+        <p>GitHub's underlying technology, <strong>Git</strong>, assigns a unique "hash value" — a digital fingerprint — to every file change. If anyone attempts to alter data, this fingerprint changes, making <strong>tampering immediately detectable</strong>.</p>
+
+        <p>Think of it like bank transaction records. Once a deposit or withdrawal is recorded, it cannot be retroactively rewritten. Git works the same way. Past records are never overwritten — new changes are always appended.</p>
+
+        <h3>Arctic permafrost</h3>
+
+        <p>GitHub operates the <strong>Arctic Code Vault</strong> project. Open-source code from around the world is written onto special film and stored in a decommissioned mine in Svalbard, Norway. In the permafrost, the data is expected to survive for at least 1,000 years.</p>
+
+        <p>The same Svalbard archipelago hosts the Global Seed Vault, which preserves plant seeds from around the world. Just as seeds safeguard the future of agriculture, the Arctic Code Vault safeguards the future of digital data.</p>
+
+
+        <h2>3. Why "Public" Means "Safe"</h2>
+
+        <p>Data stored on GitHub can be accessed by anyone in the world. At first glance, this might seem dangerous.</p>
+
+        <p>It's the opposite.</p>
+
+        <p><strong>It's safe precisely because it's public.</strong></p>
+
+        <p>If data is stored on a private server, the administrator could alter it and no one would know. It could be deleted with no evidence left behind. You'd have no choice but to trust the promise that "your data is safely stored."</p>
+
+        <p>On GitHub, data is public, so <strong>anyone can verify it at any time</strong>. The complete change history is preserved. If anything is deleted or altered, anyone in the world can detect it.</p>
+
+        <p>This principle resembles Japan's family register system. The family register is trusted precisely because it's held by a public institution — the Legal Affairs Bureau. A claim written only in a personal diary carries no credibility.</p>
+
+        <blockquote>
+            The trustworthiness of a record comes not from hiding it, but from making it verifiable by anyone.
+        </blockquote>
+
+
+        <h2>4. How Your Voice Is Stored on GitHub</h2>
+
+        <p>When you purchase a physical QR from TokiStorage and select GitHub Backup, here's what happens:</p>
+
+        <ol>
+            <li>The QR code data containing your voice is uploaded to a GitHub repository</li>
+            <li>A record of when and what was uploaded is automatically created</li>
+            <li>That data is replicated across GitHub's servers worldwide</li>
+            <li>Anyone can verify the existence and change history of that data</li>
+        </ol>
+
+        <p>As long as you have the physical QR, your voice can be played anytime. But even if the physical QR is lost, the data can be recovered from the GitHub backup.</p>
+
+
+        <h2>5. How It Compares to Other Storage Methods</h2>
+
+        <table class="comparison-table">
+            <tr>
+                <th>Storage method</th>
+                <th>Transparency</th>
+                <th>Tamper detection</th>
+                <th>Global replication</th>
+            </tr>
+            <tr>
+                <td><strong>Personal computer</strong></td>
+                <td>None (owner only)</td>
+                <td>None</td>
+                <td>None</td>
+            </tr>
+            <tr>
+                <td><strong>Cloud storage</strong><br>(Google Drive, etc.)</td>
+                <td>None (owner only)</td>
+                <td>None</td>
+                <td>Limited</td>
+            </tr>
+            <tr>
+                <td><strong>Social media</strong><br>(Instagram, etc.)</td>
+                <td>Yes (can be public)</td>
+                <td>None</td>
+                <td>None (platform-dependent)</td>
+            </tr>
+            <tr>
+                <td><strong>GitHub</strong></td>
+                <td>Yes (fully public)</td>
+                <td>Yes (Git)</td>
+                <td>Yes (global servers)</td>
+            </tr>
+        </table>
+
+        <p>Google Drive and Dropbox are convenient, but there's no way for a third party to verify that your data is actually there. If the service shuts down, the data vanishes with it.</p>
+
+        <p>Social media allows public sharing, but the platform can delete your content at any time. An Instagram post can disappear whenever Meta decides.</p>
+
+        <p>GitHub is <strong>the only general-purpose platform that combines public transparency, tamper detection, and global replication</strong>.</p>
+
+
+        <h2>6. GitHub's Role in Three-Layer Storage</h2>
+
+        <p>TokiStorage is designed to preserve data across three distinct layers:</p>
+
+        <ol>
+            <li><strong>Physical layer</strong>: Quartz glass or laminated QR (delivered to you)</li>
+            <li><strong>Private digital layer</strong>: GitHub (replicated worldwide)</li>
+            <li><strong>Institutional layer</strong>: National Diet Library (permanent preservation by law)</li>
+        </ol>
+
+        <p>The event of quartz glass breaking, the event of GitHub shutting down, and the event of the National Diet Library Law being repealed are mutually independent. Unless all three failures occur simultaneously, the data survives. This is the essence of distributed preservation.</p>
+
+        <p>Within this three-layer structure, GitHub provides <strong>digital replication and verification</strong>. While the physical layer offers localized durability and the institutional layer offers legal permanence, GitHub provides <strong>geographic distribution and technical transparency</strong>.</p>
+
+
+        <h2>7. Conclusion — Why "The World's Library"</h2>
+
+        <div class="highlight-box">
+            <p class="big">GitHub is the public library of the digital age.</p>
+            <p>Used by 100 million people, every change recorded, backed up in Arctic permafrost.<br>Your voice is permanently stored in that library.</p>
+        </div>
+
+        <p>The Library of Alexandria once gathered the ancient world's knowledge in a single place. It was lost to fire.</p>
+
+        <p>GitHub does not concentrate data in one location. It replicates worldwide, records every change, and has built-in tamper detection. And it stores backups in Arctic permafrost.</p>
+
+        <p>So that the mistake of Alexandria is never repeated.</p>
+
+        <p>Having your voice stored on GitHub means that <strong>the world's largest digital infrastructure endorses your existence</strong>. You don't need to understand the technology to benefit from it. That is the nature of public infrastructure.</p>
+
+    </article>
+
+    <footer class="article-footer">
+        <p id="essay-nav-links"></p>
+        <p style="margin-top: 2rem; font-size: 0.75rem;">&copy; 2026 TokiStorage</p>
+    </footer>
+
+</main>
+
+<script src="contact-form.js"></script>
+<script src="essay-nav.js?v=20260218"></script>
+<script src="tracker.js"></script>
+</body>
+</html>
