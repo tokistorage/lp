@@ -102,6 +102,7 @@
     { id: '30seconds', ja: '30秒音声の世界', en: '30 Seconds of Voice' },
     { id: 'voice-future', ja: '音声復元', en: 'Voice Restoration' },
     { id: 'image-clarity', ja: '画像の鮮明さ', en: 'Image Clarity' },
+    { id: 'what-is-github', ja: 'GitHubとは何か', en: 'What Is GitHub' },
     { id: 'backup-rule', ja: '3-2-1ルール', en: '3-2-1 Backup Rule' },
     { id: 'uv-laminate', ja: 'UVラミネート', en: 'UV Laminate' },
     { id: 'uptime', ja: '稼働率と外部依存', en: 'Uptime & Dependencies' },

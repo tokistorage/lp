@@ -1,0 +1,436 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" type="image/png" sizes="32x32" href="asset/favicon-32.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="asset/apple-touch-icon.png">
+    <title>GitHubとは何か——あなたの声が「世界の図書館」に保管される理由 | トキストレージ</title>
+    <meta name="robots" content="noindex, nofollow">
+    <meta name="description" content="GitHubは世界1億人以上の開発者が使うコード管理プラットフォーム。Microsoft傘下で運営され、北極圏の永久凍土にもデータを保管している。トキストレージがあなたの声をGitHubに置く理由を、技術を知らない人にも分かるように解説する。">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Shippori+Mincho:wght@400;500;600;700&family=Zen+Kaku+Gothic+New:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --toki-blue: #1E40AF;
+            --toki-blue-dark: #1E3A5F;
+            --toki-blue-pale: #EFF6FF;
+            --accent-blue: #3B82F6;
+            --bg-white: #FFFFFF;
+            --bg-section: #DBEAFE;
+            --text-primary: #1E293B;
+            --text-secondary: #475569;
+            --text-muted: #94A3B8;
+            --border: #E2E8F0;
+            --font-display: 'Shippori Mincho', serif;
+            --font-body: 'Zen Kaku Gothic New', sans-serif;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        html { scroll-behavior: smooth; }
+
+        body {
+            font-family: var(--font-body);
+            font-weight: 400;
+            background: var(--bg-white);
+            color: var(--text-primary);
+            line-height: 1.9;
+            font-size: 16px;
+        }
+
+        /* Navigation */
+        .article-nav {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 1000;
+            background: rgba(255,255,255,0.95);
+            backdrop-filter: blur(12px);
+            border-bottom: 1px solid var(--border);
+            padding: 0.6rem 1.2rem;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 1rem;
+        }
+        .article-nav .nav-brand {
+            font-family: var(--font-display);
+            font-size: 0.9rem;
+            font-weight: 600;
+            color: var(--toki-blue);
+            text-decoration: none;
+            white-space: nowrap;
+            flex-shrink: 0;
+        }
+        .article-nav .nav-right {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+        .article-nav .nav-label {
+            font-size: 0.6rem;
+            color: var(--text-muted);
+            letter-spacing: 0.08em;
+            text-align: right;
+            line-height: 1.4;
+        }
+        .article-nav .lang-switch {
+            font-size: 0.75rem;
+            color: var(--toki-blue);
+            text-decoration: none;
+            padding: 0.3rem 0.6rem;
+            border: 1px solid var(--toki-blue);
+            border-radius: 4px;
+        }
+        .article-nav .lang-switch:hover {
+            background: var(--toki-blue);
+            color: #fff;
+        }
+
+        /* Main Content */
+        .article-container {
+            max-width: 720px;
+            margin: 0 auto;
+            padding: 5rem 2rem 4rem;
+        }
+
+        .article-header {
+            margin-bottom: 3rem;
+        }
+        .article-category {
+            font-size: 0.7rem;
+            letter-spacing: 0.15em;
+            color: var(--toki-blue);
+            margin-bottom: 0.5rem;
+        }
+        .article-header h1 {
+            font-family: var(--font-display);
+            font-size: 1.8rem;
+            font-weight: 700;
+            line-height: 1.5;
+            color: var(--text-primary);
+            margin-bottom: 1rem;
+        }
+        .article-subtitle {
+            font-size: 0.95rem;
+            color: var(--text-secondary);
+            line-height: 1.8;
+        }
+
+        .article-content h2 {
+            font-family: var(--font-display);
+            font-size: 1.3rem;
+            font-weight: 600;
+            color: var(--toki-blue-dark);
+            margin: 3rem 0 1rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 1px solid var(--border);
+        }
+        .article-content h3 {
+            font-family: var(--font-display);
+            font-size: 1.1rem;
+            font-weight: 600;
+            color: var(--text-primary);
+            margin: 2rem 0 0.8rem;
+        }
+        .article-content p {
+            margin-bottom: 1.2rem;
+            text-align: justify;
+        }
+        .article-content ul, .article-content ol {
+            margin: 0.5rem 0 1.5rem 1.5rem;
+        }
+        .article-content li {
+            margin-bottom: 0.5rem;
+        }
+        .article-content blockquote {
+            border-left: 3px solid var(--toki-blue);
+            padding: 1rem 1.5rem;
+            margin: 1.5rem 0;
+            background: var(--toki-blue-pale);
+            font-style: italic;
+            color: var(--text-secondary);
+        }
+        .article-content strong {
+            color: var(--toki-blue-dark);
+        }
+
+        .core-message {
+            background: var(--toki-blue-pale);
+            border-left: 4px solid var(--toki-blue);
+            padding: 1.2rem 1.5rem;
+            margin: 0 0 2rem;
+            font-size: 0.95rem;
+            line-height: 1.8;
+        }
+
+        .comparison-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 1.5rem 0;
+            font-size: 0.9rem;
+        }
+        .comparison-table th, .comparison-table td {
+            padding: 0.7rem 1rem;
+            border: 1px solid var(--border);
+            text-align: left;
+        }
+        .comparison-table th {
+            background: var(--toki-blue-pale);
+            font-weight: 600;
+            color: var(--toki-blue-dark);
+            font-size: 0.85rem;
+        }
+        .comparison-table td {
+            vertical-align: top;
+        }
+
+        .highlight-box {
+            background: linear-gradient(135deg, var(--toki-blue-pale), #fff);
+            border: 1px solid var(--accent-blue);
+            border-radius: 8px;
+            padding: 1.5rem;
+            margin: 2rem 0;
+            text-align: center;
+        }
+        .highlight-box p {
+            text-align: center;
+            margin-bottom: 0.5rem;
+        }
+        .highlight-box .big {
+            font-family: var(--font-display);
+            font-size: 1.3rem;
+            font-weight: 700;
+            color: var(--toki-blue-dark);
+        }
+
+        /* Footer */
+        .article-footer {
+            margin-top: 4rem;
+            padding: 2rem 0;
+            border-top: 1px solid var(--border);
+            font-size: 0.7rem;
+            color: var(--text-muted);
+            line-height: 2.2;
+        }
+        .article-footer a {
+            color: var(--text-muted);
+            text-decoration: none;
+        }
+        .article-footer a:hover {
+            text-decoration: underline;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .article-container { padding: 6rem 1.2rem 3rem; }
+            .article-header h1 { font-size: 1.5rem; }
+            .article-nav .nav-label { display: none; }
+            .comparison-table { font-size: 0.8rem; }
+            .comparison-table th, .comparison-table td { padding: 0.5rem 0.6rem; }
+        }
+
+        @media print {
+            .article-nav { display: none; }
+            .article-container { padding-top: 2rem; }
+        }
+        .nav-brand::before {
+            content: '';
+            display: inline-block;
+            width: 20px;
+            height: 20px;
+            background: url('asset/tokistorage-icon-512.png') no-repeat center / contain;
+            vertical-align: -3px;
+            margin-right: 5px;
+        }
+    </style>
+<link rel="stylesheet" href="contact-form.css">
+    <meta property="og:image" content="https://tokistorage.github.io/lp/asset/tokistorage-icon-512.png">
+    <meta property="og:image:width" content="512">
+    <meta property="og:image:height" content="512">
+</head>
+<body>
+
+<nav class="article-nav">
+    <a href="index.html" class="nav-brand">トキストレージ</a>
+    <div class="nav-right">
+        <span class="nav-label">技術・設計 / WHAT IS GITHUB</span>
+        <a href="what-is-github-en.html" class="lang-switch">EN</a>
+    </div>
+</nav>
+
+<main class="article-container">
+
+    <header class="article-header">
+        <p class="article-category">ESSAY — 技術・設計</p>
+        <h1>GitHubとは何か——あなたの声が「世界の図書館」に保管される理由</h1>
+        <p class="article-subtitle">
+            プログラマーのためのサービスだと思われている。<br>
+            しかしその本質は、「改ざんできない記録」を世界中に複製する仕組みだ。
+        </p>
+    </header>
+
+    <article class="article-content">
+
+        <div class="core-message">
+            <strong>この記事で言いたいこと：</strong>GitHubは世界最大のコード管理プラットフォームであり、Microsoft傘下で1億人以上が利用している。すべての変更履歴が記録され、改ざんが検知でき、世界中のサーバーにデータが複製される。トキストレージがあなたの声をGitHubに置くのは、「技術者向けのサービスだから」ではなく、「記録の透明性と永続性において、現存する最良のインフラだから」だ。
+        </div>
+
+
+        <h2>1. 一言でいうと</h2>
+
+        <p>GitHubは、<strong>ファイルの「変更履歴」をすべて記録し、世界中に公開・複製できるサービス</strong>だ。</p>
+
+        <p>もともとはプログラマーがソースコードを管理するために作られた。しかし今では、法律文書、学術論文、政府の公開データ、さらには料理のレシピまで、あらゆる種類のファイルが管理されている。</p>
+
+        <p>身近なものにたとえるなら、こうだ。</p>
+
+        <blockquote>
+            図書館が本を保管するように、GitHubはデータを保管する。<br>
+            しかし図書館と違って、<strong>誰がいつ何を変更したか</strong>の全記録が残る。<br>
+            そして世界中の誰でも、その記録を確認できる。
+        </blockquote>
+
+
+        <h2>2. なぜ信頼できるのか</h2>
+
+        <h3>運営規模</h3>
+
+        <p>GitHubは2018年にMicrosoftが約8,000億円で買収した。現在の利用者は1億人以上。世界のソフトウェアの大部分がGitHub上で開発・管理されている。</p>
+
+        <p>Google、Apple、Meta、Amazon、日本政府のデジタル庁——世界中の主要な組織がGitHubを利用している。個人の趣味プロジェクトから、人工知能の最先端研究まで。このプラットフォームが突然消えることは、世界のデジタルインフラが崩壊することと同義だ。</p>
+
+        <h3>改ざん検知の仕組み</h3>
+
+        <p>GitHubの基盤技術である<strong>Git</strong>は、すべてのファイル変更に「ハッシュ値」という固有の指紋を付与する。もし誰かがデータを書き換えようとすれば、この指紋が変わるため、<strong>改ざんは即座に検知できる</strong>。</p>
+
+        <p>これは銀行の取引履歴と似ている。一度記録された入出金を、あとから書き換えることはできない。Gitも同じだ。過去の記録は、改ざんではなく「新しい変更」として追記される。</p>
+
+        <h3>北極圏の永久凍土</h3>
+
+        <p>GitHubは<strong>Arctic Code Vault</strong>というプロジェクトを運営している。世界中のオープンソースコードを特殊なフィルムに焼き付け、ノルウェー・スヴァールバル諸島の廃坑に保管している。永久凍土の中で、少なくとも1,000年の保存が見込まれている。</p>
+
+        <p>同じスヴァールバルには、世界中の植物の種子を保管する「世界種子貯蔵庫」がある。種子が農業の未来を守るように、Arctic Code Vaultはデジタルデータの未来を守る。</p>
+
+
+        <h2>3. 「公開」が安全を意味する理由</h2>
+
+        <p>GitHubに置かれたデータは、世界中の誰でもアクセスできる。これは一見、危険に思えるかもしれない。</p>
+
+        <p>しかし逆だ。</p>
+
+        <p><strong>公開されているからこそ、安全なのだ。</strong></p>
+
+        <p>非公開のサーバーにデータを置いた場合、そのサーバーの管理者がデータを改ざんしても、誰も気づかない。削除されても、証拠が残らない。「このデータは安全に保管されています」という約束を、信じるしかない。</p>
+
+        <p>GitHubでは違う。データは公開されているので、<strong>誰でもいつでも確認できる</strong>。変更履歴は完全に残る。何かが消されたり書き換えられたりすれば、世界中の誰でもそれを検知できる。</p>
+
+        <p>この原理は、日本の戸籍制度と似ている。戸籍が法務局という公的機関に保管されているからこそ、その記録は信頼される。個人の日記に書いただけでは、誰も信じない。</p>
+
+        <blockquote>
+            記録の信頼性は、「隠すこと」ではなく「誰でも検証できること」から生まれる。
+        </blockquote>
+
+
+        <h2>4. あなたの声はGitHubでどう保管されるか</h2>
+
+        <p>トキストレージの物理QRを購入し、GitHubバックアップを選択すると、以下のことが起きる。</p>
+
+        <ol>
+            <li>あなたの声が埋め込まれたQRコードのデータが、GitHubリポジトリにアップロードされる</li>
+            <li>いつ、どのデータがアップロードされたかの記録が、自動的に残る</li>
+            <li>そのデータは世界中のGitHubサーバーに複製される</li>
+            <li>誰でもそのデータの存在と変更履歴を確認できる</li>
+        </ol>
+
+        <p>物理QRが手元にある限り、あなたの声はいつでも再生できる。しかし物理QRが失われた場合でも、GitHubにバックアップがある限り、データは復元可能だ。</p>
+
+
+        <h2>5. 他の保管方法との違い</h2>
+
+        <table class="comparison-table">
+            <tr>
+                <th>保管方法</th>
+                <th>透明性</th>
+                <th>改ざん検知</th>
+                <th>世界複製</th>
+            </tr>
+            <tr>
+                <td><strong>個人のパソコン</strong></td>
+                <td>なし（本人のみ）</td>
+                <td>なし</td>
+                <td>なし</td>
+            </tr>
+            <tr>
+                <td><strong>クラウドストレージ</strong><br>（Google Drive等）</td>
+                <td>なし（本人のみ）</td>
+                <td>なし</td>
+                <td>限定的</td>
+            </tr>
+            <tr>
+                <td><strong>SNS投稿</strong><br>（Instagram等）</td>
+                <td>あり（公開可能）</td>
+                <td>なし</td>
+                <td>なし（サービス依存）</td>
+            </tr>
+            <tr>
+                <td><strong>GitHub</strong></td>
+                <td>あり（完全公開）</td>
+                <td>あり（Git）</td>
+                <td>あり（世界中のサーバー）</td>
+            </tr>
+        </table>
+
+        <p>Google DriveやDropboxは便利だが、「あなたのデータが確かにそこにある」ことを第三者が検証する手段がない。サービスが終了すれば、データも消える。</p>
+
+        <p>SNSは公開できるが、プラットフォームの判断でいつでも削除される可能性がある。Instagramの投稿は、Meta社が決めればいつでも消える。</p>
+
+        <p>GitHubは、<strong>公開性・改ざん検知・世界複製の三つを兼ね備えた唯一の汎用プラットフォーム</strong>だ。</p>
+
+
+        <h2>6. 三層保管の中でのGitHubの位置づけ</h2>
+
+        <p>トキストレージは、データを三つの異なる層で保管する設計を採っている。</p>
+
+        <ol>
+            <li><strong>物理層</strong>：石英ガラスやラミネートQR（手元に届く）</li>
+            <li><strong>民間デジタル層</strong>：GitHub（世界中に複製）</li>
+            <li><strong>制度層</strong>：国立国会図書館（法律に基づく永久保存）</li>
+        </ol>
+
+        <p>石英ガラスが割れる事象と、GitHubが閉鎖される事象と、国立国会図書館法が廃止される事象は、互いに独立している。三つの障害が同時に起きない限り、データは失われない。これが分散保管の本質だ。</p>
+
+        <p>GitHubは、この三層の中で<strong>「デジタル世界での複製と検証」</strong>を担っている。物理層が局所的な耐久性を、制度層が法的な永続性を提供するのに対し、GitHubは<strong>地理的な分散と技術的な透明性</strong>を提供する。</p>
+
+
+        <h2>7. 結び——なぜ「世界の図書館」なのか</h2>
+
+        <div class="highlight-box">
+            <p class="big">GitHubは、デジタル時代の公共図書館だ。</p>
+            <p>世界1億人が利用し、すべての変更が記録され、北極圏にもバックアップされる。<br>あなたの声は、その図書館に永久に保管される。</p>
+        </div>
+
+        <p>かつて、アレクサンドリア図書館は古代世界の知識を一箇所に集めた。しかし火災で失われた。</p>
+
+        <p>GitHubは、データを一箇所に集めない。世界中に複製し、すべての変更履歴を記録し、改ざんを検知できる仕組みを備えている。そして北極圏の永久凍土にも保管する。</p>
+
+        <p>アレクサンドリアの過ちを、繰り返さないために。</p>
+
+        <p>あなたの声がGitHubに保管されるということは、<strong>世界最大のデジタルインフラが、あなたの存在を裏書きする</strong>ということだ。技術を知らなくても、その恩恵を受けることができる。それが、公共インフラの本質だ。</p>
+
+    </article>
+
+    <footer class="article-footer">
+        <p id="essay-nav-links"></p>
+        <p style="margin-top: 2rem; font-size: 0.75rem;">&copy; 2026 TokiStorage</p>
+    </footer>
+
+</main>
+
+<script src="contact-form.js"></script>
+<script src="essay-nav.js?v=20260218"></script>
+<script src="tracker.js"></script>
+</body>
+</html>
