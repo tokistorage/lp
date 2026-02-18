@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" type="image/png" sizes="32x32" href="asset/favicon-32.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="asset/apple-touch-icon.png">
+    <title>人が残したいもの——声と顔とことば | トキストレージ</title>
+    <meta name="robots" content="noindex, nofollow">
+    <meta name="description" content="人は何を残したいのか。声、顔、ことば——三つのメディアが揃ったとき、存在の全体像が浮かび上がる。QR1枚に刻める時代の、残すことの意味を考える。">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Shippori+Mincho:wght@400;500;600;700&family=Zen+Kaku+Gothic+New:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --toki-amber: #D97706;
+            --toki-amber-dark: #B45309;
+            --toki-amber-pale: #FFFBEB;
+            --bg-white: #FFFFFF;
+            --bg-section: #FEF3C7;
+            --text-primary: #1E293B;
+            --text-secondary: #475569;
+            --text-muted: #94A3B8;
+            --border: #E2E8F0;
+            --font-display: 'Shippori Mincho', serif;
+            --font-body: 'Zen Kaku Gothic New', sans-serif;
+        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        html { scroll-behavior: smooth; }
+        body { font-family: var(--font-body); font-weight: 400; background: var(--bg-white); color: var(--text-primary); line-height: 2; font-size: 16px; }
+        .article-nav { position: fixed; top: 0; left: 0; right: 0; z-index: 1000; background: rgba(255,255,255,0.95); backdrop-filter: blur(12px); border-bottom: 1px solid var(--border); padding: 0.6rem 1.2rem; display: flex; align-items: center; justify-content: space-between; }
+        .article-nav .nav-brand { font-family: var(--font-display); font-size: 0.9rem; font-weight: 600; color: var(--toki-amber); text-decoration: none; }
+        .article-nav .nav-right { display: flex; align-items: center; gap: 1rem; }
+        .article-nav .nav-label { font-size: 0.6rem; color: var(--text-muted); letter-spacing: 0.08em; }
+        .article-nav .lang-switch { font-size: 0.75rem; color: var(--toki-amber); text-decoration: none; padding: 0.3rem 0.6rem; border: 1px solid var(--toki-amber); border-radius: 4px; }
+        .article-nav .lang-switch:hover { background: var(--toki-amber); color: #fff; }
+        .article-container { max-width: 680px; margin: 0 auto; padding: 7rem 2rem 4rem; }
+        .article-header { margin-bottom: 3rem; padding-bottom: 2rem; border-bottom: 1px solid var(--border); }
+        .article-category { font-size: 0.7rem; color: var(--toki-amber); letter-spacing: 0.15em; margin-bottom: 1rem; }
+        .article-header h1 { font-family: var(--font-display); font-size: 1.8rem; font-weight: 600; line-height: 1.5; margin-bottom: 1rem; }
+        .article-subtitle { font-size: 0.95rem; color: var(--text-secondary); line-height: 1.8; }
+        .article-content h2 { font-family: var(--font-display); font-size: 1.25rem; font-weight: 600; margin: 3rem 0 1.5rem; padding-bottom: 0.5rem; border-bottom: 1px solid var(--border); }
+        .article-content h3 { font-family: var(--font-display); font-size: 1.1rem; font-weight: 500; margin: 2rem 0 1rem; }
+        .article-content p { margin-bottom: 1.5rem; text-align: justify; }
+        .article-content blockquote { margin: 2rem 0; padding: 1.5rem 2rem; background: var(--bg-section); border-left: 3px solid var(--toki-amber); font-style: italic; }
+        .article-content blockquote cite { display: block; font-size: 0.85rem; color: var(--text-muted); font-style: normal; margin-top: 0.5rem; }
+        .article-content ul { margin: 1.5rem 0; padding-left: 1.5rem; }
+        .article-content li { margin-bottom: 0.75rem; }
+        .key-point { background: var(--toki-amber-pale); padding: 1.5rem 2rem; border-radius: 8px; margin: 2rem 0; }
+        .key-point p { margin-bottom: 0; font-size: 0.95rem; }
+        .core-message { background: linear-gradient(135deg, var(--toki-amber-pale) 0%, #FEF3C7 100%); border-left: 4px solid var(--toki-amber); padding: 1.2rem 1.5rem; margin: 0 0 1.5rem 0; border-radius: 0 8px 8px 0; font-size: 0.95rem; line-height: 1.8; }
+        .references { margin-top: 4rem; padding-top: 2rem; border-top: 1px solid var(--border); }
+        .references h2 { font-size: 1rem; margin-bottom: 1.5rem; }
+        .references ul { list-style: none; padding: 0; }
+        .references li { font-size: 0.85rem; color: var(--text-secondary); margin-bottom: 0.75rem; padding-left: 1.5rem; text-indent: -1.5rem; }
+        .article-footer { margin-top: 4rem; padding-top: 2rem; border-top: 1px solid var(--border); text-align: center; }
+        .article-footer p { font-size: 0.8rem; color: var(--text-muted); margin-bottom: 1rem; }
+        .article-footer a { color: var(--toki-amber); text-decoration: none; }
+        @media (max-width: 768px) { .article-container { padding: 6rem 1.2rem 3rem; } .article-header h1 { font-size: 1.5rem; } .article-nav .nav-label { display: none; } }
+        @media print { .article-nav { display: none; } .article-container { padding-top: 2rem; } }
+        .nav-brand::before {
+            content: '';
+            display: inline-block;
+            width: 20px;
+            height: 20px;
+            background: url('asset/tokistorage-icon-512.png') no-repeat center / contain;
+            vertical-align: -3px;
+            margin-right: 5px;
+        }
+    </style>
+<link rel="stylesheet" href="contact-form.css">
+    <meta property="og:image" content="https://tokistorage.github.io/lp/asset/tokistorage-icon-512.png">
+    <meta property="og:image:width" content="512">
+    <meta property="og:image:height" content="512">
+</head>
+<body>
+
+<nav class="article-nav">
+    <a href="index.html" class="nav-brand">トキストレージ</a>
+    <div class="nav-right">
+        <span class="nav-label">残したいもの</span>
+        <a href="what-to-leave-en.html" class="lang-switch">EN</a>
+    </div>
+</nav>
+
+<main class="article-container">
+    <header class="article-header">
+        <p class="article-category">エッセイ——存在と記録</p>
+        <h1>人が残したいもの<br>——声と顔とことば</h1>
+        <p class="article-subtitle">
+            声には温度がある。顔には時間が刻まれる。ことばには思考が宿る。<br>
+            三つが揃ったとき、人の存在の全体像が浮かび上がる。
+        </p>
+    </header>
+
+    <article class="article-content">
+        <div class="core-message">
+            <strong>この記事で言いたいこと：</strong>人が残したいものは、声と顔とことばに集約される。どれか一つでは足りない。声は人格を伝え、顔は存在を証明し、ことばは思考を刻む。三つが揃ったとき、そこに「人」が立ち上がる。
+        </div>
+
+        <h2>1. 残したいという衝動</h2>
+        <p>人はなぜ「残したい」と思うのか。</p>
+        <h3>消えることへの抵抗</h3>
+        <p>人間は自分が消えることを知っている唯一の生物である。その認識が「残したい」という衝動を生む。墓を建て、名前を刻み、写真を撮り、手紙を書く——すべては消滅への抵抗である。</p>
+        <h3>誰かに届けたい</h3>
+        <p>残したいという衝動には、必ず受け手がいる。子や孫、まだ見ぬ子孫、あるいは未来の誰か。「私はここにいた」という事実を、まだ生まれていない誰かに届けたい。それは利己的な欲求ではなく、未来への贈り物である。</p>
+        <h3>三つのメディア</h3>
+        <p>では、人は具体的に何を残したいのか。突き詰めれば、それは三つに収斂する。声と、顔と、ことばである。</p>
+
+        <h2>2. 声——人格の温度</h2>
+        <p>声には、文字では伝わらないものが宿る。</p>
+        <h3>祖父母の声を知らない世代</h3>
+        <p>あなたは祖父母の声を聴いたことがあるだろうか。曾祖父母の声はどうか。ほとんどの人は、二世代前の肉声を知らない。写真は残っていても、声は消えている。声は、最も失われやすい存在の痕跡である。</p>
+        <h3>声に宿るもの</h3>
+        <p>声には人格が宿る。抑揚、間、息遣い、震え——それは文字では再現できない。「愛している」という同じ言葉でも、誰がどんな声で言うかで、まったく別の意味を持つ。声は言語以前のコミュニケーションであり、人間の最も原初的な表現手段である。</p>
+        <h3>30秒の肉声</h3>
+        <p>長い演説は必要ない。30秒の肉声があれば、人の存在は伝わる。名前を名乗り、一言だけ想いを語る。それだけで、百年後の子孫は「この人は実在したのだ」と実感できる。声は存在の最も直接的な証明である。</p>
+
+        <blockquote>
+            <p>「写真は顔を見せる。文字は思考を見せる。しかし声だけが、その人の温度を伝える。」</p>
+        </blockquote>
+
+        <h2>3. 顔——時間の刻印</h2>
+        <p>顔は、存在の最も普遍的な証明である。</p>
+        <h3>遺影の重み</h3>
+        <p>葬儀で祭壇に飾られる一枚の写真。その一枚が、故人の存在を代表する。遺族はその顔を見て泣き、その顔に話しかけ、その顔を通じて故人と対話し続ける。顔は、人の存在の錨である。</p>
+        <h3>時間を刻む顔</h3>
+        <p>赤ん坊の丸い頬、思春期の不安定な表情、壮年の自信、老年の穏やかさ——顔には時間が刻まれる。同じ人物の10歳と70歳の顔を並べれば、そこに一つの人生が浮かび上がる。顔は無言の自伝である。</p>
+        <h3>顔のない記録</h3>
+        <p>歴史上の人物で、顔が残っていない人は無数にいる。名前と業績は伝わっていても、どんな顔をしていたのかわからない。顔がないと、その人は抽象化される。顔があると、その人は具体的な一人の人間になる。</p>
+
+        <h2>4. ことば——思考の結晶</h2>
+        <p>ことばは、人間だけが持つ記録手段である。</p>
+        <h3>千年読める手紙</h3>
+        <p>正倉院に残る千二百年前の文書は、今も読める。紫式部の書いた物語は、千年を超えて読み継がれている。ことばは最古のメディアであり、最も長く残るメディアでもある。声が消え、顔が朽ちても、ことばは残る。</p>
+        <h3>文字にしか残せないもの</h3>
+        <p>思考の精密さは、文字でしか表現できない。声で語れば曖昧になることも、文字にすれば明確になる。論理の筋道、感情の機微、決意の重み——ことばは思考の結晶である。遺言が文書である理由は、声では曖昧さが残るからだ。</p>
+        <h3>手紙という遺産</h3>
+        <p>親から子への手紙、恋人同士の文通、友人への別れの言葉——手紙は最も個人的な記録である。SNSの投稿は不特定多数に向けられるが、手紙は特定の誰かに向けられる。その「あなたへ」という指向性が、手紙に特別な重みを与える。</p>
+
+        <div class="key-point">
+            <p>声は温度を伝え、顔は存在を証明し、ことばは思考を刻む。どれか一つでは、人の全体像は伝わらない。</p>
+        </div>
+
+        <h2>5. 三つが揃うとき</h2>
+        <p>声と顔とことばが揃ったとき、何が起きるのか。</p>
+        <h3>「人」が立ち上がる</h3>
+        <p>声だけでは顔が見えない。顔だけでは何を考えていたかわからない。ことばだけでは温度が伝わらない。しかし三つが揃うと、そこに「人」が立ち上がる。どんな顔をして、どんな声で、何を考えていた人なのか——存在の全体像が浮かび上がる。</p>
+        <h3>QR1枚に刻める時代</h3>
+        <p>かつて、声を残すにはレコードが必要だった。顔を残すには写真館に行く必要があった。ことばを残すには紙と筆が必要だった。三つを一つの媒体に収めることは、技術的に不可能だった。</p>
+        <p>今、QRコード1枚に三つすべてを刻める。30秒の肉声、一枚の肖像、二千文字のことば——それが2センチ四方の正方形に収まる。しかもサーバーに依存せず、印刷すれば半永久的に残る。</p>
+        <h3>完結した存在証明</h3>
+        <p>声と顔とことばが揃ったQRコードは、それ自体が一つの完結した存在証明である。インターネットが消えても、サーバーが停止しても、そのQRコードをスキャンすれば、そこに一人の人間が立ち上がる。</p>
+
+        <blockquote>
+            <p>「声と顔とことば。三つが揃えば、千年後の人にも『この人がいた』と伝わる。」</p>
+        </blockquote>
+
+        <h2>6. 日常こそ残す価値がある</h2>
+        <p>残すべきは特別な日だけではない。</p>
+        <h3>偉人だけが残す時代の終わり</h3>
+        <p>歴史に残る記録は、王や将軍や文豪のものばかりだった。普通の人の声、普通の人の顔、普通の人のことばは、ほとんど残っていない。しかし千年後の歴史家が本当に知りたいのは、その時代の普通の人がどう暮らしていたかである。</p>
+        <h3>ありふれた日常の価値</h3>
+        <p>子どもの笑い声。食卓の風景。「今日はいい天気だね」という何気ない一言。それらは今は取るに足らないように見える。しかし50年後、100年後に聴き返したとき、それは何にも代えがたい宝になる。日常は、失われて初めて価値がわかる。</p>
+        <h3>存在証明の民主化</h3>
+        <p>声を残す技術は、かつて一部の特権だった。写真を残す技術も、ことばを残す技術も、普及するまでに長い時間がかかった。今、スマートフォンとQRコードがあれば、誰でも声と顔とことばを残せる。存在証明は、ついに民主化された。</p>
+
+        <h2>7. 千年という尺度</h2>
+        <p>残すなら、どれだけの時間を見据えるか。</p>
+        <h3>デジタルの脆さ</h3>
+        <p>クラウドに保存した写真は、サービス終了とともに消える。SNSの投稿は、プラットフォームの都合で削除される。ハードディスクは10年で劣化する。デジタルデータは、見かけほど永続的ではない。</p>
+        <h3>石碑の教え</h3>
+        <p>古代の石碑は千年以上を経て今も読める。ロゼッタ・ストーンは二千年以上前の文字を今に伝える。物理的な媒体に刻まれた記録は、デジタルデータより遥かに長く残る。しかし石碑は重く、高価で、持ち運べない。</p>
+        <h3>現代の石碑</h3>
+        <p>石英ガラスに刻んだデータは、理論上三億年以上保持される。QRコードに埋め込まれた声と顔とことばを石英ガラスに刻めば、それは現代の石碑になる。重さは数グラム、大きさは手のひらサイズ。しかしそこには、石碑には刻めなかった声が入っている。</p>
+
+        <div class="key-point">
+            <p>石碑は文字しか刻めなかった。現代の石碑には、声と顔とことばの三つが刻める。それは人類史上初めてのことである。</p>
+        </div>
+
+        <h2>結論——あなたは何を残しますか</h2>
+        <p>人が残したいものは、結局のところ三つに収斂する。声と、顔と、ことばである。</p>
+        <p>声には温度がある。言葉の意味以前に、その人がそこにいたという事実を伝える力がある。顔には時間が刻まれる。一枚の写真が、一人の人間の存在を永遠に証明する。ことばには思考が宿る。千年前の手紙が今も読めるように、ことばは最も長く残るメディアである。</p>
+        <p>三つが揃ったとき、そこに「人」が立ち上がる。どんな声で、どんな顔をして、何を考えていた人なのか——存在の全体像が浮かび上がる。それは文字だけの記録とも、写真だけの記録とも、根本的に異なる体験である。</p>
+        <p>今、QRコード1枚にその三つを刻み、石英ガラスに封じ、千年先へ届けることができる。特別な機会を待つ必要はない。今日の声、今日の顔、今日のことば——それが千年後の誰かにとっての宝になる。</p>
+        <p>あなたは何を残しますか。</p>
+
+        <section class="references">
+            <h2>参考文献</h2>
+            <ul>
+                <li>Heidegger, M. (1927). <em>Sein und Zeit.</em> Max Niemeyer Verlag.</li>
+                <li>Ong, W.J. (1982). <em>Orality and Literacy.</em> Methuen.</li>
+                <li>Sontag, S. (1977). <em>On Photography.</em> Farrar, Straus and Giroux.</li>
+                <li>Derrida, J. (1967). <em>De la grammatologie.</em> Les Editions de Minuit.</li>
+                <li>柳田國男. (1946). 『先祖の話』筑摩書房.</li>
+            </ul>
+        </section>
+    </article>
+
+    <footer class="article-footer">
+        <p id="essay-nav-links"></p>
+        <p style="margin-top: 2rem; font-size: 0.75rem;">&copy; 2026 TokiStorage</p>
+    </footer>
+</main>
+
+<script src="contact-form.js"></script>
+<script src="essay-nav.js?v=20260219"></script>
+<script src="tracker.js"></script>
+</body>
+</html>

@@ -27,6 +27,7 @@
     { id: 'recital-record', ja: '発表会と親心', en: 'Recitals & Parenting' },
     { id: 'lifestyle', ja: '生き方', en: 'Lifestyle' },
     { id: 'independence', ja: 'オフグリッド', en: 'Off-Grid' },
+    { id: 'what-to-leave', ja: '人が残したいもの', en: 'What to Leave Behind' },
 
     // ── 信仰・思想 ──
     { id: 'religion', ja: '宗教・神話', en: 'Religion' },
