@@ -77,6 +77,7 @@
     { id: 'art', ja: '芸術', en: 'Art' },
     { id: 'music', ja: '音楽', en: 'Music' },
     { id: 'tourism', ja: '観光', en: 'Tourism' },
+    { id: 'commemorative-photo', ja: '記念写真の変容', en: 'Souvenir Photo' },
     { id: 'sports', ja: 'スポーツ', en: 'Sports' },
     { id: 'history', ja: '歴史学', en: 'History' },
 
