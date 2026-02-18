@@ -5,9 +5,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="icon" type="image/png" sizes="32x32" href="asset/favicon-32.png">
     <link rel="apple-touch-icon" sizes="180x180" href="asset/apple-touch-icon.png">
-    <title>CloudflareとGAS——便利な依存、見えない代償 | トキストレージ</title>
+    <title>CloudflareとGAS——使うことと、頼ることは違う | トキストレージ</title>
     <meta name="robots" content="noindex, nofollow">
-    <meta name="description" content="Cloudflareの無料CDNとGoogle Apps Scriptの無料自動化。便利さの裏にある見えない依存と、トキストレージがそれらを使わない理由を考察する。">
+    <meta name="description" content="トキストレージはCloudflare WorkersとGoogle Apps Scriptを運用に使っている。しかし永続するデータは、それらに一切依存しない。使うことと、頼ることは違う。">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Shippori+Mincho:wght@400;500;600;700&family=Zen+Kaku+Gothic+New:wght@300;400;500;700&display=swap" rel="stylesheet">
@@ -69,6 +69,7 @@
         .article-content li { margin-bottom: 0.5rem; }
         .article-content blockquote { border-left: 3px solid var(--toki-blue); padding: 1rem 1.5rem; margin: 1.5rem 0; background: var(--toki-blue-pale); font-style: italic; color: var(--text-secondary); }
         .article-content strong { color: var(--toki-blue-dark); }
+        .article-content code { font-size: 0.88em; background: var(--toki-blue-pale); padding: 0.15em 0.4em; border-radius: 3px; }
 
         .core-message { background: var(--toki-blue-pale); border-left: 4px solid var(--toki-blue); padding: 1.2rem 1.5rem; margin: 0 0 2rem; font-size: 0.95rem; line-height: 1.8; }
 
@@ -114,177 +115,173 @@
 
     <header class="article-header">
         <p class="article-category">ESSAY — 技術・設計</p>
-        <h1>CloudflareとGAS——便利な依存、見えない代償</h1>
+        <h1>CloudflareとGAS——使うことと、頼ることは違う</h1>
         <p class="article-subtitle">
-            無料で高性能。だから使う。<br>
-            しかし「誰のインフラか」を問わないまま、依存は深くなる。
+            トキストレージはCloudflare WorkersとGoogle Apps Scriptを使っている。<br>
+            しかし永続するデータは、それらに一切依存しない。
         </p>
     </header>
 
     <article class="article-content">
 
         <div class="core-message">
-            <strong>この記事で言いたいこと：</strong>CloudflareとGoogle Apps Script（GAS）は、個人開発者やスタートアップにとって極めて魅力的なインフラだ。無料で高機能、設定も容易。しかしその便利さの裏側には、見えない依存がある。DNSもSSLもトラフィックも他社が握り、ビジネスロジックも他社のランタイムで動く。トキストレージがこれらを使わないのは、技術的な理由ではない。1000年の永続性を目指すとき、すべての外部依存はカウントダウンタイマーになるからだ。
+            <strong>この記事で言いたいこと：</strong>トキストレージはCloudflare WorkersとGoogle Apps Script（GAS）を運用に使っている。注文処理、問い合わせ受付、アクセス解析。便利だから使う。しかし、1000年残すべきデータ——QRコードに刻まれた音声、物理製品、国立国会図書館への納本——は、CloudflareにもGASにも一切依存しない。使うことと頼ることは違う。その境界線を設計で引いている。
         </div>
 
 
-        <h2>1. 「無料」という誘引</h2>
+        <h2>1. まず認める——使っている</h2>
 
-        <p>Cloudflareの無料プランは驚異的だ。CDN、DDoS防御、SSL証明書、DNSホスティング、Web Application Firewall。これだけの機能が無料で手に入る。個人サイトから中規模のサービスまで、多くのプロジェクトがCloudflareの無料プランで運用されている。</p>
+        <p>トキストレージのコードベースには、Cloudflare WorkersとGASが組み込まれている。隠す必要はない。事実として整理する。</p>
 
-        <p>Google Apps Script（GAS）も同様だ。Googleアカウントがあれば、サーバーレス環境でJavaScriptを実行できる。スプレッドシートとの連携、メール送信、定期実行。バックエンドのないプロジェクトに「ちょっとしたサーバー機能」を追加するのに、これ以上手軽な方法はない。</p>
+        <h3>Cloudflare Workers</h3>
+        <p>注文フォームと問い合わせフォーム（QRサイト側）は、Cloudflare Workerを経由してGASに送信される。GASのexec URLは302リダイレクトを返すため、WiseのWebhook URLバリデーションに通らない。Cloudflare Workerはその中継役だ。CORSの処理も担う。</p>
 
-        <p>どちらも優れたサービスだ。技術的な批判をする意図はない。</p>
+        <h3>Google Apps Script</h3>
+        <p>GASは3つの役割を担っている。</p>
+        <ul>
+            <li><strong>注文・問い合わせの受信</strong>——フォームデータをGoogleスプレッドシートに記録し、メールで通知する</li>
+            <li><strong>アクセス解析</strong>——ページビューをCookie UUIDで識別し、スプレッドシートにログを記録する</li>
+            <li><strong>Wise Webhook</strong>——決済通知をCloudflare Worker経由で受け取る</li>
+        </ul>
 
-        <p>しかし問いたいのは、<strong>「無料で使える」ことと「自分のインフラである」ことは、まったく別の概念だ</strong>ということだ。</p>
+        <p>つまり、<strong>運用のバックエンドはCloudflare Workers + GAS + Googleスプレッドシート</strong>で構成されている。これはまぎれもない外部依存だ。</p>
 
         <blockquote>
-            無料で使えるインフラは、あなたのインフラではない。<br>
-            あなたは利用者であり、所有者ではない。
+            「使っていない」と言うのは簡単だ。<br>
+            「使っているが、何に依存させていないか」を言語化する方が誠実だ。
         </blockquote>
 
 
-        <h2>2. Cloudflare——透明な中間者</h2>
+        <h2>2. 運用レイヤーと永続レイヤー</h2>
 
-        <p>Cloudflareの本質は「リバースプロキシ」だ。ユーザーのリクエストは、まずCloudflareのサーバーを経由し、そこからオリジンサーバーに転送される。</p>
-
-        <p>これはつまり、<strong>あなたのサイトへのすべてのトラフィックが、Cloudflareを通過する</strong>ということだ。SSL/TLSの終端もCloudflareが行う。ユーザーが見ている「安全な接続」は、ユーザーとCloudflare間の暗号化であって、ユーザーとあなたのサーバー間の暗号化ではない。</p>
-
-        <p>Cloudflareを導入すると、以下のものが第三者の管理下に入る。</p>
-
-        <ul>
-            <li><strong>DNS</strong>——ドメインの名前解決をCloudflareが管理する</li>
-            <li><strong>SSL証明書</strong>——暗号化の鍵をCloudflareが発行・管理する</li>
-            <li><strong>トラフィックルーティング</strong>——どのリクエストをどこに転送するかをCloudflareが決める</li>
-            <li><strong>キャッシュ</strong>——どのコンテンツをどれだけキャッシュするかをCloudflareが制御する</li>
-            <li><strong>アクセス制御</strong>——Botと人間の判別、国別ブロックなどをCloudflareが実行する</li>
-        </ul>
-
-        <p>2022年6月、Cloudflareの大規模障害が発生した。DiscordやShopifyを含む数百万のサイトが同時にダウンした。オリジンサーバーは正常に動いていた。<strong>中間者が倒れたとき、その先にあるすべてが倒れた</strong>のだ。</p>
-
-        <p>Cloudflareが悪いのではない。中間者に依存するアーキテクチャの構造的リスクが、可視化された瞬間だった。</p>
-
-
-        <h2>3. GAS——便利な檻</h2>
-
-        <p>Google Apps Scriptは、Googleのエコシステム内で動作するサーバーレス環境だ。スプレッドシートをデータベース代わりに使い、トリガーで定期処理を実行し、GmailやDriveと連携する。</p>
-
-        <p>問題は、<strong>すべてがGoogleアカウントに紐づくこと</strong>だ。</p>
-
-        <ul>
-            <li><strong>実行環境</strong>——GoogleのV8ランタイムで動作する。バージョンアップはGoogleが決める</li>
-            <li><strong>クォータ</strong>——1日のメール送信数、スクリプト実行時間、API呼び出し回数、すべてにGoogleが上限を設ける</li>
-            <li><strong>廃止リスク</strong>——GoogleはサービスをEOL（End of Life）にすることで知られている。Google Reader、Google+、Hangouts。GASが永続する保証はない</li>
-            <li><strong>アカウント凍結</strong>——Googleアカウントが凍結されれば、GASもスプレッドシートもメールも、すべてが同時に止まる</li>
-        </ul>
-
-        <p>GASで業務を自動化しているスタートアップは多い。注文処理、在庫管理、顧客連絡。しかしその自動化のすべてが、<strong>Googleという一社のプラットフォーム上のゲスト</strong>として動いている。</p>
-
-        <blockquote>
-            GASは「自分のサーバー」ではない。<br>
-            Googleの部屋を借りて、Googleのルールで動かしているだけだ。
-        </blockquote>
-
-
-        <h2>4. 依存の不可視化</h2>
-
-        <p>CloudflareもGASも、その依存を感じさせない設計になっている。それが優れたサービスたる所以だ。しかし感じないことと、存在しないことは違う。</p>
+        <p>トキストレージのアーキテクチャには、2つのレイヤーがある。</p>
 
         <table class="phase-table">
             <tr>
-                <th>制御の対象</th>
-                <th>GitHub Pages（直接）</th>
-                <th>Cloudflare経由</th>
-                <th>GAS</th>
+                <th></th>
+                <th>運用レイヤー</th>
+                <th>永続レイヤー</th>
             </tr>
             <tr>
-                <td><strong>DNS</strong></td>
-                <td>自身で管理可能</td>
-                <td>Cloudflareが管理</td>
-                <td>—</td>
+                <td><strong>役割</strong></td>
+                <td>注文受付、問い合わせ、解析</td>
+                <td>音声の保存、存在の記録</td>
             </tr>
             <tr>
-                <td><strong>SSL/TLS</strong></td>
-                <td>GitHub/Let's Encrypt</td>
-                <td>Cloudflareが終端</td>
-                <td>Googleが管理</td>
+                <td><strong>依存先</strong></td>
+                <td>Cloudflare Workers, GAS, Google Sheets</td>
+                <td>QRコード（物理）, GitHub, NDL</td>
             </tr>
             <tr>
-                <td><strong>コード実行</strong></td>
-                <td>クライアントサイド</td>
-                <td>Workers使用時はCloudflare</td>
-                <td>Googleのランタイム</td>
+                <td><strong>寿命の想定</strong></td>
+                <td>数年〜十数年</td>
+                <td>100年〜1000年</td>
             </tr>
             <tr>
-                <td><strong>データ保管</strong></td>
-                <td>リポジトリ内</td>
-                <td>キャッシュはCloudflare</td>
-                <td>Googleドライブ/スプレッドシート</td>
+                <td><strong>代替可能性</strong></td>
+                <td>他のサービスで代替可能</td>
+                <td>代替不可——データ自体が自己完結</td>
             </tr>
             <tr>
-                <td><strong>障害時の影響</strong></td>
-                <td>GitHub障害時のみ</td>
-                <td>GitHub + Cloudflare障害</td>
-                <td>Google障害時に全停止</td>
-            </tr>
-            <tr>
-                <td><strong>サービス終了リスク</strong></td>
-                <td>Gitで移行可能</td>
-                <td>DNS移行が必要</td>
-                <td>コード・データ移行が必要</td>
+                <td><strong>停止時の影響</strong></td>
+                <td>新規注文が受けられない</td>
+                <td>影響なし——既存のQRコードは永久に再生可能</td>
             </tr>
         </table>
 
-        <p>依存を増やすたびに、<strong>障害点（Single Point of Failure）が増える</strong>。そして外部依存のSPFは、自分では修復できない。待つしかない。</p>
+        <p>この分離が設計の核心だ。<strong>運用レイヤーは外部に依存してよい。しかし永続レイヤーは、何にも依存してはならない。</strong></p>
+
+        <p>QRコードに刻まれた音声データは、URLパラメータとしてQRコード内に完結している。サーバーに問い合わせる必要がない。CloudflareもGASもGoogleスプレッドシートも関係ない。QRコードを読み取り、ブラウザで開くだけで音声が再生される。</p>
 
 
-        <h2>5. トキストレージの選択</h2>
+        <h2>3. もしCloudflareが消えたら</h2>
 
-        <p>トキストレージはGitHub Pages上の静的サイトだ。Cloudflareは使っていない。GASも使っていない。</p>
+        <p>Cloudflare Workerが停止した場合、影響を受けるのは以下だ。</p>
 
-        <h3>Cloudflareを使わない理由</h3>
-        <p>GitHub PagesにはSSLが標準で付与される。CDNもGitHubのインフラで提供される。DDoS防御はGitHubが行う。Cloudflareを追加することで得られるメリットに対して、<strong>DNSとSSLの制御を第三者に渡すコスト</strong>が見合わない。</p>
+        <ul>
+            <li>QRサイトの注文フォームが送信できなくなる</li>
+            <li>QRサイトの問い合わせフォームが送信できなくなる</li>
+            <li>WiseのWebhook通知が届かなくなる</li>
+        </ul>
 
-        <p>トキストレージのQRコードは、データをURLパラメータとしてQRコード内に完結させている。サーバーへのリクエストは静的ファイルの配信だけだ。高度なキャッシュ制御もWAFも、構造的に不要なのだ。</p>
+        <p>影響を受けないものは以下だ。</p>
 
-        <h3>GASを使わない理由</h3>
-        <p>トキストレージにサーバーサイドの処理はない。注文管理はBASE、メールはBASEの通知機能、ニュースレターは手作業。自動化の対象となるサーバー処理が、そもそも存在しない。</p>
+        <ul>
+            <li><strong>すべての既存QRコード</strong>——再生に一切影響なし</li>
+            <li><strong>QR生成ツール</strong>——完全にクライアントサイドで動作</li>
+            <li><strong>すべての物理製品</strong>——QRコードが刻まれた金属プレートは物理的に存在し続ける</li>
+            <li><strong>NDLの記録</strong>——国立国会図書館に納本されたニュースレターは独立して保存されている</li>
+        </ul>
 
-        <p>これは怠慢ではない。<strong>サーバー処理を必要としないアーキテクチャを、最初から選んでいる</strong>のだ。GASが不要なのは、GASが必要になる設計を避けたからだ。</p>
+        <p>復旧は容易だ。GASのexec URLに直接POSTするようフォームを書き換えるか、別のプロキシサービスに差し替えればよい。Cloudflare Workerのコードはわずか52行だ。</p>
 
 
-        <h2>6. 永続性のための独立</h2>
+        <h2>4. もしGASが消えたら</h2>
 
-        <p>1000年の保存を目指すとき、すべての外部依存はリスクになる。</p>
+        <p>GASがEOL（End of Life）になった場合、影響を受けるのは以下だ。</p>
 
-        <p>Cloudflareは2010年設立。GASは2009年公開。どちらも10年台のサービスだ。素晴らしいサービスだが、100年続く保証はない。1000年はなおさらだ。</p>
+        <ul>
+            <li>注文・問い合わせのスプレッドシート記録が停止する</li>
+            <li>メール通知が届かなくなる</li>
+            <li>アクセス解析が停止する</li>
+        </ul>
 
-        <p>GitHub Pagesにも同じリスクはある。しかしGitという分散バージョン管理システムに基づいているため、<strong>リポジトリをクローンすれば、どこでも再構築できる</strong>。GitHubがなくなっても、Gitは残る。コードは手元にある。</p>
+        <p>影響を受けないものは以下だ。</p>
 
-        <p>Cloudflare経由でDNSを管理していた場合、Cloudflareがなくなればドメインの名前解決が途絶える。GASで業務ロジックを動かしていた場合、GASがEOLになればロジックを書き直す必要がある。</p>
+        <ul>
+            <li><strong>すべての既存QRコード</strong>——再生に一切影響なし</li>
+            <li><strong>すべての物理製品</strong>——変わらず存在し続ける</li>
+            <li><strong>NDLの記録</strong>——独立して永続する</li>
+            <li><strong>LPサイト</strong>——静的HTMLなので、GASが消えてもフォームとトラッカー以外は正常に表示される</li>
+        </ul>
 
-        <p><strong>依存の数は、カウントダウンタイマーの数だ。</strong>どれかひとつのタイマーが切れたとき、何かが壊れる。タイマーが少ないほど、永続性は高くなる。</p>
+        <p>代替策もある。GASのコードは131行のシンプルなスクリプトだ。フォーム受信・スプレッドシート記録・メール通知。同等の機能は、Supabase、Netlify Functions、あるいは単純なメールAPIで代替できる。</p>
+
+
+        <h2>5. 依存の設計原則</h2>
+
+        <p>トキストレージの外部依存には、明確な原則がある。</p>
+
+        <h3>原則1: 永続レイヤーは外部に依存させない</h3>
+        <p>QRコードのデータはURLパラメータとして自己完結する。音声の復号はクライアントサイドのWASMで行う。物理製品は金属に刻印される。NDLへの納本は紙と電子の両方で行われる。いずれも、Cloudflare/GAS/GitHub/BASEの生死に影響されない。</p>
+
+        <h3>原則2: 運用レイヤーは便利なものを使い、代替可能に保つ</h3>
+        <p>GASを使う理由は単純だ。無料で、セットアップが速く、スプレッドシートとの連携が自然だからだ。Cloudflare Workerを使う理由は、GASの302リダイレクト問題を解決するためだ。どちらも合理的な選択だが、<strong>どちらも明日差し替え可能なように設計している</strong>。</p>
+
+        <h3>原則3: 依存先のコードを自分で保持する</h3>
+        <p>GASのソースコード（<code>contact-form-gas.js</code>）はリポジトリに保管されている。Cloudflare Workerのソースコード（<code>wise-webhook-proxy.js</code>）もリポジトリにある。サービスが消えても、ロジックは手元に残る。</p>
 
         <blockquote>
-            便利さには半減期がある。<br>
-            独立には、半減期がない。
+            外部サービスを使うなら、そのサービスが消えた日のことを設計に含めろ。<br>
+            それが「使う」と「頼る」の境界線だ。
         </blockquote>
 
 
-        <h2>7. 結び——便利さの先を見る</h2>
+        <h2>6. 「無料」の本質</h2>
+
+        <p>Cloudflare Workersの無料枠は1日10万リクエスト。GASの無料枠は1日のメール送信100通、スクリプト実行6分/回。トキストレージの規模では十分すぎる。</p>
+
+        <p>しかし「無料で使える」ことと「自分のインフラである」ことは、まったく別の概念だ。</p>
+
+        <p>Cloudflareのアカウントが凍結されれば、Workerは止まる。Googleアカウントが凍結されれば、GASもスプレッドシートもGmailも止まる。2022年6月のCloudflare大規模障害では、DiscordやShopifyを含む数百万のサイトが同時にダウンした。</p>
+
+        <p>だからこそ、<strong>無料サービスに「乗せてよいもの」と「乗せてはならないもの」を分ける</strong>設計が要る。運用データは乗せてよい。永続データは乗せてはならない。</p>
+
+
+        <h2>7. 結び——使うことと、頼ることは違う</h2>
 
         <div class="highlight-box">
-            <p class="big">便利なインフラは、借りたインフラだ。</p>
-            <p>借りたものは、返す日が来る。<br>返す日が来ないインフラだけが、永続する。</p>
+            <p class="big">使うことと、頼ることは違う。</p>
+            <p>壊れたら困るものを外部に置くな。<br>壊れても困らないものは、便利なところに置け。</p>
         </div>
 
-        <p>Cloudflareは素晴らしいサービスだ。GASも優れた自動化基盤だ。多くのプロジェクトにとって、最適な選択肢であることは疑いない。</p>
+        <p>トキストレージはCloudflare WorkersとGASを使っている。これは事実だ。</p>
 
-        <p>しかしトキストレージが目指しているのは、「多くのプロジェクト」の最適解ではない。<strong>1000年後にもデータが読める</strong>という、極端に長い時間軸での設計だ。</p>
+        <p>しかし、これまで製造したすべてのQRコード、すべての物理製品、NDLに納本されたすべてのニュースレターは、CloudflareにもGASにも一切依存していない。明日両方のサービスが消えても、<strong>永続すべきものは何ひとつ失われない</strong>。</p>
 
-        <p>その時間軸で見ると、便利さよりも独立が重要になる。高機能よりも、依存の少なさが重要になる。今日のベストプラクティスよりも、100年後に移行可能であることが重要になる。</p>
+        <p>これは偶然ではない。最初からそう設計した。</p>
 
-        <p>すべての依存は、いつか終わるサービスへの賭けだ。<strong>賭ける対象を最小にすること</strong>が、トキストレージの設計原則だ。</p>
+        <p>外部サービスは道具だ。良い道具は使えばいい。しかし道具に命綱を預けてはならない。命綱は、自分の手の中になければならない。</p>
 
         <h2>関連エッセイ</h2>
         <ul>
