@@ -1,0 +1,270 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" type="image/png" sizes="32x32" href="asset/favicon-32.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="asset/apple-touch-icon.png">
+    <title>Enterprise Architecture — The Irreversible Choice of Initial Design | TokiStorage</title>
+    <meta name="robots" content="noindex, nofollow">
+    <meta name="description" content="Enterprise Architecture is not the province of large corporations. It is a question of structure, not scale. Whether you design it first or bolt it on later determines the fate of your project.">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Shippori+Mincho:wght@400;500;600;700&family=Zen+Kaku+Gothic+New:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --toki-blue: #1E40AF;
+            --toki-blue-dark: #1E3A5F;
+            --toki-blue-pale: #EFF6FF;
+            --accent-blue: #3B82F6;
+            --bg-white: #FFFFFF;
+            --bg-section: #DBEAFE;
+            --text-primary: #1E293B;
+            --text-secondary: #475569;
+            --text-muted: #94A3B8;
+            --border: #E2E8F0;
+            --font-display: 'Shippori Mincho', serif;
+            --font-body: 'Zen Kaku Gothic New', sans-serif;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        html { scroll-behavior: smooth; }
+
+        body {
+            font-family: var(--font-body);
+            font-weight: 400;
+            background: var(--bg-white);
+            color: var(--text-primary);
+            line-height: 1.9;
+            font-size: 16px;
+        }
+
+        .article-nav {
+            position: fixed; top: 0; left: 0; right: 0; z-index: 1000;
+            background: rgba(255,255,255,0.95);
+            backdrop-filter: blur(12px);
+            border-bottom: 1px solid var(--border);
+            padding: 0.6rem 1.2rem;
+            display: flex; align-items: center; justify-content: space-between; gap: 1rem;
+        }
+        .article-nav .nav-brand {
+            font-family: var(--font-display); font-size: 0.9rem; font-weight: 600;
+            color: var(--toki-blue); text-decoration: none; white-space: nowrap; flex-shrink: 0;
+        }
+        .article-nav .nav-right { display: flex; align-items: center; gap: 1rem; }
+        .article-nav .nav-label { font-size: 0.6rem; color: var(--text-muted); letter-spacing: 0.08em; text-align: right; line-height: 1.4; }
+        .article-nav .lang-switch { font-size: 0.75rem; color: var(--toki-blue); text-decoration: none; padding: 0.3rem 0.6rem; border: 1px solid var(--toki-blue); border-radius: 4px; }
+        .article-nav .lang-switch:hover { background: var(--toki-blue); color: #fff; }
+
+        .article-container { max-width: 720px; margin: 0 auto; padding: 5rem 2rem 4rem; }
+        .article-header { margin-bottom: 3rem; }
+        .article-category { font-size: 0.7rem; letter-spacing: 0.15em; color: var(--toki-blue); margin-bottom: 0.5rem; }
+        .article-header h1 { font-family: var(--font-display); font-size: 1.8rem; font-weight: 700; line-height: 1.5; color: var(--text-primary); margin-bottom: 1rem; }
+        .article-subtitle { font-size: 0.95rem; color: var(--text-secondary); line-height: 1.8; }
+
+        .article-content h2 { font-family: var(--font-display); font-size: 1.3rem; font-weight: 600; color: var(--toki-blue-dark); margin: 3rem 0 1rem; padding-bottom: 0.5rem; border-bottom: 1px solid var(--border); }
+        .article-content h3 { font-family: var(--font-display); font-size: 1.1rem; font-weight: 600; color: var(--text-primary); margin: 2rem 0 0.8rem; }
+        .article-content p { margin-bottom: 1.2rem; text-align: justify; }
+        .article-content ul, .article-content ol { margin: 0.5rem 0 1.5rem 1.5rem; }
+        .article-content li { margin-bottom: 0.5rem; }
+        .article-content blockquote { border-left: 3px solid var(--toki-blue); padding: 1rem 1.5rem; margin: 1.5rem 0; background: var(--toki-blue-pale); font-style: italic; color: var(--text-secondary); }
+        .article-content strong { color: var(--toki-blue-dark); }
+
+        .core-message { background: var(--toki-blue-pale); border-left: 4px solid var(--toki-blue); padding: 1.2rem 1.5rem; margin: 0 0 2rem; font-size: 0.95rem; line-height: 1.8; }
+
+        .phase-table { width: 100%; border-collapse: collapse; margin: 1.5rem 0; font-size: 0.9rem; }
+        .phase-table th, .phase-table td { padding: 0.7rem 1rem; border: 1px solid var(--border); text-align: left; }
+        .phase-table th { background: var(--toki-blue-pale); font-weight: 600; color: var(--toki-blue-dark); font-size: 0.85rem; }
+        .phase-table td { vertical-align: top; }
+
+        .highlight-box { background: linear-gradient(135deg, var(--toki-blue-pale), #fff); border: 1px solid var(--accent-blue); border-radius: 8px; padding: 1.5rem; margin: 2rem 0; text-align: center; }
+        .highlight-box p { text-align: center; margin-bottom: 0.5rem; }
+        .highlight-box .big { font-family: var(--font-display); font-size: 1.3rem; font-weight: 700; color: var(--toki-blue-dark); }
+
+        .article-footer { margin-top: 4rem; padding: 2rem 0; border-top: 1px solid var(--border); font-size: 0.7rem; color: var(--text-muted); line-height: 2.2; }
+        .article-footer a { color: var(--text-muted); text-decoration: none; }
+        .article-footer a:hover { text-decoration: underline; }
+
+        @media (max-width: 768px) {
+            .article-container { padding: 6rem 1.2rem 3rem; }
+            .article-header h1 { font-size: 1.5rem; }
+            .article-nav .nav-label { display: none; }
+            .phase-table { font-size: 0.8rem; }
+            .phase-table th, .phase-table td { padding: 0.5rem 0.6rem; }
+        }
+        @media print { .article-nav { display: none; } .article-container { padding-top: 2rem; } }
+        .nav-brand::before { content: ''; display: inline-block; width: 20px; height: 20px; background: url('asset/tokistorage-icon-512.png') no-repeat center / contain; vertical-align: -3px; margin-right: 5px; }
+    </style>
+<link rel="stylesheet" href="contact-form.css">
+    <meta property="og:image" content="https://tokistorage.github.io/lp/asset/tokistorage-icon-512.png">
+    <meta property="og:image:width" content="512">
+    <meta property="og:image:height" content="512">
+</head>
+<body>
+
+<nav class="article-nav">
+    <a href="index-en.html" class="nav-brand">TokiStorage</a>
+    <div class="nav-right">
+        <span class="nav-label">Technology & Design / Enterprise Architecture</span>
+        <a href="enterprise-architecture.html" class="lang-switch">JA</a>
+    </div>
+</nav>
+
+<main class="article-container">
+
+    <header class="article-header">
+        <p class="article-category">ESSAY — Technology & Design</p>
+        <h1>Enterprise Architecture — The Irreversible Choice of Initial Design</h1>
+        <p class="article-subtitle">
+            Governance cannot stand on a facade.<br>
+            Structure is either decided at the start or chased forever.
+        </p>
+    </header>
+
+    <article class="article-content">
+
+        <div class="core-message">
+            <strong>The point of this essay:</strong> Enterprise Architecture (EA) is not a methodology for large corporations. It is a question of structure, not scale. And structure designed from the start is fundamentally different from structure bolted on later. TokiStorage is a one-person project, but because EA was part of its initial design, its structure doesn't break when features are added.
+        </div>
+
+
+        <h2>1. Everything Built on a Facade Will Shake</h2>
+
+        <p>In spot consulting for large enterprise IT departments, one scene repeats. Systems are running. Business is flowing. But <strong>there is no structure</strong>.</p>
+
+        <p>Individual systems were built for individual requirements, then connected by APIs, CSV files, and Excel macros. No one holds the full picture. Each new requirement gets a new component tacked onto something existing.</p>
+
+        <p>Then one day, leadership says: "Let's do Enterprise Architecture."</p>
+
+        <p>But when you try to layer EA onto a facade, what happens? Reconciling with existing systems, navigating inter-departmental politics, estimating migration costs. Time is consumed not by essential structural discussion, but by <strong>debates over how to justify the current state</strong>.</p>
+
+        <blockquote>
+            The greatest enemy of EA is not technical debt.<br>
+            It is the fact that "things are working right now."
+        </blockquote>
+
+
+        <h2>2. EA as Initial Design</h2>
+
+        <p>EA takes two forms.</p>
+
+        <table class="phase-table">
+            <tr>
+                <th></th>
+                <th>Retrofitted EA</th>
+                <th>Initial-Design EA</th>
+            </tr>
+            <tr>
+                <td><strong>Purpose</strong></td>
+                <td>Organize and improve the current state</td>
+                <td>Define structural principles before building</td>
+            </tr>
+            <tr>
+                <td><strong>Constraints</strong></td>
+                <td>Existing systems, organizations, politics</td>
+                <td>None (design from a blank slate)</td>
+            </tr>
+            <tr>
+                <td><strong>Output</strong></td>
+                <td>Documentation of the status quo, phased migration plans</td>
+                <td>Design principles that guide decisions</td>
+            </tr>
+            <tr>
+                <td><strong>Risk</strong></td>
+                <td>Diluted by politics and compromise</td>
+                <td>Whether principles are upheld during implementation</td>
+            </tr>
+        </table>
+
+        <p>Retrofitted EA is like cartography — surveying and recording the roads of an existing city. Valuable in itself, but the city's structure doesn't change.</p>
+
+        <p>Initial-design EA is like urban planning — deciding where to run water pipes and power lines before laying roads. No need to dig them up later.</p>
+
+
+        <h2>3. TokiStorage's Architecture</h2>
+
+        <p>TokiStorage is a project run by one person. But it has design principles established from the start.</p>
+
+        <h3>Principle 1: Data Is Self-Contained Within the QR Code</h3>
+        <p>Voice and images are embedded as URL parameters within QR codes, with zero dependency on external servers. This principle means that server failures, service shutdowns, or corporate bankruptcy never result in data loss.</p>
+
+        <h3>Principle 2: Separate Responsibilities by Layer</h3>
+        <p>The QR generation tool, physical manufacturing, and three-layer preservation (GitHub, NDL, physical media) are designed as independent layers. Changes in one layer don't cascade to others.</p>
+
+        <h3>Principle 3: Security Is Guaranteed by Architecture</h3>
+        <p>Data never goes to a server, so it can't leak from a server. Code is published, so hidden vulnerabilities get found. The site is static, so server-side vulnerabilities don't exist. Security isn't "added" — risks "structurally cannot arise."</p>
+
+        <h3>Principle 4: Governance Is Designed Per Layer</h3>
+        <p>QR generation is client-side, so content is not screened. Physical products are private property, so they are not scanned. NDL deposit goes through newsletter editing, so content falling under prohibited uses may be declined. What is controlled, what is not, and why — all clearly defined per layer.</p>
+
+
+        <h2>4. Governance Is Embedded in Architecture</h2>
+
+        <p>In many organizations, governance is discussed separately from architecture. Security policy, data governance, compliance. Each has its own document, its own owner, its own committee.</p>
+
+        <p>But fundamentally, <strong>governance is part of architecture</strong>. "Who can control what" is determined by system structure. If the structure is ambiguous, governance is ambiguous.</p>
+
+        <p>In TokiStorage, governance is embedded in architecture.</p>
+
+        <ul>
+            <li><strong>Privacy</strong> — the design of not sending data to servers makes data protection regulation compliance unnecessary</li>
+            <li><strong>Content control</strong> — the presence or absence of control, and its rationale, is defined per layer</li>
+            <li><strong>Transparency</strong> — published code makes governance a verifiable fact, not a verbal promise</li>
+            <li><strong>Permanence</strong> — data self-contained in QR codes is unaffected by changes in organizational governance structures</li>
+        </ul>
+
+        <blockquote>
+            Don't "enforce rules" for governance.<br>
+            Design structures where rules aren't needed.
+        </blockquote>
+
+
+        <h2>5. A Question of Structure, Not Scale</h2>
+
+        <p>There is a misconception that EA is for large enterprises. That it's a taxonomy for thousands of employees, hundreds of systems, dozens of departments.</p>
+
+        <p>But the essence of EA is "making structural decisions before implementation." That definition has no condition on scale.</p>
+
+        <p>Even in a one-person project, without upfront structure, every new feature brings indecision about "where to put this," judgment wavers, and technical debt accumulates. Conversely, with principles established first, decisions become natural. New features fall into place: "This belongs here, according to our principles."</p>
+
+        <p>EA is hard in large enterprises not because they are large. <strong>It's because they ran so far without initial design.</strong></p>
+
+
+        <h2>6. Multi-Stage Approval as Structural Defeat</h2>
+
+        <p>Retrofitted governance inevitably arrives at multi-stage approval flows.</p>
+
+        <p>Structure is ambiguous, so no one can assess the risk of a change. Since risk can't be assessed, confirmation is sought from many people. Security review, architecture review, compliance check, department head approval. Back and forth, impeding the entire development lifecycle.</p>
+
+        <p>This is not the success of governance. <strong>It is the price of absent architecture.</strong></p>
+
+        <p>When structure is clear, the blast radius of a change is self-evident. When self-evident, approval flows become lightweight. Organizations that need multi-stage approval are not "cautious organizations" — they are "organizations without structure."</p>
+
+
+        <h2>7. Conclusion — First Design Lasts Forever</h2>
+
+        <div class="highlight-box">
+            <p class="big">Architecture cannot be added later.</p>
+            <p>Design it first, or run forever without it.<br>There is no middle ground.</p>
+        </div>
+
+        <p>Enterprise Architecture is neither a framework name nor a consulting firm's product. It is the stance of "making structural decisions before implementation."</p>
+
+        <p>TokiStorage is a one-person project, but it has EA as initial design. That is why a QR generation tool can support physical manufacturing on top of it, NDL deposit on top of that, and content governance on top of that — all without the structure shaking.</p>
+
+        <p>Whether you're a large enterprise or a solo operator, the question is the same. <strong>Did you decide the structure first?</strong> That answer will echo across the entire lifespan of your project.</p>
+
+    </article>
+
+    <footer class="article-footer">
+        <p id="essay-nav-links"></p>
+        <p style="margin-top: 2rem; font-size: 0.75rem;">&copy; 2026 TokiStorage</p>
+    </footer>
+
+</main>
+
+<script src="contact-form.js"></script>
+<script src="essay-nav.js?v=20260218"></script>
+<script src="tracker.js"></script>
+</body>
+</html>

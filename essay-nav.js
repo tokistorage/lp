@@ -105,6 +105,7 @@
     { id: 'what-is-github', ja: 'GitHubとは何か', en: 'What Is GitHub' },
     { id: 'api-transformation', ja: 'APIの変容', en: 'API Transformation' },
     { id: 'ssdlc', ja: 'SSDLC', en: 'SSDLC' },
+    { id: 'enterprise-architecture', ja: 'エンタープライズアーキテクチャ', en: 'Enterprise Architecture' },
     { id: 'backup-rule', ja: '3-2-1ルール', en: '3-2-1 Backup Rule' },
     { id: 'uv-laminate', ja: 'UVラミネート', en: 'UV Laminate' },
     { id: 'uptime', ja: '稼働率と外部依存', en: 'Uptime & Dependencies' },

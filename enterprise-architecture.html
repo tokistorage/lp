@@ -1,0 +1,270 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" type="image/png" sizes="32x32" href="asset/favicon-32.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="asset/apple-touch-icon.png">
+    <title>エンタープライズアーキテクチャ — 初期設計という不可逆の選択 | トキストレージ</title>
+    <meta name="robots" content="noindex, nofollow">
+    <meta name="description" content="エンタープライズアーキテクチャは大企業の専売特許ではない。規模ではなく構造の問題であり、初期に設計するか後から追加するかで、プロジェクトの運命は決まる。">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Shippori+Mincho:wght@400;500;600;700&family=Zen+Kaku+Gothic+New:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --toki-blue: #1E40AF;
+            --toki-blue-dark: #1E3A5F;
+            --toki-blue-pale: #EFF6FF;
+            --accent-blue: #3B82F6;
+            --bg-white: #FFFFFF;
+            --bg-section: #DBEAFE;
+            --text-primary: #1E293B;
+            --text-secondary: #475569;
+            --text-muted: #94A3B8;
+            --border: #E2E8F0;
+            --font-display: 'Shippori Mincho', serif;
+            --font-body: 'Zen Kaku Gothic New', sans-serif;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        html { scroll-behavior: smooth; }
+
+        body {
+            font-family: var(--font-body);
+            font-weight: 400;
+            background: var(--bg-white);
+            color: var(--text-primary);
+            line-height: 1.9;
+            font-size: 16px;
+        }
+
+        .article-nav {
+            position: fixed; top: 0; left: 0; right: 0; z-index: 1000;
+            background: rgba(255,255,255,0.95);
+            backdrop-filter: blur(12px);
+            border-bottom: 1px solid var(--border);
+            padding: 0.6rem 1.2rem;
+            display: flex; align-items: center; justify-content: space-between; gap: 1rem;
+        }
+        .article-nav .nav-brand {
+            font-family: var(--font-display); font-size: 0.9rem; font-weight: 600;
+            color: var(--toki-blue); text-decoration: none; white-space: nowrap; flex-shrink: 0;
+        }
+        .article-nav .nav-right { display: flex; align-items: center; gap: 1rem; }
+        .article-nav .nav-label { font-size: 0.6rem; color: var(--text-muted); letter-spacing: 0.08em; text-align: right; line-height: 1.4; }
+        .article-nav .lang-switch { font-size: 0.75rem; color: var(--toki-blue); text-decoration: none; padding: 0.3rem 0.6rem; border: 1px solid var(--toki-blue); border-radius: 4px; }
+        .article-nav .lang-switch:hover { background: var(--toki-blue); color: #fff; }
+
+        .article-container { max-width: 720px; margin: 0 auto; padding: 5rem 2rem 4rem; }
+        .article-header { margin-bottom: 3rem; }
+        .article-category { font-size: 0.7rem; letter-spacing: 0.15em; color: var(--toki-blue); margin-bottom: 0.5rem; }
+        .article-header h1 { font-family: var(--font-display); font-size: 1.8rem; font-weight: 700; line-height: 1.5; color: var(--text-primary); margin-bottom: 1rem; }
+        .article-subtitle { font-size: 0.95rem; color: var(--text-secondary); line-height: 1.8; }
+
+        .article-content h2 { font-family: var(--font-display); font-size: 1.3rem; font-weight: 600; color: var(--toki-blue-dark); margin: 3rem 0 1rem; padding-bottom: 0.5rem; border-bottom: 1px solid var(--border); }
+        .article-content h3 { font-family: var(--font-display); font-size: 1.1rem; font-weight: 600; color: var(--text-primary); margin: 2rem 0 0.8rem; }
+        .article-content p { margin-bottom: 1.2rem; text-align: justify; }
+        .article-content ul, .article-content ol { margin: 0.5rem 0 1.5rem 1.5rem; }
+        .article-content li { margin-bottom: 0.5rem; }
+        .article-content blockquote { border-left: 3px solid var(--toki-blue); padding: 1rem 1.5rem; margin: 1.5rem 0; background: var(--toki-blue-pale); font-style: italic; color: var(--text-secondary); }
+        .article-content strong { color: var(--toki-blue-dark); }
+
+        .core-message { background: var(--toki-blue-pale); border-left: 4px solid var(--toki-blue); padding: 1.2rem 1.5rem; margin: 0 0 2rem; font-size: 0.95rem; line-height: 1.8; }
+
+        .phase-table { width: 100%; border-collapse: collapse; margin: 1.5rem 0; font-size: 0.9rem; }
+        .phase-table th, .phase-table td { padding: 0.7rem 1rem; border: 1px solid var(--border); text-align: left; }
+        .phase-table th { background: var(--toki-blue-pale); font-weight: 600; color: var(--toki-blue-dark); font-size: 0.85rem; }
+        .phase-table td { vertical-align: top; }
+
+        .highlight-box { background: linear-gradient(135deg, var(--toki-blue-pale), #fff); border: 1px solid var(--accent-blue); border-radius: 8px; padding: 1.5rem; margin: 2rem 0; text-align: center; }
+        .highlight-box p { text-align: center; margin-bottom: 0.5rem; }
+        .highlight-box .big { font-family: var(--font-display); font-size: 1.3rem; font-weight: 700; color: var(--toki-blue-dark); }
+
+        .article-footer { margin-top: 4rem; padding: 2rem 0; border-top: 1px solid var(--border); font-size: 0.7rem; color: var(--text-muted); line-height: 2.2; }
+        .article-footer a { color: var(--text-muted); text-decoration: none; }
+        .article-footer a:hover { text-decoration: underline; }
+
+        @media (max-width: 768px) {
+            .article-container { padding: 6rem 1.2rem 3rem; }
+            .article-header h1 { font-size: 1.5rem; }
+            .article-nav .nav-label { display: none; }
+            .phase-table { font-size: 0.8rem; }
+            .phase-table th, .phase-table td { padding: 0.5rem 0.6rem; }
+        }
+        @media print { .article-nav { display: none; } .article-container { padding-top: 2rem; } }
+        .nav-brand::before { content: ''; display: inline-block; width: 20px; height: 20px; background: url('asset/tokistorage-icon-512.png') no-repeat center / contain; vertical-align: -3px; margin-right: 5px; }
+    </style>
+<link rel="stylesheet" href="contact-form.css">
+    <meta property="og:image" content="https://tokistorage.github.io/lp/asset/tokistorage-icon-512.png">
+    <meta property="og:image:width" content="512">
+    <meta property="og:image:height" content="512">
+</head>
+<body>
+
+<nav class="article-nav">
+    <a href="index.html" class="nav-brand">トキストレージ</a>
+    <div class="nav-right">
+        <span class="nav-label">技術・設計 / エンタープライズアーキテクチャ</span>
+        <a href="enterprise-architecture-en.html" class="lang-switch">EN</a>
+    </div>
+</nav>
+
+<main class="article-container">
+
+    <header class="article-header">
+        <p class="article-category">ESSAY — 技術・設計</p>
+        <h1>エンタープライズアーキテクチャ — 初期設計という不可逆の選択</h1>
+        <p class="article-subtitle">
+            ハリボテの上にガバナンスは載らない。<br>
+            構造は最初に決めるか、永遠に追いかけるかの二択である。
+        </p>
+    </header>
+
+    <article class="article-content">
+
+        <div class="core-message">
+            <strong>このエッセイの要点：</strong> エンタープライズアーキテクチャ（EA）は大企業のための方法論ではない。規模ではなく構造の問題である。そして構造は、初期に設計されたものと後から追加されたものでは、根本的に性質が異なる。トキストレージは一人のプロジェクトだが、初期設計としてのEAがあるからこそ、機能追加のたびに構造が崩れない。
+        </div>
+
+
+        <h2>1. ハリボテの上に何を建てても揺れる</h2>
+
+        <p>大企業のIT部門でスポットコンサルティングに入ると、繰り返し出会う光景がある。システムは動いている。業務は回っている。だが<strong>構造がない</strong>。</p>
+
+        <p>個別の要件に応じて個別のシステムが作られ、それらがAPIやCSVファイルやExcelマクロで繋がれている。全体像を把握している人間はいない。新しい要件が来るたびに、既存の何かの横に新しい何かが継ぎ足される。</p>
+
+        <p>そしてある日、経営層が言う。「エンタープライズアーキテクチャをやろう。」</p>
+
+        <p>しかし、ハリボテの上にEAを載せようとすると何が起きるか。既存システムとの整合性の調整、部門間の政治、移行コストの見積もり。本質的な構造設計の議論ではなく、<strong>現状をどう正当化するかの議論</strong>に時間が消える。</p>
+
+        <blockquote>
+            EAの最大の敵は、技術的負債ではない。<br>
+            「今動いている」という事実である。
+        </blockquote>
+
+
+        <h2>2. 初期設計としてのEA</h2>
+
+        <p>EAには二つの姿がある。</p>
+
+        <table class="phase-table">
+            <tr>
+                <th></th>
+                <th>後付けのEA</th>
+                <th>初期設計のEA</th>
+            </tr>
+            <tr>
+                <td><strong>目的</strong></td>
+                <td>現状の整理と改善</td>
+                <td>構造の原則を最初に定める</td>
+            </tr>
+            <tr>
+                <td><strong>制約</strong></td>
+                <td>既存システム・組織・政治</td>
+                <td>なし（白紙から設計できる）</td>
+            </tr>
+            <tr>
+                <td><strong>成果物</strong></td>
+                <td>現状のドキュメント化、段階的移行計画</td>
+                <td>判断基準となる設計原則</td>
+            </tr>
+            <tr>
+                <td><strong>リスク</strong></td>
+                <td>政治と妥協で骨抜きになる</td>
+                <td>実装段階で原則が守られるかどうか</td>
+            </tr>
+        </table>
+
+        <p>後付けのEAは「地図を描く作業」に近い。すでに存在する街の道路を測量し、記録する。それ自体に価値はあるが、街の構造は変わらない。</p>
+
+        <p>初期設計のEAは「都市計画」に近い。道路を引く前に、水道管と電線をどこに通すかを決める。後から掘り返す必要がない。</p>
+
+
+        <h2>3. トキストレージのアーキテクチャ</h2>
+
+        <p>トキストレージは一人で運営するプロジェクトである。しかし、初期に定めた設計原則がある。</p>
+
+        <h3>原則1：データはQRコード内に自己完結する</h3>
+        <p>音声も画像もURLパラメータとしてQRコードに埋め込まれ、外部サーバーに一切依存しない。この原則があるから、サーバー障害・サービス終了・企業の倒産が「データ消失」に繋がらない。</p>
+
+        <h3>原則2：レイヤーごとに責務を分離する</h3>
+        <p>QR生成ツール、物理製造、三層保管（GitHub・NDL・物理媒体）は、それぞれ独立したレイヤーとして設計されている。あるレイヤーの変更が他のレイヤーに波及しない。</p>
+
+        <h3>原則3：セキュリティはアーキテクチャで担保する</h3>
+        <p>サーバーにデータを送らないから、サーバーから漏洩しない。コードを公開しているから、隠れた脆弱性が発見される。静的サイトだから、サーバーサイドの脆弱性が存在しない。セキュリティを「追加する」のではなく、リスクが「構造的に発生しない」設計。</p>
+
+        <h3>原則4：ガバナンスはレイヤーに応じて設計する</h3>
+        <p>QR生成はクライアントサイドで完結するため、コンテンツの検閲は行わない。物理製造は私的所有物であり、スキャンしない。NDL納本はニュースレターの編集過程を経るため、禁止事項に該当するコンテンツは掲載を見送る。どのレイヤーで何を制御し、何を制御しないかが明確に定義されている。</p>
+
+
+        <h2>4. ガバナンスはアーキテクチャに内包される</h2>
+
+        <p>多くの組織で、ガバナンスはアーキテクチャとは別に議論される。セキュリティポリシー、データガバナンス、コンプライアンス。それぞれ別の文書があり、別の担当者がいて、別の会議体で審議される。</p>
+
+        <p>しかし本来、<strong>ガバナンスとはアーキテクチャの一部</strong>である。「誰が何を制御できるか」は、システムの構造が決める。構造が曖昧なら、ガバナンスも曖昧になる。</p>
+
+        <p>トキストレージでは、ガバナンスがアーキテクチャに内包されている。</p>
+
+        <ul>
+            <li><strong>プライバシー</strong> — サーバーにデータを送らない設計が、データ保護規制への対応を不要にする</li>
+            <li><strong>コンテンツ制御</strong> — レイヤーごとに制御の有無と根拠が定義されている</li>
+            <li><strong>透明性</strong> — コードが公開されているから、ガバナンスが口約束ではなく検証可能な事実になる</li>
+            <li><strong>永続性</strong> — QRコードに自己完結するデータは、組織のガバナンス体制が変わっても影響を受けない</li>
+        </ul>
+
+        <blockquote>
+            ガバナンスを「ルールで縛る」のではなく、<br>
+            「ルールが不要な構造を設計する」。
+        </blockquote>
+
+
+        <h2>5. 規模ではなく構造の問題</h2>
+
+        <p>EAは大企業のためのものだという誤解がある。数千人の組織、数百のシステム、数十の部門を横断する整理術だと。</p>
+
+        <p>しかし、EAの本質は「構造に関する意思決定を、実装より前に行う」ことである。その定義に規模の条件はない。</p>
+
+        <p>一人のプロジェクトであっても、最初に構造を決めなければ、機能を追加するたびに「どこに何を置くか」で迷い、判断がぶれ、技術的負債が積み上がる。逆に、原則が最初に定まっていれば、判断に迷わない。新しい機能は、原則に照らして「ここに置くべきだ」と自然に決まる。</p>
+
+        <p>大企業でEAが難しいのは、規模が大きいからではない。<strong>初期設計なしで走った距離が長いから</strong>である。</p>
+
+
+        <h2>6. 多段階承認という構造的敗北</h2>
+
+        <p>後付けのガバナンスが行き着く先は、多段階承認フローである。</p>
+
+        <p>構造が曖昧だから、変更のリスクを誰も評価できない。評価できないから、多くの人間に確認を求める。セキュリティレビュー、アーキテクチャレビュー、コンプライアンスチェック、部門長承認。行ったり来たりして開発ライフサイクル全体の推進が阻害される。</p>
+
+        <p>これはガバナンスの成功ではなく、<strong>アーキテクチャの不在に対する代償</strong>である。</p>
+
+        <p>構造が明確なら、変更の影響範囲は自明になる。自明なら、承認フローは軽くなる。多段階承認が必要な組織は、「慎重な組織」ではなく、「構造を持たない組織」である。</p>
+
+
+        <h2>7. 結論 — 最初の設計が最後まで残る</h2>
+
+        <div class="highlight-box">
+            <p class="big">アーキテクチャは後から追加できない。</p>
+            <p>最初に設計するか、永遠に不在のまま走り続けるか。<br>その二択に中間はない。</p>
+        </div>
+
+        <p>エンタープライズアーキテクチャとは、フレームワークの名前でも、コンサルティングファームの商品でもない。「構造に関する意思決定を、実装より前に行う」という態度のことである。</p>
+
+        <p>トキストレージは一人のプロジェクトだが、初期設計としてのEAがある。だからこそ、QR生成ツールの上に物理製造が載り、その上にNDL納本が載り、さらにその上にコンテンツガバナンスが載っても、構造が揺れない。</p>
+
+        <p>大企業であれ一人であれ、問いは同じだ。<strong>最初に構造を決めたか。</strong>その答えが、プロジェクトの全生涯にわたって効き続ける。</p>
+
+    </article>
+
+    <footer class="article-footer">
+        <p id="essay-nav-links"></p>
+        <p style="margin-top: 2rem; font-size: 0.75rem;">&copy; 2026 TokiStorage</p>
+    </footer>
+
+</main>
+
+<script src="contact-form.js"></script>
+<script src="essay-nav.js?v=20260218"></script>
+<script src="tracker.js"></script>
+</body>
+</html>
