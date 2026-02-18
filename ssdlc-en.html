@@ -184,7 +184,7 @@
             <tr>
                 <td><strong>Design</strong></td>
                 <td>Threat modeling, security requirements</td>
-                <td>Architecture where data is self-contained within the QR code. No data sent to external servers — fundamentally minimizing the attack surface</td>
+                <td>Architecture where permanent data (voice, images) is self-contained within the QR code. Operational tasks (orders, inquiries) use Cloudflare Workers and GAS, but the data meant to endure never passes through external servers — fundamentally minimizing the attack surface</td>
             </tr>
             <tr>
                 <td><strong>Implementation</strong></td>
@@ -210,7 +210,7 @@
 
         <p>What stands out is that TokiStorage's SSDLC is not an approach of "adding security measures" but of <strong>"choosing an architecture where security risks structurally cannot arise."</strong></p>
 
-        <p>If data is never sent to a server, it cannot leak from a server. If code is published, hidden vulnerabilities will be found. If the site is static, server-side vulnerabilities don't exist.</p>
+        <p>Permanent data — voice and images embedded in QR codes — is never sent to a server, so it cannot leak from a server. Operational processes (orders, contact forms, analytics) do use external services like Cloudflare Workers and GAS, but these handle transactional data, not the recordings meant to last. If code is published, hidden vulnerabilities will be found. If the site is static, server-side vulnerabilities don't exist.</p>
 
         <p>This is not "fortifying the walls." It is a design philosophy of "minimizing the walls that need fortifying."</p>
 

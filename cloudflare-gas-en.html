@@ -5,9 +5,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="icon" type="image/png" sizes="32x32" href="asset/favicon-32.png">
     <link rel="apple-touch-icon" sizes="180x180" href="asset/apple-touch-icon.png">
-    <title>Cloudflare and GAS — Convenient Dependencies, Invisible Costs | TokiStorage</title>
+    <title>Cloudflare and GAS — Using and Relying Are Different Things | TokiStorage</title>
     <meta name="robots" content="noindex, nofollow">
-    <meta name="description" content="Cloudflare's free CDN and Google Apps Script's free automation. An examination of the invisible dependencies behind their convenience, and why TokiStorage uses neither.">
+    <meta name="description" content="TokiStorage uses Cloudflare Workers and Google Apps Script for operations. But the data meant to last forever depends on neither. Using and relying are different things.">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Shippori+Mincho:wght@400;500;600;700&family=Zen+Kaku+Gothic+New:wght@300;400;500;700&display=swap" rel="stylesheet">
@@ -69,6 +69,7 @@
         .article-content li { margin-bottom: 0.5rem; }
         .article-content blockquote { border-left: 3px solid var(--toki-blue); padding: 1rem 1.5rem; margin: 1.5rem 0; background: var(--toki-blue-pale); font-style: italic; color: var(--text-secondary); }
         .article-content strong { color: var(--toki-blue-dark); }
+        .article-content code { font-size: 0.88em; background: var(--toki-blue-pale); padding: 0.15em 0.4em; border-radius: 3px; }
 
         .core-message { background: var(--toki-blue-pale); border-left: 4px solid var(--toki-blue); padding: 1.2rem 1.5rem; margin: 0 0 2rem; font-size: 0.95rem; line-height: 1.8; }
 
@@ -114,177 +115,173 @@
 
     <header class="article-header">
         <p class="article-category">ESSAY — Technology & Design</p>
-        <h1>Cloudflare and GAS — Convenient Dependencies, Invisible Costs</h1>
+        <h1>Cloudflare and GAS — Using and Relying Are Different Things</h1>
         <p class="article-subtitle">
-            Free and powerful. So you use them.<br>
-            But without asking "whose infrastructure is this," the dependency deepens.
+            TokiStorage uses Cloudflare Workers and Google Apps Script.<br>
+            But the data meant to last forever depends on neither.
         </p>
     </header>
 
     <article class="article-content">
 
         <div class="core-message">
-            <strong>The point of this essay:</strong> Cloudflare and Google Apps Script (GAS) are extraordinarily attractive infrastructure for solo developers and startups. Free, feature-rich, easy to set up. But behind that convenience lies invisible dependency. DNS, SSL, traffic routing — all controlled by a third party. Business logic running on someone else's runtime. TokiStorage uses neither, not for technical reasons, but because when you aim for a thousand years of permanence, every external dependency becomes a countdown timer.
+            <strong>The point of this essay:</strong> TokiStorage uses Cloudflare Workers and Google Apps Script (GAS) in its operations — order processing, contact forms, page view analytics. We use them because they are convenient. But the data meant to endure a thousand years — the voice embedded in QR codes, physical products, National Diet Library deposits — depends on neither Cloudflare nor GAS. Using a service and relying on it are different things. Architecture is where you draw that line.
         </div>
 
 
-        <h2>1. The Lure of "Free"</h2>
+        <h2>1. Let Us Start by Acknowledging — We Use Them</h2>
 
-        <p>Cloudflare's free plan is remarkable. CDN, DDoS protection, SSL certificates, DNS hosting, Web Application Firewall. All of this at no cost. From personal sites to mid-sized services, countless projects run on Cloudflare's free tier.</p>
+        <p>TokiStorage's codebase includes Cloudflare Workers and GAS. There is nothing to hide. Here are the facts.</p>
 
-        <p>Google Apps Script (GAS) is similarly compelling. With a Google account, you get a serverless environment for running JavaScript. Spreadsheet integration, email automation, scheduled execution. For projects without a backend, there is no easier way to add "a bit of server functionality."</p>
+        <h3>Cloudflare Workers</h3>
+        <p>The order and contact forms on the QR site send data through a Cloudflare Worker, which relays it to GAS. GAS's exec URL returns a 302 redirect, which fails Wise's webhook URL validation. The Cloudflare Worker serves as the intermediary, also handling CORS.</p>
 
-        <p>Both are excellent services. This essay is not a technical criticism of either.</p>
+        <h3>Google Apps Script</h3>
+        <p>GAS plays three roles:</p>
+        <ul>
+            <li><strong>Order and contact intake</strong> — records form data to Google Sheets and sends email notifications</li>
+            <li><strong>Page view analytics</strong> — identifies visitors by cookie UUID and logs views to a spreadsheet</li>
+            <li><strong>Wise webhook</strong> — receives payment notifications via the Cloudflare Worker</li>
+        </ul>
 
-        <p>But what must be asked is this: <strong>"available for free" and "your own infrastructure" are entirely different concepts</strong>.</p>
+        <p>In other words, <strong>the operational backend is composed of Cloudflare Workers + GAS + Google Sheets</strong>. This is undeniably an external dependency.</p>
 
         <blockquote>
-            Infrastructure you use for free is not your infrastructure.<br>
-            You are a user, not an owner.
+            It is easy to say "we don't use them."<br>
+            It is more honest to articulate what we use them for and what we never let them touch.
         </blockquote>
 
 
-        <h2>2. Cloudflare — The Transparent Middleman</h2>
+        <h2>2. The Operational Layer and the Permanent Layer</h2>
 
-        <p>Cloudflare is, at its core, a reverse proxy. User requests first pass through Cloudflare's servers before being forwarded to the origin server.</p>
-
-        <p>This means <strong>all traffic to your site passes through Cloudflare</strong>. SSL/TLS termination happens at Cloudflare. The "secure connection" the user sees is encryption between the user and Cloudflare — not between the user and your server.</p>
-
-        <p>When you adopt Cloudflare, the following come under a third party's control:</p>
-
-        <ul>
-            <li><strong>DNS</strong> — Cloudflare manages your domain's name resolution</li>
-            <li><strong>SSL certificates</strong> — Cloudflare issues and manages your encryption keys</li>
-            <li><strong>Traffic routing</strong> — Cloudflare decides which requests go where</li>
-            <li><strong>Caching</strong> — Cloudflare controls what is cached and for how long</li>
-            <li><strong>Access control</strong> — Cloudflare determines bot vs. human, country-level blocking</li>
-        </ul>
-
-        <p>In June 2022, a major Cloudflare outage occurred. Millions of sites — including Discord and Shopify — went down simultaneously. Their origin servers were running fine. <strong>When the middleman fell, everything behind it fell too.</strong></p>
-
-        <p>Cloudflare was not at fault in any moral sense. It was a moment when the structural risk of depending on a middleman became visible.</p>
-
-
-        <h2>3. GAS — The Convenient Cage</h2>
-
-        <p>Google Apps Script is a serverless environment that operates within Google's ecosystem. Use a spreadsheet as a database, run scheduled tasks via triggers, integrate with Gmail and Drive.</p>
-
-        <p>The problem is that <strong>everything is tied to a Google account</strong>.</p>
-
-        <ul>
-            <li><strong>Runtime</strong> — runs on Google's V8 engine. Version upgrades are Google's decision</li>
-            <li><strong>Quotas</strong> — daily email sends, script execution time, API calls — Google sets all limits</li>
-            <li><strong>Deprecation risk</strong> — Google is known for sunsetting services. Google Reader, Google+, Hangouts. There is no guarantee GAS will exist forever</li>
-            <li><strong>Account suspension</strong> — if your Google account is frozen, GAS, spreadsheets, and email all stop simultaneously</li>
-        </ul>
-
-        <p>Many startups automate their operations with GAS. Order processing, inventory management, customer communications. But all of that automation runs <strong>as a guest on Google's platform, by Google's rules</strong>.</p>
-
-        <blockquote>
-            GAS is not "your server."<br>
-            You are renting a room in Google's building and operating under Google's rules.
-        </blockquote>
-
-
-        <h2>4. The Invisibility of Dependency</h2>
-
-        <p>Both Cloudflare and GAS are designed so you barely feel the dependency. That is precisely what makes them excellent services. But not feeling a dependency and not having one are different things.</p>
+        <p>TokiStorage's architecture has two distinct layers.</p>
 
         <table class="phase-table">
             <tr>
-                <th>Control point</th>
-                <th>GitHub Pages (direct)</th>
-                <th>Via Cloudflare</th>
-                <th>GAS</th>
+                <th></th>
+                <th>Operational Layer</th>
+                <th>Permanent Layer</th>
             </tr>
             <tr>
-                <td><strong>DNS</strong></td>
-                <td>Self-managed</td>
-                <td>Managed by Cloudflare</td>
-                <td>—</td>
+                <td><strong>Purpose</strong></td>
+                <td>Order intake, inquiries, analytics</td>
+                <td>Preservation of voice and existence</td>
             </tr>
             <tr>
-                <td><strong>SSL/TLS</strong></td>
-                <td>GitHub / Let's Encrypt</td>
-                <td>Terminated by Cloudflare</td>
-                <td>Managed by Google</td>
+                <td><strong>Dependencies</strong></td>
+                <td>Cloudflare Workers, GAS, Google Sheets</td>
+                <td>QR code (physical), GitHub, NDL</td>
             </tr>
             <tr>
-                <td><strong>Code execution</strong></td>
-                <td>Client-side</td>
-                <td>Cloudflare (if using Workers)</td>
-                <td>Google's runtime</td>
+                <td><strong>Assumed lifespan</strong></td>
+                <td>Years to a decade</td>
+                <td>100 to 1,000 years</td>
             </tr>
             <tr>
-                <td><strong>Data storage</strong></td>
-                <td>In the repository</td>
-                <td>Cache at Cloudflare</td>
-                <td>Google Drive / Sheets</td>
+                <td><strong>Replaceability</strong></td>
+                <td>Substitutable with other services</td>
+                <td>Irreplaceable — data is self-contained</td>
             </tr>
             <tr>
-                <td><strong>Impact of outage</strong></td>
-                <td>Only GitHub outages</td>
-                <td>GitHub + Cloudflare outages</td>
-                <td>All stops on Google outage</td>
-            </tr>
-            <tr>
-                <td><strong>Service sunset risk</strong></td>
-                <td>Migrate via Git clone</td>
-                <td>DNS migration required</td>
-                <td>Code and data migration required</td>
+                <td><strong>Impact if stopped</strong></td>
+                <td>New orders cannot be received</td>
+                <td>None — all existing QR codes remain playable forever</td>
             </tr>
         </table>
 
-        <p>Every dependency added is <strong>another Single Point of Failure</strong>. And external SPFs are ones you cannot fix yourself. You can only wait.</p>
+        <p>This separation is the heart of the design. <strong>The operational layer may depend on external services. The permanent layer must depend on nothing.</strong></p>
+
+        <p>The voice data embedded in a QR code is self-contained as URL parameters within the QR code itself. No server query is needed. Cloudflare, GAS, Google Sheets — none are involved. Scan the QR code, open it in a browser, and the voice plays.</p>
 
 
-        <h2>5. TokiStorage's Choice</h2>
+        <h2>3. What If Cloudflare Disappears</h2>
 
-        <p>TokiStorage is a static site on GitHub Pages. It does not use Cloudflare. It does not use GAS.</p>
+        <p>If the Cloudflare Worker goes down, the following are affected:</p>
 
-        <h3>Why not Cloudflare</h3>
-        <p>GitHub Pages provides SSL by default. CDN is delivered through GitHub's own infrastructure. DDoS protection is handled by GitHub. Against these built-in capabilities, <strong>the cost of handing DNS and SSL control to a third party</strong> does not justify the marginal benefit.</p>
+        <ul>
+            <li>The QR site's order form can no longer submit</li>
+            <li>The QR site's contact form can no longer submit</li>
+            <li>Wise webhook notifications stop arriving</li>
+        </ul>
 
-        <p>TokiStorage's QR codes embed data as URL parameters, self-contained within the QR code. Server requests are limited to static file delivery. Advanced cache control and WAF are structurally unnecessary.</p>
+        <p>The following are unaffected:</p>
 
-        <h3>Why not GAS</h3>
-        <p>TokiStorage has no server-side processing. Order management runs on BASE. Email uses BASE's notification system. The newsletter is crafted by hand. There is no server-side process to automate in the first place.</p>
+        <ul>
+            <li><strong>Every existing QR code</strong> — playback is entirely unaffected</li>
+            <li><strong>The QR generation tool</strong> — runs entirely client-side</li>
+            <li><strong>Every physical product</strong> — metal plates with inscribed QR codes continue to physically exist</li>
+            <li><strong>NDL records</strong> — newsletters deposited to the National Diet Library are independently preserved</li>
+        </ul>
 
-        <p>This is not neglect. <strong>An architecture that requires no server-side processing was chosen from the start.</strong> GAS is unnecessary because the design avoids any need for GAS.</p>
+        <p>Recovery is straightforward. Rewrite the forms to POST directly to the GAS exec URL, or substitute another proxy service. The Cloudflare Worker code is just 52 lines.</p>
 
 
-        <h2>6. Independence for Permanence</h2>
+        <h2>4. What If GAS Disappears</h2>
 
-        <p>When aiming for a thousand years of preservation, every external dependency becomes a risk.</p>
+        <p>If GAS reaches End of Life, the following are affected:</p>
 
-        <p>Cloudflare was founded in 2010. GAS was released in 2009. Both are services with a history measured in the teens of years. They are excellent services, but none can guarantee a hundred years of operation. A thousand years is out of the question.</p>
+        <ul>
+            <li>Spreadsheet recording of orders and inquiries stops</li>
+            <li>Email notifications stop</li>
+            <li>Page view analytics stops</li>
+        </ul>
 
-        <p>GitHub Pages carries the same risk. However, because it is built on Git — a distributed version control system — <strong>cloning the repository means the site can be rebuilt anywhere</strong>. Even if GitHub disappears, Git remains. The code is in your hands.</p>
+        <p>The following are unaffected:</p>
 
-        <p>If DNS was managed through Cloudflare, name resolution dies with Cloudflare. If business logic ran on GAS, an EOL means rewriting everything.</p>
+        <ul>
+            <li><strong>Every existing QR code</strong> — playback is entirely unaffected</li>
+            <li><strong>Every physical product</strong> — continues to exist unchanged</li>
+            <li><strong>NDL records</strong> — independently permanent</li>
+            <li><strong>The LP site</strong> — static HTML, so everything except the form and tracker displays normally</li>
+        </ul>
 
-        <p><strong>The number of dependencies is the number of countdown timers.</strong> When any one timer expires, something breaks. Fewer timers mean greater permanence.</p>
+        <p>Alternatives exist. The GAS code is a simple 131-line script: receive form data, write to spreadsheet, send email. Equivalent functionality can be replaced with Supabase, Netlify Functions, or a simple email API.</p>
+
+
+        <h2>5. Principles of Dependency Design</h2>
+
+        <p>TokiStorage's external dependencies follow explicit principles.</p>
+
+        <h3>Principle 1: The permanent layer depends on nothing external</h3>
+        <p>QR code data is self-contained as URL parameters. Voice decoding runs in client-side WASM. Physical products are inscribed on metal. NDL deposits are made in both print and digital form. None of these are affected by the life or death of Cloudflare, GAS, GitHub, or BASE.</p>
+
+        <h3>Principle 2: The operational layer uses what is convenient and remains substitutable</h3>
+        <p>We use GAS because it is free, fast to set up, and integrates naturally with spreadsheets. We use Cloudflare Workers because it solves GAS's 302 redirect problem. Both are rational choices, but <strong>both are designed to be replaceable tomorrow</strong>.</p>
+
+        <h3>Principle 3: Source code of dependencies is retained in-house</h3>
+        <p>The GAS source code (<code>contact-form-gas.js</code>) is stored in the repository. The Cloudflare Worker source code (<code>wise-webhook-proxy.js</code>) is also in the repository. Even if the services disappear, the logic remains in our hands.</p>
 
         <blockquote>
-            Convenience has a half-life.<br>
-            Independence does not.
+            If you use an external service, include the day it disappears in your design.<br>
+            That is the line between using and relying.
         </blockquote>
 
 
-        <h2>7. Conclusion — Looking Beyond Convenience</h2>
+        <h2>6. The Nature of "Free"</h2>
+
+        <p>Cloudflare Workers' free tier allows 100,000 requests per day. GAS's free tier allows 100 emails per day and 6 minutes of script execution per call. For TokiStorage's scale, these are more than sufficient.</p>
+
+        <p>But "available for free" and "your own infrastructure" are entirely different concepts.</p>
+
+        <p>If your Cloudflare account is suspended, the Worker stops. If your Google account is frozen, GAS, Sheets, and Gmail all stop simultaneously. In June 2022, a major Cloudflare outage took down millions of sites — including Discord and Shopify — at once.</p>
+
+        <p>This is precisely why <strong>you must separate what you may place on free services from what you must not</strong>. Operational data may be placed there. Permanent data must not.</p>
+
+
+        <h2>7. Conclusion — Using and Relying Are Different Things</h2>
 
         <div class="highlight-box">
-            <p class="big">Convenient infrastructure is borrowed infrastructure.</p>
-            <p>What is borrowed must someday be returned.<br>Only infrastructure that never needs returning can endure.</p>
+            <p class="big">Using and relying are different things.</p>
+            <p>Never place what must not break on external ground.<br>Place what can tolerate breakage wherever is convenient.</p>
         </div>
 
-        <p>Cloudflare is an excellent service. GAS is a capable automation platform. For many projects, they are undoubtedly the optimal choice.</p>
+        <p>TokiStorage uses Cloudflare Workers and GAS. This is fact.</p>
 
-        <p>But TokiStorage is not optimizing for "many projects." It is designing for <strong>data that can still be read a thousand years from now</strong> — an extraordinarily long time horizon.</p>
+        <p>But every QR code ever produced, every physical product ever manufactured, every newsletter deposited to the NDL — none depend on Cloudflare or GAS. If both services vanish tomorrow, <strong>nothing that is meant to endure will be lost</strong>.</p>
 
-        <p>At that time scale, independence outweighs convenience. Minimal dependency outweighs feature richness. The ability to migrate a hundred years hence outweighs today's best practices.</p>
+        <p>This is not coincidence. It was designed this way from the start.</p>
 
-        <p>Every dependency is a bet on a service that will someday end. <strong>Minimizing what you bet on</strong> is TokiStorage's design principle.</p>
+        <p>External services are tools. Good tools should be used. But you must never entrust your lifeline to a tool. The lifeline must remain in your own hands.</p>
 
         <h2>Related Essays</h2>
         <ul>
