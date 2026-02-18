@@ -1,0 +1,310 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" type="image/png" sizes="32x32" href="asset/favicon-32.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="asset/apple-touch-icon.png">
+    <title>CloudflareとGAS——便利な依存、見えない代償 | トキストレージ</title>
+    <meta name="robots" content="noindex, nofollow">
+    <meta name="description" content="Cloudflareの無料CDNとGoogle Apps Scriptの無料自動化。便利さの裏にある見えない依存と、トキストレージがそれらを使わない理由を考察する。">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Shippori+Mincho:wght@400;500;600;700&family=Zen+Kaku+Gothic+New:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --toki-blue: #1E40AF;
+            --toki-blue-dark: #1E3A5F;
+            --toki-blue-pale: #EFF6FF;
+            --accent-blue: #3B82F6;
+            --bg-white: #FFFFFF;
+            --bg-section: #DBEAFE;
+            --text-primary: #1E293B;
+            --text-secondary: #475569;
+            --text-muted: #94A3B8;
+            --border: #E2E8F0;
+            --font-display: 'Shippori Mincho', serif;
+            --font-body: 'Zen Kaku Gothic New', sans-serif;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        html { scroll-behavior: smooth; }
+
+        body {
+            font-family: var(--font-body);
+            font-weight: 400;
+            background: var(--bg-white);
+            color: var(--text-primary);
+            line-height: 1.9;
+            font-size: 16px;
+        }
+
+        .article-nav {
+            position: fixed; top: 0; left: 0; right: 0; z-index: 1000;
+            background: rgba(255,255,255,0.95);
+            backdrop-filter: blur(12px);
+            border-bottom: 1px solid var(--border);
+            padding: 0.6rem 1.2rem;
+            display: flex; align-items: center; justify-content: space-between; gap: 1rem;
+        }
+        .article-nav .nav-brand {
+            font-family: var(--font-display); font-size: 0.9rem; font-weight: 600;
+            color: var(--toki-blue); text-decoration: none; white-space: nowrap; flex-shrink: 0;
+        }
+        .article-nav .nav-right { display: flex; align-items: center; gap: 1rem; }
+        .article-nav .nav-label { font-size: 0.6rem; color: var(--text-muted); letter-spacing: 0.08em; text-align: right; line-height: 1.4; }
+        .article-nav .lang-switch { font-size: 0.75rem; color: var(--toki-blue); text-decoration: none; padding: 0.3rem 0.6rem; border: 1px solid var(--toki-blue); border-radius: 4px; }
+        .article-nav .lang-switch:hover { background: var(--toki-blue); color: #fff; }
+
+        .article-container { max-width: 720px; margin: 0 auto; padding: 5rem 2rem 4rem; }
+        .article-header { margin-bottom: 3rem; }
+        .article-category { font-size: 0.7rem; letter-spacing: 0.15em; color: var(--toki-blue); margin-bottom: 0.5rem; }
+        .article-header h1 { font-family: var(--font-display); font-size: 1.8rem; font-weight: 700; line-height: 1.5; color: var(--text-primary); margin-bottom: 1rem; }
+        .article-subtitle { font-size: 0.95rem; color: var(--text-secondary); line-height: 1.8; }
+
+        .article-content h2 { font-family: var(--font-display); font-size: 1.3rem; font-weight: 600; color: var(--toki-blue-dark); margin: 3rem 0 1rem; padding-bottom: 0.5rem; border-bottom: 1px solid var(--border); }
+        .article-content h3 { font-family: var(--font-display); font-size: 1.1rem; font-weight: 600; color: var(--text-primary); margin: 2rem 0 0.8rem; }
+        .article-content p { margin-bottom: 1.2rem; text-align: justify; }
+        .article-content ul, .article-content ol { margin: 0.5rem 0 1.5rem 1.5rem; }
+        .article-content li { margin-bottom: 0.5rem; }
+        .article-content blockquote { border-left: 3px solid var(--toki-blue); padding: 1rem 1.5rem; margin: 1.5rem 0; background: var(--toki-blue-pale); font-style: italic; color: var(--text-secondary); }
+        .article-content strong { color: var(--toki-blue-dark); }
+
+        .core-message { background: var(--toki-blue-pale); border-left: 4px solid var(--toki-blue); padding: 1.2rem 1.5rem; margin: 0 0 2rem; font-size: 0.95rem; line-height: 1.8; }
+
+        .phase-table { width: 100%; border-collapse: collapse; margin: 1.5rem 0; font-size: 0.9rem; }
+        .phase-table th, .phase-table td { padding: 0.7rem 1rem; border: 1px solid var(--border); text-align: left; }
+        .phase-table th { background: var(--toki-blue-pale); font-weight: 600; color: var(--toki-blue-dark); font-size: 0.85rem; }
+        .phase-table td { vertical-align: top; }
+
+        .highlight-box { background: linear-gradient(135deg, var(--toki-blue-pale), #fff); border: 1px solid var(--accent-blue); border-radius: 8px; padding: 1.5rem; margin: 2rem 0; text-align: center; }
+        .highlight-box p { text-align: center; margin-bottom: 0.5rem; }
+        .highlight-box .big { font-family: var(--font-display); font-size: 1.3rem; font-weight: 700; color: var(--toki-blue-dark); }
+
+        .article-footer { margin-top: 4rem; padding: 2rem 0; border-top: 1px solid var(--border); font-size: 0.7rem; color: var(--text-muted); line-height: 2.2; }
+        .article-footer a { color: var(--text-muted); text-decoration: none; }
+        .article-footer a:hover { text-decoration: underline; }
+
+        @media (max-width: 768px) {
+            .article-container { padding: 6rem 1.2rem 3rem; }
+            .article-header h1 { font-size: 1.5rem; }
+            .article-nav .nav-label { display: none; }
+            .phase-table { font-size: 0.8rem; }
+            .phase-table th, .phase-table td { padding: 0.5rem 0.6rem; }
+        }
+        @media print { .article-nav { display: none; } .article-container { padding-top: 2rem; } }
+        .nav-brand::before { content: ''; display: inline-block; width: 20px; height: 20px; background: url('asset/tokistorage-icon-512.png') no-repeat center / contain; vertical-align: -3px; margin-right: 5px; }
+    </style>
+<link rel="stylesheet" href="contact-form.css">
+    <meta property="og:image" content="https://tokistorage.github.io/lp/asset/tokistorage-icon-512.png">
+    <meta property="og:image:width" content="512">
+    <meta property="og:image:height" content="512">
+</head>
+<body>
+
+<nav class="article-nav">
+    <a href="index.html" class="nav-brand">トキストレージ</a>
+    <div class="nav-right">
+        <span class="nav-label">技術・設計 / CloudflareとGAS</span>
+        <a href="cloudflare-gas-en.html" class="lang-switch">EN</a>
+    </div>
+</nav>
+
+<main class="article-container">
+
+    <header class="article-header">
+        <p class="article-category">ESSAY — 技術・設計</p>
+        <h1>CloudflareとGAS——便利な依存、見えない代償</h1>
+        <p class="article-subtitle">
+            無料で高性能。だから使う。<br>
+            しかし「誰のインフラか」を問わないまま、依存は深くなる。
+        </p>
+    </header>
+
+    <article class="article-content">
+
+        <div class="core-message">
+            <strong>この記事で言いたいこと：</strong>CloudflareとGoogle Apps Script（GAS）は、個人開発者やスタートアップにとって極めて魅力的なインフラだ。無料で高機能、設定も容易。しかしその便利さの裏側には、見えない依存がある。DNSもSSLもトラフィックも他社が握り、ビジネスロジックも他社のランタイムで動く。トキストレージがこれらを使わないのは、技術的な理由ではない。1000年の永続性を目指すとき、すべての外部依存はカウントダウンタイマーになるからだ。
+        </div>
+
+
+        <h2>1. 「無料」という誘引</h2>
+
+        <p>Cloudflareの無料プランは驚異的だ。CDN、DDoS防御、SSL証明書、DNSホスティング、Web Application Firewall。これだけの機能が無料で手に入る。個人サイトから中規模のサービスまで、多くのプロジェクトがCloudflareの無料プランで運用されている。</p>
+
+        <p>Google Apps Script（GAS）も同様だ。Googleアカウントがあれば、サーバーレス環境でJavaScriptを実行できる。スプレッドシートとの連携、メール送信、定期実行。バックエンドのないプロジェクトに「ちょっとしたサーバー機能」を追加するのに、これ以上手軽な方法はない。</p>
+
+        <p>どちらも優れたサービスだ。技術的な批判をする意図はない。</p>
+
+        <p>しかし問いたいのは、<strong>「無料で使える」ことと「自分のインフラである」ことは、まったく別の概念だ</strong>ということだ。</p>
+
+        <blockquote>
+            無料で使えるインフラは、あなたのインフラではない。<br>
+            あなたは利用者であり、所有者ではない。
+        </blockquote>
+
+
+        <h2>2. Cloudflare——透明な中間者</h2>
+
+        <p>Cloudflareの本質は「リバースプロキシ」だ。ユーザーのリクエストは、まずCloudflareのサーバーを経由し、そこからオリジンサーバーに転送される。</p>
+
+        <p>これはつまり、<strong>あなたのサイトへのすべてのトラフィックが、Cloudflareを通過する</strong>ということだ。SSL/TLSの終端もCloudflareが行う。ユーザーが見ている「安全な接続」は、ユーザーとCloudflare間の暗号化であって、ユーザーとあなたのサーバー間の暗号化ではない。</p>
+
+        <p>Cloudflareを導入すると、以下のものが第三者の管理下に入る。</p>
+
+        <ul>
+            <li><strong>DNS</strong>——ドメインの名前解決をCloudflareが管理する</li>
+            <li><strong>SSL証明書</strong>——暗号化の鍵をCloudflareが発行・管理する</li>
+            <li><strong>トラフィックルーティング</strong>——どのリクエストをどこに転送するかをCloudflareが決める</li>
+            <li><strong>キャッシュ</strong>——どのコンテンツをどれだけキャッシュするかをCloudflareが制御する</li>
+            <li><strong>アクセス制御</strong>——Botと人間の判別、国別ブロックなどをCloudflareが実行する</li>
+        </ul>
+
+        <p>2022年6月、Cloudflareの大規模障害が発生した。DiscordやShopifyを含む数百万のサイトが同時にダウンした。オリジンサーバーは正常に動いていた。<strong>中間者が倒れたとき、その先にあるすべてが倒れた</strong>のだ。</p>
+
+        <p>Cloudflareが悪いのではない。中間者に依存するアーキテクチャの構造的リスクが、可視化された瞬間だった。</p>
+
+
+        <h2>3. GAS——便利な檻</h2>
+
+        <p>Google Apps Scriptは、Googleのエコシステム内で動作するサーバーレス環境だ。スプレッドシートをデータベース代わりに使い、トリガーで定期処理を実行し、GmailやDriveと連携する。</p>
+
+        <p>問題は、<strong>すべてがGoogleアカウントに紐づくこと</strong>だ。</p>
+
+        <ul>
+            <li><strong>実行環境</strong>——GoogleのV8ランタイムで動作する。バージョンアップはGoogleが決める</li>
+            <li><strong>クォータ</strong>——1日のメール送信数、スクリプト実行時間、API呼び出し回数、すべてにGoogleが上限を設ける</li>
+            <li><strong>廃止リスク</strong>——GoogleはサービスをEOL（End of Life）にすることで知られている。Google Reader、Google+、Hangouts。GASが永続する保証はない</li>
+            <li><strong>アカウント凍結</strong>——Googleアカウントが凍結されれば、GASもスプレッドシートもメールも、すべてが同時に止まる</li>
+        </ul>
+
+        <p>GASで業務を自動化しているスタートアップは多い。注文処理、在庫管理、顧客連絡。しかしその自動化のすべてが、<strong>Googleという一社のプラットフォーム上のゲスト</strong>として動いている。</p>
+
+        <blockquote>
+            GASは「自分のサーバー」ではない。<br>
+            Googleの部屋を借りて、Googleのルールで動かしているだけだ。
+        </blockquote>
+
+
+        <h2>4. 依存の不可視化</h2>
+
+        <p>CloudflareもGASも、その依存を感じさせない設計になっている。それが優れたサービスたる所以だ。しかし感じないことと、存在しないことは違う。</p>
+
+        <table class="phase-table">
+            <tr>
+                <th>制御の対象</th>
+                <th>GitHub Pages（直接）</th>
+                <th>Cloudflare経由</th>
+                <th>GAS</th>
+            </tr>
+            <tr>
+                <td><strong>DNS</strong></td>
+                <td>自身で管理可能</td>
+                <td>Cloudflareが管理</td>
+                <td>—</td>
+            </tr>
+            <tr>
+                <td><strong>SSL/TLS</strong></td>
+                <td>GitHub/Let's Encrypt</td>
+                <td>Cloudflareが終端</td>
+                <td>Googleが管理</td>
+            </tr>
+            <tr>
+                <td><strong>コード実行</strong></td>
+                <td>クライアントサイド</td>
+                <td>Workers使用時はCloudflare</td>
+                <td>Googleのランタイム</td>
+            </tr>
+            <tr>
+                <td><strong>データ保管</strong></td>
+                <td>リポジトリ内</td>
+                <td>キャッシュはCloudflare</td>
+                <td>Googleドライブ/スプレッドシート</td>
+            </tr>
+            <tr>
+                <td><strong>障害時の影響</strong></td>
+                <td>GitHub障害時のみ</td>
+                <td>GitHub + Cloudflare障害</td>
+                <td>Google障害時に全停止</td>
+            </tr>
+            <tr>
+                <td><strong>サービス終了リスク</strong></td>
+                <td>Gitで移行可能</td>
+                <td>DNS移行が必要</td>
+                <td>コード・データ移行が必要</td>
+            </tr>
+        </table>
+
+        <p>依存を増やすたびに、<strong>障害点（Single Point of Failure）が増える</strong>。そして外部依存のSPFは、自分では修復できない。待つしかない。</p>
+
+
+        <h2>5. トキストレージの選択</h2>
+
+        <p>トキストレージはGitHub Pages上の静的サイトだ。Cloudflareは使っていない。GASも使っていない。</p>
+
+        <h3>Cloudflareを使わない理由</h3>
+        <p>GitHub PagesにはSSLが標準で付与される。CDNもGitHubのインフラで提供される。DDoS防御はGitHubが行う。Cloudflareを追加することで得られるメリットに対して、<strong>DNSとSSLの制御を第三者に渡すコスト</strong>が見合わない。</p>
+
+        <p>トキストレージのQRコードは、データをURLパラメータとしてQRコード内に完結させている。サーバーへのリクエストは静的ファイルの配信だけだ。高度なキャッシュ制御もWAFも、構造的に不要なのだ。</p>
+
+        <h3>GASを使わない理由</h3>
+        <p>トキストレージにサーバーサイドの処理はない。注文管理はBASE、メールはBASEの通知機能、ニュースレターは手作業。自動化の対象となるサーバー処理が、そもそも存在しない。</p>
+
+        <p>これは怠慢ではない。<strong>サーバー処理を必要としないアーキテクチャを、最初から選んでいる</strong>のだ。GASが不要なのは、GASが必要になる設計を避けたからだ。</p>
+
+
+        <h2>6. 永続性のための独立</h2>
+
+        <p>1000年の保存を目指すとき、すべての外部依存はリスクになる。</p>
+
+        <p>Cloudflareは2010年設立。GASは2009年公開。どちらも10年台のサービスだ。素晴らしいサービスだが、100年続く保証はない。1000年はなおさらだ。</p>
+
+        <p>GitHub Pagesにも同じリスクはある。しかしGitという分散バージョン管理システムに基づいているため、<strong>リポジトリをクローンすれば、どこでも再構築できる</strong>。GitHubがなくなっても、Gitは残る。コードは手元にある。</p>
+
+        <p>Cloudflare経由でDNSを管理していた場合、Cloudflareがなくなればドメインの名前解決が途絶える。GASで業務ロジックを動かしていた場合、GASがEOLになればロジックを書き直す必要がある。</p>
+
+        <p><strong>依存の数は、カウントダウンタイマーの数だ。</strong>どれかひとつのタイマーが切れたとき、何かが壊れる。タイマーが少ないほど、永続性は高くなる。</p>
+
+        <blockquote>
+            便利さには半減期がある。<br>
+            独立には、半減期がない。
+        </blockquote>
+
+
+        <h2>7. 結び——便利さの先を見る</h2>
+
+        <div class="highlight-box">
+            <p class="big">便利なインフラは、借りたインフラだ。</p>
+            <p>借りたものは、返す日が来る。<br>返す日が来ないインフラだけが、永続する。</p>
+        </div>
+
+        <p>Cloudflareは素晴らしいサービスだ。GASも優れた自動化基盤だ。多くのプロジェクトにとって、最適な選択肢であることは疑いない。</p>
+
+        <p>しかしトキストレージが目指しているのは、「多くのプロジェクト」の最適解ではない。<strong>1000年後にもデータが読める</strong>という、極端に長い時間軸での設計だ。</p>
+
+        <p>その時間軸で見ると、便利さよりも独立が重要になる。高機能よりも、依存の少なさが重要になる。今日のベストプラクティスよりも、100年後に移行可能であることが重要になる。</p>
+
+        <p>すべての依存は、いつか終わるサービスへの賭けだ。<strong>賭ける対象を最小にすること</strong>が、トキストレージの設計原則だ。</p>
+
+        <h2>関連エッセイ</h2>
+        <ul>
+            <li><a href="uptime.html">稼働率と外部依存 — 99.9%の先にあるもの</a></li>
+            <li><a href="ssdlc.html">SSDLC — セキュリティが倫理になるとき</a></li>
+            <li><a href="enterprise-architecture.html">エンタープライズアーキテクチャ — 初期設計という不可逆の選択</a></li>
+            <li><a href="what-is-github.html">GitHubとは何か</a></li>
+        </ul>
+
+    </article>
+
+    <footer class="article-footer">
+        <p id="essay-nav-links"></p>
+        <p style="margin-top: 2rem; font-size: 0.75rem;">&copy; 2026 TokiStorage</p>
+    </footer>
+
+</main>
+
+<script src="contact-form.js"></script>
+<script src="essay-nav.js?v=20260218"></script>
+<script src="tracker.js"></script>
+</body>
+</html>
