@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" type="image/png" sizes="32x32" href="asset/favicon-32.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="asset/apple-touch-icon.png">
+    <title>ラピッドプロトタイピング | トキストレージ</title>
+    <meta name="robots" content="index, follow">
+    <meta name="description" content="プロトタイプと本番の境界が消えたとき、開発はどう変わるか。試作がそのまま製品になる世界で、失われるものと得られるもの。">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Shippori+Mincho:wght@400;500;600;700&family=Zen+Kaku+Gothic+New:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --toki-blue: #2563EB;
+            --toki-blue-dark: #1D4ED8;
+            --toki-blue-pale: #EFF6FF;
+            --accent-blue: #3B82F6;
+            --bg-white: #FFFFFF;
+            --text-primary: #1E293B;
+            --text-secondary: #475569;
+            --text-muted: #94A3B8;
+            --border: #E2E8F0;
+            --font-display: 'Shippori Mincho', serif;
+            --font-body: 'Zen Kaku Gothic New', sans-serif;
+        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        html { scroll-behavior: smooth; }
+        body { font-family: var(--font-body); font-weight: 400; background: var(--bg-white); color: var(--text-primary); line-height: 2; font-size: 16px; }
+
+        .article-nav { position: fixed; top: 0; left: 0; right: 0; z-index: 1000; background: rgba(255,255,255,0.95); backdrop-filter: blur(12px); border-bottom: 1px solid var(--border); padding: 0.6rem 1.2rem; display: flex; align-items: center; justify-content: space-between; gap: 1rem; }
+        .article-nav .nav-brand { font-family: var(--font-display); font-size: 0.9rem; font-weight: 600; color: var(--toki-blue); text-decoration: none; white-space: nowrap; }
+        .article-nav .nav-brand::before { content: ''; display: inline-block; width: 20px; height: 20px; background: url('asset/tokistorage-icon-512.png') no-repeat center / contain; vertical-align: -3px; margin-right: 5px; }
+        .article-nav .nav-right { display: flex; align-items: center; gap: 1rem; }
+        .article-nav .nav-label { font-size: 0.6rem; color: var(--text-muted); letter-spacing: 0.08em; }
+        .article-nav .lang-switch { font-size: 0.75rem; color: var(--toki-blue); text-decoration: none; padding: 0.3rem 0.6rem; border: 1px solid var(--toki-blue); border-radius: 4px; }
+        .article-nav .lang-switch:hover { background: var(--toki-blue); color: #fff; }
+
+        .article-container { max-width: 680px; margin: 0 auto; padding: 7rem 2rem 4rem; }
+        .article-header { margin-bottom: 3rem; padding-bottom: 2rem; border-bottom: 1px solid var(--border); }
+        .article-category { font-size: 0.7rem; color: var(--toki-blue); letter-spacing: 0.15em; margin-bottom: 1rem; }
+        .article-header h1 { font-family: var(--font-display); font-size: 1.8rem; font-weight: 700; line-height: 1.5; margin-bottom: 1.5rem; }
+        .article-subtitle { font-size: 0.95rem; color: var(--text-secondary); line-height: 1.9; }
+
+        .article-content h2 { font-family: var(--font-display); font-size: 1.3rem; font-weight: 600; margin: 3rem 0 1.5rem; padding-bottom: 0.5rem; border-bottom: 2px solid var(--toki-blue-pale); }
+        .article-content h3 { font-family: var(--font-display); font-size: 1.1rem; font-weight: 600; margin: 2rem 0 1rem; color: var(--toki-blue-dark); }
+        .article-content p { margin-bottom: 1.5rem; text-align: justify; }
+        .article-content blockquote { border-left: 3px solid var(--toki-blue); padding-left: 1.5rem; margin: 2rem 0; font-family: var(--font-display); color: var(--text-secondary); }
+        .article-content ul { margin: 1.5rem 0; padding-left: 1.5rem; }
+        .article-content li { margin-bottom: 0.75rem; }
+
+        .core-message { background: var(--toki-blue-pale); border-left: 4px solid var(--toki-blue); padding: 1.5rem; margin: 2rem 0; font-size: 0.95rem; line-height: 1.8; }
+        .key-point { background: linear-gradient(135deg, var(--toki-blue-pale) 0%, #fff 100%); border: 1px solid var(--accent-blue); border-radius: 8px; padding: 1.5rem; margin: 2rem 0; text-align: center; }
+        .key-point p { font-family: var(--font-display); font-size: 1.1rem; color: var(--toki-blue-dark); margin: 0; }
+
+        .article-footer { margin-top: 4rem; padding-top: 2rem; border-top: 1px solid var(--border); text-align: center; }
+        .article-footer p { font-size: 0.8rem; color: var(--text-muted); margin-bottom: 1rem; }
+        .article-footer a { color: var(--toki-blue); text-decoration: none; }
+        .article-footer a:hover { text-decoration: underline; }
+
+        @media (max-width: 768px) {
+            .article-container { padding: 6rem 1.2rem 3rem; }
+            .article-header h1 { font-size: 1.5rem; }
+            .article-nav .nav-label { display: none; }
+        }
+        @media print { .article-nav { display: none; } .article-container { padding-top: 2rem; } }
+    </style>
+    <link rel="stylesheet" href="contact-form.css">
+    <meta property="og:image" content="https://tokistorage.github.io/lp/asset/tokistorage-icon-512.png">
+    <meta property="og:image:width" content="512">
+    <meta property="og:image:height" content="512">
+</head>
+<body>
+
+<nav class="article-nav">
+    <a href="index.html" class="nav-brand">トキストレージ</a>
+    <div class="nav-right">
+        <span class="nav-label">技術・設計 / Technology</span>
+        <a href="rapid-prototyping-en.html" class="lang-switch">EN</a>
+    </div>
+</nav>
+
+<main class="article-container">
+
+    <header class="article-header">
+        <p class="article-category">ESSAY &mdash; 開発手法と製品設計</p>
+        <h1>ラピッドプロトタイピング<br><span style="font-size: 0.6em; font-weight: 400; color: var(--text-secondary);">&mdash;&mdash; 試作と本番の境界が消える開発</span></h1>
+        <p class="article-subtitle">
+            従来のソフトウェア開発には二つの世界があった。<br>
+            試すための世界と、届けるための世界。<br>
+            その境界が消えたとき、作ることの意味が変わる。
+        </p>
+    </header>
+
+    <article class="article-content">
+
+        <div class="core-message">
+            <strong>この記事で言いたいこと：</strong>プロトタイプと本番の間にある「書き直し」のコストがゼロになったとき、試作はそのまま製品になる。重要なのは速さではない。試行の結果がすべて蓄積されることだ。
+        </div>
+
+        <h2>1. 二つの世界</h2>
+
+        <p>ソフトウェア開発には長い間、暗黙の境界線があった。プロトタイプと本番だ。</p>
+
+        <p>プロトタイプは試すための世界だ。動けばいい。コードは汚くていい。「これでいけそうか」を確認するための使い捨てだ。</p>
+
+        <p>本番は届けるための世界だ。エラーハンドリングを書く。テストを書く。ドキュメントを書く。プロトタイプで検証したアイデアを、もう一度「ちゃんと」作り直す。</p>
+
+        <p>この二段階のプロセスには、構造的な無駄がある。プロトタイプで書いたコードは捨てられ、同じ機能が本番用に再実装される。検証に1週間、再実装に2週間。合計3週間のうち、1週間分の作業は消える。</p>
+
+        <h2>2. 境界が消える条件</h2>
+
+        <p>もしプロトタイプがそのまま本番になるとしたら、その1週間は消えない。積み重なる。</p>
+
+        <p>この「境界の消失」は、三つの条件が揃ったときに起きる。</p>
+
+        <ul>
+            <li><strong>インフラが同一</strong>——試す環境と届ける環境が同じ</li>
+            <li><strong>修正コストがゼロに近い</strong>——プロトタイプの品質を本番水準に引き上げるコストが極めて低い</li>
+            <li><strong>デプロイが即時</strong>——変更が即座に反映される</li>
+        </ul>
+
+        <p>TokiStorageではこの三つがすべて成立している。</p>
+
+        <p>GitHub Pagesは開発環境と本番環境が同一だ。mainブランチにマージすれば、それが本番になる。Google Apps Scriptも同様に、保存した瞬間が本番デプロイだ。そしてバイブコーディングによって、コードの修正コストが限りなくゼロに近い。</p>
+
+        <h2>3. 捨てないプロトタイプ</h2>
+
+        <p>従来のプロトタイピングの問題は「捨てる前提で作る」ことだった。</p>
+
+        <p>捨てる前提のコードは、品質を妥協する口実を与える。「どうせ書き直すから」が、エラーハンドリングの省略、ハードコードされた定数、ドキュメントの不在を正当化する。</p>
+
+        <p>だが境界が消えた世界では、プロトタイプは捨てられない。最初の一行がそのまま本番に載る可能性がある。だから最初から「本番品質で試す」というモードが生まれる。</p>
+
+        <p>矛盾に聞こえるかもしれない。プロトタイプの速さと、本番の品質は両立しないのではないか。</p>
+
+        <p>バイブコーディングはこの矛盾を解消する。AIに「これを作って」と言えば、エラーハンドリング付き、I18N対応済み、本番品質のコードが最初から出てくる。プロトタイプの速さで、本番の品質が手に入る。</p>
+
+        <h2>4. 蓄積する試行</h2>
+
+        <p>ラピッドプロトタイピングの本当の価値は、速さではない。蓄積だ。</p>
+
+        <p>TokiStorageの開発では、一つの会話の中で「メールの上限が心配」という発言が、以下のすべてに展開された。</p>
+
+        <ul>
+            <li>管理者メールの統合（sendDailyReport関数）</li>
+            <li>sendEmailヘルパー関数への集約</li>
+            <li>SES移行のロードマップ文書</li>
+            <li>Lambda中継関数のコード</li>
+            <li>スケーリングロードマップの全体設計</li>
+            <li>「マイグレーションの設計」エッセイ</li>
+        </ul>
+
+        <p>これらすべてが、数時間の対話の中で生成され、レビューされ、コミットされ、本番に反映された。プロトタイプとして試してから書き直したものは一つもない。最初の出力がレビューを経てそのまま本番になった。</p>
+
+        <p>速さは副産物だ。本質は、試行のたびに本番資産が積み上がることだ。</p>
+
+        <h2>5. 思考の速度で作る</h2>
+
+        <p>ラピッドプロトタイピングの究極形は、「思考の速度で作る」ことだ。</p>
+
+        <p>「特商法の引渡時期、14営業日は現実的じゃないな」と思った瞬間に、日英の文言が更新される。「リマインダーは7日の方がいいかも」と思った瞬間に、GASの定数とtokutei.htmlの記載が同時に変わる。「これエッセイになるね」と思った瞬間に、日英のエッセイが生成されてPRが作られる。</p>
+
+        <p>思考からデプロイまでの距離がゼロに近い。通常のプロトタイピングでは「アイデア→設計→実装→テスト→デプロイ」のパイプラインを通る。だがバイブコーディング＋GitHub Pages＋GASの組み合わせでは、パイプラインが圧縮されて「アイデア→デプロイ」になる。</p>
+
+        <p>この圧縮が意味するのは、思いついたことをすぐに試せることだけではない。思いついたことがすぐに本番資産になることだ。</p>
+
+        <h2>6. プロトタイプの呪いからの解放</h2>
+
+        <p>ソフトウェア開発には「プロトタイプの呪い」がある。</p>
+
+        <p>素早く作ったプロトタイプが好評で、「これをそのまま使おう」と決まる。だがプロトタイプは品質を妥協して作られている。本番として使い続けるうちに、妥協が技術的負債として蓄積する。やがて身動きが取れなくなる。</p>
+
+        <p>この呪いが存在するのは、プロトタイプと本番の品質に差があるからだ。</p>
+
+        <p>バイブコーディングでは、AIが最初から本番品質のコードを生成する。プロトタイプの速さで動き始めたコードが、すでにエラーハンドリングを持ち、国際化に対応し、適切に構造化されている。だから「プロトタイプをそのまま使い続ける」ことに罪悪感がない。最初から本番だったからだ。</p>
+
+        <h2>7. 三つの概念の統合</h2>
+
+        <p>ラピッドプロトタイピング、バイブコーディング、バーンレートゼロ。この三つは独立した概念ではない。互いを前提とし、互いを増幅する。</p>
+
+        <blockquote>
+            バーンレートゼロが時間の制約を消す。<br>
+            バイブコーディングが実装の制約を消す。<br>
+            ラピッドプロトタイピングが試行と本番の境界を消す。<br>
+            三つが揃ったとき、「思いついたら、それが製品」になる。
+        </blockquote>
+
+        <p>TokiStorageは、この三つの統合の産物だ。固定費ゼロで時間に追われず、AIとの対話で実装し、試作がそのまま本番として蓄積される。一人の人間の判断だけが、製品の形を決めている。</p>
+
+        <div class="key-point">
+            <p>速く作ることが目的ではない。<br>試したすべてが、そのまま残ることが目的だ。</p>
+        </div>
+
+    </article>
+
+    <footer class="article-footer">
+        <p id="essay-nav-links"></p>
+        <p style="margin-top: 2rem; font-size: 0.75rem;">&copy; 2026 TokiStorage</p>
+    </footer>
+
+</main>
+
+<script src="contact-form.js"></script>
+<script src="essay-nav.js?v=20260219"></script>
+<script src="tracker.js"></script>
+</body>
+</html>

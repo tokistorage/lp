@@ -121,6 +121,7 @@
     { id: 'cloudflare-gas', ja: 'CloudflareとGAS', en: 'Cloudflare & GAS' },
     { id: 'migration', ja: 'マイグレーションの設計', en: 'Designing Migration' },
     { id: 'vibe-coding', ja: 'バイブコーディング', en: 'Vibe Coding' },
+    { id: 'rapid-prototyping', ja: 'ラピッドプロトタイピング', en: 'Rapid Prototyping' },
 
     // ── メタ視点 ──
     { id: 'preserving-words', ja: 'ことばを残す', en: 'Preserving Words' },
