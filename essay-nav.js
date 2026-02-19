@@ -123,6 +123,7 @@
     { id: 'migration', ja: 'マイグレーションの設計', en: 'Designing Migration' },
     { id: 'vibe-coding', ja: 'バイブコーディング', en: 'Vibe Coding' },
     { id: 'rapid-prototyping', ja: 'ラピッドプロトタイピング', en: 'Rapid Prototyping' },
+    { id: 'tech-roadmap', ja: '技術ロードマップ', en: 'Technology Roadmap' },
 
     // ── メタ視点 ──
     { id: 'preserving-words', ja: 'ことばを残す', en: 'Preserving Words' },
@@ -245,6 +246,7 @@
     'migration':              ['rapid-prototyping', 'cloudflare-gas', 'uptime', 'burn-rate-zero', 'ssdlc'],
     'vibe-coding':            ['burn-rate-zero', 'rapid-prototyping', 'migration', 'future', 'what-is-github'],
     'rapid-prototyping':      ['vibe-coding', 'burn-rate-zero', 'poc', 'migration', 'departure'],
+    'tech-roadmap':           ['migration', 'legacy', 'backup-rule', 'uptime', 'burn-rate-zero'],
     // ── メタ視点 ──
     'preserving-words':       ['why-essays', 'akashic-record', 'what-to-leave', 'narrative-trust', 'openness'],
     'why-essays':             ['preserving-words', 'brochure-essay', 'narrative-trust', 'openness', 'erasure'],

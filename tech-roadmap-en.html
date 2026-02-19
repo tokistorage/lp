@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" type="image/png" sizes="32x32" href="asset/favicon-32.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="asset/apple-touch-icon.png">
+    <title>Technology Roadmap — Migration Plan Every 10 Years | TokiStorage</title>
+    <meta name="robots" content="index, follow">
+    <meta name="description" content="Quartz glass lasts 300 million years. But the technology to read it changes every decade. What a thousand-year preservation service truly needs is not an eternal medium, but a commitment to update every 10 years.">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Shippori+Mincho:wght@400;500;600;700&family=Zen+Kaku+Gothic+New:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --toki-blue: #2563EB;
+            --toki-blue-dark: #1D4ED8;
+            --toki-blue-pale: #EFF6FF;
+            --accent-blue: #3B82F6;
+            --bg-white: #FFFFFF;
+            --text-primary: #1E293B;
+            --text-secondary: #475569;
+            --text-muted: #94A3B8;
+            --border: #E2E8F0;
+            --font-display: 'Shippori Mincho', serif;
+            --font-body: 'Zen Kaku Gothic New', sans-serif;
+        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        html { scroll-behavior: smooth; }
+        body { font-family: var(--font-body); font-weight: 400; background: var(--bg-white); color: var(--text-primary); line-height: 2; font-size: 16px; }
+
+        .article-nav { position: fixed; top: 0; left: 0; right: 0; z-index: 1000; background: rgba(255,255,255,0.95); backdrop-filter: blur(12px); border-bottom: 1px solid var(--border); padding: 0.6rem 1.2rem; display: flex; align-items: center; justify-content: space-between; gap: 1rem; }
+        .article-nav .nav-brand { font-family: var(--font-display); font-size: 0.9rem; font-weight: 600; color: var(--toki-blue); text-decoration: none; white-space: nowrap; }
+        .article-nav .nav-brand::before { content: ''; display: inline-block; width: 20px; height: 20px; background: url('asset/tokistorage-icon-512.png') no-repeat center / contain; vertical-align: -3px; margin-right: 5px; }
+        .article-nav .nav-right { display: flex; align-items: center; gap: 1rem; }
+        .article-nav .nav-label { font-size: 0.6rem; color: var(--text-muted); letter-spacing: 0.08em; }
+        .article-nav .lang-switch { font-size: 0.75rem; color: var(--toki-blue); text-decoration: none; padding: 0.3rem 0.6rem; border: 1px solid var(--toki-blue); border-radius: 4px; }
+        .article-nav .lang-switch:hover { background: var(--toki-blue); color: #fff; }
+
+        .article-container { max-width: 680px; margin: 0 auto; padding: 7rem 2rem 4rem; }
+        .article-header { margin-bottom: 3rem; padding-bottom: 2rem; border-bottom: 1px solid var(--border); }
+        .article-category { font-size: 0.7rem; color: var(--toki-blue); letter-spacing: 0.15em; margin-bottom: 1rem; }
+        .article-header h1 { font-family: var(--font-display); font-size: 1.8rem; font-weight: 700; line-height: 1.5; margin-bottom: 1.5rem; }
+        .article-subtitle { font-size: 0.95rem; color: var(--text-secondary); line-height: 1.9; }
+
+        .article-content h2 { font-family: var(--font-display); font-size: 1.3rem; font-weight: 600; margin: 3rem 0 1.5rem; padding-bottom: 0.5rem; border-bottom: 2px solid var(--toki-blue-pale); }
+        .article-content h3 { font-family: var(--font-display); font-size: 1.1rem; font-weight: 600; margin: 2rem 0 1rem; color: var(--toki-blue-dark); }
+        .article-content p { margin-bottom: 1.5rem; text-align: justify; }
+        .article-content blockquote { border-left: 3px solid var(--toki-blue); padding-left: 1.5rem; margin: 2rem 0; font-family: var(--font-display); color: var(--text-secondary); }
+        .article-content ul { margin: 1.5rem 0; padding-left: 1.5rem; }
+        .article-content li { margin-bottom: 0.75rem; }
+
+        .core-message { background: var(--toki-blue-pale); border-left: 4px solid var(--toki-blue); padding: 1.5rem; margin: 2rem 0; font-size: 0.95rem; line-height: 1.8; }
+        .key-point { background: linear-gradient(135deg, var(--toki-blue-pale) 0%, #fff 100%); border: 1px solid var(--accent-blue); border-radius: 8px; padding: 1.5rem; margin: 2rem 0; text-align: center; }
+        .key-point p { font-family: var(--font-display); font-size: 1.1rem; color: var(--toki-blue-dark); margin: 0; }
+
+        .article-footer { margin-top: 4rem; padding-top: 2rem; border-top: 1px solid var(--border); text-align: center; }
+        .article-footer p { font-size: 0.8rem; color: var(--text-muted); margin-bottom: 1rem; }
+        .article-footer a { color: var(--toki-blue); text-decoration: none; }
+        .article-footer a:hover { text-decoration: underline; }
+
+        @media (max-width: 768px) {
+            .article-container { padding: 6rem 1.2rem 3rem; }
+            .article-header h1 { font-size: 1.5rem; }
+            .article-nav .nav-label { display: none; }
+        }
+        @media print { .article-nav { display: none; } .article-container { padding-top: 2rem; } }
+    </style>
+    <link rel="stylesheet" href="contact-form.css">
+    <meta property="og:image" content="https://tokistorage.github.io/lp/asset/tokistorage-icon-512.png">
+    <meta property="og:image:width" content="512">
+    <meta property="og:image:height" content="512">
+</head>
+<body>
+
+<nav class="article-nav">
+    <a href="index-en.html" class="nav-brand">TokiStorage</a>
+    <div class="nav-right">
+        <span class="nav-label">Technology / 技術・設計</span>
+        <a href="tech-roadmap.html" class="lang-switch">JA</a>
+    </div>
+</nav>
+
+<main class="article-container">
+
+    <header class="article-header">
+        <p class="article-category">ESSAY &mdash; Technical Design &amp; Long-Term Preservation</p>
+        <h1>Technology Roadmap<br><span style="font-size: 0.6em; font-weight: 400; color: var(--text-secondary);">&mdash;&mdash; A Migration Plan Every 10 Years</span></h1>
+        <p class="article-subtitle">
+            Quartz glass lasts 300 million years. But the technology to read it changes every decade.<br>
+            What thousand-year preservation needs is not an eternal medium.<br>
+            It is the will to keep updating, and the procedures to do so.
+        </p>
+    </header>
+
+    <article class="article-content">
+
+        <div class="core-message">
+            <strong>The point of this essay:</strong> The greatest risk to thousand-year preservation is not physical degradation. It is technological obsolescence. Even if quartz glass survives perfectly, it is meaningless if the means to read it are lost. That is why we review the technology layer every 10 years and migrate when necessary — like the ritual rebuilding of Ise Shrine.
+        </div>
+
+        <h2>1. The Asymmetry Problem</h2>
+
+        <p>TokiStorage's three-layer distributed storage has one structural asymmetry.</p>
+
+        <p>The physical layer (quartz glass) has a lifespan exceeding 300 million years, proven through accelerated degradation tests by Hitachi and Kyoto University. The digital layer, on the other hand, operates on technology cycles that shift every decade. QR code standards, URL structures, browser specifications, hosting services — all of these can be replaced.</p>
+
+        <p>In other words, the vessel lasts a thousand years, but the way to read it dies first.</p>
+
+        <p>If this asymmetry is ignored, in 100 years a perfect piece of quartz glass may survive, yet the URL encoded in its QR code will be dead. The stored item is physically intact but effectively inaccessible.</p>
+
+        <h2>2. Three Layers, Three Time Horizons</h2>
+
+        <p>TokiStorage's answer to this problem is to give each of its three layers a distinct migration strategy with its own time horizon.</p>
+
+        <h3>Physical Layer: Quartz Glass — No Migration Needed</h3>
+
+        <p>Data inscribed in quartz glass is recorded as nanograting structures using femtosecond laser pulses. It is extremely stable against temperature, humidity, ultraviolet light, and chemical change. All that is needed to read it is a polarization microscope. Since the underlying principle is optical physics itself, the principle does not change even as technology evolves.</p>
+
+        <p>The design philosophy of this layer is "never migrate." Because it does not change, it serves as a foundation even when other layers do.</p>
+
+        <h3>National Layer: National Diet Library — Institutional Migration</h3>
+
+        <p>The National Diet Library (NDL) of Japan operates its web archive under the legal deposit system. Technology format migrations are carried out institutionally by the NDL itself — WARC format conversions, metadata schema updates, storage infrastructure refreshes — all funded and staffed as a national institution.</p>
+
+        <p>Individuals and companies need not worry about format compatibility 50 years from now. That is the purpose of entrusting data to the national layer.</p>
+
+        <h3>Private Layer: GitHub — Community Migration</h3>
+
+        <p>GitHub is currently used by over 100 million developers. Through the Arctic Code Vault program, open-source code is also physically archived in permafrost beneath Svalbard, Norway.</p>
+
+        <p>But GitHub's continued existence is not guaranteed. Microsoft may change its policies in 10 years. That is why this layer's migration strategy relies on Git itself. Git is a distributed version control system — as long as a repository clone exists, it can be migrated to any hosting service. GitHub to GitLab to Codeberg to a self-hosted server. The migration paths are endless.</p>
+
+        <h2>3. The 10-Year Review Checklist</h2>
+
+        <p>Even with a three-layer design, neglect leads to decay. That is why we review the following every 10 years.</p>
+
+        <h3>QR Code Standard Compatibility</h3>
+        <p>QR codes are standardized as ISO/IEC 18004. Since their invention in 1994, they have been extended while maintaining backward compatibility. But there is no guarantee the same standard will be readable in 30 or 50 years. Every 10 years, we verify that QR codes can be successfully scanned by mainstream smartphone camera apps. If scan rates decline, we consider migrating to a newer code standard.</p>
+
+        <h3>URL and Domain Persistence</h3>
+        <p>The QR codes inscribed on quartz glass contain embedded URLs. The domain (tokistorage.github.io) depends on GitHub Pages' continuity. Every 10 years, we evaluate the domain's viability and alternative hosting options. Redirect architecture is kept up to date in case migration to a custom domain becomes necessary.</p>
+
+        <h3>File Format Readability</h3>
+        <p>Audio data uses Codec2 (an open-source voice codec), images use PNG and JPEG, and text uses UTF-8 plain text and HTML. Open standards are chosen precisely to avoid the risk that proprietary formats become unreadable within a decade. Every 10 years, we verify that stored formats can still be played on current mainstream browsers and devices.</p>
+
+        <h3>Playback Environment Compatibility</h3>
+        <p>play.html is a browser-based audio playback page. WebAudio API, WASM (WebAssembly), Base64URL encoding — we verify every 10 years that these web standards still function. If a specific API is deprecated, we switch to an alternative implementation.</p>
+
+        <h2>4. Shikinen Sengu: A 1,300-Year Precedent</h2>
+
+        <p>Ise Shrine in Japan rebuilds its sanctuary every 20 years. This ritual, called Shikinen Sengu, has continued for over 1,300 years.</p>
+
+        <p>Wooden architecture is not eternal. But by rebuilding every 20 years, both the construction techniques and the materials are renewed simultaneously. The result: the building itself is always new, but the knowledge of how to build it is never lost.</p>
+
+        <blockquote>
+            There are two ways to make something last forever.<br>
+            Use a material that does not change, or create a system that keeps changing.
+        </blockquote>
+
+        <p>TokiStorage adopts both. Quartz glass is the material that does not change. The 10-year migration cycle is the system that keeps changing. The physical layer carries "eternity"; the digital layer carries "renewal."</p>
+
+        <p>The wisdom of Shikinen Sengu lies in rebuilding before decay sets in — not scrambling after something breaks, but transitioning while it still works. TokiStorage's 10-year cycle follows the same logic. While QR codes are still readable, we confirm they will remain readable for the next decade.</p>
+
+        <h2>5. Designing for Operator Absence</h2>
+
+        <p>When you promise thousand-year preservation, you must plan for the scenario where the operator is no longer present.</p>
+
+        <p>TokiStorage's architecture is built on burn-rate-zero — zero fixed costs. Server costs, domain fees, storage fees — everything runs within free tiers. The system keeps running even if no one pays a bill.</p>
+
+        <p>But even so, someone must perform the 10-year review.</p>
+
+        <p>This is where the three-layer design proves its value. Even if digital layer maintenance ceases, the physical quartz glass remains in the owner's hands. The NDL archive persists as a national institution. If one of the three layers is lost, the remaining two keep the data alive.</p>
+
+        <p>The ideal is to continue the 10-year reviews. But in reality, there may be gaps. That is precisely why there are three layers. Redundancy exists for when things do not go as planned.</p>
+
+        <h2>6. The Roadmap Is Public</h2>
+
+        <p>There is no reason to keep this migration plan private.</p>
+
+        <p>Publishing it serves three purposes. First, users can understand how their stored items are protected. Second, the technical community can provide feedback. Third, future operators — or anyone who forks the project — can inherit not just the code but the design philosophy.</p>
+
+        <p>TokiStorage's code is open-source on GitHub. This essay itself is part of the public technology roadmap. When the design philosophy sits alongside the code, someone 10 years from now can understand why it was built this way before executing the next migration.</p>
+
+        <div class="key-point">
+            <p>Quartz glass lasts a thousand years.<br>But the technology to read it must be updated every decade.<br><br>Eternity is not something you build once.<br>It is something you keep tending to.</p>
+        </div>
+
+    </article>
+
+    <footer class="article-footer">
+        <p id="essay-nav-links"></p>
+        <p style="margin-top: 2rem; font-size: 0.75rem;">&copy; 2026 TokiStorage</p>
+    </footer>
+
+</main>
+
+<script src="contact-form.js"></script>
+<script src="essay-nav.js?v=20260220"></script>
+<script src="tracker.js"></script>
+</body>
+</html>
