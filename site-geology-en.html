@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" type="image/png" sizes="32x32" href="asset/favicon-32.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="asset/apple-touch-icon.png">
+    <title>Geological Data for Storage Sites — Sado and Maui Risk Assessment | TokiStorage</title>
+    <meta name="robots" content="index, follow">
+    <meta name="description" content="Sado Island (30-million-year continental island) and Maui (dormant Haleakala volcano). Earthquake risk, sea level projections, and volcanic activity data compiled to evaluate geological suitability for thousand-year storage.">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Shippori+Mincho:wght@400;500;600;700&family=Zen+Kaku+Gothic+New:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --toki-blue: #2563EB;
+            --toki-blue-dark: #1D4ED8;
+            --toki-blue-pale: #EFF6FF;
+            --accent-blue: #3B82F6;
+            --bg-white: #FFFFFF;
+            --text-primary: #1E293B;
+            --text-secondary: #475569;
+            --text-muted: #94A3B8;
+            --border: #E2E8F0;
+            --font-display: 'Shippori Mincho', serif;
+            --font-body: 'Zen Kaku Gothic New', sans-serif;
+        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        html { scroll-behavior: smooth; }
+        body { font-family: var(--font-body); font-weight: 400; background: var(--bg-white); color: var(--text-primary); line-height: 2; font-size: 16px; }
+
+        .article-nav { position: fixed; top: 0; left: 0; right: 0; z-index: 1000; background: rgba(255,255,255,0.95); backdrop-filter: blur(12px); border-bottom: 1px solid var(--border); padding: 0.6rem 1.2rem; display: flex; align-items: center; justify-content: space-between; gap: 1rem; }
+        .article-nav .nav-brand { font-family: var(--font-display); font-size: 0.9rem; font-weight: 600; color: var(--toki-blue); text-decoration: none; white-space: nowrap; }
+        .article-nav .nav-brand::before { content: ''; display: inline-block; width: 20px; height: 20px; background: url('asset/tokistorage-icon-512.png') no-repeat center / contain; vertical-align: -3px; margin-right: 5px; }
+        .article-nav .nav-right { display: flex; align-items: center; gap: 1rem; }
+        .article-nav .nav-label { font-size: 0.6rem; color: var(--text-muted); letter-spacing: 0.08em; }
+        .article-nav .lang-switch { font-size: 0.75rem; color: var(--toki-blue); text-decoration: none; padding: 0.3rem 0.6rem; border: 1px solid var(--toki-blue); border-radius: 4px; }
+        .article-nav .lang-switch:hover { background: var(--toki-blue); color: #fff; }
+
+        .article-container { max-width: 680px; margin: 0 auto; padding: 7rem 2rem 4rem; }
+        .article-header { margin-bottom: 3rem; padding-bottom: 2rem; border-bottom: 1px solid var(--border); }
+        .article-category { font-size: 0.7rem; color: var(--toki-blue); letter-spacing: 0.15em; margin-bottom: 1rem; }
+        .article-header h1 { font-family: var(--font-display); font-size: 1.8rem; font-weight: 700; line-height: 1.5; margin-bottom: 1.5rem; }
+        .article-subtitle { font-size: 0.95rem; color: var(--text-secondary); line-height: 1.9; }
+
+        .article-content h2 { font-family: var(--font-display); font-size: 1.3rem; font-weight: 600; margin: 3rem 0 1.5rem; padding-bottom: 0.5rem; border-bottom: 2px solid var(--toki-blue-pale); }
+        .article-content h3 { font-family: var(--font-display); font-size: 1.1rem; font-weight: 600; margin: 2rem 0 1rem; color: var(--toki-blue-dark); }
+        .article-content p { margin-bottom: 1.5rem; text-align: justify; }
+        .article-content blockquote { border-left: 3px solid var(--toki-blue); padding-left: 1.5rem; margin: 2rem 0; font-family: var(--font-display); color: var(--text-secondary); }
+        .article-content ul { margin: 1.5rem 0; padding-left: 1.5rem; }
+        .article-content li { margin-bottom: 0.75rem; }
+
+        .core-message { background: var(--toki-blue-pale); border-left: 4px solid var(--toki-blue); padding: 1.5rem; margin: 2rem 0; font-size: 0.95rem; line-height: 1.8; }
+        .key-point { background: linear-gradient(135deg, var(--toki-blue-pale) 0%, #fff 100%); border: 1px solid var(--accent-blue); border-radius: 8px; padding: 1.5rem; margin: 2rem 0; text-align: center; }
+        .key-point p { font-family: var(--font-display); font-size: 1.1rem; color: var(--toki-blue-dark); margin: 0; }
+
+        .data-table { width: 100%; border-collapse: collapse; margin: 2rem 0; font-size: 0.9rem; }
+        .data-table th { background: var(--toki-blue); color: #fff; padding: 0.8rem 1rem; text-align: left; font-weight: 500; }
+        .data-table td { padding: 0.8rem 1rem; border-bottom: 1px solid var(--border); }
+        .data-table tr:nth-child(even) td { background: var(--toki-blue-pale); }
+
+        .article-footer { margin-top: 4rem; padding-top: 2rem; border-top: 1px solid var(--border); text-align: center; }
+        .article-footer p { font-size: 0.8rem; color: var(--text-muted); margin-bottom: 1rem; }
+        .article-footer a { color: var(--toki-blue); text-decoration: none; }
+        .article-footer a:hover { text-decoration: underline; }
+
+        @media (max-width: 768px) {
+            .article-container { padding: 6rem 1.2rem 3rem; }
+            .article-header h1 { font-size: 1.5rem; }
+            .article-nav .nav-label { display: none; }
+            .data-table { font-size: 0.8rem; }
+            .data-table th, .data-table td { padding: 0.5rem; }
+        }
+        @media print { .article-nav { display: none; } .article-container { padding-top: 2rem; } }
+    </style>
+    <link rel="stylesheet" href="contact-form.css">
+    <meta property="og:image" content="https://tokistorage.github.io/lp/asset/tokistorage-icon-512.png">
+    <meta property="og:image:width" content="512">
+    <meta property="og:image:height" content="512">
+</head>
+<body>
+
+<nav class="article-nav">
+    <a href="index-en.html" class="nav-brand">TokiStorage</a>
+    <div class="nav-right">
+        <span class="nav-label">Nature / 自然・宇宙</span>
+        <a href="site-geology.html" class="lang-switch">JA</a>
+    </div>
+</nav>
+
+<main class="article-container">
+
+    <header class="article-header">
+        <p class="article-category">ESSAY &mdash; Geology &amp; Preservation Design</p>
+        <h1>Geological Data for Storage Sites<br><span style="font-size: 0.6em; font-weight: 400; color: var(--text-secondary);">&mdash;&mdash; Thousand-Year Risk Assessment for Sado and Maui</span></h1>
+        <p class="article-subtitle">
+            If you promise thousand-year preservation, you owe an explanation for why the place will last that long.<br>
+            This is the first edition, based on data available in 2026,<br>
+            to be updated every 10 years per our <a href="tech-roadmap-en.html">technology roadmap</a>.
+        </p>
+    </header>
+
+    <article class="article-content">
+
+        <div class="core-message">
+            <strong>The point of this essay:</strong> Sado is a 30-million-year continental island and geologically exceptionally stable. Maui is a dormant volcanic island, but over 200 years have passed since Haleakala's last eruption, and plate movement is carrying it away from the hotspot. Both are rational choices for thousand-year storage, but risk is not zero. That is why we use three-layer distributed storage.
+        </div>
+
+        <h2>1. Comparison Summary</h2>
+
+        <table class="data-table">
+            <tr>
+                <th>Factor</th>
+                <th>Sado Island</th>
+                <th>Maui</th>
+            </tr>
+            <tr>
+                <td>Geological age</td>
+                <td>~30 million years (continental island)</td>
+                <td>~1–2 million years (volcanic island)</td>
+            </tr>
+            <tr>
+                <td>Formation</td>
+                <td>Separated from Eurasian continent</td>
+                <td>Hotspot volcanism on the Pacific Plate</td>
+            </tr>
+            <tr>
+                <td>Highest elevation</td>
+                <td>Mt. Kinpoku, 1,172 m</td>
+                <td>Haleakalā, 3,055 m</td>
+            </tr>
+            <tr>
+                <td>Earthquake risk</td>
+                <td>Moderate (Japan Sea eastern margin zone)</td>
+                <td>Low–moderate (distant effects from Big Island volcanism)</td>
+            </tr>
+            <tr>
+                <td>Volcanic risk</td>
+                <td>Very low (no active volcanoes)</td>
+                <td>Low (Haleakalā dormant; last eruption est. 1400s–1600s)</td>
+            </tr>
+            <tr>
+                <td>Sea level rise impact</td>
+                <td>Limited due to mountainous terrain</td>
+                <td>Limited due to mountainous terrain (coastal areas affected)</td>
+            </tr>
+            <tr>
+                <td>Plate movement</td>
+                <td>Eurasian Plate, several mm/year</td>
+                <td>Pacific Plate, ~7 cm/year northwest</td>
+            </tr>
+        </table>
+
+        <h2>2. Sado Island — A 30-Million-Year Continental Island</h2>
+
+        <h3>Geological Structure</h3>
+        <p>Sado Island formed approximately 30 million years ago as part of the Eurasian continent and separated as the Sea of Japan expanded. Its infinity shape comes from the Great Sado Mountains in the north and Small Sado Mountains in the south, connected by the Kunaka Plain. This geological age is orders of magnitude older than volcanic islands like Maui (1–2 million years) or Tahiti (1–3 million years).</p>
+
+        <p>Being a continental island matters profoundly. Volcanic islands are born above hotspots, drift with plate movement, and eventually submerge through erosion and subsidence — the Emperor Seamounts northwest of Hawaii are a textbook example. Continental islands, however, are part of continental crust and do not follow this submersion cycle. The fact that Sado has existed as an island for 30 million years is itself proof of its stability.</p>
+
+        <h3>Earthquake Risk</h3>
+        <p>Sado lies near the Japan Sea eastern margin deformation zone. This zone, near the boundary of the Eurasian and North American plates, has produced the 1964 Niigata earthquake (M7.5), the 2004 Chuetsu earthquake (M6.8), the 2007 Chuetsu-oki earthquake (M6.8), and the 2024 Noto Peninsula earthquake (M7.6).</p>
+
+        <p>However, none of these earthquakes had epicenters on Sado itself — they were located on the mainland side or on the seafloor. Recorded shaking on Sado has been intensity 4–5 at most. Active faults have been identified on the island, but there is no record of a major direct earthquake beneath it.</p>
+
+        <p>Thousand-year assessment: Strong shaking from an M7-class earthquake is possible. But quartz glass does not break from shaking. Seismic design of the storage facility is the essential countermeasure.</p>
+
+        <h3>Sea Level Rise Projections</h3>
+        <p>According to the IPCC Sixth Assessment Report (AR6, 2021), global mean sea level rise by 2100 is projected at 0.32–0.62 m under SSP1-2.6 and 0.63–1.01 m under SSP5-8.5. Long-term projections to 2300 suggest the possibility of several meters under SSP5-8.5.</p>
+
+        <p>Sado's highest point is 1,172 m (Mt. Kinpoku). Placing a storage facility at 100 m or higher elevation means sea level rise of several meters would have no impact. Coastal settlements may be affected, but the storage site can be positioned to avoid this entirely.</p>
+
+        <h2>3. Maui — Haleakalā's Dormant Volcanic Island</h2>
+
+        <h3>Geological Structure</h3>
+        <p>Maui is a volcanic island born from the Hawaiian hotspot on the Pacific Plate. West Maui Mountain (Mauna Kahalawai) and Haleakalā are connected by a central isthmus, forming the infinity shape. Geological age is 1–2 million years.</p>
+
+        <p>The Pacific Plate moves northwest at approximately 7 cm per year, and Maui is already drifting away from the hotspot. Current volcanic activity is centered on the Big Island to the southeast (Kīlauea, Mauna Loa). This means Maui's volcanic activity is on a declining trend going forward.</p>
+
+        <h3>Volcanic Risk</h3>
+        <p>The date of Haleakalā's last eruption is debated. The USGS estimates the 1480s–1600s, while some sources record an eruption around 1790. Regardless, over 200 years have passed without eruption, and the USGS Volcanic Threat Assessment (2018 edition) classifies Haleakalā as a "moderate threat."</p>
+
+        <p>We must honestly acknowledge that it is "dormant," not "extinct." The probability of Haleakalā erupting within the next 1,000 years is not zero. But even if it does erupt, lava flows follow terrain. Siting the storage facility away from predicted lava flow paths avoids direct damage.</p>
+
+        <h3>Earthquake Risk</h3>
+        <p>Maui's own seismic activity is low. Earthquakes in the Hawaiian Islands are concentrated on the volcanically active Big Island. Even during the 2018 Kīlauea eruption's M6.9 earthquake, shaking on Maui was minimal.</p>
+
+        <p>On a thousand-year scale, large volcanic earthquakes from the Big Island or Pacific Plate intraplate fault activity may cause shaking. But as with Sado, the risk to quartz glass is manageable through seismic facility design.</p>
+
+        <h3>Sea Level Rise Projections</h3>
+        <p>Haleakalā stands at 3,055 m. Sea level rise vulnerability is limited to coastal areas. However, Hawaiian islands slowly subside as they drift from the hotspot. Maui's estimated subsidence rate is 0.02–0.05 mm per year — extremely gradual, amounting to a few centimeters to a few tens of centimeters over a millennium. Even combining subsidence with sea level rise, the risk of a highland storage facility being submerged is extremely low.</p>
+
+        <h2>4. Why Two Sites</h2>
+
+        <p>Neither Sado nor Maui alone is sufficient.</p>
+
+        <p>Sado is overwhelmingly superior in geological stability. Its 30-million-year track record speaks louder than any risk model. But earthquake risk from the Japan Sea eastern margin cannot be ignored.</p>
+
+        <p>Maui carries inherent risk as a volcanic island. But its trend is one of declining activity as plate movement carries it from the hotspot. And it belongs to an entirely different geological structure from Sado, separated by the Pacific Ocean.</p>
+
+        <blockquote>
+            The probability of the same disaster simultaneously destroying both Sado and Maui is vanishingly close to zero.
+        </blockquote>
+
+        <p>Planet-scale distribution means driving the correlation of geological risks toward zero. A Japan Sea earthquake does not affect Maui. A Haleakalā eruption does not affect Sado. The geological risks of the two islands are independent.</p>
+
+        <p>And even if one site is hit, the physical layer (quartz glass in the owner's hands), national layer (National Diet Library), and private layer (GitHub) preserve data through separate channels. Geological risk is managed as part of a redundant design across three layers and two sites.</p>
+
+        <h2>5. Limitations of This Assessment</h2>
+
+        <p>Honestly, no one can accurately predict geological risk a thousand years into the future.</p>
+
+        <p>IPCC projections extend to 2100 (at most 2300). Beyond that, uncertainty is too great for scientific consensus. For long-term volcanic eruption prediction, nothing more can be said than "probability distributions based on historical data."</p>
+
+        <p>What this essay can demonstrate is this: "Based on the best data available in 2026, Sado and Maui are rational choices as thousand-year storage sites." Nothing more, nothing less.</p>
+
+        <p>The 10-year review cycle defined in our <a href="tech-roadmap-en.html">technology roadmap</a> applies not only to technology but also to geological data updates. New fault discoveries, revised sea level projections, advances in volcanic monitoring — all will be incorporated every 10 years, and this document updated accordingly.</p>
+
+        <div class="key-point">
+            <p>We cannot guarantee safety for a thousand years.<br>But we can honestly assess, publish, and keep updating the risks for a thousand years.<br><br>That is the minimum duty of those entrusted with preservation.</p>
+        </div>
+
+    </article>
+
+    <footer class="article-footer">
+        <p id="essay-nav-links"></p>
+        <p style="margin-top: 2rem; font-size: 0.75rem;">&copy; 2026 TokiStorage</p>
+    </footer>
+
+</main>
+
+<script src="contact-form.js"></script>
+<script src="essay-nav.js?v=20260220"></script>
+<script src="tracker.js"></script>
+</body>
+</html>

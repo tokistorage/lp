@@ -91,6 +91,7 @@
     { id: 'animal-welfare', ja: '動物愛護', en: 'Animal Welfare' },
     { id: 'ecology', ja: '生態系', en: 'Ecology' },
     { id: 'geology', ja: '地質学', en: 'Geology' },
+    { id: 'site-geology', ja: '保管候補地の地質データ', en: 'Storage Site Geology' },
     { id: 'turtle', ja: '亀が導く永続性', en: 'Turtle & Permanence' },
     { id: 'urayasu', ja: '浦安という地の利', en: 'Urayasu' },
     { id: 'hyoutanjima', ja: 'ひょうたん島の蓋然性', en: 'The Probability of Gourd Island' },
@@ -215,7 +216,8 @@
     // ── 自然・宇宙 ──
     'animal-welfare':         ['ecology', 'esg', 'turtle', 'peace', 'sdgs'],
     'ecology':                ['animal-welfare', 'sdgs', 'esg', 'geology', 'turtle'],
-    'geology':                ['ecology', 'turtle', 'urayasu', 'history', 'space'],
+    'geology':                ['site-geology', 'ecology', 'turtle', 'urayasu', 'history'],
+    'site-geology':           ['geology', 'hyoutanjima', 'community-benefit', 'tech-roadmap', 'backup-rule'],
     'turtle':                 ['geology', 'ecology', 'legacy', 'what-to-leave', 'history'],
     'urayasu':                ['hyoutanjima', 'realestate', 'geology', 'tourism', 'ecology'],
     'hyoutanjima':            ['urayasu', 'dimension', 'geology', 'space', 'ecology'],

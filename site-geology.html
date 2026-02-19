@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" type="image/png" sizes="32x32" href="asset/favicon-32.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="asset/apple-touch-icon.png">
+    <title>保管候補地の地質データ——佐渡とマウイの千年リスク評価 | トキストレージ</title>
+    <meta name="robots" content="index, follow">
+    <meta name="description" content="佐渡島（3000万年の大陸島）とマウイ島（ハレアカラ火山の休火山島）。地震リスク、海面上昇予測、火山活動の現時点データをまとめ、千年保管の地質的適格性を評価する。">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Shippori+Mincho:wght@400;500;600;700&family=Zen+Kaku+Gothic+New:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --toki-blue: #2563EB;
+            --toki-blue-dark: #1D4ED8;
+            --toki-blue-pale: #EFF6FF;
+            --accent-blue: #3B82F6;
+            --bg-white: #FFFFFF;
+            --text-primary: #1E293B;
+            --text-secondary: #475569;
+            --text-muted: #94A3B8;
+            --border: #E2E8F0;
+            --font-display: 'Shippori Mincho', serif;
+            --font-body: 'Zen Kaku Gothic New', sans-serif;
+        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        html { scroll-behavior: smooth; }
+        body { font-family: var(--font-body); font-weight: 400; background: var(--bg-white); color: var(--text-primary); line-height: 2; font-size: 16px; }
+
+        .article-nav { position: fixed; top: 0; left: 0; right: 0; z-index: 1000; background: rgba(255,255,255,0.95); backdrop-filter: blur(12px); border-bottom: 1px solid var(--border); padding: 0.6rem 1.2rem; display: flex; align-items: center; justify-content: space-between; gap: 1rem; }
+        .article-nav .nav-brand { font-family: var(--font-display); font-size: 0.9rem; font-weight: 600; color: var(--toki-blue); text-decoration: none; white-space: nowrap; }
+        .article-nav .nav-brand::before { content: ''; display: inline-block; width: 20px; height: 20px; background: url('asset/tokistorage-icon-512.png') no-repeat center / contain; vertical-align: -3px; margin-right: 5px; }
+        .article-nav .nav-right { display: flex; align-items: center; gap: 1rem; }
+        .article-nav .nav-label { font-size: 0.6rem; color: var(--text-muted); letter-spacing: 0.08em; }
+        .article-nav .lang-switch { font-size: 0.75rem; color: var(--toki-blue); text-decoration: none; padding: 0.3rem 0.6rem; border: 1px solid var(--toki-blue); border-radius: 4px; }
+        .article-nav .lang-switch:hover { background: var(--toki-blue); color: #fff; }
+
+        .article-container { max-width: 680px; margin: 0 auto; padding: 7rem 2rem 4rem; }
+        .article-header { margin-bottom: 3rem; padding-bottom: 2rem; border-bottom: 1px solid var(--border); }
+        .article-category { font-size: 0.7rem; color: var(--toki-blue); letter-spacing: 0.15em; margin-bottom: 1rem; }
+        .article-header h1 { font-family: var(--font-display); font-size: 1.8rem; font-weight: 700; line-height: 1.5; margin-bottom: 1.5rem; }
+        .article-subtitle { font-size: 0.95rem; color: var(--text-secondary); line-height: 1.9; }
+
+        .article-content h2 { font-family: var(--font-display); font-size: 1.3rem; font-weight: 600; margin: 3rem 0 1.5rem; padding-bottom: 0.5rem; border-bottom: 2px solid var(--toki-blue-pale); }
+        .article-content h3 { font-family: var(--font-display); font-size: 1.1rem; font-weight: 600; margin: 2rem 0 1rem; color: var(--toki-blue-dark); }
+        .article-content p { margin-bottom: 1.5rem; text-align: justify; }
+        .article-content blockquote { border-left: 3px solid var(--toki-blue); padding-left: 1.5rem; margin: 2rem 0; font-family: var(--font-display); color: var(--text-secondary); }
+        .article-content ul { margin: 1.5rem 0; padding-left: 1.5rem; }
+        .article-content li { margin-bottom: 0.75rem; }
+
+        .core-message { background: var(--toki-blue-pale); border-left: 4px solid var(--toki-blue); padding: 1.5rem; margin: 2rem 0; font-size: 0.95rem; line-height: 1.8; }
+        .key-point { background: linear-gradient(135deg, var(--toki-blue-pale) 0%, #fff 100%); border: 1px solid var(--accent-blue); border-radius: 8px; padding: 1.5rem; margin: 2rem 0; text-align: center; }
+        .key-point p { font-family: var(--font-display); font-size: 1.1rem; color: var(--toki-blue-dark); margin: 0; }
+
+        .data-table { width: 100%; border-collapse: collapse; margin: 2rem 0; font-size: 0.9rem; }
+        .data-table th { background: var(--toki-blue); color: #fff; padding: 0.8rem 1rem; text-align: left; font-weight: 500; }
+        .data-table td { padding: 0.8rem 1rem; border-bottom: 1px solid var(--border); }
+        .data-table tr:nth-child(even) td { background: var(--toki-blue-pale); }
+
+        .article-footer { margin-top: 4rem; padding-top: 2rem; border-top: 1px solid var(--border); text-align: center; }
+        .article-footer p { font-size: 0.8rem; color: var(--text-muted); margin-bottom: 1rem; }
+        .article-footer a { color: var(--toki-blue); text-decoration: none; }
+        .article-footer a:hover { text-decoration: underline; }
+
+        @media (max-width: 768px) {
+            .article-container { padding: 6rem 1.2rem 3rem; }
+            .article-header h1 { font-size: 1.5rem; }
+            .article-nav .nav-label { display: none; }
+            .data-table { font-size: 0.8rem; }
+            .data-table th, .data-table td { padding: 0.5rem; }
+        }
+        @media print { .article-nav { display: none; } .article-container { padding-top: 2rem; } }
+    </style>
+    <link rel="stylesheet" href="contact-form.css">
+    <meta property="og:image" content="https://tokistorage.github.io/lp/asset/tokistorage-icon-512.png">
+    <meta property="og:image:width" content="512">
+    <meta property="og:image:height" content="512">
+</head>
+<body>
+
+<nav class="article-nav">
+    <a href="index.html" class="nav-brand">トキストレージ</a>
+    <div class="nav-right">
+        <span class="nav-label">自然・宇宙 / Nature</span>
+        <a href="site-geology-en.html" class="lang-switch">EN</a>
+    </div>
+</nav>
+
+<main class="article-container">
+
+    <header class="article-header">
+        <p class="article-category">ESSAY &mdash; 地質学と保管設計</p>
+        <h1>保管候補地の地質データ<br><span style="font-size: 0.6em; font-weight: 400; color: var(--text-secondary);">&mdash;&mdash; 佐渡とマウイの千年リスク評価</span></h1>
+        <p class="article-subtitle">
+            千年保管を掲げるなら、その場所が千年もつ根拠を示す義務がある。<br>
+            これは2026年時点のデータに基づく初版であり、<br>
+            <a href="tech-roadmap.html">技術ロードマップ</a>に従い10年ごとに更新する。
+        </p>
+    </header>
+
+    <article class="article-content">
+
+        <div class="core-message">
+            <strong>この記事で言いたいこと：</strong>佐渡は3000万年の大陸島で地質学的に極めて安定。マウイはハレアカラ火山の休火山島だが、最後の噴火から200年以上が経過し、プレート移動により火山活動は減衰方向にある。いずれも千年スケールの保管候補地として合理的な選択だが、リスクはゼロではない。だから三層分散保管なのだ。
+        </div>
+
+        <h2>1. 比較サマリー</h2>
+
+        <table class="data-table">
+            <tr>
+                <th>項目</th>
+                <th>佐渡島</th>
+                <th>マウイ島</th>
+            </tr>
+            <tr>
+                <td>地質年齢</td>
+                <td>約3000万年（大陸島）</td>
+                <td>約100〜200万年（火山島）</td>
+            </tr>
+            <tr>
+                <td>形成過程</td>
+                <td>ユーラシア大陸から分離</td>
+                <td>太平洋プレート上のホットスポット火山</td>
+            </tr>
+            <tr>
+                <td>最高標高</td>
+                <td>金北山 1,172m</td>
+                <td>ハレアカラ 3,055m</td>
+            </tr>
+            <tr>
+                <td>地震リスク</td>
+                <td>中（日本海東縁変動帯の影響）</td>
+                <td>低〜中（ハワイ島の火山性地震の遠方影響）</td>
+            </tr>
+            <tr>
+                <td>火山リスク</td>
+                <td>極めて低（活火山なし）</td>
+                <td>低（ハレアカラは休火山、最後の噴火は推定1400〜1600年代）</td>
+            </tr>
+            <tr>
+                <td>海面上昇影響</td>
+                <td>山岳地形のため限定的</td>
+                <td>山岳地形のため限定的（沿岸部は影響あり）</td>
+            </tr>
+            <tr>
+                <td>プレート移動</td>
+                <td>ユーラシアプレート上、年間数mm</td>
+                <td>太平洋プレート上、年間約7cm北西へ</td>
+            </tr>
+        </table>
+
+        <h2>2. 佐渡島——3000万年の大陸島</h2>
+
+        <h3>地質構造</h3>
+        <p>佐渡島は約3000万年前にユーラシア大陸の一部として形成され、日本海の拡大に伴い大陸から分離した大陸島だ。北の大佐渡山地と南の小佐渡山地が国仲平野でくびれた∞形状を持つ。この地質年齢は、火山島であるマウイ（100〜200万年）やタヒチ（100〜300万年）と比べて桁違いに古い。</p>
+
+        <p>大陸島であることの意味は大きい。火山島はホットスポットの上で生まれ、プレート移動とともにホットスポットから離れ、浸食と沈降によりやがて海没する。ハワイ諸島の北西に連なる天皇海山列がその実例だ。だが大陸島は大陸地殻の一部であり、この海没サイクルに属さない。佐渡が3000万年間、島として存在し続けていること自体が、その安定性の証拠だ。</p>
+
+        <h3>地震リスク</h3>
+        <p>佐渡島は日本海東縁変動帯の近傍に位置する。この変動帯はユーラシアプレートと北米プレートの境界付近にあたり、過去に1964年新潟地震（M7.5）、2004年中越地震（M6.8）、2007年中越沖地震（M6.8）、2024年能登半島地震（M7.6）を引き起こしている。</p>
+
+        <p>ただし、これらの地震の震源はいずれも佐渡島そのものではなく、本州側または日本海の海底にある。佐渡島での揺れは震度4〜5程度が記録の上限だ。島内に活断層は確認されているが、大規模な直下型地震の記録はない。</p>
+
+        <p>千年スケールでの評価：M7クラスの地震による強い揺れを受ける可能性はある。だが石英ガラスは揺れでは壊れない。保管施設の耐震設計が本質的な対策となる。</p>
+
+        <h3>海面上昇予測</h3>
+        <p>IPCC第6次評価報告書（AR6, 2021年）によれば、2100年までの全球平均海面上昇は、SSP1-2.6シナリオで0.32〜0.62m、SSP5-8.5シナリオで0.63〜1.01m。2300年までの長期予測ではSSP5-8.5で最大数メートルの可能性が示されている。</p>
+
+        <p>佐渡島の最高標高は1,172m（金北山）。保管施設を海抜100m以上の高台に設置すれば、数メートル規模の海面上昇では影響を受けない。沿岸集落への影響はあるが、保管施設の立地選定で回避可能だ。</p>
+
+        <h2>3. マウイ島——ハレアカラの休火山島</h2>
+
+        <h3>地質構造</h3>
+        <p>マウイ島は太平洋プレート上のハワイホットスポットが生んだ火山島だ。西マウイ山（マウナ・カハラワイ）とハレアカラの二つの火山体が中央地峡でつながり、∞形状を形成している。地質年齢は100〜200万年。</p>
+
+        <p>太平洋プレートは年間約7cmの速度で北西に移動しており、マウイはすでにホットスポットの直上から外れつつある。現在の火山活動の中心はマウイの南東にあるハワイ島（キラウエア、マウナロア）に移っている。これはマウイの火山活動が今後さらに減衰していく方向にあることを意味する。</p>
+
+        <h3>火山リスク</h3>
+        <p>ハレアカラの最後の噴火時期には諸説ある。USGSは推定1480〜1600年代とし、一部の文献は1790年頃の噴火を記録している。いずれにしても200年以上噴火がなく、USGSの火山脅威評価（2018年版）ではハレアカラは「中程度の脅威」に分類されている。</p>
+
+        <p>「休火山」であって「死火山」ではない点は正直に認める必要がある。ハレアカラが今後1000年以内に噴火する可能性はゼロではない。だが仮に噴火しても、溶岩流は地形に沿って流れる。保管施設の立地を溶岩流の予測経路から外すことで、直接的な被害は回避可能だ。</p>
+
+        <h3>地震リスク</h3>
+        <p>マウイ島自体の地震活動は低い。ハワイ諸島で地震が多いのは火山活動が活発なハワイ島だ。2018年のキラウエア噴火に伴うM6.9の地震でも、マウイ島での揺れは軽微だった。</p>
+
+        <p>千年スケールでは、ハワイ島の大規模な火山性地震や、太平洋プレート内部の断層活動による揺れを受ける可能性がある。だが佐渡と同様、石英ガラスへのリスクは施設の耐震設計で管理できる。</p>
+
+        <h3>海面上昇予測</h3>
+        <p>マウイ島のハレアカラは標高3,055m。海面上昇への脆弱性は沿岸部に限定される。ただし、ハワイの島々は形成後にプレート移動とともに沈降していく。マウイの沈降速度は推定年間0.02〜0.05mmと極めてゆるやかだが、千年単位では数cm〜数十cmの沈降となる。この沈降と海面上昇の複合効果を考慮しても、高台に設置された保管施設が水没するリスクは極めて低い。</p>
+
+        <h2>4. なぜ二拠点なのか</h2>
+
+        <p>佐渡とマウイ、どちらか一方だけでは不十分だ。</p>
+
+        <p>佐渡は地質学的安定性では圧倒的に優れている。3000万年の実績は、どんなリスク評価モデルより雄弁だ。だが日本海東縁変動帯に近い地震リスクは無視できない。</p>
+
+        <p>マウイは火山島としてのリスクを内包する。だがプレート移動によりホットスポットから離れつつあるという減衰トレンドがある。そして太平洋を挟んで佐渡とは完全に異なる地質構造に属する。</p>
+
+        <blockquote>
+            同じ災害が同時に佐渡とマウイの両方を破壊する確率は、限りなくゼロに近い。
+        </blockquote>
+
+        <p>地球規模の分散とは、地質リスクの相関をゼロに近づけることだ。日本海東縁の地震がマウイに影響することはない。ハレアカラの噴火が佐渡に影響することもない。二つの島の地質リスクは独立している。</p>
+
+        <p>そしてどちらの拠点が被災しても、物理層（手元の石英ガラス）・国家層（国立国会図書館）・民間層（GitHub）の三層が別経路でデータを保全する。地質リスクは、三層×二拠点の冗長設計の一部として管理される。</p>
+
+        <h2>5. この評価の限界</h2>
+
+        <p>正直に言えば、千年先の地質リスクを正確に予測することは誰にもできない。</p>
+
+        <p>IPCC予測は2100年（最大2300年）までの範囲だ。それ以降は不確実性が大きすぎて科学的なコンセンサスがない。火山噴火の長期予測に至っては、「過去のデータに基づく確率分布」以上のことは言えない。</p>
+
+        <p>このエッセイが示せるのは、「2026年時点で入手可能な最良のデータに基づけば、佐渡とマウイは千年保管の候補地として合理的である」ということだ。それ以上でも以下でもない。</p>
+
+        <p><a href="tech-roadmap.html">技術ロードマップ</a>で定めた10年ごとの点検サイクルは、技術だけでなく地質データの更新にも適用される。新しい断層の発見、海面上昇予測の改訂、火山活動モニタリングの進展——これらを10年ごとに反映し、このドキュメントを更新する。</p>
+
+        <div class="key-point">
+            <p>千年の安全を保証することはできない。<br>だが千年分のリスクを誠実に評価し、公開し、更新し続けることはできる。<br><br>それが、保管を託される側の最低限の責務だ。</p>
+        </div>
+
+    </article>
+
+    <footer class="article-footer">
+        <p id="essay-nav-links"></p>
+        <p style="margin-top: 2rem; font-size: 0.75rem;">&copy; 2026 TokiStorage</p>
+    </footer>
+
+</main>
+
+<script src="contact-form.js"></script>
+<script src="essay-nav.js?v=20260220"></script>
+<script src="tracker.js"></script>
+</body>
+</html>
