@@ -128,7 +128,8 @@
     { id: 'preserving-words', ja: 'ことばを残す', en: 'Preserving Words' },
     { id: 'why-essays', ja: 'エッセイを刻む意義', en: 'The Significance of Inscribing Essays' },
     { id: 'erasure', ja: '残さない選択', en: 'Choosing Not to Leave Behind' },
-    { id: 'narrative-trust', ja: '物語が語る信頼', en: 'The Trust That Stories Tell' }
+    { id: 'narrative-trust', ja: '物語が語る信頼', en: 'The Trust That Stories Tell' },
+    { id: 'headhunter', ja: '海外ヘッドハンターとの対話', en: 'Dialogue with an Overseas Headhunter' }
   ];
 
   // ── Related Essays Map ──
@@ -149,7 +150,7 @@
     'transformation-journey': ['backcasting', 'emotion', 'satiation', 'solitude', 'lifecycle'],
     // ── 人生の節目 ──
     'lifecycle':              ['shiseikan', 'ceremony', 'what-to-leave', 'pathology', 'transformation-journey'],
-    'adversity':              ['lifecycle', 'backcasting', 'integrity', 'pathology', 'transformation-journey'],
+    'adversity':              ['lifecycle', 'backcasting', 'integrity', 'pathology', 'headhunter'],
     'ceremony':               ['lifecycle', 'what-to-leave', 'recital-record', 'shiseikan', 'religion'],
     'recital-record':         ['ceremony', 'early-education', 'commemorative-photo', 'music', 'what-to-leave'],
     'lifestyle':              ['independence', 'solitude', 'burn-rate-zero', 'post-nomad', 'backcasting'],
@@ -183,7 +184,7 @@
     'sdgs':                   ['esg', 'ecology', 'global', 'education', 'gift-economy'],
     'no-competition':         ['platform', 'global-niche', 'free-strategy', 'ecosystem', 'framework'],
     'platform':               ['no-competition', 'ecosystem', 'disintermediation', 'api-transformation', 'global-niche'],
-    'global-niche':           ['no-competition', 'platform', 'global', 'global-honbinos', 'framework'],
+    'global-niche':           ['no-competition', 'platform', 'global', 'global-honbinos', 'headhunter'],
     'global-honbinos':        ['global-niche', 'global', 'sanpoyoshi', 'ecology', 'turtle'],
     'ecosystem':              ['platform', 'sanpoyoshi', 'no-competition', 'disintermediation', 'industry'],
     'free-strategy':          ['burn-rate-zero', 'sanpoyoshi', 'no-competition', 'gift-economy', 'advertising'],
@@ -195,7 +196,7 @@
     'disintermediation':      ['platform', 'ecosystem', 'industry', 'api-transformation', 'walking-partner'],
     'walking-partner':        ['sanpoyoshi', 'partner-boundary', 'global-honbinos', 'gift-economy', 'disintermediation'],
     'sanpoyoshi':             ['walking-partner', 'partner-boundary', 'ecosystem', 'free-strategy', 'gift-economy'],
-    'burn-rate-zero':         ['vibe-coding', 'rapid-prototyping', 'migration', 'free-strategy', 'framework'],
+    'burn-rate-zero':         ['vibe-coding', 'rapid-prototyping', 'migration', 'free-strategy', 'headhunter'],
     'framework':              ['burn-rate-zero', 'no-competition', 'enterprise-architecture', 'price-acceptance', 'global-niche'],
     // ── 文化・社会活動 ──
     'education':              ['early-education', 'history', 'media', 'psychology', 'lifestyle'],
@@ -222,7 +223,7 @@
     'perspective':            ['coach', 'chief-timeless', 'backcasting', 'philosophy', 'decision-maker'],
     'chief-timeless':         ['coach', 'perspective', 'future', 'decision-maker', 'departure'],
     'hands':                  ['departure', 'legacy', 'deposition', 'art', 'preserving-words'],
-    'departure':              ['legacy', 'openness', 'hands', 'no-competition', 'burn-rate-zero'],
+    'departure':              ['legacy', 'openness', 'hands', 'no-competition', 'headhunter'],
     'openness':               ['akashic-record', 'legacy', 'departure', 'ssdlc', 'what-is-github'],
     'akashic-record':         ['openness', 'legacy', 'national-record', 'dimension', 'preserving-words'],
     'legacy':                 ['openness', 'akashic-record', 'deposition', 'hands', 'backup-rule'],
@@ -248,7 +249,8 @@
     'preserving-words':       ['why-essays', 'akashic-record', 'what-to-leave', 'narrative-trust', 'openness'],
     'why-essays':             ['preserving-words', 'brochure-essay', 'narrative-trust', 'openness', 'erasure'],
     'erasure':                ['preserving-words', 'why-essays', 'shiseikan', 'what-to-leave', 'openness'],
-    'narrative-trust':        ['brochure-essay', 'preserving-words', 'integrity', 'why-essays', 'price-acceptance']
+    'narrative-trust':        ['brochure-essay', 'preserving-words', 'integrity', 'why-essays', 'headhunter'],
+    'headhunter':             ['narrative-trust', 'burn-rate-zero', 'departure', 'adversity', 'global-niche']
   };
 
   const isEnglish = document.documentElement.lang === 'en';
