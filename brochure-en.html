@@ -220,6 +220,7 @@
         .tokiqr-box .try-link:hover { text-decoration: underline; }
         .print-url { display: none; }
         .print-only-qr { display: none; }
+        .print-only { display: none; }
 
         .areas { margin-bottom: 0.5rem; }
         .area-row {
@@ -371,6 +372,7 @@
             .tokiqr-box .try-link { display: none; }
             .print-url { display: inline; font-size: 0.75rem; color: var(--toki-blue); }
             .print-only-qr { display: block; }
+            .print-only { display: block; }
             /* Lower half: 2-column layout */
             .print-lower {
                 columns: 2;
@@ -398,7 +400,8 @@
             .qr-pair .section-heading h2 { font-size: 0.82rem; }
             .qr-pair .essay-qr-box { display: flex; align-items: center; gap: 0.4rem; padding: 0.2rem 0.3rem; border: none; text-align: left !important; }
             .qr-pair .essay-qr-box p { font-size: 0.6rem; line-height: 1.35; margin-bottom: 0.1rem; }
-            .qr-pair .essay-qr-box img { width: 34px; height: 34px; flex-shrink: 0; }
+            .qr-pair .essay-qr-box img { width: 52px; height: 52px; flex-shrink: 0; }
+            .qr-pair .essay-qr-box p:first-of-type { display: none; }
             .print-lower .essay-heading {
                 break-before: auto;
             }
@@ -408,14 +411,20 @@
                 margin-top: 0.4rem;
                 padding-top: 0.35rem;
                 flex-direction: row;
+                align-items: flex-end;
                 gap: 2rem;
             }
+            .contact-info { flex: 1; }
+            .contact-qr { text-align: center; flex-shrink: 0; }
+            .contact-qr img { width: 110px; height: 110px; }
+            .contact-qr p { font-size: 0.82rem; font-weight: 500; margin-top: 0.2rem; color: var(--text-primary); }
             /* Hide essay link in print */
             .print-lower .try-link { display: none; }
             .areas { margin-bottom: 0.3rem; }
             .area-row { padding: 0.12rem 0; }
             .area-label { font-size: 0.8rem; }
             .area-desc { font-size: 0.8rem; }
+            .pricing-heading { break-before: column; }
             .pricing-line { font-size: 0.82rem; margin-bottom: 0.08rem; }
             .pricing-note { font-size: 0.75rem; }
             .contact-info .contact-name { font-size: 0.92rem; }
@@ -463,7 +472,7 @@
             body.landscape-mode .qr-pair .section-heading h2 { font-size: 0.78rem; }
             body.landscape-mode .qr-pair .essay-qr-box { display: flex; align-items: center; gap: 0.3rem; padding: 0.15rem 0.25rem; margin-bottom: 0; border: none; text-align: left !important; }
             body.landscape-mode .qr-pair .essay-qr-box p { font-size: 0.52rem; line-height: 1.3; margin-bottom: 0.06rem; }
-            body.landscape-mode .qr-pair .essay-qr-box img { width: 28px; height: 28px; flex-shrink: 0; }
+            body.landscape-mode .qr-pair .essay-qr-box img { width: 44px; height: 44px; flex-shrink: 0; }
             /* Sizing for landscape */
             body.landscape-mode .br-header { margin-bottom: 0.5rem; padding-bottom: 0.35rem; }
             body.landscape-mode .br-header .company { font-size: 1.35rem; }
@@ -489,17 +498,21 @@
             body.landscape-mode .pricing-line { font-size: 0.84rem; margin-bottom: 0.08rem; }
             body.landscape-mode .pricing-note { font-size: 0.76rem; }
             body.landscape-mode .essay-qr-box { display: flex; align-items: center; gap: 0.3rem; padding: 0.2rem; text-align: left !important; }
-            body.landscape-mode .essay-qr-box img { width: 28px; height: 28px; flex-shrink: 0; }
+            body.landscape-mode .essay-qr-box img { width: 44px; height: 44px; flex-shrink: 0; }
             body.landscape-mode .essay-qr-box p { font-size: 0.52rem; line-height: 1.3; margin-bottom: 0.06rem; }
             body.landscape-mode .contact-section {
                 column-span: none;
                 margin-top: 0.45rem;
                 padding-top: 0.35rem;
-                flex-direction: column;
-                gap: 0;
+                flex-direction: row;
+                align-items: flex-end;
+                gap: 1rem;
             }
+            body.landscape-mode .contact-info { flex: 1; }
             body.landscape-mode .contact-info .contact-name { font-size: 0.95rem; }
             body.landscape-mode .contact-info p { font-size: 0.8rem; line-height: 1.45; }
+            body.landscape-mode .contact-qr img { width: 92px; height: 92px; }
+            body.landscape-mode .contact-qr p { font-size: 0.72rem; }
         }
     </style>
     <style id="landscape-page-style" media="not all">
@@ -538,17 +551,17 @@
         <div class="layer-card">
             <div class="layer-name">Physical</div>
             <div class="layer-sub">Quartz Glass &amp; Laminate</div>
-            <div class="layer-desc">1,000-year durability<br>Delivered to you</div>
+            <div class="layer-desc">1,000-year durability<br>Delivered to you<br>Geo-distributed</div>
         </div>
         <div class="layer-card">
             <div class="layer-name">National</div>
             <div class="layer-sub">National Diet Library</div>
-            <div class="layer-desc">Permanent preservation<br>under Japanese law (confirmed)</div>
+            <div class="layer-desc">Permanent preservation<br>under Japanese law (confirmed)<br>Voice in national archive</div>
         </div>
         <div class="layer-card">
             <div class="layer-name">Private</div>
-            <div class="layer-sub">GitHub Arctic Code Vault</div>
-            <div class="layer-desc">Global distribution +<br>Arctic archive</div>
+            <div class="layer-sub">GitHub</div>
+            <div class="layer-desc">Globally distributed hosting<br>Public repository, always accessible<br>Accessible worldwide, anytime</div>
         </div>
     </div>
 
@@ -569,7 +582,7 @@
     </div>
 
     <div class="print-lower">
-    <div class="section-heading"><h2>Service Areas</h2></div>
+    <div class="section-heading"><h2>Use Cases</h2></div>
     <div class="areas">
         <div class="area-row">
             <span class="area-label">Personal</span>
@@ -577,20 +590,24 @@
         </div>
         <div class="area-row">
             <span class="area-label">Business</span>
-            <span class="area-desc">Founder's portrait &amp; voice, company creed, brand stories, corporate heritage archive</span>
+            <span class="area-desc">Founder's portrait &amp; voice, company creed, brand stories, corporate history</span>
         </div>
         <div class="area-row">
             <span class="area-label">Government</span>
             <span class="area-desc">Cultural asset image, voice &amp; inscription preservation, disaster messages, storytellers' face &amp; voice</span>
         </div>
+        <div class="area-row">
+            <span class="area-desc">"Could this work for us?" — Let's figure it out together.</span>
+        </div>
     </div>
 
-    <div class="section-heading pricing-heading"><h2>Pricing</h2></div>
+    <div class="section-heading pricing-heading"><h2>End-User Pricing</h2></div>
+    <p class="pricing-note">No cost to partners for adoption. Start as early as today.</p>
     <p class="pricing-line">TokiQR (Voice, Image &amp; Text QR): <strong>Free</strong></p>
     <p class="pricing-line">Laminated QR: <strong>$33</strong></p>
     <p class="pricing-line">Quartz Glass QR: <strong>$333</strong></p>
-    <p class="pricing-note">One-time payment. No monthly fees.</p>
-    <p class="pricing-line" style="margin-top: 0.3rem; font-size: 0.85em; color: var(--text-muted);">Storage add-ons with purchase: GitHub &amp; NDL (included) / Sado Island &amp; Maui (1&times; product price)</p>
+    <p class="pricing-note">One-time payment. No monthly fees. Payment via Wise (Visa / Mastercard &amp; bank transfer).</p>
+    <p class="pricing-line" style="margin-top: 0.3rem;">Storage: GitHub &amp; NDL (included as standard) / Sado Island &amp; Maui (1&times; product price)</p>
 
     <div class="qr-pair">
     <div class="qr-pair-item">
@@ -598,7 +615,7 @@
     <div class="tokiqr-box essay-qr-box" style="text-align: center;">
         <img src="asset/qr-setup.png" alt="QR code to setup page" class="print-only-qr" style="margin-bottom: 0.75rem;">
         <p style="font-family: var(--font-display); font-size: 0.95rem; color: var(--text-primary); margin-bottom: 0.5rem;">Set up now</p>
-        <p style="font-size: 0.8rem; color: var(--text-secondary); line-height: 1.7; margin-bottom: 0.5rem;">Configure your location name, available media (voice, image, text), and Wise tag to create a custom QR sticker.<br>In the printed version, scan the QR code to open the setup page.</p>
+        <p style="font-size: 0.8rem; color: var(--text-secondary); line-height: 1.7; margin-bottom: 0.5rem;">Choose your location name and media types to create a custom QR sticker for your venue.</p>
         <a href="https://tokistorage.github.io/qr/setup.html" class="try-link">Open setup page &rarr;</a>
     </div>
     </div>
@@ -607,7 +624,7 @@
     <div class="tokiqr-box essay-qr-box" style="text-align: center;">
         <img src="asset/qr-commemorative-photo-en.png" alt="QR code to essay" class="print-only-qr" style="margin-bottom: 0.75rem;">
         <p style="font-family: var(--font-display); font-size: 0.95rem; color: var(--text-primary); margin-bottom: 0.5rem;">When Tourist Spots Meet TokiQR</p>
-        <p style="font-size: 0.8rem; color: var(--text-secondary); line-height: 1.7; margin-bottom: 0.5rem;">When TokiQR meets the tourist photo corner,<br>a photo becomes a record of voice, face, and words — and the entire facility becomes a place for memories.</p>
+        <p style="font-size: 0.8rem; color: var(--text-secondary); line-height: 1.7; margin-bottom: 0.5rem;">Photos become records of voice, face, and words — the entire facility becomes a place for memories.</p>
         <a href="commemorative-photo-en.html" class="try-link">Read the essay &rarr;</a>
     </div>
     </div>
@@ -618,9 +635,13 @@
             <div class="contact-name">TokiStorage</div>
             <p style="font-size: 0.7rem; color: var(--text-secondary); margin: 0.2rem 0 0.4rem;">National Diet Library archived project / Registered sole proprietorship</p>
             <p>Takuya Sato, Founder</p>
-            <p>Urayasu, Chiba, Japan (planning to establish a physical storage base on Sado Island)</p>
+            <p>Urayasu, Chiba, Japan<br>(Planning to establish a physical storage base on Sado Island)</p>
             <p><a href="https://tokistorage.github.io/lp/">tokistorage.github.io/lp/</a></p>
             <p><a href="mailto:tokistorage1000@gmail.com">tokistorage1000@gmail.com</a></p>
+        </div>
+        <div class="contact-qr print-only">
+            <img src="asset/qr-contact-en.png" alt="QR code to contact form">
+            <p>Inquiries &amp; Consultation</p>
         </div>
     </div>
     </div><!-- /.print-lower -->
