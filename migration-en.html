@@ -172,6 +172,16 @@
 
         <p>These are not things to "think about when we scale." They are items kept as a list of "what needs updating" right now. The principle of migration design is not limited to code. Legal obligations, contracts, and policies all follow the same rule: write down in advance what needs to change and how. That is the condition for not being ad-hoc.</p>
 
+        <h3>Automate money in careful stages</h3>
+
+        <p>TokiQR has a partner revenue-sharing system. For orders placed through referrals, 10% of revenue is paid to the partner. Currently, this is automatically tallied on a monthly basis, and a report with Wise payment links is sent to the administrator. The actual transfer is done manually.</p>
+
+        <p>As the number of partners grows, this manual payment will itself become a migration target. But automating money is fundamentally different from automating emails or files. A bug becomes real financial damage instantly.</p>
+
+        <p>So the stages are finer-grained. First, auto-generate a batch CSV. The administrator downloads it, uploads it to Wise, and executes a bulk transfer. Because the amounts are reviewed before execution, there is no risk of erroneous payments. The next step is API-based automated transfers &mdash; but with a per-transaction cap, requiring administrator approval when exceeded.</p>
+
+        <p>The principle of migration design is the same here. "Manual is fine for now. But what to do at the next stage is already written down." Adjusting the granularity of stages according to the magnitude of risk &mdash; that, too, is design.</p>
+
         <h2>5. The Boundary With Over-Engineering</h2>
 
         <p>Migration design carries the temptation of over-engineering. Building abstractions "for the future" that are never used, anticipating every possible scenario.</p>
