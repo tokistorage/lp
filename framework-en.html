@@ -1,0 +1,323 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" type="image/png" sizes="32x32" href="asset/favicon-32.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="asset/apple-touch-icon.png">
+    <title>Framework Expression | TokiStorage</title>
+    <meta name="robots" content="index, follow">
+    <meta name="description" content="Business Model Canvas, Balanced Scorecard, Porter's Five Forces — analyzing TokiStorage through every classic consulting framework. What they illuminate, and what they miss.">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Shippori+Mincho:wght@400;500;600;700&family=Zen+Kaku+Gothic+New:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --toki-blue: #2563EB;
+            --toki-blue-dark: #1D4ED8;
+            --toki-blue-pale: #EFF6FF;
+            --accent-blue: #3B82F6;
+            --bg-white: #FFFFFF;
+            --text-primary: #1E293B;
+            --text-secondary: #475569;
+            --text-muted: #94A3B8;
+            --border: #E2E8F0;
+            --font-display: 'Shippori Mincho', serif;
+            --font-body: 'Zen Kaku Gothic New', sans-serif;
+        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        html { scroll-behavior: smooth; }
+        body { font-family: var(--font-body); font-weight: 400; background: var(--bg-white); color: var(--text-primary); line-height: 2; font-size: 16px; }
+
+        .article-nav { position: fixed; top: 0; left: 0; right: 0; z-index: 1000; background: rgba(255,255,255,0.95); backdrop-filter: blur(12px); border-bottom: 1px solid var(--border); padding: 0.6rem 1.2rem; display: flex; align-items: center; justify-content: space-between; gap: 1rem; }
+        .article-nav .nav-brand { font-family: var(--font-display); font-size: 0.9rem; font-weight: 600; color: var(--toki-blue); text-decoration: none; white-space: nowrap; }
+        .article-nav .nav-brand::before { content: ''; display: inline-block; width: 20px; height: 20px; background: url('asset/tokistorage-icon-512.png') no-repeat center / contain; vertical-align: -3px; margin-right: 5px; }
+        .article-nav .nav-right { display: flex; align-items: center; gap: 1rem; }
+        .article-nav .nav-label { font-size: 0.6rem; color: var(--text-muted); letter-spacing: 0.08em; }
+        .article-nav .lang-switch { font-size: 0.75rem; color: var(--toki-blue); text-decoration: none; padding: 0.3rem 0.6rem; border: 1px solid var(--toki-blue); border-radius: 4px; }
+        .article-nav .lang-switch:hover { background: var(--toki-blue); color: #fff; }
+
+        .article-container { max-width: 680px; margin: 0 auto; padding: 7rem 2rem 4rem; }
+        .article-header { margin-bottom: 3rem; padding-bottom: 2rem; border-bottom: 1px solid var(--border); }
+        .article-category { font-size: 0.7rem; color: var(--toki-blue); letter-spacing: 0.15em; margin-bottom: 1rem; }
+        .article-header h1 { font-family: var(--font-display); font-size: 1.8rem; font-weight: 700; line-height: 1.5; margin-bottom: 1.5rem; }
+        .article-subtitle { font-size: 0.95rem; color: var(--text-secondary); line-height: 1.9; }
+
+        .article-content h2 { font-family: var(--font-display); font-size: 1.3rem; font-weight: 600; margin: 3rem 0 1.5rem; padding-bottom: 0.5rem; border-bottom: 2px solid var(--toki-blue-pale); }
+        .article-content h3 { font-family: var(--font-display); font-size: 1.1rem; font-weight: 600; margin: 2rem 0 1rem; color: var(--toki-blue-dark); }
+        .article-content p { margin-bottom: 1.5rem; text-align: justify; }
+        .article-content blockquote { border-left: 3px solid var(--toki-blue); padding-left: 1.5rem; margin: 2rem 0; font-family: var(--font-display); color: var(--text-secondary); }
+        .article-content ul { margin: 1.5rem 0; padding-left: 1.5rem; }
+        .article-content li { margin-bottom: 0.75rem; }
+
+        .core-message { background: var(--toki-blue-pale); border-left: 4px solid var(--toki-blue); padding: 1.5rem; margin: 2rem 0; font-size: 0.95rem; line-height: 1.8; }
+        .key-point { background: linear-gradient(135deg, var(--toki-blue-pale) 0%, #fff 100%); border: 1px solid var(--accent-blue); border-radius: 8px; padding: 1.5rem; margin: 2rem 0; text-align: center; }
+        .key-point p { font-family: var(--font-display); font-size: 1.1rem; color: var(--toki-blue-dark); margin: 0; }
+
+        .fw-box { background: #f8fafc; border: 1px solid var(--border); border-radius: 8px; padding: 1.2rem 1.5rem; margin: 1.5rem 0; font-size: 0.9rem; line-height: 1.8; }
+        .fw-box dt { font-weight: 600; color: var(--toki-blue); margin-bottom: 0.2rem; }
+        .fw-box dd { margin: 0 0 0.8rem 0; }
+        .fw-box dd:last-child { margin-bottom: 0; }
+
+        .article-footer { margin-top: 4rem; padding-top: 2rem; border-top: 1px solid var(--border); text-align: center; }
+        .article-footer p { font-size: 0.8rem; color: var(--text-muted); margin-bottom: 1rem; }
+        .article-footer a { color: var(--toki-blue); text-decoration: none; }
+        .article-footer a:hover { text-decoration: underline; }
+
+        @media (max-width: 768px) {
+            .article-container { padding: 6rem 1.2rem 3rem; }
+            .article-header h1 { font-size: 1.5rem; }
+            .article-nav .nav-label { display: none; }
+        }
+        @media print { .article-nav { display: none; } .article-container { padding-top: 2rem; } }
+    </style>
+    <link rel="stylesheet" href="contact-form.css">
+    <meta property="og:image" content="https://tokistorage.github.io/lp/asset/tokistorage-icon-512.png">
+    <meta property="og:image:width" content="512">
+    <meta property="og:image:height" content="512">
+</head>
+<body>
+
+<nav class="article-nav">
+    <a href="index-en.html" class="nav-brand">TokiStorage</a>
+    <div class="nav-right">
+        <span class="nav-label">Economy / 経済・財産</span>
+        <a href="framework.html" class="lang-switch">JA</a>
+    </div>
+</nav>
+
+<main class="article-container">
+
+    <header class="article-header">
+        <p class="article-category">ESSAY &mdash; Applying Classic Consulting Frameworks</p>
+        <h1>Framework Expression<br><span style="font-size: 0.6em; font-weight: 400; color: var(--text-secondary);">&mdash;&mdash; Dissecting a business through every standard frame</span></h1>
+        <p class="article-subtitle">
+            Business Model Canvas, Balanced Scorecard, Porter's Five Forces.<br>
+            Applying the consultant's toolkit to one's own business.<br>
+            What the frames illuminate, and what they cannot.
+        </p>
+    </header>
+
+    <article class="article-content">
+
+        <div class="core-message">
+            <strong>The point of this essay:</strong> Frameworks are training wheels for thinking, not the essence of a business. But spinning those wheels reveals contours of the business that even the founder had not noticed. This essay analyzes TokiStorage through 10 frameworks, examining what each captures and what it misses.
+        </div>
+
+        <h2>1. Business Model Canvas (BMC)</h2>
+
+        <p>Alexander Osterwalder's 9 blocks. The entire business on a single sheet.</p>
+
+        <dl class="fw-box">
+            <dt>Customer Segments</dt>
+            <dd>Individuals (end-of-life planning, parents, musicians), organizations (temples, municipalities, memorial halls), partners (photo studios, funeral services, tourism boards)</dd>
+            <dt>Value Proposition</dt>
+            <dd>"Inscribe up to 30 seconds of voice into a single QR code, preserved for a thousand years" &mdash; solving both the fragility of digital data and the degradation of physical media</dd>
+            <dt>Channels</dt>
+            <dd>GitHub Pages (direct), partner referrals, organic inflow via essay collection</dd>
+            <dt>Customer Relationships</dt>
+            <dd>Made-to-order, personal interaction. Not mass production but one-of-a-kind creation</dd>
+            <dt>Revenue Streams</dt>
+            <dd>Quartz glass plate sales (high unit price, low frequency), made-to-order fees</dd>
+            <dt>Key Resources</dt>
+            <dd>Proprietary audio encoding technology (PCT international patent pending), Codec2 WASM, philosophical foundation of 100+ essays</dd>
+            <dt>Key Activities</dt>
+            <dd>Audio compression R&amp;D, laser inscription on quartz glass, partner network development</dd>
+            <dt>Key Partners</dt>
+            <dd>Quartz glass fabricators, Cloudflare (CDN), temples and municipalities</dd>
+            <dt>Cost Structure</dt>
+            <dd>Near-zero burn rate. Fixed costs: domain and Cloudflare only. Variable costs: quartz glass material and fabrication per order</dd>
+        </dl>
+
+        <p>What BMC illuminates: The entire business at a glance. The combination of "zero burn rate" and "made-to-order" makes the cost structure's abnormality visible.</p>
+
+        <p>What BMC misses: "Why a thousand years?" "Why voice?" &mdash; the philosophical basis of the business. There is no block for "founder's motivation" in the nine squares.</p>
+
+        <h2>2. Balanced Scorecard (BSC)</h2>
+
+        <p>Kaplan and Norton's four perspectives. Measuring a business beyond financials.</p>
+
+        <dl class="fw-box">
+            <dt>Financial Perspective</dt>
+            <dd>Zero burn rate. Revenue is order-based. Margins are high but frequency is low. The sustainability metric: "How many years can the business survive with zero revenue?" &mdash; the answer is "indefinitely"</dd>
+            <dt>Customer Perspective</dt>
+            <dd>NPS unmeasured, but unsolicited partner inquiries serve as a proxy. Essay-driven inflow is the primary lead generation</dd>
+            <dt>Internal Process Perspective</dt>
+            <dd>End-to-end process handled by one person. High automation via GAS. Bottleneck: quartz glass fabrication lead time</dd>
+            <dt>Learning &amp; Growth Perspective</dt>
+            <dd>Technology: deepening audio encoding beyond Codec2. Philosophy: articulation through essay writing. Organization: solo, but the partner ecosystem functions as a distributed organization</dd>
+        </dl>
+
+        <p>What BSC illuminates: The moment you place "How many years can the business survive at zero revenue?" in the financial perspective, the entire premise of BSC collapses. A new metric is needed for measuring the health of a business that does not pursue growth.</p>
+
+        <p>What BSC misses: A thousand-year time span. BSC assumes quarterly and annual improvement cycles. Customer satisfaction a millennium from now cannot be measured.</p>
+
+        <h2>3. Porter's Five Forces</h2>
+
+        <p>Analyzing industry competitive structure through five forces.</p>
+
+        <dl class="fw-box">
+            <dt>Industry Rivalry</dt>
+            <dd>No direct competitors exist. No other service inscribes voice into QR codes for millennial preservation. Indirect competitors: time capsules, digital wills, memorial services</dd>
+            <dt>Threat of New Entrants</dt>
+            <dd>Technical barrier: audio encoding + QR encoding combination is PCT-filed. Philosophical barrier: a worldview built across 100+ essays is difficult to imitate</dd>
+            <dt>Threat of Substitutes</dt>
+            <dd>Cloud storage, SNS archives, paper letters. None offer thousand-year durability. No current substitute for quartz glass</dd>
+            <dt>Buyer Power</dt>
+            <dd>Low. Made-to-order with fixed pricing. However, "price acceptance" is a challenge &mdash; without understanding the value, no purchase occurs</dd>
+            <dt>Supplier Power</dt>
+            <dd>Dependency on quartz glass fabricators exists, but multiple candidates are available and technical specifications are standardized</dd>
+        </dl>
+
+        <p>What Five Forces illuminates: "No competition" is structural, not accidental. Entry barriers are formed in three layers: patent, philosophical foundation, and niche market.</p>
+
+        <p>What Five Forces misses: This framework is for "winning." But TokiStorage does not aim to win a competition. "Democratizing proof of existence" cannot be discussed in competitive terms.</p>
+
+        <h2>4. SWOT Analysis</h2>
+
+        <dl class="fw-box">
+            <dt>Strengths</dt>
+            <dd>PCT-pending proprietary technology, zero burn rate sustainability, 100+ essays, founder's consulting experience (Deloitte, CTO, 100+ PoCs)</dd>
+            <dt>Weaknesses</dt>
+            <dd>Solo operation scalability limits, external dependency for quartz fabrication, low brand awareness, "a thousand years" is difficult to convey intuitively</dd>
+            <dt>Opportunities</dt>
+            <dd>Growing end-of-life planning market, municipal digital archive demand, credibility from Ise Shrine and Mt. Hiei connections, widespread QR adoption</dd>
+            <dt>Threats</dt>
+            <dd>Quartz glass fabrication cost volatility, patent examination uncertainty, difficulty building trust around an unverifiable "thousand-year" claim</dd>
+        </dl>
+
+        <p>What SWOT illuminates: Many items in "Weaknesses" and "Threats" are things that time resolves. Brand awareness and partner networks can be built slowly when burn rate is zero.</p>
+
+        <p>What SWOT misses: Once divided into four quadrants, the fact that strengths and weaknesses are two sides of the same coin becomes invisible. "Solo operation" is both a weakness and the very thing that enables zero burn rate.</p>
+
+        <h2>5. Customer Journey</h2>
+
+        <p>Tracing the path from awareness to purchase.</p>
+
+        <dl class="fw-box">
+            <dt>Awareness</dt>
+            <dd>Search traffic to essays, social media quote shares, partner referrals. Zero advertising spend</dd>
+            <dt>Interest</dt>
+            <dd>Reading multiple essays. Reviewing the Manifesto, the 37 Trust Design items. A phase of understanding "what is this person thinking?"</dd>
+            <dt>Consideration</dt>
+            <dd>Comparing alternatives (cloud storage, paper, digital wills). Weighing price against the value of "a thousand years"</dd>
+            <dt>Purchase</dt>
+            <dd>The moment when "I have a voice I want to preserve" exceeds the price threshold. Made-to-order</dd>
+            <dt>Use &amp; Share</dt>
+            <dd>The experience of scanning the QR code and hearing the voice. Sharing with family and friends becomes the next awareness touchpoint</dd>
+        </dl>
+
+        <p>What the Customer Journey illuminates: The abnormal length of the "Interest" phase. Typical e-commerce reaches purchase in minutes; TokiStorage's essay-reading phase spans hours to weeks. This is not a weakness but a design choice.</p>
+
+        <p>What it misses: "The user a thousand years from now." The buyer and the ultimate beneficiary are different people. A great-great-grandchild scanning the QR code &mdash; that experience cannot be drawn on a journey map.</p>
+
+        <h2>6. STP (Segmentation, Targeting, Positioning)</h2>
+
+        <dl class="fw-box">
+            <dt>Segmentation</dt>
+            <dd>Geographic: Japan (end-of-life market) &rarr; Global (Japanese diaspora, war bereaved). Psychographic: degree of urgency to "preserve a voice"</dd>
+            <dt>Targeting</dt>
+            <dd>Primary: end-of-life planning generation (strongest motivation to leave a voice). Secondary: parents (child growth records). Tertiary: temples and municipalities (cultural preservation)</dd>
+            <dt>Positioning</dt>
+            <dd>"Millennial proof of existence." Uniquely positioned on the time axis. Premium pricing, but reasonable in the context of "once in a lifetime"</dd>
+        </dl>
+
+        <p>What STP illuminates: Target priorities become clear. When segments are cut by the psychographic axis of "urgency to preserve a voice," motivation matters more than age or demographics.</p>
+
+        <h2>7. Value Chain</h2>
+
+        <dl class="fw-box">
+            <dt>Primary Activities</dt>
+            <dd>Procurement (quartz glass) &rarr; Production (audio encoding + laser inscription) &rarr; Delivery (individual shipping) &rarr; Marketing (essays + partners) &rarr; Service (perpetual QR readability guarantee)</dd>
+            <dt>Support Activities</dt>
+            <dd>Technology development (Codec2 WASM, QR encoder), HR (one person), procurement (Cloudflare, GitHub Pages), general administration (GAS automation)</dd>
+        </dl>
+
+        <p>What the Value Chain illuminates: The moment "perpetual guarantee" is written in the Service column, the time horizon of the conventional value chain breaks. Normal after-service spans years; here it is a millennium. GitHub Pages does not guarantee thousand-year uptime &mdash; meaning URL permanence is the single greatest design risk.</p>
+
+        <h2>8. Jobs to Be Done (JTBD)</h2>
+
+        <p>Clayton Christensen's framework: what "job" does the customer hire the product for?</p>
+
+        <dl class="fw-box">
+            <dt>Functional Job</dt>
+            <dd>"Physically preserve a voice with durability exceeding 100 years"</dd>
+            <dt>Emotional Job</dt>
+            <dd>"Ease the anxiety that my existence will be forgotten"</dd>
+            <dt>Social Job</dt>
+            <dd>"Tell someone important: 'I was thinking of you'" &mdash; even after I am gone from this world</dd>
+        </dl>
+
+        <p>What JTBD illuminates: The customer does not "hire" quartz glass. They hire "a voice that reaches beyond death." The emotional job, not the physical product, determines the purchase.</p>
+
+        <p>What JTBD misses: "The job of the beneficiary a thousand years from now." JTBD analyzes the buyer's job, but TokiStorage's true beneficiary has not yet been born.</p>
+
+        <h2>9. TAM / SAM / SOM</h2>
+
+        <dl class="fw-box">
+            <dt>TAM (Total Addressable Market)</dt>
+            <dd>Global end-of-life and memorial market: ~$130 billion. Digital archive market: ~$8 billion</dd>
+            <dt>SAM (Serviceable Available Market)</dt>
+            <dd>Within Japan's end-of-life market, those who value "physical voice preservation": estimated tens of thousands</dd>
+            <dt>SOM (Serviceable Obtainable Market)</dt>
+            <dd>Tens to a hundred orders per year. Upper limit depends on physical production constraints</dd>
+        </dl>
+
+        <p>What TAM/SAM/SOM illuminates: SOM is extremely small. But for a zero-burn-rate business, a small SOM is not fatal. A few dozen orders per year sustains the business.</p>
+
+        <p>What it misses: TAM is meaningless for a business that creates its market. The market for "preserving voice for a thousand years" does not yet exist. You cannot size a market that does not exist.</p>
+
+        <h2>10. Blue Ocean Strategy</h2>
+
+        <dl class="fw-box">
+            <dt>Eliminate</dt>
+            <dd>Advertising budget, sales team, inventory, subscription billing</dd>
+            <dt>Reduce</dt>
+            <dd>Product variations (focused on quartz glass + QR), update frequency (thousand-year preservation completes in a single production)</dd>
+            <dt>Raise</dt>
+            <dd>Preservation duration (years &rarr; millennium), philosophical articulation (100+ essays), transparency (37 trust design items, "Before You Decide" page)</dd>
+            <dt>Create</dt>
+            <dd>Proprietary audio encoding, PCT patent, partner ecosystem, the philosophy of "democratizing proof of existence"</dd>
+        </dl>
+
+        <p>What Blue Ocean illuminates: The list of "eliminated" items reads like a list of conventional business assumptions. No advertising, no sales team, no inventory, no subscription. A business model that removes all of these is outside the framework's expectations.</p>
+
+        <h2>11. Beyond the Frame</h2>
+
+        <p>After running ten frameworks, something becomes visible.</p>
+
+        <p>Every framework accurately captures TokiStorage's "what" and "how." Business model structure, sources of competitive advantage, customer motivation. As analysis, they are effective.</p>
+
+        <p>But none of them can explain "why a thousand years."</p>
+
+        <p>Frameworks are tools of rationality. Enter a market because the TAM is large, gain advantage because there are no competitors, sell because there is a customer job. But a thousand-year time horizon exceeds the bounds of rational investment judgment. The ROI a millennium from now cannot be calculated.</p>
+
+        <p>And yet the decision to "preserve for a thousand years" was made &mdash; not as a framework's conclusion, but as the founder's conviction. The conviction that recording and inheriting existence is not a privilege, but a right belonging to everyone.</p>
+
+        <blockquote>
+            Frameworks illuminate the "what" and the "how."<br>
+            But the "why" exists only outside the frame.
+        </blockquote>
+
+        <p>What a career in consulting taught me was not how to use frameworks. It was the limits of frameworks. No matter how precise the analysis, the core of a business &mdash; why you do this &mdash; does not fit inside a frame.</p>
+
+        <p>That is precisely why, having run every frame, I can say with certainty: TokiStorage's value resides in a place no framework can contain.</p>
+
+        <div class="key-point">
+            <p>Frameworks are training wheels for thinking,<br>not the essence of a business.<br>The essence is always decided outside the frame.</p>
+        </div>
+
+    </article>
+
+    <footer class="article-footer">
+        <p id="essay-nav-links"></p>
+        <p style="margin-top: 2rem; font-size: 0.75rem;">&copy; 2026 TokiStorage</p>
+    </footer>
+
+</main>
+
+<script src="contact-form.js"></script>
+<script src="essay-nav.js?v=20260220"></script>
+<script src="tracker.js"></script>
+</body>
+</html>
