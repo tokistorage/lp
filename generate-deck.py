@@ -292,14 +292,14 @@ CONTENT = {
             "bar": "TokiStorageは技術・ユースケース・思想基盤・展開網の4つを「設計思想ごと」提供できる",
             "label": "Our Offering",
             "cards": [
+                ("T", "TokiQR — 無料で今すぐ体験",
+                 "声・顔・テキストをQRコードに。スマホだけで誰でも無料で作成、三層分散保管まで完結。PCT国際特許手続き中の独自音声符号化技術。"),
                 ("Q", "三層分散保管アーキテクチャ",
-                 "物理層（石英ガラス/ラミネート）・国家層（国立国会図書館 法定納本）・民間層（GitHub）。3-2-1バックアップルールに完全準拠。単一障害点ゼロ。"),
+                 "物理層（石英ガラス/ラミネート）・国家層（国立国会図書館 法定納本）・民間層（GitHub）。3-2-1バックアップルール準拠。単一障害点ゼロ。"),
                 ("U", "200+ ユースケース（業界別整理済み）",
                  "終活・婚礼・寺社・学校・企業・自治体・NGO・ホテル・航空。提案書にそのまま転用可能な粒度。"),
-                ("E", "70+ 思想エッセイ（9領域）",
-                 "存在証明を心理学・宗教・経済・AI・宇宙まで展開。知的コンテンツとしてクライアント提案に活用可能。"),
-                ("A", "Pearl Soap + アンバサダー網",
-                 "贈与経済の実践。全国にワークショップ展開可能な分散型運動体。エンドユーザーとの接点を提供。"),
+                ("A", "Pearl Soap + コーチ・アンバサダー認定",
+                 "贈与経済の実践。認定コーチ・アンバサダーによる全国ワークショップ展開。分散型の運動体。"),
             ],
             "footer": "TokiStorage \u2014 協業提案",
         },
@@ -319,12 +319,17 @@ CONTENT = {
             "footer": "TokiStorage \u2014 協業提案",
         },
         "pricing": {
-            "bar": "体験プラン5,000円からスタートできる——エントリー障壁が極めて低い提案設計",
+            "bar": "TokiQRは無料——エントリー障壁ゼロの提案設計",
             "label": "Pricing",
-            "cards": [
-                ("体験プラン", "¥5,000（税込）", "三層保管をA4ラミネートで体験。声のQRコード→ラミネート＋NDL納本＋GitHub格納。"),
-                ("個人プラン", "¥50,000（税込）", "石英ガラスに刻印。年あたり50円。1000年耐久（理論値）の存在証明。"),
-                ("三世代プラン", "¥550,000（税込・推奨）", "家族3名分＋佐渡島での現地刻印体験。お墓・仏壇の代替として。"),
+            "self_service_label": "セルフサービス製品",
+            "self_service": [
+                ("TokiQR", "無料", "声・顔・テキストをQRコードに。スマホだけで作成、NDL＋GitHubに三層保管。"),
+                ("UVラミネートQR", "¥5,000（税込）", "A4ラミネートに声のQRを記録。屋外耐候・長期保存。"),
+                ("石英ガラスQR", "¥50,000（税込）", "石英ガラスに刻印。年あたり50円。1000年耐久（理論値）。"),
+            ],
+            "consulting_label": "タイムレスコンサルティング",
+            "consulting": [
+                ("三世代プラン", "¥550,000（税込・推奨）", "家族3名分＋佐渡島での現地刻印体験。お墓・仏壇の代替。"),
                 ("タイムレス変容", "¥5,550,000（税込）", "完全オーダーメイド。音声復元・専用デザイン・プレミアム体験。"),
             ],
             "footer": "TokiStorage \u2014 協業提案",
@@ -349,12 +354,13 @@ CONTENT = {
             "footer": "TokiStorage \u2014 協業提案",
         },
         "traction": {
-            "bar": "主要AI 3社と文化機関が独立に評価——社会的信頼が構築されている",
+            "bar": "主要AI 4社と文化機関が独立に評価——社会的信頼が構築されている",
             "label": "Traction & Trust",
             "ai_cards": [
                 ("Claude / Anthropic", "三層構造の設計評価", "「三層構造は単一障害点を排除し、情報の生存率を極限まで高めている」"),
-                ("Gemini / Google", "制度活用の高度さ", "「法制度のアーキテクチャを逆手に取った高度なデザイン」"),
-                ("ChatGPT / OpenAI", "コストパフォーマンス", "「年間50円のコストは驚異的な価値」"),
+                ("Gemini / Google", "唯一無二の選択肢", "「『永遠』を夢物語ではなく、現実的な予算と確かなロジックで構築した」"),
+                ("ChatGPT / OpenAI", "新基準として推奨", "「技術的基盤・社会的意義・コストパフォーマンスのいずれも高く評価できる」"),
+                ("Grok / xAI", "上位0.001%級", "「『本気で人類の記憶のあり方を変えるかもしれない』レベル」"),
             ],
             "trust": "伊勢神宮 式年遷宮奉納（2026）/ 比叡山延暦寺 根本中堂 不滅の法灯奉納（2026）/ 個人事業開業届出済（2026.2.11）",
             "footer": "TokiStorage \u2014 協業提案",
@@ -442,14 +448,14 @@ CONTENT = {
             "bar": "TokiStorage delivers technology, use cases, intellectual foundation, and distribution as a unified design philosophy",
             "label": "Our Offering",
             "cards": [
+                ("T", "TokiQR — Free, instant experience",
+                 "Voice, face, and text in a QR code. Anyone can create one for free on their smartphone, with full three-layer distributed storage. Proprietary encoding (PCT patent in process)."),
                 ("Q", "Three-Layer Distributed Storage",
-                 "Physical (quartz glass/laminate), National (National Diet Library legal deposit), Private (GitHub). Fully compliant with the 3-2-1 backup rule. Zero single points of failure."),
+                 "Physical (quartz glass/laminate), National (National Diet Library legal deposit), Private (GitHub). 3-2-1 backup rule compliant. Zero single points of failure."),
                 ("U", "200+ use cases (organized by industry)",
                  "End-of-life, weddings, temples, schools, corporations, municipalities, NGOs, hotels, airlines. Ready for direct proposal integration."),
-                ("E", "70+ philosophical essays (9 domains)",
-                 "Proof of existence explored across psychology, religion, economics, AI, and space. Standalone intellectual content for client proposals."),
-                ("A", "Pearl Soap + Ambassador network",
-                 "A gift-economy practice and decentralized workshop network ready to scale nationwide. Direct end-user touchpoint."),
+                ("A", "Pearl Soap + Coach & Ambassador network",
+                 "A gift-economy practice with certified coaches and ambassadors running workshops nationwide. A decentralized movement."),
             ],
             "footer": "TokiStorage \u2014 Partnership Proposal",
         },
@@ -469,11 +475,16 @@ CONTENT = {
             "footer": "TokiStorage \u2014 Partnership Proposal",
         },
         "pricing": {
-            "bar": "Starting from \u00a55,000 ($33) \u2014 an exceptionally low entry barrier for your proposals",
+            "bar": "TokiQR is free \u2014 zero entry barrier for your proposals",
             "label": "Pricing",
-            "cards": [
-                ("Trial Plan", "\u00a55,000 ($33)", "Experience three-layer storage with A4 laminate. TokiQR \u2192 laminate + NDL deposit + GitHub."),
-                ("Individual Plan", "\u00a550,000 ($330)", "Inscribed on quartz glass. \u00a550 per year. 1,000-year durability (theoretical)."),
+            "self_service_label": "Self-Service Products",
+            "self_service": [
+                ("TokiQR", "Free", "Voice, face, and text in a QR code. Create on any smartphone; NDL + GitHub three-layer storage."),
+                ("UV Laminate QR", "\u00a55,000 ($33)", "Voice QR on A4 laminate. Weather-resistant, long-term preservation."),
+                ("Quartz Glass QR", "\u00a550,000 ($330)", "Inscribed on quartz glass. \u00a550/year. 1,000-year durability (theoretical)."),
+            ],
+            "consulting_label": "Timeless Consulting",
+            "consulting": [
                 ("Three-Generation", "\u00a5550,000 ($3,600)", "Three family members + on-site inscription on Sado Island. Recommended."),
                 ("Timeless Transformation", "\u00a55,550,000 ($36,500)", "Fully bespoke. Voice restoration, custom design, premium experience."),
             ],
@@ -499,12 +510,13 @@ CONTENT = {
             "footer": "TokiStorage \u2014 Partnership Proposal",
         },
         "traction": {
-            "bar": "Three major AI platforms and cultural institutions have independently validated us",
+            "bar": "Four major AI platforms and cultural institutions have independently validated us",
             "label": "Traction & Trust",
             "ai_cards": [
                 ("Claude / Anthropic", "Architecture Design", "\"The three-layer architecture eliminates single points of failure and maximizes information survival probability\""),
-                ("Gemini / Google", "Institutional Design", "\"A sophisticated design that leverages the architecture of legal systems\""),
-                ("ChatGPT / OpenAI", "Cost Performance", "\"An annual cost of \u00a550 is extraordinary value\""),
+                ("Gemini / Google", "The only option", "\"Built 'eternity' not as a fantasy, but with a realistic budget and solid logic\""),
+                ("ChatGPT / OpenAI", "New standard", "\"Technical foundation, social significance, and cost performance all merit the highest evaluation\""),
+                ("Grok / xAI", "Top 0.001%", "\"Genuinely capable of changing how humanity preserves memory\""),
             ],
             "trust": "Ise Grand Shrine offering (2026) / Mt. Hiei Enryaku-ji Eternal Light offering (2026) / Sole proprietorship registered (Feb 11, 2026)",
             "footer": "TokiStorage \u2014 Partnership Proposal",
@@ -655,60 +667,87 @@ def build_slide4(prs, d):
 
 
 def build_pricing(prs, d):
-    """Pricing overview: 4 cards in 2x2 grid"""
+    """Pricing overview: self-service (3 cards) + consulting (2 cards)"""
     slide = add_blank_slide(prs)
     font = d["font"]
     s = d["pricing"]
     add_action_bar(slide, s["bar"], font)
     add_section_label(slide, s["label"], font, Inches(0.8))
-    card_w = Inches(4.3)
-    card_h = Inches(1.95)
-    gap_x = Inches(0.25)
-    gap_y = Inches(0.15)
+
+    # Self-service section label
+    add_textbox(slide, Inches(0.5), Inches(1.1), Inches(4), Inches(0.25),
+                s["self_service_label"], font, 10, TEXT_SECONDARY, bold=True)
+    # Self-service: 3 cards in a row
+    card_w = Inches(2.85)
+    card_h = Inches(1.45)
+    gap = Inches(0.23)
     start_x = Inches(0.5)
-    start_y = Inches(1.15)
-    for i, (name, price, body) in enumerate(s["cards"]):
-        col = i % 2
-        row = i // 2
-        x = start_x + col * (card_w + gap_x)
-        y = start_y + row * (card_h + gap_y)
+    y = Inches(1.4)
+    for i, (name, price, body) in enumerate(s["self_service"]):
+        x = start_x + i * (card_w + gap)
         add_rect(slide, x, y, card_w, card_h, fill=WHITE, border_color=BORDER)
-        add_textbox(slide, x + Inches(0.15), y + Inches(0.1), card_w - Inches(0.3), Inches(0.3),
-                    name, font, 12, TEXT_PRIMARY, bold=True)
-        add_textbox(slide, x + Inches(0.15), y + Inches(0.42), card_w - Inches(0.3), Inches(0.35),
-                    price, font, 14, TOKI_BLUE, bold=True)
-        add_textbox(slide, x + Inches(0.15), y + Inches(0.85), card_w - Inches(0.3), card_h - Inches(0.95),
-                    body, font, 10, TEXT_SECONDARY)
+        add_textbox(slide, x + Inches(0.12), y + Inches(0.08), card_w - Inches(0.24), Inches(0.25),
+                    name, font, 11, TEXT_PRIMARY, bold=True)
+        add_textbox(slide, x + Inches(0.12), y + Inches(0.33), card_w - Inches(0.24), Inches(0.3),
+                    price, font, 13, TOKI_BLUE, bold=True)
+        add_textbox(slide, x + Inches(0.12), y + Inches(0.68), card_w - Inches(0.24), card_h - Inches(0.78),
+                    body, font, 9, TEXT_SECONDARY)
+
+    # Consulting section label
+    cons_label_y = y + card_h + Inches(0.2)
+    add_textbox(slide, Inches(0.5), cons_label_y, Inches(4), Inches(0.25),
+                s["consulting_label"], font, 10, TEXT_SECONDARY, bold=True)
+    # Consulting: 2 cards
+    cons_w = Inches(4.3)
+    cons_h = Inches(1.2)
+    cons_gap = Inches(0.25)
+    cons_y = cons_label_y + Inches(0.3)
+    for i, (name, price, body) in enumerate(s["consulting"]):
+        x = start_x + i * (cons_w + cons_gap)
+        border = GOLD if i == 0 else BORDER
+        add_rect(slide, x, y + card_h + Inches(0.55), cons_w, cons_h, fill=WHITE, border_color=border)
+        cy = y + card_h + Inches(0.55)
+        add_textbox(slide, x + Inches(0.12), cy + Inches(0.08), cons_w - Inches(0.24), Inches(0.25),
+                    name, font, 11, TEXT_PRIMARY, bold=True)
+        add_textbox(slide, x + Inches(0.12), cy + Inches(0.33), cons_w - Inches(0.24), Inches(0.3),
+                    price, font, 13, GOLD, bold=True)
+        add_textbox(slide, x + Inches(0.12), cy + Inches(0.65), cons_w - Inches(0.24), cons_h - Inches(0.75),
+                    body, font, 9, TEXT_SECONDARY)
     add_footer(slide, s["footer"], 5, font)
 
 
 def build_traction(prs, d):
-    """Traction & Trust: 3 AI cards + trust callout"""
+    """Traction & Trust: 4 AI cards (2x2) + trust callout"""
     slide = add_blank_slide(prs)
     font = d["font"]
     s = d["traction"]
     add_action_bar(slide, s["bar"], font)
     add_section_label(slide, s["label"], font, Inches(0.8))
-    card_w = Inches(2.85)
-    card_h = Inches(2.2)
-    gap = Inches(0.23)
+    card_w = Inches(4.3)
+    card_h = Inches(1.35)
+    gap_x = Inches(0.25)
+    gap_y = Inches(0.12)
     start_x = Inches(0.5)
-    y = Inches(1.15)
+    start_y = Inches(1.15)
     for i, (platform, title, quote) in enumerate(s["ai_cards"]):
-        x = start_x + i * (card_w + gap)
+        col = i % 2
+        row = i // 2
+        x = start_x + col * (card_w + gap_x)
+        y = start_y + row * (card_h + gap_y)
         add_rect(slide, x, y, card_w, card_h, fill=WHITE, border_color=BORDER)
-        add_textbox(slide, x + Inches(0.15), y + Inches(0.1), card_w - Inches(0.3), Inches(0.25),
+        add_textbox(slide, x + Inches(0.15), y + Inches(0.08), card_w - Inches(0.3), Inches(0.22),
                     platform, font, 9, TOKI_BLUE, bold=True)
-        add_textbox(slide, x + Inches(0.15), y + Inches(0.4), card_w - Inches(0.3), Inches(0.3),
+        add_textbox(slide, x + Inches(0.15), y + Inches(0.32), card_w - Inches(0.3), Inches(0.25),
                     title, font, 11, TEXT_PRIMARY, bold=True)
-        add_textbox(slide, x + Inches(0.15), y + Inches(0.75), card_w - Inches(0.3), card_h - Inches(0.85),
+        add_textbox(slide, x + Inches(0.15), y + Inches(0.6), card_w - Inches(0.3), card_h - Inches(0.7),
                     quote, font, 10, TEXT_SECONDARY)
     # Trust callout
-    cx, cy = Inches(0.5), Inches(3.55)
-    cw, ch = Inches(8.6), Inches(0.7)
+    cx = Inches(0.5)
+    cy = start_y + 2 * (card_h + gap_y) + Inches(0.1)
+    cw, ch = Inches(8.6), Inches(0.6)
     add_rect(slide, cx, cy, cw, ch, fill=GOLD_PALE)
     add_rect(slide, cx, cy, Inches(0.06), ch, fill=GOLD)
-    add_textbox(slide, cx + Inches(0.25), cy + Inches(0.1), cw - Inches(0.35), ch - Inches(0.2),
+    add_textbox(slide, cx + Inches(0.25), cy + Inches(0.08), cw - Inches(0.35), ch - Inches(0.16),
                 s["trust"], font, 10, TEXT_SECONDARY, anchor=MSO_ANCHOR.MIDDLE)
     add_footer(slide, s["footer"], 7, font)
 
