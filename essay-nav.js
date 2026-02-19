@@ -129,6 +129,124 @@
     { id: 'erasure', ja: '残さない選択', en: 'Choosing Not to Leave Behind' }
   ];
 
+  // ── Related Essays Map ──
+  // 各エッセイに3〜5本の関連エッセイを定義
+  const relatedMap = {
+    // ── 基礎理論（個人の内面）──
+    'psychology':             ['philosophy', 'integrity', 'emotion', 'backcasting', 'solitude'],
+    'philosophy':             ['psychology', 'integrity', 'existentialism', 'boundary', 'peace'],
+    'integrity':              ['philosophy', 'psychology', 'openness', 'sanpoyoshi', 'free-strategy'],
+    'solitude':               ['psychology', 'emotion', 'lifestyle', 'transformation-journey', 'satiation'],
+    'pathology':              ['psychology', 'lifecycle', 'adversity', 'ceremony', 'organization'],
+    'emotion':                ['psychology', 'solitude', 'satiation', 'transformation-journey', 'backcasting'],
+    'backcasting':            ['transformation-journey', 'psychology', 'perspective', 'future', 'lifestyle'],
+    'boundary':               ['philosophy', 'organization', 'partner-boundary', 'meiwaku', 'peace'],
+    'peace':                  ['philosophy', 'meiwaku', 'religion', 'global', 'boundary'],
+    'meiwaku':                ['peace', 'philosophy', 'organization', 'boundary', 'psychology'],
+    'satiation':              ['emotion', 'solitude', 'transformation-journey', 'consumption', 'lifestyle'],
+    'transformation-journey': ['backcasting', 'emotion', 'satiation', 'solitude', 'lifecycle'],
+    // ── 人生の節目 ──
+    'lifecycle':              ['shiseikan', 'ceremony', 'what-to-leave', 'pathology', 'transformation-journey'],
+    'adversity':              ['lifecycle', 'backcasting', 'integrity', 'pathology', 'transformation-journey'],
+    'ceremony':               ['lifecycle', 'what-to-leave', 'recital-record', 'shiseikan', 'religion'],
+    'recital-record':         ['ceremony', 'early-education', 'commemorative-photo', 'music', 'what-to-leave'],
+    'lifestyle':              ['independence', 'solitude', 'burn-rate-zero', 'post-nomad', 'backcasting'],
+    'independence':           ['lifestyle', 'burn-rate-zero', 'post-nomad', 'ecology', 'platform'],
+    'what-to-leave':          ['lifecycle', 'preserving-words', 'ceremony', 'shiseikan', 'legacy'],
+    // ── 信仰・思想 ──
+    'religion':               ['shiseikan', 'philosophy', 'ceremony', 'existentialism', 'peace'],
+    'existentialism':         ['philosophy', 'religion', 'dimension', 'shiseikan', 'burn-rate-zero'],
+    'dimension':              ['existentialism', 'akashic-record', 'space', 'religion', 'hyoutanjima'],
+    'shiseikan':              ['lifecycle', 'religion', 'what-to-leave', 'existentialism', 'dimension'],
+    // ── 社会制度 ──
+    'organization':           ['government', 'boundary', 'enterprise-architecture', 'meiwaku', 'industry'],
+    'government':             ['organization', 'nation', 'election', 'strategy', 'national-record'],
+    'election':               ['government', 'nation', 'organization', 'strategy', 'philosophy'],
+    'nation':                 ['government', 'global', 'strategy', 'national-record', 'election'],
+    'national-record':        ['nation', 'akashic-record', 'preserving-words', 'legacy', 'history'],
+    'global':                 ['nation', 'strategy', 'global-niche', 'global-honbinos', 'sdgs'],
+    'strategy':               ['nation', 'global', 'no-competition', 'global-niche', 'platform'],
+    // ── 経済・財産 ──
+    'industry':               ['consumption', 'organization', 'platform', 'ecosystem', 'disintermediation'],
+    'consumption':            ['industry', 'satiation', 'gift-economy', 'novelty-soap', 'fragrance'],
+    'gift-economy':           ['consumption', 'sanpoyoshi', 'free-strategy', 'walking-partner', 'ceremony'],
+    'novelty-soap':           ['fragrance', 'gift-economy', 'advertising', 'brochure-essay', 'consumption'],
+    'fragrance':              ['novelty-soap', 'consumption', 'advertising', 'ecology', 'gift-economy'],
+    'advertising':            ['brochure-essay', 'free-strategy', 'media', 'novelty-soap', 'price-acceptance'],
+    'price-acceptance':       ['advertising', 'no-competition', 'brochure-essay', 'consumption', 'payment'],
+    'finance':                ['ownership', 'realestate', 'payment', 'burn-rate-zero', 'industry'],
+    'ownership':              ['finance', 'realestate', 'what-to-leave', 'legacy', 'existentialism'],
+    'realestate':             ['ownership', 'finance', 'urayasu', 'independence', 'industry'],
+    'esg':                    ['sdgs', 'ecology', 'global', 'animal-welfare', 'industry'],
+    'sdgs':                   ['esg', 'ecology', 'global', 'education', 'gift-economy'],
+    'no-competition':         ['platform', 'global-niche', 'free-strategy', 'ecosystem', 'departure'],
+    'platform':               ['no-competition', 'ecosystem', 'disintermediation', 'api-transformation', 'global-niche'],
+    'global-niche':           ['no-competition', 'platform', 'global', 'global-honbinos', '30seconds'],
+    'global-honbinos':        ['global-niche', 'global', 'sanpoyoshi', 'ecology', 'turtle'],
+    'ecosystem':              ['platform', 'sanpoyoshi', 'no-competition', 'disintermediation', 'industry'],
+    'free-strategy':          ['burn-rate-zero', 'sanpoyoshi', 'no-competition', 'gift-economy', 'advertising'],
+    'brochure-essay':         ['advertising', 'free-strategy', 'novelty-soap', 'why-essays', 'why-not-consulting'],
+    'payment':                ['finance', 'burn-rate-zero', 'cloudflare-gas', 'partner-boundary', 'made-to-order'],
+    'partner-boundary':       ['sanpoyoshi', 'walking-partner', 'made-to-order', 'boundary', 'integrity'],
+    'made-to-order':          ['partner-boundary', 'industry', 'disintermediation', 'payment', 'migration'],
+    'post-nomad':             ['lifestyle', 'independence', 'burn-rate-zero', 'global', 'future'],
+    'disintermediation':      ['platform', 'ecosystem', 'industry', 'api-transformation', 'walking-partner'],
+    'walking-partner':        ['sanpoyoshi', 'partner-boundary', 'global-honbinos', 'gift-economy', 'disintermediation'],
+    'sanpoyoshi':             ['walking-partner', 'partner-boundary', 'ecosystem', 'free-strategy', 'gift-economy'],
+    'burn-rate-zero':         ['vibe-coding', 'rapid-prototyping', 'migration', 'free-strategy', 'independence'],
+    // ── 文化・社会活動 ──
+    'education':              ['early-education', 'history', 'media', 'psychology', 'lifestyle'],
+    'early-education':        ['education', 'recital-record', 'music', 'psychology', 'entertainment'],
+    'media':                  ['entertainment', 'advertising', 'platform', 'history', 'openness'],
+    'entertainment':          ['media', 'music', 'art', 'sports', 'tourism'],
+    'art':                    ['music', 'hands', 'entertainment', 'preserving-words', 'history'],
+    'music':                  ['art', 'entertainment', '30seconds', 'recital-record', 'voice-future'],
+    'tourism':                ['commemorative-photo', 'urayasu', 'hyoutanjima', 'sports', 'entertainment'],
+    'commemorative-photo':    ['recital-record', 'tourism', 'image-clarity', 'what-to-leave', 'hands'],
+    'sports':                 ['entertainment', 'tourism', 'education', 'adversity', 'lifestyle'],
+    'history':                ['national-record', 'preserving-words', 'geology', 'education', 'akashic-record'],
+    // ── 自然・宇宙 ──
+    'animal-welfare':         ['ecology', 'esg', 'turtle', 'peace', 'sdgs'],
+    'ecology':                ['animal-welfare', 'sdgs', 'esg', 'geology', 'turtle'],
+    'geology':                ['ecology', 'turtle', 'urayasu', 'history', 'space'],
+    'turtle':                 ['geology', 'ecology', 'legacy', 'what-to-leave', 'history'],
+    'urayasu':                ['hyoutanjima', 'realestate', 'geology', 'tourism', 'ecology'],
+    'hyoutanjima':            ['urayasu', 'dimension', 'geology', 'space', 'ecology'],
+    'space':                  ['dimension', 'geology', 'hyoutanjima', 'akashic-record', 'future'],
+    // ── 技術・設計 ──
+    'coach':                  ['chief-timeless', 'perspective', 'future', 'backcasting', 'departure'],
+    'future':                 ['vibe-coding', 'coach', 'api-transformation', 'perspective', 'chief-timeless'],
+    'perspective':            ['coach', 'chief-timeless', 'backcasting', 'philosophy', 'decision-maker'],
+    'chief-timeless':         ['coach', 'perspective', 'future', 'decision-maker', 'departure'],
+    'hands':                  ['departure', 'legacy', 'deposition', 'art', 'preserving-words'],
+    'departure':              ['legacy', 'openness', 'hands', 'no-competition', 'burn-rate-zero'],
+    'openness':               ['akashic-record', 'legacy', 'departure', 'ssdlc', 'what-is-github'],
+    'akashic-record':         ['openness', 'legacy', 'national-record', 'dimension', 'preserving-words'],
+    'legacy':                 ['openness', 'akashic-record', 'deposition', 'hands', 'backup-rule'],
+    'deposition':             ['legacy', 'uv-laminate', 'hands', 'image-clarity', '30seconds'],
+    '30seconds':              ['voice-future', 'image-clarity', 'global-niche', 'music', 'legacy'],
+    'voice-future':           ['30seconds', 'image-clarity', 'legacy', 'akashic-record', 'future'],
+    'image-clarity':          ['voice-future', '30seconds', 'deposition', 'commemorative-photo', 'uv-laminate'],
+    'what-is-github':         ['openness', 'vibe-coding', 'cloudflare-gas', 'ssdlc', 'api-transformation'],
+    'api-transformation':     ['platform', 'cloudflare-gas', 'what-is-github', 'future', 'disintermediation'],
+    'ssdlc':                  ['legacy', 'openness', 'cloudflare-gas', 'uptime', 'backup-rule'],
+    'enterprise-architecture':['organization', 'ssdlc', 'poc', 'decision-maker', 'migration'],
+    'poc':                    ['rapid-prototyping', 'enterprise-architecture', 'decision-maker', 'why-not-consulting', 'vibe-coding'],
+    'why-not-consulting':     ['poc', 'decision-maker', 'brochure-essay', 'burn-rate-zero', 'partner-boundary'],
+    'decision-maker':         ['chief-timeless', 'perspective', 'poc', 'why-not-consulting', 'enterprise-architecture'],
+    'backup-rule':            ['ssdlc', 'uptime', 'legacy', 'cloudflare-gas', 'uv-laminate'],
+    'uv-laminate':            ['deposition', 'legacy', 'image-clarity', 'backup-rule', 'hands'],
+    'uptime':                 ['cloudflare-gas', 'backup-rule', 'ssdlc', 'migration', 'api-transformation'],
+    'cloudflare-gas':         ['uptime', 'backup-rule', 'api-transformation', 'what-is-github', 'burn-rate-zero'],
+    'migration':              ['rapid-prototyping', 'cloudflare-gas', 'uptime', 'burn-rate-zero', 'ssdlc'],
+    'vibe-coding':            ['burn-rate-zero', 'rapid-prototyping', 'migration', 'future', 'what-is-github'],
+    'rapid-prototyping':      ['vibe-coding', 'burn-rate-zero', 'poc', 'migration', 'departure'],
+    // ── メタ視点 ──
+    'preserving-words':       ['why-essays', 'akashic-record', 'what-to-leave', 'hands', 'openness'],
+    'why-essays':             ['preserving-words', 'brochure-essay', 'no-competition', 'openness', 'erasure'],
+    'erasure':                ['preserving-words', 'why-essays', 'shiseikan', 'what-to-leave', 'openness']
+  };
+
   const isEnglish = document.documentElement.lang === 'en';
   const currentPath = window.location.pathname;
   const currentFile = currentPath.split('/').pop().replace('.html', '').replace('-en', '');
@@ -147,10 +265,27 @@
     ? `<br><br><a href="manifesto-en.html" style="color: var(--toki-blue, #2563EB); font-weight: 500;">Manifesto</a> · <a href="transparency-en.html" style="color: var(--amber, #D97706);">Before You Decide</a> · <a href="not-for-you-en.html" style="color: var(--amber, #D97706);">Not For Everyone</a> · <a href="trust-design-en.html" style="color: var(--amber, #D97706);">Trust Design</a> · <a href="pearl-soap.html" style="color: var(--toki-gold);">Pearl Soap</a> · <a href="100-scenes.html" style="color: var(--toki-gold);">100 Scenes</a> · <a href="usecases-en.html">Use Cases</a> · <a href="client-proposal-en.html">Timeless Consulting</a> · <a href="timeless-coach.html">Timeless Coach</a> · <a href="partnership-en.html">Partnership</a> · <a href="government-proposal-en.html">Government Proposal</a> · <a href="patronage-en.html">Patronage</a> · <a href="index-en.html">Toki Storage</a>`
     : `<br><br><a href="manifesto.html" style="color: var(--toki-blue, #2563EB); font-weight: 500;">マニフェスト</a> · <a href="transparency.html" style="color: var(--amber, #D97706);">疑ってください</a> · <a href="not-for-you.html" style="color: var(--amber, #D97706);">向いていない方へ</a> · <a href="trust-design.html" style="color: var(--amber, #D97706);">信頼設計37項目</a> · <a href="pearl-soap.html" style="color: var(--toki-gold);">Pearl Soap</a> · <a href="100-scenes.html" style="color: var(--toki-gold);">100のシーン</a> · <a href="usecases.html">ユースケース</a> · <a href="client-proposal.html">タイムレスコンサルティング</a> · <a href="timeless-coach.html">タイムレスコーチ認定</a> · <a href="partnership.html">パートナーシップ</a> · <a href="government-proposal.html">行政提案</a> · <a href="patronage.html">パトロネージ</a> · <a href="index.html">トキストレージ</a>`;
 
+  // ── Related Essays Section ──
+  function buildRelatedSection(currentId) {
+    var related = relatedMap[currentId];
+    if (!related || related.length === 0) return '';
+    var header = isEnglish ? 'Related Essays' : '関連エッセイ';
+    var relatedLinks = related.map(function(id) {
+      var essay = essays.find(function(e) { return e.id === id; });
+      if (!essay) return '';
+      var href = isEnglish ? essay.id + '-en.html' : essay.id + '.html';
+      var label = isEnglish ? essay.en : essay.ja;
+      return '<a href="' + href + '" style="font-weight: 500;">' + label + '</a>';
+    }).filter(Boolean).join(' \u00b7 ');
+    return '<span style="display:block;margin-bottom:1.5rem;padding-bottom:1rem;border-bottom:1px solid var(--border,#E2E8F0);">'
+      + '<span style="display:block;font-size:0.65rem;letter-spacing:0.12em;color:var(--toki-blue,#2563EB);margin-bottom:0.5rem;font-weight:600;">'
+      + header + '</span>' + relatedLinks + '</span>';
+  }
+
   document.addEventListener('DOMContentLoaded', function() {
     const container = document.getElementById('essay-nav-links');
     if (container) {
-      container.innerHTML = links + specialLinks;
+      container.innerHTML = buildRelatedSection(currentFile) + links + specialLinks;
     }
   });
 })();
