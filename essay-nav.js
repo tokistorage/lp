@@ -118,6 +118,7 @@
     { id: 'uv-laminate', ja: 'UVラミネート', en: 'UV Laminate' },
     { id: 'uptime', ja: '稼働率と外部依存', en: 'Uptime & Dependencies' },
     { id: 'cloudflare-gas', ja: 'CloudflareとGAS', en: 'Cloudflare & GAS' },
+    { id: 'migration', ja: 'マイグレーションの設計', en: 'Designing Migration' },
 
     // ── メタ視点 ──
     { id: 'preserving-words', ja: 'ことばを残す', en: 'Preserving Words' },

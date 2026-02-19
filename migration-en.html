@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" type="image/png" sizes="32x32" href="asset/favicon-32.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="asset/apple-touch-icon.png">
+    <title>Designing Migration | TokiStorage</title>
+    <meta name="robots" content="index, follow">
+    <meta name="description" content="'We'll deal with it when we scale' is a promise that's never kept. On the difference between ad-hoc firefighting and designing migration paths, through the lens of TokiQR's operational architecture.">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Shippori+Mincho:wght@400;500;600;700&family=Zen+Kaku+Gothic+New:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --toki-blue: #2563EB;
+            --toki-blue-dark: #1D4ED8;
+            --toki-blue-pale: #EFF6FF;
+            --accent-blue: #3B82F6;
+            --bg-white: #FFFFFF;
+            --text-primary: #1E293B;
+            --text-secondary: #475569;
+            --text-muted: #94A3B8;
+            --border: #E2E8F0;
+            --font-display: 'Shippori Mincho', serif;
+            --font-body: 'Zen Kaku Gothic New', sans-serif;
+        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        html { scroll-behavior: smooth; }
+        body { font-family: var(--font-body); font-weight: 400; background: var(--bg-white); color: var(--text-primary); line-height: 2; font-size: 16px; }
+
+        .article-nav { position: fixed; top: 0; left: 0; right: 0; z-index: 1000; background: rgba(255,255,255,0.95); backdrop-filter: blur(12px); border-bottom: 1px solid var(--border); padding: 0.6rem 1.2rem; display: flex; align-items: center; justify-content: space-between; gap: 1rem; }
+        .article-nav .nav-brand { font-family: var(--font-display); font-size: 0.9rem; font-weight: 600; color: var(--toki-blue); text-decoration: none; white-space: nowrap; }
+        .article-nav .nav-brand::before { content: ''; display: inline-block; width: 20px; height: 20px; background: url('asset/tokistorage-icon-512.png') no-repeat center / contain; vertical-align: -3px; margin-right: 5px; }
+        .article-nav .nav-right { display: flex; align-items: center; gap: 1rem; }
+        .article-nav .nav-label { font-size: 0.6rem; color: var(--text-muted); letter-spacing: 0.08em; }
+        .article-nav .lang-switch { font-size: 0.75rem; color: var(--toki-blue); text-decoration: none; padding: 0.3rem 0.6rem; border: 1px solid var(--toki-blue); border-radius: 4px; }
+        .article-nav .lang-switch:hover { background: var(--toki-blue); color: #fff; }
+
+        .article-container { max-width: 680px; margin: 0 auto; padding: 7rem 2rem 4rem; }
+        .article-header { margin-bottom: 3rem; padding-bottom: 2rem; border-bottom: 1px solid var(--border); }
+        .article-category { font-size: 0.7rem; color: var(--toki-blue); letter-spacing: 0.15em; margin-bottom: 1rem; }
+        .article-header h1 { font-family: var(--font-display); font-size: 1.8rem; font-weight: 700; line-height: 1.5; margin-bottom: 1.5rem; }
+        .article-subtitle { font-size: 0.95rem; color: var(--text-secondary); line-height: 1.9; }
+
+        .article-content h2 { font-family: var(--font-display); font-size: 1.3rem; font-weight: 600; margin: 3rem 0 1.5rem; padding-bottom: 0.5rem; border-bottom: 2px solid var(--toki-blue-pale); }
+        .article-content h3 { font-family: var(--font-display); font-size: 1.1rem; font-weight: 600; margin: 2rem 0 1rem; color: var(--toki-blue-dark); }
+        .article-content p { margin-bottom: 1.5rem; text-align: justify; }
+        .article-content blockquote { border-left: 3px solid var(--toki-blue); padding-left: 1.5rem; margin: 2rem 0; font-family: var(--font-display); color: var(--text-secondary); }
+        .article-content ul { margin: 1.5rem 0; padding-left: 1.5rem; }
+        .article-content li { margin-bottom: 0.75rem; }
+
+        .core-message { background: var(--toki-blue-pale); border-left: 4px solid var(--toki-blue); padding: 1.5rem; margin: 2rem 0; font-size: 0.95rem; line-height: 1.8; }
+        .key-point { background: linear-gradient(135deg, var(--toki-blue-pale) 0%, #fff 100%); border: 1px solid var(--accent-blue); border-radius: 8px; padding: 1.5rem; margin: 2rem 0; text-align: center; }
+        .key-point p { font-family: var(--font-display); font-size: 1.1rem; color: var(--toki-blue-dark); margin: 0; }
+
+        .article-footer { margin-top: 4rem; padding-top: 2rem; border-top: 1px solid var(--border); text-align: center; }
+        .article-footer p { font-size: 0.8rem; color: var(--text-muted); margin-bottom: 1rem; }
+        .article-footer a { color: var(--toki-blue); text-decoration: none; }
+        .article-footer a:hover { text-decoration: underline; }
+
+        @media (max-width: 768px) {
+            .article-container { padding: 6rem 1.2rem 3rem; }
+            .article-header h1 { font-size: 1.5rem; }
+            .article-nav .nav-label { display: none; }
+        }
+        @media print { .article-nav { display: none; } .article-container { padding-top: 2rem; } }
+    </style>
+    <link rel="stylesheet" href="contact-form.css">
+    <meta property="og:image" content="https://tokistorage.github.io/lp/asset/tokistorage-icon-512.png">
+    <meta property="og:image:width" content="512">
+    <meta property="og:image:height" content="512">
+</head>
+<body>
+
+<nav class="article-nav">
+    <a href="index-en.html" class="nav-brand">TokiStorage</a>
+    <div class="nav-right">
+        <span class="nav-label">Technology / Design</span>
+        <a href="migration.html" class="lang-switch">JA</a>
+    </div>
+</nav>
+
+<main class="article-container">
+
+    <header class="article-header">
+        <p class="article-category">ESSAY &mdash; Technical Design &amp; Operational Philosophy</p>
+        <h1>Designing Migration<br><span style="font-size: 0.6em; font-weight: 400; color: var(--text-secondary);">&mdash;&mdash; Why "We'll deal with it when we scale" never gets done</span></h1>
+        <p class="article-subtitle">
+            Ad-hoc fixes and migration design look the same on the surface.<br>
+            Both make the decision to "not do it now."<br>
+            But one is forgotten, while the other takes half a day when the time comes.
+        </p>
+    </header>
+
+    <article class="article-content">
+
+        <div class="core-message">
+            <strong>The point of this essay:</strong> The essence of scaling is not building a massive system upfront. It is placing small seams in the right places so that when the phase changes, a minimal change carries you to the next stage.
+        </div>
+
+        <h2>1. The Lie of "We'll Deal With It When We Scale"</h2>
+
+        <p>There is a phrase heard more often than any other in software development when deferring work: "We'll deal with it when we scale."</p>
+
+        <p>The moment these words are spoken, it is almost certain that the work will never be done.</p>
+
+        <p>The reason is simple. When you do scale, you are occupied with entirely different problems that come with scale. User support, bug fixes, feature requests. "That technical debt we deferred" sinks to the bottom of the priority list. And when the limit is truly reached, an ad-hoc patch is applied as an emergency measure.</p>
+
+        <p>This is the true nature of "ad-hoc." Deferring itself is not the problem. The problem is not designing a "way back" to the deferred issue.</p>
+
+        <h2>2. The Difference Between Ad-Hoc and Migration Design</h2>
+
+        <p>Ad-hoc fixes and migration design appear identical on the surface. Both make the decision to "not do it now."</p>
+
+        <p>The difference is a single point.</p>
+
+        <blockquote>
+            Migration design makes explicit "what needs to change when the time comes," even though "we're not doing it now."
+        </blockquote>
+
+        <p>Specifically, it means the following conditions are met:</p>
+
+        <ul>
+            <li><strong>The trigger</strong> is defined &mdash; what event initiates the migration</li>
+            <li><strong>The change surface</strong> is localized &mdash; what exactly needs to change</li>
+            <li><strong>The procedure</strong> is documented &mdash; how to execute the migration</li>
+        </ul>
+
+        <p>When these three are in place, "not doing it now" is not negligence but a design decision.</p>
+
+        <h2>3. Consolidating Into a Single Function</h2>
+
+        <p>TokiQR's operations send emails through Google Apps Script (GAS). Gmail's free tier allows 100 emails per day. For the early stages of a solo operation, this is sufficient, but as orders grow, the limit will be reached.</p>
+
+        <p>In the future, migrating to Amazon SES (Simple Email Service) would provide 62,000 free emails per month. But there is no need to integrate SES now. Orders are still few, and the setup &mdash; AWS account, domain verification &mdash; can wait until it's needed.</p>
+
+        <p>So what was done? All email sending was consolidated into a single function.</p>
+
+        <blockquote>
+            function sendEmail(recipient, subject, body, options) {<br>
+            &nbsp;&nbsp;MailApp.sendEmail(recipient, subject, body, options || {});<br>
+            }
+        </blockquote>
+
+        <p>Fourteen direct calls to MailApp.sendEmail throughout the codebase were replaced to go through this function. When it's time to migrate to SES, only the internals of this one function need to change.</p>
+
+        <p>This is not over-engineering. It's adding a single function. But that single function transforms the future migration cost from "rewriting and testing 14 call sites" to "rewriting and testing 1 call site."</p>
+
+        <h2>4. A Three-Phase Roadmap</h2>
+
+        <p>The same principle governs not just email sending but TokiQR's entire operational design.</p>
+
+        <h3>Phase 1: Build it yourself (current)</h3>
+        <p>Printing, UV lamination, packaging, shipping. All done by one person. Operations are fully contained within GAS and Gmail, with zero infrastructure cost. This setup handles up to roughly 50 orders per day.</p>
+
+        <h3>Phase 2: Domestic outsourcing</h3>
+        <p>Beyond 50 orders per day, laminate production is delegated to a domestic print service. Order data flows from GAS to the vendor, who handles printing, lamination, packaging, and shipping end to end. TokiStorage becomes a fully digital operation with zero inventory and zero manual labor. Email sending migrates to SES.</p>
+
+        <h3>Phase 3: International expansion</h3>
+        <p>As international orders grow, production is routed to local vendors based on the customer's country. The order data already contains country information, so only routing logic needs to be added.</p>
+
+        <p>The code changes required at each phase transition are minimal. Phase 2 requires rewriting the sendEmail function and adding vendor integration. Phase 3 requires adding country-based routing. Neither breaks existing data structures.</p>
+
+        <h2>5. The Boundary With Over-Engineering</h2>
+
+        <p>Migration design carries the temptation of over-engineering. Building abstractions "for the future" that are never used, anticipating every possible scenario.</p>
+
+        <p>Where is the boundary?</p>
+
+        <blockquote>
+            Add nothing extra to the code that works today.<br>
+            But separate concerns so that future changes happen in one place.
+        </blockquote>
+
+        <p>The sendEmail function, right now, simply calls MailApp.sendEmail. The overhead as a wrapper is effectively zero. But it localizes the future point of change to a single location.</p>
+
+        <p>This is the watershed between "migration design" and "over-engineering." It has zero impact on current behavior while reducing future migration cost. What you add is structure, not functionality.</p>
+
+        <h2>6. Design With Seams</h2>
+
+        <p>In architecture, there is a concept called an "expansion joint." It is a seam built into a structure so that when an earthquake or temperature change causes the building to expand or contract, the whole structure doesn't crack. In normal times, it does nothing. But when force is applied, that seam protects the building.</p>
+
+        <p>Migration design in software works the same way. Function abstraction, data structure separation, configuration externalization. These do nothing in peacetime. But when the phase changes, they absorb the shock of change.</p>
+
+        <div class="key-point">
+            <p>Migration is not about building a massive system in advance.<br>It is about placing small seams in the right places.</p>
+        </div>
+
+        <h2>7. The True Cost of Being Ad-Hoc</h2>
+
+        <p>The cost of ad-hoc fixes is not just technical debt.</p>
+
+        <p>The true cost is the degradation of judgment. As emergency responses pile up, the team learns that "it'll be another stopgap anyway." Trust in design erodes, and the option to "build it properly" becomes psychologically distant.</p>
+
+        <p>Conversely, in organizations where migration paths are designed, there is no anxiety in the decision to "not do it now." The procedure for when the time comes is visible, so deferral can be done with confidence. Deferral becomes priority management, not guilt.</p>
+
+        <p>At TokiQR, the migration procedure is documented in gas/scaling-roadmap.md. The Lambda function code, IAM role configuration, and GAS-side rewrite instructions. Everything is written down. That is why we can say "not now." Because we know exactly what to do when the time comes.</p>
+
+        <h2>8. Migration in Solo Development</h2>
+
+        <p>This design principle is not just for large team development. It is, in fact, more essential for solo developers.</p>
+
+        <p>On a team, someone might remember the technical debt. But in solo development, you can't even recall what you were thinking three months ago. The "you" who said "we'll deal with it when we scale" no longer exists.</p>
+
+        <p>That is precisely why migration paths must be left close to the code. Write the procedure. State the trigger conditions explicitly. Your future self is a stranger. Lay the path now so that stranger can work without hesitation.</p>
+
+        <div class="key-point">
+            <p>Being ad-hoc is not the absence of a path.<br>It is forgetting that the path ever existed.</p>
+        </div>
+
+    </article>
+
+    <footer class="article-footer">
+        <p id="essay-nav-links"></p>
+        <p style="margin-top: 2rem; font-size: 0.75rem;">&copy; 2026 TokiStorage</p>
+    </footer>
+
+</main>
+
+<script src="contact-form.js"></script>
+<script src="essay-nav.js?v=20260219"></script>
+<script src="tracker.js"></script>
+</body>
+</html>
