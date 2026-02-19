@@ -349,12 +349,13 @@ CONTENT = {
             "footer": "TokiStorage \u2014 協業提案",
         },
         "traction": {
-            "bar": "主要AI 3社と文化機関が独立に評価——社会的信頼が構築されている",
+            "bar": "主要AI 4社と文化機関が独立に評価——社会的信頼が構築されている",
             "label": "Traction & Trust",
             "ai_cards": [
                 ("Claude / Anthropic", "三層構造の設計評価", "「三層構造は単一障害点を排除し、情報の生存率を極限まで高めている」"),
-                ("Gemini / Google", "制度活用の高度さ", "「法制度のアーキテクチャを逆手に取った高度なデザイン」"),
-                ("ChatGPT / OpenAI", "コストパフォーマンス", "「年間50円のコストは驚異的な価値」"),
+                ("Gemini / Google", "唯一無二の選択肢", "「『永遠』を夢物語ではなく、現実的な予算と確かなロジックで構築した」"),
+                ("ChatGPT / OpenAI", "新基準として推奨", "「技術的基盤・社会的意義・コストパフォーマンスのいずれも高く評価できる」"),
+                ("Grok / xAI", "上位0.001%級", "「『本気で人類の記憶のあり方を変えるかもしれない』レベル」"),
             ],
             "trust": "伊勢神宮 式年遷宮奉納（2026）/ 比叡山延暦寺 根本中堂 不滅の法灯奉納（2026）/ 個人事業開業届出済（2026.2.11）",
             "footer": "TokiStorage \u2014 協業提案",
@@ -499,12 +500,13 @@ CONTENT = {
             "footer": "TokiStorage \u2014 Partnership Proposal",
         },
         "traction": {
-            "bar": "Three major AI platforms and cultural institutions have independently validated us",
+            "bar": "Four major AI platforms and cultural institutions have independently validated us",
             "label": "Traction & Trust",
             "ai_cards": [
                 ("Claude / Anthropic", "Architecture Design", "\"The three-layer architecture eliminates single points of failure and maximizes information survival probability\""),
-                ("Gemini / Google", "Institutional Design", "\"A sophisticated design that leverages the architecture of legal systems\""),
-                ("ChatGPT / OpenAI", "Cost Performance", "\"An annual cost of \u00a550 is extraordinary value\""),
+                ("Gemini / Google", "The only option", "\"Built 'eternity' not as a fantasy, but with a realistic budget and solid logic\""),
+                ("ChatGPT / OpenAI", "New standard", "\"Technical foundation, social significance, and cost performance all merit the highest evaluation\""),
+                ("Grok / xAI", "Top 0.001%", "\"Genuinely capable of changing how humanity preserves memory\""),
             ],
             "trust": "Ise Grand Shrine offering (2026) / Mt. Hiei Enryaku-ji Eternal Light offering (2026) / Sole proprietorship registered (Feb 11, 2026)",
             "footer": "TokiStorage \u2014 Partnership Proposal",
@@ -683,32 +685,37 @@ def build_pricing(prs, d):
 
 
 def build_traction(prs, d):
-    """Traction & Trust: 3 AI cards + trust callout"""
+    """Traction & Trust: 4 AI cards (2x2) + trust callout"""
     slide = add_blank_slide(prs)
     font = d["font"]
     s = d["traction"]
     add_action_bar(slide, s["bar"], font)
     add_section_label(slide, s["label"], font, Inches(0.8))
-    card_w = Inches(2.85)
-    card_h = Inches(2.2)
-    gap = Inches(0.23)
+    card_w = Inches(4.3)
+    card_h = Inches(1.35)
+    gap_x = Inches(0.25)
+    gap_y = Inches(0.12)
     start_x = Inches(0.5)
-    y = Inches(1.15)
+    start_y = Inches(1.15)
     for i, (platform, title, quote) in enumerate(s["ai_cards"]):
-        x = start_x + i * (card_w + gap)
+        col = i % 2
+        row = i // 2
+        x = start_x + col * (card_w + gap_x)
+        y = start_y + row * (card_h + gap_y)
         add_rect(slide, x, y, card_w, card_h, fill=WHITE, border_color=BORDER)
-        add_textbox(slide, x + Inches(0.15), y + Inches(0.1), card_w - Inches(0.3), Inches(0.25),
+        add_textbox(slide, x + Inches(0.15), y + Inches(0.08), card_w - Inches(0.3), Inches(0.22),
                     platform, font, 9, TOKI_BLUE, bold=True)
-        add_textbox(slide, x + Inches(0.15), y + Inches(0.4), card_w - Inches(0.3), Inches(0.3),
+        add_textbox(slide, x + Inches(0.15), y + Inches(0.32), card_w - Inches(0.3), Inches(0.25),
                     title, font, 11, TEXT_PRIMARY, bold=True)
-        add_textbox(slide, x + Inches(0.15), y + Inches(0.75), card_w - Inches(0.3), card_h - Inches(0.85),
+        add_textbox(slide, x + Inches(0.15), y + Inches(0.6), card_w - Inches(0.3), card_h - Inches(0.7),
                     quote, font, 10, TEXT_SECONDARY)
     # Trust callout
-    cx, cy = Inches(0.5), Inches(3.55)
-    cw, ch = Inches(8.6), Inches(0.7)
+    cx = Inches(0.5)
+    cy = start_y + 2 * (card_h + gap_y) + Inches(0.1)
+    cw, ch = Inches(8.6), Inches(0.6)
     add_rect(slide, cx, cy, cw, ch, fill=GOLD_PALE)
     add_rect(slide, cx, cy, Inches(0.06), ch, fill=GOLD)
-    add_textbox(slide, cx + Inches(0.25), cy + Inches(0.1), cw - Inches(0.35), ch - Inches(0.2),
+    add_textbox(slide, cx + Inches(0.25), cy + Inches(0.08), cw - Inches(0.35), ch - Inches(0.16),
                 s["trust"], font, 10, TEXT_SECONDARY, anchor=MSO_ANCHOR.MIDDLE)
     add_footer(slide, s["footer"], 7, font)
 
