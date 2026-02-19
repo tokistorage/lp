@@ -69,6 +69,7 @@
     { id: 'made-to-order', ja: '受注生産の境界', en: 'The Boundary of Made-to-Order' },
     { id: 'post-nomad', ja: 'ポストノマド', en: 'Post-Nomad' },
     { id: 'disintermediation', ja: '流通構造の変容', en: 'Disintermediation' },
+    { id: 'walking-partner', ja: '歩くパートナー', en: 'Walking Partner' },
 
     // ── 文化・社会活動 ──
     { id: 'education', ja: '教育', en: 'Education' },
