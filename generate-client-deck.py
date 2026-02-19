@@ -290,13 +290,10 @@ CONTENT = {
             "footer": "Timeless Consulting",
         },
         "pricing": {
-            "bar": "体験プラン5,000円から——あなたに合ったかたちで始められます",
+            "bar": "対話を通じて、より深い存在証明を。タイムレスコンサルティングの料金体系",
             "label": "Investment Guide",
+            "note": "TokiQR（無料）・UVラミネートQR（¥5,000）・石英ガラス（¥50,000）はセルフサービスでもご利用いただけます。",
             "items": [
-                (TOKI_BLUE_PALE, "T", "体験プラン — ¥5,000（税込）",
-                 "三層保管をA4ラミネートで体験。声のQRコード→ラミネート＋NDL納本＋GitHub格納。まずはここから。"),
-                (TOKI_BLUE_PALE, "Q", "個人プラン — ¥50,000（税込）",
-                 "石英ガラスに刻印。年あたり50円の存在証明。1000年耐久（理論値）。"),
                 (GOLD_PALE, "F", "三世代プラン — ¥550,000（税込・推奨）",
                  "家族3名分＋佐渡島での現地刻印体験。お墓・仏壇の代替として。最も選ばれるプラン。"),
                 (GREEN_PALE, "V", "タイムレス変容 — ¥5,550,000（税込）",
@@ -415,13 +412,10 @@ CONTENT = {
             "footer": "Timeless Consulting",
         },
         "pricing": {
-            "bar": "Starting from \u00a55,000 ($33) \u2014 begin in whatever way feels right for you",
+            "bar": "A deeper proof of existence through dialogue. Timeless Consulting pricing.",
             "label": "Investment Guide",
+            "note": "TokiQR (free), UV Laminate QR (\u00a55,000), and Quartz Glass (\u00a550,000) are also available as self-service.",
             "items": [
-                (TOKI_BLUE_PALE, "T", "Trial Plan \u2014 \u00a55,000 ($33)",
-                 "Experience three-layer storage with A4 laminate. TokiQR \u2192 laminate + NDL deposit + GitHub. Start here."),
-                (TOKI_BLUE_PALE, "Q", "Individual Plan \u2014 \u00a550,000 ($330)",
-                 "Inscribed on quartz glass. \u00a550 per year for proof of existence. 1,000-year durability (theoretical)."),
                 (GOLD_PALE, "F", "Three-Generation \u2014 \u00a5550,000 ($3,600, recommended)",
                  "Three family members + on-site inscription on Sado Island. An alternative to traditional graves."),
                 (GREEN_PALE, "V", "Timeless Transformation \u2014 \u00a55,550,000 ($36,500)",
@@ -614,16 +608,27 @@ def build_slide6(prs, d):
 
 
 def build_pricing(prs, d):
-    """Investment Guide: 4 items"""
+    """Investment Guide"""
     slide = add_blank_slide(prs)
     font = d["font"]
     s = d["pricing"]
     add_action_bar(slide, s["bar"], font)
     add_section_label(slide, s["label"], font, Inches(0.8))
+    # Self-service note
+    note_y = Inches(1.15)
+    note = s.get("note", "")
+    if note:
+        nx = Inches(0.5)
+        nw = Inches(8.6)
+        nh = Inches(0.55)
+        add_rect(slide, nx, note_y, nw, nh, fill=TOKI_BLUE_PALE)
+        add_rect(slide, nx, note_y, Inches(0.06), nh, fill=TOKI_BLUE)
+        add_textbox(slide, nx + Inches(0.25), note_y + Inches(0.05), nw - Inches(0.35), nh - Inches(0.1),
+                    note, font, 10, TEXT_SECONDARY, anchor=MSO_ANCHOR.MIDDLE)
     item_w = Inches(8.6)
-    item_h = Inches(0.88)
-    gap = Inches(0.1)
-    start_y = Inches(1.2)
+    item_h = Inches(1.1)
+    gap = Inches(0.15)
+    start_y = Inches(1.85)
     x = Inches(0.5)
     for i, (bg, icon, title, body) in enumerate(s["items"]):
         y = start_y + i * (item_h + gap)
