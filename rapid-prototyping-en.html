@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" type="image/png" sizes="32x32" href="asset/favicon-32.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="asset/apple-touch-icon.png">
+    <title>Rapid Prototyping | TokiStorage</title>
+    <meta name="robots" content="index, follow">
+    <meta name="description" content="When the boundary between prototype and production disappears, what happens to development? In a world where trials become products, what is lost and what is gained.">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Shippori+Mincho:wght@400;500;600;700&family=Zen+Kaku+Gothic+New:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --toki-blue: #2563EB;
+            --toki-blue-dark: #1D4ED8;
+            --toki-blue-pale: #EFF6FF;
+            --accent-blue: #3B82F6;
+            --bg-white: #FFFFFF;
+            --text-primary: #1E293B;
+            --text-secondary: #475569;
+            --text-muted: #94A3B8;
+            --border: #E2E8F0;
+            --font-display: 'Shippori Mincho', serif;
+            --font-body: 'Zen Kaku Gothic New', sans-serif;
+        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        html { scroll-behavior: smooth; }
+        body { font-family: var(--font-body); font-weight: 400; background: var(--bg-white); color: var(--text-primary); line-height: 2; font-size: 16px; }
+
+        .article-nav { position: fixed; top: 0; left: 0; right: 0; z-index: 1000; background: rgba(255,255,255,0.95); backdrop-filter: blur(12px); border-bottom: 1px solid var(--border); padding: 0.6rem 1.2rem; display: flex; align-items: center; justify-content: space-between; gap: 1rem; }
+        .article-nav .nav-brand { font-family: var(--font-display); font-size: 0.9rem; font-weight: 600; color: var(--toki-blue); text-decoration: none; white-space: nowrap; }
+        .article-nav .nav-brand::before { content: ''; display: inline-block; width: 20px; height: 20px; background: url('asset/tokistorage-icon-512.png') no-repeat center / contain; vertical-align: -3px; margin-right: 5px; }
+        .article-nav .nav-right { display: flex; align-items: center; gap: 1rem; }
+        .article-nav .nav-label { font-size: 0.6rem; color: var(--text-muted); letter-spacing: 0.08em; }
+        .article-nav .lang-switch { font-size: 0.75rem; color: var(--toki-blue); text-decoration: none; padding: 0.3rem 0.6rem; border: 1px solid var(--toki-blue); border-radius: 4px; }
+        .article-nav .lang-switch:hover { background: var(--toki-blue); color: #fff; }
+
+        .article-container { max-width: 680px; margin: 0 auto; padding: 7rem 2rem 4rem; }
+        .article-header { margin-bottom: 3rem; padding-bottom: 2rem; border-bottom: 1px solid var(--border); }
+        .article-category { font-size: 0.7rem; color: var(--toki-blue); letter-spacing: 0.15em; margin-bottom: 1rem; }
+        .article-header h1 { font-family: var(--font-display); font-size: 1.8rem; font-weight: 700; line-height: 1.5; margin-bottom: 1.5rem; }
+        .article-subtitle { font-size: 0.95rem; color: var(--text-secondary); line-height: 1.9; }
+
+        .article-content h2 { font-family: var(--font-display); font-size: 1.3rem; font-weight: 600; margin: 3rem 0 1.5rem; padding-bottom: 0.5rem; border-bottom: 2px solid var(--toki-blue-pale); }
+        .article-content h3 { font-family: var(--font-display); font-size: 1.1rem; font-weight: 600; margin: 2rem 0 1rem; color: var(--toki-blue-dark); }
+        .article-content p { margin-bottom: 1.5rem; text-align: justify; }
+        .article-content blockquote { border-left: 3px solid var(--toki-blue); padding-left: 1.5rem; margin: 2rem 0; font-family: var(--font-display); color: var(--text-secondary); }
+        .article-content ul { margin: 1.5rem 0; padding-left: 1.5rem; }
+        .article-content li { margin-bottom: 0.75rem; }
+
+        .core-message { background: var(--toki-blue-pale); border-left: 4px solid var(--toki-blue); padding: 1.5rem; margin: 2rem 0; font-size: 0.95rem; line-height: 1.8; }
+        .key-point { background: linear-gradient(135deg, var(--toki-blue-pale) 0%, #fff 100%); border: 1px solid var(--accent-blue); border-radius: 8px; padding: 1.5rem; margin: 2rem 0; text-align: center; }
+        .key-point p { font-family: var(--font-display); font-size: 1.1rem; color: var(--toki-blue-dark); margin: 0; }
+
+        .article-footer { margin-top: 4rem; padding-top: 2rem; border-top: 1px solid var(--border); text-align: center; }
+        .article-footer p { font-size: 0.8rem; color: var(--text-muted); margin-bottom: 1rem; }
+        .article-footer a { color: var(--toki-blue); text-decoration: none; }
+        .article-footer a:hover { text-decoration: underline; }
+
+        @media (max-width: 768px) {
+            .article-container { padding: 6rem 1.2rem 3rem; }
+            .article-header h1 { font-size: 1.5rem; }
+            .article-nav .nav-label { display: none; }
+        }
+        @media print { .article-nav { display: none; } .article-container { padding-top: 2rem; } }
+    </style>
+    <link rel="stylesheet" href="contact-form.css">
+    <meta property="og:image" content="https://tokistorage.github.io/lp/asset/tokistorage-icon-512.png">
+    <meta property="og:image:width" content="512">
+    <meta property="og:image:height" content="512">
+</head>
+<body>
+
+<nav class="article-nav">
+    <a href="index-en.html" class="nav-brand">TokiStorage</a>
+    <div class="nav-right">
+        <span class="nav-label">Technology / Design</span>
+        <a href="rapid-prototyping.html" class="lang-switch">JA</a>
+    </div>
+</nav>
+
+<main class="article-container">
+
+    <header class="article-header">
+        <p class="article-category">ESSAY &mdash; Development Methods &amp; Product Design</p>
+        <h1>Rapid Prototyping<br><span style="font-size: 0.6em; font-weight: 400; color: var(--text-secondary);">&mdash;&mdash; When the boundary between prototype and production disappears</span></h1>
+        <p class="article-subtitle">
+            Software development has always had two worlds.<br>
+            One for trying things. One for shipping things.<br>
+            When the boundary between them vanishes, the meaning of building changes.
+        </p>
+    </header>
+
+    <article class="article-content">
+
+        <div class="core-message">
+            <strong>The point of this essay:</strong> When the cost of rewriting a prototype into production code reaches zero, the prototype becomes the product. What matters is not speed. It is that every trial accumulates as a permanent asset.
+        </div>
+
+        <h2>1. Two Worlds</h2>
+
+        <p>For a long time, software development had an unspoken boundary. Prototype and production.</p>
+
+        <p>The prototype was the world of trying. It just needed to work. The code could be messy. It was disposable, built only to answer: "Is this idea viable?"</p>
+
+        <p>Production was the world of shipping. You wrote error handling. You wrote tests. You wrote documentation. The idea validated in the prototype was rebuilt &mdash; "properly" &mdash; from scratch.</p>
+
+        <p>This two-phase process carries structural waste. Code written for the prototype is discarded, and the same functionality is reimplemented for production. One week for validation, two weeks for reimplementation. Of the three-week total, one week's work vanishes.</p>
+
+        <h2>2. The Conditions for the Boundary to Disappear</h2>
+
+        <p>If the prototype could become production directly, that one week would not vanish. It would accumulate.</p>
+
+        <p>This "disappearance of the boundary" occurs when three conditions are met simultaneously.</p>
+
+        <ul>
+            <li><strong>Identical infrastructure</strong> &mdash; the environment for trying and the environment for shipping are the same</li>
+            <li><strong>Near-zero modification cost</strong> &mdash; the cost of elevating prototype quality to production standards is negligible</li>
+            <li><strong>Instant deployment</strong> &mdash; changes are reflected immediately</li>
+        </ul>
+
+        <p>At TokiStorage, all three hold true.</p>
+
+        <p>GitHub Pages makes the development environment and production environment identical. Merge to the main branch, and that is production. Google Apps Script works the same way &mdash; save, and it is deployed. And through vibe coding, the cost of modifying code approaches zero.</p>
+
+        <h2>3. Non-Disposable Prototypes</h2>
+
+        <p>The problem with traditional prototyping was the assumption that what you build will be thrown away.</p>
+
+        <p>Code built to be discarded gives permission to compromise on quality. "We'll rewrite it anyway" justifies skipping error handling, hardcoding constants, and omitting documentation.</p>
+
+        <p>But in a world without the boundary, prototypes are not discarded. The very first line of code may end up in production. So a new mode emerges: "prototype at production quality."</p>
+
+        <p>This might sound contradictory. Surely the speed of prototyping and the quality of production are incompatible.</p>
+
+        <p>Vibe coding resolves this contradiction. Say "build this" to an AI, and code with error handling, I18N support, and production-grade structure appears from the start. You get the speed of a prototype with the quality of production.</p>
+
+        <h2>4. Accumulating Trials</h2>
+
+        <p>The true value of rapid prototyping is not speed. It is accumulation.</p>
+
+        <p>In TokiStorage's development, a single remark &mdash; "I'm worried about the email sending limit" &mdash; expanded into all of the following within a single conversation.</p>
+
+        <ul>
+            <li>Consolidation of admin emails (sendDailyReport function)</li>
+            <li>Centralization into a sendEmail helper function</li>
+            <li>SES migration roadmap document</li>
+            <li>Lambda relay function code</li>
+            <li>Complete scaling roadmap design</li>
+            <li>The "Designing Migration" essay</li>
+        </ul>
+
+        <p>All of these were generated, reviewed, committed, and deployed to production within a few hours of conversation. Not a single item was prototyped first and then rewritten. The initial output, after review, became production directly.</p>
+
+        <p>Speed is a byproduct. The essence is that every trial adds to the production asset base.</p>
+
+        <h2>5. Building at the Speed of Thought</h2>
+
+        <p>The ultimate form of rapid prototyping is building at the speed of thought.</p>
+
+        <p>The moment you think "the delivery timeline of 14 business days on the commercial transactions page isn't realistic," the Japanese and English text is updated. The moment you think "maybe the payment reminder should be 7 days instead," the GAS constant and the tokutei.html text change simultaneously. The moment you think "this could be an essay," bilingual essays are generated and a pull request is created.</p>
+
+        <p>The distance from thought to deployment approaches zero. In conventional prototyping, you pass through a pipeline: idea, design, implementation, testing, deployment. But with vibe coding plus GitHub Pages plus GAS, the pipeline compresses to: idea, deployment.</p>
+
+        <p>This compression means more than being able to try things quickly. It means that what you think of immediately becomes a production asset.</p>
+
+        <h2>6. Freedom from the Prototype Curse</h2>
+
+        <p>Software development has a "prototype curse."</p>
+
+        <p>A quickly-built prototype is well received, and the decision is made: "let's just use this." But the prototype was built with compromised quality. As it continues to serve as production, those compromises accumulate as technical debt. Eventually, the system becomes immovable.</p>
+
+        <p>This curse exists because there is a quality gap between prototype and production.</p>
+
+        <p>With vibe coding, AI generates production-quality code from the start. Code that began moving at prototype speed already has error handling, internationalization support, and proper structure. So there is no guilt in "continuing to use the prototype as-is." It was production from the beginning.</p>
+
+        <h2>7. The Integration of Three Concepts</h2>
+
+        <p>Rapid prototyping, vibe coding, and burn rate zero. These three are not independent concepts. Each presupposes and amplifies the others.</p>
+
+        <blockquote>
+            Burn rate zero eliminates the constraint of time.<br>
+            Vibe coding eliminates the constraint of implementation.<br>
+            Rapid prototyping eliminates the boundary between trial and production.<br>
+            When all three are in place, "if you think of it, it is a product."
+        </blockquote>
+
+        <p>TokiStorage is the product of this integration. With zero fixed costs and no time pressure, building through dialogue with AI, trials accumulate directly as production assets. One person's judgment alone determines the shape of the product.</p>
+
+        <div class="key-point">
+            <p>The goal is not to build fast.<br>The goal is that everything you try remains as it is.</p>
+        </div>
+
+    </article>
+
+    <footer class="article-footer">
+        <p id="essay-nav-links"></p>
+        <p style="margin-top: 2rem; font-size: 0.75rem;">&copy; 2026 TokiStorage</p>
+    </footer>
+
+</main>
+
+<script src="contact-form.js"></script>
+<script src="essay-nav.js?v=20260219"></script>
+<script src="tracker.js"></script>
+</body>
+</html>
