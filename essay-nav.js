@@ -284,10 +284,105 @@
       + header + '</span>' + relatedLinks + '</span>';
   }
 
+  // ── Share Buttons ──
+  var xIcon = '<svg viewBox="0 0 24 24" width="14" height="14" fill="currentColor"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>';
+  var copyIcon = '<svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 01-2-2V4a2 2 0 012-2h9a2 2 0 012 2v1"/></svg>';
+
+  function tweetUrl(text, url) {
+    var maxText = 280 - 24; // URL takes ~23 chars on X
+    if (text.length > maxText) text = text.substring(0, maxText - 1) + '\u2026';
+    return 'https://twitter.com/intent/tweet?text=' + encodeURIComponent(text) + '&url=' + encodeURIComponent(url);
+  }
+
+  function getPageTitle() {
+    var h1 = document.querySelector('.article-header h1');
+    if (!h1) return document.title;
+    return h1.childNodes[0].textContent.trim();
+  }
+
+  function getCleanText(el) {
+    return el.textContent.replace(/\s+/g, ' ').trim();
+  }
+
+  function injectShareStyles() {
+    var style = document.createElement('style');
+    style.textContent = [
+      '.share-bar{display:flex;align-items:center;gap:0.5rem;margin:2.5rem 0 0;padding:1rem 0;border-top:1px solid var(--border,#E2E8F0);}',
+      '.share-bar-label{font-size:0.7rem;color:var(--text-muted,#94A3B8);letter-spacing:0.1em;font-weight:600;}',
+      '.share-btn{display:inline-flex;align-items:center;gap:0.35rem;padding:0.4rem 0.7rem;border:1px solid var(--border,#E2E8F0);border-radius:6px;background:var(--bg-white,#fff);color:var(--text-secondary,#475569);font-size:0.75rem;font-family:var(--font-body);cursor:pointer;text-decoration:none;transition:all 0.15s;}',
+      '.share-btn:hover{border-color:var(--toki-blue,#2563EB);color:var(--toki-blue,#2563EB);background:var(--toki-blue-pale,#EFF6FF);}',
+      '.share-btn-copied{border-color:#16a34a!important;color:#16a34a!important;background:#f0fdf4!important;}',
+      '.quotable{position:relative;}',
+      '.quote-share{position:absolute;top:0.5rem;right:0.5rem;display:flex;align-items:center;gap:0.25rem;padding:0.3rem 0.5rem;border:1px solid var(--border,#E2E8F0);border-radius:5px;background:rgba(255,255,255,0.95);color:var(--text-muted,#94A3B8);font-size:0.65rem;cursor:pointer;text-decoration:none;opacity:0;transition:opacity 0.2s;font-family:var(--font-body);}',
+      '.quotable:hover .quote-share{opacity:1;}',
+      '.quote-share:hover{color:var(--toki-blue,#2563EB);border-color:var(--toki-blue,#2563EB);background:var(--toki-blue-pale,#EFF6FF);}',
+      '@media print{.share-bar,.quote-share{display:none!important;}}'
+    ].join('\n');
+    document.head.appendChild(style);
+  }
+
+  function buildShareBar() {
+    var articleContent = document.querySelector('.article-content');
+    if (!articleContent) return;
+
+    var pageUrl = window.location.href;
+    var title = getPageTitle();
+    var shareLabel = isEnglish ? 'SHARE' : 'SHARE';
+    var copyLabel = isEnglish ? 'Copy link' : 'リンクをコピー';
+    var copiedLabel = isEnglish ? 'Copied!' : 'コピーしました';
+
+    var bar = document.createElement('div');
+    bar.className = 'share-bar';
+    bar.innerHTML = '<span class="share-bar-label">' + shareLabel + '</span>'
+      + '<a class="share-btn" href="' + tweetUrl(title, pageUrl) + '" target="_blank" rel="noopener">' + xIcon + ' Post</a>'
+      + '<button class="share-btn" id="copy-url-btn">' + copyIcon + ' ' + copyLabel + '</button>';
+    articleContent.appendChild(bar);
+
+    document.getElementById('copy-url-btn').addEventListener('click', function() {
+      var btn = this;
+      navigator.clipboard.writeText(pageUrl).then(function() {
+        btn.innerHTML = copyIcon + ' ' + copiedLabel;
+        btn.classList.add('share-btn-copied');
+        setTimeout(function() {
+          btn.innerHTML = copyIcon + ' ' + copyLabel;
+          btn.classList.remove('share-btn-copied');
+        }, 2000);
+      });
+    });
+  }
+
+  function addQuoteSharing() {
+    var pageUrl = window.location.href;
+    var targets = document.querySelectorAll('.article-content blockquote, .article-content .key-point');
+    var postLabel = 'Post';
+
+    targets.forEach(function(el) {
+      el.classList.add('quotable');
+      var link = document.createElement('a');
+      link.className = 'quote-share';
+      link.target = '_blank';
+      link.rel = 'noopener';
+      link.innerHTML = xIcon + ' ' + postLabel;
+      link.addEventListener('click', function(e) {
+        e.preventDefault();
+        var text = getCleanText(el);
+        window.open(tweetUrl(text, pageUrl), '_blank', 'width=550,height=420');
+      });
+      el.appendChild(link);
+    });
+  }
+
   document.addEventListener('DOMContentLoaded', function() {
     const container = document.getElementById('essay-nav-links');
     if (container) {
       container.innerHTML = buildRelatedSection(currentFile) + links + specialLinks;
+    }
+
+    // Share buttons (only on essay pages with .article-content)
+    if (document.querySelector('.article-content')) {
+      injectShareStyles();
+      buildShareBar();
+      addQuoteSharing();
     }
   });
 })();
