@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" type="image/png" sizes="32x32" href="asset/favicon-32.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="asset/apple-touch-icon.png">
+    <title>海外ヘッドハンターとの対話 | トキストレージ</title>
+    <meta name="robots" content="index, follow">
+    <meta name="description" content="ブロックチェーンスタートアップからのダイレクトメッセージ。全て英語で進んだ選考。マウイの経験で得た胆力。そして辞退という選択。純日本人がどう英語力を攻略し、何を選び取るか。">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Shippori+Mincho:wght@400;500;600;700&family=Zen+Kaku+Gothic+New:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --toki-blue: #2563EB;
+            --toki-blue-dark: #1D4ED8;
+            --toki-blue-pale: #EFF6FF;
+            --accent-blue: #3B82F6;
+            --bg-white: #FFFFFF;
+            --text-primary: #1E293B;
+            --text-secondary: #475569;
+            --text-muted: #94A3B8;
+            --border: #E2E8F0;
+            --font-display: 'Shippori Mincho', serif;
+            --font-body: 'Zen Kaku Gothic New', sans-serif;
+        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        html { scroll-behavior: smooth; }
+        body { font-family: var(--font-body); font-weight: 400; background: var(--bg-white); color: var(--text-primary); line-height: 2; font-size: 16px; }
+
+        .article-nav { position: fixed; top: 0; left: 0; right: 0; z-index: 1000; background: rgba(255,255,255,0.95); backdrop-filter: blur(12px); border-bottom: 1px solid var(--border); padding: 0.6rem 1.2rem; display: flex; align-items: center; justify-content: space-between; gap: 1rem; }
+        .article-nav .nav-brand { font-family: var(--font-display); font-size: 0.9rem; font-weight: 600; color: var(--toki-blue); text-decoration: none; white-space: nowrap; }
+        .article-nav .nav-brand::before { content: ''; display: inline-block; width: 20px; height: 20px; background: url('asset/tokistorage-icon-512.png') no-repeat center / contain; vertical-align: -3px; margin-right: 5px; }
+        .article-nav .nav-right { display: flex; align-items: center; gap: 1rem; }
+        .article-nav .nav-label { font-size: 0.6rem; color: var(--text-muted); letter-spacing: 0.08em; }
+        .article-nav .lang-switch { font-size: 0.75rem; color: var(--toki-blue); text-decoration: none; padding: 0.3rem 0.6rem; border: 1px solid var(--toki-blue); border-radius: 4px; }
+        .article-nav .lang-switch:hover { background: var(--toki-blue); color: #fff; }
+
+        .article-container { max-width: 680px; margin: 0 auto; padding: 7rem 2rem 4rem; }
+        .article-header { margin-bottom: 3rem; padding-bottom: 2rem; border-bottom: 1px solid var(--border); }
+        .article-category { font-size: 0.7rem; color: var(--toki-blue); letter-spacing: 0.15em; margin-bottom: 1rem; }
+        .article-header h1 { font-family: var(--font-display); font-size: 1.8rem; font-weight: 700; line-height: 1.5; margin-bottom: 1.5rem; }
+        .article-subtitle { font-size: 0.95rem; color: var(--text-secondary); line-height: 1.9; }
+
+        .article-content h2 { font-family: var(--font-display); font-size: 1.3rem; font-weight: 600; margin: 3rem 0 1.5rem; padding-bottom: 0.5rem; border-bottom: 2px solid var(--toki-blue-pale); }
+        .article-content h3 { font-family: var(--font-display); font-size: 1.1rem; font-weight: 600; margin: 2rem 0 1rem; color: var(--toki-blue-dark); }
+        .article-content p { margin-bottom: 1.5rem; text-align: justify; }
+        .article-content blockquote { border-left: 3px solid var(--toki-blue); padding-left: 1.5rem; margin: 2rem 0; font-family: var(--font-display); color: var(--text-secondary); }
+        .article-content ul { margin: 1.5rem 0; padding-left: 1.5rem; }
+        .article-content li { margin-bottom: 0.75rem; }
+
+        .core-message { background: var(--toki-blue-pale); border-left: 4px solid var(--toki-blue); padding: 1.5rem; margin: 2rem 0; font-size: 0.95rem; line-height: 1.8; }
+        .key-point { background: linear-gradient(135deg, var(--toki-blue-pale) 0%, #fff 100%); border: 1px solid var(--accent-blue); border-radius: 8px; padding: 1.5rem; margin: 2rem 0; text-align: center; }
+        .key-point p { font-family: var(--font-display); font-size: 1.1rem; color: var(--toki-blue-dark); margin: 0; }
+
+        .article-footer { margin-top: 4rem; padding-top: 2rem; border-top: 1px solid var(--border); text-align: center; }
+        .article-footer p { font-size: 0.8rem; color: var(--text-muted); margin-bottom: 1rem; }
+        .article-footer a { color: var(--toki-blue); text-decoration: none; }
+        .article-footer a:hover { text-decoration: underline; }
+
+        @media (max-width: 768px) {
+            .article-container { padding: 6rem 1.2rem 3rem; }
+            .article-header h1 { font-size: 1.5rem; }
+            .article-nav .nav-label { display: none; }
+        }
+        @media print { .article-nav { display: none; } .article-container { padding-top: 2rem; } }
+    </style>
+    <link rel="stylesheet" href="contact-form.css">
+    <meta property="og:image" content="https://tokistorage.github.io/lp/asset/tokistorage-icon-512.png">
+    <meta property="og:image:width" content="512">
+    <meta property="og:image:height" content="512">
+</head>
+<body>
+
+<nav class="article-nav">
+    <a href="index.html" class="nav-brand">トキストレージ</a>
+    <div class="nav-right">
+        <span class="nav-label">メタ視点 / Meta</span>
+        <a href="headhunter-en.html" class="lang-switch">EN</a>
+    </div>
+</nav>
+
+<main class="article-container">
+
+    <header class="article-header">
+        <p class="article-category">ESSAY &mdash; 選択と言語と胆力</p>
+        <h1>海外ヘッドハンターとの対話<br><span style="font-size: 0.6em; font-weight: 400; color: var(--text-secondary);">&mdash;&mdash; 純日本人が英語で選考を通過し、辞退するまで</span></h1>
+        <p class="article-subtitle">
+            ブロックチェーンスタートアップのHRからダイレクトメッセージが来た。<br>
+            すべてのやりとりは英語だった。<br>
+            選考は進んだ。だが最後に、辞退を選んだ。
+        </p>
+    </header>
+
+    <article class="article-content">
+
+        <div class="core-message">
+            <strong>この記事で言いたいこと：</strong>海外のブロックチェーンスタートアップから声がかかり、英語で選考が進み、サンプルプロジェクトの構築とデモを打診されるまでに至った。技術的には容易だった。だが辞退した。この経験が教えてくれたのは、「できるけどやらない」という選択の重みと、そこに至るまでの英語力・胆力・技術的自負がどう積み重なったかということだ。
+        </div>
+
+        <h2>1. ダイレクトメッセージ</h2>
+
+        <p>あるブロックチェーンスタートアップのHRから、LinkedInでダイレクトメッセージが届いた。英語だった。</p>
+
+        <p>分散型技術を基盤にしたプロダクトを展開している企業で、エンジニアリングのシニアポジションを探しているという。プロフィールを見て声をかけたと書いてあった。</p>
+
+        <p>こういうメッセージ自体は珍しくない。だが今回は、読んだ瞬間に「面白い」と思った。技術スタックに既視感があった。分散システム、暗号技術、コンセンサスアルゴリズム——いずれもzenn.devで要素技術として出版していた領域と重なっていたからだ。</p>
+
+        <h2>2. マウイの後で</h2>
+
+        <p>このメッセージを受け取ったタイミングに意味がある。マウイ島ラハイナの経験の後だった。</p>
+
+        <p>2023年8月のラハイナ大火。歴史的な町が一夜にして消失した現場を目の当たりにした経験は、自分の中の何かを変えた。「失われるもの」の重さを、頭ではなく体で理解した。それがTokiStorageの原点でもある。</p>
+
+        <p>だが同時に、あの経験は胆力を鍛えた。人生で本当に怖いものを知った後、キャリアの選択肢に対する恐怖が消えた。英語で選考を受けること、海外の企業と対等に話すこと——以前なら二の足を踏んだかもしれない。だがラハイナの後では、それは怖いことではなかった。</p>
+
+        <h2>3. すべて英語で</h2>
+
+        <p>選考プロセスのすべてが英語だった。初回のメッセージから、カジュアル面談、技術的な質疑応答、チームとのカルチャーフィットの確認まで。</p>
+
+        <p>ここで大切なのは、自分が「純日本人」だということだ。帰国子女でもなければ、留学経験もない。英語圏での生活経験もない。それでも、海外のスタートアップと英語で選考を進め、技術的な議論を交わし、最終的に自分の意志で辞退するところまで到達した。</p>
+
+        <p>英語力は一朝一夕に身につくものではない。だが、ある時点で「完璧な英語」を目指すのをやめた瞬間に、劇的に楽になった。コミュニケーションに必要なのは文法的正確さではなく、思考の明晰さだ。自分が何を考え、何を提案し、何に疑問を持っているかを正確に伝えられれば、多少の文法的不完全さは問題にならない。</p>
+
+        <p>技術英語は特にそうだ。アーキテクチャの議論、コードレビュー、設計判断の説明——これらは論理の言語であり、論理に母語の優位性はない。</p>
+
+        <h2>4. ブロックチェーンのサンプル</h2>
+
+        <p>選考が進み、サンプルプロジェクトの構築とデモを打診された。ブロックチェーン上で動作する小規模なアプリケーションを作り、技術力を示してほしいと。</p>
+
+        <p>正直に言えば、技術的には簡単だった。zenn.devで出版していた要素技術——スマートコントラクト、分散台帳、コンセンサスメカニズム——を組み合わせれば、デモレベルのプロダクトは数日で構築できる自信があった。</p>
+
+        <p>だが、手を動かす前に立ち止まった。</p>
+
+        <h2>5. ポストブロックチェーンの自負</h2>
+
+        <p>TokiStorageは、自分の中では「ポストブロックチェーン」だ。</p>
+
+        <p>ブロックチェーンが解こうとした問題——改竄不可能な記録、分散的な保管、信頼の担保——を、TokiStorageは別の方法で解いている。石英ガラスは物理的に改竄不可能だ。三層分散保管は、コンセンサスアルゴリズムではなく障害モードの独立性で信頼を担保する。国会図書館という制度的永続性は、どのブロックチェーンネットワークよりも長い歴史的実績を持つ。</p>
+
+        <p>ブロックチェーンの技術的要素を理解しているからこそ、その限界も見える。コンセンサスに依存するネットワークは、参加者が減れば脆弱になる。マイニングのエネルギーコスト、スケーラビリティの制約、51%攻撃の理論的リスク。「千年」というタイムスパンで考えたとき、ブロックチェーンは十分ではなかった。</p>
+
+        <p>だから石英ガラスを選んだ。サーバーもネットワークも電力も不要で、物理法則だけが保証する永続性。これはブロックチェーンの「次」ではなく、「別の解」だ。ブロックチェーンが目指したゴールに対する、より根本的なアプローチ。</p>
+
+        <h2>6. 純日本人の英語攻略</h2>
+
+        <p>ここに至るまでの英語力の構築について書いておきたい。同じ道を歩こうとしている人のために。</p>
+
+        <p>自分が英語を使えるようになった過程に、特別なことはない。特別なのは、やめなかったことだ。</p>
+
+        <p>技術ドキュメントを英語で読む。Stack Overflowで英語で質問する。GitHubのIssueを英語で書く。最初は時間がかかる。だが技術英語は語彙が限定されているため、半年もすればスピードが追いつく。</p>
+
+        <p>会話は別の筋肉だ。だが技術的な議論に限れば、事前準備で8割はカバーできる。自分のアーキテクチャを英語で説明する練習、想定される質問への回答を英語で用意しておくこと。残りの2割はその場の判断力で、これは日本語でも同じだ。</p>
+
+        <p>最も重要な転換点は、「英語ができる」から「英語で仕事をする」への意識の切り替えだった。英語は目的ではなく道具だ。道具の完璧さを追求するより、道具を使って何を作るかに集中した方がいい。不完全な道具でも、作りたいものが明確なら、十分に機能する。</p>
+
+        <blockquote>
+            英語力は完璧さの問題ではない。<br>
+            伝えたいものの明確さの問題だ。
+        </blockquote>
+
+        <h2>7. 辞退という選択</h2>
+
+        <p>サンプルプロジェクトを作る技術力はあった。選考を通過する英語力もあった。マウイの後に鍛えられた胆力で、躊躇もなかった。</p>
+
+        <p>だが辞退した。</p>
+
+        <p>理由は単純だ。TokiStorageの方が面白いからだ。</p>
+
+        <p>ブロックチェーンのスタートアップで他人のビジョンを実装するより、自分の確信を形にする方を選んだ。技術的に簡単だったからこそ、その選択は明確だった。「できるからやる」のではなく、「できるけどやらない」——その判断ができるようになったことが、マウイ以降の自分の変化だと思う。</p>
+
+        <p>ヘッドハンターとの対話は無駄ではなかった。英語で選考を通過できるという事実が、自分の市場価値を確認させてくれた。海外のスタートアップと対等に技術議論ができるという経験が、TokiStorageを世界に向けて展開する自信の裏付けになった。</p>
+
+        <p>そして何より、「辞退できる」ということ自体が、バーンレートゼロの事業構造が与えてくれた自由だ。生活のために次の仕事を取る必要がない。だから、本当にやりたいことだけを選べる。</p>
+
+        <blockquote>
+            選択肢を持つことと、選択肢を行使しないことは、<br>
+            同じ自由の表と裏だ。
+        </blockquote>
+
+        <div class="key-point">
+            <p>「できるけどやらない」は、<br>「できない」とは根本的に違う。<br>その差を生むのは、技術と言語と胆力の積み重ねだ。</p>
+        </div>
+
+    </article>
+
+    <footer class="article-footer">
+        <p id="essay-nav-links"></p>
+        <p style="margin-top: 2rem; font-size: 0.75rem;">&copy; 2026 TokiStorage</p>
+    </footer>
+
+</main>
+
+<script src="contact-form.js"></script>
+<script src="essay-nav.js?v=20260220"></script>
+<script src="tracker.js"></script>
+</body>
+</html>
