@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" type="image/png" sizes="32x32" href="asset/favicon-32.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="asset/apple-touch-icon.png">
+    <title>Vibe Coding | TokiStorage</title>
+    <meta name="robots" content="index, follow">
+    <meta name="description" content="From writing code to conveying intent. How vibe coding with AI builds production-grade business infrastructure, and what it means for the future of solo development.">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Shippori+Mincho:wght@400;500;600;700&family=Zen+Kaku+Gothic+New:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --toki-blue: #2563EB;
+            --toki-blue-dark: #1D4ED8;
+            --toki-blue-pale: #EFF6FF;
+            --accent-blue: #3B82F6;
+            --bg-white: #FFFFFF;
+            --text-primary: #1E293B;
+            --text-secondary: #475569;
+            --text-muted: #94A3B8;
+            --border: #E2E8F0;
+            --font-display: 'Shippori Mincho', serif;
+            --font-body: 'Zen Kaku Gothic New', sans-serif;
+        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        html { scroll-behavior: smooth; }
+        body { font-family: var(--font-body); font-weight: 400; background: var(--bg-white); color: var(--text-primary); line-height: 2; font-size: 16px; }
+
+        .article-nav { position: fixed; top: 0; left: 0; right: 0; z-index: 1000; background: rgba(255,255,255,0.95); backdrop-filter: blur(12px); border-bottom: 1px solid var(--border); padding: 0.6rem 1.2rem; display: flex; align-items: center; justify-content: space-between; gap: 1rem; }
+        .article-nav .nav-brand { font-family: var(--font-display); font-size: 0.9rem; font-weight: 600; color: var(--toki-blue); text-decoration: none; white-space: nowrap; }
+        .article-nav .nav-brand::before { content: ''; display: inline-block; width: 20px; height: 20px; background: url('asset/tokistorage-icon-512.png') no-repeat center / contain; vertical-align: -3px; margin-right: 5px; }
+        .article-nav .nav-right { display: flex; align-items: center; gap: 1rem; }
+        .article-nav .nav-label { font-size: 0.6rem; color: var(--text-muted); letter-spacing: 0.08em; }
+        .article-nav .lang-switch { font-size: 0.75rem; color: var(--toki-blue); text-decoration: none; padding: 0.3rem 0.6rem; border: 1px solid var(--toki-blue); border-radius: 4px; }
+        .article-nav .lang-switch:hover { background: var(--toki-blue); color: #fff; }
+
+        .article-container { max-width: 680px; margin: 0 auto; padding: 7rem 2rem 4rem; }
+        .article-header { margin-bottom: 3rem; padding-bottom: 2rem; border-bottom: 1px solid var(--border); }
+        .article-category { font-size: 0.7rem; color: var(--toki-blue); letter-spacing: 0.15em; margin-bottom: 1rem; }
+        .article-header h1 { font-family: var(--font-display); font-size: 1.8rem; font-weight: 700; line-height: 1.5; margin-bottom: 1.5rem; }
+        .article-subtitle { font-size: 0.95rem; color: var(--text-secondary); line-height: 1.9; }
+
+        .article-content h2 { font-family: var(--font-display); font-size: 1.3rem; font-weight: 600; margin: 3rem 0 1.5rem; padding-bottom: 0.5rem; border-bottom: 2px solid var(--toki-blue-pale); }
+        .article-content h3 { font-family: var(--font-display); font-size: 1.1rem; font-weight: 600; margin: 2rem 0 1rem; color: var(--toki-blue-dark); }
+        .article-content p { margin-bottom: 1.5rem; text-align: justify; }
+        .article-content blockquote { border-left: 3px solid var(--toki-blue); padding-left: 1.5rem; margin: 2rem 0; font-family: var(--font-display); color: var(--text-secondary); }
+        .article-content ul { margin: 1.5rem 0; padding-left: 1.5rem; }
+        .article-content li { margin-bottom: 0.75rem; }
+
+        .core-message { background: var(--toki-blue-pale); border-left: 4px solid var(--toki-blue); padding: 1.5rem; margin: 2rem 0; font-size: 0.95rem; line-height: 1.8; }
+        .key-point { background: linear-gradient(135deg, var(--toki-blue-pale) 0%, #fff 100%); border: 1px solid var(--accent-blue); border-radius: 8px; padding: 1.5rem; margin: 2rem 0; text-align: center; }
+        .key-point p { font-family: var(--font-display); font-size: 1.1rem; color: var(--toki-blue-dark); margin: 0; }
+
+        .article-footer { margin-top: 4rem; padding-top: 2rem; border-top: 1px solid var(--border); text-align: center; }
+        .article-footer p { font-size: 0.8rem; color: var(--text-muted); margin-bottom: 1rem; }
+        .article-footer a { color: var(--toki-blue); text-decoration: none; }
+        .article-footer a:hover { text-decoration: underline; }
+
+        @media (max-width: 768px) {
+            .article-container { padding: 6rem 1.2rem 3rem; }
+            .article-header h1 { font-size: 1.5rem; }
+            .article-nav .nav-label { display: none; }
+        }
+        @media print { .article-nav { display: none; } .article-container { padding-top: 2rem; } }
+    </style>
+    <link rel="stylesheet" href="contact-form.css">
+    <meta property="og:image" content="https://tokistorage.github.io/lp/asset/tokistorage-icon-512.png">
+    <meta property="og:image:width" content="512">
+    <meta property="og:image:height" content="512">
+</head>
+<body>
+
+<nav class="article-nav">
+    <a href="index-en.html" class="nav-brand">TokiStorage</a>
+    <div class="nav-right">
+        <span class="nav-label">Technology / Design</span>
+        <a href="vibe-coding.html" class="lang-switch">JA</a>
+    </div>
+</nav>
+
+<main class="article-container">
+
+    <header class="article-header">
+        <p class="article-category">ESSAY &mdash; Development Methods &amp; the Future of Solo Development</p>
+        <h1>Vibe Coding<br><span style="font-size: 0.6em; font-weight: 400; color: var(--text-secondary);">&mdash;&mdash; Building a business without writing code</span></h1>
+        <p class="article-subtitle">
+            The era of worrying about semicolons is ending.<br>
+            Convey what you want to build, and code appears.<br>
+            What matters is no longer implementation skill, but intent and judgment.
+        </p>
+    </header>
+
+    <article class="article-content">
+
+        <div class="core-message">
+            <strong>The point of this essay:</strong> Vibe coding is not "lazily letting AI write code." It is the act of conveying intent precisely, judging the validity of generated code, and steering architecture. When implementation cost approaches zero, all that remains is the judgment of what to build and why.
+        </div>
+
+        <h2>1. Implementation Was the Bottleneck</h2>
+
+        <p>The history of software development has been a battle against implementation cost.</p>
+
+        <p>You have the idea. You can design it. But turning it into code required knowing a programming language's syntax, memorizing a framework's conventions, and accumulating debugging experience. There is a physical limit to how much code a single developer can write in a day.</p>
+
+        <p>Companies tried to solve this constraint by adding people. But more people meant more communication overhead and a ballooning burn rate. Solo developers never had that option to begin with.</p>
+
+        <p>The value of an idea and the ability to implement it were entirely separate skills. And the cost of the latter blocked the realization of the former.</p>
+
+        <h2>2. What Is Vibe Coding</h2>
+
+        <p>Vibe coding is a development method where you convey intent to an AI in natural language, and code is generated and modified accordingly.</p>
+
+        <p>Say "consolidate email sending into a single function," and 14 direct calls are rewritten to go through a helper. Say "combine admin notification emails into one," and four functions are decomposed into internal helpers with a unified report function generated. Say "change the delivery timing to made-to-order," and both Japanese and English I18N objects are updated.</p>
+
+        <p>What the developer is doing is not writing code. It is conveying "what," "why," and "in which direction."</p>
+
+        <p>This "vibe" &mdash; an intuitive sense of direction &mdash; is the essence of vibe coding. Even without knowing precise syntax, if the contour of your intent comes through, code is born.</p>
+
+        <h2>3. Only Judgment Remains</h2>
+
+        <p>When implementation cost approaches zero, what disappears from the development process, and what remains?</p>
+
+        <p>What disappears: memorizing syntax, rote knowledge of library APIs, writing boilerplate error handling, repeating template code. All of these are handled by the AI.</p>
+
+        <p>What remains is judgment.</p>
+
+        <ul>
+            <li>Should email sending be consolidated into a helper function before the limit becomes a problem?</li>
+            <li>At what stage and to what extent should partner payment automation be advanced?</li>
+            <li>What legal updates are needed at the point of outsourcing?</li>
+            <li>Does the wording of the terms of service match the business reality?</li>
+        </ul>
+
+        <p>Ask an AI these questions and you'll get "it depends." Business context, risk tolerance, priorities &mdash; everything depends on human judgment.</p>
+
+        <blockquote>
+            What vibe coding removes is the wall of implementation.<br>
+            What remains is the most essential work: design decision-making.
+        </blockquote>
+
+        <h2>4. How TokiStorage Was Built</h2>
+
+        <p>TokiStorage's business infrastructure &mdash; order management, payment integration, automated notifications, access analytics, partner accounting, the essay collection &mdash; was all built through vibe coding.</p>
+
+        <p>There are 1,800 lines of Google Apps Script. From order intake to Wise payment detection, automatic status updates, daily reports, payment reminders, and monthly partner reports. Not every line was typed by hand.</p>
+
+        <p>But the architectural decisions &mdash; which data belongs in which sheet, how to design the status flow, how to separate triggers &mdash; were all made by a human. AI handled implementation. The human handled design.</p>
+
+        <p>This very essay is the same. From a single utterance &mdash; "let's write an essay about vibe coding" &mdash; the structure was proposed, the text was generated, both language versions were created, the essay was registered in essay-nav.js, and a pull request was opened. What the human did was say "let's write it" and indicate the direction of the content.</p>
+
+        <h2>5. The Difference From "Lazily Delegating"</h2>
+
+        <p>Vibe coding has its critics. "AI-generated code is low quality." "It produces unmaintainable code." "You move forward without understanding the fundamentals."</p>
+
+        <p>These criticisms are valid &mdash; but only when vibe coding is defined as "lazily letting AI write code."</p>
+
+        <p>The practice at TokiStorage is different. Generated code is always reviewed. Behavior is verified manually. When problems arise, the cause is identified and the direction of the fix is specified. Verifying whether the Specified Commercial Transactions Act disclosure matches business reality is a human job. Recognizing that GAS contains secrets and should be gitignored is a human judgment.</p>
+
+        <p>The quality of vibe coding is determined not by AI capability, but by the judgment of the person using it. Convey precise intent, evaluate the output, and correct the direction. The accuracy of this cycle determines the quality of the result.</p>
+
+        <h2>6. Resonance With Burn Rate Zero</h2>
+
+        <p>Vibe coding and zero burn rate amplify each other.</p>
+
+        <p>Zero burn rate eliminates time constraints. Vibe coding eliminates implementation constraints. When both are in place, the two walls facing a solo developer &mdash; "no time to build" and "no skills to build" &mdash; vanish simultaneously.</p>
+
+        <p>All that remains is "what to build" and "why to build it."</p>
+
+        <p>If you have clear answers to these two questions, one person can complete an entire business infrastructure. Legal, operations, scaling design, and philosophical articulation. All sustained by one person's judgment and dialogue with AI.</p>
+
+        <h2>7. A New Definition of "Solo"</h2>
+
+        <p>Before vibe coding, "developing solo" meant writing every line of code yourself. It was heroic but had a physical ceiling.</p>
+
+        <p>After vibe coding, "developing solo" means making every decision yourself. What determines output is not lines of code but number of decisions.</p>
+
+        <p>This shift expands the possibilities of solo development by orders of magnitude. The number of decisions a single person can make in a day far exceeds the lines of code they could write. It takes a substantial scale of business before judgment becomes the bottleneck.</p>
+
+        <blockquote>
+            Vibe coding is not the democratization of development.<br>
+            It is the democratization of judgment. Anyone who can make good decisions can build software.
+        </blockquote>
+
+        <h2>8. Inscribing Proof of Existence Through Vibes</h2>
+
+        <p>TokiStorage's mission is "democratizing proof of existence." Inscribing voice, photos, and text into QR codes to be preserved.</p>
+
+        <p>Vibe coding is itself proof of the business's existence. The record of one person building business infrastructure from zero through dialogue with AI. Each essay is a product of that process.</p>
+
+        <p>The number of lines of code is not what matters. What intent was there, and what judgments were made. That is the proof of existence inscribed through vibe coding.</p>
+
+        <div class="key-point">
+            <p>It is not the power to write code,<br>but the power to decide what to build, that creates a business.</p>
+        </div>
+
+    </article>
+
+    <footer class="article-footer">
+        <p id="essay-nav-links"></p>
+        <p style="margin-top: 2rem; font-size: 0.75rem;">&copy; 2026 TokiStorage</p>
+    </footer>
+
+</main>
+
+<script src="contact-form.js"></script>
+<script src="essay-nav.js?v=20260219"></script>
+<script src="tracker.js"></script>
+</body>
+</html>
