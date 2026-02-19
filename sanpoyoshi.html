@@ -1,0 +1,268 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" type="image/png" sizes="32x32" href="asset/favicon-32.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="asset/apple-touch-icon.png">
+    <title>三方よしの溶解点 | トキストレージ</title>
+    <meta name="robots" content="index, follow">
+    <meta name="description" content="パートナー還元の10%をめぐる罪悪感、不信、感謝。収益を得ることの多面性を、三方よしと透明性の視点から問い直す。">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Shippori+Mincho:wght@400;500;600;700&family=Zen+Kaku+Gothic+New:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --toki-blue: #2563EB;
+            --toki-blue-dark: #1D4ED8;
+            --toki-blue-pale: #EFF6FF;
+            --accent-blue: #3B82F6;
+            --bg-white: #FFFFFF;
+            --text-primary: #1E293B;
+            --text-secondary: #475569;
+            --text-muted: #94A3B8;
+            --border: #E2E8F0;
+            --font-display: 'Shippori Mincho', serif;
+            --font-body: 'Zen Kaku Gothic New', sans-serif;
+        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        html { scroll-behavior: smooth; }
+        body { font-family: var(--font-body); font-weight: 400; background: var(--bg-white); color: var(--text-primary); line-height: 2; font-size: 16px; }
+
+        .article-nav { position: fixed; top: 0; left: 0; right: 0; z-index: 1000; background: rgba(255,255,255,0.95); backdrop-filter: blur(12px); border-bottom: 1px solid var(--border); padding: 0.6rem 1.2rem; display: flex; align-items: center; justify-content: space-between; gap: 1rem; }
+        .article-nav .nav-brand { font-family: var(--font-display); font-size: 0.9rem; font-weight: 600; color: var(--toki-blue); text-decoration: none; white-space: nowrap; }
+        .article-nav .nav-brand::before { content: ''; display: inline-block; width: 20px; height: 20px; background: url('asset/tokistorage-icon-512.png') no-repeat center / contain; vertical-align: -3px; margin-right: 5px; }
+        .article-nav .nav-right { display: flex; align-items: center; gap: 1rem; }
+        .article-nav .nav-label { font-size: 0.6rem; color: var(--text-muted); letter-spacing: 0.08em; }
+        .article-nav .lang-switch { font-size: 0.75rem; color: var(--toki-blue); text-decoration: none; padding: 0.3rem 0.6rem; border: 1px solid var(--toki-blue); border-radius: 4px; }
+        .article-nav .lang-switch:hover { background: var(--toki-blue); color: #fff; }
+
+        .article-container { max-width: 680px; margin: 0 auto; padding: 7rem 2rem 4rem; }
+        .article-header { margin-bottom: 3rem; padding-bottom: 2rem; border-bottom: 1px solid var(--border); }
+        .article-category { font-size: 0.7rem; color: var(--toki-blue); letter-spacing: 0.15em; margin-bottom: 1rem; }
+        .article-header h1 { font-family: var(--font-display); font-size: 1.8rem; font-weight: 700; line-height: 1.5; margin-bottom: 1.5rem; }
+        .article-subtitle { font-size: 0.95rem; color: var(--text-secondary); line-height: 1.9; }
+
+        .article-content h2 { font-family: var(--font-display); font-size: 1.3rem; font-weight: 600; margin: 3rem 0 1.5rem; padding-bottom: 0.5rem; border-bottom: 2px solid var(--toki-blue-pale); }
+        .article-content h3 { font-family: var(--font-display); font-size: 1.1rem; font-weight: 600; margin: 2rem 0 1rem; color: var(--toki-blue-dark); }
+        .article-content p { margin-bottom: 1.5rem; text-align: justify; }
+        .article-content blockquote { border-left: 3px solid var(--toki-blue); padding-left: 1.5rem; margin: 2rem 0; font-family: var(--font-display); color: var(--text-secondary); }
+        .article-content ul { margin: 1.5rem 0; padding-left: 1.5rem; }
+        .article-content li { margin-bottom: 0.75rem; }
+
+        .core-message { background: var(--toki-blue-pale); border-left: 4px solid var(--toki-blue); padding: 1.5rem; margin: 2rem 0; font-size: 0.95rem; line-height: 1.8; }
+        .key-point { background: linear-gradient(135deg, var(--toki-blue-pale) 0%, #fff 100%); border: 1px solid var(--accent-blue); border-radius: 8px; padding: 1.5rem; margin: 2rem 0; text-align: center; }
+        .key-point p { font-family: var(--font-display); font-size: 1.1rem; color: var(--toki-blue-dark); margin: 0; }
+
+        .article-footer { margin-top: 4rem; padding-top: 2rem; border-top: 1px solid var(--border); text-align: center; }
+        .article-footer p { font-size: 0.8rem; color: var(--text-muted); margin-bottom: 1rem; }
+        .article-footer a { color: var(--toki-blue); text-decoration: none; }
+        .article-footer a:hover { text-decoration: underline; }
+
+        @media (max-width: 768px) {
+            .article-container { padding: 6rem 1.2rem 3rem; }
+            .article-header h1 { font-size: 1.5rem; }
+            .article-nav .nav-label { display: none; }
+        }
+        @media print { .article-nav { display: none; } .article-container { padding-top: 2rem; } }
+    </style>
+    <link rel="stylesheet" href="contact-form.css">
+    <meta property="og:image" content="https://tokistorage.github.io/lp/asset/tokistorage-icon-512.png">
+    <meta property="og:image:width" content="512">
+    <meta property="og:image:height" content="512">
+</head>
+<body>
+
+<nav class="article-nav">
+    <a href="index.html" class="nav-brand">トキストレージ</a>
+    <div class="nav-right">
+        <span class="nav-label">経済・財産 / Economy</span>
+        <a href="sanpoyoshi-en.html" class="lang-switch">EN</a>
+    </div>
+</nav>
+
+<main class="article-container">
+
+    <header class="article-header">
+        <p class="article-category">ESSAY &mdash; パートナー還元と透明性</p>
+        <h1>三方よしの溶解点<br><span style="font-size: 0.6em; font-weight: 400; color: var(--text-secondary);">&mdash;&mdash; 収益の罪悪感が、透明性によって融ける構造</span></h1>
+        <p class="article-subtitle">
+            パートナーが得る10%。利用者が払う対価。作り手が受け取る収益。<br>
+            同じ取引を、三者がそれぞれの角度から見つめている。<br>
+            罪悪感も、不信も、感謝も——すべてが同時に存在しうる。
+        </p>
+    </header>
+
+    <article class="article-content">
+
+        <div class="core-message">
+            <strong>この記事で言いたいこと：</strong>収益を得ることへの罪悪感は、隠蔽から生まれる。すべてを開示したとき、罪悪感は「説明責任」に変わり、不信は「納得」に変わる。三方よしとは、三者全員が構造を見通せる状態のことだ。
+        </div>
+
+        <h2>1. 収益を得ることへの後ろめたさ</h2>
+
+        <p>パートナーがTokiQRを紹介し、注文が入り、10%が還元される。仕組みとしてはシンプルだ。</p>
+
+        <p>だがこの10%を受け取るとき、パートナーの心のどこかに「これでよいのか」という問いが生まれることがある。</p>
+
+        <p>紹介した相手は友人だった。旅先で出会った知り合いだった。カフェで隣に座った縁。その人が5,000円を払い、自分に500円が入る。関係の性質が、一瞬だけ揺れる。</p>
+
+        <p>善意で薦めたはずだった。心からいいと思ったから伝えた。だが収益が発生したことで、その動機が汚染されたように感じる。「本当に善意だったのか、それとも500円のためだったのか」と、自分で自分を疑い始める。</p>
+
+        <p>この罪悪感は、不自然ではない。むしろ健全だ。人間関係と金銭が交差する地点では、誰もが一度は立ち止まる。</p>
+
+        <h2>2. 利用者の視点——「ビジネス相手だったのか」</h2>
+
+        <p>注文した側にも、同じ揺れがありうる。</p>
+
+        <p>「あの人が熱心に薦めてくれたのは、収益があったからなのか。」</p>
+
+        <p>この疑念が芽生えた瞬間、紹介者への信頼が変質する。善意の紹介だと思っていたものが、営業行為に見え始める。あの笑顔の後ろに計算があったのではないか、と。あの熱意は製品への共感ではなく、500円への期待だったのではないか、と。</p>
+
+        <p>この感覚は理不尽ではない。人は動機を気にする生き物だ。同じ行為でも、動機によって受け取り方が変わる。誰かが自発的に薦めてくれたのか、報酬があるから薦めたのか——結果は同じでも、関係性における意味がまったく異なる。</p>
+
+        <p>そしてこの疑念は、一度生まれると消えにくい。紹介者が何を言っても、「でも収益があったんでしょう」という一言が、すべての善意を無効化しうる。</p>
+
+        <h2>3. 作り手の罪悪感</h2>
+
+        <p>パートナーだけではない。トキストレージ自身も同じ問いの前に立つ。</p>
+
+        <p>人が大切な声を残したいと思う。子どもの笑い声を。亡くなった親の声を。自分自身の言葉を。その切実な感情が、注文という行為になり、収益になる。</p>
+
+        <p>人の「残したい」という感情は、もっとも私的で、もっとも脆い。その脆さから収益を得ている事実を、綺麗に包装することはできない。「永久保存のサービスを提供している」という言い方はできる。だがその底には、他者の切実さを経済的価値に変換しているという構造が横たわっている。</p>
+
+        <p>この構造から目を逸らすことは、できるかもしれない。だが、逸らすべきではない。</p>
+
+        <h2>4. 三方よしという古い知恵</h2>
+
+        <p>近江商人の「三方よし」——売り手よし、買い手よし、世間よし。</p>
+
+        <p>この思想の核心は、利益を得ることの正当化ではない。利益を得たうえで、なお三者全員が満たされている構造を設計できるか、という問いだ。</p>
+
+        <p>TokiQRのパートナー還元を三方に分けてみる。</p>
+
+        <ul>
+            <li><strong>作り手（トキストレージ）</strong>——製品が届き、事業が持続する。次の製品開発に再投資できる。</li>
+            <li><strong>利用者</strong>——声・画像・テキストを永久に残せる。QRコード1枚が、1000年の器になる。</li>
+            <li><strong>パートナー</strong>——紹介という自然な行為が、経済的に報われる。初期費用もノルマもない。</li>
+        </ul>
+
+        <p>三者がそれぞれの文脈で満たされている。だが、三方よしが成立しているかどうかは、当事者の主観だけでは検証できない。「よし」の判断材料が揃っていなければ、三方よしは自己申告に過ぎない。</p>
+
+        <h3>三方よしの前提条件——情報の対称性</h3>
+
+        <p>売り手が「三方よし」を名乗るとき、買い手と世間はそれを検証する手段を持っているか。利益率は見えているか。還元の構造は開示されているか。「世間よし」の根拠は示されているか。</p>
+
+        <p>三方よしの本質は、善意ではない。情報の対称性だ。三者全員が構造を見通せる状態でなければ、「よし」の判断は下せない。</p>
+
+        <h2>5. 作り手として収益の10%を寄付するという基準</h2>
+
+        <p>トキストレージは、収益の10%を寄付する。</p>
+
+        <p>これは「善意」ではない。「基準」だ。</p>
+
+        <p>収益を得ている以上、その一部を社会に還元する責務がある——そう考えるのは自然だ。だが寄付の本質的な意味は、金額にも比率にもない。</p>
+
+        <p>寄付とは、「収益が最終目的ではない」という構造上の宣言だ。収益は事業の持続に使われ、パートナーへの還元に使われ、製品の改善に使われ、そのうえで一部が社会に返される。この流れのすべてが開示されているとき、収益の意味が変わる。</p>
+
+        <p>10%という数字に特別な根拠はない。だが基準を持つこと、その基準を公言すること、そして実行すること——この三段階が、「収益を得ていること」に対する最低限の説明責任だと考えている。</p>
+
+        <blockquote>
+            <p>寄付は、罪悪感を消すためにするのではない。<br>収益が循環していることを、自分自身に証明するためにする。</p>
+        </blockquote>
+
+        <h2>6. 「機会を知れた」という利用者の感覚</h2>
+
+        <p>ここで視点を、もう一度利用者に戻す。</p>
+
+        <p>利用者のなかには、こう言う人がいる。「知れてよかった。」「誰かが教えてくれなければ、この選択肢に出会えなかった。」</p>
+
+        <p>声を永久に残せるという選択肢の存在を、そもそも知らなかった。QRコードが1000年の器になるという発想に、触れたことがなかった。パートナーが紹介してくれなければ、この選択肢は自分の人生に現れなかった。</p>
+
+        <p>この感覚のなかに、パートナーへの感謝が自然に含まれている。紹介によって得た「機会」の価値が、パートナーの収益よりもはるかに大きいとき、不均衡は消える。</p>
+
+        <p>5,000円を払って声を永久に残す。その機会を教えてくれた人に500円が入る。この二つの事象を天秤にかけたとき、利用者の多くは不公平だとは感じない。むしろ「500円で済むのか」と思うかもしれない。教えてくれたこと自体に、それ以上の価値があるのだから。</p>
+
+        <h3>営業と紹介の境界線</h3>
+
+        <p>ただし、この感覚が成立するには条件がある。紹介が「押しつけ」でないことだ。</p>
+
+        <p>「面白いものがあるよ」と伝えることと、「買ってくれ」と迫ることは、まったく違う。前者は機会の提供であり、後者は圧力だ。パートナーが前者の姿勢を保てるかどうかが、三方よしの成否を分ける。</p>
+
+        <p>TokiQRのパートナー制度にノルマがない理由がここにある。ノルマがあれば、紹介は圧力に変わる。ノルマがないから、紹介は紹介のまま保たれる。</p>
+
+        <h2>7. 「ビジネス相手だったのか」——不信の正体</h2>
+
+        <p>ここで、もっとも厄介な感情に正面から向き合う。</p>
+
+        <p>パートナーが収益を得ていると知ったとき、利用者が感じる不信。「自分はビジネス相手として見られていたのか。」この疑念の正体は何か。</p>
+
+        <p>裏切り感だ。</p>
+
+        <p>人は、自分が「選ばれた」と思いたい。紹介してくれた人が、自分のことを思って薦めてくれたのだと信じたい。そこに収益という動機が混ざると、「自分のために」が「500円のために」にすり替わったように感じる。</p>
+
+        <p>だが、この二つは本当に排他的だろうか。</p>
+
+        <p>友人が経営するレストランを薦めるとき、その友人に客が来ることを知っている。だから薦めないだろうか。医師が処方する薬に利益が発生することを知っているから、処方を信用しないだろうか。書店員が薦める本の売上が店の収益になることを知っているから、推薦を疑うだろうか。</p>
+
+        <p>善意と収益は、共存する。問題は共存の事実ではなく、共存が隠されているかどうかだ。</p>
+
+        <h2>8. 透明性による融解</h2>
+
+        <p>罪悪感も、不信も、疑念も——すべて「隠されている」ときに増幅する。</p>
+
+        <p>パートナーが収益を得ていることを隠していたら、利用者は騙されたと感じる。トキストレージが利益構造を隠していたら、パートナーは搾取されていると感じる。不透明さが、善意すら毒に変える。</p>
+
+        <p>逆に、すべてが見えているとき、何が起きるか。</p>
+
+        <p>TokiQRはすべてを開示している。</p>
+
+        <ul>
+            <li>パートナーの還元率は10%であること——セットアップページに書いてある</li>
+            <li>価格体系の全体——注文ページに書いてある</li>
+            <li>パートナー制度の設計思想——このエッセイを含め、複数のエッセイで開示している</li>
+            <li>トキストレージの寄付基準——収益の10%</li>
+        </ul>
+
+        <p>利用者は、自分が払う5,000円のうち500円がパートナーに渡ることを知ったうえで注文できる。パートナーは、自分の還元率と作り手の利益構造を知ったうえで紹介できる。作り手は、すべてを見せたうえで収益を受け取れる。</p>
+
+        <p>透明性は信頼を「構築」するのではない。不信を「溶解」するのだ。信頼は行動の積み重ねで生まれる。だが不信は、情報の欠落で生まれる。透明性は、その欠落を埋める。</p>
+
+        <div class="key-point">
+            <p>三方よしの「よし」は、善意では成立しない。<br>三者全員が構造を見通せるとき、初めて「よし」と言える。<br>透明性が、三方よしの溶解点——すべてが融け合う温度——を決める。</p>
+        </div>
+
+        <h2>9. 罪悪感の正しい居場所</h2>
+
+        <p>収益を得ることへの罪悪感は、消すべきものではない。</p>
+
+        <p>罪悪感は、自分が他者の行為から利益を得ていることへの健全な自覚だ。この感覚を失ったとき、人は搾取を正当化し始める。「ビジネスだから当然だ」と言い切れる人間よりも、「これでよいのだろうか」と問い続ける人間のほうが、長期的には信頼される。</p>
+
+        <p>パートナーが罪悪感を持つこと。それは紹介先を人間として見ている証拠だ。利用者が疑念を持つこと。それは紹介者との関係を大切にしている証拠だ。作り手が後ろめたさを持つこと。それは収益の源泉を忘れていない証拠だ。</p>
+
+        <p>問題は、これらの感情が「隠蔽」によって肥大化することだ。透明性のなかに置かれたとき、罪悪感は「慎重さ」に変わり、不信は「確認」に変わり、後ろめたさは「敬意」に変わる。</p>
+
+        <blockquote>
+            <p>収益は罪ではない。<br>収益を隠すことが、罪になる。</p>
+        </blockquote>
+
+        <p>三方よしとは、三者が同じ構造を見つめ、それぞれの立場から「これでよい」と言える状態のことだ。その状態をつくるのは善意ではなく、透明性だ。</p>
+
+        <p>パートナーは堂々と紹介すればいい。利用者は構造を知ったうえで判断すればいい。作り手は後ろめたさを抱えたまま、それでも誠実に収益を受け取ればいい。</p>
+
+        <p>すべてが見えているとき、そこに残るのは罪悪感ではない。責任だ。</p>
+
+    </article>
+
+    <footer class="article-footer">
+        <p id="essay-nav-links"></p>
+        <p style="margin-top: 2rem; font-size: 0.75rem;">&copy; 2026 TokiStorage</p>
+    </footer>
+
+</main>
+
+<script src="contact-form.js"></script>
+<script src="essay-nav.js?v=20260219"></script>
+<script src="tracker.js"></script>
+</body>
+</html>

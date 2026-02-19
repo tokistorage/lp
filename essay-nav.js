@@ -70,6 +70,7 @@
     { id: 'post-nomad', ja: 'ポストノマド', en: 'Post-Nomad' },
     { id: 'disintermediation', ja: '流通構造の変容', en: 'Disintermediation' },
     { id: 'walking-partner', ja: '歩くパートナー', en: 'Walking Partner' },
+    { id: 'sanpoyoshi', ja: '三方よしの溶解点', en: 'Sanpo-yoshi' },
 
     // ── 文化・社会活動 ──
     { id: 'education', ja: '教育', en: 'Education' },
