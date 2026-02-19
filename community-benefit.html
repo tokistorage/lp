@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" type="image/png" sizes="32x32" href="asset/favicon-32.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="asset/apple-touch-icon.png">
+    <title>地域との利益共有モデル | トキストレージ</title>
+    <meta name="robots" content="index, follow">
+    <meta name="description" content="佐渡とマウイに保管拠点を置くとは、土地を借りることではない。その島の一部になることだ。雇用、インフラ、文化保全——千年保管が地域に何を返せるかを設計する。">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Shippori+Mincho:wght@400;500;600;700&family=Zen+Kaku+Gothic+New:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --toki-blue: #2563EB;
+            --toki-blue-dark: #1D4ED8;
+            --toki-blue-pale: #EFF6FF;
+            --accent-blue: #3B82F6;
+            --bg-white: #FFFFFF;
+            --text-primary: #1E293B;
+            --text-secondary: #475569;
+            --text-muted: #94A3B8;
+            --border: #E2E8F0;
+            --font-display: 'Shippori Mincho', serif;
+            --font-body: 'Zen Kaku Gothic New', sans-serif;
+        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        html { scroll-behavior: smooth; }
+        body { font-family: var(--font-body); font-weight: 400; background: var(--bg-white); color: var(--text-primary); line-height: 2; font-size: 16px; }
+
+        .article-nav { position: fixed; top: 0; left: 0; right: 0; z-index: 1000; background: rgba(255,255,255,0.95); backdrop-filter: blur(12px); border-bottom: 1px solid var(--border); padding: 0.6rem 1.2rem; display: flex; align-items: center; justify-content: space-between; gap: 1rem; }
+        .article-nav .nav-brand { font-family: var(--font-display); font-size: 0.9rem; font-weight: 600; color: var(--toki-blue); text-decoration: none; white-space: nowrap; }
+        .article-nav .nav-brand::before { content: ''; display: inline-block; width: 20px; height: 20px; background: url('asset/tokistorage-icon-512.png') no-repeat center / contain; vertical-align: -3px; margin-right: 5px; }
+        .article-nav .nav-right { display: flex; align-items: center; gap: 1rem; }
+        .article-nav .nav-label { font-size: 0.6rem; color: var(--text-muted); letter-spacing: 0.08em; }
+        .article-nav .lang-switch { font-size: 0.75rem; color: var(--toki-blue); text-decoration: none; padding: 0.3rem 0.6rem; border: 1px solid var(--toki-blue); border-radius: 4px; }
+        .article-nav .lang-switch:hover { background: var(--toki-blue); color: #fff; }
+
+        .article-container { max-width: 680px; margin: 0 auto; padding: 7rem 2rem 4rem; }
+        .article-header { margin-bottom: 3rem; padding-bottom: 2rem; border-bottom: 1px solid var(--border); }
+        .article-category { font-size: 0.7rem; color: var(--toki-blue); letter-spacing: 0.15em; margin-bottom: 1rem; }
+        .article-header h1 { font-family: var(--font-display); font-size: 1.8rem; font-weight: 700; line-height: 1.5; margin-bottom: 1.5rem; }
+        .article-subtitle { font-size: 0.95rem; color: var(--text-secondary); line-height: 1.9; }
+
+        .article-content h2 { font-family: var(--font-display); font-size: 1.3rem; font-weight: 600; margin: 3rem 0 1.5rem; padding-bottom: 0.5rem; border-bottom: 2px solid var(--toki-blue-pale); }
+        .article-content h3 { font-family: var(--font-display); font-size: 1.1rem; font-weight: 600; margin: 2rem 0 1rem; color: var(--toki-blue-dark); }
+        .article-content p { margin-bottom: 1.5rem; text-align: justify; }
+        .article-content blockquote { border-left: 3px solid var(--toki-blue); padding-left: 1.5rem; margin: 2rem 0; font-family: var(--font-display); color: var(--text-secondary); }
+        .article-content ul { margin: 1.5rem 0; padding-left: 1.5rem; }
+        .article-content li { margin-bottom: 0.75rem; }
+
+        .core-message { background: var(--toki-blue-pale); border-left: 4px solid var(--toki-blue); padding: 1.5rem; margin: 2rem 0; font-size: 0.95rem; line-height: 1.8; }
+        .key-point { background: linear-gradient(135deg, var(--toki-blue-pale) 0%, #fff 100%); border: 1px solid var(--accent-blue); border-radius: 8px; padding: 1.5rem; margin: 2rem 0; text-align: center; }
+        .key-point p { font-family: var(--font-display); font-size: 1.1rem; color: var(--toki-blue-dark); margin: 0; }
+
+        .article-footer { margin-top: 4rem; padding-top: 2rem; border-top: 1px solid var(--border); text-align: center; }
+        .article-footer p { font-size: 0.8rem; color: var(--text-muted); margin-bottom: 1rem; }
+        .article-footer a { color: var(--toki-blue); text-decoration: none; }
+        .article-footer a:hover { text-decoration: underline; }
+
+        @media (max-width: 768px) {
+            .article-container { padding: 6rem 1.2rem 3rem; }
+            .article-header h1 { font-size: 1.5rem; }
+            .article-nav .nav-label { display: none; }
+        }
+        @media print { .article-nav { display: none; } .article-container { padding-top: 2rem; } }
+    </style>
+    <link rel="stylesheet" href="contact-form.css">
+    <meta property="og:image" content="https://tokistorage.github.io/lp/asset/tokistorage-icon-512.png">
+    <meta property="og:image:width" content="512">
+    <meta property="og:image:height" content="512">
+</head>
+<body>
+
+<nav class="article-nav">
+    <a href="index.html" class="nav-brand">トキストレージ</a>
+    <div class="nav-right">
+        <span class="nav-label">社会制度 / Society</span>
+        <a href="community-benefit-en.html" class="lang-switch">EN</a>
+    </div>
+</nav>
+
+<main class="article-container">
+
+    <header class="article-header">
+        <p class="article-category">ESSAY &mdash; 地域共生と長期保全</p>
+        <h1>地域との利益共有モデル<br><span style="font-size: 0.6em; font-weight: 400; color: var(--text-secondary);">&mdash;&mdash; 土地を借りるのではなく、島の一部になること</span></h1>
+        <p class="article-subtitle">
+            佐渡とマウイに保管拠点を置くとは、倉庫を建てることではない。<br>
+            その島が千年後も島であり続けるために、何を返せるかを考えることだ。
+        </p>
+    </header>
+
+    <article class="article-content">
+
+        <div class="core-message">
+            <strong>この記事で言いたいこと：</strong>千年保管の拠点は、土地の上に置かれるのではない。地域の中に根を下ろす。保管物が千年残るためには、その場所のコミュニティもまた千年続かなければならない。だから利益共有は慈善ではなく、保管設計の一部だ。
+        </div>
+
+        <h2>1. 抽出と共生</h2>
+
+        <p>企業が地方に拠点を置くとき、二つのパターンがある。</p>
+
+        <p>一つは抽出。安い土地、安い人件費、優遇税制。条件が変われば撤退する。工場が閉鎖されたあとに残るのは、空き地と失業だ。</p>
+
+        <p>もう一つは共生。その場所でしか成立しない理由があり、地域の存続が自社の存続と直結している。撤退の選択肢がそもそも存在しない。</p>
+
+        <p>トキストレージが佐渡とマウイを選んだのは、土地が安いからではない。どちらも∞形の島であり、太平洋を挟んだ地球規模の分散保管に最適な地質条件を持つからだ。佐渡は3000万年の大陸島。マウイはハレアカラ火山の安定した地盤。この地質学的な理由は、100年後も1000年後も変わらない。</p>
+
+        <blockquote>
+            撤退できない拠点を選んだ時点で、地域との関係は「取引」ではなく「運命共同体」になる。
+        </blockquote>
+
+        <h2>2. 佐渡——流人が文化を守った島</h2>
+
+        <p>佐渡には独特の文化的重層性がある。順徳天皇、日蓮、世阿弥——都から追放された人々がこの島に文化の本質を持ち込み、守り伝えた。能楽が今も佐渡で生きているのは、世阿弥が流された歴史があるからだ。</p>
+
+        <p>つまり佐渡は、「記憶の裏面」を保存してきた島だ。中央から忘れられたものが、ここで生き延びた。</p>
+
+        <p>トキストレージが佐渡に保管拠点を置くことは、この系譜の延長線上にある。声を残す。存在を残す。中央のインフラに依存せず、島の地質と文化の力で千年を超える。</p>
+
+        <p>だが同時に、佐渡は深刻な人口減少に直面している。高齢化率は40%を超え、若者の流出が止まらない。島の文化を継承する人がいなくなれば、能楽も、金山の記憶も、朱鷺の保全活動も、続かない。</p>
+
+        <p>千年保管の拠点が、人のいない島に成立するだろうか。しない。保管物を守るには、それを見守る人が必要だ。</p>
+
+        <h3>佐渡で何ができるか</h3>
+
+        <ul>
+            <li><strong>保管施設の現地管理者雇用</strong>——温湿度管理、定期点検、来訪者対応。フルタイム1〜2名、島内在住を条件とする</li>
+            <li><strong>能楽・伝統芸能の記録保全</strong>——島内の能舞台での上演をCodec2音声＋石英ガラスで記録。演者の声を千年残す。記録費用はトキストレージが負担し、コンテンツは地域に帰属する</li>
+            <li><strong>朱鷺（トキ）保全活動への寄付</strong>——社名の由来でもある「トキ」の保全に、売上の一部を拠出する。ブランドとしての整合性と地域還元の両立</li>
+            <li><strong>島内学校との連携</strong>——地元の子どもたちに「自分の声を千年残す」体験を提供。TokiQR（無料）を使った授業プログラムを開発し、島の教育資源に組み込む</li>
+        </ul>
+
+        <h2>3. マウイ——火と再生の島</h2>
+
+        <p>2023年のラハイナ大火は、マウイの歴史的中心地を焼き尽くした。ハワイ王国の首都だった街並み、バニヤンツリー、地域のアーカイブ——物理的な記憶が一夜で失われた。</p>
+
+        <p>この経験は、トキストレージの存在意義と直結する。火に耐える石英ガラスで、二度と失われない形で記録を残す。マウイにとって保管拠点は、外部から来た企業の施設ではなく、「もう記録は失わない」という島自身の意志の延長でなければならない。</p>
+
+        <p>だがマウイに拠点を置くことは、ハワイの土地と文化に対する深い敬意なしには成り立たない。ネイティブ・ハワイアンにとって、土地（ʻāina）は所有するものではなく、世話をするものだ。aloha ʻāina——土地への愛——は、利用権ではなく責任を意味する。</p>
+
+        <h3>マウイで何ができるか</h3>
+
+        <ul>
+            <li><strong>ネイティブ・ハワイアンの口承文化の記録</strong>——オリ（詠唱）、モオレロ（物語）を、コミュニティの許可と監修のもとで石英ガラスに記録する。所有権と利用権はコミュニティに帰属し、トキストレージは技術と費用を提供する</li>
+            <li><strong>ラハイナ復興への技術提供</strong>——大火で失われたアーカイブの再構築を支援する。住民の声の記録、歴史的写真のQR化など、地域の記憶復元プロジェクトに協力する</li>
+            <li><strong>現地アドバイザリーボードの設置</strong>——保管拠点の運営方針について、ネイティブ・ハワイアンコミュニティのリーダー、文化実践者、環境活動家を含むアドバイザリーボードを設置する。方針決定権は地域側に置く</li>
+            <li><strong>日系コミュニティとの接続</strong>——マウイには日系移民の歴史がある。日系アメリカ人の家族の声を故郷と結ぶプロジェクトとして、帰郷の記録を石英ガラスで保全する</li>
+        </ul>
+
+        <h2>4. CSRとの違い</h2>
+
+        <p>ここまでの話は、企業のCSR活動に聞こえるかもしれない。「地域貢献」「文化支援」「環境保全」——どれも聞き慣れた言葉だ。</p>
+
+        <p>だが構造が根本的に違う。</p>
+
+        <p>CSRは本業の利益から切り離された活動だ。業績が悪化すれば真っ先に削られる。CSR部門が廃止されても、本業は続く。つまりCSRは、構造的に持続可能ではない。</p>
+
+        <p>トキストレージの地域還元は本業そのものだ。保管拠点のある島が衰退すれば、保管物の安全も脅かされる。島の文化が途絶えれば、保管施設を見守る人がいなくなる。地域の存続は、事業の存続と不可分だ。</p>
+
+        <blockquote>
+            利益の一部を地域に還元するのではない。<br>
+            地域が存続することが、利益の前提条件なのだ。
+        </blockquote>
+
+        <h2>5. 三方よしの再設計</h2>
+
+        <p>近江商人の「三方よし」——売り手よし、買い手よし、世間よし——は、しばしばCSRの文脈で引用される。だが本来の意味はもっと構造的だ。</p>
+
+        <p>「世間よし」は「社会に良いことをする」という意味ではない。「商いが世間の仕組みの中に正しく組み込まれている」という意味だ。世間に受け入れられなければ、商いは続かない。だから世間よしは、持続性の条件であって、付加的な美徳ではない。</p>
+
+        <p>トキストレージにおける三者は、こうなる。</p>
+
+        <ul>
+            <li><strong>預ける人</strong>——声が千年残る安心を得る</li>
+            <li><strong>トキストレージ</strong>——バーンレート・ゼロの構造で事業が持続する</li>
+            <li><strong>保管拠点の地域</strong>——雇用、文化記録、教育プログラム、インフラ貢献を得る</li>
+        </ul>
+
+        <p>三者のうちどれか一つが欠けても、千年保管は成立しない。預ける人がいなければ事業がない。事業がなければ拠点を維持できない。拠点の地域が衰退すれば保管物を守れない。</p>
+
+        <h2>6. 千年後の島のために</h2>
+
+        <p>地域との利益共有を考えるとき、時間軸が問題になる。</p>
+
+        <p>通常のビジネスでは、5年計画が「長期」だ。だが千年保管を掲げるなら、地域との関係も千年の視野で設計しなければならない。</p>
+
+        <p>100年後、佐渡の人口がどうなっているかはわからない。マウイの政治体制がどう変わるかも予測できない。だが確実に言えることがある。その島に人がいて、保管施設を気にかけてくれる状態——それが千年保管の最低条件だ。</p>
+
+        <p>だからトキストレージの地域還元は、短期的な利益分配ではなく、「この島にいたい理由」を次の世代に残すことを目指す。子どもたちが自分の声を石英ガラスに刻んだ体験は、その子が大人になったとき、保管施設を守る動機になるかもしれない。能楽の上演が千年の記録として残ることは、演者の子孫にとって島に留まる理由になるかもしれない。</p>
+
+        <div class="key-point">
+            <p>千年保管とは、物を残すことではない。<br>物を見守る人を、残すことだ。<br><br>地域への還元は慈善ではない。<br>千年の保管設計そのものだ。</p>
+        </div>
+
+    </article>
+
+    <footer class="article-footer">
+        <p id="essay-nav-links"></p>
+        <p style="margin-top: 2rem; font-size: 0.75rem;">&copy; 2026 TokiStorage</p>
+    </footer>
+
+</main>
+
+<script src="contact-form.js"></script>
+<script src="essay-nav.js?v=20260220"></script>
+<script src="tracker.js"></script>
+</body>
+</html>
