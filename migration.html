@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" type="image/png" sizes="32x32" href="asset/favicon-32.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="asset/apple-touch-icon.png">
+    <title>マイグレーションの設計 | トキストレージ</title>
+    <meta name="robots" content="index, follow">
+    <meta name="description" content="「スケールしたら対応する」は実行されない。場当たり的な対処と、移行経路を設計しておくことの違いを、TokiQRの運用設計から考える。">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Shippori+Mincho:wght@400;500;600;700&family=Zen+Kaku+Gothic+New:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --toki-blue: #2563EB;
+            --toki-blue-dark: #1D4ED8;
+            --toki-blue-pale: #EFF6FF;
+            --accent-blue: #3B82F6;
+            --bg-white: #FFFFFF;
+            --text-primary: #1E293B;
+            --text-secondary: #475569;
+            --text-muted: #94A3B8;
+            --border: #E2E8F0;
+            --font-display: 'Shippori Mincho', serif;
+            --font-body: 'Zen Kaku Gothic New', sans-serif;
+        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        html { scroll-behavior: smooth; }
+        body { font-family: var(--font-body); font-weight: 400; background: var(--bg-white); color: var(--text-primary); line-height: 2; font-size: 16px; }
+
+        .article-nav { position: fixed; top: 0; left: 0; right: 0; z-index: 1000; background: rgba(255,255,255,0.95); backdrop-filter: blur(12px); border-bottom: 1px solid var(--border); padding: 0.6rem 1.2rem; display: flex; align-items: center; justify-content: space-between; gap: 1rem; }
+        .article-nav .nav-brand { font-family: var(--font-display); font-size: 0.9rem; font-weight: 600; color: var(--toki-blue); text-decoration: none; white-space: nowrap; }
+        .article-nav .nav-brand::before { content: ''; display: inline-block; width: 20px; height: 20px; background: url('asset/tokistorage-icon-512.png') no-repeat center / contain; vertical-align: -3px; margin-right: 5px; }
+        .article-nav .nav-right { display: flex; align-items: center; gap: 1rem; }
+        .article-nav .nav-label { font-size: 0.6rem; color: var(--text-muted); letter-spacing: 0.08em; }
+        .article-nav .lang-switch { font-size: 0.75rem; color: var(--toki-blue); text-decoration: none; padding: 0.3rem 0.6rem; border: 1px solid var(--toki-blue); border-radius: 4px; }
+        .article-nav .lang-switch:hover { background: var(--toki-blue); color: #fff; }
+
+        .article-container { max-width: 680px; margin: 0 auto; padding: 7rem 2rem 4rem; }
+        .article-header { margin-bottom: 3rem; padding-bottom: 2rem; border-bottom: 1px solid var(--border); }
+        .article-category { font-size: 0.7rem; color: var(--toki-blue); letter-spacing: 0.15em; margin-bottom: 1rem; }
+        .article-header h1 { font-family: var(--font-display); font-size: 1.8rem; font-weight: 700; line-height: 1.5; margin-bottom: 1.5rem; }
+        .article-subtitle { font-size: 0.95rem; color: var(--text-secondary); line-height: 1.9; }
+
+        .article-content h2 { font-family: var(--font-display); font-size: 1.3rem; font-weight: 600; margin: 3rem 0 1.5rem; padding-bottom: 0.5rem; border-bottom: 2px solid var(--toki-blue-pale); }
+        .article-content h3 { font-family: var(--font-display); font-size: 1.1rem; font-weight: 600; margin: 2rem 0 1rem; color: var(--toki-blue-dark); }
+        .article-content p { margin-bottom: 1.5rem; text-align: justify; }
+        .article-content blockquote { border-left: 3px solid var(--toki-blue); padding-left: 1.5rem; margin: 2rem 0; font-family: var(--font-display); color: var(--text-secondary); }
+        .article-content ul { margin: 1.5rem 0; padding-left: 1.5rem; }
+        .article-content li { margin-bottom: 0.75rem; }
+
+        .core-message { background: var(--toki-blue-pale); border-left: 4px solid var(--toki-blue); padding: 1.5rem; margin: 2rem 0; font-size: 0.95rem; line-height: 1.8; }
+        .key-point { background: linear-gradient(135deg, var(--toki-blue-pale) 0%, #fff 100%); border: 1px solid var(--accent-blue); border-radius: 8px; padding: 1.5rem; margin: 2rem 0; text-align: center; }
+        .key-point p { font-family: var(--font-display); font-size: 1.1rem; color: var(--toki-blue-dark); margin: 0; }
+
+        .article-footer { margin-top: 4rem; padding-top: 2rem; border-top: 1px solid var(--border); text-align: center; }
+        .article-footer p { font-size: 0.8rem; color: var(--text-muted); margin-bottom: 1rem; }
+        .article-footer a { color: var(--toki-blue); text-decoration: none; }
+        .article-footer a:hover { text-decoration: underline; }
+
+        @media (max-width: 768px) {
+            .article-container { padding: 6rem 1.2rem 3rem; }
+            .article-header h1 { font-size: 1.5rem; }
+            .article-nav .nav-label { display: none; }
+        }
+        @media print { .article-nav { display: none; } .article-container { padding-top: 2rem; } }
+    </style>
+    <link rel="stylesheet" href="contact-form.css">
+    <meta property="og:image" content="https://tokistorage.github.io/lp/asset/tokistorage-icon-512.png">
+    <meta property="og:image:width" content="512">
+    <meta property="og:image:height" content="512">
+</head>
+<body>
+
+<nav class="article-nav">
+    <a href="index.html" class="nav-brand">トキストレージ</a>
+    <div class="nav-right">
+        <span class="nav-label">技術・設計 / Technology</span>
+        <a href="migration-en.html" class="lang-switch">EN</a>
+    </div>
+</nav>
+
+<main class="article-container">
+
+    <header class="article-header">
+        <p class="article-category">ESSAY &mdash; 技術設計と運用哲学</p>
+        <h1>マイグレーションの設計<br><span style="font-size: 0.6em; font-weight: 400; color: var(--text-secondary);">&mdash;&mdash; 「スケールしたら対応する」が実行されない理由</span></h1>
+        <p class="article-subtitle">
+            場当たり的な対処と、移行経路の設計は、見た目が似ている。<br>
+            どちらも「今はやらない」という判断をする。<br>
+            だが一方は忘れ去られ、もう一方はその時が来たら半日で終わる。
+        </p>
+    </header>
+
+    <article class="article-content">
+
+        <div class="core-message">
+            <strong>この記事で言いたいこと：</strong>スケーリングの本質は、巨大なシステムを最初から作ることではない。フェーズが変わったときに、最小の変更で次の段階に移れる「継ぎ目」を設計しておくことだ。
+        </div>
+
+        <h2>1. 「スケールしたら対応する」の嘘</h2>
+
+        <p>ソフトウェア開発でもっともよく聞く先送りの言葉がある。「スケールしたら対応する」。</p>
+
+        <p>この言葉が発せられた瞬間、ほぼ確実に、その対応は行われない。</p>
+
+        <p>理由は単純だ。スケールしたとき、開発者はスケールに伴う別の問題に追われている。ユーザー対応、バグ修正、機能要望。「あのとき先送りにした技術的負債」は、優先度リストの下に沈んでいく。そして本当に限界が来たとき、緊急対応として場当たり的なパッチが当てられる。</p>
+
+        <p>これが「場当たり的」の正体だ。先送りそのものが悪いのではない。先送りにした課題の「戻り方」を設計していないことが問題なのだ。</p>
+
+        <h2>2. 場当たり的と移行設計の違い</h2>
+
+        <p>場当たり的な対処と、移行経路の設計は、表面上は同じに見える。どちらも「今はやらない」という判断をしている。</p>
+
+        <p>違いは一点だけだ。</p>
+
+        <blockquote>
+            移行設計は、「今はやらないが、やるときに何を変えればよいか」が明確になっている。
+        </blockquote>
+
+        <p>具体的には、次の条件が揃っていることを指す。</p>
+
+        <ul>
+            <li><strong>トリガー</strong>が定義されている——何が起きたら移行するのか</li>
+            <li><strong>変更箇所</strong>が局所化されている——どこを変えればよいのか</li>
+            <li><strong>手順</strong>が書かれている——どうやって移行するのか</li>
+        </ul>
+
+        <p>この三つが揃っていれば、「今はやらない」は怠慢ではなく設計判断になる。</p>
+
+        <h2>3. 一つの関数に集約する</h2>
+
+        <p>TokiQRの運用では、Google Apps Script（GAS）からメールを送信している。GASの無料枠はGmail経由で1日100通。個人運営の初期段階では十分だが、注文が増えれば上限に達する。</p>
+
+        <p>将来的にはAmazon SES（Simple Email Service）に移行すれば、月62,000通が無料になる。だが今SESを組み込む必要はない。注文はまだ少ないし、AWSアカウントの設定やドメイン認証といったセットアップは、必要になってからで十分だ。</p>
+
+        <p>では何をしたか。メール送信のコードを一つの関数に集約した。</p>
+
+        <blockquote>
+            function sendEmail(recipient, subject, body, options) {<br>
+            &nbsp;&nbsp;MailApp.sendEmail(recipient, subject, body, options || {});<br>
+            }
+        </blockquote>
+
+        <p>コード全体で14箇所あったMailApp.sendEmailの直接呼び出しを、すべてこの関数経由に変えた。SESに移行するときは、この1関数の中身を書き換えるだけだ。</p>
+
+        <p>これは過剰設計ではない。関数一つ追加しただけだ。だがこの一つが、将来の移行コストを「14箇所の書き換え＋テスト」から「1箇所の書き換え＋テスト」に変える。</p>
+
+        <h2>4. 三段階のロードマップ</h2>
+
+        <p>メール送信だけでなく、TokiQRの運用全体も同じ原則で設計されている。</p>
+
+        <h3>フェーズ1：自分で作る（現在）</h3>
+        <p>印刷、UVラミネート加工、梱包、発送。すべて一人で行う。GASとGmailで運用は完結し、インフラコストはゼロ。1日50件程度まではこの体制で回る。</p>
+
+        <h3>フェーズ2：国内外注</h3>
+        <p>1日50件を超えたら、ラミネート生産を国内の印刷業者に委託する。GASから注文データを業者に連携し、印刷・加工・梱包・発送を一括で任せる。TokiStorage側は在庫ゼロ、作業ゼロの完全デジタル運営になる。メール送信はSESに移行。</p>
+
+        <h3>フェーズ3：海外展開</h3>
+        <p>海外注文が増えたら、顧客の国に応じて現地の生産拠点に振り分ける。注文データにはすでに国情報が含まれているので、ルーティングロジックの追加だけで対応できる。</p>
+
+        <p>各フェーズの移行で必要なコード変更は最小限だ。フェーズ2ではsendEmail関数の書き換えと業者連携の追加。フェーズ3では国別ルーティングの追加。いずれも既存のデータ構造を壊さない。</p>
+
+        <h2>5. 過剰設計との境界</h2>
+
+        <p>移行設計には、過剰設計に陥る誘惑がつきまとう。「将来のために」とあらゆるケースを想定し、使われない抽象化を積み重ねる。</p>
+
+        <p>その境界はどこにあるのか。</p>
+
+        <blockquote>
+            今の段階で動くコードに、一行も余計なものを足さない。<br>
+            ただし、将来の変更が一箇所で済むように、責務を分離しておく。
+        </blockquote>
+
+        <p>sendEmail関数は、今この瞬間はMailApp.sendEmailをそのまま呼んでいるだけだ。ラッパーとしてのオーバーヘッドは実質ゼロ。だが将来の変更点を一箇所に局所化している。</p>
+
+        <p>これが「移行設計」と「過剰設計」の分水嶺だ。今の動作に一切影響を与えず、将来の移行コストだけを下げる。足すのは構造であって、機能ではない。</p>
+
+        <h2>6. 継ぎ目のある設計</h2>
+
+        <p>建築には「エキスパンションジョイント」という概念がある。地震や温度変化で建物が膨張・収縮したとき、構造全体が壊れないように設けられた継ぎ目だ。普段は何の役割も果たさない。だが力がかかったとき、その継ぎ目が建物を守る。</p>
+
+        <p>ソフトウェアにおけるマイグレーション設計も同じだ。関数の抽象化、データ構造の分離、設定の外出し。これらは平時には何もしない。だがフェーズが変わったとき、変更の衝撃を吸収する。</p>
+
+        <div class="key-point">
+            <p>マイグレーションとは、巨大なシステムを事前に作ることではない。<br>小さな継ぎ目を、正しい場所に仕込んでおくことだ。</p>
+        </div>
+
+        <h2>7. 場当たり的であることの本当のコスト</h2>
+
+        <p>場当たり的な対処のコストは、技術的負債だけではない。</p>
+
+        <p>本当のコストは「判断の劣化」だ。緊急対応を繰り返すうちに、チームは「どうせまた急場しのぎになる」と学習する。設計への信頼が失われ、「ちゃんと作る」という選択肢が心理的に遠のく。</p>
+
+        <p>逆に、移行経路が設計されている組織では、「今はやらない」という判断に不安がない。やるときの手順が見えているから、安心して先送りにできる。先送りが罪悪感ではなく、優先順位の管理になる。</p>
+
+        <p>TokiQRでは、SES移行の手順書がgas/scaling-roadmap.mdに残されている。Lambda関数のコード、IAMロールの設定、GAS側の書き換え方法。すべてが書かれている。だから「今はやらない」と言える。やるときに何をすればよいか、わかっているからだ。</p>
+
+        <h2>8. 個人開発におけるマイグレーション</h2>
+
+        <p>この設計原則は、大規模なチーム開発だけのものではない。むしろ個人開発にこそ必要だ。</p>
+
+        <p>チームなら、誰かが技術的負債を覚えていてくれるかもしれない。だが個人開発では、3ヶ月前の自分が何を考えていたかすら忘れている。「スケールしたら対応する」と言った自分は、もういない。</p>
+
+        <p>だからこそ、移行経路をコードの近くに残す。手順書を書く。トリガー条件を明記する。未来の自分は他人だ。その他人が迷わず作業できるように、今の自分が道を敷いておく。</p>
+
+        <div class="key-point">
+            <p>場当たり的とは、道がないことではない。<br>道があったことを、忘れてしまうことだ。</p>
+        </div>
+
+    </article>
+
+    <footer class="article-footer">
+        <p id="essay-nav-links"></p>
+        <p style="margin-top: 2rem; font-size: 0.75rem;">&copy; 2026 TokiStorage</p>
+    </footer>
+
+</main>
+
+<script src="contact-form.js"></script>
+<script src="essay-nav.js?v=20260219"></script>
+<script src="tracker.js"></script>
+</body>
+</html>
