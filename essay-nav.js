@@ -126,7 +126,8 @@
     // ── メタ視点 ──
     { id: 'preserving-words', ja: 'ことばを残す', en: 'Preserving Words' },
     { id: 'why-essays', ja: 'エッセイを刻む意義', en: 'The Significance of Inscribing Essays' },
-    { id: 'erasure', ja: '残さない選択', en: 'Choosing Not to Leave Behind' }
+    { id: 'erasure', ja: '残さない選択', en: 'Choosing Not to Leave Behind' },
+    { id: 'narrative-trust', ja: '物語が語る信頼', en: 'The Trust That Stories Tell' }
   ];
 
   // ── Related Essays Map ──
@@ -135,7 +136,7 @@
     // ── 基礎理論（個人の内面）──
     'psychology':             ['philosophy', 'integrity', 'emotion', 'backcasting', 'solitude'],
     'philosophy':             ['psychology', 'integrity', 'existentialism', 'boundary', 'peace'],
-    'integrity':              ['philosophy', 'psychology', 'openness', 'sanpoyoshi', 'free-strategy'],
+    'integrity':              ['philosophy', 'psychology', 'openness', 'sanpoyoshi', 'narrative-trust'],
     'solitude':               ['psychology', 'emotion', 'lifestyle', 'transformation-journey', 'satiation'],
     'pathology':              ['psychology', 'lifecycle', 'adversity', 'ceremony', 'organization'],
     'emotion':                ['psychology', 'solitude', 'satiation', 'transformation-journey', 'backcasting'],
@@ -173,7 +174,7 @@
     'novelty-soap':           ['fragrance', 'gift-economy', 'advertising', 'brochure-essay', 'consumption'],
     'fragrance':              ['novelty-soap', 'consumption', 'advertising', 'ecology', 'gift-economy'],
     'advertising':            ['brochure-essay', 'free-strategy', 'media', 'novelty-soap', 'price-acceptance'],
-    'price-acceptance':       ['advertising', 'no-competition', 'brochure-essay', 'consumption', 'payment'],
+    'price-acceptance':       ['advertising', 'no-competition', 'brochure-essay', 'narrative-trust', 'payment'],
     'finance':                ['ownership', 'realestate', 'payment', 'burn-rate-zero', 'industry'],
     'ownership':              ['finance', 'realestate', 'what-to-leave', 'legacy', 'existentialism'],
     'realestate':             ['ownership', 'finance', 'urayasu', 'independence', 'industry'],
@@ -185,7 +186,7 @@
     'global-honbinos':        ['global-niche', 'global', 'sanpoyoshi', 'ecology', 'turtle'],
     'ecosystem':              ['platform', 'sanpoyoshi', 'no-competition', 'disintermediation', 'industry'],
     'free-strategy':          ['burn-rate-zero', 'sanpoyoshi', 'no-competition', 'gift-economy', 'advertising'],
-    'brochure-essay':         ['advertising', 'free-strategy', 'novelty-soap', 'why-essays', 'why-not-consulting'],
+    'brochure-essay':         ['advertising', 'free-strategy', 'novelty-soap', 'why-essays', 'narrative-trust'],
     'payment':                ['finance', 'burn-rate-zero', 'cloudflare-gas', 'partner-boundary', 'made-to-order'],
     'partner-boundary':       ['sanpoyoshi', 'walking-partner', 'made-to-order', 'boundary', 'integrity'],
     'made-to-order':          ['partner-boundary', 'industry', 'disintermediation', 'payment', 'migration'],
@@ -242,9 +243,10 @@
     'vibe-coding':            ['burn-rate-zero', 'rapid-prototyping', 'migration', 'future', 'what-is-github'],
     'rapid-prototyping':      ['vibe-coding', 'burn-rate-zero', 'poc', 'migration', 'departure'],
     // ── メタ視点 ──
-    'preserving-words':       ['why-essays', 'akashic-record', 'what-to-leave', 'hands', 'openness'],
-    'why-essays':             ['preserving-words', 'brochure-essay', 'no-competition', 'openness', 'erasure'],
-    'erasure':                ['preserving-words', 'why-essays', 'shiseikan', 'what-to-leave', 'openness']
+    'preserving-words':       ['why-essays', 'akashic-record', 'what-to-leave', 'narrative-trust', 'openness'],
+    'why-essays':             ['preserving-words', 'brochure-essay', 'narrative-trust', 'openness', 'erasure'],
+    'erasure':                ['preserving-words', 'why-essays', 'shiseikan', 'what-to-leave', 'openness'],
+    'narrative-trust':        ['brochure-essay', 'preserving-words', 'integrity', 'why-essays', 'price-acceptance']
   };
 
   const isEnglish = document.documentElement.lang === 'en';
