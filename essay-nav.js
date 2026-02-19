@@ -286,12 +286,28 @@
 
   // ── Share Buttons ──
   var xIcon = '<svg viewBox="0 0 24 24" width="14" height="14" fill="currentColor"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>';
+  var linkedInIcon = '<svg viewBox="0 0 24 24" width="14" height="14" fill="currentColor"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 01-2.063-2.065 2.064 2.064 0 112.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg>';
+  var lineIcon = '<svg viewBox="0 0 24 24" width="14" height="14" fill="currentColor"><path d="M19.365 9.863c.349 0 .63.285.63.631 0 .345-.281.63-.63.63H17.61v1.125h1.755c.349 0 .63.283.63.63 0 .344-.281.629-.63.629h-2.386a.63.63 0 01-.63-.629V8.108c0-.345.281-.63.63-.63h2.386c.349 0 .63.285.63.63 0 .349-.281.63-.63.63H17.61v1.125h1.755zm-3.855 3.016a.63.63 0 01-.63.629.626.626 0 01-.51-.262l-2.455-3.339v2.972a.63.63 0 01-1.26 0V8.108a.63.63 0 01.63-.63c.2 0 .385.096.51.262l2.455 3.339V8.108a.63.63 0 011.26 0v4.771zm-5.741 0a.63.63 0 01-1.26 0V8.108a.63.63 0 011.26 0v4.771zm-2.527.629H4.856a.63.63 0 01-.63-.629V8.108c0-.345.282-.63.63-.63.349 0 .63.285.63.63v4.141h1.756c.348 0 .629.283.629.63 0 .344-.281.629-.629.629M24 10.314C24 4.943 18.615.572 12 .572S0 4.943 0 10.314c0 4.811 4.27 8.842 10.035 9.608.391.082.923.258 1.058.59.12.301.079.766.038 1.08l-.164 1.02c-.045.301-.24 1.186 1.049.645 1.291-.539 6.916-4.078 9.436-6.975C23.176 14.393 24 12.458 24 10.314"/></svg>';
+  var hatenaIcon = '<svg viewBox="0 0 24 24" width="14" height="14" fill="currentColor"><path d="M20.47 0C22.42 0 24 1.58 24 3.53v16.94c0 1.95-1.58 3.53-3.53 3.53H3.53C1.58 24 0 22.42 0 20.47V3.53C0 1.58 1.58 0 3.53 0h16.94zm-3.705 14.47c-.78 0-1.41.63-1.41 1.41s.63 1.414 1.41 1.414 1.41-.634 1.41-1.414-.63-1.41-1.41-1.41zm.255-9.887h-2.34v8.142h2.34V4.583zm-6.36 5.747c1.156-.423 1.86-1.332 1.86-2.61C12.22 5.756 10.856 4.6 8.55 4.6H4.8v12.86h3.855c2.505 0 3.96-1.245 3.96-3.345 0-1.53-.9-2.55-2.055-2.865v-.06l.105.04zm-2.88-3.15h1.29c.855 0 1.38.405 1.38 1.14s-.48 1.17-1.38 1.17H7.78V7.18zm1.515 8.28H7.78v-2.58h1.515c1.005 0 1.53.465 1.53 1.29s-.525 1.29-1.53 1.29z"/></svg>';
+  var fbIcon = '<svg viewBox="0 0 24 24" width="14" height="14" fill="currentColor"><path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/></svg>';
   var copyIcon = '<svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 01-2-2V4a2 2 0 012-2h9a2 2 0 012 2v1"/></svg>';
 
-  function tweetUrl(text, url) {
-    var maxText = 280 - 24; // URL takes ~23 chars on X
-    if (text.length > maxText) text = text.substring(0, maxText - 1) + '\u2026';
-    return 'https://twitter.com/intent/tweet?text=' + encodeURIComponent(text) + '&url=' + encodeURIComponent(url);
+  function shareUrl(platform, text, url) {
+    var e = encodeURIComponent;
+    switch (platform) {
+      case 'x':
+        var maxText = 280 - 24;
+        if (text.length > maxText) text = text.substring(0, maxText - 1) + '\u2026';
+        return 'https://twitter.com/intent/tweet?text=' + e(text) + '&url=' + e(url);
+      case 'linkedin':
+        return 'https://www.linkedin.com/sharing/share-offsite/?url=' + e(url);
+      case 'line':
+        return 'https://social-plugins.line.me/lineit/share?url=' + e(url) + '&text=' + e(text);
+      case 'hatena':
+        return 'https://b.hatena.ne.jp/entry/s/' + url.replace(/^https?:\/\//, '');
+      case 'facebook':
+        return 'https://www.facebook.com/sharer/sharer.php?u=' + e(url) + '&quote=' + e(text);
+    }
   }
 
   function getPageTitle() {
@@ -309,6 +325,7 @@
     style.textContent = [
       '.share-bar{display:flex;align-items:center;gap:0.5rem;margin:2.5rem 0 0;padding:1rem 0;border-top:1px solid var(--border,#E2E8F0);}',
       '.share-bar-label{font-size:0.7rem;color:var(--text-muted,#94A3B8);letter-spacing:0.1em;font-weight:600;}',
+      '.share-bar{flex-wrap:wrap;}',
       '.share-btn{display:inline-flex;align-items:center;gap:0.35rem;padding:0.4rem 0.7rem;border:1px solid var(--border,#E2E8F0);border-radius:6px;background:var(--bg-white,#fff);color:var(--text-secondary,#475569);font-size:0.75rem;font-family:var(--font-body);cursor:pointer;text-decoration:none;transition:all 0.15s;}',
       '.share-btn:hover{border-color:var(--toki-blue,#2563EB);color:var(--toki-blue,#2563EB);background:var(--toki-blue-pale,#EFF6FF);}',
       '.share-btn-copied{border-color:#16a34a!important;color:#16a34a!important;background:#f0fdf4!important;}',
@@ -334,7 +351,11 @@
     var bar = document.createElement('div');
     bar.className = 'share-bar';
     bar.innerHTML = '<span class="share-bar-label">' + shareLabel + '</span>'
-      + '<a class="share-btn" href="' + tweetUrl(title, pageUrl) + '" target="_blank" rel="noopener">' + xIcon + ' Post</a>'
+      + '<a class="share-btn" href="' + shareUrl('x', title, pageUrl) + '" target="_blank" rel="noopener">' + xIcon + ' Post</a>'
+      + '<a class="share-btn" href="' + shareUrl('linkedin', title, pageUrl) + '" target="_blank" rel="noopener">' + linkedInIcon + ' LinkedIn</a>'
+      + '<a class="share-btn" href="' + shareUrl('line', title, pageUrl) + '" target="_blank" rel="noopener">' + lineIcon + ' LINE</a>'
+      + '<a class="share-btn" href="' + shareUrl('hatena', title, pageUrl) + '" target="_blank" rel="noopener">' + hatenaIcon + ' Hatena</a>'
+      + '<a class="share-btn" href="' + shareUrl('facebook', title, pageUrl) + '" target="_blank" rel="noopener">' + fbIcon + ' Facebook</a>'
       + '<button class="share-btn" id="copy-url-btn">' + copyIcon + ' ' + copyLabel + '</button>';
     articleContent.appendChild(bar);
 
@@ -366,7 +387,7 @@
       link.addEventListener('click', function(e) {
         e.preventDefault();
         var text = getCleanText(el);
-        window.open(tweetUrl(text, pageUrl), '_blank', 'width=550,height=420');
+        window.open(shareUrl('x', text, pageUrl), '_blank', 'width=550,height=420');
       });
       el.appendChild(link);
     });
