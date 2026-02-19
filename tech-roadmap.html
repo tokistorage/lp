@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" type="image/png" sizes="32x32" href="asset/favicon-32.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="asset/apple-touch-icon.png">
+    <title>技術ロードマップ——10年ごとのマイグレーション計画 | トキストレージ</title>
+    <meta name="robots" content="index, follow">
+    <meta name="description" content="石英ガラスは3億年もつ。だが読み取る技術は10年で変わる。千年保管のために必要なのは、永遠の媒体ではなく、10年ごとに更新し続ける設計だ。">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Shippori+Mincho:wght@400;500;600;700&family=Zen+Kaku+Gothic+New:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --toki-blue: #2563EB;
+            --toki-blue-dark: #1D4ED8;
+            --toki-blue-pale: #EFF6FF;
+            --accent-blue: #3B82F6;
+            --bg-white: #FFFFFF;
+            --text-primary: #1E293B;
+            --text-secondary: #475569;
+            --text-muted: #94A3B8;
+            --border: #E2E8F0;
+            --font-display: 'Shippori Mincho', serif;
+            --font-body: 'Zen Kaku Gothic New', sans-serif;
+        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        html { scroll-behavior: smooth; }
+        body { font-family: var(--font-body); font-weight: 400; background: var(--bg-white); color: var(--text-primary); line-height: 2; font-size: 16px; }
+
+        .article-nav { position: fixed; top: 0; left: 0; right: 0; z-index: 1000; background: rgba(255,255,255,0.95); backdrop-filter: blur(12px); border-bottom: 1px solid var(--border); padding: 0.6rem 1.2rem; display: flex; align-items: center; justify-content: space-between; gap: 1rem; }
+        .article-nav .nav-brand { font-family: var(--font-display); font-size: 0.9rem; font-weight: 600; color: var(--toki-blue); text-decoration: none; white-space: nowrap; }
+        .article-nav .nav-brand::before { content: ''; display: inline-block; width: 20px; height: 20px; background: url('asset/tokistorage-icon-512.png') no-repeat center / contain; vertical-align: -3px; margin-right: 5px; }
+        .article-nav .nav-right { display: flex; align-items: center; gap: 1rem; }
+        .article-nav .nav-label { font-size: 0.6rem; color: var(--text-muted); letter-spacing: 0.08em; }
+        .article-nav .lang-switch { font-size: 0.75rem; color: var(--toki-blue); text-decoration: none; padding: 0.3rem 0.6rem; border: 1px solid var(--toki-blue); border-radius: 4px; }
+        .article-nav .lang-switch:hover { background: var(--toki-blue); color: #fff; }
+
+        .article-container { max-width: 680px; margin: 0 auto; padding: 7rem 2rem 4rem; }
+        .article-header { margin-bottom: 3rem; padding-bottom: 2rem; border-bottom: 1px solid var(--border); }
+        .article-category { font-size: 0.7rem; color: var(--toki-blue); letter-spacing: 0.15em; margin-bottom: 1rem; }
+        .article-header h1 { font-family: var(--font-display); font-size: 1.8rem; font-weight: 700; line-height: 1.5; margin-bottom: 1.5rem; }
+        .article-subtitle { font-size: 0.95rem; color: var(--text-secondary); line-height: 1.9; }
+
+        .article-content h2 { font-family: var(--font-display); font-size: 1.3rem; font-weight: 600; margin: 3rem 0 1.5rem; padding-bottom: 0.5rem; border-bottom: 2px solid var(--toki-blue-pale); }
+        .article-content h3 { font-family: var(--font-display); font-size: 1.1rem; font-weight: 600; margin: 2rem 0 1rem; color: var(--toki-blue-dark); }
+        .article-content p { margin-bottom: 1.5rem; text-align: justify; }
+        .article-content blockquote { border-left: 3px solid var(--toki-blue); padding-left: 1.5rem; margin: 2rem 0; font-family: var(--font-display); color: var(--text-secondary); }
+        .article-content ul { margin: 1.5rem 0; padding-left: 1.5rem; }
+        .article-content li { margin-bottom: 0.75rem; }
+
+        .core-message { background: var(--toki-blue-pale); border-left: 4px solid var(--toki-blue); padding: 1.5rem; margin: 2rem 0; font-size: 0.95rem; line-height: 1.8; }
+        .key-point { background: linear-gradient(135deg, var(--toki-blue-pale) 0%, #fff 100%); border: 1px solid var(--accent-blue); border-radius: 8px; padding: 1.5rem; margin: 2rem 0; text-align: center; }
+        .key-point p { font-family: var(--font-display); font-size: 1.1rem; color: var(--toki-blue-dark); margin: 0; }
+
+        .article-footer { margin-top: 4rem; padding-top: 2rem; border-top: 1px solid var(--border); text-align: center; }
+        .article-footer p { font-size: 0.8rem; color: var(--text-muted); margin-bottom: 1rem; }
+        .article-footer a { color: var(--toki-blue); text-decoration: none; }
+        .article-footer a:hover { text-decoration: underline; }
+
+        @media (max-width: 768px) {
+            .article-container { padding: 6rem 1.2rem 3rem; }
+            .article-header h1 { font-size: 1.5rem; }
+            .article-nav .nav-label { display: none; }
+        }
+        @media print { .article-nav { display: none; } .article-container { padding-top: 2rem; } }
+    </style>
+    <link rel="stylesheet" href="contact-form.css">
+    <meta property="og:image" content="https://tokistorage.github.io/lp/asset/tokistorage-icon-512.png">
+    <meta property="og:image:width" content="512">
+    <meta property="og:image:height" content="512">
+</head>
+<body>
+
+<nav class="article-nav">
+    <a href="index.html" class="nav-brand">トキストレージ</a>
+    <div class="nav-right">
+        <span class="nav-label">技術・設計 / Technology</span>
+        <a href="tech-roadmap-en.html" class="lang-switch">EN</a>
+    </div>
+</nav>
+
+<main class="article-container">
+
+    <header class="article-header">
+        <p class="article-category">ESSAY &mdash; 技術設計と長期保全</p>
+        <h1>技術ロードマップ<br><span style="font-size: 0.6em; font-weight: 400; color: var(--text-secondary);">&mdash;&mdash; 10年ごとのマイグレーション計画</span></h1>
+        <p class="article-subtitle">
+            石英ガラスは3億年もつ。だが、それを読み取る技術は10年で変わる。<br>
+            千年保管に必要なのは、永遠の媒体ではない。<br>
+            更新し続ける意志と、その手順を残すことだ。
+        </p>
+    </header>
+
+    <article class="article-content">
+
+        <div class="core-message">
+            <strong>この記事で言いたいこと：</strong>千年保管の最大のリスクは物理的劣化ではない。技術の陳腐化だ。石英ガラスが完璧に残っていても、それを読む手段が失われれば意味がない。だから10年ごとに技術層を点検し、必要なら移行する——式年遷宮のように。
+        </div>
+
+        <h2>1. 非対称性の問題</h2>
+
+        <p>トキストレージの三層分散保管には、一つの構造的な非対称性がある。</p>
+
+        <p>物理層（石英ガラス）の寿命は3億年以上。日立製作所と京都大学の共同研究で、加速劣化試験により実証されている。一方、デジタル層の技術サイクルは10年単位で変わる。QRコードの規格、URLの仕組み、ブラウザの仕様、ホスティングサービスの存続——すべてが入れ替わりうる。</p>
+
+        <p>つまり、「器」は千年もつが、「読み方」が先に消える。</p>
+
+        <p>この非対称性を放置すれば、100年後に完璧な石英ガラスが残っていても、そこに刻まれたQRコードが指すURLは死んでいる。保管物は物理的には無傷だが、実質的にはアクセス不能になる。</p>
+
+        <h2>2. 三つの層、三つの時間軸</h2>
+
+        <p>この問題に対するトキストレージの設計は、三層それぞれに異なる時間軸のマイグレーション戦略を持たせることだ。</p>
+
+        <h3>物理層：石英ガラス——マイグレーション不要</h3>
+
+        <p>石英ガラスに刻まれたデータは、レーザー加工によるフェムト秒パルスでナノグレーティング構造として記録される。温度、湿度、紫外線、化学変化に対して極めて安定しており、読み取りに必要なのは偏光顕微鏡だけだ。光学原理は物理法則そのものなので、技術が変わっても原理は変わらない。</p>
+
+        <p>この層は「マイグレーションしない」ことが設計の核だ。変わらないからこそ、他の層が変わっても基盤が残る。</p>
+
+        <h3>国家層：国立国会図書館——制度によるマイグレーション</h3>
+
+        <p>国立国会図書館（NDL）のウェブアーカイブは、納本制度という法的枠組みに基づいて運用されている。技術フォーマットの移行はNDL自身が組織的に行う。WARCフォーマットからの変換、メタデータスキーマの更新、ストレージ基盤の刷新——これらは国の機関として予算と人員を投じて実施される。</p>
+
+        <p>個人や企業が50年後のフォーマット互換性を心配する必要がない。それが国家層に託す意味だ。</p>
+
+        <h3>民間層：GitHub——コミュニティによるマイグレーション</h3>
+
+        <p>GitHubは現在、1億人以上の開発者が利用するプラットフォームだ。Arctic Code Vaultプログラムにより、オープンソースコードはノルウェーのスヴァールバル諸島の永久凍土下に物理的にもアーカイブされている。</p>
+
+        <p>だがGitHub自体の存続は保証されない。10年後にMicrosoftが方針を変えるかもしれない。だからこの層のマイグレーション戦略は「Gitそのもの」に依拠する。Gitは分散型バージョン管理システムであり、リポジトリのクローンさえあれば、どのホスティングサービスにも移行できる。GitHub → GitLab → Codeberg → 自前サーバー。移行先は無数にある。</p>
+
+        <h2>3. 10年サイクルの点検項目</h2>
+
+        <p>三層の設計があっても、放置すれば機能しなくなる。だから10年ごとに以下を点検する。</p>
+
+        <h3>QRコード規格の互換性</h3>
+        <p>QRコードはISO/IEC 18004として国際標準化されている。1994年の発明以来、後方互換性を維持したまま拡張されてきた。だが30年後、50年後に同じ規格が読み取り可能である保証はない。10年ごとに、主要なスマートフォンのカメラアプリでQRコードが正常に読み取れるかを検証する。読み取り率が低下していれば、新しいコード規格への移行を検討する。</p>
+
+        <h3>URL・ドメインの存続</h3>
+        <p>石英ガラスに刻まれたQRコードにはURLが埋め込まれている。ドメイン（tokistorage.github.io）の存続は、GitHub Pagesの継続に依存する。10年ごとに、ドメインの有効性と代替ホスティングの選択肢を評価する。独自ドメインへの移行が必要になった場合に備え、リダイレクト設計を常に最新化しておく。</p>
+
+        <h3>ファイルフォーマットの可読性</h3>
+        <p>音声データはCodec2（オープンソース音声コーデック）、画像はPNGとJPEG、テキストはUTF-8のプレーンテキストとHTML。いずれもオープン規格を選んでいるのは、プロプライエタリなフォーマットが10年で読めなくなるリスクを避けるためだ。10年ごとに、保管しているフォーマットが現行の主要ブラウザとデバイスで再生可能かを検証する。</p>
+
+        <h3>再生環境の互換性</h3>
+        <p>play.htmlはブラウザ上で音声を再生するページだ。WebAudio API、WASM（WebAssembly）、Base64URLエンコーディング——これらのWeb標準が10年後も機能するかを検証する。もし特定のAPIが非推奨になった場合、代替実装に切り替える。</p>
+
+        <h2>4. 式年遷宮という先例</h2>
+
+        <p>伊勢神宮は20年ごとに社殿を建て替える。式年遷宮と呼ばれるこの儀式は、1300年以上続いている。</p>
+
+        <p>木造建築は永遠ではない。だが20年ごとに建て替えることで、建築技術の伝承と材料の更新が同時に行われる。結果として、建物そのものは常に新しいが、「建て方」の知識は途切れない。</p>
+
+        <blockquote>
+            永遠に保つ方法は二つある。<br>
+            変わらない素材を使うか、変わり続ける仕組みを作るか。
+        </blockquote>
+
+        <p>トキストレージは両方を採用した。石英ガラスは変わらない素材。10年ごとのマイグレーションは変わり続ける仕組み。物理層が「永遠」を担い、デジタル層が「更新」を担う。</p>
+
+        <p>式年遷宮の知恵は、「壊れる前に建て替える」ことにある。劣化してから慌てるのではなく、まだ機能しているうちに次の形に移す。トキストレージの10年サイクルも同じだ。QRコードがまだ読める間に、次の10年も読めるかを確認する。</p>
+
+        <h2>5. 運営者不在時の設計</h2>
+
+        <p>千年保管を掲げる以上、運営者がいなくなるシナリオは想定しなければならない。</p>
+
+        <p>トキストレージの設計は、バーンレート・ゼロ（固定費ゼロ）を基盤にしている。サーバー費用、ドメイン費用、ストレージ費用——すべてが無料枠の範囲で運用されている。つまり、誰も課金しなくても、システムは動き続ける。</p>
+
+        <p>だがそれでも、10年ごとの点検は誰かがやらなければならない。</p>
+
+        <p>ここで三層設計が機能する。仮にデジタル層のメンテナンスが途絶えても、物理層の石英ガラスは手元にある。国家層のNDLアーカイブは制度として存続する。三層のうち一層が失われても、残りの二層でデータは生き延びる。</p>
+
+        <p>理想は、10年ごとの点検を継続すること。だが現実には、途絶える可能性もある。だからこそ三層なのだ。冗長性は「うまくいかなかったとき」のために存在する。</p>
+
+        <h2>6. ロードマップは公開する</h2>
+
+        <p>このマイグレーション計画を非公開にする理由はない。</p>
+
+        <p>公開することで、三つの効果がある。第一に、利用者が「自分の保管物がどう守られるか」を理解できる。第二に、技術コミュニティからのフィードバックが得られる。第三に、将来の運営者（あるいはフォークする誰か）が、設計思想ごと引き継げる。</p>
+
+        <p>トキストレージのコードはGitHubでオープンソース公開されている。このエッセイ自体が、技術ロードマップの公開文書の一部だ。設計思想がコードの横に並んでいれば、10年後の誰かが「なぜこう作ったのか」を理解した上でマイグレーションを実行できる。</p>
+
+        <div class="key-point">
+            <p>石英ガラスは千年もつ。<br>だがそれを読む技術は、10年ごとに更新しなければならない。<br><br>永遠とは、一度作って終わりではない。<br>繰り返し手を入れ続けることだ。</p>
+        </div>
+
+    </article>
+
+    <footer class="article-footer">
+        <p id="essay-nav-links"></p>
+        <p style="margin-top: 2rem; font-size: 0.75rem;">&copy; 2026 TokiStorage</p>
+    </footer>
+
+</main>
+
+<script src="contact-form.js"></script>
+<script src="essay-nav.js?v=20260220"></script>
+<script src="tracker.js"></script>
+</body>
+</html>
