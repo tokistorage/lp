@@ -1,0 +1,241 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" type="image/png" sizes="32x32" href="asset/favicon-32.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="asset/apple-touch-icon.png">
+    <title>Burn Rate Zero | TokiStorage</title>
+    <meta name="robots" content="index, follow">
+    <meta name="description" content="Build the entire foundation before your first sale. When fixed costs are literally zero, the pressure to ship prematurely disappears, and design quality transforms.">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Shippori+Mincho:wght@400;500;600;700&family=Zen+Kaku+Gothic+New:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --toki-blue: #2563EB;
+            --toki-blue-dark: #1D4ED8;
+            --toki-blue-pale: #EFF6FF;
+            --accent-blue: #3B82F6;
+            --bg-white: #FFFFFF;
+            --text-primary: #1E293B;
+            --text-secondary: #475569;
+            --text-muted: #94A3B8;
+            --border: #E2E8F0;
+            --font-display: 'Shippori Mincho', serif;
+            --font-body: 'Zen Kaku Gothic New', sans-serif;
+        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        html { scroll-behavior: smooth; }
+        body { font-family: var(--font-body); font-weight: 400; background: var(--bg-white); color: var(--text-primary); line-height: 2; font-size: 16px; }
+
+        .article-nav { position: fixed; top: 0; left: 0; right: 0; z-index: 1000; background: rgba(255,255,255,0.95); backdrop-filter: blur(12px); border-bottom: 1px solid var(--border); padding: 0.6rem 1.2rem; display: flex; align-items: center; justify-content: space-between; gap: 1rem; }
+        .article-nav .nav-brand { font-family: var(--font-display); font-size: 0.9rem; font-weight: 600; color: var(--toki-blue); text-decoration: none; white-space: nowrap; }
+        .article-nav .nav-brand::before { content: ''; display: inline-block; width: 20px; height: 20px; background: url('asset/tokistorage-icon-512.png') no-repeat center / contain; vertical-align: -3px; margin-right: 5px; }
+        .article-nav .nav-right { display: flex; align-items: center; gap: 1rem; }
+        .article-nav .nav-label { font-size: 0.6rem; color: var(--text-muted); letter-spacing: 0.08em; }
+        .article-nav .lang-switch { font-size: 0.75rem; color: var(--toki-blue); text-decoration: none; padding: 0.3rem 0.6rem; border: 1px solid var(--toki-blue); border-radius: 4px; }
+        .article-nav .lang-switch:hover { background: var(--toki-blue); color: #fff; }
+
+        .article-container { max-width: 680px; margin: 0 auto; padding: 7rem 2rem 4rem; }
+        .article-header { margin-bottom: 3rem; padding-bottom: 2rem; border-bottom: 1px solid var(--border); }
+        .article-category { font-size: 0.7rem; color: var(--toki-blue); letter-spacing: 0.15em; margin-bottom: 1rem; }
+        .article-header h1 { font-family: var(--font-display); font-size: 1.8rem; font-weight: 700; line-height: 1.5; margin-bottom: 1.5rem; }
+        .article-subtitle { font-size: 0.95rem; color: var(--text-secondary); line-height: 1.9; }
+
+        .article-content h2 { font-family: var(--font-display); font-size: 1.3rem; font-weight: 600; margin: 3rem 0 1.5rem; padding-bottom: 0.5rem; border-bottom: 2px solid var(--toki-blue-pale); }
+        .article-content h3 { font-family: var(--font-display); font-size: 1.1rem; font-weight: 600; margin: 2rem 0 1rem; color: var(--toki-blue-dark); }
+        .article-content p { margin-bottom: 1.5rem; text-align: justify; }
+        .article-content blockquote { border-left: 3px solid var(--toki-blue); padding-left: 1.5rem; margin: 2rem 0; font-family: var(--font-display); color: var(--text-secondary); }
+        .article-content ul { margin: 1.5rem 0; padding-left: 1.5rem; }
+        .article-content li { margin-bottom: 0.75rem; }
+
+        .core-message { background: var(--toki-blue-pale); border-left: 4px solid var(--toki-blue); padding: 1.5rem; margin: 2rem 0; font-size: 0.95rem; line-height: 1.8; }
+        .key-point { background: linear-gradient(135deg, var(--toki-blue-pale) 0%, #fff 100%); border: 1px solid var(--accent-blue); border-radius: 8px; padding: 1.5rem; margin: 2rem 0; text-align: center; }
+        .key-point p { font-family: var(--font-display); font-size: 1.1rem; color: var(--toki-blue-dark); margin: 0; }
+
+        .article-footer { margin-top: 4rem; padding-top: 2rem; border-top: 1px solid var(--border); text-align: center; }
+        .article-footer p { font-size: 0.8rem; color: var(--text-muted); margin-bottom: 1rem; }
+        .article-footer a { color: var(--toki-blue); text-decoration: none; }
+        .article-footer a:hover { text-decoration: underline; }
+
+        @media (max-width: 768px) {
+            .article-container { padding: 6rem 1.2rem 3rem; }
+            .article-header h1 { font-size: 1.5rem; }
+            .article-nav .nav-label { display: none; }
+        }
+        @media print { .article-nav { display: none; } .article-container { padding-top: 2rem; } }
+    </style>
+    <link rel="stylesheet" href="contact-form.css">
+    <meta property="og:image" content="https://tokistorage.github.io/lp/asset/tokistorage-icon-512.png">
+    <meta property="og:image:width" content="512">
+    <meta property="og:image:height" content="512">
+</head>
+<body>
+
+<nav class="article-nav">
+    <a href="index-en.html" class="nav-brand">TokiStorage</a>
+    <div class="nav-right">
+        <span class="nav-label">Economy / Business</span>
+        <a href="burn-rate-zero.html" class="lang-switch">JA</a>
+    </div>
+</nav>
+
+<main class="article-container">
+
+    <header class="article-header">
+        <p class="article-category">ESSAY &mdash; Business Design &amp; the Structure of Time</p>
+        <h1>Burn Rate Zero<br><span style="font-size: 0.6em; font-weight: 400; color: var(--text-secondary);">&mdash;&mdash; The structural advantage of building without urgency</span></h1>
+        <p class="article-subtitle">
+            Startups are told to "ship first, fix later."<br>
+            But if your fixed costs are zero, there is no reason to follow that sequence.<br>
+            A new option emerges: complete the foundation before entering the market.
+        </p>
+    </header>
+
+    <article class="article-content">
+
+        <div class="core-message">
+            <strong>The point of this essay:</strong> A burn rate of zero is not merely cost reduction. It is the elimination of time pressure, and that fundamentally changes the quality of every design decision. When urgency disappears, so does compromise.
+        </div>
+
+        <h2>1. The Startup Orthodoxy &mdash; Think While Running</h2>
+
+        <p>There is an unspoken assumption in the startup world. "Ship fast, fix fast." Throw an MVP into the market, get feedback, iterate. If you wait for perfection, a competitor will beat you to it. So you think while running.</p>
+
+        <p>This orthodoxy depends on a single precondition: burn rate.</p>
+
+        <p>Server costs, office rent, salaries. A startup loses money simply by existing. So revenue must come quickly. Without revenue, fundraising becomes necessary. Fundraising creates deadlines. Deadlines create urgency.</p>
+
+        <p>Urgency justifies compromise. "Legal can wait." "Terms of service? Use a template." "Scaling? We'll deal with it when it's a problem." These deferrals are decisions forced by burn rate.</p>
+
+        <h2>2. When the Precondition Vanishes</h2>
+
+        <p>What happens when burn rate is zero?</p>
+
+        <p>Consider TokiStorage's fixed costs:</p>
+
+        <ul>
+            <li><strong>Hosting</strong>: GitHub Pages &mdash; free</li>
+            <li><strong>Backend</strong>: Google Apps Script &mdash; free</li>
+            <li><strong>Database</strong>: Google Sheets &mdash; free</li>
+            <li><strong>CDN</strong>: Cloudflare Workers &mdash; free tier</li>
+            <li><strong>Payments</strong>: Wise &mdash; fees only on transfers</li>
+            <li><strong>Domain</strong>: GitHub Pages default &mdash; free</li>
+            <li><strong>Email</strong>: Gmail &mdash; free</li>
+        </ul>
+
+        <p>Monthly fixed costs are zero. Literally zero. No servers to crash, no invoices to arrive.</p>
+
+        <p>What happens in this state? The pressure of time vanishes.</p>
+
+        <p>The business doesn't die without revenue. So there is no need to "sell first." Instead, a different option appears: "build everything first."</p>
+
+        <h2>3. What Was Completed Before the First Sale</h2>
+
+        <p>TokiStorage built all of the following before generating any revenue.</p>
+
+        <h3>Operational infrastructure</h3>
+        <p>Order forms to Wise payment integration, automatic payment detection, status management, daily reports, payment reminders, delivery delay notifications. All automated through Google Apps Script. The administrator receives exactly one email each morning.</p>
+
+        <h3>Legal compliance</h3>
+        <p>Disclosure under the Specified Commercial Transactions Act, terms of service, privacy policy. All prepared in both Japanese and English. Prices, payment methods, return conditions, system requirements &mdash; every required item is filled in.</p>
+
+        <h3>Scaling design</h3>
+        <p>Email sending consolidated into a single function. Migration to SES requires changing one function. A phased roadmap for production outsourcing and international expansion is documented. Including legal update checklists and partner payment automation paths.</p>
+
+        <h3>Articulated philosophy</h3>
+        <p>Why does this business exist? What is proof of existence? How should the relationship with partners be designed? What is the rationale behind each technical decision? These are published as a series of essays. Not sales collateral. The thinking itself functions as a foundation of trust.</p>
+
+        <p>In a typical startup, these are built incrementally after revenue starts flowing. Or they are scrambled together after problems arise. At TokiStorage, all of it is in place before the first sale.</p>
+
+        <h2>4. What Changes When Urgency Disappears</h2>
+
+        <p>The greatest effect of zero burn rate is not cost savings. It is the transformation of decision quality.</p>
+
+        <blockquote>
+            "If we don't launch this month, we run out of money."<br>
+            When this sentence doesn't exist, urgency vanishes from every design decision.
+        </blockquote>
+
+        <p>There is no need to fill in terms of service with a template. You can write content specific to your business, checking each item at your own pace.</p>
+
+        <p>There is no need to defer scaling to "later." You can design migration paths, write procedure documents, and create a state where your future self won't be lost.</p>
+
+        <p>There is no need to write essays "for marketing." You can take the time to articulate what you actually think.</p>
+
+        <p>All of these become possible because there is time. And there is time because fixed costs are zero.</p>
+
+        <h2>5. The Technical Conditions for "Free"</h2>
+
+        <p>Zero burn rate is not a mindset. It is made possible only when specific technical conditions are met.</p>
+
+        <p>GitHub Pages hosts static sites for free. Google Apps Script handles backend processing for free. Cloudflare Workers relays API calls within its free tier. Without these services, TokiStorage's structure would not be viable.</p>
+
+        <p>What matters is that these are "free but limited" services. GitHub Pages can only serve static files. GAS has execution time and API call limits. Cloudflare Workers has request caps on its free tier.</p>
+
+        <p>But in TokiQR, QR code generation happens entirely client-side. Audio, images, and text are all converted into QR codes within the browser, never sent to a server. This keeps server load minimal, well within free tier limits.</p>
+
+        <p>The product's architecture enables zero burn rate. Conversely, the architecture was chosen to enable zero burn rate. This is not coincidence but design.</p>
+
+        <h2>6. The Meaning of 93% Gross Margin</h2>
+
+        <p>What happens when a zero-fixed-cost business sells a physical product?</p>
+
+        <p>A laminated QR card costs roughly &yen;200 to produce. The selling price is &yen;5,000. Gross margin: 93%.</p>
+
+        <p>This figure represents profit obtained while keeping fixed costs at zero. No server bills. No office. Revenue stays as profit in nearly its entirety.</p>
+
+        <p>At 50 orders per day, monthly revenue reaches &yen;7.5 million. At 93% gross margin, that is roughly &yen;7 million in gross profit. Outsource production, and your time becomes completely free.</p>
+
+        <p>In a typical startup, revenue at this scale requires server costs, salaries, and advertising spend. A break-even point exists, and until it is crossed, the business runs at a loss. TokiStorage's break-even point is the first order. Profitable from day one.</p>
+
+        <h2>7. The Conditions for a Solo Unicorn</h2>
+
+        <p>"Unicorn" refers to a startup valued at over one billion dollars. It typically presupposes massive fundraising and explosive growth.</p>
+
+        <p>But reframe the question. What if one person, with no external funding, could build a sustainably high-profit business? Valuation becomes irrelevant. What matters is structure.</p>
+
+        <ul>
+            <li><strong>Zero fixed costs</strong> &mdash; the business doesn't die without revenue</li>
+            <li><strong>93% gross margin</strong> &mdash; revenue is almost entirely profit</li>
+            <li><strong>Outsourceable production</strong> &mdash; personal time is not the scaling bottleneck</li>
+            <li><strong>Patent-backed barrier to entry</strong> &mdash; competitors cannot easily replicate</li>
+            <li><strong>Pre-designed migration paths</strong> &mdash; the structure holds at scale</li>
+        </ul>
+
+        <p>All of these conditions are in place. And all of them were confirmed before any revenue was generated.</p>
+
+        <h2>8. Time Is Capital</h2>
+
+        <p>In the startup context, "capital" always means money. Fundraising, burn rate, runway. Everything is framed as a temporal constraint on cash.</p>
+
+        <p>But when burn rate is zero, the financial runway becomes infinite. The only remaining capital is time.</p>
+
+        <blockquote>
+            It is not that we can't do it because we lack money.<br>
+            It is that because it costs nothing, we can solve everything with time.
+        </blockquote>
+
+        <p>Time to write legal documents yourself. Time to design scaling migration paths. Time to articulate your philosophy in essays. All of this was secured because there was no financial pressure.</p>
+
+        <p>Zero burn rate is the state in which time can be used as the ultimate form of capital. A foundation built in this state is an accumulation of decisions made without urgency.</p>
+
+        <div class="key-point">
+            <p>Zero burn rate is not about costs.<br>It is about the freedom to never compromise.</p>
+        </div>
+
+    </article>
+
+    <footer class="article-footer">
+        <p id="essay-nav-links"></p>
+        <p style="margin-top: 2rem; font-size: 0.75rem;">&copy; 2026 TokiStorage</p>
+    </footer>
+
+</main>
+
+<script src="contact-form.js"></script>
+<script src="essay-nav.js?v=20260219"></script>
+<script src="tracker.js"></script>
+</body>
+</html>
