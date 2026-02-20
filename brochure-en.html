@@ -665,6 +665,28 @@
     if (p.get('landscape') === '1') {
         document.body.classList.add('landscape-mode');
         document.getElementById('landscape-page-style').media = 'all';
+        // Safari doesn't trigger @media print inside iframes during parent print.
+        // Copy all print rules as screen rules so the layout renders correctly.
+        try {
+            var css = '';
+            var sheets = document.styleSheets;
+            for (var i = 0; i < sheets.length; i++) {
+                var rules = sheets[i].cssRules;
+                if (!rules) continue;
+                for (var j = 0; j < rules.length; j++) {
+                    if (rules[j] instanceof CSSMediaRule && rules[j].conditionText === 'print') {
+                        for (var k = 0; k < rules[j].cssRules.length; k++) {
+                            css += rules[j].cssRules[k].cssText + '\n';
+                        }
+                    }
+                }
+            }
+            if (css) {
+                var s = document.createElement('style');
+                s.textContent = css;
+                document.head.appendChild(s);
+            }
+        } catch(e) {}
     }
     if (p.get('grayscale') === '1') {
         var s = document.createElement('style');
