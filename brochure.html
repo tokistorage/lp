@@ -673,11 +673,19 @@
 </main>
 
 <script>
-// Auto-activate landscape for headless PDF generation
-if (new URLSearchParams(location.search).get('landscape') === '1') {
-    document.body.classList.add('landscape-mode');
-    document.getElementById('landscape-page-style').media = 'all';
-}
+// Auto-activate modes for headless PDF generation
+(function() {
+    var p = new URLSearchParams(location.search);
+    if (p.get('landscape') === '1') {
+        document.body.classList.add('landscape-mode');
+        document.getElementById('landscape-page-style').media = 'all';
+    }
+    if (p.get('grayscale') === '1') {
+        var s = document.createElement('style');
+        s.textContent = ':root{--toki-blue:#444;--toki-blue-pale:#F0F0F0;--text-muted:#777;}img{filter:grayscale(100%);}';
+        document.head.appendChild(s);
+    }
+})();
 </script>
 <script src="tracker.js"></script>
 </body>
