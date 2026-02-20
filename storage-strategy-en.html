@@ -140,6 +140,48 @@
 
         <p>Whether one million or one hundred million codes are issued, the server side stays at 3 MB. Data is distributed across physical paper, so the cloud scaling problem simply does not arise.</p>
 
+        <p>The difference goes beyond capacity. The operational model is fundamentally different.</p>
+
+        <table>
+            <tr>
+                <th></th>
+                <th>Conventional (CRUD)</th>
+                <th>TokiStorage (Write-Once)</th>
+            </tr>
+            <tr>
+                <td>Operations</td>
+                <td>Create, Read, Update, Delete</td>
+                <td>Write once, never modify</td>
+            </tr>
+            <tr>
+                <td>Update frequency</td>
+                <td>High (users modify at will)</td>
+                <td>Zero (immutable once finalized)</td>
+            </tr>
+            <tr>
+                <td>History tracking</td>
+                <td>Required (track changes)</td>
+                <td>Unnecessary (no changes exist)</td>
+            </tr>
+            <tr>
+                <td>Locking</td>
+                <td>Required (prevent concurrent writes)</td>
+                <td>Unnecessary (single write only)</td>
+            </tr>
+            <tr>
+                <td>Consistency</td>
+                <td>Complex (transactions)</td>
+                <td>Trivial (immutable data)</td>
+            </tr>
+            <tr>
+                <td>Backup</td>
+                <td>Snapshots + incremental diffs</td>
+                <td>Simple copy</td>
+            </tr>
+        </table>
+
+        <p>Conventional storage requires vast machinery to &ldquo;manage data that changes&rdquo;&mdash;databases, transaction logs, locking, incremental backups. All of it stems from one assumption: data can change. TokiStorage's preserved records, once finalized, never change. No updates means no history needed. No locking needed. Consistency is automatically guaranteed by immutability itself. This is the principle that structurally reduces storage complexity to zero.</p>
+
         <h2>2. What Makes Up Those 3 MB</h2>
 
         <p>What exactly is inside those 3 megabytes?</p>
