@@ -461,7 +461,94 @@
 
         <p>And migrating the decoder? Just copy 3 MB of files to a new server. No matter how many times the hosting provider changes over 1,000 years, each migration takes minutes.</p>
 
-        <h2>9. Beyond 1,000 Years</h2>
+        <h2>9. A Design Without Precedent</h2>
+
+        <p>Several projects around the world aim at long-term preservation. But compared to TokiStorage's architecture, each one stands on fundamentally different ground.</p>
+
+        <table>
+            <tr>
+                <th>Project</th>
+                <th>Approach</th>
+                <th>Scaling</th>
+                <th>Maintenance Cost</th>
+            </tr>
+            <tr>
+                <td>Internet Archive</td>
+                <td>Centralized servers</td>
+                <td>O(n) &mdash; scales with data</td>
+                <td>Millions of USD/year</td>
+            </tr>
+            <tr>
+                <td>GitHub Arctic Code Vault</td>
+                <td>Physical storage in Arctic mine</td>
+                <td>Batch (periodic snapshots)</td>
+                <td>No access (storage only)</td>
+            </tr>
+            <tr>
+                <td>LOCKSS</td>
+                <td>Distributed server nodes</td>
+                <td>O(n) &mdash; replicated per node</td>
+                <td>Institutional budgets</td>
+            </tr>
+            <tr>
+                <td>IPFS</td>
+                <td>P2P distributed storage</td>
+                <td>O(n) &mdash; depends on pinning nodes</td>
+                <td>Pinning service fees</td>
+            </tr>
+            <tr>
+                <td>Rosetta Project</td>
+                <td>Micro-etched nickel disk</td>
+                <td>Fixed by physical capacity</td>
+                <td>Low (physical custody)</td>
+            </tr>
+            <tr>
+                <td>Memory of Mankind</td>
+                <td>Ceramic tablets in salt mine</td>
+                <td>Fixed by physical capacity</td>
+                <td>Low (single site)</td>
+            </tr>
+            <tr>
+                <td><strong>TokiStorage</strong></td>
+                <td><strong>Data on paper, server is decoder only</strong></td>
+                <td><strong>O(1) &mdash; independent of volume</strong></td>
+                <td><strong>&asymp; $0</strong></td>
+            </tr>
+        </table>
+
+        <p>The shared weakness across existing projects boils down to two things: <strong>&ldquo;cost grows with data&rdquo;</strong> or <strong>&ldquo;preservation works, but access requires special means.&rdquo;</strong></p>
+
+        <p>The Internet Archive is a monumental effort to preserve humanity's digital heritage, but it is fundamentally a centralized model that stores data on servers. Capacity scales with usage, and annual operating costs reach millions of dollars. If funding stops, the archive stops.</p>
+
+        <p>GitHub's Arctic Code Vault stores open-source code in an abandoned mine on Svalbard in the Arctic. Physical durability is excellent, but access requires traveling to the site. Everyday &ldquo;reading&rdquo; is not part of the design.</p>
+
+        <p>LOCKSS (Lots of Copies Keep Stuff Safe) is a distributed preservation network for academic libraries. The distributed philosophy is similar, but each node holds a full copy of the data, so capacity scales linearly. Dependence on participating institutions' operating budgets introduces uncertainty at the 1,000-year scale.</p>
+
+        <p>IPFS is revolutionary as peer-to-peer distributed storage, but data disappears when nodes go offline. Persistence requires pinning services, which means cost. This is incompatible with &ldquo;zero-cost permanence.&rdquo;</p>
+
+        <p>The Long Now Foundation's Rosetta Project micro-etches text onto a nickel disk. Physical durability is high, but there is no connection to a digital decoder. Reading the etched information requires a microscope&mdash;fundamentally different from the experience of &ldquo;scan with a smartphone and it plays.&rdquo;</p>
+
+        <p>Austria's Memory of Mankind engraves information onto ceramic tablets and stores them in a salt mine. A beautiful concept, but it is a single-site centralized approach without the redundancy of distributed storage.</p>
+
+        <h3>The Anomaly of O(1)</h3>
+
+        <p>What makes TokiStorage fundamentally different is that server capacity is <strong>O(1)</strong>&mdash;constant. Issue one code or one hundred million; the server stays at 3 MB. Data is distributed across paper, so nothing accumulates centrally.</p>
+
+        <p>This is less a &ldquo;storage strategy&rdquo; and more a &ldquo;strategy of holding no storage.&rdquo; While every existing project asks &ldquo;how do we preserve data long-term?,&rdquo; TokiStorage asks nothing at all&mdash;it eliminates the question by never holding the data in the first place. It belongs to a different category entirely.</p>
+
+        <h3>The Closest Precedent: Ise Grand Shrine</h3>
+
+        <p>If no precedent exists in the digital world, look to the analog one. The closest design philosophy is Ise Grand Shrine's Shikinen Seng&#363; itself&mdash;a system that has sustained continuity for 1,300 years through &ldquo;designing the mechanism, not the monument.&rdquo;</p>
+
+        <p>The <em>goshintai</em> (sacred essence) never changes. The <em>shaden</em> (shrine hall) is rebuilt every 20 years. Skill and spirit are transmitted to the next generation; the system runs itself. TokiStorage's design&mdash;an immutable decoder, repositories split every 20 years, a fully automated pipeline&mdash;is this 1,300-year-old design principle translated into digital infrastructure.</p>
+
+        <blockquote>
+            Existing long-term preservation projects are designed to protect data.<br>
+            TokiStorage is designed to never hold data at all.<br>
+            When there is nothing to protect, no protection mechanism is needed.
+        </blockquote>
+
+        <h2>10. Beyond 1,000 Years</h2>
 
         <p>We have used 1,000 years as our benchmark throughout this essay. But honestly, this architecture has no upper time limit.</p>
 
