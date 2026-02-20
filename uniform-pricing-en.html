@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" type="image/png" sizes="32x32" href="asset/favicon-32.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="asset/apple-touch-icon.png">
+    <title>The Philosophy of Uniform Pricing | TokiStorage</title>
+    <meta name="robots" content="noindex, nofollow">
+    <meta name="description" content="We removed coupons. Everyone pays the same price and receives the same respect. If we stand for democratizing proof of existence, there can be no exceptions in pricing.">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Shippori+Mincho:wght@400;500;600;700&family=Zen+Kaku+Gothic+New:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --toki-blue: #2563EB;
+            --toki-blue-dark: #1D4ED8;
+            --toki-blue-pale: #EFF6FF;
+            --accent-blue: #3B82F6;
+            --bg-white: #FFFFFF;
+            --text-primary: #1E293B;
+            --text-secondary: #475569;
+            --text-muted: #94A3B8;
+            --border: #E2E8F0;
+            --font-display: 'Shippori Mincho', serif;
+            --font-body: 'Zen Kaku Gothic New', sans-serif;
+        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        html { scroll-behavior: smooth; }
+        body { font-family: var(--font-body); font-weight: 400; background: var(--bg-white); color: var(--text-primary); line-height: 2; font-size: 16px; }
+
+        .article-nav { position: fixed; top: 0; left: 0; right: 0; z-index: 1000; background: rgba(255,255,255,0.95); backdrop-filter: blur(12px); border-bottom: 1px solid var(--border); padding: 0.6rem 1.2rem; display: flex; align-items: center; justify-content: space-between; gap: 1rem; }
+        .article-nav .nav-brand { font-family: var(--font-display); font-size: 0.9rem; font-weight: 600; color: var(--toki-blue); text-decoration: none; white-space: nowrap; }
+        .article-nav .nav-brand::before { content: ''; display: inline-block; width: 20px; height: 20px; background: url('asset/tokistorage-icon-512.png') no-repeat center / contain; vertical-align: -3px; margin-right: 5px; }
+        .article-nav .nav-right { display: flex; align-items: center; gap: 1rem; }
+        .article-nav .nav-label { font-size: 0.6rem; color: var(--text-muted); letter-spacing: 0.08em; }
+        .article-nav .lang-switch { font-size: 0.75rem; color: var(--toki-blue); text-decoration: none; padding: 0.3rem 0.6rem; border: 1px solid var(--toki-blue); border-radius: 4px; }
+        .article-nav .lang-switch:hover { background: var(--toki-blue); color: #fff; }
+
+        .article-container { max-width: 680px; margin: 0 auto; padding: 7rem 2rem 4rem; }
+        .article-header { margin-bottom: 3rem; padding-bottom: 2rem; border-bottom: 1px solid var(--border); }
+        .article-category { font-size: 0.7rem; color: var(--toki-blue); letter-spacing: 0.15em; margin-bottom: 1rem; }
+        .article-header h1 { font-family: var(--font-display); font-size: 1.8rem; font-weight: 700; line-height: 1.5; margin-bottom: 1.5rem; }
+        .article-subtitle { font-size: 0.95rem; color: var(--text-secondary); line-height: 1.9; }
+
+        .article-content h2 { font-family: var(--font-display); font-size: 1.3rem; font-weight: 600; margin: 3rem 0 1.5rem; padding-bottom: 0.5rem; border-bottom: 2px solid var(--toki-blue-pale); }
+        .article-content h3 { font-family: var(--font-display); font-size: 1.1rem; font-weight: 600; margin: 2rem 0 1rem; color: var(--toki-blue-dark); }
+        .article-content p { margin-bottom: 1.5rem; text-align: justify; }
+        .article-content blockquote { border-left: 3px solid var(--toki-blue); padding-left: 1.5rem; margin: 2rem 0; font-family: var(--font-display); color: var(--text-secondary); }
+        .article-content ul { margin: 1.5rem 0; padding-left: 1.5rem; }
+        .article-content li { margin-bottom: 0.75rem; }
+
+        .core-message { background: var(--toki-blue-pale); border-left: 4px solid var(--toki-blue); padding: 1.5rem; margin: 2rem 0; font-size: 0.95rem; line-height: 1.8; }
+        .key-point { background: linear-gradient(135deg, var(--toki-blue-pale) 0%, #fff 100%); border: 1px solid var(--accent-blue); border-radius: 8px; padding: 1.5rem; margin: 2rem 0; text-align: center; }
+        .key-point p { font-family: var(--font-display); font-size: 1.1rem; color: var(--toki-blue-dark); margin: 0; }
+
+        .article-footer { margin-top: 4rem; padding-top: 2rem; border-top: 1px solid var(--border); text-align: center; }
+        .article-footer p { font-size: 0.8rem; color: var(--text-muted); margin-bottom: 1rem; }
+        .article-footer a { color: var(--toki-blue); text-decoration: none; }
+        .article-footer a:hover { text-decoration: underline; }
+
+        @media (max-width: 768px) {
+            .article-container { padding: 6rem 1.2rem 3rem; }
+            .article-header h1 { font-size: 1.5rem; }
+            .article-nav .nav-label { display: none; }
+        }
+        @media print { .article-nav { display: none; } .article-container { padding-top: 2rem; } }
+    </style>
+    <link rel="stylesheet" href="contact-form.css">
+    <meta property="og:image" content="https://tokistorage.github.io/lp/asset/tokistorage-icon-512.png">
+    <meta property="og:image:width" content="512">
+    <meta property="og:image:height" content="512">
+</head>
+<body>
+
+<nav class="article-nav">
+    <a href="index-en.html" class="nav-brand">TokiStorage</a>
+    <div class="nav-right">
+        <span class="nav-label">Economy &amp; Property</span>
+    </div>
+</nav>
+
+<main class="article-container">
+
+    <header class="article-header">
+        <p class="article-category">ESSAY &mdash; Economy &amp; Property</p>
+        <h1>The Philosophy of Uniform Pricing<br><span style="font-size: 0.6em; font-weight: 400; color: var(--text-secondary);">&mdash;&mdash; Why We Removed Coupons</span></h1>
+        <p class="article-subtitle">
+            Everyone pays the same price. Everyone receives the same respect.<br>
+            If we stand for democratizing proof of existence,<br>
+            there can be no exceptions in pricing.
+        </p>
+    </header>
+
+    <article class="article-content">
+
+        <div class="core-message">
+            <strong>The point of this essay:</strong> TokiStorage has removed its coupon system. Discounts begin with good intentions but structurally breed elitism and become seeds of conflict. For a mission as universal as preserving voices, differential pricing is a contradiction.
+        </div>
+
+        <h2>1. The Good Intentions Behind Coupons</h2>
+
+        <p>Coupons begin with good intentions. &ldquo;Make it easier to take the first step.&rdquo; &ldquo;Thank someone for a referral.&rdquo; &ldquo;Offer a special price to a special person.&rdquo; The intent is kind. But the consequences of the structure operate independently of intent.</p>
+
+        <p>Some people receive a discount. Others do not. That fact alone creates a &ldquo;difference&rdquo; within the service. Difference invites comparison, and comparison breeds resentment.</p>
+
+        <h2>2. When Good Intentions Backfire</h2>
+
+        <p>&ldquo;That person got it for free with a coupon, but I paid full price.&rdquo; This feeling is rational. The mere existence of different prices for the same product raises questions of fairness.</p>
+
+        <p>The criteria for distributing coupons become problematic too. Who receives them? Influencers? Early adopters? Personal acquaintances? Whatever criterion is chosen, those not chosen see only one fact: someone else was selected.</p>
+
+        <p>This is elitism. What started as generosity structurally embeds discrimination.</p>
+
+        <h2>3. No Differential on the Right to Preserve a Voice</h2>
+
+        <p>The core of TokiStorage&rsquo;s mission is &ldquo;democratizing proof of existence.&rdquo; Preserving a voice. Preserving a likeness. Preserving words. This is a fundamental human desire, independent of social status or economic means&mdash;a right everyone should hold.</p>
+
+        <p>What does it mean to apply a discount to that right? &ldquo;Your proof of existence costs &yen;5,000. But this person&rsquo;s is free.&rdquo;&mdash;that is placing differential value on existence itself.</p>
+
+        <p>To champion the democratization of proof of existence while differentiating on price is a contradiction.</p>
+
+        <h2>4. Uniform Pricing as Respect</h2>
+
+        <p>Everyone pays the same price. This is not a constraint. It is respect.</p>
+
+        <p>&ldquo;You and that person receive the same service at the same price. No one gets special treatment. No one gets shortchanged.&rdquo;</p>
+
+        <p>Uniform pricing is a declaration of equal respect for every customer. We do not ask why someone wants to preserve a voice. Whether they have a referrer, whether their timing was early, whether they have a large following&mdash;none of it matters.</p>
+
+        <p>They wanted to preserve a voice. That fact alone is enough.</p>
+
+        <h2>5. No Discounts, No Price Hikes</h2>
+
+        <p>There is another problem lurking behind coupons: who bears the cost of the discount?</p>
+
+        <p>When a free coupon order comes in, TokiStorage absorbs the production and shipping costs. Or the profit from other customers paying full price subsidizes it. Either way, the discount is borne by &ldquo;someone invisible.&rdquo;</p>
+
+        <p>Uniform pricing eliminates this opacity. There is one price. Everyone pays the same and stands on the same cost structure. There is no need to inflate the listed price to fund a discount pool.</p>
+
+        <h2>6. The Complexity Problem</h2>
+
+        <p>Coupons carry management overhead. Code generation, expiration dates, usage tracking, product restrictions, validation logic, email template branching for free orders. Technically it is perhaps fifty lines of code, but those fifty lines produce &ldquo;exception handling.&rdquo;</p>
+
+        <p>Exception handling increases system complexity. Complexity breeds bugs, raises maintenance costs, and shortens the lifespan of code.</p>
+
+        <p>As described in the Storage Strategy essay, TokiStorage&rsquo;s server is 3 MB. To preserve the purity of those 3 MB, unnecessary complexity is eliminated. When we deleted the coupon code, 64 lines vanished. The system became 64 lines simpler.</p>
+
+        <h2>7. A Universal Mission Demands Universal Pricing</h2>
+
+        <p>&ldquo;Preserving a voice&rdquo; is a universal mission. Someone wants to preserve their dog&rsquo;s bark. Someone wants to preserve a deceased parent&rsquo;s voice. Someone wants to preserve their child&rsquo;s first &ldquo;Mama.&rdquo; To all of them, we respond with the same price, the same quality, the same respect.</p>
+
+        <p>In a world with coupons, there are &ldquo;lucky people&rdquo; and &ldquo;everyone else.&rdquo; In a world of uniform pricing, everyone stands on the same ground.</p>
+
+        <blockquote>
+            Democratizing proof of existence means<br>
+            everyone pays the same price and receives the same respect.<br>
+            Making no exceptions is the highest form of fairness.
+        </blockquote>
+
+        <div class="key-point">
+            <p>Uniform pricing is not a constraint. It is respect.<br>We do not ask why someone wants to preserve a voice.<br>Everyone pays the same price. Everyone receives the same respect.</p>
+        </div>
+
+    </article>
+
+    <footer class="article-footer">
+        <p id="essay-nav-links"></p>
+        <p style="margin-top: 2rem; font-size: 0.75rem;">&copy; 2026 TokiStorage</p>
+    </footer>
+
+</main>
+
+<script src="contact-form.js"></script>
+<script src="essay-nav.js?v=20260221"></script>
+<script src="tracker.js"></script>
+</body>
+</html>
