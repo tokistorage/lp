@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" type="image/png" sizes="32x32" href="asset/favicon-32.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="asset/apple-touch-icon.png">
+    <title>機種依存という境界 | トキストレージ</title>
+    <meta name="robots" content="noindex, nofollow">
+    <meta name="description" content="iPhone Safariで印刷ボタンを消した日、得たものと失ったもの。すべての端末で同じ体験を提供する理想と、現実の境界に向き合い「捨てる」と決めることで守られる品質について。">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Shippori+Mincho:wght@400;500;600;700&family=Zen+Kaku+Gothic+New:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --toki-blue: #2563EB;
+            --toki-blue-dark: #1D4ED8;
+            --toki-blue-pale: #EFF6FF;
+            --accent-blue: #3B82F6;
+            --bg-white: #FFFFFF;
+            --text-primary: #1E293B;
+            --text-secondary: #475569;
+            --text-muted: #94A3B8;
+            --border: #E2E8F0;
+            --font-display: 'Shippori Mincho', serif;
+            --font-body: 'Zen Kaku Gothic New', sans-serif;
+        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        html { scroll-behavior: smooth; }
+        body { font-family: var(--font-body); font-weight: 400; background: var(--bg-white); color: var(--text-primary); line-height: 2; font-size: 16px; }
+
+        .article-nav { position: fixed; top: 0; left: 0; right: 0; z-index: 1000; background: rgba(255,255,255,0.95); backdrop-filter: blur(12px); border-bottom: 1px solid var(--border); padding: 0.6rem 1.2rem; display: flex; align-items: center; justify-content: space-between; gap: 1rem; }
+        .article-nav .nav-brand { font-family: var(--font-display); font-size: 0.9rem; font-weight: 600; color: var(--toki-blue); text-decoration: none; white-space: nowrap; }
+        .article-nav .nav-brand::before { content: ''; display: inline-block; width: 20px; height: 20px; background: url('asset/tokistorage-icon-512.png') no-repeat center / contain; vertical-align: -3px; margin-right: 5px; }
+        .article-nav .nav-right { display: flex; align-items: center; gap: 1rem; }
+        .article-nav .nav-label { font-size: 0.6rem; color: var(--text-muted); letter-spacing: 0.08em; }
+        .article-nav .lang-switch { font-size: 0.75rem; color: var(--toki-blue); text-decoration: none; padding: 0.3rem 0.6rem; border: 1px solid var(--toki-blue); border-radius: 4px; }
+        .article-nav .lang-switch:hover { background: var(--toki-blue); color: #fff; }
+
+        .article-container { max-width: 680px; margin: 0 auto; padding: 7rem 2rem 4rem; }
+        .article-header { margin-bottom: 3rem; padding-bottom: 2rem; border-bottom: 1px solid var(--border); }
+        .article-category { font-size: 0.7rem; color: var(--toki-blue); letter-spacing: 0.15em; margin-bottom: 1rem; }
+        .article-header h1 { font-family: var(--font-display); font-size: 1.8rem; font-weight: 700; line-height: 1.5; margin-bottom: 1.5rem; }
+        .article-subtitle { font-size: 0.95rem; color: var(--text-secondary); line-height: 1.9; }
+
+        .article-content h2 { font-family: var(--font-display); font-size: 1.3rem; font-weight: 600; margin: 3rem 0 1.5rem; padding-bottom: 0.5rem; border-bottom: 2px solid var(--toki-blue-pale); }
+        .article-content h3 { font-family: var(--font-display); font-size: 1.1rem; font-weight: 600; margin: 2rem 0 1rem; color: var(--toki-blue-dark); }
+        .article-content p { margin-bottom: 1.5rem; text-align: justify; }
+        .article-content blockquote { border-left: 3px solid var(--toki-blue); padding-left: 1.5rem; margin: 2rem 0; font-family: var(--font-display); color: var(--text-secondary); }
+        .article-content ul { margin: 1.5rem 0; padding-left: 1.5rem; }
+        .article-content li { margin-bottom: 0.75rem; }
+
+        .core-message { background: var(--toki-blue-pale); border-left: 4px solid var(--toki-blue); padding: 1.5rem; margin: 2rem 0; font-size: 0.95rem; line-height: 1.8; }
+        .key-point { background: linear-gradient(135deg, var(--toki-blue-pale) 0%, #fff 100%); border: 1px solid var(--accent-blue); border-radius: 8px; padding: 1.5rem; margin: 2rem 0; text-align: center; }
+        .key-point p { font-family: var(--font-display); font-size: 1.1rem; color: var(--toki-blue-dark); margin: 0; }
+
+        .article-footer { margin-top: 4rem; padding-top: 2rem; border-top: 1px solid var(--border); text-align: center; }
+        .article-footer p { font-size: 0.8rem; color: var(--text-muted); margin-bottom: 1rem; }
+        .article-footer a { color: var(--toki-blue); text-decoration: none; }
+        .article-footer a:hover { text-decoration: underline; }
+
+        @media (max-width: 768px) {
+            .article-container { padding: 6rem 1.2rem 3rem; }
+            .article-header h1 { font-size: 1.5rem; }
+            .article-nav .nav-label { display: none; }
+        }
+        @media print { .article-nav { display: none; } .article-container { padding-top: 2rem; } }
+    </style>
+    <link rel="stylesheet" href="contact-form.css">
+    <meta property="og:image" content="https://tokistorage.github.io/lp/asset/tokistorage-icon-512.png">
+    <meta property="og:image:width" content="512">
+    <meta property="og:image:height" content="512">
+</head>
+<body>
+
+<nav class="article-nav">
+    <a href="index.html" class="nav-brand">トキストレージ</a>
+    <div class="nav-right">
+        <span class="nav-label">技術・設計 / Technology</span>
+    </div>
+</nav>
+
+<main class="article-container">
+
+    <header class="article-header">
+        <p class="article-category">ESSAY &mdash; 技術・設計</p>
+        <h1>機種依存という境界<br><span style="font-size: 0.6em; font-weight: 400; color: var(--text-secondary);">&mdash;&mdash; 失う決断が生む設計</span></h1>
+        <p class="article-subtitle">
+            iPhone Safariで印刷ボタンを消した日、得たものと失ったもの。<br>
+            「すべての端末で同じ体験を」という理想の先にあったのは、<br>
+            捨てることでしか守れない品質だった。
+        </p>
+    </header>
+
+    <article class="article-content">
+
+        <div class="core-message">
+            <strong>この記事で言いたいこと：</strong>「すべての端末で同じ体験を」は理想だが、現実の境界に向き合い「捨てる」と決めることが、かえってサービス全体の品質を守る。機能を削ることは、ときに機能を守ることだ。
+        </div>
+
+        <h2>1. 試行錯誤の記録</h2>
+
+        <p>TokiQRのplay.htmlにPC向け印刷機能を実装した。A4横のレイアウトに、QRコードとメタデータを配置し、二ページ目にはブローシャを収めた。PCのブラウザで「印刷」を押せば、そのまま美しいシートが出力される。声を閉じ込めたQRコードが、物理的な紙の上に降り立つ瞬間だ。</p>
+
+        <p>当然のように思った。同じ体験をiPhone Safariでも提供しよう、と。</p>
+
+        <p>そこから始まった試行錯誤は、20を超えるプルリクエストに刻まれている。QRコードの表示サイズを150mmから115mmへ、さらに108mmへ。@pageのマージンを何度も書き換えた。100vhを固定mmに置き換え、ネガティブマージンで微調整し、iframeでの描画を試し、PNG画像への変換を試し、Service Workerのキャッシュが邪魔をする問題と格闘した。</p>
+
+        <p>一つ直せば別の場所が崩れる。97%のビューポートで収まるが、100%ではみ出る。その3%の隙間に、デスクトップとモバイルの間に横たわる深い溝が見えた。</p>
+
+        <blockquote>
+            3%の余白に潜む溝は、技術的な問題ではなかった。<br>
+            設計思想の断層だった。
+        </blockquote>
+
+        <p>iOS Safariは<code>@page { size }</code>を無視する。<code>column-count: 2</code>はiframe内で機能しない。<code>window.print()</code>にはユーザージェスチャーの制約がある。一つひとつは些細な制限に見える。だがそれらが重なったとき、「モバイルでの印刷」という体験は、砂上の楼閣になった。</p>
+
+        <h2>2. 境界の発見</h2>
+
+        <p>ブラウザの印刷APIは、デスクトップを前提に設計されている。</p>
+
+        <p>これは非難ではない。歴史的な事実だ。印刷という行為は、大きな画面で文書を確認し、接続されたプリンターに出力するという、物理的な作業環境を想定して設計された。モバイルブラウザがその機能を「サポートしている」のは事実だが、サポートしていることと、信頼できる体験を提供することの間には、埋めがたい距離がある。</p>
+
+        <p>モバイルで「ほぼ動く」は、「動かない」と同義だ。</p>
+
+        <p>98%のケースで正しく表示されるレイアウトは、残り2%で崩れる。QRコードが紙の端で切れる。二段組みが一段に戻る。余白が消えて文字が詰まる。ユーザーはその2%に遭遇したとき、「たまたま崩れた」とは思わない。「このサービスは壊れている」と思う。</p>
+
+        <blockquote>
+            98%で崩れるレイアウトは、ユーザーの信頼を100%損なう。
+        </blockquote>
+
+        <p>技術者にとっての98%は「ほぼ完成」だ。だがユーザーにとっての98%は「壊れている」だ。この認知の非対称性に気づいたとき、問題の本質が見えた。これは実装の問題ではない。そもそもモバイルブラウザで本番品質の印刷を提供するという前提が、現時点では成り立たないのだ。</p>
+
+        <h2>3. 失うという決断</h2>
+
+        <p>モバイルの印刷ボタンを消した。</p>
+
+        <p>簡単な決断ではなかった。20以上のPRで積み重ねた試行錯誤の結果として「できませんでした」と認めることは、技術者としての矜持に触れる。もう少し工夫すれば、もう少し時間をかければ、きっと解決できる。そう思いたかった。</p>
+
+        <p>だが「もう少し」の先にあるのは、脆い体験の上に築かれた機能だ。今日直しても、次のiOSアップデートで崩れるかもしれない。その不安を抱えながら機能を提供し続けることは、誠実ではない。</p>
+
+        <h3>失ったもの</h3>
+
+        <p>モバイルユーザーが自力で印刷する導線を失った。iPhoneで録音し、QRコードを生成し、その場で印刷するという一気通貫のワークフローは消えた。</p>
+
+        <h3>得たもの</h3>
+
+        <ul>
+            <li><strong>壊れた体験を届けないという品質保証</strong>——ユーザーが「印刷」を押して期待を裏切られることはない</li>
+            <li><strong>注文ボタンへの明確な誘導</strong>——印刷の代わりに、プロが仕上げた高品質なQRシールを注文する導線が前面に出る</li>
+            <li><strong>PC印刷の品質に集中できる余地</strong>——モバイル対応に費やしていたリソースを、PC印刷の完成度に向けられる</li>
+        </ul>
+
+        <p>「ご自身で印刷する場合はPCをご利用ください」——この一文を添えた。機能を削除したのではない。機能を配置し直したのだ。モバイルで「できない」のではなく、「PCでやるのが最善」であるという案内。それは制限ではなく、最適化だ。</p>
+
+        <blockquote>
+            捨てたのは機能ではない。<br>
+            「すべての端末で同じ体験を」という、実現不可能な約束を捨てた。
+        </blockquote>
+
+        <h2>4. 存在証明のインフラとして</h2>
+
+        <p>トキストレージは「声と記憶を1000年先に届ける」サービスだ。TokiQRはそのための技術基盤であり、QRコードは声を物理世界に定着させる接点だ。</p>
+
+        <p>この文脈で問うべきは、「すべての端末で印刷可能か」ではない。「確実に届く体験か」だ。</p>
+
+        <p>物理的なQRシールは、注文を通じて高品質に提供できる。UV印刷とラミネート加工を施した、耐候性のあるシール。それは家庭用プリンターの出力とは次元の異なる品質だ。モバイルで不安定な印刷を提供するよりも、プロの品質で届けるほうが、サービスの本質に近い。</p>
+
+        <p>1000年先に届けることを約束するサービスが、手元の端末で崩れる印刷を提供していたら、その約束は信じてもらえるだろうか。</p>
+
+        <p>機種依存という現実を受け入れることは、サービスの誠実さにつながる。「できること」と「すべきこと」を区別し、「すべきこと」に全力を注ぐ。できないことを無理に提供するより、できることの品質を極める。それが、1000年の約束を支える姿勢だ。</p>
+
+        <div class="core-message">
+            正しい分業とは、すべてを一つの場所で完結させることではない。それぞれの場所で最善を尽くすことだ。モバイルは録音と生成に集中する。印刷はPCか、注文に委ねる。その割り切りが、全体の信頼を守る。
+        </div>
+
+        <h2>5. 設計者への問い</h2>
+
+        <p>あなたのプロダクトにも、「捨てるべき98%」はないだろうか。</p>
+
+        <p>ほぼ動くが完全ではない機能。対応しているが信頼できない環境。提供できるが品質を保証できない体験。それらを「対応済み」と表示し続けることは、ユーザーへの誠実さだろうか。</p>
+
+        <p>全端末対応という言葉は、仕様書では美しく響く。だが現実のブラウザは、仕様書通りには動かない。CSSの解釈が異なり、APIの実装が異なり、ユーザーの期待が異なる。その差異を吸収しようとするほど、コードは複雑になり、テストは増え、品質は脆くなる。</p>
+
+        <p>「すべての端末で同じ体験を」という呪縛から解放されたとき、本当に守るべき体験が見えてくる。それは「どこでも使える」ではなく、「使う場所で確実に動く」だ。</p>
+
+        <blockquote>
+            万能を目指すことは、何も守らないことに等しい。<br>
+            境界を認めることが、品質の始まりだ。
+        </blockquote>
+
+        <p>20以上のPRを経て印刷ボタンを消したあの日、技術的には何も解決していない。iOS Safariの<code>@page</code>対応は変わらない。<code>column-count</code>の制限も残っている。変わったのは、設計者としての視座だ。</p>
+
+        <p>すべてを提供することが善ではない。確実に届くものだけを提供することが、善だ。</p>
+
+        <div class="key-point">
+            <p>失う決断の先に、守るべきものが見える。<br>機種依存は制約ではない。設計の起点だ。</p>
+        </div>
+
+    </article>
+
+    <footer class="article-footer">
+        <p id="essay-nav-links"></p>
+        <p style="margin-top: 2rem; font-size: 0.75rem;">&copy; 2026 TokiStorage</p>
+    </footer>
+
+</main>
+
+<script src="contact-form.js"></script>
+<script src="essay-nav.js?v=20260220"></script>
+<script src="tracker.js"></script>
+</body>
+</html>
