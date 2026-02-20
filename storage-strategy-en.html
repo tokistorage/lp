@@ -178,7 +178,7 @@
 
         <p>Does this mean nothing in TokiStorage's infrastructure ever grows? There is one exception: newsletter PDFs.</p>
 
-        <p>TokiStorage publishes a biannual newsletter in PDF format. HTML essays are text-based and weigh roughly 20 KB each, but a PDF is a binary file&mdash;roughly 630 KB per issue. Additionally, the appendix accumulates PDFs generated from each customer's TokiQR playback page via the print function&mdash;one PDF per customer, added with each issue. Binary volume grows in proportion to the number of featured customers. And because PDFs are binary, Git's delta compression does not work on them.</p>
+        <p>TokiStorage publishes a biannual newsletter in PDF format. HTML essays are text-based and weigh roughly 20 KB each, but a PDF is a binary file&mdash;roughly 630 KB per issue. Additionally, each issue's appendix includes customer TokiQR codes. When an order ships, the storage pipeline automatically generates a PDF from the TokiQR playback page and commits it to the archive repository. One print PDF per customer, so binary volume grows in proportion to the number of featured customers. And because PDFs are binary, Git's delta compression does not work on them.</p>
 
         <table>
             <tr>
@@ -289,6 +289,14 @@
         <p>The key is URL design. From the very first issue, PDF download links on the main site point to each volume's archive URL (e.g., <code>tokistorage.github.io/newsletter-vol1/2026-02.pdf</code>). No PDFs are stored in the main repository. This means separating a volume requires zero link rewrites. The risk of something breaking during separation is zero.</p>
 
         <p>Under this structure, the main repository contains only HTML source code. Even after 1,000 years, it remains lightweight. The 50 archived volumes each sit quietly as independent 25 MB repositories, serving PDFs through GitHub Pages indefinitely.</p>
+
+        <h3>The Automated Pipeline</h3>
+
+        <p>This Shikinen Seng&#363; system does not rely on manual operations. When the storage pipeline detects a shipped order, it automatically generates a TokiQR PDF from the playback page and commits it directly to the current volume's archive repository. The main repository receives only a JSON manifest with archive URLs&mdash;no binaries ever touch it.</p>
+
+        <p>Newsletter advancement is automated as well. Once the current issue's publication month has passed, the pipeline auto-generates the next issue's HTML draft, manifest, and index page card. When the 20-year volume boundary is crossed, it adds new volume metadata automatically and emails the administrator to create the new archive repository.</p>
+
+        <p>The only human task is the initial creation of each new archive repository and enabling GitHub Pages. Everything else is maintained autonomously by the pipeline. To sustain operations across 1,000 years, the system itself must be self-running.</p>
 
         <blockquote>
             Just as Shikinen Seng&#363; has sustained Ise Grand Shrine for 1,300 years<br>
