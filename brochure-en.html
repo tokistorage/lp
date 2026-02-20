@@ -429,12 +429,14 @@
         @media print {
             body.landscape-mode { line-height: 1.28; font-size: 10.5px; }
             body.landscape-mode .brochure {
-                columns: 2;
+                -webkit-column-count: 2;
+                column-count: 2;
+                -webkit-column-gap: 10mm;
                 column-gap: 10mm;
+                width: 100%;
             }
             body.landscape-mode .print-lower {
                 display: contents;
-                columns: auto;
             }
             body.landscape-mode .br-header,
             body.landscape-mode .tagline {
@@ -666,12 +668,13 @@ function printLandscape() {
     }
     document.body.classList.add('landscape-mode');
     document.getElementById('landscape-page-style').media = 'all';
+    void document.body.offsetHeight; // force reflow
     window.addEventListener('afterprint', function cleanup() {
         document.body.classList.remove('landscape-mode');
         document.getElementById('landscape-page-style').media = 'not all';
         window.removeEventListener('afterprint', cleanup);
     });
-    window.print();
+    setTimeout(function() { window.print(); }, isIOS ? 300 : 0);
 }
 </script>
 <script src="tracker.js"></script>
