@@ -199,7 +199,7 @@ def generate_ja(qr_path):
     pdf.rect(MARGIN, y_box, CONTENT_W, box_h, "DF")
 
     items = [
-        "PCT国際特許手続き中の独自符号化技術",
+        "独自符号化技術",
         "QR1枚に最大30秒の声を記録",
         "サーバー不要・オフライン再生・スマートフォンだけで再生可能",
         "印刷対応・自社サービスへの組み込み自由",
@@ -389,7 +389,7 @@ def generate_en(qr_path):
     pdf.rect(MARGIN, y_box, CONTENT_W, box_h, "DF")
 
     items = [
-        "Proprietary encoding technology (PCT international patent pending)",
+        "Proprietary encoding technology",
         "Up to 30 seconds of voice in a single QR code",
         "No server required \u2014 plays offline on any smartphone",
         "Print-ready \u00b7 free to integrate into your own service",
