@@ -126,7 +126,7 @@
     { id: 'migration', ja: 'マイグレーションの設計', en: 'Designing Migration' },
     { id: 'vibe-coding', ja: 'バイブコーディング', en: 'Vibe Coding' },
     { id: 'rapid-prototyping', ja: 'ラピッドプロトタイピング', en: 'Rapid Prototyping' },
-    { id: 'device-dependency', ja: '機種依存という境界', en: 'Device Dependency' },
+    { id: 'device-dependency', ja: '機種依存・組織依存の断層', en: 'Device & Organizational Dependency' },
     { id: 'tech-roadmap', ja: '技術ロードマップ', en: 'Technology Roadmap' },
 
     // ── メタ視点 ──
@@ -253,7 +253,7 @@
     'migration':              ['rapid-prototyping', 'cloudflare-gas', 'uptime', 'burn-rate-zero', 'ssdlc'],
     'vibe-coding':            ['burn-rate-zero', 'rapid-prototyping', 'migration', 'future', 'what-is-github'],
     'rapid-prototyping':      ['vibe-coding', 'burn-rate-zero', 'poc', 'migration', 'departure'],
-    'device-dependency':      ['rapid-prototyping', 'uptime', 'boundary', 'uv-laminate', 'integrity'],
+    'device-dependency':      ['poc', 'organization', 'boundary', 'openness', 'integrity'],
     'tech-roadmap':           ['migration', 'legacy', 'backup-rule', 'uptime', 'burn-rate-zero'],
     // ── メタ視点 ──
     'preserving-words':       ['why-essays', 'akashic-record', 'what-to-leave', 'narrative-trust', 'openness'],
