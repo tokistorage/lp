@@ -1,0 +1,379 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" type="image/png" sizes="32x32" href="asset/favicon-32.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="asset/apple-touch-icon.png">
+    <title>Essays | TokiStorage</title>
+    <meta name="robots" content="noindex, nofollow">
+    <meta name="description" content="Why do we want to leave something behind? 113 essays spanning psychology, economics, geology, and the cosmos. Browse by category or start anywhere.">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Shippori+Mincho:wght@400;500;600;700&family=Zen+Kaku+Gothic+New:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --toki-blue: #2563EB;
+            --toki-blue-dark: #1D4ED8;
+            --toki-blue-pale: #EFF6FF;
+            --toki-gold: #92702A;
+            --toki-gold-pale: #FEF9EE;
+            --amber: #D97706;
+            --bg-white: #FFFFFF;
+            --text-primary: #1E293B;
+            --text-secondary: #475569;
+            --text-muted: #94A3B8;
+            --border: #E2E8F0;
+            --font-display: 'Shippori Mincho', serif;
+            --font-body: 'Zen Kaku Gothic New', sans-serif;
+        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        html { scroll-behavior: smooth; }
+        body { font-family: var(--font-body); font-weight: 400; background: var(--bg-white); color: var(--text-primary); line-height: 1.9; font-size: 16px; }
+
+        .portal-nav { position: fixed; top: 0; left: 0; right: 0; z-index: 1000; background: rgba(255,255,255,0.95); backdrop-filter: blur(12px); border-bottom: 1px solid var(--border); padding: 0.6rem 1.2rem; display: flex; align-items: center; justify-content: space-between; gap: 1rem; }
+        .portal-nav .nav-brand { font-family: var(--font-display); font-size: 0.9rem; font-weight: 600; color: var(--toki-blue); text-decoration: none; white-space: nowrap; }
+        .portal-nav .nav-brand::before { content: ''; display: inline-block; width: 20px; height: 20px; background: url('asset/tokistorage-icon-512.png') no-repeat center / contain; vertical-align: -3px; margin-right: 5px; }
+        .portal-nav .nav-right { display: flex; align-items: center; gap: 1rem; }
+        .portal-nav .lang-switch { font-size: 0.75rem; color: var(--toki-blue); text-decoration: none; padding: 0.3rem 0.6rem; border: 1px solid var(--toki-blue); border-radius: 4px; }
+        .portal-nav .lang-switch:hover { background: var(--toki-blue); color: #fff; }
+
+        .portal-container { max-width: 760px; margin: 0 auto; padding: 7rem 2rem 4rem; }
+
+        .portal-hero { text-align: center; margin-bottom: 3.5rem; padding-bottom: 2.5rem; border-bottom: 1px solid var(--border); }
+        .portal-hero .hero-label { font-size: 0.7rem; color: var(--toki-blue); letter-spacing: 0.2em; margin-bottom: 1.5rem; font-weight: 600; }
+        .portal-hero h1 { font-family: var(--font-display); font-size: 2rem; font-weight: 700; line-height: 1.5; margin-bottom: 1rem; }
+        .portal-hero .hero-sub { font-size: 0.95rem; color: var(--text-secondary); max-width: 560px; margin: 0 auto; line-height: 1.9; }
+
+        .portal-toc { margin-bottom: 3rem; padding: 1.5rem; background: var(--toki-blue-pale); border-radius: 8px; }
+        .portal-toc-label { font-size: 0.65rem; letter-spacing: 0.12em; color: var(--toki-blue); font-weight: 600; margin-bottom: 0.75rem; }
+        .portal-toc a { font-size: 0.85rem; color: var(--text-secondary); text-decoration: none; }
+        .portal-toc a:hover { color: var(--toki-blue); }
+        .portal-toc-list { display: flex; flex-wrap: wrap; gap: 0.3rem 1rem; }
+
+        .portal-latest { margin-bottom: 3rem; padding: 1.5rem; background: var(--toki-gold-pale); border-radius: 8px; border: 1px solid rgba(146,112,42,0.15); }
+        .portal-latest-label { font-size: 0.65rem; letter-spacing: 0.12em; color: var(--toki-gold); font-weight: 600; margin-bottom: 0.75rem; }
+        .portal-latest a { font-size: 0.9rem; color: var(--text-primary); text-decoration: none; font-weight: 500; }
+        .portal-latest a:hover { color: var(--toki-gold); }
+        .portal-latest-list { display: flex; flex-direction: column; gap: 0.5rem; }
+
+        .portal-category { margin-bottom: 2.5rem; }
+        .portal-category-header { display: flex; align-items: baseline; gap: 0.75rem; margin-bottom: 1rem; padding-bottom: 0.5rem; border-bottom: 2px solid var(--toki-blue-pale); }
+        .portal-category-header h2 { font-family: var(--font-display); font-size: 1.15rem; font-weight: 600; white-space: nowrap; }
+        .portal-category-header .cat-desc { font-size: 0.8rem; color: var(--text-muted); }
+        .portal-category-header .cat-count { font-size: 0.7rem; color: var(--text-muted); white-space: nowrap; }
+        .portal-essays { display: flex; flex-wrap: wrap; gap: 0.2rem 0; }
+        .portal-essays a { font-size: 0.85rem; color: var(--text-secondary); text-decoration: none; padding: 0.15rem 0; }
+        .portal-essays a:hover { color: var(--toki-blue); }
+        .portal-essays .sep { color: var(--text-muted); font-size: 0.75rem; margin: 0 0.4rem; }
+
+        .portal-guides { margin-top: 3rem; padding-top: 2rem; border-top: 1px solid var(--border); }
+        .portal-guides-label { font-size: 0.65rem; letter-spacing: 0.12em; color: var(--amber); font-weight: 600; margin-bottom: 0.75rem; }
+        .portal-guides a { font-size: 0.85rem; text-decoration: none; }
+        .portal-guides a:hover { text-decoration: underline; }
+        .portal-guides-list { display: flex; flex-wrap: wrap; gap: 0.3rem 0; }
+        .portal-guides-list .sep { color: var(--text-muted); font-size: 0.75rem; margin: 0 0.4rem; }
+
+        .portal-footer { margin-top: 4rem; padding-top: 2rem; border-top: 1px solid var(--border); text-align: center; }
+        .portal-footer p { font-size: 0.8rem; color: var(--text-muted); margin-bottom: 1rem; }
+        .portal-footer a { color: var(--toki-blue); text-decoration: none; }
+        .portal-footer a:hover { text-decoration: underline; }
+
+        @media (max-width: 768px) {
+            .portal-container { padding: 6rem 1.2rem 3rem; }
+            .portal-hero h1 { font-size: 1.6rem; }
+            .portal-category-header { flex-direction: column; gap: 0.25rem; }
+        }
+        @media print { .portal-nav { display: none; } .portal-container { padding-top: 2rem; } }
+    </style>
+    <meta property="og:image" content="https://tokistorage.github.io/lp/asset/tokistorage-icon-512.png">
+    <meta property="og:image:width" content="512">
+    <meta property="og:image:height" content="512">
+</head>
+<body>
+
+<nav class="portal-nav">
+    <a href="index-en.html" class="nav-brand">TokiStorage</a>
+    <div class="nav-right">
+        <a href="essays.html" class="lang-switch">JA</a>
+    </div>
+</nav>
+
+<main class="portal-container">
+
+    <header class="portal-hero">
+        <p class="hero-label">ESSAYS</p>
+        <h1>1000-Year Design Philosophy</h1>
+        <p class="hero-sub">
+            Why do we want to leave something behind?<br>
+            From this single question, 113 essays have grown to span psychology, economics, geology, and the cosmos.<br>
+            Nine categories. Start anywhere.
+        </p>
+    </header>
+
+    <div class="portal-toc">
+        <div class="portal-toc-label">CATEGORIES</div>
+        <div class="portal-toc-list">
+            <a href="#foundations">Foundations</a>
+            <a href="#milestones">Life Milestones</a>
+            <a href="#belief">Belief &amp; Thought</a>
+            <a href="#society">Society &amp; Governance</a>
+            <a href="#economy">Economy &amp; Property</a>
+            <a href="#culture">Culture &amp; Community</a>
+            <a href="#nature">Nature &amp; Cosmos</a>
+            <a href="#technology">Technology &amp; Design</a>
+            <a href="#meta">Meta Perspectives</a>
+        </div>
+    </div>
+
+    <div class="portal-latest">
+        <div class="portal-latest-label">LATEST</div>
+        <div class="portal-latest-list">
+            <div><a href="device-dependency-en.html">Device, Browser &amp; Organizational Dependency</a></div>
+            <div><a href="choosing-not-to-choose-en.html">The Choice Not to Choose</a></div>
+            <div><a href="site-geology-en.html">Storage Site Geology</a></div>
+            <div><a href="community-benefit-en.html">Community Benefit-Sharing</a></div>
+            <div><a href="tech-roadmap-en.html">Technology Roadmap</a></div>
+        </div>
+    </div>
+
+    <!-- Foundations -->
+    <section class="portal-category" id="foundations">
+        <div class="portal-category-header">
+            <h2>Foundations</h2>
+            <span class="cat-desc">Questions that begin within</span>
+            <span class="cat-count">12</span>
+        </div>
+        <div class="portal-essays">
+            <a href="psychology-en.html">Psychology</a><span class="sep">·</span>
+            <a href="philosophy-en.html">Philosophy</a><span class="sep">·</span>
+            <a href="integrity-en.html">Integrity</a><span class="sep">·</span>
+            <a href="solitude-en.html">Solitude</a><span class="sep">·</span>
+            <a href="pathology-en.html">Pathology</a><span class="sep">·</span>
+            <a href="emotion-en.html">Emotions as Transformation</a><span class="sep">·</span>
+            <a href="backcasting-en.html">Backcasting &amp; Self-Transformation</a><span class="sep">·</span>
+            <a href="boundary-en.html">System Boundaries</a><span class="sep">·</span>
+            <a href="peace-en.html">Peace for All</a><span class="sep">·</span>
+            <a href="meiwaku-en.html">The Structure of Meiwaku</a><span class="sep">·</span>
+            <a href="satiation-en.html">Satiation &amp; Transformation</a><span class="sep">·</span>
+            <a href="transformation-journey-en.html">Transformation Journey</a>
+        </div>
+    </section>
+
+    <!-- Life Milestones -->
+    <section class="portal-category" id="milestones">
+        <div class="portal-category-header">
+            <h2>Life Milestones</h2>
+            <span class="cat-desc">Landscapes we encounter along the way</span>
+            <span class="cat-count">8</span>
+        </div>
+        <div class="portal-essays">
+            <a href="lifecycle-en.html">Life Cycle</a><span class="sep">·</span>
+            <a href="adversity-en.html">Adversity</a><span class="sep">·</span>
+            <a href="ceremony-en.html">Rites of Passage</a><span class="sep">·</span>
+            <a href="recital-record-en.html">Recitals &amp; Parenting</a><span class="sep">·</span>
+            <a href="playground-gift-en.html">Proof of Friendship</a><span class="sep">·</span>
+            <a href="lifestyle-en.html">Lifestyle</a><span class="sep">·</span>
+            <a href="independence-en.html">Off-Grid</a><span class="sep">·</span>
+            <a href="what-to-leave-en.html">What to Leave Behind</a>
+        </div>
+    </section>
+
+    <!-- Belief & Thought -->
+    <section class="portal-category" id="belief">
+        <div class="portal-category-header">
+            <h2>Belief &amp; Thought</h2>
+            <span class="cat-desc">Gazing at the invisible</span>
+            <span class="cat-count">4</span>
+        </div>
+        <div class="portal-essays">
+            <a href="religion-en.html">Religion</a><span class="sep">·</span>
+            <a href="existentialism-en.html">Existentialism</a><span class="sep">·</span>
+            <a href="dimension-en.html">The Fifth Dimension</a><span class="sep">·</span>
+            <a href="shiseikan-en.html">Cultivating a View of Life &amp; Death</a>
+        </div>
+    </section>
+
+    <!-- Society & Governance -->
+    <section class="portal-category" id="society">
+        <div class="portal-category-header">
+            <h2>Society &amp; Governance</h2>
+            <span class="cat-desc">The power we hold within society</span>
+            <span class="cat-count">7</span>
+        </div>
+        <div class="portal-essays">
+            <a href="organization-en.html">Organizations</a><span class="sep">·</span>
+            <a href="government-en.html">Government</a><span class="sep">·</span>
+            <a href="election-en.html">Elections &amp; Existence</a><span class="sep">·</span>
+            <a href="nation-en.html">Nation</a><span class="sep">·</span>
+            <a href="national-record-en.html">National Records</a><span class="sep">·</span>
+            <a href="global-en.html">Global Society</a><span class="sep">·</span>
+            <a href="strategy-en.html">National Strategy</a>
+        </div>
+    </section>
+
+    <!-- Economy & Property -->
+    <section class="portal-category" id="economy">
+        <div class="portal-category-header">
+            <h2>Economy &amp; Property</h2>
+            <span class="cat-desc">How to deliver and preserve value</span>
+            <span class="cat-count">29</span>
+        </div>
+        <div class="portal-essays">
+            <a href="industry-en.html">Industry</a><span class="sep">·</span>
+            <a href="consumption-en.html">Consumption</a><span class="sep">·</span>
+            <a href="gift-economy-en.html">Gift Economy</a><span class="sep">·</span>
+            <a href="novelty-soap-en.html">Novelty Soap</a><span class="sep">·</span>
+            <a href="fragrance-en.html">Science of Scent</a><span class="sep">·</span>
+            <a href="advertising-en.html">Advertising &amp; ROI</a><span class="sep">·</span>
+            <a href="price-acceptance-en.html">Price Acceptance</a><span class="sep">·</span>
+            <a href="finance-en.html">Finance</a><span class="sep">·</span>
+            <a href="ownership-en.html">Ownership</a><span class="sep">·</span>
+            <a href="realestate-en.html">Real Estate</a><span class="sep">·</span>
+            <a href="esg-en.html">ESG/GX</a><span class="sep">·</span>
+            <a href="sdgs-en.html">SDGs</a><span class="sep">·</span>
+            <a href="no-competition-en.html">No Competition</a><span class="sep">·</span>
+            <a href="platform-en.html">Platform View</a><span class="sep">·</span>
+            <a href="global-niche-en.html">Global Niche</a><span class="sep">·</span>
+            <a href="global-honbinos-en.html">Global Honbinos</a><span class="sep">·</span>
+            <a href="ecosystem-en.html">Redefining the Ecosystem</a><span class="sep">·</span>
+            <a href="free-strategy-en.html">The Paradox of Free</a><span class="sep">·</span>
+            <a href="brochure-essay-en.html">The Limits of the Brochure</a><span class="sep">·</span>
+            <a href="choosing-not-to-choose-en.html">The Choice Not to Choose</a><span class="sep">·</span>
+            <a href="payment-en.html">Payment Methods</a><span class="sep">·</span>
+            <a href="partner-boundary-en.html">The Partner Boundary</a><span class="sep">·</span>
+            <a href="made-to-order-en.html">The Boundary of Made-to-Order</a><span class="sep">·</span>
+            <a href="post-nomad-en.html">Post-Nomad</a><span class="sep">·</span>
+            <a href="disintermediation-en.html">Disintermediation</a><span class="sep">·</span>
+            <a href="walking-partner-en.html">Walking Partner</a><span class="sep">·</span>
+            <a href="sanpoyoshi-en.html">Sanpo-yoshi</a><span class="sep">·</span>
+            <a href="burn-rate-zero-en.html">Burn Rate Zero</a><span class="sep">·</span>
+            <a href="framework-en.html">Framework Expression</a>
+        </div>
+    </section>
+
+    <!-- Culture & Community -->
+    <section class="portal-category" id="culture">
+        <div class="portal-category-header">
+            <h2>Culture &amp; Community</h2>
+            <span class="cat-desc">Creating, sharing, connecting</span>
+            <span class="cat-count">11</span>
+        </div>
+        <div class="portal-essays">
+            <a href="education-en.html">Education</a><span class="sep">·</span>
+            <a href="early-education-en.html">Early Childhood</a><span class="sep">·</span>
+            <a href="media-en.html">Media</a><span class="sep">·</span>
+            <a href="entertainment-en.html">Entertainment</a><span class="sep">·</span>
+            <a href="art-en.html">Art</a><span class="sep">·</span>
+            <a href="music-en.html">Music</a><span class="sep">·</span>
+            <a href="community-benefit-en.html">Community Benefit-Sharing</a><span class="sep">·</span>
+            <a href="tourism-en.html">Tourism</a><span class="sep">·</span>
+            <a href="commemorative-photo-en.html">Souvenir Photo</a><span class="sep">·</span>
+            <a href="sports-en.html">Sports</a><span class="sep">·</span>
+            <a href="history-en.html">History</a>
+        </div>
+    </section>
+
+    <!-- Nature & Cosmos -->
+    <section class="portal-category" id="nature">
+        <div class="portal-category-header">
+            <h2>Nature &amp; Cosmos</h2>
+            <span class="cat-desc">This planet and the time beyond</span>
+            <span class="cat-count">8</span>
+        </div>
+        <div class="portal-essays">
+            <a href="animal-welfare-en.html">Animal Welfare</a><span class="sep">·</span>
+            <a href="ecology-en.html">Ecology</a><span class="sep">·</span>
+            <a href="geology-en.html">Geology</a><span class="sep">·</span>
+            <a href="site-geology-en.html">Storage Site Geology</a><span class="sep">·</span>
+            <a href="turtle-en.html">Turtle &amp; Permanence</a><span class="sep">·</span>
+            <a href="urayasu-en.html">Urayasu</a><span class="sep">·</span>
+            <a href="hyoutanjima-en.html">The Probability of Gourd Island</a><span class="sep">·</span>
+            <a href="space-en.html">Space</a>
+        </div>
+    </section>
+
+    <!-- Technology & Design -->
+    <section class="portal-category" id="technology">
+        <div class="portal-category-header">
+            <h2>Technology &amp; Design</h2>
+            <span class="cat-desc">Methods for designing 1000 years</span>
+            <span class="cat-count">29</span>
+        </div>
+        <div class="portal-essays">
+            <a href="coach-en.html">Timeless Coach</a><span class="sep">·</span>
+            <a href="future-en.html">AI Era</a><span class="sep">·</span>
+            <a href="perspective-en.html">The Essence of Perspective</a><span class="sep">·</span>
+            <a href="chief-timeless-en.html">Chief Timeless Officer</a><span class="sep">·</span>
+            <a href="hands-en.html">Inscribed by Hand</a><span class="sep">·</span>
+            <a href="departure-en.html">Departure from Trends</a><span class="sep">·</span>
+            <a href="openness-en.html">Openism</a><span class="sep">·</span>
+            <a href="akashic-record-en.html">Akashic Record</a><span class="sep">·</span>
+            <a href="legacy-en.html">Technical Design</a><span class="sep">·</span>
+            <a href="deposition-en.html">Deposition</a><span class="sep">·</span>
+            <a href="30seconds-en.html">30 Seconds of Voice</a><span class="sep">·</span>
+            <a href="voice-future-en.html">Voice Restoration</a><span class="sep">·</span>
+            <a href="image-clarity-en.html">Image Clarity</a><span class="sep">·</span>
+            <a href="what-is-github-en.html">What Is GitHub</a><span class="sep">·</span>
+            <a href="api-transformation-en.html">API Transformation</a><span class="sep">·</span>
+            <a href="ssdlc-en.html">SSDLC</a><span class="sep">·</span>
+            <a href="enterprise-architecture-en.html">Enterprise Architecture</a><span class="sep">·</span>
+            <a href="poc-en.html">The PoC Perspective</a><span class="sep">·</span>
+            <a href="why-not-consulting-en.html">Why No Implementation Project</a><span class="sep">·</span>
+            <a href="decision-maker-en.html">The Decision-Maker's Resolution</a><span class="sep">·</span>
+            <a href="backup-rule-en.html">3-2-1 Backup Rule</a><span class="sep">·</span>
+            <a href="uv-laminate-en.html">UV Laminate</a><span class="sep">·</span>
+            <a href="uptime-en.html">Uptime &amp; Dependencies</a><span class="sep">·</span>
+            <a href="cloudflare-gas-en.html">Cloudflare &amp; GAS</a><span class="sep">·</span>
+            <a href="migration-en.html">Designing Migration</a><span class="sep">·</span>
+            <a href="vibe-coding-en.html">Vibe Coding</a><span class="sep">·</span>
+            <a href="rapid-prototyping-en.html">Rapid Prototyping</a><span class="sep">·</span>
+            <a href="device-dependency-en.html">Device, Browser &amp; Organizational Dependency</a><span class="sep">·</span>
+            <a href="tech-roadmap-en.html">Technology Roadmap</a>
+        </div>
+    </section>
+
+    <!-- Meta Perspectives -->
+    <section class="portal-category" id="meta">
+        <div class="portal-category-header">
+            <h2>Meta Perspectives</h2>
+            <span class="cat-desc">Why write, why preserve</span>
+            <span class="cat-count">5</span>
+        </div>
+        <div class="portal-essays">
+            <a href="preserving-words-en.html">Preserving Words</a><span class="sep">·</span>
+            <a href="why-essays-en.html">The Significance of Inscribing Essays</a><span class="sep">·</span>
+            <a href="erasure-en.html">Choosing Not to Leave Behind</a><span class="sep">·</span>
+            <a href="narrative-trust-en.html">The Trust That Stories Tell</a><span class="sep">·</span>
+            <a href="headhunter-en.html">Dialogue with an Overseas Headhunter</a>
+        </div>
+    </section>
+
+    <!-- Guides & Special Pages -->
+    <div class="portal-guides">
+        <div class="portal-guides-label">GUIDES &amp; SPECIAL PAGES</div>
+        <div class="portal-guides-list">
+            <a href="manifesto-en.html" style="color: var(--toki-blue); font-weight: 500;">Manifesto</a><span class="sep">·</span>
+            <a href="transparency-en.html" style="color: var(--amber);">Honest Answers to 10 Concerns</a><span class="sep">·</span>
+            <a href="not-for-you-en.html" style="color: var(--amber);">Is This Right for You?</a><span class="sep">·</span>
+            <a href="trust-design-en.html" style="color: var(--amber);">Trust Design</a><span class="sep">·</span>
+            <a href="pearl-soap.html" style="color: var(--toki-gold);">Pearl Soap</a><span class="sep">·</span>
+            <a href="100-scenes.html" style="color: var(--toki-gold);">100 Scenes</a><span class="sep">·</span>
+            <a href="usecases-en.html">Use Cases</a><span class="sep">·</span>
+            <a href="client-proposal-en.html">Timeless Consulting</a><span class="sep">·</span>
+            <a href="timeless-coach.html">Timeless Coach</a><span class="sep">·</span>
+            <a href="partnership-en.html">Partnership</a><span class="sep">·</span>
+            <a href="government-proposal-en.html">Government Proposal</a><span class="sep">·</span>
+            <a href="patronage-en.html">Patronage</a><span class="sep">·</span>
+            <a href="index-en.html">TokiStorage</a>
+        </div>
+    </div>
+
+    <footer class="portal-footer">
+        <p><a href="index-en.html">TokiStorage</a> &mdash; Proof of existence that lasts 1000 years</p>
+    </footer>
+
+</main>
+
+</body>
+</html>
