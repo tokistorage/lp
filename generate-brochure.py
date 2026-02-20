@@ -159,9 +159,9 @@ def generate_ja(qr_path):
     col_w = (CONTENT_W - 8) / 3  # 3 columns with 4mm gaps
     y_top = pdf.get_y()
     layers = [
-        ("物理層", "石英ガラス・ラミネート", "1000年耐久\n手元に届く実物"),
+        ("物理層", "石英ガラス・UVラミネート", "記録そのものが手元の実物に\n石英1000年・UV更新可"),
         ("国家層", "国立国会図書館", "国会図書館法による\n永久保存"),
-        ("民間層", "GitHub Arctic Code Vault", "世界分散＋\n北極圏アーカイブ"),
+        ("民間層", "GitHub", "無料の公開基盤で永続管理\n維持費は一切不要"),
     ]
 
     for i, (title, subtitle, desc) in enumerate(layers):
@@ -353,9 +353,9 @@ def generate_en(qr_path):
     col_w = (CONTENT_W - 8) / 3
     y_top = pdf.get_y()
     layers = [
-        ("Physical", "Quartz Glass & Laminate", "1,000-year durability\nDelivered to you"),
+        ("Physical", "Quartz Glass & UV Laminate", "Your record in your hands\nQuartz 1,000 yrs · UV renewable"),
         ("National", "National Diet Library", "Permanent preservation\nunder Japanese law"),
-        ("Private", "GitHub Arctic Code Vault", "Global distribution +\nArctic archive"),
+        ("Private", "GitHub", "Free open platform\nZero maintenance cost"),
     ]
 
     for i, (title, subtitle, desc) in enumerate(layers):
