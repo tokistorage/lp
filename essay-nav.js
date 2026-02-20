@@ -129,6 +129,7 @@
     { id: 'rapid-prototyping', ja: 'ラピッドプロトタイピング', en: 'Rapid Prototyping' },
     { id: 'device-dependency', ja: '機種依存・ブラウザ依存・組織依存の断層', en: 'Device, Browser & Organizational Dependency' },
     { id: 'tech-roadmap', ja: '技術ロードマップ', en: 'Technology Roadmap' },
+    { id: 'storage-strategy', ja: 'ストレージ戦略', en: 'Storage Strategy' },
 
     // ── メタ視点 ──
     { id: 'preserving-words', ja: 'ことばを残す', en: 'Preserving Words' },
@@ -143,6 +144,7 @@
   // LATEST_COUNT で表示件数を制御
   const LATEST_COUNT = 5;
   const latestEssayIds = [
+    'storage-strategy',
     'playground-gift',
     'device-dependency',
     'choosing-not-to-choose',
@@ -276,6 +278,7 @@
     'rapid-prototyping':      ['vibe-coding', 'burn-rate-zero', 'poc', 'migration', 'departure'],
     'device-dependency':      ['poc', 'organization', 'boundary', 'openness', 'integrity'],
     'tech-roadmap':           ['migration', 'legacy', 'backup-rule', 'uptime', 'burn-rate-zero'],
+    'storage-strategy':       ['backup-rule', 'migration', 'uptime', 'legacy', 'device-dependency'],
     // ── メタ視点 ──
     'preserving-words':       ['why-essays', 'akashic-record', 'what-to-leave', 'narrative-trust', 'openness'],
     'why-essays':             ['preserving-words', 'brochure-essay', 'narrative-trust', 'openness', 'erasure'],
