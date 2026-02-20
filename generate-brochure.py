@@ -152,8 +152,34 @@ def generate_ja(qr_path):
              "三層の分散保管で、声と記憶を1000年先に届ける。それがトキストレージです。",
              align="C", new_x="LMARGIN", new_y="NEXT")
 
-    # ── Three-Layer Architecture ───────────────────────────────────────
+    # ── TokiQR Highlight ──────────────────────────────────────────────
     pdf.ln(7)
+    pdf.section_title("TokiQR ── 声を刻むQRコード")
+
+    y_box = pdf.get_y()
+    box_h = 50
+    pdf.set_fill_color(*BG_LIGHT)
+    pdf.set_draw_color(*BORDER)
+    pdf.rect(MARGIN, y_box, CONTENT_W, box_h, "DF")
+
+    items = [
+        "QR1枚に最大30秒の声を記録",
+        "サーバー不要・オフライン再生・スマートフォンだけで再生可能",
+        "印刷対応・自社サービスへの組み込み自由",
+        "セットアップページでQRシール1枚からカスタム展開（スタンプラリー・観光・イベント）",
+        "独自符号化技術",
+        "無料で今すぐ体験 → tokistorage.github.io/qr/",
+    ]
+    pdf.set_xy(MARGIN + 6, y_box + 4)
+    pdf.set_font("JP", "", 9.5)
+    pdf.set_text_color(*DARK)
+    for item in items:
+        pdf.set_x(MARGIN + 6)
+        pdf.cell(CONTENT_W - 12, 7, f"・{item}", new_x="LMARGIN", new_y="NEXT")
+
+    pdf.set_y(y_box + box_h + 6)
+
+    # ── Three-Layer Architecture ───────────────────────────────────────
     pdf.section_title("三層分散保管アーキテクチャ")
 
     col_w = (CONTENT_W - 8) / 3  # 3 columns with 4mm gaps
@@ -188,32 +214,6 @@ def generate_ja(qr_path):
         pdf.multi_cell(col_w - 6, 5, desc, align="C")
 
     pdf.set_y(y_top + 46)
-
-    # ── TokiQR Highlight ──────────────────────────────────────────────
-    pdf.section_title("TokiQR ── 声を刻むQRコード")
-
-    y_box = pdf.get_y()
-    box_h = 50
-    pdf.set_fill_color(*BG_LIGHT)
-    pdf.set_draw_color(*BORDER)
-    pdf.rect(MARGIN, y_box, CONTENT_W, box_h, "DF")
-
-    items = [
-        "QR1枚に最大30秒の声を記録",
-        "サーバー不要・オフライン再生・スマートフォンだけで再生可能",
-        "印刷対応・自社サービスへの組み込み自由",
-        "セットアップページでQRシール1枚からカスタム展開（スタンプラリー・観光・イベント）",
-        "独自符号化技術",
-        "無料で今すぐ体験 → tokistorage.github.io/qr/",
-    ]
-    pdf.set_xy(MARGIN + 6, y_box + 4)
-    pdf.set_font("JP", "", 9.5)
-    pdf.set_text_color(*DARK)
-    for item in items:
-        pdf.set_x(MARGIN + 6)
-        pdf.cell(CONTENT_W - 12, 7, f"・{item}", new_x="LMARGIN", new_y="NEXT")
-
-    pdf.set_y(y_box + box_h + 6)
 
     # ── Service Areas ─────────────────────────────────────────────────
     pdf.section_title("事業領域")
@@ -346,8 +346,34 @@ def generate_en(qr_path):
              "Three-layer distributed storage carries your voice and memory 1,000 years into the future.",
              align="C", new_x="LMARGIN", new_y="NEXT")
 
-    # ── Three-Layer Architecture ───────────────────────────────────────
+    # ── TokiQR Highlight ──────────────────────────────────────────────
     pdf.ln(7)
+    pdf.section_title("TokiQR \u2014 Voice Encoded in a QR Code")
+
+    y_box = pdf.get_y()
+    box_h = 50
+    pdf.set_fill_color(*BG_LIGHT)
+    pdf.set_draw_color(*BORDER)
+    pdf.rect(MARGIN, y_box, CONTENT_W, box_h, "DF")
+
+    items = [
+        "Up to 30 seconds of voice in a single QR code",
+        "No server required \u2014 plays offline on any smartphone",
+        "Print-ready \u00b7 free to integrate into your own service",
+        "Setup page: deploy from a single QR sticker (stamp rallies, tourism, events)",
+        "Proprietary encoding technology",
+        "Try it free now \u2192 tokistorage.github.io/qr/",
+    ]
+    pdf.set_xy(MARGIN + 6, y_box + 4)
+    pdf.set_font("JP", "", 9.5)
+    pdf.set_text_color(*DARK)
+    for item in items:
+        pdf.set_x(MARGIN + 6)
+        pdf.cell(CONTENT_W - 12, 7, f"\u2022 {item}", new_x="LMARGIN", new_y="NEXT")
+
+    pdf.set_y(y_box + box_h + 6)
+
+    # ── Three-Layer Architecture ───────────────────────────────────────
     pdf.section_title("Three-Layer Distributed Storage")
 
     col_w = (CONTENT_W - 8) / 3
@@ -378,32 +404,6 @@ def generate_en(qr_path):
         pdf.multi_cell(col_w - 6, 5, desc, align="C")
 
     pdf.set_y(y_top + 46)
-
-    # ── TokiQR Highlight ──────────────────────────────────────────────
-    pdf.section_title("TokiQR \u2014 Voice Encoded in a QR Code")
-
-    y_box = pdf.get_y()
-    box_h = 50
-    pdf.set_fill_color(*BG_LIGHT)
-    pdf.set_draw_color(*BORDER)
-    pdf.rect(MARGIN, y_box, CONTENT_W, box_h, "DF")
-
-    items = [
-        "Up to 30 seconds of voice in a single QR code",
-        "No server required \u2014 plays offline on any smartphone",
-        "Print-ready \u00b7 free to integrate into your own service",
-        "Setup page: deploy from a single QR sticker (stamp rallies, tourism, events)",
-        "Proprietary encoding technology",
-        "Try it free now \u2192 tokistorage.github.io/qr/",
-    ]
-    pdf.set_xy(MARGIN + 6, y_box + 4)
-    pdf.set_font("JP", "", 9.5)
-    pdf.set_text_color(*DARK)
-    for item in items:
-        pdf.set_x(MARGIN + 6)
-        pdf.cell(CONTENT_W - 12, 7, f"\u2022 {item}", new_x="LMARGIN", new_y="NEXT")
-
-    pdf.set_y(y_box + box_h + 6)
 
     # ── Service Areas ─────────────────────────────────────────────────
     pdf.section_title("Service Areas")
