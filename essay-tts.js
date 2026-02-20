@@ -17,14 +17,13 @@
   function injectStyles() {
     var css = document.createElement('style');
     css.textContent = [
-      '.tts-btn{display:inline-flex;align-items:center;gap:4px;font-size:.7rem;color:var(--text-secondary,#475569);background:none;border:1px solid var(--border,#E2E8F0);border-radius:4px;padding:3px 8px;cursor:pointer;font-family:inherit;transition:background .15s,color .15s;white-space:nowrap}',
-      '.tts-btn:hover{background:var(--toki-violet,var(--toki-blue,#2563EB));color:#fff;border-color:var(--toki-violet,var(--toki-blue,#2563EB))}',
-      '.tts-btn.is-active{background:var(--toki-violet,var(--toki-blue,#2563EB));color:#fff;border-color:var(--toki-violet,var(--toki-blue,#2563EB))}',
+      '.tts-btn{display:inline-flex;align-items:center;gap:4px;font-size:.75rem;color:var(--toki-violet,#7C3AED);background:var(--toki-violet-pale,#F5F3FF);border:1px solid var(--toki-violet,#7C3AED);border-radius:4px;padding:4px 10px;cursor:pointer;font-family:inherit;transition:background .15s,color .15s;white-space:nowrap}',
+      '.tts-btn:hover{background:var(--toki-violet,#7C3AED);color:#fff}',
+      '.tts-btn.is-active{background:var(--toki-violet,#7C3AED);color:#fff}',
       '.tts-icon{width:14px;height:14px;fill:currentColor;flex-shrink:0}',
-      '.tts-speed{font-size:.65rem;min-width:2.2em;text-align:center}',
+      '.tts-speed{font-size:.7rem;min-width:2.2em;text-align:center}',
       '.tts-controls{display:inline-flex;align-items:center;gap:4px}',
-      '.tts-progress{position:fixed;top:0;left:0;height:2px;background:var(--toki-violet,var(--toki-blue,#2563EB));z-index:1001;transition:width .3s;pointer-events:none}',
-      '.tts-highlight{background:rgba(124,58,237,.08);border-radius:2px;transition:background .2s}',
+      '.tts-progress{position:fixed;top:0;left:0;height:2px;background:var(--toki-violet,#7C3AED);z-index:1001;transition:width .3s;pointer-events:none}',
       '@media print{.tts-controls,.tts-progress{display:none}}'
     ].join('\n');
     document.head.appendChild(css);
