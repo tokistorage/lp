@@ -143,6 +143,7 @@
   // LATEST_COUNT で表示件数を制御
   const LATEST_COUNT = 5;
   const latestEssayIds = [
+    'playground-gift',
     'device-dependency',
     'choosing-not-to-choose',
     'site-geology',
