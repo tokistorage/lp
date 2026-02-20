@@ -1,0 +1,332 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" type="image/png" sizes="32x32" href="asset/favicon-32.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="asset/apple-touch-icon.png">
+    <title>ストレージ戦略 | トキストレージ</title>
+    <meta name="robots" content="noindex, nofollow">
+    <meta name="description" content="TokiQRのデコーダーはわずか3MB。データはQR紙面に分散し、サーバー側は発行枚数に依存しない。1000年スケールのストレージ持続性とマイグレーション戦略を試算する。">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Shippori+Mincho:wght@400;500;600;700&family=Zen+Kaku+Gothic+New:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --toki-blue: #2563EB;
+            --toki-blue-dark: #1D4ED8;
+            --toki-blue-pale: #EFF6FF;
+            --accent-blue: #3B82F6;
+            --bg-white: #FFFFFF;
+            --text-primary: #1E293B;
+            --text-secondary: #475569;
+            --text-muted: #94A3B8;
+            --border: #E2E8F0;
+            --font-display: 'Shippori Mincho', serif;
+            --font-body: 'Zen Kaku Gothic New', sans-serif;
+        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        html { scroll-behavior: smooth; }
+        body { font-family: var(--font-body); font-weight: 400; background: var(--bg-white); color: var(--text-primary); line-height: 2; font-size: 16px; }
+
+        .article-nav { position: fixed; top: 0; left: 0; right: 0; z-index: 1000; background: rgba(255,255,255,0.95); backdrop-filter: blur(12px); border-bottom: 1px solid var(--border); padding: 0.6rem 1.2rem; display: flex; align-items: center; justify-content: space-between; gap: 1rem; }
+        .article-nav .nav-brand { font-family: var(--font-display); font-size: 0.9rem; font-weight: 600; color: var(--toki-blue); text-decoration: none; white-space: nowrap; }
+        .article-nav .nav-brand::before { content: ''; display: inline-block; width: 20px; height: 20px; background: url('asset/tokistorage-icon-512.png') no-repeat center / contain; vertical-align: -3px; margin-right: 5px; }
+        .article-nav .nav-right { display: flex; align-items: center; gap: 1rem; }
+        .article-nav .nav-label { font-size: 0.6rem; color: var(--text-muted); letter-spacing: 0.08em; }
+        .article-nav .lang-switch { font-size: 0.75rem; color: var(--toki-blue); text-decoration: none; padding: 0.3rem 0.6rem; border: 1px solid var(--toki-blue); border-radius: 4px; }
+        .article-nav .lang-switch:hover { background: var(--toki-blue); color: #fff; }
+
+        .article-container { max-width: 680px; margin: 0 auto; padding: 7rem 2rem 4rem; }
+        .article-header { margin-bottom: 3rem; padding-bottom: 2rem; border-bottom: 1px solid var(--border); }
+        .article-category { font-size: 0.7rem; color: var(--toki-blue); letter-spacing: 0.15em; margin-bottom: 1rem; }
+        .article-header h1 { font-family: var(--font-display); font-size: 1.8rem; font-weight: 700; line-height: 1.5; margin-bottom: 1.5rem; }
+        .article-subtitle { font-size: 0.95rem; color: var(--text-secondary); line-height: 1.9; }
+
+        .article-content h2 { font-family: var(--font-display); font-size: 1.3rem; font-weight: 600; margin: 3rem 0 1.5rem; padding-bottom: 0.5rem; border-bottom: 2px solid var(--toki-blue-pale); }
+        .article-content h3 { font-family: var(--font-display); font-size: 1.1rem; font-weight: 600; margin: 2rem 0 1rem; color: var(--toki-blue-dark); }
+        .article-content p { margin-bottom: 1.5rem; text-align: justify; }
+        .article-content blockquote { border-left: 3px solid var(--toki-blue); padding-left: 1.5rem; margin: 2rem 0; font-family: var(--font-display); color: var(--text-secondary); }
+        .article-content ul { margin: 1.5rem 0; padding-left: 1.5rem; }
+        .article-content li { margin-bottom: 0.75rem; }
+        .article-content table { width: 100%; border-collapse: collapse; margin: 1.5rem 0; font-size: 0.9rem; }
+        .article-content th, .article-content td { border: 1px solid var(--border); padding: 0.6rem 0.8rem; text-align: left; }
+        .article-content th { background: var(--toki-blue-pale); font-weight: 600; font-size: 0.85rem; }
+        .article-content td { line-height: 1.6; }
+
+        .core-message { background: var(--toki-blue-pale); border-left: 4px solid var(--toki-blue); padding: 1.5rem; margin: 2rem 0; font-size: 0.95rem; line-height: 1.8; }
+        .key-point { background: linear-gradient(135deg, var(--toki-blue-pale) 0%, #fff 100%); border: 1px solid var(--accent-blue); border-radius: 8px; padding: 1.5rem; margin: 2rem 0; text-align: center; }
+        .key-point p { font-family: var(--font-display); font-size: 1.1rem; color: var(--toki-blue-dark); margin: 0; }
+
+        .article-footer { margin-top: 4rem; padding-top: 2rem; border-top: 1px solid var(--border); text-align: center; }
+        .article-footer p { font-size: 0.8rem; color: var(--text-muted); margin-bottom: 1rem; }
+        .article-footer a { color: var(--toki-blue); text-decoration: none; }
+        .article-footer a:hover { text-decoration: underline; }
+
+        @media (max-width: 768px) {
+            .article-container { padding: 6rem 1.2rem 3rem; }
+            .article-header h1 { font-size: 1.5rem; }
+            .article-nav .nav-label { display: none; }
+            .article-content table { font-size: 0.8rem; }
+            .article-content th, .article-content td { padding: 0.4rem 0.5rem; }
+        }
+        @media print { .article-nav { display: none; } .article-container { padding-top: 2rem; } }
+    </style>
+    <link rel="stylesheet" href="contact-form.css">
+    <meta property="og:image" content="https://tokistorage.github.io/lp/asset/tokistorage-icon-512.png">
+    <meta property="og:image:width" content="512">
+    <meta property="og:image:height" content="512">
+</head>
+<body>
+
+<nav class="article-nav">
+    <a href="index.html" class="nav-brand">トキストレージ</a>
+    <div class="nav-right">
+        <span class="nav-label">技術・設計 / Technology &amp; Design</span>
+    </div>
+</nav>
+
+<main class="article-container">
+
+    <header class="article-header">
+        <p class="article-category">ESSAY &mdash; 技術・設計</p>
+        <h1>ストレージ戦略<br><span style="font-size: 0.6em; font-weight: 400; color: var(--text-secondary);">&mdash;&mdash; 1000年スケールの容量試算とマイグレーション</span></h1>
+        <p class="article-subtitle">
+            TokiQRのデコーダーはわずか3MB。データはQR紙面のURL内に分散し、<br>
+            サーバー側の容量は発行枚数に依存しない。<br>
+            この設計が1000年後にどこまで持つか、数字で検証する。
+        </p>
+    </header>
+
+    <article class="article-content">
+
+        <div class="core-message">
+            <strong>この記事で言いたいこと：</strong>TokiQRは「データをサーバーに預ける」モデルではない。データは紙の上にあり、サーバーは読み取り装置を提供するだけだ。この構造のおかげで、ストレージのスケール問題が原理的に発生しない。
+        </div>
+
+        <h2>1. 従来のクラウドストレージと何が違うか</h2>
+
+        <p>一般的なクラウドサービスは、ユーザーが増えるほどサーバーの容量が増える。写真を100万枚保存すれば数テラバイト。音声を100万件保存すればさらに膨大になる。容量は利用者数に比例し、コストも比例する。これがクラウドストレージの基本構造であり、サービスが成長するほどインフラ費用が重くなるという宿命を持つ。</p>
+
+        <p>TokiQRは違う。ユーザーの音声や画像はサーバーに保存されない。QRコード内のURLにエンコードされ、紙面上に物理的に存在する。サーバーが持っているのは、そのURLを受け取ってデコードする「再生装置」だけだ。</p>
+
+        <table>
+            <tr>
+                <th></th>
+                <th>TokiQR</th>
+                <th>クラウド写真サービス</th>
+            </tr>
+            <tr>
+                <td>データの保管場所</td>
+                <td>QR紙面のURL内</td>
+                <td>中央サーバー</td>
+            </tr>
+            <tr>
+                <td>100万件発行時のサーバー容量</td>
+                <td><strong>3 MB</strong>（デコーダーのみ）</td>
+                <td>5 TB以上</td>
+            </tr>
+            <tr>
+                <td>1億件発行時のサーバー容量</td>
+                <td><strong>3 MB</strong>（変わらない）</td>
+                <td>500 TB以上</td>
+            </tr>
+            <tr>
+                <td>月額ストレージコスト</td>
+                <td>≈ $0</td>
+                <td>$100+/TB</td>
+            </tr>
+        </table>
+
+        <p>100万枚発行しても1億枚発行しても、サーバー側は3MBのまま変わらない。データは紙に分散しているから、クラウドストレージのスケール問題が構造的に発生しない。</p>
+
+        <h2>2. 3MBの内訳</h2>
+
+        <p>サーバーが持つ3MBの中身は何か。</p>
+
+        <table>
+            <tr>
+                <th>構成要素</th>
+                <th>サイズ</th>
+                <th>役割</th>
+            </tr>
+            <tr>
+                <td>Codec2 WASM</td>
+                <td>1.9 MB</td>
+                <td>音声デコーダー（独自音声符号化技術）</td>
+            </tr>
+            <tr>
+                <td>Brotli WASM</td>
+                <td>1.0 MB</td>
+                <td>データ圧縮・展開</td>
+            </tr>
+            <tr>
+                <td>JavaScript / CSS / HTML</td>
+                <td>0.1 MB</td>
+                <td>UI・再生ロジック</td>
+            </tr>
+        </table>
+
+        <p>これがTokiQRの全体だ。データベースはない。ユーザーテーブルもない。認証サーバーもない。静的ファイルの配信だけで完結する。GitHub Pagesのような無料の静的ホスティングで十分に運用できる。</p>
+
+        <blockquote>
+            データを預からないことで、データを守る必要がなくなる。<br>
+            サーバーは読み取り装置に徹する。
+        </blockquote>
+
+        <h2>3. 唯一の線形成長要因</h2>
+
+        <p>では、TokiStorageのインフラに成長する要素は何もないのか。一つだけある。ニュースレターのPDFだ。</p>
+
+        <p>TokiStorageは月次のニュースレターをPDFで発行している。HTMLのエッセイはテキストベースなので1本あたり約20KBに収まるが、PDFはバイナリファイルであり、1号あたり約630KBになる。そしてPDFはバイナリであるがゆえに、バージョン管理システム（Git）の差分圧縮が効かない。更新するたびに全体のコピーが履歴に積み上がる。</p>
+
+        <table>
+            <tr>
+                <th>期間</th>
+                <th>号数</th>
+                <th>PDF累計</th>
+                <th>Git履歴含む推定</th>
+            </tr>
+            <tr>
+                <td>1年</td>
+                <td>12号</td>
+                <td>約 7.5 MB</td>
+                <td>約 15 MB</td>
+            </tr>
+            <tr>
+                <td>10年</td>
+                <td>120号</td>
+                <td>約 75 MB</td>
+                <td>約 150 MB</td>
+            </tr>
+            <tr>
+                <td>100年</td>
+                <td>1,200号</td>
+                <td>約 750 MB</td>
+                <td>約 1.5 GB</td>
+            </tr>
+            <tr>
+                <td>1000年</td>
+                <td>12,000号</td>
+                <td>約 7.5 GB</td>
+                <td>約 15 GB</td>
+            </tr>
+        </table>
+
+        <p>GitHubのリポジトリ推奨上限は1GB、強く推奨される上限は5GB。100年で推奨上限を超え、1000年では15GBに達する。ハードリミットの100GBには余裕があるが、無策でいいわけではない。</p>
+
+        <h2>4. PDF運用の原則</h2>
+
+        <p>ここから導かれるのは、シンプルな運用原則だ。</p>
+
+        <p><strong>PDFは確定時にのみ生成し、同一ファイルを繰り返し更新しない。</strong></p>
+
+        <p>HTMLはテキストだからGitの差分が効く。100回書き直しても、増えるのは変更行数分だけだ。一方、PDFはバイナリだから、1文字の修正でもファイル全体がGit履歴に複製される。ブローシャのPDFを10回更新すれば、300KB × 10 = 3MBが履歴に積み上がる。</p>
+
+        <p>つまり、HTMLをソースコードとして何度でも自由に編集し、PDFは最終成果物として確定版のみを生成する。ソフトウェア開発でいう「ビルド成果物をバージョン管理に入れない」という原則と同じだ。</p>
+
+        <ul>
+            <li><strong>HTML（ソース）</strong> — 何度でも更新可。テキスト差分が効くため、履歴の肥大化は軽微</li>
+            <li><strong>PDF（成果物）</strong> — 確定版のみ生成。中間的な修正ではPDFを作らない</li>
+            <li><strong>ニュースレターPDF</strong> — 月1回の発行時に1回だけ生成し、以降は更新しない</li>
+        </ul>
+
+        <p>この原則を守れば、Git履歴の肥大化は最小限に抑えられる。PDFの累計容量だけが月に630KBずつ純粋に増えていく、予測可能な成長カーブになる。</p>
+
+        <h2>5. 1000年のマイグレーション</h2>
+
+        <p>GitHubが1000年後に存在する保証はない。では、TokiQRは何に依存しているのか。</p>
+
+        <table>
+            <tr>
+                <th>リスク</th>
+                <th>深刻度</th>
+                <th>対策</th>
+            </tr>
+            <tr>
+                <td>ホスティング消滅</td>
+                <td>中</td>
+                <td>デコーダー3MBをどこにでも再ホスト可能</td>
+            </tr>
+            <tr>
+                <td>URL変更</td>
+                <td>高</td>
+                <td>カスタムドメイン＋DNSリダイレクトで移行先を制御</td>
+            </tr>
+            <tr>
+                <td>Codec2フォーマット廃止</td>
+                <td>低</td>
+                <td>WASMバイナリ自体がデコーダーを内包。仕様もオープン</td>
+            </tr>
+            <tr>
+                <td>HTML/JS非互換</td>
+                <td>低</td>
+                <td>ブラウザの後方互換性は極めて強い</td>
+            </tr>
+            <tr>
+                <td>QR紙面の物理劣化</td>
+                <td>中</td>
+                <td>ラミネート屋外10年、屋内数十年。QRエラー訂正あり</td>
+            </tr>
+        </table>
+
+        <p>最大のリスクは「URL永続性」だ。QR紙面に刻まれたURLが無効になると、データは紙の上に存在するのに読み取れなくなる。これはリンク切れと同じ問題だが、対策は明確だ。</p>
+
+        <p>カスタムドメインを使えば、ホスティング先を変えてもDNSレベルで移行先を指定できる。デコーダーはたった3MBだから、どんな時代のどんなホスティングサービスにも載せられる。100TBのデータベースを移行するのとは、根本的に話が違う。</p>
+
+        <blockquote>
+            3MBなら、USBメモリ1本で1000年分のインフラを持ち運べる。<br>
+            移行コストが限りなくゼロに近いことが、最大の持続性になる。
+        </blockquote>
+
+        <h2>6. データフォーマットの耐久性</h2>
+
+        <p>ストレージの物理的な容量と同じくらい重要なのが、データフォーマットが将来も読めるかどうかだ。</p>
+
+        <p>TokiQRが依存するフォーマットを整理する。</p>
+
+        <ul>
+            <li><strong>HTML</strong> — 1993年から30年以上の後方互換性を維持。最も長寿なデジタルフォーマットの一つ</li>
+            <li><strong>JavaScript</strong> — 1995年から進化を続けながらも、古いコードは動き続ける</li>
+            <li><strong>WebAssembly (WASM)</strong> — バイナリ仕様が固定化されており、仮にブラウザが変わっても仕様通りに実行可能</li>
+            <li><strong>Codec2</strong> — オープンソースの音声コーデック。仕様が公開されており、WASMにデコーダーが内包されている</li>
+            <li><strong>PNG</strong> — 1996年策定。ロスレス画像フォーマットとして事実上の永久標準</li>
+            <li><strong>QRコード</strong> — 1994年にデンソーウェーブが開発。ISO/IEC 18004として国際標準化済み</li>
+        </ul>
+
+        <p>いずれも国際標準またはオープンな仕様に基づいている。プロプライエタリなフォーマットは一つもない。仮にTokiStorageという組織が消滅しても、標準仕様を読めばデータを復元できる。これは、特定のベンダーに閉じ込められるクラウドサービスとの決定的な違いだ。</p>
+
+        <h2>7. スマホの写真は1000年残るか</h2>
+
+        <p>比較として、スマートフォンの写真が1000年後に残る可能性を考えてみる。</p>
+
+        <p>iCloudの無料枠は5GB。有料プランでも、支払いが途絶えればデータは削除される。Googleフォトも同様だ。サービスの継続は企業の存続に依存し、企業の寿命は統計的に数十年だ。</p>
+
+        <p>機種変更、アカウント移行、サービス終了。デジタルデータは「どこかに保存されている」という安心感とは裏腹に、実は多くの断絶リスクを抱えている。しかもデータ量が膨大であればあるほど、移行のコストと手間が増え、どこかのタイミングで「もういいや」と諦める確率が高くなる。</p>
+
+        <p>一方、QR紙面に刻まれたデータは、紙が物理的に存在する限り残る。移行の必要がない。バックアップの必要がない。クラウドの契約更新も、アカウントのパスワード管理もいらない。引き出しの奥に入れておけば、数十年後にそのまま読める。</p>
+
+        <p>そしてデコーダーの移行は、たった3MBのファイルを新しいサーバーに置くだけだ。1000年の間に何度ホスティング先が変わっても、その作業は数分で終わる。</p>
+
+        <div class="core-message">
+            1000年のストレージ戦略は、実はシンプルだ。データをサーバーに集めない。紙に分散する。サーバーには読み取り装置だけを置く。読み取り装置が3MBなら、どんな時代でも、どんなインフラでも、移行できる。巨大なデータベースを引き継ぐ必要がないことが、最大の持続性戦略になる。
+        </div>
+
+        <div class="key-point">
+            <p>最も持続的なストレージ戦略は、ストレージを持たないことだ。<br>データは紙の上に。サーバーには3MBの読み取り装置だけを。</p>
+        </div>
+
+    </article>
+
+    <footer class="article-footer">
+        <p id="essay-nav-links"></p>
+        <p style="margin-top: 2rem; font-size: 0.75rem;">&copy; 2026 TokiStorage</p>
+    </footer>
+
+</main>
+
+<script src="contact-form.js"></script>
+<script src="essay-nav.js?v=20260220"></script>
+<script src="tracker.js"></script>
+</body>
+</html>
