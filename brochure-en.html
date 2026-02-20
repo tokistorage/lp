@@ -509,40 +509,6 @@
             body.landscape-mode .contact-info p { font-size: 0.8rem; line-height: 1.45; }
             body.landscape-mode .contact-qr img { width: 76px; height: 76px; }
             body.landscape-mode .contact-qr p { font-size: 0.72rem; }
-            /* iOS compact override — applied via JS class */
-            body.landscape-compact { line-height: 1.28 !important; font-size: 10.5px !important; }
-            body.landscape-compact .brochure { -webkit-column-gap: 10mm !important; column-gap: 10mm !important; }
-            body.landscape-compact .br-header { margin-bottom: 0.2rem !important; padding-bottom: 0.15rem !important; }
-            body.landscape-compact .br-header .company { font-size: 1.15rem !important; }
-            body.landscape-compact .tagline { margin-bottom: 0.2rem !important; }
-            body.landscape-compact .tagline h1 { font-size: 1.1rem !important; margin-bottom: 0.08rem !important; }
-            body.landscape-compact .tagline .hook { font-size: 0.85rem !important; margin-bottom: 0.08rem !important; }
-            body.landscape-compact .tagline .hook-sub { font-size: 0.7rem !important; line-height: 1.28 !important; }
-            body.landscape-compact .section-heading { margin: 0.22rem 0 0.1rem !important; }
-            body.landscape-compact .section-heading h2 { font-size: 0.85rem !important; }
-            body.landscape-compact .layers-grid { gap: 0.28rem !important; margin-bottom: 0.18rem !important; }
-            body.landscape-compact .layer-card { padding: 0.2rem 0.28rem !important; }
-            body.landscape-compact .layer-card .layer-name { font-size: 0.78rem !important; }
-            body.landscape-compact .layer-card .layer-sub { font-size: 0.65rem !important; }
-            body.landscape-compact .layer-card .layer-desc { font-size: 0.56rem !important; line-height: 1.28 !important; }
-            body.landscape-compact .tokiqr-box { padding: 0.22rem 0.38rem !important; margin-bottom: 0.18rem !important; }
-            body.landscape-compact .tokiqr-box li { font-size: 0.7rem !important; line-height: 1.28 !important; padding: 0 !important; }
-            body.landscape-compact .print-url { font-size: 0.65rem !important; }
-            body.landscape-compact .area-row { padding: 0.03rem 0 !important; }
-            body.landscape-compact .area-label { font-size: 0.7rem !important; }
-            body.landscape-compact .area-desc { font-size: 0.7rem !important; }
-            body.landscape-compact .areas { margin-bottom: 0.1rem !important; }
-            body.landscape-compact .pricing-line { font-size: 0.74rem !important; margin-bottom: 0.03rem !important; }
-            body.landscape-compact .pricing-note { font-size: 0.65rem !important; }
-            body.landscape-compact .essay-qr-box img { width: 38px !important; height: 38px !important; }
-            body.landscape-compact .essay-qr-box p { font-size: 0.46rem !important; line-height: 1.22 !important; }
-            body.landscape-compact .qr-pair .essay-qr-box img { width: 44px !important; height: 44px !important; }
-            body.landscape-compact .qr-pair { gap: 0.35rem !important; margin: 0.12rem 0 !important; }
-            body.landscape-compact .contact-section { margin-top: 0.2rem !important; padding-top: 0.15rem !important; gap: 0.6rem !important; }
-            body.landscape-compact .contact-info .contact-name { font-size: 0.82rem !important; }
-            body.landscape-compact .contact-info p { font-size: 0.7rem !important; line-height: 1.28 !important; }
-            body.landscape-compact .contact-qr img { width: 68px !important; height: 68px !important; }
-            body.landscape-compact .contact-qr p { font-size: 0.6rem !important; }
         }
     </style>
     <style id="landscape-page-style" media="not all">
@@ -679,10 +645,9 @@
     <div class="pdf-download">
         <p class="pdf-title">Printable A4 Brochure (PDF)</p>
         <div class="pdf-buttons">
-            <a href="javascript:void(0)" onclick="window.print()" class="btn-current">A4 Portrait PDF</a>
-            <a href="javascript:void(0)" onclick="printLandscape()" class="btn-other">A4 Landscape PDF</a>
+            <a href="asset/brochure-en.pdf" download class="btn-current">A4 Portrait Download</a>
+            <a href="asset/brochure-en-landscape.pdf" download class="btn-other">A4 Landscape Download</a>
         </div>
-        <p class="pdf-hint">Select "Save as PDF" in the print dialog</p>
     </div>
 
     <footer class="br-footer">
@@ -694,21 +659,10 @@
 </main>
 
 <script>
-function printLandscape() {
-    var isIOS = /iPad|iPhone|iPod/.test(navigator.userAgent);
-    if (isIOS) {
-        alert('Please select "Landscape" orientation in the print dialog.\niOS cannot switch orientation automatically.');
-        document.body.classList.add('landscape-compact');
-    }
+// Auto-activate landscape for headless PDF generation
+if (new URLSearchParams(location.search).get('landscape') === '1') {
     document.body.classList.add('landscape-mode');
     document.getElementById('landscape-page-style').media = 'all';
-    void document.body.offsetHeight;
-    window.addEventListener('afterprint', function cleanup() {
-        document.body.classList.remove('landscape-mode', 'landscape-compact');
-        document.getElementById('landscape-page-style').media = 'not all';
-        window.removeEventListener('afterprint', cleanup);
-    });
-    setTimeout(function() { window.print(); }, isIOS ? 300 : 0);
 }
 </script>
 <script src="tracker.js"></script>
