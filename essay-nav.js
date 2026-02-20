@@ -74,6 +74,7 @@
     { id: 'walking-partner', ja: '歩くパートナー', en: 'Walking Partner' },
     { id: 'sanpoyoshi', ja: '三方よしの溶解点', en: 'Sanpo-yoshi' },
     { id: 'burn-rate-zero', ja: 'バーンレートゼロ', en: 'Burn Rate Zero' },
+    { id: 'uniform-pricing', ja: '均一価格の思想', en: 'Uniform Pricing' },
     { id: 'framework', ja: 'フレームワーク表現', en: 'Framework Expression' },
 
     // ── 文化・社会活動 ──
@@ -144,6 +145,7 @@
   // LATEST_COUNT で表示件数を制御
   const LATEST_COUNT = 5;
   const latestEssayIds = [
+    'uniform-pricing',
     'storage-strategy',
     'playground-gift',
     'device-dependency',
@@ -226,6 +228,7 @@
     'walking-partner':        ['sanpoyoshi', 'partner-boundary', 'global-honbinos', 'gift-economy', 'disintermediation'],
     'sanpoyoshi':             ['walking-partner', 'partner-boundary', 'ecosystem', 'free-strategy', 'gift-economy'],
     'burn-rate-zero':         ['vibe-coding', 'rapid-prototyping', 'migration', 'free-strategy', 'headhunter'],
+    'uniform-pricing':        ['price-acceptance', 'free-strategy', 'storage-strategy', 'sanpoyoshi', 'openness'],
     'framework':              ['burn-rate-zero', 'no-competition', 'enterprise-architecture', 'price-acceptance', 'global-niche'],
     // ── 文化・社会活動 ──
     'education':              ['early-education', 'history', 'media', 'psychology', 'lifestyle'],

@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" type="image/png" sizes="32x32" href="asset/favicon-32.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="asset/apple-touch-icon.png">
+    <title>均一価格の思想 | トキストレージ</title>
+    <meta name="robots" content="noindex, nofollow">
+    <meta name="description" content="クーポンをやめた。全員が同じ価格で、同じ敬意を受ける。存在証明の民主化を掲げるなら、価格にも例外を作らない。">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Shippori+Mincho:wght@400;500;600;700&family=Zen+Kaku+Gothic+New:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --toki-blue: #2563EB;
+            --toki-blue-dark: #1D4ED8;
+            --toki-blue-pale: #EFF6FF;
+            --accent-blue: #3B82F6;
+            --bg-white: #FFFFFF;
+            --text-primary: #1E293B;
+            --text-secondary: #475569;
+            --text-muted: #94A3B8;
+            --border: #E2E8F0;
+            --font-display: 'Shippori Mincho', serif;
+            --font-body: 'Zen Kaku Gothic New', sans-serif;
+        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        html { scroll-behavior: smooth; }
+        body { font-family: var(--font-body); font-weight: 400; background: var(--bg-white); color: var(--text-primary); line-height: 2; font-size: 16px; }
+
+        .article-nav { position: fixed; top: 0; left: 0; right: 0; z-index: 1000; background: rgba(255,255,255,0.95); backdrop-filter: blur(12px); border-bottom: 1px solid var(--border); padding: 0.6rem 1.2rem; display: flex; align-items: center; justify-content: space-between; gap: 1rem; }
+        .article-nav .nav-brand { font-family: var(--font-display); font-size: 0.9rem; font-weight: 600; color: var(--toki-blue); text-decoration: none; white-space: nowrap; }
+        .article-nav .nav-brand::before { content: ''; display: inline-block; width: 20px; height: 20px; background: url('asset/tokistorage-icon-512.png') no-repeat center / contain; vertical-align: -3px; margin-right: 5px; }
+        .article-nav .nav-right { display: flex; align-items: center; gap: 1rem; }
+        .article-nav .nav-label { font-size: 0.6rem; color: var(--text-muted); letter-spacing: 0.08em; }
+        .article-nav .lang-switch { font-size: 0.75rem; color: var(--toki-blue); text-decoration: none; padding: 0.3rem 0.6rem; border: 1px solid var(--toki-blue); border-radius: 4px; }
+        .article-nav .lang-switch:hover { background: var(--toki-blue); color: #fff; }
+
+        .article-container { max-width: 680px; margin: 0 auto; padding: 7rem 2rem 4rem; }
+        .article-header { margin-bottom: 3rem; padding-bottom: 2rem; border-bottom: 1px solid var(--border); }
+        .article-category { font-size: 0.7rem; color: var(--toki-blue); letter-spacing: 0.15em; margin-bottom: 1rem; }
+        .article-header h1 { font-family: var(--font-display); font-size: 1.8rem; font-weight: 700; line-height: 1.5; margin-bottom: 1.5rem; }
+        .article-subtitle { font-size: 0.95rem; color: var(--text-secondary); line-height: 1.9; }
+
+        .article-content h2 { font-family: var(--font-display); font-size: 1.3rem; font-weight: 600; margin: 3rem 0 1.5rem; padding-bottom: 0.5rem; border-bottom: 2px solid var(--toki-blue-pale); }
+        .article-content h3 { font-family: var(--font-display); font-size: 1.1rem; font-weight: 600; margin: 2rem 0 1rem; color: var(--toki-blue-dark); }
+        .article-content p { margin-bottom: 1.5rem; text-align: justify; }
+        .article-content blockquote { border-left: 3px solid var(--toki-blue); padding-left: 1.5rem; margin: 2rem 0; font-family: var(--font-display); color: var(--text-secondary); }
+        .article-content ul { margin: 1.5rem 0; padding-left: 1.5rem; }
+        .article-content li { margin-bottom: 0.75rem; }
+
+        .core-message { background: var(--toki-blue-pale); border-left: 4px solid var(--toki-blue); padding: 1.5rem; margin: 2rem 0; font-size: 0.95rem; line-height: 1.8; }
+        .key-point { background: linear-gradient(135deg, var(--toki-blue-pale) 0%, #fff 100%); border: 1px solid var(--accent-blue); border-radius: 8px; padding: 1.5rem; margin: 2rem 0; text-align: center; }
+        .key-point p { font-family: var(--font-display); font-size: 1.1rem; color: var(--toki-blue-dark); margin: 0; }
+
+        .article-footer { margin-top: 4rem; padding-top: 2rem; border-top: 1px solid var(--border); text-align: center; }
+        .article-footer p { font-size: 0.8rem; color: var(--text-muted); margin-bottom: 1rem; }
+        .article-footer a { color: var(--toki-blue); text-decoration: none; }
+        .article-footer a:hover { text-decoration: underline; }
+
+        @media (max-width: 768px) {
+            .article-container { padding: 6rem 1.2rem 3rem; }
+            .article-header h1 { font-size: 1.5rem; }
+            .article-nav .nav-label { display: none; }
+        }
+        @media print { .article-nav { display: none; } .article-container { padding-top: 2rem; } }
+    </style>
+    <link rel="stylesheet" href="contact-form.css">
+    <meta property="og:image" content="https://tokistorage.github.io/lp/asset/tokistorage-icon-512.png">
+    <meta property="og:image:width" content="512">
+    <meta property="og:image:height" content="512">
+</head>
+<body>
+
+<nav class="article-nav">
+    <a href="index.html" class="nav-brand">トキストレージ</a>
+    <div class="nav-right">
+        <span class="nav-label">経済・財産 / Economy &amp; Property</span>
+    </div>
+</nav>
+
+<main class="article-container">
+
+    <header class="article-header">
+        <p class="article-category">ESSAY &mdash; 経済・財産</p>
+        <h1>均一価格の思想<br><span style="font-size: 0.6em; font-weight: 400; color: var(--text-secondary);">&mdash;&mdash; なぜクーポンをやめたのか</span></h1>
+        <p class="article-subtitle">
+            全員が同じ価格で、同じ敬意を受ける。<br>
+            存在証明の民主化を掲げるなら、価格にも例外を作らない。
+        </p>
+    </header>
+
+    <article class="article-content">
+
+        <div class="core-message">
+            <strong>この記事で言いたいこと：</strong>TokiStorageはクーポン機能を廃止した。割引は善意で始まるが、構造的に選民思想を生み、争いの種になる。声を残すという普遍的な使命に対して、価格に差をつけることは矛盾だ。
+        </div>
+
+        <h2>1. クーポンという善意</h2>
+
+        <p>クーポンは善意で始まる。「最初の一歩を踏み出しやすくしたい」「友人に紹介してもらったお礼をしたい」「特別な人に特別な価格で」。意図は良い。しかし、その構造がもたらす結果は、意図とは無関係に作用する。</p>
+
+        <p>割引を受けた人と受けなかった人がいる。その事実だけで、サービスの中に「差」が生まれる。差は比較を生み、比較は不満を生む。</p>
+
+        <h2>2. 善意が裏目に出る構造</h2>
+
+        <p>「あの人はクーポンで無料だったのに、私は定価で買った。」この感情は合理的だ。同じ商品に異なる価格が存在すること自体が、公平性への疑問を生む。</p>
+
+        <p>クーポンの配布基準も問題になる。誰に配るのか。インフルエンサーか。早期申込者か。知人か。どの基準を選んでも、選ばれなかった人から見れば「選ばれた人がいる」という事実だけが残る。</p>
+
+        <p>これは選民思想だ。善意のつもりで始めたものが、構造的に差別を内包している。</p>
+
+        <h2>3. 声を残す権利に差をつけない</h2>
+
+        <p>TokiStorageの事業の核心は「存在証明の民主化」だ。声を残す。肖像を残す。ことばを残す。これは人間の根源的な欲求であり、社会的地位や経済力とは無関係に、誰もが持つべき権利だ。</p>
+
+        <p>その権利に対して割引を適用するとはどういうことか。「あなたの存在証明は5,000円。でもこの人は無料。」——これは存在の価値に差をつけていることに他ならない。</p>
+
+        <p>存在証明の民主化を掲げておきながら、価格で差をつけるのは矛盾だ。</p>
+
+        <h2>4. 均一価格という敬意</h2>
+
+        <p>全員が同じ価格を支払う。これは制約ではない。敬意だ。</p>
+
+        <p>「あなたも、あの人も、同じ価格で同じサービスを受ける。誰も特別扱いされない。誰も冷遇されない。」</p>
+
+        <p>均一価格は、すべての注文者に対する平等な敬意の表明だ。声を残したいと思った人に対して、その動機の背景を問わない。紹介者がいるかどうか、タイミングが早いかどうか、フォロワーが多いかどうか。そんなことは関係ない。</p>
+
+        <p>声を残したいと思った。その事実だけで十分だ。</p>
+
+        <h2>5. 値引きしない代わりに値上げもしない</h2>
+
+        <p>クーポンの裏側には、もう一つの問題がある。割引の原資は誰が負担するのか。</p>
+
+        <p>無料クーポンで注文を受ければ、その制作費と送料はTokiStorageが負担する。あるいは、他の顧客が定価で支払った利益から補填される。どちらにしても、割引は「見えない誰か」が負担している。</p>
+
+        <p>均一価格を採用すれば、この不透明さが消える。価格は一つ。全員が同じ価格を支払い、同じコスト構造の上に立つ。値引きの原資を確保するために定価を高く設定する必要もない。</p>
+
+        <h2>6. 拡張性の問題</h2>
+
+        <p>クーポンは管理コストを伴う。コードの生成、有効期限の設定、利用回数の追跡、対象商品の制限、検証ロジック、無料注文時のメールテンプレート分岐。技術的には50行程度のコードだが、その50行が生むのは「例外処理」だ。</p>
+
+        <p>例外処理は、システムの複雑性を増す。そして複雑性は、バグの温床になり、メンテナンスコストを増やし、コードの寿命を縮める。</p>
+
+        <p>ストレージ戦略で述べた通り、TokiStorageのサーバーは3MBだ。この3MBの純粋さを保つために、不要な複雑性は排除する。クーポンのコードを削除したとき、64行が消えた。64行分、システムが単純になった。</p>
+
+        <h2>7. 普遍的な使命には普遍的な価格を</h2>
+
+        <p>「声を残す」は普遍的な使命だ。愛犬の鳴き声を残したい人がいる。亡くなった親の声を残したい人がいる。子どもの「ママ」を残したい人がいる。そのすべてに対して、同じ価格、同じ品質、同じ敬意で応える。</p>
+
+        <p>クーポンがある世界では、「運が良かった人」と「そうでなかった人」がいる。均一価格の世界では、全員が同じ地平に立つ。</p>
+
+        <blockquote>
+            存在証明の民主化とは、<br>
+            全員が同じ価格で同じ敬意を受けることだ。<br>
+            例外を作らないことが、最大の公平性になる。
+        </blockquote>
+
+        <div class="key-point">
+            <p>均一価格は制約ではない。敬意だ。<br>声を残したいと思った人に対して、<br>その理由も背景も問わない。全員が同じ価格で、同じ敬意を受ける。</p>
+        </div>
+
+    </article>
+
+    <footer class="article-footer">
+        <p id="essay-nav-links"></p>
+        <p style="margin-top: 2rem; font-size: 0.75rem;">&copy; 2026 TokiStorage</p>
+    </footer>
+
+</main>
+
+<script src="contact-form.js"></script>
+<script src="essay-nav.js?v=20260221"></script>
+<script src="tracker.js"></script>
+</body>
+</html>
