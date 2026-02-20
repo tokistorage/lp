@@ -179,6 +179,26 @@ def generate_ja(qr_path):
 
     pdf.set_y(y_box + box_h + 6)
 
+    # ── Service Areas ─────────────────────────────────────────────────
+    pdf.section_title("事業領域")
+
+    areas = [
+        ("個人向け", "結婚式の誓い、終活メッセージ、家族の記録、成長記録"),
+        ("法人向け", "おもてなし音声、ブランドストーリー、社史・創業の想い"),
+        ("行政向け", "文化財音声保存、防災メッセージ、地域の語り部記録"),
+    ]
+
+    for label, desc in areas:
+        pdf.set_x(MARGIN)
+        pdf.set_font("JP", "B", 9.5)
+        pdf.set_text_color(*TOKI_BLUE)
+        pdf.cell(28, 7, label)
+        pdf.set_font("JP", "", 9.5)
+        pdf.set_text_color(*SECONDARY)
+        pdf.cell(CONTENT_W - 28, 7, desc, new_x="LMARGIN", new_y="NEXT")
+
+    pdf.ln(6)
+
     # ── Three-Layer Architecture ───────────────────────────────────────
     pdf.section_title("三層分散保管アーキテクチャ")
 
@@ -214,26 +234,6 @@ def generate_ja(qr_path):
         pdf.multi_cell(col_w - 6, 5, desc, align="C")
 
     pdf.set_y(y_top + 46)
-
-    # ── Service Areas ─────────────────────────────────────────────────
-    pdf.section_title("事業領域")
-
-    areas = [
-        ("個人向け", "結婚式の誓い、終活メッセージ、家族の記録、成長記録"),
-        ("法人向け", "おもてなし音声、ブランドストーリー、社史・創業の想い"),
-        ("行政向け", "文化財音声保存、防災メッセージ、地域の語り部記録"),
-    ]
-
-    for label, desc in areas:
-        pdf.set_x(MARGIN)
-        pdf.set_font("JP", "B", 9.5)
-        pdf.set_text_color(*TOKI_BLUE)
-        pdf.cell(28, 7, label)
-        pdf.set_font("JP", "", 9.5)
-        pdf.set_text_color(*SECONDARY)
-        pdf.cell(CONTENT_W - 28, 7, desc, new_x="LMARGIN", new_y="NEXT")
-
-    pdf.ln(6)
 
     # ── Pricing Summary ───────────────────────────────────────────────
     pdf.section_title("料金")
@@ -373,6 +373,26 @@ def generate_en(qr_path):
 
     pdf.set_y(y_box + box_h + 6)
 
+    # ── Service Areas ─────────────────────────────────────────────────
+    pdf.section_title("Service Areas")
+
+    areas = [
+        ("Personal", "Wedding vows, legacy messages, family records, growth milestones"),
+        ("Business", "Hospitality voice, brand stories, corporate heritage"),
+        ("Government", "Cultural asset preservation, disaster messages, oral history"),
+    ]
+
+    for label, desc in areas:
+        pdf.set_x(MARGIN)
+        pdf.set_font("JP", "B", 9.5)
+        pdf.set_text_color(*TOKI_BLUE)
+        pdf.cell(28, 7, label)
+        pdf.set_font("JP", "", 9.5)
+        pdf.set_text_color(*SECONDARY)
+        pdf.cell(CONTENT_W - 28, 7, desc, new_x="LMARGIN", new_y="NEXT")
+
+    pdf.ln(6)
+
     # ── Three-Layer Architecture ───────────────────────────────────────
     pdf.section_title("Three-Layer Distributed Storage")
 
@@ -404,26 +424,6 @@ def generate_en(qr_path):
         pdf.multi_cell(col_w - 6, 5, desc, align="C")
 
     pdf.set_y(y_top + 46)
-
-    # ── Service Areas ─────────────────────────────────────────────────
-    pdf.section_title("Service Areas")
-
-    areas = [
-        ("Personal", "Wedding vows, legacy messages, family records, growth milestones"),
-        ("Business", "Hospitality voice, brand stories, corporate heritage"),
-        ("Government", "Cultural asset preservation, disaster messages, oral history"),
-    ]
-
-    for label, desc in areas:
-        pdf.set_x(MARGIN)
-        pdf.set_font("JP", "B", 9.5)
-        pdf.set_text_color(*TOKI_BLUE)
-        pdf.cell(28, 7, label)
-        pdf.set_font("JP", "", 9.5)
-        pdf.set_text_color(*SECONDARY)
-        pdf.cell(CONTENT_W - 28, 7, desc, new_x="LMARGIN", new_y="NEXT")
-
-    pdf.ln(6)
 
     # ── Pricing Summary ───────────────────────────────────────────────
     pdf.section_title("Pricing")
