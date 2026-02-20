@@ -126,7 +126,7 @@
     { id: 'migration', ja: 'マイグレーションの設計', en: 'Designing Migration' },
     { id: 'vibe-coding', ja: 'バイブコーディング', en: 'Vibe Coding' },
     { id: 'rapid-prototyping', ja: 'ラピッドプロトタイピング', en: 'Rapid Prototyping' },
-    { id: 'device-dependency', ja: '機種依存・組織依存の断層', en: 'Device & Organizational Dependency' },
+    { id: 'device-dependency', ja: '機種依存・ブラウザ依存・組織依存の断層', en: 'Device, Browser & Organizational Dependency' },
     { id: 'tech-roadmap', ja: '技術ロードマップ', en: 'Technology Roadmap' },
 
     // ── メタ視点 ──
