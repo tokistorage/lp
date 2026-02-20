@@ -7,19 +7,21 @@
   "volumes": {
     "1": {
       "period": "2026-2045",
-      "dir": "vol1",
+      "repo": "tokistorage/newsletter-vol1",
+      "pages_url": "https://tokistorage.github.io/newsletter-vol1/",
       "issues_max": 40,
-      "note": "Vol.1 完了後は凍結 (read-only archive)。式年遷宮式にVol.2を新設。"
+      "note": "Vol.1 完了後は凍結 (read-only archive)。GitHub Pages は維持。式年遷宮式にVol.2を新設。"
     }
   },
   "issues": [
-    { "date": "2026-02", "serial": 1, "volume": 1, "number": 1, "status": "published", "pdf": "vol1/2026-02.pdf" },
-    { "date": "2026-04", "serial": 2, "volume": 1, "number": 2, "status": "drafting", "pdf": "vol1/2026-04.pdf" }
+    { "date": "2026-02", "serial": 1, "volume": 1, "number": 1, "status": "published", "pdf_url": "https://tokistorage.github.io/newsletter-vol1/2026-02.pdf" },
+    { "date": "2026-04", "serial": 2, "volume": 1, "number": 2, "status": "drafting", "pdf_url": "https://tokistorage.github.io/newsletter-vol1/2026-04.pdf" }
   ],
   "storage_strategy": {
-    "description": "式年遷宮式リポジトリ分割。巻 (volume) = 20年。巻ごとにPDFと巻末QR画像を格納。巻完了時にサブディレクトリごと別リポジトリへ分離可能。",
+    "description": "各巻を独立リポジトリ (newsletter-vol{N}) で管理。GitHub Pages で PDF を公開。lp リポジトリにはPDFを置かず、URLリンクのみ保持。",
     "pdf_rule": "確定時のみ生成。同一ファイルの繰り返し更新を禁止。Git履歴肥大化を防止。",
+    "url_scheme": "https://tokistorage.github.io/newsletter-vol{N}/{YYYY-MM}.pdf",
     "estimated_per_volume": "40号 × ~630KB = ~25MB (PDF only)",
-    "migration_trigger": "リポジトリ容量が1GBに近づいた場合、または巻が完了した時点で分離を検討"
+    "archive_policy": "巻完了後もGitHub Pages を維持。リポジトリは read-only だがダウンロードは永続的に可能。"
   }
 }
