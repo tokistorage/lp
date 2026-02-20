@@ -7,7 +7,7 @@
     <link rel="apple-touch-icon" sizes="180x180" href="asset/apple-touch-icon.png">
     <title>ストレージ戦略 | トキストレージ</title>
     <meta name="robots" content="noindex, nofollow">
-    <meta name="description" content="TokiQRのデコーダーはわずか3MB。データはQR紙面に分散し、サーバー側は発行枚数に依存しない。1000年スケールのストレージ持続性とマイグレーション戦略を試算する。">
+    <meta name="description" content="TokiQRのデコーダーはわずか3MB。データはQR紙面に分散し、サーバー側は発行枚数に依存しない。蓄積する要素がなければ天井も存在しない。時間の上限がないストレージ設計を数字で検証する。">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Shippori+Mincho:wght@400;500;600;700&family=Zen+Kaku+Gothic+New:wght@300;400;500;700&display=swap" rel="stylesheet">
@@ -90,11 +90,11 @@
 
     <header class="article-header">
         <p class="article-category">ESSAY &mdash; 技術・設計</p>
-        <h1>ストレージ戦略<br><span style="font-size: 0.6em; font-weight: 400; color: var(--text-secondary);">&mdash;&mdash; 1000年スケールの容量試算とマイグレーション</span></h1>
+        <h1>ストレージ戦略<br><span style="font-size: 0.6em; font-weight: 400; color: var(--text-secondary);">&mdash;&mdash; 時間の上限がない設計</span></h1>
         <p class="article-subtitle">
             TokiQRのデコーダーはわずか3MB。データはQR紙面のURL内に分散し、<br>
             サーバー側の容量は発行枚数に依存しない。<br>
-            この設計が1000年後にどこまで持つか、数字で検証する。
+            蓄積する要素がなければ、天井も存在しない。数字で検証する。
         </p>
     </header>
 
@@ -378,12 +378,27 @@
 
         <p>そしてデコーダーの移行は、たった3MBのファイルを新しいサーバーに置くだけだ。1000年の間に何度ホスティング先が変わっても、その作業は数分で終わる。</p>
 
+        <h2>9. 1000年を超えて</h2>
+
+        <p>ここまで「1000年」を基準に試算してきた。だが正直に言えば、このアーキテクチャに時間の上限はない。</p>
+
+        <p>10,000年を想定してみる。500巻、20,000号。各巻は25MBの独立したリポジトリで、互いに依存しない。本体リポジトリは3MBのまま。どの巻も他の巻の存在を知らず、自分のPDFをGitHub Pagesで配信し続けるだけだ。500個のリポジトリが並んでも、構造は1巻の時と同じだ。</p>
+
+        <p>なぜ上限がないのか。蓄積する要素がないからだ。従来のクラウドサービスは、時間とともにデータが中央に集まり、いつか容量の天井にぶつかる。TokiQRはデータを紙に分散し、サーバーには読み取り装置しかない。読み取り装置は3MBで不変。ニュースレターPDFは巻ごとに分離され、巻のリポジトリは完結すると凍結される。各巻が独立しているから、巻数がいくら増えても全体に影響を与えるボトルネックが存在しない。</p>
+
+        <p>そしてこの構造を維持するパイプラインは、完全に自動化されている。20年の巻境界を超えると、新しいアーカイブリポジトリの作成からGitHub Pagesの有効化まで、人間の介入なしに完了する。100年後の運営者も、10,000年後の運営者も、同じ仕組みの恩恵を受ける。</p>
+
+        <blockquote>
+            持続性とは、年数を長く設定することではない。<br>
+            年数という概念が設計から消えることだ。
+        </blockquote>
+
         <div class="core-message">
-            1000年のストレージ戦略は、実はシンプルだ。データをサーバーに集めない。紙に分散する。サーバーには読み取り装置だけを置く。読み取り装置が3MBなら、どんな時代でも、どんなインフラでも、移行できる。巨大なデータベースを引き継ぐ必要がないことが、最大の持続性戦略になる。
+            ストレージ戦略の本質は、実はシンプルだ。データをサーバーに集めない。紙に分散する。サーバーには読み取り装置だけを置く。読み取り装置が3MBなら、どんな時代でも、どんなインフラでも、移行できる。蓄積する要素がなければ、天井も存在しない。巨大なデータベースを引き継ぐ必要がないことが、最大の持続性戦略になる。
         </div>
 
         <div class="key-point">
-            <p>最も持続的なストレージ戦略は、ストレージを持たないことだ。<br>データは紙の上に。サーバーには3MBの読み取り装置だけを。</p>
+            <p>最も持続的なストレージ戦略は、ストレージを持たないことだ。<br>データは紙の上に。サーバーには3MBの読み取り装置だけを。<br>この設計に、時間の上限はない。</p>
         </div>
 
     </article>
