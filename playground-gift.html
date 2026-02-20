@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" type="image/png" sizes="32x32" href="asset/favicon-32.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="asset/apple-touch-icon.png">
+    <title>仲良くなった証 | トキストレージ</title>
+    <meta name="robots" content="noindex, nofollow">
+    <meta name="description" content="総合デパートのキッズプレイグラウンドで娘が初めて会った友達に自分のQRラミネートカードを渡した。その場限りの出会いを超える、小さな贈り物の記録。">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Shippori+Mincho:wght@400;500;600;700&family=Zen+Kaku+Gothic+New:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --toki-blue: #2563EB;
+            --toki-blue-dark: #1D4ED8;
+            --toki-blue-pale: #EFF6FF;
+            --accent-blue: #3B82F6;
+            --bg-white: #FFFFFF;
+            --text-primary: #1E293B;
+            --text-secondary: #475569;
+            --text-muted: #94A3B8;
+            --border: #E2E8F0;
+            --font-display: 'Shippori Mincho', serif;
+            --font-body: 'Zen Kaku Gothic New', sans-serif;
+        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        html { scroll-behavior: smooth; }
+        body { font-family: var(--font-body); font-weight: 400; background: var(--bg-white); color: var(--text-primary); line-height: 2; font-size: 16px; }
+
+        .article-nav { position: fixed; top: 0; left: 0; right: 0; z-index: 1000; background: rgba(255,255,255,0.95); backdrop-filter: blur(12px); border-bottom: 1px solid var(--border); padding: 0.6rem 1.2rem; display: flex; align-items: center; justify-content: space-between; gap: 1rem; }
+        .article-nav .nav-brand { font-family: var(--font-display); font-size: 0.9rem; font-weight: 600; color: var(--toki-blue); text-decoration: none; white-space: nowrap; }
+        .article-nav .nav-brand::before { content: ''; display: inline-block; width: 20px; height: 20px; background: url('asset/tokistorage-icon-512.png') no-repeat center / contain; vertical-align: -3px; margin-right: 5px; }
+        .article-nav .nav-right { display: flex; align-items: center; gap: 1rem; }
+        .article-nav .nav-label { font-size: 0.6rem; color: var(--text-muted); letter-spacing: 0.08em; }
+        .article-nav .lang-switch { font-size: 0.75rem; color: var(--toki-blue); text-decoration: none; padding: 0.3rem 0.6rem; border: 1px solid var(--toki-blue); border-radius: 4px; }
+        .article-nav .lang-switch:hover { background: var(--toki-blue); color: #fff; }
+
+        .article-container { max-width: 680px; margin: 0 auto; padding: 7rem 2rem 4rem; }
+        .article-header { margin-bottom: 3rem; padding-bottom: 2rem; border-bottom: 1px solid var(--border); }
+        .article-category { font-size: 0.7rem; color: var(--toki-blue); letter-spacing: 0.15em; margin-bottom: 1rem; }
+        .article-header h1 { font-family: var(--font-display); font-size: 1.8rem; font-weight: 700; line-height: 1.5; margin-bottom: 1.5rem; }
+        .article-subtitle { font-size: 0.95rem; color: var(--text-secondary); line-height: 1.9; }
+
+        .article-content h2 { font-family: var(--font-display); font-size: 1.3rem; font-weight: 600; margin: 3rem 0 1.5rem; padding-bottom: 0.5rem; border-bottom: 2px solid var(--toki-blue-pale); }
+        .article-content h3 { font-family: var(--font-display); font-size: 1.1rem; font-weight: 600; margin: 2rem 0 1rem; color: var(--toki-blue-dark); }
+        .article-content p { margin-bottom: 1.5rem; text-align: justify; }
+        .article-content blockquote { border-left: 3px solid var(--toki-blue); padding-left: 1.5rem; margin: 2rem 0; font-family: var(--font-display); color: var(--text-secondary); }
+        .article-content ul { margin: 1.5rem 0; padding-left: 1.5rem; }
+        .article-content li { margin-bottom: 0.75rem; }
+
+        .core-message { background: var(--toki-blue-pale); border-left: 4px solid var(--toki-blue); padding: 1.5rem; margin: 2rem 0; font-size: 0.95rem; line-height: 1.8; }
+        .key-point { background: linear-gradient(135deg, var(--toki-blue-pale) 0%, #fff 100%); border: 1px solid var(--accent-blue); border-radius: 8px; padding: 1.5rem; margin: 2rem 0; text-align: center; }
+        .key-point p { font-family: var(--font-display); font-size: 1.1rem; color: var(--toki-blue-dark); margin: 0; }
+
+        .article-footer { margin-top: 4rem; padding-top: 2rem; border-top: 1px solid var(--border); text-align: center; }
+        .article-footer p { font-size: 0.8rem; color: var(--text-muted); margin-bottom: 1rem; }
+        .article-footer a { color: var(--toki-blue); text-decoration: none; }
+        .article-footer a:hover { text-decoration: underline; }
+
+        @media (max-width: 768px) {
+            .article-container { padding: 6rem 1.2rem 3rem; }
+            .article-header h1 { font-size: 1.5rem; }
+            .article-nav .nav-label { display: none; }
+        }
+        @media print { .article-nav { display: none; } .article-container { padding-top: 2rem; } }
+    </style>
+    <link rel="stylesheet" href="contact-form.css">
+    <meta property="og:image" content="https://tokistorage.github.io/lp/asset/tokistorage-icon-512.png">
+    <meta property="og:image:width" content="512">
+    <meta property="og:image:height" content="512">
+</head>
+<body>
+
+<nav class="article-nav">
+    <a href="index.html" class="nav-brand">トキストレージ</a>
+    <div class="nav-right">
+        <span class="nav-label">人生の節目 / Life Milestones</span>
+    </div>
+</nav>
+
+<main class="article-container">
+
+    <header class="article-header">
+        <p class="article-category">ESSAY &mdash; 人生の節目</p>
+        <h1>仲良くなった証<br><span style="font-size: 0.6em; font-weight: 400; color: var(--text-secondary);">&mdash;&mdash; キッズプレイグラウンドの贈り物</span></h1>
+        <p class="article-subtitle">
+            総合デパートのキッズプレイグラウンドで、娘が初めて会った友達に<br>
+            自分の顔が印刷されたQRカードを渡した。<br>
+            その場限りの出会いを、小さなラミネートカード一枚が変えた記録。
+        </p>
+    </header>
+
+    <article class="article-content">
+
+        <div class="core-message">
+            <strong>この記事で言いたいこと：</strong>子どもは理屈で動かない。「渡したい」と思ったから渡した。その衝動の中に、存在証明の本質がある。
+        </div>
+
+        <h2>1. キッズプレイグラウンドという場所</h2>
+
+        <p>総合デパートのキッズプレイグラウンド。滑り台とボールプールがあり、子どもたちが走り回っている。親は柵の外から見守る。子どもたちは名前も知らないまま、すぐに遊び始める。</p>
+
+        <p>この場所の特徴は、出会いの偶然性と、別れの確実性だ。同じ子に二度会う確率はほぼゼロに等しい。休日の午後、たまたま同じ時間帯に来ていた、たまたま同じくらいの年齢の子。1時間ほど一緒に遊んで、どちらかの親が「そろそろ行くよ」と声をかけて、それで終わる。</p>
+
+        <p>名前を交換することもあるが、連絡先は交換しない。子ども同士が「またね」と手を振り、二度と会わない。それがキッズプレイグラウンドの日常だ。</p>
+
+        <h2>2. その場限りとの違い</h2>
+
+        <p>娘の顔を肖像としたラミネートQRカードを10部刷って持ち歩いていた。カバンの中に、いつでも渡せる状態で入れていた。</p>
+
+        <p>この日、娘はプレイグラウンドで一人の女の子と仲良くなった。追いかけっこをして、ボールプールに一緒に飛び込んで、何かを一生懸命話し合っていた。親の目には、いつもの光景に見えた。</p>
+
+        <p>帰り際、娘はカバンからラミネートカードを取り出して、その子に渡した。「これ、あげる」と。</p>
+
+        <p>大人なら、名刺交換をするだろう。LINEを交換するだろう。でもそれは「また連絡するため」の情報交換だ。娘がやったのは違う。「自分の存在の欠片を渡す」という行為だ。連絡を取るためではない。仲良くなった証として、自分自身を差し出した。</p>
+
+        <blockquote>
+            名刺は情報を交換する。<br>
+            ラミネートカードは存在を贈る。
+        </blockquote>
+
+        <h2>3. 自然と渡したくなるもの</h2>
+
+        <p>なぜ娘は渡したくなったのか。誰にも教えられていない。「友達ができたら渡しなさい」と言ったことはない。</p>
+
+        <p>自分の顔が印刷されたカードを持っていて、仲良くなった子がいて、もうすぐ別れるとわかった。その三つの条件が揃ったとき、「あげたい」という衝動が自然に湧いたのだろう。</p>
+
+        <p>デジタルな連絡先交換は、この衝動を生まない。スマートフォンを出して、QRコードを読み取って、フレンド申請をして——その手順の多さが、子どもの「渡したい」を阻む。そもそも子どもはスマートフォンを持っていない。</p>
+
+        <p>物理的なカードには、渡すという行為のハードルが極端に低い。手に持って、差し出す。それだけだ。子どもにとって、それは折り紙を渡すのと同じくらい自然な動作だ。</p>
+
+        <p>ここに、物理化の本質的な意味がある。デジタルデータを物理的な形にすることは、技術的なコストがかかる。だがそのコストの対価として、「渡す」という行為が限りなく自然になる。テクノロジーが見えなくなったとき、人間の衝動がそのまま形になる。</p>
+
+        <h2>4. 受け取ってもらえる喜び</h2>
+
+        <p>渡した瞬間の娘の顔を見ていた。緊張と、期待と、少しの不安。受け取った子が「かわいい！」と言った瞬間、娘の顔がぱっと明るくなった。</p>
+
+        <p>「受け取ってもらえた」という事実は、「仲良くなれた」という確認でもある。相手が自分のカードを手に取り、眺め、大事そうに持つ。その一連の動作が、目の前の友情を確かなものにする。</p>
+
+        <p>デジタルの友達申請には、この身体的な確認がない。承認ボタンを押しても、相手の表情は見えない。物理的な贈り物にだけある、渡す瞬間の相互確認——「あなたが大事」と「ありがとう」が、目と手を通じて同時に交わされる。</p>
+
+        <blockquote>
+            デジタルの承認は情報を更新する。<br>
+            物理的な贈り物は関係を確認する。
+        </blockquote>
+
+        <h2>5. 拒絶を超えるもの</h2>
+
+        <p>正直に言えば、受け取ってもらえない可能性も考えていた。知らない子から突然カードを渡されたら、警戒する親もいるだろう。</p>
+
+        <p>だが実際には、拒絶は起きなかった。いくつかの要因がある。</p>
+
+        <p>まず、子どもから子どもへ渡されたこと。大人が配るチラシではない。子どもが自分の意思で、遊んだ相手に差し出した。この文脈が、受け取る側の警戒心を解く。</p>
+
+        <p>次に、カードに子どもの顔が印刷されていること。商業的な匂いがしない。明らかに個人的なもので、大量生産ではないと直感でわかる。受け取った親も「何これ？」と興味を持つ。QRコードをスキャンすると、声や映像が再生される。技術的な驚きが、最初の警戒を好奇心に変える。</p>
+
+        <p>そして何より、子どもたちが仲良くなった後に渡されたこと。見知らぬ人からの配布物ではなく、「一緒に遊んだ友達からの贈り物」という文脈が成立している。順序が大事だ。仲良くなる前に渡せば営業になる。仲良くなった後に渡すから贈り物になる。</p>
+
+        <h2>6. 10部という設計</h2>
+
+        <p>10部刷って持ち歩いていたことに、意味がある。</p>
+
+        <p>1部では渡せない。手元に残しておきたいから。2〜3部では心もとない。「あげちゃったらなくなる」という心理的な抵抗が、渡す衝動にブレーキをかける。</p>
+
+        <p>10部あると、その抵抗が消える。「まだたくさんある」という安心感が、渡すハードルを限りなく下げる。名刺を100枚持ち歩くビジネスパーソンが、初対面の相手に躊躇なく名刺を渡すのと同じ構造だ。</p>
+
+        <p>ラミネートQRカードの価格は1枚500円。10部で5,000円。この金額で、子どもが10回「自分の存在を誰かに渡す」体験ができる。1回あたり500円の存在証明。高いか安いかは、あの瞬間の娘の笑顔が答えている。</p>
+
+        <h2>7. 帰り道に残るもの</h2>
+
+        <p>プレイグラウンドを出た後、娘は機嫌がよかった。いつもなら「もっと遊びたかった」と言うのに、この日は違った。満足していた。</p>
+
+        <p>普通のプレイグラウンドでの出会いは、場を離れた瞬間に薄れ始める。楽しかった記憶は残るが、相手の顔は曖昧になり、名前は忘れる。だが今日は違う。相手の手の中に、自分の顔が残っている。相手がカードをスキャンすれば、自分の声が聞こえる。その事実が、「今日の出会い」を「ただの出来事」から「続いている関係」に変える。</p>
+
+        <p>受け取った側にも同じことが言える。帰り道、親が「さっきもらったの何？」と聞く。子どもが「お友達にもらった」と答える。親がスキャンする。画面に映る子どもの顔と声。「こういう子と遊んだんだね」という会話が生まれる。その場限りだったはずの出会いが、家族の会話の中で再生される。</p>
+
+        <blockquote>
+            その場限りの出会いは、記憶の中で薄れていく。<br>
+            でも手の中に残るものがあれば、出会いは生き続ける。
+        </blockquote>
+
+        <div class="core-message">
+            子どもは理屈で渡したのではない。「仲良くなったから、自分を渡したい」という直感で動いた。その直感の中に、存在証明の最もシンプルな形がある。技術でも戦略でもなく、「あなたと出会えたことを残したい」という人間の衝動。トキストレージが届けたいのは、まさにこれだ。
+        </div>
+
+        <div class="key-point">
+            <p>仲良くなった証は、デジタルの記録ではなく、手渡しできるものであるべきだ。<br>それを子どもが、誰にも教わらずに証明してくれた。</p>
+        </div>
+
+    </article>
+
+    <footer class="article-footer">
+        <p id="essay-nav-links"></p>
+        <p style="margin-top: 2rem; font-size: 0.75rem;">&copy; 2026 TokiStorage</p>
+    </footer>
+
+</main>
+
+<script src="contact-form.js"></script>
+<script src="essay-nav.js?v=20260220"></script>
+<script src="tracker.js"></script>
+</body>
+</html>
