@@ -345,15 +345,9 @@
         /* Portrait print */
         @media print {
             @page { size: A4; margin: 9mm 11mm; }
-            :root {
-                --toki-blue: #444;
-                --toki-blue-pale: #F0F0F0;
-                --text-muted: #777;
-            }
-            img { filter: grayscale(100%); }
             .br-nav, .pdf-download, .br-footer { display: none; }
             .brochure { padding: 0; max-width: 100%; }
-            body { background: white; line-height: 1.45; font-size: 13px; }
+            body { background: white; line-height: 1.45; font-size: 13px; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
             .br-header { margin-bottom: 0.5rem; padding-bottom: 0.35rem; }
             .br-header .company { font-size: 1.35rem; }
             .tagline { margin-bottom: 0.5rem; }
@@ -665,6 +659,10 @@
 
 <script>
 function printLandscape() {
+    var isIOS = /iPad|iPhone|iPod/.test(navigator.userAgent);
+    if (isIOS) {
+        alert('Please select "Landscape" orientation in the print dialog.\niOS cannot switch orientation automatically.');
+    }
     document.body.classList.add('landscape-mode');
     document.getElementById('landscape-page-style').media = 'all';
     window.addEventListener('afterprint', function cleanup() {
