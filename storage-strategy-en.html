@@ -304,7 +304,7 @@
             prevents 1,000 years of storage from ever breaking down.
         </blockquote>
 
-        <h2>6. Migration</h2>
+        <h2>6. Migration and URL Permanence</h2>
 
         <p>There is no guarantee that GitHub will exist in 1,000 years. So what does TokiQR actually depend on?</p>
 
@@ -321,8 +321,8 @@
             </tr>
             <tr>
                 <td>URL changes</td>
-                <td>High</td>
-                <td>Custom domain + DNS redirect controls migration</td>
+                <td>Medium</td>
+                <td>github.io is free. Platform survival = URL survival</td>
             </tr>
             <tr>
                 <td>Codec2 format deprecated</td>
@@ -341,11 +341,35 @@
             </tr>
         </table>
 
-        <p>The greatest risk is URL permanence. If the URL embedded in the QR paper becomes invalid, the data exists on paper but cannot be read. The solution is clear: use a custom domain, and DNS-level control lets you point to any new host. Since the decoder is only 3 MB, it can run on any hosting service of any era. This is fundamentally different from migrating a 100 TB database.</p>
+        <p>If the URL embedded in QR paper becomes invalid, the data exists on paper but cannot be read. URL permanence is therefore the central issue.</p>
+
+        <h3>The Custom Domain Trap</h3>
+
+        <p>The conventional wisdom is to acquire a custom domain and control migration via DNS redirects. But from a permanence standpoint, custom domains introduce their own risks.</p>
+
+        <ul>
+            <li><strong>Ongoing cost</strong> &mdash; Domains require annual renewal fees. A lapse in payment means the URL dies</li>
+            <li><strong>Registrar dependency</strong> &mdash; If the domain registrar goes out of business, a transfer process is required</li>
+            <li><strong>Succession fragility</strong> &mdash; For individuals and small organizations, the operator's absence can directly halt renewal</li>
+        </ul>
+
+        <p>Custom domains offer the flexibility of controlling where traffic is directed, but they carry a perpetual liability: recurring fees. At the 1,000-year or 10,000-year scale, this liability may itself become the single point of failure.</p>
+
+        <h3>The github.io Choice</h3>
+
+        <p>TokiQR uses <code>tokistorage.github.io</code> as-is. This is a deliberate design decision.</p>
+
+        <ul>
+            <li><strong>Zero maintenance cost</strong> &mdash; GitHub Pages is free. There is no payment lapse risk</li>
+            <li><strong>Platform survival = URL survival</strong> &mdash; As long as GitHub exists, the URL remains valid</li>
+            <li><strong>Riding a giant&rsquo;s infrastructure</strong> &mdash; GitHub (Microsoft) operates the world's largest code hosting platform. Its expected lifespan far exceeds any individual domain registration</li>
+        </ul>
+
+        <p>Of course, there is no guarantee GitHub will exist forever. But when that day comes, the migration effort is simply re-hosting 3 MB of decoder files. This is fundamentally different from migrating a 100 TB database. And there is no need to re-stamp QR paper with new URLs. Throughout internet history, URLs of major platforms have not vanished&mdash;they have been redirected.</p>
 
         <blockquote>
-            At 3 MB, a single USB drive can carry 1,000 years of infrastructure.<br>
-            Near-zero migration cost is the ultimate form of sustainability.
+            A zero-cost URL cannot expire from a lapsed payment.<br>
+            The most permanent URL is one that costs nothing to maintain.
         </blockquote>
 
         <h2>7. Format Durability</h2>
