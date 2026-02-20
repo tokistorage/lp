@@ -293,7 +293,7 @@ CONTENT = {
             "label": "Our Offering",
             "cards": [
                 ("T", "TokiQR — 無料で今すぐ体験",
-                 "声・顔・テキストをQRコードに。スマホだけで誰でも無料で作成、三層分散保管まで完結。PCT国際特許手続き中の独自音声符号化技術。"),
+                 "声・顔・テキストをQRコードに。スマホだけで誰でも無料で作成、三層分散保管まで完結。独自音声符号化技術。"),
                 ("Q", "三層分散保管アーキテクチャ",
                  "物理層（石英ガラス/ラミネート）・国家層（国立国会図書館 法定納本）・民間層（GitHub）。3-2-1バックアップルール準拠。単一障害点ゼロ。"),
                 ("U", "200+ ユースケース（業界別整理済み）",
@@ -449,7 +449,7 @@ CONTENT = {
             "label": "Our Offering",
             "cards": [
                 ("T", "TokiQR — Free, instant experience",
-                 "Voice, face, and text in a QR code. Anyone can create one for free on their smartphone, with full three-layer distributed storage. Proprietary encoding (PCT patent in process)."),
+                 "Voice, face, and text in a QR code. Anyone can create one for free on their smartphone, with full three-layer distributed storage. Proprietary encoding technology."),
                 ("Q", "Three-Layer Distributed Storage",
                  "Physical (quartz glass/laminate), National (National Diet Library legal deposit), Private (GitHub). 3-2-1 backup rule compliant. Zero single points of failure."),
                 ("U", "200+ use cases (organized by industry)",
