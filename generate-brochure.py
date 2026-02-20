@@ -161,7 +161,7 @@ def generate_ja(qr_path):
     layers = [
         ("物理層", "石英ガラス・UVラミネート", "記録が手元の実物に\n石英1000年・UV更新可"),
         ("国家層", "国立国会図書館", "国会図書館法による\n永久保存"),
-        ("民間層", "GitHub", "無料の公開基盤で永続管理\n維持費は一切不要"),
+        ("民間層", "GitHub", "無料公開基盤で永続管理\n維持費は一切不要"),
     ]
 
     for i, (title, subtitle, desc) in enumerate(layers):
