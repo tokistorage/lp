@@ -178,7 +178,7 @@
 
         <p>Does this mean nothing in TokiStorage's infrastructure ever grows? There is one exception: newsletter PDFs.</p>
 
-        <p>TokiStorage publishes a biannual newsletter in PDF format. HTML essays are text-based and weigh roughly 20 KB each, but a PDF is a binary file&mdash;roughly 630 KB per issue. Additionally, the appendix of each issue contains customer TokiQR codes (QR code images of playback page URLs)&mdash;also binary. And because binaries resist Git's delta compression, every update copies the entire file into the repository history.</p>
+        <p>TokiStorage publishes a biannual newsletter in PDF format. HTML essays are text-based and weigh roughly 20 KB each, but a PDF is a binary file&mdash;roughly 630 KB per issue. Additionally, the appendix accumulates PDFs generated from each customer's TokiQR playback page via the print function&mdash;one PDF per customer, added with each issue. Binary volume grows in proportion to the number of featured customers. And because PDFs are binary, Git's delta compression does not work on them.</p>
 
         <table>
             <tr>
