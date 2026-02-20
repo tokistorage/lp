@@ -178,7 +178,7 @@
 
         <p>Does this mean nothing in TokiStorage's infrastructure ever grows? There is one exception: newsletter PDFs.</p>
 
-        <p>TokiStorage publishes a monthly newsletter in PDF format. HTML essays are text-based and weigh roughly 20 KB each, but a PDF is a binary file&mdash;roughly 630 KB per issue. And because PDFs are binary, Git's delta compression does not work on them. Every update copies the entire file into the repository history.</p>
+        <p>TokiStorage publishes a biannual newsletter in PDF format. HTML essays are text-based and weigh roughly 20 KB each, but a PDF is a binary file&mdash;roughly 630 KB per issue. Additionally, the appendix of each issue contains customer TokiQR codes (QR code images of playback page URLs)&mdash;also binary. And because binaries resist Git's delta compression, every update copies the entire file into the repository history.</p>
 
         <table>
             <tr>
@@ -189,31 +189,31 @@
             </tr>
             <tr>
                 <td>1 year</td>
-                <td>12</td>
-                <td>&sim;7.5 MB</td>
-                <td>&sim;15 MB</td>
+                <td>2</td>
+                <td>&sim;1.3 MB</td>
+                <td>&sim;2.5 MB</td>
             </tr>
             <tr>
-                <td>10 years</td>
-                <td>120</td>
-                <td>&sim;75 MB</td>
-                <td>&sim;150 MB</td>
+                <td>20 years (1 volume)</td>
+                <td>40</td>
+                <td>&sim;25 MB</td>
+                <td>&sim;50 MB</td>
             </tr>
             <tr>
-                <td>100 years</td>
-                <td>1,200</td>
-                <td>&sim;750 MB</td>
-                <td>&sim;1.5 GB</td>
+                <td>100 years (5 volumes)</td>
+                <td>200</td>
+                <td>&sim;125 MB</td>
+                <td>&sim;250 MB</td>
             </tr>
             <tr>
-                <td>1,000 years</td>
-                <td>12,000</td>
-                <td>&sim;7.5 GB</td>
-                <td>&sim;15 GB</td>
+                <td>1,000 years (50 volumes)</td>
+                <td>2,000</td>
+                <td>&sim;1.25 GB</td>
+                <td>&sim;2.5 GB</td>
             </tr>
         </table>
 
-        <p>GitHub recommends keeping repositories under 1 GB, and strongly recommends staying under 5 GB. At the 100-year mark, we exceed the recommended limit. At 1,000 years, we reach 15 GB. The hard limit of 100 GB is still distant, but a strategy is needed.</p>
+        <p>GitHub recommends keeping repositories under 1 GB, and strongly recommends staying under 5 GB. Piling everything into a single repository will eventually hit these limits. But there is a design-level mitigation.</p>
 
         <h2>4. The PDF Principle</h2>
 
@@ -231,9 +231,70 @@
             <li><strong>Newsletter PDF</strong> &mdash; Generate once at publication. Never update afterward</li>
         </ul>
 
-        <p>Following this principle keeps Git history growth to a minimum. Only the net PDF volume grows&mdash;630 KB per month, a predictable and manageable curve.</p>
+        <p>Following this principle keeps Git history growth to a minimum. Only the net PDF volume grows&mdash;630 KB per issue, a predictable and manageable curve.</p>
 
-        <h2>5. Migration Over 1,000 Years</h2>
+        <h2>5. Shikinen Seng&#363;: Repository Renewal Every 20 Years</h2>
+
+        <p>Japan's Ise Grand Shrine practices <em>Shikinen Seng&#363;</em>&mdash;rebuilding its halls every 20 years. The old structure is not destroyed; a new one is built alongside it, and the role transfers. We apply this philosophy to repository management.</p>
+
+        <p>TokiStorage's newsletter uses a numbering system where 20 years equals one volume. Two issues per year, 40 issues per volume. One volume's PDF total is roughly 25 MB. By organizing PDFs into volume-based subdirectories, each completed volume can be cleanly separated into its own repository.</p>
+
+        <table>
+            <tr>
+                <th>Volume</th>
+                <th>Period</th>
+                <th>Issues</th>
+                <th>Estimated PDF Size</th>
+                <th>Status</th>
+            </tr>
+            <tr>
+                <td>Vol.1</td>
+                <td>2026&ndash;2045</td>
+                <td>40</td>
+                <td>&sim;25 MB</td>
+                <td>Active</td>
+            </tr>
+            <tr>
+                <td>Vol.2</td>
+                <td>2046&ndash;2065</td>
+                <td>40</td>
+                <td>&sim;25 MB</td>
+                <td>&mdash;</td>
+            </tr>
+            <tr>
+                <td>Vol.3</td>
+                <td>2066&ndash;2085</td>
+                <td>40</td>
+                <td>&sim;25 MB</td>
+                <td>&mdash;</td>
+            </tr>
+            <tr>
+                <td>&hellip;</td>
+                <td>&hellip;</td>
+                <td>&hellip;</td>
+                <td>&hellip;</td>
+                <td>&hellip;</td>
+            </tr>
+            <tr>
+                <td>Vol.50</td>
+                <td>3006&ndash;3025</td>
+                <td>40</td>
+                <td>&sim;25 MB</td>
+                <td>&mdash;</td>
+            </tr>
+        </table>
+
+        <p>Once a volume is complete, its PDFs are never updated again. They become a read-only archive. Only the current volume remains in the active repository; past volumes are frozen in separate repositories.</p>
+
+        <p>Under this structure, the active repository always stays at roughly one volume's worth&mdash;about 25 MB of PDFs plus the HTML source code. Even after 1,000 years, the active repository remains lightweight. The 50 archived volumes each sit quietly as independent 25 MB repositories.</p>
+
+        <blockquote>
+            Just as Shikinen Seng&#363; has sustained Ise Grand Shrine for 1,300 years<br>
+            by rebuilding every 20 years, splitting repositories every 20 years<br>
+            prevents 1,000 years of storage from ever breaking down.
+        </blockquote>
+
+        <h2>6. Migration</h2>
 
         <p>There is no guarantee that GitHub will exist in 1,000 years. So what does TokiQR actually depend on?</p>
 
@@ -277,7 +338,7 @@
             Near-zero migration cost is the ultimate form of sustainability.
         </blockquote>
 
-        <h2>6. Format Durability</h2>
+        <h2>7. Format Durability</h2>
 
         <p>Equally important to physical storage capacity is whether data formats will remain readable in the future.</p>
 
@@ -294,7 +355,7 @@
 
         <p>Every one of these is based on an international standard or open specification. Not a single proprietary format. Even if TokiStorage as an organization ceases to exist, the data can be recovered by reading the public specifications. This is a decisive difference from cloud services that lock users into proprietary ecosystems.</p>
 
-        <h2>7. Will Your Phone Photos Last 1,000 Years?</h2>
+        <h2>8. Will Your Phone Photos Last 1,000 Years?</h2>
 
         <p>For comparison, consider the likelihood of smartphone photos surviving 1,000 years.</p>
 

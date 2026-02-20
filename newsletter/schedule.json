@@ -4,8 +4,22 @@
   "volume_duration_years": 20,
   "current_issue": "2026-04",
   "current_serial": 2,
+  "volumes": {
+    "1": {
+      "period": "2026-2045",
+      "dir": "vol1",
+      "issues_max": 40,
+      "note": "Vol.1 完了後は凍結 (read-only archive)。式年遷宮式にVol.2を新設。"
+    }
+  },
   "issues": [
-    { "date": "2026-02", "serial": 1, "volume": 1, "number": 1, "status": "published" },
-    { "date": "2026-04", "serial": 2, "volume": 1, "number": 2, "status": "drafting" }
-  ]
+    { "date": "2026-02", "serial": 1, "volume": 1, "number": 1, "status": "published", "pdf": "vol1/2026-02.pdf" },
+    { "date": "2026-04", "serial": 2, "volume": 1, "number": 2, "status": "drafting", "pdf": "vol1/2026-04.pdf" }
+  ],
+  "storage_strategy": {
+    "description": "式年遷宮式リポジトリ分割。巻 (volume) = 20年。巻ごとにPDFと巻末QR画像を格納。巻完了時にサブディレクトリごと別リポジトリへ分離可能。",
+    "pdf_rule": "確定時のみ生成。同一ファイルの繰り返し更新を禁止。Git履歴肥大化を防止。",
+    "estimated_per_volume": "40号 × ~630KB = ~25MB (PDF only)",
+    "migration_trigger": "リポジトリ容量が1GBに近づいた場合、または巻が完了した時点で分離を検討"
+  }
 }
