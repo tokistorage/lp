@@ -163,8 +163,8 @@ def generate_ja(qr_path):
     pdf.rect(MARGIN, y_box, CONTENT_W, box_h, "DF")
 
     items = [
-        "QR1枚に最大30秒の声を記録",
-        "サーバー不要・オフライン再生・スマートフォンだけで再生可能",
+        "かざすだけで声が届く——温もりも抑揚もそのまま（最大30秒）",
+        "サービス終了で消えない——スマホだけでいつでも再生",
         "印刷対応・自社サービスへの組み込み自由",
         "セットアップページでQRシール1枚からカスタム展開（スタンプラリー・観光・イベント）",
         "独自符号化技術",
@@ -357,8 +357,8 @@ def generate_en(qr_path):
     pdf.rect(MARGIN, y_box, CONTENT_W, box_h, "DF")
 
     items = [
-        "Up to 30 seconds of voice in a single QR code",
-        "No server required \u2014 plays offline on any smartphone",
+        "Just scan and hear their voice \u2014 warmth, tone, personality intact (up to 30 sec)",
+        "No service shutdown risk \u2014 plays on any smartphone, anytime, anywhere",
         "Print-ready \u00b7 free to integrate into your own service",
         "Setup page: deploy from a single QR sticker (stamp rallies, tourism, events)",
         "Proprietary encoding technology",
