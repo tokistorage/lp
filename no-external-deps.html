@@ -144,12 +144,11 @@
 
         <ul>
             <li><strong>GitHub Pages</strong> — ホスティング。サイトの存在そのもの</li>
-            <li><strong>Cloudflare Web Analytics</strong> — アクセス解析。Cookie不使用、プライバシー重視</li>
-            <li><strong>Cloudflare Workers + Google Apps Script</strong> — お問い合わせフォーム・注文フォームの送信</li>
+            <li><strong>Cloudflare Workers + Google Apps Script</strong> — お問い合わせフォーム・注文フォーム・アクセス解析の送信</li>
             <li><strong>Wise API</strong> — 国際決済。Webhook経由で入金を自動検知し、注文ステータスを自動更新</li>
         </ul>
 
-        <p>これが全部だ。いずれも無料枠の範囲内で動いている（Wiseの手数料は送金額に対する従量課金であり、月額固定費はゼロ）。どれかが停止しても、サイトのコア機能——エッセイの表示とQRコードの生成・再生——は壊れない。Cloudflareが落ちればアクセス解析が止まる。Wiseが落ちれば手動で入金確認すればいい。だが、コンテンツは届く。フォントはシステムフォント（Hiragino Mincho / Yu Gothic）を使っており、外部配信に依存しない。</p>
+        <p>これが全部だ。アクセス解析もCloudflare Web Analyticsではなく、自前の<code>tracker.js</code>がGASにビーコン送信する仕組みで完結している。いずれも無料枠の範囲内で動いている（Wiseの手数料は送金額に対する従量課金であり、月額固定費はゼロ）。どれかが停止しても、サイトのコア機能——エッセイの表示とQRコードの生成・再生——は壊れない。Wiseが落ちれば手動で入金確認すればいい。フォントはシステムフォントを使っており、外部配信に依存しない。だが、コンテンツは届く。</p>
 
         <p>この「壊れても致命的にならない」構造が、依存先を選ぶ基準だ。</p>
 
@@ -170,7 +169,7 @@
                 <tr>
                     <td><strong>Google Analytics</strong></td>
                     <td>詳細なユーザー行動分析、コンバージョン追跡</td>
-                    <td>Cookie同意バナーが必要。GDPR/個人情報保護法対応が複雑化。Cloudflare Web Analyticsで十分</td>
+                    <td>Cookie同意バナーが必要。GDPR/個人情報保護法対応が複雑化。自前のtracker.js + GASで十分</td>
                     <td class="dep-verdict dep-no">不採用</td>
                 </tr>
                 <tr>
@@ -250,7 +249,7 @@
 
         <p><strong>問い1：それが止まったとき、コンテンツは届くか？</strong></p>
 
-        <p>Cloudflare Analyticsが停止しても、ページは表示される。Wiseが停止しても、手動で入金確認すればいい。だがFirebaseが停止したら？ データベースに依存していたら？ そのサービスの停止がコンテンツの到達を妨げるなら、依存してはいけない。</p>
+        <p>GASが停止しても、ページは表示される。Wiseが停止しても、手動で入金確認すればいい。だがFirebaseが停止したら？ データベースに依存していたら？ そのサービスの停止がコンテンツの到達を妨げるなら、依存してはいけない。</p>
 
         <p><strong>問い2：無料枠が消えたとき、支払い続けられるか？</strong></p>
 
