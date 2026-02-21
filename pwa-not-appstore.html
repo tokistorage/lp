@@ -1,0 +1,239 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" type="image/png" sizes="32x32" href="asset/favicon-32.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="asset/apple-touch-icon.png">
+    <title>アプリストアに出さない理由 | トキストレージ</title>
+    <meta name="robots" content="index, follow">
+    <meta name="description" content="PWAはすでに動いている。Electron、Tauri、アプリストア——選択肢はあった。だが維持費が発生する選択肢は、すべて却下した。ランニングコストゼロというポリシーが、配布戦略を決める。">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Shippori+Mincho:wght@400;500;600;700&family=Zen+Kaku+Gothic+New:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --toki-blue: #2563EB;
+            --toki-blue-dark: #1D4ED8;
+            --toki-blue-pale: #EFF6FF;
+            --accent-blue: #3B82F6;
+            --bg-white: #FFFFFF;
+            --text-primary: #1E293B;
+            --text-secondary: #475569;
+            --text-muted: #94A3B8;
+            --border: #E2E8F0;
+            --font-display: 'Shippori Mincho', serif;
+            --font-body: 'Zen Kaku Gothic New', sans-serif;
+        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        html { scroll-behavior: smooth; }
+        body { font-family: var(--font-body); font-weight: 400; background: var(--bg-white); color: var(--text-primary); line-height: 2; font-size: 16px; }
+
+        .article-nav { position: fixed; top: 0; left: 0; right: 0; z-index: 1000; background: rgba(255,255,255,0.95); backdrop-filter: blur(12px); border-bottom: 1px solid var(--border); padding: 0.6rem 1.2rem; display: flex; align-items: center; justify-content: space-between; gap: 1rem; }
+        .article-nav .nav-brand { font-family: var(--font-display); font-size: 0.9rem; font-weight: 600; color: var(--toki-blue); text-decoration: none; white-space: nowrap; }
+        .article-nav .nav-brand::before { content: ''; display: inline-block; width: 20px; height: 20px; background: url('asset/tokistorage-icon-512.png') no-repeat center / contain; vertical-align: -3px; margin-right: 5px; }
+        .article-nav .nav-right { display: flex; align-items: center; gap: 1rem; }
+        .article-nav .nav-label { font-size: 0.6rem; color: var(--text-muted); letter-spacing: 0.08em; }
+        .article-nav .lang-switch { font-size: 0.75rem; color: var(--toki-blue); text-decoration: none; padding: 0.3rem 0.6rem; border: 1px solid var(--toki-blue); border-radius: 4px; }
+        .article-nav .lang-switch:hover { background: var(--toki-blue); color: #fff; }
+
+        .article-container { max-width: 680px; margin: 0 auto; padding: 7rem 2rem 4rem; }
+        .article-header { margin-bottom: 3rem; padding-bottom: 2rem; border-bottom: 1px solid var(--border); }
+        .article-category { font-size: 0.7rem; color: var(--toki-blue); letter-spacing: 0.15em; margin-bottom: 1rem; }
+        .article-header h1 { font-family: var(--font-display); font-size: 1.8rem; font-weight: 700; line-height: 1.5; margin-bottom: 1.5rem; }
+        .article-subtitle { font-size: 0.95rem; color: var(--text-secondary); line-height: 1.9; }
+
+        .article-content h2 { font-family: var(--font-display); font-size: 1.3rem; font-weight: 600; margin: 3rem 0 1.5rem; padding-bottom: 0.5rem; border-bottom: 2px solid var(--toki-blue-pale); }
+        .article-content h3 { font-family: var(--font-display); font-size: 1.1rem; font-weight: 600; margin: 2rem 0 1rem; color: var(--toki-blue-dark); }
+        .article-content p { margin-bottom: 1.5rem; text-align: justify; }
+        .article-content blockquote { border-left: 3px solid var(--toki-blue); padding-left: 1.5rem; margin: 2rem 0; font-family: var(--font-display); color: var(--text-secondary); }
+        .article-content ul { margin: 1.5rem 0; padding-left: 1.5rem; }
+        .article-content li { margin-bottom: 0.75rem; }
+
+        .core-message { background: var(--toki-blue-pale); border-left: 4px solid var(--toki-blue); padding: 1.5rem; margin: 2rem 0; font-size: 0.95rem; line-height: 1.8; }
+        .key-point { background: linear-gradient(135deg, var(--toki-blue-pale) 0%, #fff 100%); border: 1px solid var(--accent-blue); border-radius: 8px; padding: 1.5rem; margin: 2rem 0; text-align: center; }
+        .key-point p { font-family: var(--font-display); font-size: 1.1rem; color: var(--toki-blue-dark); margin: 0; }
+
+        .article-footer { margin-top: 4rem; padding-top: 2rem; border-top: 1px solid var(--border); text-align: center; }
+        .article-footer p { font-size: 0.8rem; color: var(--text-muted); margin-bottom: 1rem; }
+        .article-footer a { color: var(--toki-blue); text-decoration: none; }
+        .article-footer a:hover { text-decoration: underline; }
+
+        @media (max-width: 768px) {
+            .article-container { padding: 6rem 1.2rem 3rem; }
+            .article-header h1 { font-size: 1.5rem; }
+            .article-nav .nav-label { display: none; }
+        }
+        @media print { .article-nav { display: none; } .article-container { padding-top: 2rem; } }
+    </style>
+    <link rel="stylesheet" href="contact-form.css">
+    <meta property="og:type" content="article">
+    <meta property="og:title" content="アプリストアに出さない理由 | トキストレージ">
+    <meta property="og:description" content="PWAはすでに動いている。Electron、Tauri、アプリストア——選択肢はあった。だが維持費が発生する選択肢は、すべて却下した。ランニングコストゼロというポリシーが、配布戦略を決める。">
+    <meta property="og:url" content="https://tokistorage.github.io/lp/pwa-not-appstore.html">
+    <meta property="og:site_name" content="トキストレージ">
+    <meta name="twitter:card" content="summary">
+    <meta name="twitter:title" content="アプリストアに出さない理由 | トキストレージ">
+    <meta name="twitter:description" content="PWAはすでに動いている。Electron、Tauri、アプリストア——選択肢はあった。だが維持費が発生する選択肢は、すべて却下した。ランニングコストゼロというポリシーが、配布戦略を決める。">
+    <meta property="og:image" content="https://tokistorage.github.io/lp/asset/tokistorage-icon-512.png">
+    <meta property="og:image:width" content="512">
+    <meta property="og:image:height" content="512">
+    <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Article",
+  "headline": "アプリストアに出さない理由",
+  "author": {
+    "@type": "Person",
+    "name": "Takuya Sato",
+    "url": "https://tokistorage.github.io/lp/profile.html"
+  },
+  "publisher": {
+    "@type": "Organization",
+    "name": "TokiStorage",
+    "url": "https://tokistorage.github.io/lp",
+    "logo": {
+      "@type": "ImageObject",
+      "url": "https://tokistorage.github.io/lp/asset/tokistorage-icon-512.png"
+    }
+  },
+  "url": "https://tokistorage.github.io/lp/pwa-not-appstore.html",
+  "inLanguage": "ja",
+  "mainEntityOfPage": "https://tokistorage.github.io/lp/pwa-not-appstore.html",
+  "description": "PWAはすでに動いている。Electron、Tauri、アプリストア——選択肢はあった。だが維持費が発生する選択肢は、すべて却下した。ランニングコストゼロというポリシーが、配布戦略を決める。"
+}
+    </script>
+    <link rel="canonical" href="https://tokistorage.github.io/lp/pwa-not-appstore.html">
+</head>
+<body>
+
+<nav class="article-nav">
+    <a href="index.html" class="nav-brand">トキストレージ</a>
+    <div class="nav-right">
+        <span class="nav-label">技術・設計 / Technology</span>
+    </div>
+</nav>
+
+<main class="article-container">
+
+    <header class="article-header">
+        <p class="article-category">ESSAY &mdash; 技術・設計</p>
+        <h1>アプリストアに出さない理由<br><span style="font-size: 0.6em; font-weight: 400; color: var(--text-secondary);">&mdash;&mdash; PWAとランニングコストゼロの交差点</span></h1>
+        <p class="article-subtitle">
+            TokiQRはすでにPWAとして動いている。<br>
+            Electron、Tauri、アプリストア——選択肢はあった。<br>
+            だが維持費が発生する選択肢は、すべて却下した。
+        </p>
+    </header>
+
+    <article class="article-content">
+
+        <div class="core-message">
+            <strong>この記事で言いたいこと：</strong>マルチプラットフォーム対応は「アプリストアに出すこと」と同義ではない。PWAはすでにAndroid・iPhone・デスクトップのすべてで動いている。維持費が発生する配布チャネルを選ばないことは、制約ではなく、1000年持続するための設計判断だ。
+        </div>
+
+        <h2>1. すでに動いている</h2>
+
+        <p>TokiQRのソースコードを改めて見たとき、すでにPWA対応が完了していることに気づいた。<code>manifest.json</code>が存在し、<code>service-worker.js</code>が登録されている。<code>index.html</code>と<code>play.html</code>の両方で、Service Workerのregistration処理が実行されている。</p>
+
+        <p><code>manifest.json</code>の中身はこうだ。アプリ名「TokiQR」、表示モード<code>standalone</code>（ブラウザのアドレスバーが消える）、テーマカラーは#2563EB、ポートレート固定。512pxと180pxのアイコン。ショートカットとして「QR生成」。</p>
+
+        <p>つまり、Androidなら「ホーム画面に追加」でネイティブアプリのように使える。iPhoneならSafariの共有メニューから同様の操作ができる。デスクトップのChromeでもインストール可能だ。どのプラットフォームでも、すでに動いている。</p>
+
+        <blockquote>
+            「マルチプラットフォーム対応しますか？」——もうしてあった。
+        </blockquote>
+
+        <h2>2. 三つの選択肢</h2>
+
+        <p>Webアプリをネイティブアプリのように配布する方法は、大きく三つある。</p>
+
+        <p><strong>Electron。</strong>Chromiumを丸ごとバンドルして、デスクトップアプリとして配布する。VS CodeやSlackが採用している。だが、実行ファイルは100MBを超える。QRコード1枚に2,953バイトを詰め込む設計思想で作られたプロジェクトに、100MBのランタイムは似合わない。</p>
+
+        <p><strong>Tauri。</strong>Rust製の軽量フレームワークで、OS標準のWebViewを使うためバンドルサイズが小さい。技術的には良い選択肢だ。だが、デスクトップアプリとして配布する必要性がそもそもない。TokiQRの利用シーンは、スマートフォンでQRコードを読み取る場面だ。</p>
+
+        <p><strong>アプリストア。</strong>Google PlayとApple App Store。最も広いリーチを持つ配布チャネル。ストア検索で新しいユーザーに見つけてもらえる。だが、ここには維持費がかかる。</p>
+
+        <h2>3. 維持費という断層</h2>
+
+        <p>Google Play Storeへのデベロッパー登録は$25の一時金。Apple App Storeは年間$99。Appleの方は毎年の支払いを止めた瞬間、アプリはストアから消える。</p>
+
+        <p>$99は大した金額ではない。だが問題は金額の大小ではない。<strong>「毎年払い続けなければ存在し続けられない」</strong>という構造そのものが、トキストレージの設計思想と相容れない。</p>
+
+        <p>トキストレージは、ランニングコストゼロで1000年持続する保管を設計している。GitHub Pagesは無料、Cloudflare Analyticsは無料、ドメインすらカスタムドメインを使わずgithub.ioで運用している。すべては、維持費が途絶えてもサービスが死なないようにするためだ。</p>
+
+        <p>その設計思想で作られたプロジェクトが、年間$99のサブスクリプションに依存する配布チャネルを選ぶことは、矛盾だ。</p>
+
+        <blockquote>
+            維持費がかかるということは、<br>
+            支払いが止まった瞬間に消えるということだ。<br>
+            1000年残すプロジェクトに、その選択肢はない。
+        </blockquote>
+
+        <h2>4. アプリストアの不在が失うもの</h2>
+
+        <p>公平に見れば、アプリストアに出さないことで失うものもある。</p>
+
+        <p>まず、ストア検索での発見可能性。「QRコード」「音声保存」で検索したユーザーがTokiQRを見つける確率は、ストアに出していれば高くなる。</p>
+
+        <p>次に、信頼感。「App Storeにある＝審査を通った」という暗黙の信用がある。特に日本のユーザーは、ブラウザだけで完結するサービスよりも、アプリストアからインストールしたアプリの方を信頼する傾向がある。</p>
+
+        <p>だが、TokiQRのユーザー導線を考えると、この損失は限定的だ。TokiQRの主な利用シーンは、QRコードを読み取って再生すること。ユーザーはQRコードからURLにアクセスし、<code>play.html</code>で音声や画像を受け取る。アプリストアで検索してTokiQRを見つけるユーザーは、ほぼいない。入口はストアではなく、QRコードそのものだ。</p>
+
+        <h2>5. PWAという第四の道</h2>
+
+        <p>PWA（Progressive Web App）は、Electron・Tauri・アプリストアのいずれとも異なる第四の配布方法だ。</p>
+
+        <p>配布コストはゼロ。GitHub Pagesにデプロイするだけで、全プラットフォームに配信される。審査もなければ、登録料もない。アップデートはHTMLを更新するだけで即座に全ユーザーに届く。アプリストア経由では、審査に数日かかることもある。</p>
+
+        <p>オフライン対応もService Workerで実現済みだ。一度アクセスすれば、ネットワークが切れてもアプリは動く。これはアプリストアのネイティブアプリと同じ体験を、Webの仕組みだけで実現している。</p>
+
+        <p>iOSのPWAには制限がある。プッシュ通知はiOS 16.4まで対応していなかった。バックグラウンド実行にも制約がある。だが、TokiQRにプッシュ通知は不要だし、バックグラウンド処理も必要ない。QRコードの読み取りと再生——それだけができればいい。PWAの制約は、このプロジェクトにとって制約にならない。</p>
+
+        <h2>6. 配布戦略はポリシーで決まる</h2>
+
+        <p>技術的な最適解と、プロジェクトとしての最適解は異なる。</p>
+
+        <p>技術的には、アプリストアに出すことは可能だ。Google PlayにはTWA（Trusted Web Activity）というPWAラッパーがあり、最小限のコード変更で出せる。Apple App Storeは「Webサイトのラッパーアプリ」をリジェクトする傾向があるが、不可能ではない。</p>
+
+        <p>だが、プロジェクトとしての問いは「できるか」ではなく「やるべきか」だ。</p>
+
+        <p>トキストレージのポリシーは明確だ。<strong>ランニングコストゼロ。</strong>毎月・毎年の支払いが発生するサービスには依存しない。GitHub Pages、Cloudflare Analytics、Google Fonts——すべて無料の基盤の上に成り立っている。この原則を破る理由が、アプリストアでの発見可能性だけでは、割に合わない。</p>
+
+        <p>「いずれユーザーが増えて『アプリないの？』という声が出てきたら検討する」——それが当初の結論だった。だが考え直した。声が出てきたとしても、答えは同じだ。「ブラウザでお使いいただけます。ホーム画面に追加すれば、アプリと同じように動きます。」</p>
+
+        <blockquote>
+            ポリシーは、検討の余地がないから<br>ポリシーと呼ぶ。
+        </blockquote>
+
+        <h2>7. ストアフロントなき配布</h2>
+
+        <p>アプリストアは、ソフトウェアの配布における「店舗」だ。棚に並べてもらい、検索で見つけてもらい、レビューで信頼を積む。そのビジネスモデルの対価として、登録料と手数料を払う。</p>
+
+        <p>トキストレージは店舗を持たない。QRコードそのものが配布チャネルだ。墓石に刻まれたQRコードを読み取れば、そこに音声がある。記念碑のQRコードをスキャンすれば、そこに画像がある。ストアフロントを経由する必要がない。</p>
+
+        <p>これは、<a href="disintermediation.html">中間流通の排除</a>と同じ構造だ。プラットフォームを介さず、QRコードからユーザーに直接届く。中間に誰もいない。だから維持費もかからない。だから1000年続く。</p>
+
+        <div class="core-message">
+            マルチプラットフォーム対応は、アプリストアに出すことと同義ではない。PWAはすでにAndroid・iPhone・デスクトップで動いている。維持費ゼロで、審査なしで、即座にアップデートできる。1000年持続するための配布戦略は、年間$99のサブスクリプションではなく、QRコードから直接届くWebの仕組みそのものだ。
+        </div>
+
+        <div class="key-point">
+            <p>最良の配布チャネルは、<br>維持費なしで1000年届き続けるものだ。</p>
+        </div>
+
+    </article>
+
+    <footer class="article-footer">
+        <p id="essay-nav-links"></p>
+        <p style="margin-top: 2rem; font-size: 0.75rem;">&copy; 2026 TokiStorage</p>
+    </footer>
+
+</main>
+
+<script src="contact-form.js" defer></script>
+<script src="essay-tts.js?v=20260220"></script>
+<script src="essay-nav.js?v=20260222"></script>
+<script src="tracker.js" defer></script>
+</body>
+</html>
