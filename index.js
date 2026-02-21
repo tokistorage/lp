@@ -19,11 +19,13 @@ document.addEventListener('DOMContentLoaded', function() {
             // Close all other FAQ items
             document.querySelectorAll('.faq-item').forEach(function(faq) {
                 faq.classList.remove('active');
+                faq.querySelector('.faq-question').setAttribute('aria-expanded', 'false');
             });
 
             // Toggle current item
             if (!isActive) {
                 item.classList.add('active');
+                this.setAttribute('aria-expanded', 'true');
             }
         });
     });
