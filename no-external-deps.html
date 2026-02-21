@@ -150,10 +150,11 @@
             <li><strong>GitHub Pages</strong> — ホスティング。サイトの存在そのもの</li>
             <li><strong>Cloudflare Web Analytics</strong> — アクセス解析。Cookie不使用、プライバシー重視</li>
             <li><strong>Google Fonts</strong> — Webフォント配信（Shippori Mincho、Zen Kaku Gothic New）</li>
-            <li><strong>Cloudflare Workers + Google Apps Script</strong> — お問い合わせフォームの送信</li>
+            <li><strong>Cloudflare Workers + Google Apps Script</strong> — お問い合わせフォーム・注文フォームの送信</li>
+            <li><strong>Wise API</strong> — 国際決済。Webhook経由で入金を自動検知し、注文ステータスを自動更新</li>
         </ul>
 
-        <p>これが全部だ。いずれも無料枠の範囲内で動いている。どれかが停止しても、サイトのコア機能——エッセイの表示とQRコードの生成・再生——は壊れない。Google Fontsが落ちればフォントがシステムフォントに戻り、Cloudflareが落ちればアクセス解析が止まる。だが、コンテンツは届く。</p>
+        <p>これが全部だ。いずれも無料枠の範囲内で動いている（Wiseの手数料は送金額に対する従量課金であり、月額固定費はゼロ）。どれかが停止しても、サイトのコア機能——エッセイの表示とQRコードの生成・再生——は壊れない。Google Fontsが落ちればフォントがシステムフォントに戻り、Cloudflareが落ちればアクセス解析が止まる。Wiseが落ちれば手動で入金確認すればいい。だが、コンテンツは届く。</p>
 
         <p>この「壊れても致命的にならない」構造が、依存先を選ぶ基準だ。</p>
 
@@ -196,9 +197,9 @@
                     <td class="dep-verdict dep-no">不採用</td>
                 </tr>
                 <tr>
-                    <td><strong>Stripe / 決済API</strong></td>
-                    <td>オンライン決済、サブスクリプション</td>
-                    <td>決済手数料が発生。PCI DSS準拠の運用負荷。現段階では<a href="payment.html">銀行振込で十分</a></td>
+                    <td><strong>Stripe / PayPal</strong></td>
+                    <td>カード決済、サブスクリプション課金</td>
+                    <td>決済手数料3.6%+。PCI DSS準拠の運用負荷。<a href="payment.html">Wise</a>で国際送金・Webhook自動入金確認まで構築済み。追加の決済プラットフォームは不要</td>
                     <td class="dep-verdict dep-no">不採用</td>
                 </tr>
                 <tr>
