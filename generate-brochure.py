@@ -46,16 +46,16 @@ if not FONT_PATH:
     print("ERROR: No Japanese font found. Install IPA Gothic or run on macOS.")
     sys.exit(1)
 
-# ── Colors (matching TokiStorage brand) ────────────────────────────────
-TOKI_BLUE = (37, 99, 235)       # #2563EB
-TOKI_BLUE_PALE = (239, 246, 255)  # #EFF6FF
-DARK = (30, 41, 59)             # #1e293b
-SECONDARY = (71, 85, 105)       # #475569
-MUTED = (148, 163, 184)         # #94a3b8
-BORDER = (226, 232, 240)        # #e2e8f0
-BG_LIGHT = (248, 250, 252)      # #f8fafc
+# ── Colors (grayscale for print) ──────────────────────────────────────
+TOKI_BLUE = (68, 68, 68)         # #444
+TOKI_BLUE_PALE = (240, 240, 240) # #F0F0F0
+DARK = (30, 41, 59)              # #1e293b
+SECONDARY = (71, 85, 105)        # #475569
+MUTED = (119, 119, 119)          # #777
+BORDER = (226, 232, 240)         # #e2e8f0
+BG_LIGHT = (245, 245, 245)       # #f5f5f5
 WHITE = (255, 255, 255)
-GOLD = (201, 169, 98)           # #C9A962
+GOLD = (136, 136, 136)           # #888
 
 # ── Layout constants (A4 portrait: 210mm × 297mm) ─────────────────────
 PAGE_W = 210
