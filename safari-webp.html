@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" type="image/png" sizes="32x32" href="asset/favicon-32.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="asset/apple-touch-icon.png">
+    <title>SafariとWebPの断層 | トキストレージ</title>
+    <meta name="robots" content="noindex, nofollow">
+    <meta name="description" content="SafariのCanvas APIがWebP非対応で無言でJPEGにフォールバックする問題。表示側を疑い続けた10以上のPRの末にたどり着いた、エンコード側の真因とWASMによる解決。">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Shippori+Mincho:wght@400;500;600;700&family=Zen+Kaku+Gothic+New:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --toki-blue: #2563EB;
+            --toki-blue-dark: #1D4ED8;
+            --toki-blue-pale: #EFF6FF;
+            --accent-blue: #3B82F6;
+            --bg-white: #FFFFFF;
+            --text-primary: #1E293B;
+            --text-secondary: #475569;
+            --text-muted: #94A3B8;
+            --border: #E2E8F0;
+            --font-display: 'Shippori Mincho', serif;
+            --font-body: 'Zen Kaku Gothic New', sans-serif;
+        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        html { scroll-behavior: smooth; }
+        body { font-family: var(--font-body); font-weight: 400; background: var(--bg-white); color: var(--text-primary); line-height: 2; font-size: 16px; }
+
+        .article-nav { position: fixed; top: 0; left: 0; right: 0; z-index: 1000; background: rgba(255,255,255,0.95); backdrop-filter: blur(12px); border-bottom: 1px solid var(--border); padding: 0.6rem 1.2rem; display: flex; align-items: center; justify-content: space-between; gap: 1rem; }
+        .article-nav .nav-brand { font-family: var(--font-display); font-size: 0.9rem; font-weight: 600; color: var(--toki-blue); text-decoration: none; white-space: nowrap; }
+        .article-nav .nav-brand::before { content: ''; display: inline-block; width: 20px; height: 20px; background: url('asset/tokistorage-icon-512.png') no-repeat center / contain; vertical-align: -3px; margin-right: 5px; }
+        .article-nav .nav-right { display: flex; align-items: center; gap: 1rem; }
+        .article-nav .nav-label { font-size: 0.6rem; color: var(--text-muted); letter-spacing: 0.08em; }
+        .article-nav .lang-switch { font-size: 0.75rem; color: var(--toki-blue); text-decoration: none; padding: 0.3rem 0.6rem; border: 1px solid var(--toki-blue); border-radius: 4px; }
+        .article-nav .lang-switch:hover { background: var(--toki-blue); color: #fff; }
+
+        .article-container { max-width: 680px; margin: 0 auto; padding: 7rem 2rem 4rem; }
+        .article-header { margin-bottom: 3rem; padding-bottom: 2rem; border-bottom: 1px solid var(--border); }
+        .article-category { font-size: 0.7rem; color: var(--toki-blue); letter-spacing: 0.15em; margin-bottom: 1rem; }
+        .article-header h1 { font-family: var(--font-display); font-size: 1.8rem; font-weight: 700; line-height: 1.5; margin-bottom: 1.5rem; }
+        .article-subtitle { font-size: 0.95rem; color: var(--text-secondary); line-height: 1.9; }
+
+        .article-content h2 { font-family: var(--font-display); font-size: 1.3rem; font-weight: 600; margin: 3rem 0 1.5rem; padding-bottom: 0.5rem; border-bottom: 2px solid var(--toki-blue-pale); }
+        .article-content h3 { font-family: var(--font-display); font-size: 1.1rem; font-weight: 600; margin: 2rem 0 1rem; color: var(--toki-blue-dark); }
+        .article-content p { margin-bottom: 1.5rem; text-align: justify; }
+        .article-content blockquote { border-left: 3px solid var(--toki-blue); padding-left: 1.5rem; margin: 2rem 0; font-family: var(--font-display); color: var(--text-secondary); }
+        .article-content ul { margin: 1.5rem 0; padding-left: 1.5rem; }
+        .article-content li { margin-bottom: 0.75rem; }
+
+        .core-message { background: var(--toki-blue-pale); border-left: 4px solid var(--toki-blue); padding: 1.5rem; margin: 2rem 0; font-size: 0.95rem; line-height: 1.8; }
+        .key-point { background: linear-gradient(135deg, var(--toki-blue-pale) 0%, #fff 100%); border: 1px solid var(--accent-blue); border-radius: 8px; padding: 1.5rem; margin: 2rem 0; text-align: center; }
+        .key-point p { font-family: var(--font-display); font-size: 1.1rem; color: var(--toki-blue-dark); margin: 0; }
+
+        .article-footer { margin-top: 4rem; padding-top: 2rem; border-top: 1px solid var(--border); text-align: center; }
+        .article-footer p { font-size: 0.8rem; color: var(--text-muted); margin-bottom: 1rem; }
+        .article-footer a { color: var(--toki-blue); text-decoration: none; }
+        .article-footer a:hover { text-decoration: underline; }
+
+        @media (max-width: 768px) {
+            .article-container { padding: 6rem 1.2rem 3rem; }
+            .article-header h1 { font-size: 1.5rem; }
+            .article-nav .nav-label { display: none; }
+        }
+        @media print { .article-nav { display: none; } .article-container { padding-top: 2rem; } }
+    </style>
+    <link rel="stylesheet" href="contact-form.css">
+    <meta property="og:image" content="https://tokistorage.github.io/lp/asset/tokistorage-icon-512.png">
+    <meta property="og:image:width" content="512">
+    <meta property="og:image:height" content="512">
+</head>
+<body>
+
+<nav class="article-nav">
+    <a href="index.html" class="nav-brand">トキストレージ</a>
+    <div class="nav-right">
+        <span class="nav-label">技術・設計 / Technology</span>
+    </div>
+</nav>
+
+<main class="article-container">
+
+    <header class="article-header">
+        <p class="article-category">ESSAY &mdash; 技術・設計</p>
+        <h1>SafariとWebPの断層<br><span style="font-size: 0.6em; font-weight: 400; color: var(--text-secondary);">&mdash;&mdash; 見えない場所に答えがあった</span></h1>
+        <p class="article-subtitle">
+            QRコードに埋め込んだ画像に格子状のパターンが現れる。<br>
+            表示側を疑い、10以上のPRを重ねた末にたどり着いたのは、<br>
+            Safariが静かに差し替えていたエンコード形式だった。
+        </p>
+    </header>
+
+    <article class="article-content">
+
+        <div class="core-message">
+            <strong>この記事で言いたいこと：</strong>問題は目に見える場所にあるとは限らない。表示を疑い続けた10以上のPRの末、真因はエンコードの静かなフォールバックにあった。探す場所を変える勇気が、10の手段より価値がある。だが10の手段がなければ、場所を変える根拠もなかった。
+        </div>
+
+        <h2>1. 格子の出現</h2>
+
+        <p>TokiQRは、QRコード1枚に音声・画像・テキストを埋め込むサービスだ。QRコードのバージョン40、誤り訂正レベルLで格納できるデータは最大2,953バイト。この制約の中で、画像の解像度をできるだけ高く保つために、解像度とJPEG/WebP品質のバイナリサーチを行い、バイト数上限ぎりぎりまで詰め込む。</p>
+
+        <p>ある日、スマートフォンでQRコードを読み取り、埋め込んだ画像を表示したとき、格子状のパターンが目立つことに気づいた。ピクセルの境界が目に見える形で浮かび上がり、画像が粗く感じられる。同じQRコードをPCのChromeで開くと、それほど気にならない。</p>
+
+        <p>「表示の問題だ」と思った。スマートフォンはDevice Pixel Ratio（DPR）が2〜3倍あり、CSSピクセルを物理ピクセルに引き伸ばすときに、画像のピクセル境界が強調される。解像度の低い画像を大きく表示すれば格子が見えるのは、自然な現象だ。であれば、表示時のアップスケーリングを改善すればいい。</p>
+
+        <p>その仮説は、理にかなっていた。だからこそ、長い回り道が始まった。</p>
+
+        <h2>2. 表示側への10のアプローチ</h2>
+
+        <p>まず、Canvas APIのbicubic補間を試した。<code>imageSmoothingQuality: 'high'</code>を指定し、ブラウザの最高品質の補間アルゴリズムで画像を拡大する。次に、CSSの<code>blur(0.6px)</code>を重ねて、ピクセル境界を視覚的にぼかす。</p>
+
+        <p>効果が見えなかったので、より高度なアルゴリズムに手を伸ばした。pica.jsのLanczos3リサンプリング。信号処理に基づく高品質な補間手法で、写真のリサイズでは定評がある。</p>
+
+        <p>それでも変わらない。ならばAIの力を借りよう。UpscalerJSを導入し、TensorFlow.jsの上でESRGAN（Enhanced Super-Resolution Generative Adversarial Network）を走らせた。デフォルトモデルで変わらなければ、より重いThickモデルを。それでも駄目なら、クラウドのAI——OpenAIのgpt-image-1やSoraを手動で試した。</p>
+
+        <p>さらに発想を変えた。表示側ではなく、アップスケーリングの前にソース画像にぼかしを加えてみる。逆に、アップスケーリング後にノイズを注入して格子パターンを散らしてみる。最後に、ゲームエミュレータで使われるhqxアルゴリズム——ピクセルアートの拡大に特化した手法——まで試した。</p>
+
+        <p>結果はすべて同じだった。「未処理（Raw）と変わらない」。</p>
+
+        <blockquote>
+            10の手段を試して差が出ないとき、問題は手段ではなく前提にある。
+        </blockquote>
+
+        <h2>3. 横断的な観察</h2>
+
+        <p>転機は、表示側の改善を諦めかけたとき、ふと行った横断的な観察だった。</p>
+
+        <p>同じ画像を、PCのChromeとSafariの両方でQRコードに変換し、それぞれのQRコードをスマートフォンで読み取って復元した。同じソース画像、同じコード、同じ変換ロジック。違うのはQRコードを生成したブラウザだけだ。</p>
+
+        <p>結果は明確だった。PC Chromeで生成したQRコードからは、格子のない滑らかな画像が復元される。PC Safariで生成したQRコードからは、格子が見える。スマートフォンのSafariでもChromeでも、格子が見える。</p>
+
+        <p>「表示側の問題」という仮説が崩れた瞬間だった。もし表示側の問題なら、同じQRコードを同じ端末で開いたときに差が出るはずだ。だが差が出たのは、QRコードを「生成した」ブラウザが異なるときだった。問題は表示ではなく、生成——つまりエンコード側にあった。</p>
+
+        <blockquote>
+            再現条件を絞り込む行為は、仮説を捨てる行為でもある。
+        </blockquote>
+
+        <h2>4. 無言のフォールバック</h2>
+
+        <p>生成されたQRコードの中身を調べた。Chrome で生成された画像は192&times;256ピクセル、2,134バイトのWebP。Safari で生成された画像は96&times;128ピクセル、2,124バイトのJPEG。</p>
+
+        <p>バイト数はほぼ同じだ。だが解像度は半分になっている。</p>
+
+        <p>WebPはJPEGに比べて約2倍の圧縮効率を持つ。同じバイト数なら、WebPのほうが2倍の解像度を格納できる。2,953バイトの上限の中で最大解像度を追求するこのシステムでは、WebPとJPEGの差は解像度の差に直結する。</p>
+
+        <p>コードを確認した。<code>canvas.toBlob('image/webp', quality)</code>——Canvas APIに対して、WebP形式での出力を明示的に指示している。Chromeはこの指示に従い、WebPを出力する。ではSafariはどうしたのか。</p>
+
+        <p>Safariは、この指示を黙って無視した。<code>'image/webp'</code>というMIMEタイプの指定を受け取りながら、エラーも警告も出さず、JPEGにフォールバックした。コンソールには何も表示されない。<code>toBlob()</code>のコールバックは正常に呼ばれ、Blobオブジェクトが返る。ただし、その中身はWebPではなくJPEGだ。</p>
+
+        <blockquote>
+            最も厄介なバグは、エラーを出さないバグだ。
+        </blockquote>
+
+        <p>これはSafariのバグではない。Canvas APIの仕様上、ブラウザは指定されたMIMEタイプをサポートしていない場合、<code>image/png</code>にフォールバックすることが許されている。Safariの実装では、<code>image/webp</code>を指定するとJPEG（またはPNG）にフォールバックする。仕様に準拠した挙動であり、エラーにはならない。</p>
+
+        <p>だからこそ気づきにくかった。テストは通る。画像は表示される。「正しく動いている」ように見える。ただし解像度が半分になっている。</p>
+
+        <h2>5. オフラインという制約</h2>
+
+        <p>原因がわかれば、解決策は見える。ブラウザのCanvas APIがWebPをサポートしていないなら、自前でWebPエンコーダを持てばいい。</p>
+
+        <p>クラウドAPIという選択肢もあった。画像をサーバーに送り、サーバー側でWebPにエンコードして返す。技術的には最も簡単だ。だがTokiQRの設計原則は「サーバーに依存しない」こと。QRコードの生成も、音声のエンコードも、すべてブラウザ内で完結する。オフラインでも動く。この原則を画像エンコードだけ例外にすることはできない。</p>
+
+        <p>@jsquash/webpを見つけた。Googleのlibwebp——WebPの参照実装——をWebAssemblyにコンパイルしたライブラリだ。ブラウザ内でネイティブに近い速度でWebPエンコードを実行できる。</p>
+
+        <p>275KBのWASMファイルと、38KBのJavaScriptラッパーをローカルに配置した。CDNへの依存はない。ネットワークが切れていても動く。ブラウザがCanvas APIでWebPをサポートしているかどうかを起動時に検出し、サポートしていなければWASMエンコーダにフォールバックする。</p>
+
+        <p>Safariで画像をQRコードに変換した。192&times;256ピクセルのWebPが生成された。QRコードを読み取り、画像を表示した。格子が消えていた。</p>
+
+        <blockquote>
+            制約は解法を限定するが、同時に解法を純化する。
+        </blockquote>
+
+        <h2>6. 探す場所を間違えること</h2>
+
+        <p>振り返れば、10以上のPRは「表示側には問題がない」ことの証明だった。Canvas bicubic、Lanczos3、ESRGAN、hqx——どれを試しても未処理と変わらなかったのは、表示側のアルゴリズムが問題ではなかったからだ。問題はその手前、エンコードの段階で既に起きていた。</p>
+
+        <p>では、10以上のPRは無駄だったのか。</p>
+
+        <p>そうではない。表示側に問題がないことを実証的に確認したからこそ、「問題はエンコード側にあるのではないか」という仮説に確信を持てた。もし最初の2つのアプローチだけで諦めていたら、「もっと良いアップスケーリング手法があるはずだ」という未練が残っただろう。10の手段を尽くしたからこそ、視点を切り替える根拠が生まれた。</p>
+
+        <p>消去法は遠回りに見える。だが、確信をもって正解にたどり着く唯一の道でもある。</p>
+
+        <blockquote>
+            問題を見つけるとは、問題でない場所を確定させることだ。
+        </blockquote>
+
+        <h2>7. 設計の断層</h2>
+
+        <p>この経験は、以前書いた「<a href="device-dependency.html">機種依存・ブラウザ依存・組織依存の断層</a>」と同じ構造を持っている。あのエッセイでは、Safariの印刷エンジンが<code>overflow: hidden</code>を無視する問題を扱った。今回は、Safariの Canvas APIが<code>'image/webp'</code>を無視する問題だ。</p>
+
+        <p>どちらも、ブラウザが機能を「サポートしている」ことと「正しく動く」ことの間に横たわる溝だ。<code>canvas.toBlob()</code>はSafariでも動く。MIMEタイプの引数も受け付ける。エラーは出ない。ただし、指定した形式では出力されない。</p>
+
+        <p>この種の断層は、テストケースに書きにくい。<code>toBlob()</code>が呼ばれ、Blobが返り、画像が表示される——すべてのアサーションが通過する。「壊れている」のではなく「足りない」。エラーではなくフォールバック。だから正常系として素通りしてしまう。</p>
+
+        <p>印刷の断層では、「すべてのブラウザで同じ印刷体験を提供する」という前提を捨てた。今回は、「ブラウザのCanvas APIがWebPをサポートしている」という前提を捨て、自前のエンコーダで補った。どちらも、前提を疑い、境界を認めることから解決が始まっている。</p>
+
+        <div class="core-message">
+            目に見える症状を追いかけ続けた先に、見えない原因があった。表示ではなくエンコード、エラーではなくフォールバック、壊れているのではなく足りない。断層は常に、見えにくい場所に横たわっている。
+        </div>
+
+        <div class="key-point">
+            <p>探す場所を変える勇気が、10のPRより価値がある。<br>だが10のPRがなければ、場所を変える根拠もなかった。</p>
+        </div>
+
+    </article>
+
+    <footer class="article-footer">
+        <p id="essay-nav-links"></p>
+        <p style="margin-top: 2rem; font-size: 0.75rem;">&copy; 2026 TokiStorage</p>
+    </footer>
+
+</main>
+
+<script src="contact-form.js"></script>
+<script src="essay-tts.js?v=20260220"></script>
+<script src="essay-nav.js?v=20260220"></script>
+<script src="tracker.js"></script>
+</body>
+</html>
