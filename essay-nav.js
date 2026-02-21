@@ -19,6 +19,7 @@
     { id: 'meiwaku', ja: '迷惑の構造', en: 'The Structure of Meiwaku', date: '2026-02-14' },
     { id: 'satiation', ja: '飽きと変容', en: 'Satiation & Transformation', date: '2026-02-14' },
     { id: 'transformation-journey', ja: '変容の旅路', en: 'Transformation Journey', date: '2026-02-18' },
+    { id: 'influence-boundaries', ja: '影響力の外側', en: 'Beyond the Boundaries of Influence', date: '2026-02-21' },
 
     // ── 人生の節目 ──
     { id: 'lifecycle', ja: '生老病死', en: 'Life Cycle', date: '2026-02-13' },
@@ -146,6 +147,7 @@
   // LATEST_COUNT で表示件数を制御
   const LATEST_COUNT = 5;
   const latestEssayIds = [
+    'influence-boundaries',
     'patent-departure',
     'uniform-pricing',
     'storage-strategy',
@@ -179,6 +181,7 @@
     'meiwaku':                ['peace', 'philosophy', 'organization', 'boundary', 'psychology'],
     'satiation':              ['emotion', 'solitude', 'transformation-journey', 'consumption', 'lifestyle'],
     'transformation-journey': ['backcasting', 'emotion', 'satiation', 'solitude', 'lifecycle'],
+    'influence-boundaries':   ['boundary', 'integrity', 'solitude', 'erasure', 'departure'],
     // ── 人生の節目 ──
     'lifecycle':              ['shiseikan', 'ceremony', 'what-to-leave', 'pathology', 'transformation-journey'],
     'adversity':              ['lifecycle', 'backcasting', 'integrity', 'pathology', 'headhunter'],
