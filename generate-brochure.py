@@ -167,7 +167,6 @@ def generate_ja(qr_path):
         "サービス終了で消えない——スマホだけでいつでも再生",
         "印刷対応・自社サービスへの組み込み自由",
         "セットアップページでQRシール1枚からカスタム展開（スタンプラリー・観光・イベント）",
-        "独自符号化技術",
         "無料で今すぐ体験 → tokistorage.github.io/qr/",
     ]
     pdf.set_xy(MARGIN + 6, y_box + 4)
@@ -361,7 +360,6 @@ def generate_en(qr_path):
         "No service shutdown risk \u2014 plays on any smartphone, anytime, anywhere",
         "Print-ready \u00b7 free to integrate into your own service",
         "Setup page: deploy from a single QR sticker (stamp rallies, tourism, events)",
-        "Proprietary encoding technology",
         "Try it free now \u2192 tokistorage.github.io/qr/",
     ]
     pdf.set_xy(MARGIN + 6, y_box + 4)
