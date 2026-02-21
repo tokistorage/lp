@@ -1,0 +1,350 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" type="image/png" sizes="32x32" href="asset/favicon-32.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="asset/apple-touch-icon.png">
+    <title>外部依存性を増やさない | トキストレージ</title>
+    <meta name="robots" content="index, follow">
+    <meta name="description" content="Google Analytics、YouTube、NotebookLM、OpenAI TTS——導入できるサービスは無数にある。だが、依存先が増えるたびに壊れるポイントも増える。やれることをやらない選択が、1000年の持続性を守る。">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Shippori+Mincho:wght@400;500;600;700&family=Zen+Kaku+Gothic+New:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --toki-blue: #2563EB;
+            --toki-blue-dark: #1D4ED8;
+            --toki-blue-pale: #EFF6FF;
+            --accent-blue: #3B82F6;
+            --bg-white: #FFFFFF;
+            --text-primary: #1E293B;
+            --text-secondary: #475569;
+            --text-muted: #94A3B8;
+            --border: #E2E8F0;
+            --font-display: 'Shippori Mincho', serif;
+            --font-body: 'Zen Kaku Gothic New', sans-serif;
+        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        html { scroll-behavior: smooth; }
+        body { font-family: var(--font-body); font-weight: 400; background: var(--bg-white); color: var(--text-primary); line-height: 2; font-size: 16px; }
+
+        .article-nav { position: fixed; top: 0; left: 0; right: 0; z-index: 1000; background: rgba(255,255,255,0.95); backdrop-filter: blur(12px); border-bottom: 1px solid var(--border); padding: 0.6rem 1.2rem; display: flex; align-items: center; justify-content: space-between; gap: 1rem; }
+        .article-nav .nav-brand { font-family: var(--font-display); font-size: 0.9rem; font-weight: 600; color: var(--toki-blue); text-decoration: none; white-space: nowrap; }
+        .article-nav .nav-brand::before { content: ''; display: inline-block; width: 20px; height: 20px; background: url('asset/tokistorage-icon-512.png') no-repeat center / contain; vertical-align: -3px; margin-right: 5px; }
+        .article-nav .nav-right { display: flex; align-items: center; gap: 1rem; }
+        .article-nav .nav-label { font-size: 0.6rem; color: var(--text-muted); letter-spacing: 0.08em; }
+        .article-nav .lang-switch { font-size: 0.75rem; color: var(--toki-blue); text-decoration: none; padding: 0.3rem 0.6rem; border: 1px solid var(--toki-blue); border-radius: 4px; }
+        .article-nav .lang-switch:hover { background: var(--toki-blue); color: #fff; }
+
+        .article-container { max-width: 680px; margin: 0 auto; padding: 7rem 2rem 4rem; }
+        .article-header { margin-bottom: 3rem; padding-bottom: 2rem; border-bottom: 1px solid var(--border); }
+        .article-category { font-size: 0.7rem; color: var(--toki-blue); letter-spacing: 0.15em; margin-bottom: 1rem; }
+        .article-header h1 { font-family: var(--font-display); font-size: 1.8rem; font-weight: 700; line-height: 1.5; margin-bottom: 1.5rem; }
+        .article-subtitle { font-size: 0.95rem; color: var(--text-secondary); line-height: 1.9; }
+
+        .article-content h2 { font-family: var(--font-display); font-size: 1.3rem; font-weight: 600; margin: 3rem 0 1.5rem; padding-bottom: 0.5rem; border-bottom: 2px solid var(--toki-blue-pale); }
+        .article-content h3 { font-family: var(--font-display); font-size: 1.1rem; font-weight: 600; margin: 2rem 0 1rem; color: var(--toki-blue-dark); }
+        .article-content p { margin-bottom: 1.5rem; text-align: justify; }
+        .article-content blockquote { border-left: 3px solid var(--toki-blue); padding-left: 1.5rem; margin: 2rem 0; font-family: var(--font-display); color: var(--text-secondary); }
+        .article-content ul { margin: 1.5rem 0; padding-left: 1.5rem; }
+        .article-content li { margin-bottom: 0.75rem; }
+
+        .core-message { background: var(--toki-blue-pale); border-left: 4px solid var(--toki-blue); padding: 1.5rem; margin: 2rem 0; font-size: 0.95rem; line-height: 1.8; }
+        .key-point { background: linear-gradient(135deg, var(--toki-blue-pale) 0%, #fff 100%); border: 1px solid var(--accent-blue); border-radius: 8px; padding: 1.5rem; margin: 2rem 0; text-align: center; }
+        .key-point p { font-family: var(--font-display); font-size: 1.1rem; color: var(--toki-blue-dark); margin: 0; }
+
+        .dep-table { width: 100%; border-collapse: collapse; margin: 2rem 0; font-size: 0.9rem; }
+        .dep-table th { background: var(--toki-blue-pale); font-weight: 600; text-align: left; padding: 0.75rem; border: 1px solid var(--border); font-size: 0.8rem; }
+        .dep-table td { padding: 0.75rem; border: 1px solid var(--border); vertical-align: top; }
+        .dep-table tr:nth-child(even) { background: #FAFBFC; }
+        .dep-verdict { font-weight: 600; }
+        .dep-no { color: #DC2626; }
+        .dep-yes { color: #16A34A; }
+
+        .article-footer { margin-top: 4rem; padding-top: 2rem; border-top: 1px solid var(--border); text-align: center; }
+        .article-footer p { font-size: 0.8rem; color: var(--text-muted); margin-bottom: 1rem; }
+        .article-footer a { color: var(--toki-blue); text-decoration: none; }
+        .article-footer a:hover { text-decoration: underline; }
+
+        @media (max-width: 768px) {
+            .article-container { padding: 6rem 1.2rem 3rem; }
+            .article-header h1 { font-size: 1.5rem; }
+            .article-nav .nav-label { display: none; }
+            .dep-table { font-size: 0.8rem; }
+            .dep-table th, .dep-table td { padding: 0.5rem; }
+        }
+        @media print { .article-nav { display: none; } .article-container { padding-top: 2rem; } }
+    </style>
+    <link rel="stylesheet" href="contact-form.css">
+    <meta property="og:type" content="article">
+    <meta property="og:title" content="外部依存性を増やさない | トキストレージ">
+    <meta property="og:description" content="Google Analytics、YouTube、NotebookLM、OpenAI TTS——導入できるサービスは無数にある。だが、依存先が増えるたびに壊れるポイントも増える。やれることをやらない選択が、1000年の持続性を守る。">
+    <meta property="og:url" content="https://tokistorage.github.io/lp/no-external-deps.html">
+    <meta property="og:site_name" content="トキストレージ">
+    <meta name="twitter:card" content="summary">
+    <meta name="twitter:title" content="外部依存性を増やさない | トキストレージ">
+    <meta name="twitter:description" content="Google Analytics、YouTube、NotebookLM、OpenAI TTS——導入できるサービスは無数にある。だが、依存先が増えるたびに壊れるポイントも増える。やれることをやらない選択が、1000年の持続性を守る。">
+    <meta property="og:image" content="https://tokistorage.github.io/lp/asset/tokistorage-icon-512.png">
+    <meta property="og:image:width" content="512">
+    <meta property="og:image:height" content="512">
+    <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Article",
+  "headline": "外部依存性を増やさない",
+  "author": {
+    "@type": "Person",
+    "name": "Takuya Sato",
+    "url": "https://tokistorage.github.io/lp/profile.html"
+  },
+  "publisher": {
+    "@type": "Organization",
+    "name": "TokiStorage",
+    "url": "https://tokistorage.github.io/lp",
+    "logo": {
+      "@type": "ImageObject",
+      "url": "https://tokistorage.github.io/lp/asset/tokistorage-icon-512.png"
+    }
+  },
+  "url": "https://tokistorage.github.io/lp/no-external-deps.html",
+  "inLanguage": "ja",
+  "mainEntityOfPage": "https://tokistorage.github.io/lp/no-external-deps.html",
+  "description": "Google Analytics、YouTube、NotebookLM、OpenAI TTS——導入できるサービスは無数にある。だが、依存先が増えるたびに壊れるポイントも増える。やれることをやらない選択が、1000年の持続性を守る。"
+}
+    </script>
+    <link rel="canonical" href="https://tokistorage.github.io/lp/no-external-deps.html">
+</head>
+<body>
+
+<nav class="article-nav">
+    <a href="index.html" class="nav-brand">トキストレージ</a>
+    <div class="nav-right">
+        <span class="nav-label">技術・設計 / Technology</span>
+    </div>
+</nav>
+
+<main class="article-container">
+
+    <header class="article-header">
+        <p class="article-category">ESSAY &mdash; 技術・設計</p>
+        <h1>外部依存性を増やさない<br><span style="font-size: 0.6em; font-weight: 400; color: var(--text-secondary);">&mdash;&mdash; やれることをやらない設計</span></h1>
+        <p class="article-subtitle">
+            導入できるサービスは無数にある。<br>
+            だが依存先が増えるたびに、壊れるポイントも増える。<br>
+            「入れませんか？」への回答を、ここにまとめる。
+        </p>
+    </header>
+
+    <article class="article-content">
+
+        <div class="core-message">
+            <strong>この記事で言いたいこと：</strong>外部サービスの導入は「できるかどうか」ではなく「壊れたとき何が起きるか」で判断する。依存先を増やすたびに、1000年の持続性が削られる。やれることをやらない選択が、守るべきものを守る。
+        </div>
+
+        <h2>1. 現在の依存先</h2>
+
+        <p>トキストレージが現在依存している外部サービスを、まず正直に列挙する。</p>
+
+        <ul>
+            <li><strong>GitHub Pages</strong> — ホスティング。サイトの存在そのもの</li>
+            <li><strong>Cloudflare Web Analytics</strong> — アクセス解析。Cookie不使用、プライバシー重視</li>
+            <li><strong>Google Fonts</strong> — Webフォント配信（Shippori Mincho、Zen Kaku Gothic New）</li>
+            <li><strong>Cloudflare Workers + Google Apps Script</strong> — お問い合わせフォームの送信</li>
+        </ul>
+
+        <p>これが全部だ。いずれも無料枠の範囲内で動いている。どれかが停止しても、サイトのコア機能——エッセイの表示とQRコードの生成・再生——は壊れない。Google Fontsが落ちればフォントがシステムフォントに戻り、Cloudflareが落ちればアクセス解析が止まる。だが、コンテンツは届く。</p>
+
+        <p>この「壊れても致命的にならない」構造が、依存先を選ぶ基準だ。</p>
+
+        <h2>2. 入れませんか？——一覧表</h2>
+
+        <p>「このサービスを入れたらどうですか」と提案されそうなもの、あるいは実際に検討したものを一覧にした。</p>
+
+        <table class="dep-table">
+            <thead>
+                <tr>
+                    <th>サービス</th>
+                    <th>できること</th>
+                    <th>入れない理由</th>
+                    <th>判定</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td><strong>Google Analytics</strong></td>
+                    <td>詳細なユーザー行動分析、コンバージョン追跡</td>
+                    <td>Cookie同意バナーが必要。GDPR/個人情報保護法対応が複雑化。Cloudflare Web Analyticsで十分</td>
+                    <td class="dep-verdict dep-no">不採用</td>
+                </tr>
+                <tr>
+                    <td><strong>YouTube埋め込み</strong></td>
+                    <td>エッセイの動画版・音声解説を提供</td>
+                    <td>外部プラットフォーム依存。YouTube側の仕様変更・削除で壊れる。iframe読み込みでページ重量増加</td>
+                    <td class="dep-verdict dep-no">不採用</td>
+                </tr>
+                <tr>
+                    <td><strong>NotebookLM</strong></td>
+                    <td>AI生成ポッドキャスト、エッセイの音声対話版</td>
+                    <td>生成品質の制御不能。著者の意図と異なる解釈リスク。配信にYouTube等の別プラットフォームが必要</td>
+                    <td class="dep-verdict dep-no">不採用</td>
+                </tr>
+                <tr>
+                    <td><strong>OpenAI TTS / ElevenLabs</strong></td>
+                    <td>高品質な音声読み上げ</td>
+                    <td>API課金が発生（ランニングコスト）。生成した音声ファイルのホスティングコスト。ブラウザ標準のWeb Speech APIで代替可能</td>
+                    <td class="dep-verdict dep-no">不採用</td>
+                </tr>
+                <tr>
+                    <td><strong>Stripe / 決済API</strong></td>
+                    <td>オンライン決済、サブスクリプション</td>
+                    <td>決済手数料が発生。PCI DSS準拠の運用負荷。現段階では<a href="payment.html">銀行振込で十分</a></td>
+                    <td class="dep-verdict dep-no">不採用</td>
+                </tr>
+                <tr>
+                    <td><strong>Firebase / Supabase</strong></td>
+                    <td>データベース、認証、リアルタイム機能</td>
+                    <td>サーバーサイド依存。無料枠を超えると課金。静的サイトの設計思想と相容れない</td>
+                    <td class="dep-verdict dep-no">不採用</td>
+                </tr>
+                <tr>
+                    <td><strong>Algolia / 検索API</strong></td>
+                    <td>全文検索、ファセット検索</td>
+                    <td>外部API依存。無料枠に制限あり。ブラウザ側のJavaScriptで静的検索は実装可能</td>
+                    <td class="dep-verdict dep-no">不採用</td>
+                </tr>
+                <tr>
+                    <td><strong>Vercel / Netlify</strong></td>
+                    <td>サーバーレス関数、エッジ配信</td>
+                    <td>GitHub Pagesで十分。移行すると依存先が変わるだけで、構造的改善にならない</td>
+                    <td class="dep-verdict dep-no">不採用</td>
+                </tr>
+                <tr>
+                    <td><strong>Sentry / エラー監視</strong></td>
+                    <td>フロントエンドのエラー検知・レポート</td>
+                    <td>静的サイトにサーバーサイドエラーはない。ブラウザのConsoleで十分。追加のJS読み込みでページ重量増加</td>
+                    <td class="dep-verdict dep-no">不採用</td>
+                </tr>
+                <tr>
+                    <td><strong>Intercom / チャットbot</strong></td>
+                    <td>リアルタイムチャットサポート</td>
+                    <td>月額課金。24時間対応の運用負荷。お問い合わせフォームで十分</td>
+                    <td class="dep-verdict dep-no">不採用</td>
+                </tr>
+                <tr>
+                    <td><strong>SendGrid / Mailchimp</strong></td>
+                    <td>メールマガジン、自動メール配信</td>
+                    <td>メールアドレス収集は個人情報管理の負荷。Push型マーケティングはプロジェクトの思想と合わない</td>
+                    <td class="dep-verdict dep-no">不採用</td>
+                </tr>
+                <tr>
+                    <td><strong>Apple App Store / Google Play</strong></td>
+                    <td>アプリストアでの配布・発見</td>
+                    <td>年間$99（Apple）のランニングコスト。<a href="pwa-not-appstore.html">PWAで十分対応済み</a></td>
+                    <td class="dep-verdict dep-no">不採用</td>
+                </tr>
+            </tbody>
+        </table>
+
+        <p>12項目すべてが不採用。これは偏屈ではなく、一貫性だ。</p>
+
+        <h2>3. 判断基準——三つの問い</h2>
+
+        <p>外部サービスの導入を検討するとき、三つの問いを立てる。</p>
+
+        <p><strong>問い1：それが止まったとき、コンテンツは届くか？</strong></p>
+
+        <p>Google Fontsが停止しても、テキストは読める。Cloudflare Analyticsが停止しても、ページは表示される。だがFirebaseが停止したら？ Stripeが停止したら？ そのサービスの停止がコンテンツの到達を妨げるなら、依存してはいけない。</p>
+
+        <p><strong>問い2：無料枠が消えたとき、支払い続けられるか？</strong></p>
+
+        <p>多くのサービスは無料枠で始められる。だが無料枠は永遠ではない。料金改定、プラン変更、サービス終了——いつ起きてもおかしくない。1000年のうちに、無料枠が維持される保証はゼロだ。</p>
+
+        <p><strong>問い3：それなしで、ブラウザだけで代替できないか？</strong></p>
+
+        <p>音声読み上げはWeb Speech APIでできる。検索はJavaScriptでできる。オフライン対応はService Workerでできる。ブラウザの標準機能でできることを、わざわざ外部APIに委ねる必要はない。ブラウザは1000年後も存在するだろう。特定のAPIが存在する保証はない。</p>
+
+        <blockquote>
+            「できるか」ではなく「それが消えたとき何が起きるか」。<br>
+            依存先を選ぶとは、消えたときの影響を選ぶことだ。
+        </blockquote>
+
+        <h2>4. 体験を増やす誘惑</h2>
+
+        <p>サービスを追加すれば、体験は確実に向上する。</p>
+
+        <p>YouTube動画を埋め込めば、テキストを読まない人にもリーチできる。OpenAIのTTSを使えば、ブラウザ標準よりはるかに自然な音声でエッセイを読み上げられる。Algoliaを入れれば、114本のエッセイを瞬時に全文検索できる。チャットbotがあれば、問い合わせの応答速度が上がる。</p>
+
+        <p>どれも正しい。どれも「入れた方がいい」と言える。</p>
+
+        <p>だが、体験を増やすたびに、依存先も増える。依存先が増えるたびに、どこかが壊れたときにサイト全体が劣化するリスクが増える。そして「壊れた箇所を直す」という運用負荷が発生する。運用負荷は、ランニングコストの別名だ。</p>
+
+        <p>金銭的コストがゼロでも、外部サービスのAPI仕様変更に追従するための時間的コストは発生する。YouTube埋め込みのiframeパラメータが変わった。Google Fontsのサブセット仕様が変わった。Cloudflareのスクリプトタグが変わった。これらは実際に起きることだ。依存先が12個あれば、年に数回はどこかが変わる。</p>
+
+        <h2>5. やらない選択の積み重ね</h2>
+
+        <p>トキストレージの設計は、「やらない選択」の積み重ねでできている。</p>
+
+        <ul>
+            <li>カスタムドメインを<strong>取らない</strong>。github.ioで運用する。ドメイン更新料がかからない</li>
+            <li>サーバーを<strong>持たない</strong>。GitHub Pagesの静的ホスティングで完結する</li>
+            <li>データベースを<strong>使わない</strong>。すべてのデータはHTMLとQRコードに含まれる</li>
+            <li>ユーザー登録を<strong>求めない</strong>。個人情報を預からない</li>
+            <li>アプリストアに<strong>出さない</strong>。PWAで十分だ</li>
+            <li>外部APIを<strong>増やさない</strong>。ブラウザ標準でできることはブラウザに任せる</li>
+        </ul>
+
+        <p>これらは「できないからやらない」のではない。「やれるがやらない」のだ。やれることをやらない選択には、明確な意思が必要だ。トレンドに流されず、提案に惑わされず、「それは本当に1000年持つか」と問い続ける。</p>
+
+        <blockquote>
+            やれることをやらない。<br>
+            その選択の根拠を説明できることが、設計思想だ。
+        </blockquote>
+
+        <h2>6. 例外の条件</h2>
+
+        <p>すべての外部サービスを拒絶しているわけではない。現に、GitHub Pages、Cloudflare、Google Fontsには依存している。例外を認める条件がある。</p>
+
+        <p><strong>条件1：停止してもコンテンツが届く。</strong>Google Fontsが落ちても、テキストはシステムフォントで読める。Cloudflareが落ちても、ページは表示される。「劣化するが死なない」依存だけが許容される。</p>
+
+        <p><strong>条件2：無料であり続ける蓋然性が高い。</strong>GitHub PagesはMicrosoftのインフラ、CloudflareはWeb全体のインフラ、Google FontsはGoogleのエコシステム。いずれもビジネスモデル上、無料を維持する動機がある。</p>
+
+        <p><strong>条件3：移行先が存在する。</strong>GitHub Pagesが終了しても、静的HTMLはどこにでもホスティングできる。Google Fontsが終了しても、フォントファイルをセルフホストできる。依存先が消えたとき、移行できないものには依存しない。</p>
+
+        <p>この三条件をすべて満たすものだけが、依存先として許容される。逆に、一つでも満たさないものは、どれだけ便利でも採用しない。</p>
+
+        <h2>7. 引き算の設計</h2>
+
+        <p>ソフトウェア開発では、機能を足すことが進歩とされがちだ。新しいAPIを組み込み、新しいサービスを連携し、新しい体験を提供する。足し算の設計だ。</p>
+
+        <p>トキストレージは引き算で設計する。何を足すかではなく、何を足さないか。何を依存するかではなく、何に依存しないか。依存先を一つ減らすたびに、壊れるポイントが一つ消える。壊れるポイントが消えるたびに、1000年後にコンテンツが届く確率が上がる。</p>
+
+        <p>これは、墓石と同じ構造だ。墓石は、訪れた人にはすべてを見せる。だが自らどこかに出向くことはない。YouTubeに動画を上げるのは、こちらから出向くことだ。App Storeにアプリを出すのも、出向くことだ。間口は開けておく。来てくれた人にはコンテンツが届く。だが、こちらからは組み込まない、埋め込まない、出張らない。</p>
+
+        <p>現在の構成——HTML、CSS、JavaScript、WASM。ブラウザが解釈できるファイルだけで、サイトの全機能が動く。サーバーサイドの処理はない。データベースはない。APIコールはない（アクセス解析とフォーム送信を除く）。この構成は、20年前のブラウザでも基本的に動く。そして20年後のブラウザでも動くだろう。</p>
+
+        <p>外部依存性を増やさないことは、機能の制限ではない。持続性の設計だ。</p>
+
+        <div class="core-message">
+            導入できるサービスは無数にある。だが依存先が増えるたびに、壊れるポイントが増え、運用負荷が増え、1000年の持続性が削られる。判断基準は「できるか」ではなく「それが消えたとき何が起きるか」。やれることをやらない選択を、根拠をもって積み重ねること。それが引き算の設計であり、トキストレージの外部依存性ポリシーだ。
+        </div>
+
+        <div class="key-point">
+            <p>足さないことで、守れるものがある。<br>依存先を減らすたびに、1000年が近づく。</p>
+        </div>
+
+    </article>
+
+    <footer class="article-footer">
+        <p id="essay-nav-links"></p>
+        <p style="margin-top: 2rem; font-size: 0.75rem;">&copy; 2026 TokiStorage</p>
+    </footer>
+
+</main>
+
+<script src="contact-form.js" defer></script>
+<script src="essay-tts.js?v=20260220"></script>
+<script src="essay-nav.js?v=20260222"></script>
+<script src="tracker.js" defer></script>
+</body>
+</html>
