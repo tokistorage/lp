@@ -137,6 +137,7 @@
     { id: 'safari-webp', ja: 'SafariとWebPの断層', en: 'The Safari-WebP Fault Line', date: '2026-02-21' },
     { id: 'seo-aio', ja: '見つけてもらうための設計', en: 'Designing for Discoverability', date: '2026-02-22' },
     { id: 'oss-foundation', ja: 'オープンソースの体裁', en: 'The Shape of Open Source', date: '2026-02-22' },
+    { id: 'pwa-not-appstore', ja: 'アプリストアに出さない理由', en: 'Why We Skip the App Store', date: '2026-02-22' },
 
     // ── メタ視点 ──
     { id: 'preserving-words', ja: 'ことばを残す', en: 'Preserving Words', date: '2026-02-19' },
@@ -151,6 +152,7 @@
   // LATEST_COUNT で表示件数を制御
   const LATEST_COUNT = 5;
   const latestEssayIds = [
+    'pwa-not-appstore',
     'oss-foundation',
     'seo-aio',
     'safari-webp',
@@ -298,6 +300,7 @@
     'safari-webp':            ['device-dependency', 'image-clarity', 'vibe-coding', 'poc', 'uptime'],
     'seo-aio':                ['vibe-coding', 'openness', 'safari-webp', 'burn-rate-zero', 'why-essays'],
     'oss-foundation':         ['openness', 'seo-aio', 'vibe-coding', 'ssdlc', 'what-is-github'],
+    'pwa-not-appstore':       ['burn-rate-zero', 'disintermediation', 'uptime', 'device-dependency', 'free-strategy'],
     // ── メタ視点 ──
     'preserving-words':       ['why-essays', 'akashic-record', 'what-to-leave', 'narrative-trust', 'openness'],
     'why-essays':             ['preserving-words', 'brochure-essay', 'narrative-trust', 'openness', 'erasure'],
