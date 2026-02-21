@@ -149,7 +149,7 @@ def generate_ja(qr_path):
              align="C", new_x="LMARGIN", new_y="NEXT")
     pdf.set_x(MARGIN)
     pdf.cell(CONTENT_W, 6,
-             "三層の分散保管で、声と記憶を1000年先に届ける。それがトキストレージです。",
+             "三層の分散保管で、声と肖像とことばを1000年先に届ける。それがトキストレージです。",
              align="C", new_x="LMARGIN", new_y="NEXT")
 
     # ── TokiQR Highlight ──────────────────────────────────────────────
@@ -343,7 +343,7 @@ def generate_en(qr_path):
              align="C", new_x="LMARGIN", new_y="NEXT")
     pdf.set_x(MARGIN)
     pdf.cell(CONTENT_W, 6,
-             "Three-layer distributed storage carries your voice and memory 1,000 years into the future.",
+             "Three-layer distributed storage carries voice, portrait, and text 1,000 years into the future.",
              align="C", new_x="LMARGIN", new_y="NEXT")
 
     # ── TokiQR Highlight ──────────────────────────────────────────────
