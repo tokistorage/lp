@@ -146,12 +146,31 @@
             <li><strong>GitHub Pages</strong> — ホスティング。サイトの存在そのもの</li>
             <li><strong>Cloudflare Workers + Google Apps Script</strong> — お問い合わせフォーム・注文フォーム・アクセス解析の送信</li>
             <li><strong>Wise API</strong> — 国際決済。Webhook経由で入金を自動検知し、注文ステータスを自動更新</li>
-            <li><strong>Claude Code</strong> — 唯一の有償サブスクリプション。ChatGPT、Gemini、Copilot、Cursor、Cody、画像生成（Midjourney、DALL-E、Stable Diffusion）、動画生成（Sora、Runway）、LLM API（OpenAI、Anthropic、Google）、Agentic AI（LangChain、CrewAI、AutoGPT）、Deep Research（Perplexity、Genspark）——主要な生成AIをすべてハンズオンで試した結果、開発用途のClaude Codeのみに集約。開発ツールであり、サイトの動作には一切関与しない</li>
+            <li><strong>Claude Code</strong> — 唯一の有償サブスクリプション。開発ツールであり、サイトの動作には一切関与しない</li>
         </ul>
 
         <p>これが全部だ。アクセス解析もCloudflare Web Analyticsではなく、自前の<code>tracker.js</code>がGASにビーコン送信する仕組みで完結している。無料枠の範囲内で動いているものと、従量課金（Wise）と、月額課金（Claude Code）が混在するが、いずれもサイトのコア機能——エッセイの表示とQRコードの生成・再生——には依存しない。Wiseが落ちれば手動で入金確認すればいい。Claude Codeを解約してもサイトは一行も変わらない。フォントはシステムフォントを使っており、外部配信に依存しない。だが、コンテンツは届く。</p>
 
         <p>この「壊れても致命的にならない」構造が、依存先を選ぶ基準だ。</p>
+
+        <h3>生成AI——全領域を試した上での一本化</h3>
+
+        <p>依存先リストの中で、Claude Codeだけが有償サブスクリプションだ。なぜこれだけは払っているのか。そして、なぜ「これだけ」なのか。</p>
+
+        <p>主要な生成AIは、すべてハンズオンで試してきた。</p>
+
+        <ul>
+            <li><strong>コーディング支援</strong> — ChatGPT、Gemini、GitHub Copilot、Cursor、Sourcegraph Cody</li>
+            <li><strong>画像生成</strong> — Midjourney、DALL-E、Stable Diffusion</li>
+            <li><strong>動画生成</strong> — Sora、Runway</li>
+            <li><strong>LLM API</strong> — OpenAI API、Anthropic API、Google Gemini API</li>
+            <li><strong>Agentic AI</strong> — LangChain、CrewAI、AutoGPT</li>
+            <li><strong>Deep Research</strong> — Perplexity、Genspark</li>
+        </ul>
+
+        <p>この中で、サイトの開発に直接貢献し、ランタイムに一切影響を与えず、解約してもサイトが一行も変わらないものは、Claude Codeだけだった。画像生成や動画生成は成果物をサイトに組み込めば外部依存になる。LLM APIを組み込めばランニングコストが発生する。Agentic AIフレームワークは開発の複雑さを増すだけだ。</p>
+
+        <p>Claude Codeは「道具」であり「部品」ではない。大工が使う鉋を捨てても、建てた家は倒れない。それと同じ構造だ。</p>
 
         <h2>2. 入れませんか？——一覧表</h2>
 
