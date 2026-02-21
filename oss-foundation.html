@@ -1,0 +1,245 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" type="image/png" sizes="32x32" href="asset/favicon-32.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="asset/apple-touch-icon.png">
+    <title>オープンソースの体裁 | トキストレージ</title>
+    <meta name="robots" content="index, follow">
+    <meta name="description" content="コードは公開されていた。だが「オープンソース」ではなかった。README不在、LICENSE不在、Issue運用なし——公開と開放の間にある溝を埋めた記録。">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Shippori+Mincho:wght@400;500;600;700&family=Zen+Kaku+Gothic+New:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --toki-blue: #2563EB;
+            --toki-blue-dark: #1D4ED8;
+            --toki-blue-pale: #EFF6FF;
+            --accent-blue: #3B82F6;
+            --bg-white: #FFFFFF;
+            --text-primary: #1E293B;
+            --text-secondary: #475569;
+            --text-muted: #94A3B8;
+            --border: #E2E8F0;
+            --font-display: 'Shippori Mincho', serif;
+            --font-body: 'Zen Kaku Gothic New', sans-serif;
+        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        html { scroll-behavior: smooth; }
+        body { font-family: var(--font-body); font-weight: 400; background: var(--bg-white); color: var(--text-primary); line-height: 2; font-size: 16px; }
+
+        .article-nav { position: fixed; top: 0; left: 0; right: 0; z-index: 1000; background: rgba(255,255,255,0.95); backdrop-filter: blur(12px); border-bottom: 1px solid var(--border); padding: 0.6rem 1.2rem; display: flex; align-items: center; justify-content: space-between; gap: 1rem; }
+        .article-nav .nav-brand { font-family: var(--font-display); font-size: 0.9rem; font-weight: 600; color: var(--toki-blue); text-decoration: none; white-space: nowrap; }
+        .article-nav .nav-brand::before { content: ''; display: inline-block; width: 20px; height: 20px; background: url('asset/tokistorage-icon-512.png') no-repeat center / contain; vertical-align: -3px; margin-right: 5px; }
+        .article-nav .nav-right { display: flex; align-items: center; gap: 1rem; }
+        .article-nav .nav-label { font-size: 0.6rem; color: var(--text-muted); letter-spacing: 0.08em; }
+        .article-nav .lang-switch { font-size: 0.75rem; color: var(--toki-blue); text-decoration: none; padding: 0.3rem 0.6rem; border: 1px solid var(--toki-blue); border-radius: 4px; }
+        .article-nav .lang-switch:hover { background: var(--toki-blue); color: #fff; }
+
+        .article-container { max-width: 680px; margin: 0 auto; padding: 7rem 2rem 4rem; }
+        .article-header { margin-bottom: 3rem; padding-bottom: 2rem; border-bottom: 1px solid var(--border); }
+        .article-category { font-size: 0.7rem; color: var(--toki-blue); letter-spacing: 0.15em; margin-bottom: 1rem; }
+        .article-header h1 { font-family: var(--font-display); font-size: 1.8rem; font-weight: 700; line-height: 1.5; margin-bottom: 1.5rem; }
+        .article-subtitle { font-size: 0.95rem; color: var(--text-secondary); line-height: 1.9; }
+
+        .article-content h2 { font-family: var(--font-display); font-size: 1.3rem; font-weight: 600; margin: 3rem 0 1.5rem; padding-bottom: 0.5rem; border-bottom: 2px solid var(--toki-blue-pale); }
+        .article-content h3 { font-family: var(--font-display); font-size: 1.1rem; font-weight: 600; margin: 2rem 0 1rem; color: var(--toki-blue-dark); }
+        .article-content p { margin-bottom: 1.5rem; text-align: justify; }
+        .article-content blockquote { border-left: 3px solid var(--toki-blue); padding-left: 1.5rem; margin: 2rem 0; font-family: var(--font-display); color: var(--text-secondary); }
+        .article-content ul { margin: 1.5rem 0; padding-left: 1.5rem; }
+        .article-content li { margin-bottom: 0.75rem; }
+
+        .core-message { background: var(--toki-blue-pale); border-left: 4px solid var(--toki-blue); padding: 1.5rem; margin: 2rem 0; font-size: 0.95rem; line-height: 1.8; }
+        .key-point { background: linear-gradient(135deg, var(--toki-blue-pale) 0%, #fff 100%); border: 1px solid var(--accent-blue); border-radius: 8px; padding: 1.5rem; margin: 2rem 0; text-align: center; }
+        .key-point p { font-family: var(--font-display); font-size: 1.1rem; color: var(--toki-blue-dark); margin: 0; }
+
+        .article-footer { margin-top: 4rem; padding-top: 2rem; border-top: 1px solid var(--border); text-align: center; }
+        .article-footer p { font-size: 0.8rem; color: var(--text-muted); margin-bottom: 1rem; }
+        .article-footer a { color: var(--toki-blue); text-decoration: none; }
+        .article-footer a:hover { text-decoration: underline; }
+
+        @media (max-width: 768px) {
+            .article-container { padding: 6rem 1.2rem 3rem; }
+            .article-header h1 { font-size: 1.5rem; }
+            .article-nav .nav-label { display: none; }
+        }
+        @media print { .article-nav { display: none; } .article-container { padding-top: 2rem; } }
+    </style>
+    <link rel="stylesheet" href="contact-form.css">
+    <meta property="og:type" content="article">
+    <meta property="og:title" content="オープンソースの体裁 | トキストレージ">
+    <meta property="og:description" content="コードは公開されていた。だが「オープンソース」ではなかった。README不在、LICENSE不在、Issue運用なし——公開と開放の間にある溝を埋めた記録。">
+    <meta property="og:url" content="https://tokistorage.github.io/lp/oss-foundation.html">
+    <meta property="og:site_name" content="トキストレージ">
+    <meta name="twitter:card" content="summary">
+    <meta name="twitter:title" content="オープンソースの体裁 | トキストレージ">
+    <meta name="twitter:description" content="コードは公開されていた。だが「オープンソース」ではなかった。README不在、LICENSE不在、Issue運用なし——公開と開放の間にある溝を埋めた記録。">
+    <meta property="og:image" content="https://tokistorage.github.io/lp/asset/tokistorage-icon-512.png">
+    <meta property="og:image:width" content="512">
+    <meta property="og:image:height" content="512">
+    <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Article",
+  "headline": "オープンソースの体裁",
+  "author": {
+    "@type": "Person",
+    "name": "Takuya Sato",
+    "url": "https://tokistorage.github.io/lp/profile.html"
+  },
+  "publisher": {
+    "@type": "Organization",
+    "name": "TokiStorage",
+    "url": "https://tokistorage.github.io/lp",
+    "logo": {
+      "@type": "ImageObject",
+      "url": "https://tokistorage.github.io/lp/asset/tokistorage-icon-512.png"
+    }
+  },
+  "url": "https://tokistorage.github.io/lp/oss-foundation.html",
+  "inLanguage": "ja",
+  "mainEntityOfPage": "https://tokistorage.github.io/lp/oss-foundation.html",
+  "description": "コードは公開されていた。だが「オープンソース」ではなかった。README不在、LICENSE不在、Issue運用なし——公開と開放の間にある溝を埋めた記録。"
+}
+    </script>
+    <link rel="canonical" href="https://tokistorage.github.io/lp/oss-foundation.html">
+</head>
+<body>
+
+<nav class="article-nav">
+    <a href="index.html" class="nav-brand">トキストレージ</a>
+    <div class="nav-right">
+        <span class="nav-label">技術・設計 / Technology</span>
+    </div>
+</nav>
+
+<main class="article-container">
+
+    <header class="article-header">
+        <p class="article-category">ESSAY &mdash; 技術・設計</p>
+        <h1>オープンソースの体裁<br><span style="font-size: 0.6em; font-weight: 400; color: var(--text-secondary);">&mdash;&mdash; 公開と開放の間にある溝</span></h1>
+        <p class="article-subtitle">
+            コードはGitHubに公開されていた。だが「オープンソース」ではなかった。<br>
+            README不在、LICENSE不在、Issue運用なし。<br>
+            公開と開放の間にある溝を埋めた記録。
+        </p>
+    </header>
+
+    <article class="article-content">
+
+        <div class="core-message">
+            <strong>この記事で言いたいこと：</strong>コードを公開することと、プロジェクトを開放することは違う。READMEは玄関、LICENSEは契約書、Issue テンプレートは対話の窓口。体裁を整えることは形式主義ではなく、他者への敬意だ。
+        </div>
+
+        <h2>1. 公開されているが開かれていない</h2>
+
+        <p>トキストレージには二つのリポジトリがある。<a href="https://github.com/tokistorage/lp">lp</a>はランディングページとエッセイ群、<a href="https://github.com/tokistorage/qr">qr</a>はTokiQRの本体。どちらもGitHub上でPublicに設定されており、誰でもソースコードを見ることができる。</p>
+
+        <p>だが、lpリポジトリにはREADME.mdがなかった。リポジトリを開くと、500以上のHTMLファイルが並ぶだけで、何のプロジェクトなのか、どう動かすのか、何も説明がない。qrリポジトリにはREADMEがあったが、数行の概要だけだった。</p>
+
+        <p>LICENSEファイルはどちらにもない。つまり、コードは見えるが、使っていいのかどうかわからない。法的には「著作権者の許諾なし」と同義だ。CONTRIBUTING.mdもない。コントリビュートしたくても、どこから手をつければいいのか、PRの作法は何なのか、言語は日本語でいいのか——何もわからない。</p>
+
+        <p>リポジトリのDescriptionは空。Homepage URLは未設定。Topicsもゼロ。GitHubの検索にも、トピック一覧にも、どこにも引っかからない。</p>
+
+        <blockquote>
+            公開されていることと、開かれていることは、まったく異なる。
+        </blockquote>
+
+        <h2>2. 玄関をつくる——README</h2>
+
+        <p>READMEは、リポジトリの玄関だ。初めて訪れた人が最初に目にするもの。ここに何も書かれていなければ、訪問者は中に入る手がかりを持たない。</p>
+
+        <p>lpのREADMEには、プロジェクトの概要（三層分散保管とは何か）、コンテンツの構成（114本のエッセイ、100以上のユースケース）、技術スタック（GitHub Pages、Google Fonts、Cloudflare Analytics）、ライブサイトへのリンク、ローカルでの起動方法を書いた。</p>
+
+        <p>qrのREADMEは全面的にリライトした。ASCIIのアーキテクチャ図で、録音からQRコード生成までのデータフローを視覚化した。Codec2のWASMモジュール、WebPエンコーダのSafariフォールバック、QRコード バージョン40の2,953バイト制約。ブラウザ互換表をテーブルで示し、URL形式のフォーマットを明記した。</p>
+
+        <p>READMEを書く行為は、自分のプロジェクトを他者の目で見直す行為でもある。「何が面白いのか」「何が独自なのか」「何が制約なのか」——自明だと思っていたことを言語化すると、自分自身の理解も深まる。</p>
+
+        <h2>3. 契約書を置く——LICENSE</h2>
+
+        <p>LICENSEファイルがないリポジトリは、法的にはAll Rights Reservedだ。コードが見えるからといって、使っていいわけではない。</p>
+
+        <p>MIT Licenseを選んだ。「このソフトウェアを自由に使って、改変して、再配布していい。ただし著作権表示を残してね。無保証だよ」——これだけのシンプルな契約だ。</p>
+
+        <p>1000年残すことを設計するプロジェクトに、制約の多いライセンスは似合わない。残すことの本質は、できるだけ多くの人が、できるだけ自由に扱えることだ。オープンであること自体が、プロジェクトの思想と一致する。</p>
+
+        <blockquote>
+            LICENSEは「使っていい」の宣言だ。<br>
+            置かないことは、沈黙による拒絶になる。
+        </blockquote>
+
+        <h2>4. 窓口を開く——Issue テンプレートとPRテンプレート</h2>
+
+        <p>Issueは、外部からの対話の窓口だ。バグを見つけた人、機能を提案したい人、質問がある人——彼らが最初に触れるインターフェースがIssueテンプレートだ。</p>
+
+        <p>Bug Reportテンプレートには、再現手順、期待される挙動、実際の挙動、環境情報（ブラウザ、OS、デバイス）を用意した。qrリポジトリのテンプレートには、Codec2のモード（450/700C/1200/1600/2400/3200）の選択欄も追加した。音声コーデックのモードによって挙動が変わるこのプロジェクト固有の情報だ。</p>
+
+        <p>Feature Requestテンプレートには、概要、動機、提案する解決策、検討した代替案。qrリポジトリのテンプレートには制約リマインダー——「オフラインで動くこと」「サーバー依存なし」「QR Version 40 = 2,953バイト上限」——を組み込んだ。制約を事前に共有することで、実現不可能な提案を減らせる。</p>
+
+        <p>PRテンプレートには、Summary（何をしたか、関連Issue番号）とTest Plan（検証方法）。qrリポジトリのテンプレートには「ChromeとSafariの両方でテスト」を必須チェック項目にした。WebP WASMフォールバックがSafari固有の問題であることは、<a href="safari-webp.html">前のエッセイ</a>で書いた通りだ。</p>
+
+        <p>テンプレートは、コントリビューターへの「ここに書いてくれればいい」という道しるべだ。白紙のIssueフォームは、何を書けばいいかわからない人にとっては壁になる。</p>
+
+        <h2>5. 居場所を示す——Description、URL、Topics</h2>
+
+        <p>GitHubのリポジトリには、コードの外側にもメタデータがある。Description（説明文）、Homepage URL（ライブサイトへのリンク）、Topics（タグ）。</p>
+
+        <p>lpのDescriptionは空だった。「TokiStorage Landing Page — 存在証明の民主化。三層分散保管で声・画像・テキストを1000年残す。」と設定した。Homepage URLに<code>tokistorage.github.io/lp/</code>を指定した。Topicsには<code>preservation</code>、<code>codec2</code>、<code>github-pages</code>、<code>open-source</code>などを追加した。</p>
+
+        <p>qrのDescriptionは古い表現だった。「Voice Memorial QR - 音声をQRコードで永久保存」——音声だけでなく画像もテキストも扱えるようになった今、実態と合っていない。「TokiQR — 音声・画像・テキストをQRコード1枚に。Codec2 WASM、完全オフライン対応。」に更新した。</p>
+
+        <p>さらに、プロフィールREADME用のリポジトリ<code>tokistorage/tokistorage</code>を新規作成した。GitHubは、ユーザー名と同名のリポジトリにREADME.mdを置くと、プロフィールページに表示する。三層分散保管の概要と、lp・qrリポジトリへのリンクを記載した。</p>
+
+        <h2>6. 見えない貢献——git config</h2>
+
+        <p>すべての整備が終わったとき、ふと気づいた。GitHubのcontributionグラフ——プロフィールページの緑のタイル——が更新されていない。数百のコミットを重ねたのに、草が生えていない。</p>
+
+        <p>原因はシンプルだった。<code>git config</code>のメールアドレスが未設定で、コミットのAuthorメールがMacのホスト名から自動生成された<code>tokistorage@satouminanoMacBook-Pro.local</code>になっていた。GitHubは、コミットのメールアドレスがアカウントの登録メールと一致しないと、contributionとしてカウントしない。</p>
+
+        <p>何百ものコミット、何十ものPull Request、500ページ以上のコンテンツ追加——その痕跡がプロフィールに一切反映されていなかった。</p>
+
+        <p><code>git config --global user.email</code>を正しく設定した。たった1行の設定変更で、今後のすべてのコミットがcontributionグラフに反映されるようになる。</p>
+
+        <blockquote>
+            設定の1行が、存在の証明を左右する。<br>
+            コードを書いた事実は変わらないが、見える形で残るかどうかが変わる。
+        </blockquote>
+
+        <p>これは、このプロジェクト自体の思想と奇妙に重なる。トキストレージが解決しようとしている問題——声や画像が、適切な形式で保管されなければ消えてしまう——と、gitのメール設定が合っていなければ貢献が見えなくなる問題は、構造的に同じだ。存在していても、正しく記録されなければ、存在しなかったことになる。</p>
+
+        <h2>7. 体裁は敬意だ</h2>
+
+        <p>READMEを書き、LICENSEを置き、Issueテンプレートを整え、Descriptionを設定する。これらは「やらなくても動く」作業だ。コードは変わらない。サイトの表示も変わらない。機能は一つも増えない。</p>
+
+        <p>だが、これらは他者への敬意の表明だ。</p>
+
+        <p>READMEは「あなたの時間を無駄にしません、ここに概要があります」という敬意。LICENSEは「あなたが自由に使えることを保証します」という敬意。Issueテンプレートは「あなたの声を聴く準備ができています」という敬意。Descriptionは「あなたが探しているものかどうか、すぐにわかるようにします」という敬意。</p>
+
+        <p>ソロ開発者にとって、これらは後回しにしがちだ。自分だけが使うなら不要。自分だけがコードを読むならREADMEは要らない。だが「公開」を選んだ時点で、読者は自分だけではなくなる。</p>
+
+        <p>オープンソースの体裁を整えることは、コードを世界に開く行為だ。扉を開けて、「どうぞ」と招き入れる。その「どうぞ」がなければ、扉はただの壁に見える。</p>
+
+        <div class="core-message">
+            コードを公開することと、プロジェクトを開放することは違う。READMEは訪問者への道案内、LICENSEは自由の宣言、Issueテンプレートは対話への招待。体裁を整えることは形式主義ではない。見えない場所にいる、まだ出会っていないコントリビューターへの敬意だ。そして、git configの1行が存在の証明を左右するように、正しい形式で記録することが、存在そのものの可視性を決める。
+        </div>
+
+        <div class="key-point">
+            <p>公開は行為だが、開放は姿勢だ。<br>体裁を整えることは、まだ見ぬ他者への「どうぞ」だ。</p>
+        </div>
+
+    </article>
+
+    <footer class="article-footer">
+        <p id="essay-nav-links"></p>
+        <p style="margin-top: 2rem; font-size: 0.75rem;">&copy; 2026 TokiStorage</p>
+    </footer>
+
+</main>
+
+<script src="contact-form.js" defer></script>
+<script src="essay-tts.js?v=20260220"></script>
+<script src="essay-nav.js?v=20260222"></script>
+<script src="tracker.js" defer></script>
+</body>
+</html>
