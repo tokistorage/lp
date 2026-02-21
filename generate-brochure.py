@@ -157,7 +157,7 @@ def generate_ja(qr_path):
     pdf.section_title("TokiQR ── 声を刻むQRコード")
 
     y_box = pdf.get_y()
-    box_h = 50
+    box_h = 43
     pdf.set_fill_color(*BG_LIGHT)
     pdf.set_draw_color(*BORDER)
     pdf.rect(MARGIN, y_box, CONTENT_W, box_h, "DF")
@@ -165,8 +165,7 @@ def generate_ja(qr_path):
     items = [
         "かざすだけで声が届く——温もりも抑揚もそのまま（最大30秒）",
         "サービス終了で消えない——スマホだけでいつでも再生",
-        "印刷対応・自社サービスへの組み込み自由",
-        "セットアップページでQRシール1枚からカスタム展開（スタンプラリー・観光・イベント）",
+        "QRシール1枚から導入——印刷・組み込み自由、観光・施設・イベントに",
         "無料で今すぐ体験 → tokistorage.github.io/qr/",
     ]
     pdf.set_xy(MARGIN + 6, y_box + 4)
@@ -350,7 +349,7 @@ def generate_en(qr_path):
     pdf.section_title("TokiQR \u2014 Voice Encoded in a QR Code")
 
     y_box = pdf.get_y()
-    box_h = 50
+    box_h = 43
     pdf.set_fill_color(*BG_LIGHT)
     pdf.set_draw_color(*BORDER)
     pdf.rect(MARGIN, y_box, CONTENT_W, box_h, "DF")
@@ -358,8 +357,7 @@ def generate_en(qr_path):
     items = [
         "Just scan and hear their voice \u2014 warmth, tone, personality intact (up to 30 sec)",
         "No service shutdown risk \u2014 plays on any smartphone, anytime, anywhere",
-        "Print-ready \u00b7 free to integrate into your own service",
-        "Setup page: deploy from a single QR sticker (stamp rallies, tourism, events)",
+        "Deploy from a single QR sticker \u2014 print-ready, integration-friendly, for tourism, venues & events",
         "Try it free now \u2192 tokistorage.github.io/qr/",
     ]
     pdf.set_xy(MARGIN + 6, y_box + 4)
