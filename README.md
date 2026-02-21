@@ -26,7 +26,7 @@ TokiStorage は、人間の声・画像・テキストを三つの独立した�
 ## Tech Stack
 
 - **Hosting**: GitHub Pages (static site)
-- **Fonts**: Shippori Mincho + Zen Kaku Gothic New (Google Fonts)
+- **Fonts**: System fonts (Hiragino Mincho / Yu Gothic)
 - **SEO**: OGP, JSON-LD, hreflang, sitemap.xml, llms.txt
 - **Analytics**: Cloudflare Web Analytics
 - **CI**: GitHub Actions (auto-merge, deploy-notify, essay-sync)

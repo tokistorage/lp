@@ -7,11 +7,7 @@
     <link rel="apple-touch-icon" sizes="180x180" href="asset/apple-touch-icon.png">
     <title>外部依存性を増やさない | トキストレージ</title>
     <meta name="robots" content="index, follow">
-    <meta name="description" content="Google Analytics、YouTube、NotebookLM、OpenAI TTS——導入できるサービスは無数にある。だが、依存先が増えるたびに壊れるポイントも増える。やれることをやらない選択が、1000年の持続性を守る。">
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Shippori+Mincho:wght@400;500;600;700&family=Zen+Kaku+Gothic+New:wght@300;400;500;700&display=swap" rel="stylesheet">
-    <style>
+    <meta name="description" content="Google Analytics、YouTube、NotebookLM、OpenAI TTS——導入できるサービスは無数にある。だが、依存先が増えるたびに壊れるポイントも増える。やれることをやらない選択が、1000年の持続性を守る。">    <style>
         :root {
             --toki-blue: #2563EB;
             --toki-blue-dark: #1D4ED8;
@@ -22,8 +18,8 @@
             --text-secondary: #475569;
             --text-muted: #94A3B8;
             --border: #E2E8F0;
-            --font-display: 'Shippori Mincho', serif;
-            --font-body: 'Zen Kaku Gothic New', sans-serif;
+            --font-display: 'Hiragino Mincho ProN', 'Yu Mincho', serif;
+            --font-body: 'Hiragino Kaku Gothic ProN', 'Yu Gothic', 'Meiryo', sans-serif;
         }
         * { margin: 0; padding: 0; box-sizing: border-box; }
         html { scroll-behavior: smooth; }
@@ -149,12 +145,11 @@
         <ul>
             <li><strong>GitHub Pages</strong> — ホスティング。サイトの存在そのもの</li>
             <li><strong>Cloudflare Web Analytics</strong> — アクセス解析。Cookie不使用、プライバシー重視</li>
-            <li><strong>Google Fonts</strong> — Webフォント配信（Shippori Mincho、Zen Kaku Gothic New）</li>
             <li><strong>Cloudflare Workers + Google Apps Script</strong> — お問い合わせフォーム・注文フォームの送信</li>
             <li><strong>Wise API</strong> — 国際決済。Webhook経由で入金を自動検知し、注文ステータスを自動更新</li>
         </ul>
 
-        <p>これが全部だ。いずれも無料枠の範囲内で動いている（Wiseの手数料は送金額に対する従量課金であり、月額固定費はゼロ）。どれかが停止しても、サイトのコア機能——エッセイの表示とQRコードの生成・再生——は壊れない。Google Fontsが落ちればフォントがシステムフォントに戻り、Cloudflareが落ちればアクセス解析が止まる。Wiseが落ちれば手動で入金確認すればいい。だが、コンテンツは届く。</p>
+        <p>これが全部だ。いずれも無料枠の範囲内で動いている（Wiseの手数料は送金額に対する従量課金であり、月額固定費はゼロ）。どれかが停止しても、サイトのコア機能——エッセイの表示とQRコードの生成・再生——は壊れない。Cloudflareが落ちればアクセス解析が止まる。Wiseが落ちれば手動で入金確認すればいい。だが、コンテンツは届く。フォントはシステムフォント（Hiragino Mincho / Yu Gothic）を使っており、外部配信に依存しない。</p>
 
         <p>この「壊れても致命的にならない」構造が、依存先を選ぶ基準だ。</p>
 
@@ -255,7 +250,7 @@
 
         <p><strong>問い1：それが止まったとき、コンテンツは届くか？</strong></p>
 
-        <p>Google Fontsが停止しても、テキストは読める。Cloudflare Analyticsが停止しても、ページは表示される。だがFirebaseが停止したら？ Stripeが停止したら？ そのサービスの停止がコンテンツの到達を妨げるなら、依存してはいけない。</p>
+        <p>Cloudflare Analyticsが停止しても、ページは表示される。Wiseが停止しても、手動で入金確認すればいい。だがFirebaseが停止したら？ データベースに依存していたら？ そのサービスの停止がコンテンツの到達を妨げるなら、依存してはいけない。</p>
 
         <p><strong>問い2：無料枠が消えたとき、支払い続けられるか？</strong></p>
 
@@ -280,7 +275,7 @@
 
         <p>だが、体験を増やすたびに、依存先も増える。依存先が増えるたびに、どこかが壊れたときにサイト全体が劣化するリスクが増える。そして「壊れた箇所を直す」という運用負荷が発生する。運用負荷は、ランニングコストの別名だ。</p>
 
-        <p>金銭的コストがゼロでも、外部サービスのAPI仕様変更に追従するための時間的コストは発生する。YouTube埋め込みのiframeパラメータが変わった。Google Fontsのサブセット仕様が変わった。Cloudflareのスクリプトタグが変わった。これらは実際に起きることだ。依存先が12個あれば、年に数回はどこかが変わる。</p>
+        <p>金銭的コストがゼロでも、外部サービスのAPI仕様変更に追従するための時間的コストは発生する。YouTube埋め込みのiframeパラメータが変わった。Cloudflareのスクリプトタグが変わった。WiseのWebhookフォーマットが変わった。これらは実際に起きることだ。依存先が12個あれば、年に数回はどこかが変わる。</p>
 
         <h2>5. やらない選択の積み重ね</h2>
 
@@ -304,13 +299,13 @@
 
         <h2>6. 例外の条件</h2>
 
-        <p>すべての外部サービスを拒絶しているわけではない。現に、GitHub Pages、Cloudflare、Google Fontsには依存している。例外を認める条件がある。</p>
+        <p>すべての外部サービスを拒絶しているわけではない。現に、GitHub Pages、Cloudflare、Wiseには依存している。例外を認める条件がある。</p>
 
-        <p><strong>条件1：停止してもコンテンツが届く。</strong>Google Fontsが落ちても、テキストはシステムフォントで読める。Cloudflareが落ちても、ページは表示される。「劣化するが死なない」依存だけが許容される。</p>
+        <p><strong>条件1：停止してもコンテンツが届く。</strong>Cloudflareが落ちてもページは表示される。Wiseが落ちても手動で入金を確認すればいい。フォントは外部配信ではなくシステムフォントだから、ネットワーク障害にも影響されない。「劣化するが死なない」依存だけが許容される。</p>
 
-        <p><strong>条件2：無料であり続ける蓋然性が高い。</strong>GitHub PagesはMicrosoftのインフラ、CloudflareはWeb全体のインフラ、Google FontsはGoogleのエコシステム。いずれもビジネスモデル上、無料を維持する動機がある。</p>
+        <p><strong>条件2：無料であり続ける蓋然性が高い。</strong>GitHub PagesはMicrosoftのインフラ、CloudflareはWeb全体のインフラ。いずれもビジネスモデル上、無料を維持する動機がある。Wiseは従量課金だが、月額固定費はゼロだ。</p>
 
-        <p><strong>条件3：移行先が存在する。</strong>GitHub Pagesが終了しても、静的HTMLはどこにでもホスティングできる。Google Fontsが終了しても、フォントファイルをセルフホストできる。依存先が消えたとき、移行できないものには依存しない。</p>
+        <p><strong>条件3：移行先が存在する。</strong>GitHub Pagesが終了しても、静的HTMLはどこにでもホスティングできる。Wiseが終了しても、銀行振込に戻せばいい。依存先が消えたとき、移行できないものには依存しない。</p>
 
         <p>この三条件をすべて満たすものだけが、依存先として許容される。逆に、一つでも満たさないものは、どれだけ便利でも採用しない。</p>
 
