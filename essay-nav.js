@@ -134,6 +134,7 @@
     { id: 'tech-roadmap', ja: '技術ロードマップ', en: 'Technology Roadmap', date: '2026-02-20' },
     { id: 'patent-departure', ja: '特許からの離脱', en: 'Departure from Patents', date: '2026-02-21' },
     { id: 'storage-strategy', ja: 'ストレージ戦略', en: 'Storage Strategy', date: '2026-02-20' },
+    { id: 'safari-webp', ja: 'SafariとWebPの断層', en: 'The Safari-WebP Fault Line', date: '2026-02-21' },
 
     // ── メタ視点 ──
     { id: 'preserving-words', ja: 'ことばを残す', en: 'Preserving Words', date: '2026-02-19' },
@@ -148,6 +149,7 @@
   // LATEST_COUNT で表示件数を制御
   const LATEST_COUNT = 5;
   const latestEssayIds = [
+    'safari-webp',
     'approval-affinity',
     'influence-boundaries',
     'patent-departure',
@@ -289,6 +291,7 @@
     'tech-roadmap':           ['migration', 'legacy', 'backup-rule', 'uptime', 'burn-rate-zero'],
     'patent-departure':       ['openness', 'storage-strategy', 'uniform-pricing', 'free-strategy', 'departure'],
     'storage-strategy':       ['backup-rule', 'migration', 'uptime', 'legacy', 'device-dependency'],
+    'safari-webp':            ['device-dependency', 'image-clarity', 'vibe-coding', 'poc', 'uptime'],
     // ── メタ視点 ──
     'preserving-words':       ['why-essays', 'akashic-record', 'what-to-leave', 'narrative-trust', 'openness'],
     'why-essays':             ['preserving-words', 'brochure-essay', 'narrative-trust', 'openness', 'erasure'],
