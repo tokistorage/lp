@@ -1,0 +1,278 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" type="image/png" sizes="32x32" href="asset/favicon-32.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="asset/apple-touch-icon.png">
+    <title>見つけてもらうための設計 | トキストレージ</title>
+    <meta name="robots" content="index, follow">
+    <meta name="description" content="500ページのサイトがnoindexで検索エンジンから遮断されていた。SEO、OGP、構造化データ、hreflang、llms.txt——発見性をゼロから設計した記録。">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Shippori+Mincho:wght@400;500;600;700&family=Zen+Kaku+Gothic+New:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --toki-blue: #2563EB;
+            --toki-blue-dark: #1D4ED8;
+            --toki-blue-pale: #EFF6FF;
+            --accent-blue: #3B82F6;
+            --bg-white: #FFFFFF;
+            --text-primary: #1E293B;
+            --text-secondary: #475569;
+            --text-muted: #94A3B8;
+            --border: #E2E8F0;
+            --font-display: 'Shippori Mincho', serif;
+            --font-body: 'Zen Kaku Gothic New', sans-serif;
+        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        html { scroll-behavior: smooth; }
+        body { font-family: var(--font-body); font-weight: 400; background: var(--bg-white); color: var(--text-primary); line-height: 2; font-size: 16px; }
+
+        .article-nav { position: fixed; top: 0; left: 0; right: 0; z-index: 1000; background: rgba(255,255,255,0.95); backdrop-filter: blur(12px); border-bottom: 1px solid var(--border); padding: 0.6rem 1.2rem; display: flex; align-items: center; justify-content: space-between; gap: 1rem; }
+        .article-nav .nav-brand { font-family: var(--font-display); font-size: 0.9rem; font-weight: 600; color: var(--toki-blue); text-decoration: none; white-space: nowrap; }
+        .article-nav .nav-brand::before { content: ''; display: inline-block; width: 20px; height: 20px; background: url('asset/tokistorage-icon-512.png') no-repeat center / contain; vertical-align: -3px; margin-right: 5px; }
+        .article-nav .nav-right { display: flex; align-items: center; gap: 1rem; }
+        .article-nav .nav-label { font-size: 0.6rem; color: var(--text-muted); letter-spacing: 0.08em; }
+        .article-nav .lang-switch { font-size: 0.75rem; color: var(--toki-blue); text-decoration: none; padding: 0.3rem 0.6rem; border: 1px solid var(--toki-blue); border-radius: 4px; }
+        .article-nav .lang-switch:hover { background: var(--toki-blue); color: #fff; }
+
+        .article-container { max-width: 680px; margin: 0 auto; padding: 7rem 2rem 4rem; }
+        .article-header { margin-bottom: 3rem; padding-bottom: 2rem; border-bottom: 1px solid var(--border); }
+        .article-category { font-size: 0.7rem; color: var(--toki-blue); letter-spacing: 0.15em; margin-bottom: 1rem; }
+        .article-header h1 { font-family: var(--font-display); font-size: 1.8rem; font-weight: 700; line-height: 1.5; margin-bottom: 1.5rem; }
+        .article-subtitle { font-size: 0.95rem; color: var(--text-secondary); line-height: 1.9; }
+
+        .article-content h2 { font-family: var(--font-display); font-size: 1.3rem; font-weight: 600; margin: 3rem 0 1.5rem; padding-bottom: 0.5rem; border-bottom: 2px solid var(--toki-blue-pale); }
+        .article-content h3 { font-family: var(--font-display); font-size: 1.1rem; font-weight: 600; margin: 2rem 0 1rem; color: var(--toki-blue-dark); }
+        .article-content p { margin-bottom: 1.5rem; text-align: justify; }
+        .article-content blockquote { border-left: 3px solid var(--toki-blue); padding-left: 1.5rem; margin: 2rem 0; font-family: var(--font-display); color: var(--text-secondary); }
+        .article-content ul { margin: 1.5rem 0; padding-left: 1.5rem; }
+        .article-content li { margin-bottom: 0.75rem; }
+
+        .core-message { background: var(--toki-blue-pale); border-left: 4px solid var(--toki-blue); padding: 1.5rem; margin: 2rem 0; font-size: 0.95rem; line-height: 1.8; }
+        .key-point { background: linear-gradient(135deg, var(--toki-blue-pale) 0%, #fff 100%); border: 1px solid var(--accent-blue); border-radius: 8px; padding: 1.5rem; margin: 2rem 0; text-align: center; }
+        .key-point p { font-family: var(--font-display); font-size: 1.1rem; color: var(--toki-blue-dark); margin: 0; }
+
+        .article-footer { margin-top: 4rem; padding-top: 2rem; border-top: 1px solid var(--border); text-align: center; }
+        .article-footer p { font-size: 0.8rem; color: var(--text-muted); margin-bottom: 1rem; }
+        .article-footer a { color: var(--toki-blue); text-decoration: none; }
+        .article-footer a:hover { text-decoration: underline; }
+
+        @media (max-width: 768px) {
+            .article-container { padding: 6rem 1.2rem 3rem; }
+            .article-header h1 { font-size: 1.5rem; }
+            .article-nav .nav-label { display: none; }
+        }
+        @media print { .article-nav { display: none; } .article-container { padding-top: 2rem; } }
+    </style>
+    <link rel="stylesheet" href="contact-form.css">
+    <meta property="og:type" content="article">
+    <meta property="og:title" content="見つけてもらうための設計 | トキストレージ">
+    <meta property="og:description" content="500ページのサイトがnoindexで検索エンジンから遮断されていた。SEO、OGP、構造化データ、hreflang、llms.txt——発見性をゼロから設計した記録。">
+    <meta property="og:url" content="https://tokistorage.github.io/lp/seo-aio.html">
+    <meta property="og:site_name" content="トキストレージ">
+    <meta name="twitter:card" content="summary">
+    <meta name="twitter:title" content="見つけてもらうための設計 | トキストレージ">
+    <meta name="twitter:description" content="500ページのサイトがnoindexで検索エンジンから遮断されていた。SEO、OGP、構造化データ、hreflang、llms.txt——発見性をゼロから設計した記録。">
+    <meta property="og:image" content="https://tokistorage.github.io/lp/asset/tokistorage-icon-512.png">
+    <meta property="og:image:width" content="512">
+    <meta property="og:image:height" content="512">
+    <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Article",
+  "headline": "見つけてもらうための設計",
+  "author": {
+    "@type": "Person",
+    "name": "Takuya Sato",
+    "url": "https://tokistorage.github.io/lp/profile.html"
+  },
+  "publisher": {
+    "@type": "Organization",
+    "name": "TokiStorage",
+    "url": "https://tokistorage.github.io/lp",
+    "logo": {
+      "@type": "ImageObject",
+      "url": "https://tokistorage.github.io/lp/asset/tokistorage-icon-512.png"
+    }
+  },
+  "url": "https://tokistorage.github.io/lp/seo-aio.html",
+  "inLanguage": "ja",
+  "mainEntityOfPage": "https://tokistorage.github.io/lp/seo-aio.html",
+  "description": "500ページのサイトがnoindexで検索エンジンから遮断されていた。SEO、OGP、構造化データ、hreflang、llms.txt——発見性をゼロから設計した記録。"
+}
+    </script>
+    <link rel="canonical" href="https://tokistorage.github.io/lp/seo-aio.html">
+</head>
+<body>
+
+<nav class="article-nav">
+    <a href="index.html" class="nav-brand">トキストレージ</a>
+    <div class="nav-right">
+        <span class="nav-label">技術・設計 / Technology</span>
+    </div>
+</nav>
+
+<main class="article-container">
+
+    <header class="article-header">
+        <p class="article-category">ESSAY &mdash; 技術・設計</p>
+        <h1>見つけてもらうための設計<br><span style="font-size: 0.6em; font-weight: 400; color: var(--text-secondary);">&mdash;&mdash; SEOゼロから発見性を積み上げた記録</span></h1>
+        <p class="article-subtitle">
+            500ページのサイトが、検索エンジンから完全に遮断されていた。<br>
+            noindexの解除から始まり、OGP、構造化データ、hreflang、<br>
+            そしてAI検索エンジン向けのllms.txt——発見性の全層を一日で構築した。
+        </p>
+    </header>
+
+    <article class="article-content">
+
+        <div class="core-message">
+            <strong>この記事で言いたいこと：</strong>作ることと見つけてもらうことは、まったく異なる設計行為だ。500ページを書いても、noindexが1行あれば誰にも届かない。発見性は機能ではなく、インフラだ。
+        </div>
+
+        <h2>1. 見えない壁</h2>
+
+        <p>トキストレージのLPサイトには、114本のエッセイ、100以上のユースケース、技術資料、ニュースレター——合計500ページ以上のコンテンツがある。すべてGitHub Pagesで静的に配信されている。</p>
+
+        <p>だが、そのすべてのページに<code>&lt;meta name="robots" content="noindex, nofollow"&gt;</code>が入っていた。</p>
+
+        <p>開発初期に入れたまま、そのままになっていた。検索エンジンのクローラは全ページを丁寧に無視する。Googleで「トキストレージ エッセイ」と検索しても、1件もヒットしない。500ページが、インターネット上に存在しないのと同じ状態だった。</p>
+
+        <p>作ることに没頭していた。ページが増えるたびにコンテンツは充実し、リンク構造は洗練され、エッセイ間のクロスリンクも整備された。だが発見性という層だけが、最初の1行のまま凍結していた。</p>
+
+        <blockquote>
+            500ページを書くよりも、1行のnoindexを消すほうが、発見性への貢献は大きい。
+        </blockquote>
+
+        <h2>2. 基盤層——noindex解除とOGP</h2>
+
+        <p>最初にやったのは、全ページの<code>noindex, nofollow</code>を<code>index, follow</code>に変更することだ。ただし2つの例外がある。職務経歴書と履歴書は個人情報を含むため、noindexのまま残した。</p>
+
+        <p>同時にOpen Graph Protocol（OGP）タグを全ページに追加した。OGPは、SNSやメッセージアプリでURLを共有したときに表示されるタイトル・説明文・画像を制御するメタデータだ。<code>og:title</code>、<code>og:description</code>、<code>og:url</code>、<code>og:type</code>、<code>og:site_name</code>。Twitter Cardの<code>twitter:card</code>、<code>twitter:title</code>、<code>twitter:description</code>。</p>
+
+        <p>499ページに一括で追加した。Pythonスクリプトで各ページの<code>&lt;title&gt;</code>タグと<code>&lt;meta name="description"&gt;</code>から値を取得し、OGPタグに変換する。手作業では2〜3ページが限界だが、スクリプトなら499ページを数秒で処理できる。</p>
+
+        <p><code>sitemap.xml</code>と<code>robots.txt</code>も作成した。サイトマップは501のURLを含む。<code>robots.txt</code>はクローラにサイトマップの場所を伝える。Google Search Consoleに登録し、サイトマップを送信した。</p>
+
+        <p>これで、Googleの検索結果にページが表示されるための最低条件が揃った。</p>
+
+        <h2>3. 構造化データ——JSON-LD</h2>
+
+        <p>次に、JSON-LD形式の構造化データを全ページに埋め込んだ。検索エンジンがページの意味構造を機械的に理解するためのメタデータだ。</p>
+
+        <p>エッセイページには<code>Article</code>スキーマを適用した。<code>headline</code>（見出し）、<code>author</code>（著者名とプロフィールURL）、<code>publisher</code>（組織名とロゴ）、<code>inLanguage</code>（言語）、<code>description</code>（説明文）。Googleの検索結果でリッチスニペットとして表示される可能性が生まれる。</p>
+
+        <p>非エッセイページには<code>WebPage</code>スキーマを適用した。シンプルなページ名、URL、言語情報。</p>
+
+        <p>ここでも499ページをスクリプトで一括処理した。エッセイかどうかの判定は、ファイル名とページ内の<code>.article-content</code>クラスの存在で行う。</p>
+
+        <blockquote>
+            構造化データは、検索エンジンに「このページは何か」を説明する翻訳層だ。
+        </blockquote>
+
+        <h2>4. hreflang——言語の橋</h2>
+
+        <p>トキストレージのサイトは日英バイリンガルだ。<code>index.html</code>と<code>index-en.html</code>、<code>safari-webp.html</code>は日本語のみ、<code>usecase-hula-en.html</code>は英語のみ——ページによって日英ペアがあったりなかったりする。</p>
+
+        <p>日英ペアが存在する158組（316ページ）には<code>hreflang</code>タグを追加した。</p>
+
+        <p><code>&lt;link rel="alternate" hreflang="ja" href="...index.html"&gt;</code>と<code>&lt;link rel="alternate" hreflang="en" href="...index-en.html"&gt;</code>。さらに<code>hreflang="x-default"</code>で日本語版をデフォルトに指定する。これにより、Googleは日本語で検索しているユーザーには日本語版を、英語のユーザーには英語版を表示するようになる。</p>
+
+        <p>同時に、全ページに<code>canonical</code>タグを追加した。GitHub Pagesは末尾スラッシュの有無で同じページに複数のURLが生まれうる。canonicalタグは「このURLが正式な住所だ」と検索エンジンに伝え、重複コンテンツの問題を防ぐ。</p>
+
+        <h2>5. AI検索への対応——llms.txt</h2>
+
+        <p>ここまでが人間の検索エンジンへの対応だ。だが2026年の検索ランドスケープは、もはやGoogleだけではない。</p>
+
+        <p>Perplexity、ChatGPT、Google AI Overviews——AIが直接ウェブを読み、回答を生成する時代になっている。これらのAIクローラは従来のSEOとは異なる発見経路を持つ。<code>llms.txt</code>は、この新しい経路に対応するためのファイルだ。</p>
+
+        <p>概念は単純だ。サイトのルートに<code>llms.txt</code>を置き、サイトの概要、主要ページ、技術的な事実を平文で記述する。AIクローラはHTMLを解析するよりも、この平文ファイルから効率的にサイトの全体像を把握できる。</p>
+
+        <p>書いた内容は、トキストレージの三層分散保管の説明、TokiQRのCodec2 WASM技術、主要ページへのURL、キュレーションした技術エッセイとビジネスエッセイのリスト、そしてKey Facts——Codec2の450bps、QRコード バージョン40の2,953バイト制限、NDL納本の受付番号。</p>
+
+        <p>AIに自社を説明するための、もう一つのフロントドアだ。</p>
+
+        <blockquote>
+            llms.txtは、AIへの自己紹介状だ。<br>
+            HTMLの構造を解析させるのではなく、「私たちはこれです」と平文で伝える。
+        </blockquote>
+
+        <h2>6. パフォーマンス——Core Web Vitals</h2>
+
+        <p>SEOのもう一つの柱は、ページの表示速度だ。Googleは Core Web Vitals——LCP（最大コンテンツ描画）、CLS（累積レイアウトシフト）、INP（次のペイントまでのインタラクション）——をランキング要因に組み込んでいる。</p>
+
+        <p>コードを分析すると、<code>contact-form.js</code>と<code>tracker.js</code>に<code>defer</code>属性がなかった。ブラウザはこれらのスクリプトをダウンロードし実行するまで、ページの描画をブロックする。</p>
+
+        <p>475ページのスクリプトタグに<code>defer</code>を追加した。ブラウザはDOMの構築と並行してスクリプトをダウンロードし、DOM構築後に実行する。ユーザーが最初のコンテンツを見るまでの時間が短くなる。</p>
+
+        <p>あわせて、ロゴ画像の空の<code>alt</code>属性を<code>alt="TokiStorage"</code>に修正し、FAQアコーディオンのボタンに<code>aria-expanded</code>属性を追加した。アクセシビリティの改善は、SEOスコアにも直結する。</p>
+
+        <h2>7. 作ることと見つけてもらうこと</h2>
+
+        <p>この一連の作業で気づいたのは、「作ること」と「見つけてもらうこと」は完全に異なるレイヤーの設計行為だということだ。</p>
+
+        <p>エッセイを書くことは楽しい。アーキテクチャを設計するのも楽しい。コードを書き、ページを公開し、リンク構造を整備する。だがそのすべてが、<code>noindex</code>の1行によって無効化されていた。</p>
+
+        <p>発見性は、コンテンツの「品質」とは独立した設計対象だ。どれほど優れたエッセイを書いても、OGPタグがなければSNSで共有されたときにただのURLとして表示される。構造化データがなければ、検索結果でリッチスニペットにならない。hreflangがなければ、英語ユーザーに日本語ページが表示される。</p>
+
+        <p>これはTokiQRの設計でも経験した構造だ。音声をCodec2で圧縮し、QRコードに埋め込み、ブラウザでデコードする——その技術的な設計がどれほど精緻でも、Safariが静かにWebPをJPEGにフォールバックしていれば画質は半分になる。問題は常に、見えにくい場所に横たわっている。</p>
+
+        <blockquote>
+            発見性は機能ではない。インフラだ。<br>
+            電気が通っていなければ、どんな家電も動かない。
+        </blockquote>
+
+        <h2>8. ソロ開発とSEOの関係</h2>
+
+        <p>なぜnoindexが放置されていたのか。答えは単純だ。ソロ開発では、プロダクトを作る人と、プロダクトを届ける人が同じだからだ。</p>
+
+        <p>組織には、開発チーム、マーケティングチーム、SEO担当がいる。それぞれが専門領域に集中し、見落としを補い合う。ソロ開発にはそのフィードバックがない。作ることに没頭すると、届けることを忘れる。届けることに集中すると、作ることが止まる。</p>
+
+        <p>だが、ソロ開発にはソロ開発の利点がある。499ページの一括更新を、合議なく、承認プロセスなく、即座に実行できる。SEOの施策を思い立ってから全ページにデプロイされるまでの時間が、組織では数週間、ソロでは数時間だ。</p>
+
+        <p>AIとの協働がこのスピードを可能にしている。Pythonスクリプトの生成、全ページの解析、パターンの検出と修正——人間がやれば数日かかる作業を、AIが数分で処理する。ソロ開発者はAIの手を借りて、組織のスケールに匹敵する変更を実行できる。</p>
+
+        <p>バイブコーディングの応用だ。「noindexを全ページで解除して、OGPタグを追加して」と伝えれば、AIは499ページの構造を分析し、適切な箇所にタグを挿入するスクリプトを書く。hreflangのペアリングも、JSON-LDのスキーマ選択も、同じ流れで処理される。</p>
+
+        <h2>9. 発見の多層構造</h2>
+
+        <p>振り返ると、発見性には明確なレイヤー構造がある。</p>
+
+        <ul>
+            <li><strong>存在許可</strong>——<code>noindex</code>の解除。検索エンジンに「来ていいよ」と伝える。</li>
+            <li><strong>自己紹介</strong>——OGPタグ、構造化データ。「私はこういうページです」と伝える。</li>
+            <li><strong>住所整理</strong>——canonical、sitemap.xml。「正式な住所はここです」と伝える。</li>
+            <li><strong>言語案内</strong>——hreflang。「あなたの言語にはこちらを」と伝える。</li>
+            <li><strong>AI対応</strong>——llms.txt、JSON-LD。「AIのあなたにはこれを読んで」と伝える。</li>
+            <li><strong>快適さ</strong>——Core Web Vitals。「速く、正しく表示します」と伝える。</li>
+        </ul>
+
+        <p>どの層が欠けても、発見性は損なわれる。noindexがあればすべてが無効。OGPがなければSNS共有が弱い。hreflangがなければバイリンガルの価値が半減する。llms.txtがなければ、AI時代の検索に対応できない。</p>
+
+        <p>これは、トキストレージの三層分散保管——物理（石英ガラス）、国家（国立国会図書館）、デジタル（GitHub）——と同じ構造だ。保管にも発見にも、冗長性と多層性が必要になる。一つの層に依存すれば、その層が崩れたときにすべてを失う。</p>
+
+        <div class="core-message">
+            作ったものが世界に存在するためには、作ること以外の設計が要る。noindexの1行が500ページを無にし、llms.txtの1ファイルがAIへの扉を開く。発見性はコンテンツの品質とは独立した設計対象であり、多層的に構築しなければ、どこか一つの欠落で全体が沈黙する。
+        </div>
+
+        <div class="key-point">
+            <p>500ページを書くよりも、見つけてもらう設計を1日で積むほうが、<br>世界への到達距離は大きく変わる。<br>作ることと届けることは、対等な設計行為だ。</p>
+        </div>
+
+    </article>
+
+    <footer class="article-footer">
+        <p id="essay-nav-links"></p>
+        <p style="margin-top: 2rem; font-size: 0.75rem;">&copy; 2026 TokiStorage</p>
+    </footer>
+
+</main>
+
+<script src="contact-form.js" defer></script>
+<script src="essay-tts.js?v=20260220"></script>
+<script src="essay-nav.js?v=20260222"></script>
+<script src="tracker.js" defer></script>
+</body>
+</html>
