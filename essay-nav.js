@@ -20,6 +20,7 @@
     { id: 'satiation', ja: '飽きと変容', en: 'Satiation & Transformation', date: '2026-02-14' },
     { id: 'transformation-journey', ja: '変容の旅路', en: 'Transformation Journey', date: '2026-02-18' },
     { id: 'influence-boundaries', ja: '影響力の外側', en: 'Beyond the Boundaries of Influence', date: '2026-02-21' },
+    { id: 'approval-affinity', ja: '承認と親和の違い', en: 'Approval vs. Affinity', date: '2026-02-21' },
 
     // ── 人生の節目 ──
     { id: 'lifecycle', ja: '生老病死', en: 'Life Cycle', date: '2026-02-13' },
@@ -147,9 +148,9 @@
   // LATEST_COUNT で表示件数を制御
   const LATEST_COUNT = 5;
   const latestEssayIds = [
+    'approval-affinity',
     'influence-boundaries',
     'patent-departure',
-    'uniform-pricing',
     'storage-strategy',
     'playground-gift',
     'device-dependency',
