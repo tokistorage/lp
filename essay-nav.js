@@ -31,6 +31,7 @@
     { id: 'lifestyle', ja: '生き方', en: 'Lifestyle', date: '2026-02-13' },
     { id: 'independence', ja: 'オフグリッド', en: 'Off-Grid', date: '2026-02-13' },
     { id: 'what-to-leave', ja: '人が残したいもの', en: 'What to Leave Behind', date: '2026-02-19' },
+    { id: 'brides-letter', ja: '花嫁の手紙', en: "The Bride's Letter", date: '2026-02-23' },
 
     // ── 信仰・思想 ──
     { id: 'religion', ja: '宗教・神話', en: 'Religion', date: '2026-02-13' },
@@ -159,6 +160,7 @@
   // LATEST_COUNT で表示件数を制御
   const LATEST_COUNT = 5;
   const latestEssayIds = [
+    'brides-letter',
     'wedding-partnership',
     'try-and-revert',
     'prime-location',
@@ -214,6 +216,7 @@
     'lifestyle':              ['independence', 'solitude', 'burn-rate-zero', 'post-nomad', 'backcasting'],
     'independence':           ['lifestyle', 'burn-rate-zero', 'post-nomad', 'ecology', 'platform'],
     'what-to-leave':          ['lifecycle', 'preserving-words', 'ceremony', 'shiseikan', 'legacy'],
+    'brides-letter':          ['ceremony', 'wedding-partnership', 'what-to-leave', 'recital-record', 'commemorative-photo'],
     // ── 信仰・思想 ──
     'religion':               ['shiseikan', 'philosophy', 'ceremony', 'existentialism', 'peace'],
     'existentialism':         ['philosophy', 'religion', 'dimension', 'shiseikan', 'burn-rate-zero'],

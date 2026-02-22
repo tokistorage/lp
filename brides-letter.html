@@ -1,0 +1,262 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" type="image/png" sizes="32x32" href="asset/favicon-32.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="asset/apple-touch-icon.png">
+    <title>花嫁の手紙 | トキストレージ</title>
+    <meta name="robots" content="index, follow">
+    <meta name="description" content="披露宴で花嫁が両親に宛てて読んだ手紙。その30秒の声がQRコードに刻まれ、UVラミネートで封をされた。数年後、母親が台所でそのカードを見つけ、娘の声をもう一度聴く。">    <style>
+        :root {
+            --toki-blue: #2563EB;
+            --toki-blue-dark: #1D4ED8;
+            --toki-blue-pale: #EFF6FF;
+            --accent-blue: #3B82F6;
+            --bg-white: #FFFFFF;
+            --text-primary: #1E293B;
+            --text-secondary: #475569;
+            --text-muted: #94A3B8;
+            --border: #E2E8F0;
+            --font-display: 'Hiragino Mincho ProN', 'Yu Mincho', serif;
+            --font-body: 'Hiragino Kaku Gothic ProN', 'Yu Gothic', 'Meiryo', sans-serif;
+        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        html { scroll-behavior: smooth; }
+        body { font-family: var(--font-body); font-weight: 400; background: var(--bg-white); color: var(--text-primary); line-height: 2; font-size: 16px; }
+
+        .article-nav { position: fixed; top: 0; left: 0; right: 0; z-index: 1000; background: rgba(255,255,255,0.95); backdrop-filter: blur(12px); border-bottom: 1px solid var(--border); padding: 0.6rem 1.2rem; display: flex; align-items: center; justify-content: space-between; gap: 1rem; }
+        .article-nav .nav-brand { font-family: var(--font-display); font-size: 0.9rem; font-weight: 600; color: var(--toki-blue); text-decoration: none; white-space: nowrap; }
+        .article-nav .nav-brand::before { content: ''; display: inline-block; width: 20px; height: 20px; background: url('asset/tokistorage-icon-512.png') no-repeat center / contain; vertical-align: -3px; margin-right: 5px; }
+        .article-nav .nav-right { display: flex; align-items: center; gap: 1rem; }
+        .article-nav .nav-label { font-size: 0.6rem; color: var(--text-muted); letter-spacing: 0.08em; }
+        .article-nav .lang-switch { font-size: 0.75rem; color: var(--toki-blue); text-decoration: none; padding: 0.3rem 0.6rem; border: 1px solid var(--toki-blue); border-radius: 4px; }
+        .article-nav .lang-switch:hover { background: var(--toki-blue); color: #fff; }
+
+        .article-container { max-width: 680px; margin: 0 auto; padding: 7rem 2rem 4rem; }
+        .article-header { margin-bottom: 3rem; padding-bottom: 2rem; border-bottom: 1px solid var(--border); }
+        .article-category { font-size: 0.7rem; color: var(--toki-blue); letter-spacing: 0.15em; margin-bottom: 1rem; }
+        .article-header h1 { font-family: var(--font-display); font-size: 1.8rem; font-weight: 700; line-height: 1.5; margin-bottom: 1.5rem; }
+        .article-subtitle { font-size: 0.95rem; color: var(--text-secondary); line-height: 1.9; }
+
+        .article-content h2 { font-family: var(--font-display); font-size: 1.3rem; font-weight: 600; margin: 3rem 0 1.5rem; padding-bottom: 0.5rem; border-bottom: 2px solid var(--toki-blue-pale); }
+        .article-content h3 { font-family: var(--font-display); font-size: 1.1rem; font-weight: 600; margin: 2rem 0 1rem; color: var(--toki-blue-dark); }
+        .article-content p { margin-bottom: 1.5rem; text-align: justify; }
+        .article-content blockquote { border-left: 3px solid var(--toki-blue); padding-left: 1.5rem; margin: 2rem 0; font-family: var(--font-display); color: var(--text-secondary); }
+        .article-content ul { margin: 1.5rem 0; padding-left: 1.5rem; }
+        .article-content li { margin-bottom: 0.75rem; }
+
+        .core-message { background: var(--toki-blue-pale); border-left: 4px solid var(--toki-blue); padding: 1.5rem; margin: 2rem 0; font-size: 0.95rem; line-height: 1.8; }
+        .key-point { background: linear-gradient(135deg, var(--toki-blue-pale) 0%, #fff 100%); border: 1px solid var(--accent-blue); border-radius: 8px; padding: 1.5rem; margin: 2rem 0; text-align: center; }
+        .key-point p { font-family: var(--font-display); font-size: 1.1rem; color: var(--toki-blue-dark); margin: 0; }
+
+        .article-footer { margin-top: 4rem; padding-top: 2rem; border-top: 1px solid var(--border); text-align: center; }
+        .article-footer p { font-size: 0.8rem; color: var(--text-muted); margin-bottom: 1rem; }
+        .article-footer a { color: var(--toki-blue); text-decoration: none; }
+        .article-footer a:hover { text-decoration: underline; }
+
+        @media (max-width: 768px) {
+            .article-container { padding: 6rem 1.2rem 3rem; }
+            .article-header h1 { font-size: 1.5rem; }
+            .article-nav .nav-label { display: none; }
+        }
+        @media print { .article-nav { display: none; } .article-container { padding-top: 2rem; } }
+    </style>
+    <link rel="stylesheet" href="contact-form.css">
+    <meta property="og:type" content="article">
+    <meta property="og:title" content="花嫁の手紙 | トキストレージ">
+    <meta property="og:description" content="披露宴で花嫁が両親に宛てて読んだ手紙。その30秒の声がQRコードに刻まれ、UVラミネートで封をされた。数年後、母親が台所でそのカードを見つけ、娘の声をもう一度聴く。">
+    <meta property="og:url" content="https://tokistorage.github.io/lp/brides-letter.html">
+    <meta property="og:site_name" content="トキストレージ">
+    <meta name="twitter:card" content="summary">
+    <meta name="twitter:title" content="花嫁の手紙 | トキストレージ">
+    <meta name="twitter:description" content="披露宴で花嫁が両親に宛てて読んだ手紙。その30秒の声がQRコードに刻まれ、UVラミネートで封をされた。数年後、母親が台所でそのカードを見つけ、娘の声をもう一度聴く。">
+    <meta property="og:image" content="https://tokistorage.github.io/lp/asset/tokistorage-icon-512.png">
+    <meta property="og:image:width" content="512">
+    <meta property="og:image:height" content="512">
+    <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Article",
+  "headline": "花嫁の手紙",
+  "author": {
+    "@type": "Person",
+    "name": "Takuya Sato",
+    "url": "https://tokistorage.github.io/lp/profile.html"
+  },
+  "publisher": {
+    "@type": "Organization",
+    "name": "TokiStorage",
+    "url": "https://tokistorage.github.io/lp",
+    "logo": {
+      "@type": "ImageObject",
+      "url": "https://tokistorage.github.io/lp/asset/tokistorage-icon-512.png"
+    }
+  },
+  "url": "https://tokistorage.github.io/lp/brides-letter.html",
+  "inLanguage": "ja",
+  "mainEntityOfPage": "https://tokistorage.github.io/lp/brides-letter.html",
+  "description": "披露宴で花嫁が両親に宛てて読んだ手紙。その30秒の声がQRコードに刻まれ、UVラミネートで封をされた。数年後、母親が台所でそのカードを見つけ、娘の声をもう一度聴く。"
+}
+    </script>
+    <link rel="alternate" hreflang="ja" href="https://tokistorage.github.io/lp/brides-letter.html">
+    <link rel="alternate" hreflang="en" href="https://tokistorage.github.io/lp/brides-letter-en.html">
+    <link rel="alternate" hreflang="x-default" href="https://tokistorage.github.io/lp/brides-letter.html">
+    <link rel="canonical" href="https://tokistorage.github.io/lp/brides-letter.html">
+</head>
+<body>
+
+<nav class="article-nav">
+    <a href="index.html" class="nav-brand">トキストレージ</a>
+    <div class="nav-right">
+        <span class="nav-label">人生の節目 / Life Milestones</span>
+        <a href="brides-letter-en.html" class="lang-switch">EN</a>
+    </div>
+</nav>
+
+<main class="article-container">
+
+    <header class="article-header">
+        <p class="article-category">ESSAY &mdash; 人生の節目</p>
+        <h1>花嫁の手紙<br><span style="font-size: 0.6em; font-weight: 400; color: var(--text-secondary);">&mdash;&mdash; 30秒の声が、ずっと残る</span></h1>
+        <p class="article-subtitle">
+            披露宴で読み上げた、両親への手紙。<br>
+            その声は30秒のQRコードに刻まれ、UVラミネートで封をされた。<br>
+            数年後、母親が台所の引き出しからそのカードを見つける。
+        </p>
+    </header>
+
+    <article class="article-content">
+
+        <div class="core-message">
+            <strong>この物語について：</strong>これはフィクションである。しかし、ここに描かれる技術はすべて実在する。QR1枚に最大30秒の声を刻む独自音声符号化技術、UVラミネートによる長期保存、スマートフォンをかざすだけの再生。トキストレージ ウェディングが届けたい体験を、一組の家族の物語として書いた。
+        </div>
+
+        <h2>1. 披露宴の朝</h2>
+
+        <p>六月の朝だった。梅雨の合間の、奇跡みたいに晴れた土曜日。</p>
+
+        <p>新婦控室の鏡の前で、彩花はメイクをしてもらいながら、膝の上の便箋をちらちら見ていた。手紙だ。両親に宛てた、披露宴で読む手紙。何度も書き直した。泣かないように短くしたつもりが、読み返すとやっぱり長い。削ると意味が変わる。足すと時間が足りない。結局、前の晩に四度目の清書をして、それでもまだ不安だった。</p>
+
+        <p>「手紙、ご用意できていますか」</p>
+
+        <p>ウェディングプランナーの女性が、柔らかい声で確認に来た。彩花はうなずく。</p>
+
+        <p>「お手紙を読まれるとき、お声を録音させていただくこともできます。QRコードにして、ご両親にお渡しするカードにお入れします」</p>
+
+        <p>彩花は一瞬きょとんとした。QRコードに声？　プランナーは名刺サイズのカードを見せてくれた。表面にはUVラミネートの光沢。裏面に小さなQRコード。スマートフォンをかざせば、そこに録音された声が流れるのだという。</p>
+
+        <p>「アプリのインストールは要りません。カメラで読み取るだけです」</p>
+
+        <p>彩花は便箋に目を落とした。この手紙は、読んだら終わりだと思っていた。両親の記憶に残ればいい、とだけ考えていた。でも、記憶は薄れる。あの日は感極まって泣いていた母が、十年後にどれだけ正確に娘の声を思い出せるだろう。</p>
+
+        <p>「お願いします」と彩花は言った。</p>
+
+        <h2>2. 手紙を読む</h2>
+
+        <p>披露宴の後半、司会者が告げた。「新婦からご両親へ、お手紙がございます」</p>
+
+        <p>会場が静まった。BGMが消え、グラスを置く音だけが響いた。彩花はマイクの前に立ち、便箋を開いた。指が震えていた。</p>
+
+        <p>「お父さん、お母さん」</p>
+
+        <p>第一声で、母親が泣いた。父親は唇を引き結んで、テーブルの一点を見つめていた。</p>
+
+        <p>彩花は読んだ。まっすぐに、途切れ途切れに。朝ごはんを作ってくれたこと。運動会で誰より大きな声で応援してくれたこと。高校受験の夜、黙ってココアを置いてくれたこと。就職して家を出るとき、玄関で母が泣いたこと。どれも小さな記憶だ。でも彩花にとっては、人生の骨格だった。</p>
+
+        <p>会場の200人が聞いていたが、彩花の声は両親だけに向いていた。</p>
+
+        <p>最後に彩花は便箋を下ろして、両親の顔を見た。</p>
+
+        <blockquote>
+            ありがとう、育ててくれて。<br>
+            私は幸せです。
+        </blockquote>
+
+        <p>30秒——手紙全体は5分あったが、彩花が選んだ30秒は、この最後の部分だった。声が震えていて、鼻声で、お世辞にもきれいとは言えない。でも、それが本物の声だった。</p>
+
+        <h2>3. 声を刻む</h2>
+
+        <p>お色直しの間に、会場スタッフが録音データを処理した。</p>
+
+        <p>彩花の声は独自音声符号化技術によって圧縮され、1枚のQRコードに変換された。30秒の声が、あの小さな白黒の模様の中に収まる。音質はハイファイではない。少し金属的な響きが混じる。ボイスコーダーを通したような質感。でも、言葉は聞き取れる。イントネーションも、声の震えも、感情も——すべてが残っている。</p>
+
+        <p>スタッフはQRコードを名刺サイズのカードに印刷し、UVラミネートで表面を封じた。このラミネートが紫外線と湿気を遮断し、印刷面を長期間保護する。理論上の耐久年数は、屋内保管で数百年。実用的には、人間の寿命よりはるかに長い。</p>
+
+        <p>カードは2枚作られた。1枚は彩花の両親へ。もう1枚は、新郎の両親へ。彩花が最後に新郎の両親にも頭を下げたあの場面——「息子さんを、お借りします」——その声も一緒に入っている。</p>
+
+        <p>披露宴の最後、両家の親にカードが手渡された。彩花の母親はカードを受け取ると、裏返してQRコードを見つめ、何も言わずにハンドバッグにしまった。大事なものをしまう、あの仕草で。</p>
+
+        <h2>4. 数年後の台所</h2>
+
+        <p>ある秋の午後だった。</p>
+
+        <p>彩花の母、洋子は台所で食器棚の引き出しを整理していた。奥の方に、見覚えのあるカードが入っていた。名刺サイズ。表面にUVラミネートの光沢。裏に白黒のQRコード。</p>
+
+        <p>あの日のカードだ。</p>
+
+        <p>洋子はカードを手に取った。ラミネートの表面は、数年前と変わらずつるりとしていた。角も潰れていない。引き出しの奥で、ほかの何にも紛れず、一枚だけで存在していた。</p>
+
+        <p>スマートフォンのカメラをかざした。画面にURLが表示され、タップした。</p>
+
+        <p>数秒の読み込みの後——</p>
+
+        <p>台所に、娘の声が響いた。</p>
+
+        <p>少し金属的で、電話越しよりもさらにざらついた質感。でも、まぎれもなく彩花の声だった。あの日の、震えた声。鼻をすすりながら、必死に最後まで読もうとしている声。</p>
+
+        <blockquote>
+            ありがとう、育ててくれて。<br>
+            私は幸せです。
+        </blockquote>
+
+        <p>洋子は流しの前に立ったまま、動けなかった。</p>
+
+        <p>あの日の披露宴では、涙でよく聞こえなかった。自分も泣いていたし、会場の空気が揺れていたし、何より感情が先走って、言葉を正確に受け取れていなかった。</p>
+
+        <p>でも今、静かな台所で、一人で聴いている。秋の午後の陽が窓から差して、水切りかごのコップに反射している。そのなかで、娘の声が30秒間、まっすぐに届いた。</p>
+
+        <p>あの日聞けなかった言葉を、今、聴いている。</p>
+
+        <p>洋子はカードをそっとエプロンのポケットに入れた。引き出しの奥ではなく、もっと近いところに置こうと思った。</p>
+
+        <h2>5. 残るということ</h2>
+
+        <p>披露宴の花は、一週間で枯れた。写真は残っているが、スマートフォンの機種を変えるたびにアルバムの奥へ沈んでいく。ビデオレターは再生するための環境ごと古くなる。DVDプレーヤーを最後に使ったのはいつだろう。</p>
+
+        <p>でもあのカードは残っている。</p>
+
+        <p>QRコードに必要なのはカメラだけだ。専用アプリも、特定のデバイスも要らない。URLを読み取って、ブラウザで再生する。それだけの仕組みが、あの30秒をいつでも取り出せる状態にしている。</p>
+
+        <p>音質は完璧ではない。ハイファイ音源を聴き慣れた耳には、少しロボティックに聞こえるかもしれない。でも、声の核——誰の声か、何を言っているか、どんな感情か——は、すべて残っている。声紋のように、その人だけの振動が刻まれている。</p>
+
+        <p>彩花が手紙に費やした時間は何日もあった。でも、カードに刻まれたのは30秒だ。手紙の全文ではない。最後の最後、便箋を下ろして両親の顔を見ながら言った、あの言葉だけ。</p>
+
+        <p>それで十分だった。</p>
+
+        <p>人が一生のうちに本当に伝えたいことは、30秒に収まる。長い手紙も、何年分もの思い出も、煎じ詰めればひと言になる。彩花のひと言は「ありがとう、育ててくれて」だった。</p>
+
+        <p>そのひと言が、カードの中で、ずっと生きている。</p>
+
+        <div class="core-message">
+            花は枯れる。写真は色褪せる。ビデオの再生環境は世代ごとに変わる。でも、QRコードとブラウザがある限り、声は残る。30秒という制約が、逆に本質を浮き彫りにする。何を残すか選ばなければならないとき、人は一番大事な言葉を選ぶ。
+        </div>
+
+        <div class="key-point">
+            <p>声は、最も個人的な贈り物だ。<br>30秒あれば、一生分の「ありがとう」が届く。</p>
+        </div>
+
+    </article>
+
+    <footer class="article-footer">
+        <p id="essay-nav-links"></p>
+        <p style="margin-top: 2rem; font-size: 0.75rem;">&copy; 2026 TokiStorage</p>
+    </footer>
+
+</main>
+
+<script src="contact-form.js" defer></script>
+<script src="essay-nav.js?v=20260220"></script>
+<script src="tracker.js" defer></script>
+</body>
+</html>
