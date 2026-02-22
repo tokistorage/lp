@@ -146,7 +146,7 @@
             <li><strong>GitHub Pages</strong> — ホスティング。サイトの存在そのもの</li>
             <li><strong>Cloudflare Workers + Google Apps Script</strong> — お問い合わせフォーム・注文フォーム・アクセス解析の送信</li>
             <li><strong>Wise API</strong> — 国際決済。Webhook経由で入金を自動検知し、注文ステータスを自動更新</li>
-            <li><strong>OpenStreetMap</strong> — QR再生ページで録音位置の地図を表示。Google Maps API、Mapbox、Leaflet、HERE Maps——主要なマップエンジンを試した上で、API課金なし・コミュニティ運営のオープンデータであるOSMを選択。Wikipediaと同じ構造であり、消滅する蓋然性はきわめて低い</li>
+            <li><strong>OpenStreetMap</strong> — QR再生ページで録音位置の地図を表示。コミュニティ運営のオープンデータ</li>
             <li><strong>Claude Code</strong> — 唯一の有償サブスクリプション。開発ツールであり、サイトの動作には一切関与しない</li>
         </ul>
 
@@ -173,6 +173,19 @@
         <p>この中で、サイトの開発に直接貢献し、ランタイムに一切影響を与えず、解約してもサイトが一行も変わらないものは、Claude Codeだけだった。画像生成や動画生成は成果物をサイトに組み込めば外部依存になる。LLM APIを組み込めばランニングコストが発生する。Agentic AIフレームワークは開発の複雑さを増すだけだ。ローカル生成AIは外部依存を排除できる点で思想に合致するが、開発生産性ではクラウドモデルに及ばない。</p>
 
         <p>Claude Codeは「道具」であり「部品」ではない。大工が使う鉋を捨てても、建てた家は倒れない。それと同じ構造だ。</p>
+
+        <h3>地図エンジン——API課金なしの選択</h3>
+
+        <p>QR再生ページには録音位置を地図で表示する機能がある。地図エンジンの選定にも、同じ基準を適用した。</p>
+
+        <ul>
+            <li><strong>Google Maps API</strong> — 高機能だが従量課金。無料枠の上限を超えると月額が発生する</li>
+            <li><strong>Mapbox</strong> — デザイン性が高いがAPI課金モデル。同上</li>
+            <li><strong>HERE Maps</strong> — 自動車産業向けに強いが、やはりAPI課金</li>
+            <li><strong>Leaflet</strong> — ライブラリ自体は無料だが、タイル配信元が必要。結局どこかに依存する</li>
+        </ul>
+
+        <p>選んだのはOpenStreetMapだ。API課金がない。Wikipediaと同じコミュニティ運営のオープンデータであり、特定企業の経営判断で消滅するリスクがない。そしてOSMが落ちても、QRコードの音声再生には一切影響しない。地図は補助情報であり、コア機能ではない。</p>
 
         <h2>2. 入れませんか？——一覧表</h2>
 
