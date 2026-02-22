@@ -92,6 +92,7 @@
     { id: 'commemorative-photo', ja: '記念写真の変容', en: 'Souvenir Photo', date: '2026-02-19' },
     { id: 'sports', ja: 'スポーツ', en: 'Sports', date: '2026-02-13' },
     { id: 'history', ja: '歴史学', en: 'History', date: '2026-02-13' },
+    { id: 'wedding-partnership', ja: '結婚式という共創', en: 'Co-Creation in Weddings', date: '2026-02-23' },
 
     // ── 自然・宇宙 ──
     { id: 'animal-welfare', ja: '動物愛護', en: 'Animal Welfare', date: '2026-02-13' },
@@ -158,6 +159,7 @@
   // LATEST_COUNT で表示件数を制御
   const LATEST_COUNT = 5;
   const latestEssayIds = [
+    'wedding-partnership',
     'try-and-revert',
     'prime-location',
     'utilization-productivity',
@@ -269,6 +271,7 @@
     'commemorative-photo':    ['recital-record', 'tourism', 'image-clarity', 'what-to-leave', 'hands'],
     'sports':                 ['entertainment', 'tourism', 'education', 'adversity', 'lifestyle'],
     'history':                ['national-record', 'preserving-words', 'geology', 'education', 'akashic-record'],
+    'wedding-partnership':    ['ceremony', 'commemorative-photo', 'community-benefit', 'what-to-leave', 'partner-boundary'],
     // ── 自然・宇宙 ──
     'animal-welfare':         ['ecology', 'esg', 'turtle', 'peace', 'sdgs'],
     'ecology':                ['animal-welfare', 'sdgs', 'esg', 'geology', 'turtle'],
