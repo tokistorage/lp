@@ -1,0 +1,330 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" type="image/png" sizes="32x32" href="asset/favicon-32.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="asset/apple-touch-icon.png">
+    <title>Try and Revert — Design Principles Accelerate Decisions | TokiStorage</title>
+    <meta name="robots" content="index, follow">
+    <meta name="description" content="We tried adding LINE OGP support via Cloudflare Workers, discovered a platform limitation, and reverted all code within half a day. The speed of that decision came not from skill, but from clear design principles.">    <style>
+        :root {
+            --toki-blue: #1E40AF;
+            --toki-blue-dark: #1E3A5F;
+            --toki-blue-pale: #EFF6FF;
+            --accent-blue: #3B82F6;
+            --bg-white: #FFFFFF;
+            --bg-section: #DBEAFE;
+            --text-primary: #1E293B;
+            --text-secondary: #475569;
+            --text-muted: #94A3B8;
+            --border: #E2E8F0;
+            --font-display: 'Hiragino Mincho ProN', 'Yu Mincho', serif;
+            --font-body: 'Hiragino Kaku Gothic ProN', 'Yu Gothic', 'Meiryo', sans-serif;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        html { scroll-behavior: smooth; }
+
+        body {
+            font-family: var(--font-body);
+            font-weight: 400;
+            background: var(--bg-white);
+            color: var(--text-primary);
+            line-height: 1.9;
+            font-size: 16px;
+        }
+
+        .article-nav {
+            position: fixed; top: 0; left: 0; right: 0; z-index: 1000;
+            background: rgba(255,255,255,0.95);
+            backdrop-filter: blur(12px);
+            border-bottom: 1px solid var(--border);
+            padding: 0.6rem 1.2rem;
+            display: flex; align-items: center; justify-content: space-between; gap: 1rem;
+        }
+        .article-nav .nav-brand {
+            font-family: var(--font-display); font-size: 0.9rem; font-weight: 600;
+            color: var(--toki-blue); text-decoration: none; white-space: nowrap; flex-shrink: 0;
+        }
+        .article-nav .nav-right { display: flex; align-items: center; gap: 1rem; }
+        .article-nav .nav-label { font-size: 0.6rem; color: var(--text-muted); letter-spacing: 0.08em; text-align: right; line-height: 1.4; }
+        .article-nav .lang-switch { font-size: 0.75rem; color: var(--toki-blue); text-decoration: none; padding: 0.3rem 0.6rem; border: 1px solid var(--toki-blue); border-radius: 4px; }
+        .article-nav .lang-switch:hover { background: var(--toki-blue); color: #fff; }
+
+        .article-container { max-width: 720px; margin: 0 auto; padding: 5rem 2rem 4rem; }
+        .article-header { margin-bottom: 3rem; }
+        .article-category { font-size: 0.7rem; letter-spacing: 0.15em; color: var(--toki-blue); margin-bottom: 0.5rem; }
+        .article-header h1 { font-family: var(--font-display); font-size: 1.8rem; font-weight: 700; line-height: 1.5; color: var(--text-primary); margin-bottom: 1rem; }
+        .article-subtitle { font-size: 0.95rem; color: var(--text-secondary); line-height: 1.8; }
+
+        .article-content h2 { font-family: var(--font-display); font-size: 1.3rem; font-weight: 600; color: var(--toki-blue-dark); margin: 3rem 0 1rem; padding-bottom: 0.5rem; border-bottom: 1px solid var(--border); }
+        .article-content h3 { font-family: var(--font-display); font-size: 1.1rem; font-weight: 600; color: var(--text-primary); margin: 2rem 0 0.8rem; }
+        .article-content p { margin-bottom: 1.2rem; text-align: justify; }
+        .article-content ul, .article-content ol { margin: 0.5rem 0 1.5rem 1.5rem; }
+        .article-content li { margin-bottom: 0.5rem; }
+        .article-content blockquote { border-left: 3px solid var(--toki-blue); padding: 1rem 1.5rem; margin: 1.5rem 0; background: var(--toki-blue-pale); font-style: italic; color: var(--text-secondary); }
+        .article-content strong { color: var(--toki-blue-dark); }
+        .article-content code { font-size: 0.88em; background: var(--toki-blue-pale); padding: 0.15em 0.4em; border-radius: 3px; }
+
+        .core-message { background: var(--toki-blue-pale); border-left: 4px solid var(--toki-blue); padding: 1.2rem 1.5rem; margin: 0 0 2rem; font-size: 0.95rem; line-height: 1.8; }
+
+        .phase-table { width: 100%; border-collapse: collapse; margin: 1.5rem 0; font-size: 0.9rem; }
+        .phase-table th, .phase-table td { padding: 0.7rem 1rem; border: 1px solid var(--border); text-align: left; }
+        .phase-table th { background: var(--toki-blue-pale); font-weight: 600; color: var(--toki-blue-dark); font-size: 0.85rem; }
+        .phase-table td { vertical-align: top; }
+
+        .highlight-box { background: linear-gradient(135deg, var(--toki-blue-pale), #fff); border: 1px solid var(--accent-blue); border-radius: 8px; padding: 1.5rem; margin: 2rem 0; text-align: center; }
+        .highlight-box p { text-align: center; margin-bottom: 0.5rem; }
+        .highlight-box .big { font-family: var(--font-display); font-size: 1.3rem; font-weight: 700; color: var(--toki-blue-dark); }
+
+        .article-footer { margin-top: 4rem; padding: 2rem 0; border-top: 1px solid var(--border); font-size: 0.7rem; color: var(--text-muted); line-height: 2.2; }
+        .article-footer a { color: var(--text-muted); text-decoration: none; }
+        .article-footer a:hover { text-decoration: underline; }
+
+        @media (max-width: 768px) {
+            .article-container { padding: 6rem 1.2rem 3rem; }
+            .article-header h1 { font-size: 1.5rem; }
+            .article-nav .nav-label { display: none; }
+            .phase-table { font-size: 0.8rem; }
+            .phase-table th, .phase-table td { padding: 0.5rem 0.6rem; }
+        }
+        @media print { .article-nav { display: none; } .article-container { padding-top: 2rem; } }
+        .nav-brand::before { content: ''; display: inline-block; width: 20px; height: 20px; background: url('asset/tokistorage-icon-512.png') no-repeat center / contain; vertical-align: -3px; margin-right: 5px; }
+    </style>
+<link rel="stylesheet" href="contact-form.css">
+    <meta property="og:type" content="article">
+    <meta property="og:title" content="Try and Revert — Design Principles Accelerate Decisions | TokiStorage">
+    <meta property="og:description" content="We tried adding LINE OGP support via Cloudflare Workers, discovered a platform limitation, and reverted all code within half a day. The speed of that decision came not from skill, but from clear design principles.">
+    <meta property="og:url" content="https://tokistorage.github.io/lp/try-and-revert-en.html">
+    <meta property="og:site_name" content="TokiStorage">
+    <meta name="twitter:card" content="summary">
+    <meta name="twitter:title" content="Try and Revert — Design Principles Accelerate Decisions | TokiStorage">
+    <meta name="twitter:description" content="We tried adding LINE OGP support via Cloudflare Workers, discovered a platform limitation, and reverted all code within half a day. The speed of that decision came not from skill, but from clear design principles.">
+    <meta property="og:image" content="https://tokistorage.github.io/lp/asset/tokistorage-icon-512.png">
+    <meta property="og:image:width" content="512">
+    <meta property="og:image:height" content="512">
+    <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Article",
+  "headline": "Try and Revert — Design Principles Accelerate Decisions",
+  "author": {
+    "@type": "Person",
+    "name": "Takuya Sato",
+    "url": "https://tokistorage.github.io/lp/profile.html"
+  },
+  "publisher": {
+    "@type": "Organization",
+    "name": "TokiStorage",
+    "url": "https://tokistorage.github.io/lp",
+    "logo": {
+      "@type": "ImageObject",
+      "url": "https://tokistorage.github.io/lp/asset/tokistorage-icon-512.png"
+    }
+  },
+  "url": "https://tokistorage.github.io/lp/try-and-revert-en.html",
+  "inLanguage": "en",
+  "mainEntityOfPage": "https://tokistorage.github.io/lp/try-and-revert-en.html",
+  "description": "We tried adding LINE OGP support via Cloudflare Workers, discovered a platform limitation, and reverted all code within half a day. The speed of that decision came not from skill, but from clear design principles."
+}
+    </script>
+    <link rel="alternate" hreflang="ja" href="https://tokistorage.github.io/lp/try-and-revert.html">
+    <link rel="alternate" hreflang="en" href="https://tokistorage.github.io/lp/try-and-revert-en.html">
+    <link rel="alternate" hreflang="x-default" href="https://tokistorage.github.io/lp/try-and-revert.html">
+    <link rel="canonical" href="https://tokistorage.github.io/lp/try-and-revert-en.html">
+</head>
+<body>
+
+<nav class="article-nav">
+    <a href="index-en.html" class="nav-brand">TokiStorage</a>
+    <div class="nav-right">
+        <span class="nav-label">Technology & Design / Try and Revert</span>
+        <a href="try-and-revert.html" class="lang-switch">JA</a>
+    </div>
+</nav>
+
+<main class="article-container">
+
+    <header class="article-header">
+        <p class="article-category">ESSAY — Technology & Design</p>
+        <h1>Try and Revert — Design Principles Accelerate Decisions</h1>
+        <p class="article-subtitle">
+            We tried adding LINE OGP support via Cloudflare Workers,<br>
+            discovered a platform limitation, and reverted all code within half a day.<br>
+            The speed of that decision came not from skill, but from clear design principles.
+        </p>
+    </header>
+
+    <article class="article-content">
+
+        <div class="core-message">
+            <strong>Key takeaway:</strong> We extended our Cloudflare Worker to serve dynamic OGP tags so that TokiQR's <code>play.html</code> would display custom thumbnails when shared on LINE. LINE, however, only renders compact cards — custom thumbnail images are not supported. A URL shortener via Cloudflare KV was technically feasible but violated our core principle: "Data must be self-contained within the URL." The code was written, deployed, tested, and reverted — all within half a day. That speed came from having principles that make decisions for you.
+        </div>
+
+
+        <h2>1. What We Wanted</h2>
+
+        <p>TokiQR's <code>play.html</code> is the page that plays back voice, images, and text recorded in a QR code. All data is embedded in the URL parameters. No server query is needed.</p>
+
+        <p>When this URL is sent via LINE, a rich preview — title, description, and a custom image — would improve the recipient's experience. Serving OGP (Open Graph Protocol) meta tags to crawlers should have made this possible.</p>
+
+        <h3>What We Built</h3>
+
+        <p>We extended our existing Cloudflare Worker (a 52-line GAS proxy) with OGP functionality. The logic was straightforward:</p>
+
+        <ul>
+            <li>If the User-Agent is a crawler (LINE, Facebook, Twitter, etc.) → return dynamic OGP HTML</li>
+            <li>If it's a normal browser → 302 redirect to GitHub Pages</li>
+        </ul>
+
+        <p>The Worker parsed URL parameters to determine the data type (voice, image, or text) and generated appropriate OGP titles and descriptions. For Codec2 audio, it even calculated duration from the Base64 length — displaying something like "14.0 seconds of voice memory." Three OGP images were also created.</p>
+
+        <p>The implementation was complete. We deployed to Cloudflare, updated <code>play.js</code> to route shares through the Worker URL, and tested with curl. Crawler UAs received correct OGP HTML; normal UAs got 302 redirects. Technically, everything worked.</p>
+
+
+        <h2>2. What Happened</h2>
+
+        <p>When we actually sent the URL via LINE, the OGP title and description appeared correctly, along with a small icon. But the custom thumbnail image — the 1200x630px rich image — did not appear.</p>
+
+        <p>LINE's URL sharing only displays compact cards (small icon + title + description). The <code>og:image</code> custom image is not rendered in LINE's preview cards. This is by design.</p>
+
+        <p>This was not a bug. It was a platform design decision by LINE.</p>
+
+        <p>Furthermore, <code>play.html</code> URLs can reach nearly 4,000 characters (because the Base64-encoded audio data is in the query parameters). When a URL of this length is pasted in a LINE message, the URL itself dominates the message — a visual problem that exists before any thumbnail considerations.</p>
+
+
+        <h2>3. The Temptation of Short URLs</h2>
+
+        <p>A technical solution existed. Using Cloudflare Workers KV (Key-Value Store) for URL shortening could compress a 4,000-character URL to roughly 20 characters. LINE messages would look clean.</p>
+
+        <p>However, this solution <strong>directly violates our design principle</strong>.</p>
+
+        <p>TokiQR's core is that data is self-contained in the URL parameters. No server query is needed. Scan the QR code, open it in a browser, and audio plays. Cloudflare, GAS, GitHub — none of them matter.</p>
+
+        <p>The moment we introduce URL shortening, this self-containment breaks. The short URL mapping is stored in Cloudflare KV. If KV disappears, every short URL becomes a permanent dead link. <strong>The permanence of data would depend on the lifespan of an external service.</strong></p>
+
+        <blockquote>
+            Short URLs are convenient. But they replace the self-containment of a 4,000-character URL with the external dependency of a 20-character one.
+        </blockquote>
+
+        <p>The principle defined in our previous essay, "<a href="cloudflare-gas-en.html">Cloudflare & GAS — Using Is Not the Same as Depending</a>," activated here. The operational layer may depend on external services, but the permanence layer must depend on nothing. URL shortening is a permanence-layer problem. So we rejected it.</p>
+
+
+        <h2>4. Principles Make Decisions for You</h2>
+
+        <p>The rejection of short URLs was instantaneous. Time spent deliberating: virtually zero.</p>
+
+        <p>This was not a matter of judgment skill. <strong>The principle made the decision.</strong></p>
+
+        <p>When design principles are clearly articulated, encountering a new problem doesn't require fresh thinking. You simply check against the principle. The answer appears.</p>
+
+        <table class="phase-table">
+            <tr>
+                <th>Question</th>
+                <th>Principle Check</th>
+                <th>Decision</th>
+            </tr>
+            <tr>
+                <td>Introduce URL shortening?</td>
+                <td>Permanence layer would depend on external KV</td>
+                <td>Reject</td>
+            </tr>
+            <tr>
+                <td>Keep the OGP Worker?</td>
+                <td>LINE's limitation prevents achieving the goal</td>
+                <td>Revert all code</td>
+            </tr>
+            <tr>
+                <td>Revert noindex too?</td>
+                <td>Personal data URLs should not be search-indexed</td>
+                <td>Keep noindex only</td>
+            </tr>
+        </table>
+
+        <p>All three decisions were made without hesitation. The principles were clear. Without them, the conversation would have drifted into "short URLs would improve the experience, maybe we should just add it for now" — branching into technical feasibility, user experience, and cost discussions that could have consumed hours.</p>
+
+
+        <h2>5. The Value of Trying</h2>
+
+        <p>Was this entire effort wasted? We don't think so.</p>
+
+        <p>Before trying, we did not know that LINE doesn't render custom thumbnails, or that play.html's lengthy URLs would visually break LINE messages. These were facts discovered only through implementation, deployment, and testing.</p>
+
+        <p>And precisely because we tried, <strong>the decision to revert carried conviction</strong>. There is a meaningful difference between "I heard LINE doesn't show thumbnails" and "I built it, deployed it, and confirmed it myself."</p>
+
+        <p>Additionally, the OGP effort produced a useful side effect: adding <code>noindex</code> to <code>play.html</code>. URLs containing personal voice data have no reason to be search-indexed. This improvement emerged naturally during the process and has value independent of OGP.</p>
+
+        <h3>Timeline of Half a Day</h3>
+
+        <table class="phase-table">
+            <tr>
+                <th>Step</th>
+                <th>Action</th>
+            </tr>
+            <tr>
+                <td>Plan</td>
+                <td>Design Cloudflare Worker OGP proxy</td>
+            </tr>
+            <tr>
+                <td>Implement</td>
+                <td>Extend Worker, generate 3 OGP images, modify play.js</td>
+            </tr>
+            <tr>
+                <td>Deploy</td>
+                <td>Deploy to Cloudflare, verify with curl</td>
+            </tr>
+            <tr>
+                <td>Validate</td>
+                <td>Send via LINE, confirm custom thumbnail not displayed</td>
+            </tr>
+            <tr>
+                <td>Decide</td>
+                <td>Reject short URLs, revert all code, keep noindex</td>
+            </tr>
+            <tr>
+                <td>Restore</td>
+                <td>Revert Worker, play.js, and OGP images</td>
+            </tr>
+        </table>
+
+        <p>Six steps completed in half a day. The "revert" decision took no time because principles were clear. The revert itself took no time because Git made it trivial.</p>
+
+
+        <h2>6. Conclusion — Principles Are Decision Caches</h2>
+
+        <div class="highlight-box">
+            <p class="big">Design principles are decision caches.</p>
+            <p>Think deeply once, articulate it clearly,<br>and every similar question gets an instant answer.</p>
+        </div>
+
+        <p>In projects without clear design principles, the same category of decision gets debated repeatedly. "Should we add an external dependency?" "Is it acceptable for user experience?" "Is it okay if it's temporary?" Arguing from scratch every time is a waste.</p>
+
+        <p>At TokiStorage, we have articulated: "The permanence layer depends on nothing external." That is why short URLs were instantly rejected. That is why the moment we confirmed LINE's limitation, we could revert everything. No need to pause and deliberate each time.</p>
+
+        <p>Try, check against principles, revert. The ability to run this cycle at speed — that is the practical value of design principles. Principles are not ideals. They are <strong>tools that accelerate decisions</strong>.</p>
+
+        <h2>Related Essays</h2>
+        <ul>
+            <li><a href="cloudflare-gas-en.html">Cloudflare & GAS — Using Is Not the Same as Depending</a></li>
+            <li><a href="rapid-prototyping-en.html">Rapid Prototyping</a></li>
+            <li><a href="no-external-deps-en.html">No More External Dependencies</a></li>
+            <li><a href="poc-en.html">The PoC Perspective</a></li>
+            <li><a href="uptime-en.html">Uptime & Dependencies</a></li>
+        </ul>
+
+    </article>
+
+    <footer class="article-footer">
+        <p id="essay-nav-links"></p>
+        <p style="margin-top: 2rem; font-size: 0.75rem;">&copy; 2026 TokiStorage</p>
+    </footer>
+
+</main>
+
+<script src="contact-form.js" defer></script>
+<script src="essay-tts.js?v=20260220"></script>
+<script src="essay-nav.js?v=20260222"></script>
+<script src="tracker.js" defer></script>
+</body>
+</html>
