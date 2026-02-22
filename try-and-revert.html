@@ -1,0 +1,330 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" type="image/png" sizes="32x32" href="asset/favicon-32.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="asset/apple-touch-icon.png">
+    <title>試して、戻す——設計原則が判断を速くする | トキストレージ</title>
+    <meta name="robots" content="index, follow">
+    <meta name="description" content="LINE OGPへの対応をCloudflare Workerで試み、プラットフォームの制約を発見し、半日で全コードを元に戻した。判断が速かったのは、能力ではなく設計原則のおかげだ。">    <style>
+        :root {
+            --toki-blue: #1E40AF;
+            --toki-blue-dark: #1E3A5F;
+            --toki-blue-pale: #EFF6FF;
+            --accent-blue: #3B82F6;
+            --bg-white: #FFFFFF;
+            --bg-section: #DBEAFE;
+            --text-primary: #1E293B;
+            --text-secondary: #475569;
+            --text-muted: #94A3B8;
+            --border: #E2E8F0;
+            --font-display: 'Hiragino Mincho ProN', 'Yu Mincho', serif;
+            --font-body: 'Hiragino Kaku Gothic ProN', 'Yu Gothic', 'Meiryo', sans-serif;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        html { scroll-behavior: smooth; }
+
+        body {
+            font-family: var(--font-body);
+            font-weight: 400;
+            background: var(--bg-white);
+            color: var(--text-primary);
+            line-height: 1.9;
+            font-size: 16px;
+        }
+
+        .article-nav {
+            position: fixed; top: 0; left: 0; right: 0; z-index: 1000;
+            background: rgba(255,255,255,0.95);
+            backdrop-filter: blur(12px);
+            border-bottom: 1px solid var(--border);
+            padding: 0.6rem 1.2rem;
+            display: flex; align-items: center; justify-content: space-between; gap: 1rem;
+        }
+        .article-nav .nav-brand {
+            font-family: var(--font-display); font-size: 0.9rem; font-weight: 600;
+            color: var(--toki-blue); text-decoration: none; white-space: nowrap; flex-shrink: 0;
+        }
+        .article-nav .nav-right { display: flex; align-items: center; gap: 1rem; }
+        .article-nav .nav-label { font-size: 0.6rem; color: var(--text-muted); letter-spacing: 0.08em; text-align: right; line-height: 1.4; }
+        .article-nav .lang-switch { font-size: 0.75rem; color: var(--toki-blue); text-decoration: none; padding: 0.3rem 0.6rem; border: 1px solid var(--toki-blue); border-radius: 4px; }
+        .article-nav .lang-switch:hover { background: var(--toki-blue); color: #fff; }
+
+        .article-container { max-width: 720px; margin: 0 auto; padding: 5rem 2rem 4rem; }
+        .article-header { margin-bottom: 3rem; }
+        .article-category { font-size: 0.7rem; letter-spacing: 0.15em; color: var(--toki-blue); margin-bottom: 0.5rem; }
+        .article-header h1 { font-family: var(--font-display); font-size: 1.8rem; font-weight: 700; line-height: 1.5; color: var(--text-primary); margin-bottom: 1rem; }
+        .article-subtitle { font-size: 0.95rem; color: var(--text-secondary); line-height: 1.8; }
+
+        .article-content h2 { font-family: var(--font-display); font-size: 1.3rem; font-weight: 600; color: var(--toki-blue-dark); margin: 3rem 0 1rem; padding-bottom: 0.5rem; border-bottom: 1px solid var(--border); }
+        .article-content h3 { font-family: var(--font-display); font-size: 1.1rem; font-weight: 600; color: var(--text-primary); margin: 2rem 0 0.8rem; }
+        .article-content p { margin-bottom: 1.2rem; text-align: justify; }
+        .article-content ul, .article-content ol { margin: 0.5rem 0 1.5rem 1.5rem; }
+        .article-content li { margin-bottom: 0.5rem; }
+        .article-content blockquote { border-left: 3px solid var(--toki-blue); padding: 1rem 1.5rem; margin: 1.5rem 0; background: var(--toki-blue-pale); font-style: italic; color: var(--text-secondary); }
+        .article-content strong { color: var(--toki-blue-dark); }
+        .article-content code { font-size: 0.88em; background: var(--toki-blue-pale); padding: 0.15em 0.4em; border-radius: 3px; }
+
+        .core-message { background: var(--toki-blue-pale); border-left: 4px solid var(--toki-blue); padding: 1.2rem 1.5rem; margin: 0 0 2rem; font-size: 0.95rem; line-height: 1.8; }
+
+        .phase-table { width: 100%; border-collapse: collapse; margin: 1.5rem 0; font-size: 0.9rem; }
+        .phase-table th, .phase-table td { padding: 0.7rem 1rem; border: 1px solid var(--border); text-align: left; }
+        .phase-table th { background: var(--toki-blue-pale); font-weight: 600; color: var(--toki-blue-dark); font-size: 0.85rem; }
+        .phase-table td { vertical-align: top; }
+
+        .highlight-box { background: linear-gradient(135deg, var(--toki-blue-pale), #fff); border: 1px solid var(--accent-blue); border-radius: 8px; padding: 1.5rem; margin: 2rem 0; text-align: center; }
+        .highlight-box p { text-align: center; margin-bottom: 0.5rem; }
+        .highlight-box .big { font-family: var(--font-display); font-size: 1.3rem; font-weight: 700; color: var(--toki-blue-dark); }
+
+        .article-footer { margin-top: 4rem; padding: 2rem 0; border-top: 1px solid var(--border); font-size: 0.7rem; color: var(--text-muted); line-height: 2.2; }
+        .article-footer a { color: var(--text-muted); text-decoration: none; }
+        .article-footer a:hover { text-decoration: underline; }
+
+        @media (max-width: 768px) {
+            .article-container { padding: 6rem 1.2rem 3rem; }
+            .article-header h1 { font-size: 1.5rem; }
+            .article-nav .nav-label { display: none; }
+            .phase-table { font-size: 0.8rem; }
+            .phase-table th, .phase-table td { padding: 0.5rem 0.6rem; }
+        }
+        @media print { .article-nav { display: none; } .article-container { padding-top: 2rem; } }
+        .nav-brand::before { content: ''; display: inline-block; width: 20px; height: 20px; background: url('asset/tokistorage-icon-512.png') no-repeat center / contain; vertical-align: -3px; margin-right: 5px; }
+    </style>
+<link rel="stylesheet" href="contact-form.css">
+    <meta property="og:type" content="article">
+    <meta property="og:title" content="試して、戻す——設計原則が判断を速くする | トキストレージ">
+    <meta property="og:description" content="LINE OGPへの対応をCloudflare Workerで試み、プラットフォームの制約を発見し、半日で全コードを元に戻した。判断が速かったのは、能力ではなく設計原則のおかげだ。">
+    <meta property="og:url" content="https://tokistorage.github.io/lp/try-and-revert.html">
+    <meta property="og:site_name" content="トキストレージ">
+    <meta name="twitter:card" content="summary">
+    <meta name="twitter:title" content="試して、戻す——設計原則が判断を速くする | トキストレージ">
+    <meta name="twitter:description" content="LINE OGPへの対応をCloudflare Workerで試み、プラットフォームの制約を発見し、半日で全コードを元に戻した。判断が速かったのは、能力ではなく設計原則のおかげだ。">
+    <meta property="og:image" content="https://tokistorage.github.io/lp/asset/tokistorage-icon-512.png">
+    <meta property="og:image:width" content="512">
+    <meta property="og:image:height" content="512">
+    <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Article",
+  "headline": "試して、戻す——設計原則が判断を速くする",
+  "author": {
+    "@type": "Person",
+    "name": "Takuya Sato",
+    "url": "https://tokistorage.github.io/lp/profile.html"
+  },
+  "publisher": {
+    "@type": "Organization",
+    "name": "TokiStorage",
+    "url": "https://tokistorage.github.io/lp",
+    "logo": {
+      "@type": "ImageObject",
+      "url": "https://tokistorage.github.io/lp/asset/tokistorage-icon-512.png"
+    }
+  },
+  "url": "https://tokistorage.github.io/lp/try-and-revert.html",
+  "inLanguage": "ja",
+  "mainEntityOfPage": "https://tokistorage.github.io/lp/try-and-revert.html",
+  "description": "LINE OGPへの対応をCloudflare Workerで試み、プラットフォームの制約を発見し、半日で全コードを元に戻した。判断が速かったのは、能力ではなく設計原則のおかげだ。"
+}
+    </script>
+    <link rel="alternate" hreflang="ja" href="https://tokistorage.github.io/lp/try-and-revert.html">
+    <link rel="alternate" hreflang="en" href="https://tokistorage.github.io/lp/try-and-revert-en.html">
+    <link rel="alternate" hreflang="x-default" href="https://tokistorage.github.io/lp/try-and-revert.html">
+    <link rel="canonical" href="https://tokistorage.github.io/lp/try-and-revert.html">
+</head>
+<body>
+
+<nav class="article-nav">
+    <a href="index.html" class="nav-brand">トキストレージ</a>
+    <div class="nav-right">
+        <span class="nav-label">技術・設計 / 試して、戻す</span>
+        <a href="try-and-revert-en.html" class="lang-switch">EN</a>
+    </div>
+</nav>
+
+<main class="article-container">
+
+    <header class="article-header">
+        <p class="article-category">ESSAY — 技術・設計</p>
+        <h1>試して、戻す——設計原則が判断を速くする</h1>
+        <p class="article-subtitle">
+            LINE OGPへの対応をCloudflare Workerで試み、<br>
+            プラットフォームの制約を発見し、半日で全コードを元に戻した。<br>
+            判断が速かったのは、能力ではなく設計原則のおかげだ。
+        </p>
+    </header>
+
+    <article class="article-content">
+
+        <div class="core-message">
+            <strong>この記事で言いたいこと：</strong>TokiQRの<code>play.html</code>をLINEで共有した際にカスタムサムネイルを表示しようと、Cloudflare Workerを拡張してOGP対応を実装した。しかしLINEはコンパクトカード表示しかサポートしておらず、カスタムサムネイル画像は表示されなかった。短縮URLという回避策は技術的に可能だったが、「データはURL内に自己完結する」という設計原則に反するため即座に棄却した。コードを書き、デプロイし、テストし、戻す。この一連が半日で完結したのは、原則が判断を代行したからだ。
+        </div>
+
+
+        <h2>1. やりたかったこと</h2>
+
+        <p>TokiQRの<code>play.html</code>は、QRコードに記録された音声・画像・テキストを再生するページだ。URLパラメータにすべてのデータが含まれている。サーバーへの問い合わせは一切ない。</p>
+
+        <p>このURLをLINEで送ったとき、リッチなサムネイル——タイトル、説明文、カスタム画像——が表示されれば、受け取る側の体験が良くなる。OGP（Open Graph Protocol）のメタタグをクローラーに返せば実現できるはずだった。</p>
+
+        <h3>実装したこと</h3>
+
+        <p>既存のCloudflare Worker（52行のGASプロキシ）にOGP機能を追加した。ロジックは明快だ。</p>
+
+        <ul>
+            <li>User-Agentがクローラー（LINE、Facebook、Twitter等）→ 動的OGP HTMLを返す</li>
+            <li>通常ブラウザ → 302リダイレクトでGitHub Pagesに飛ばす</li>
+        </ul>
+
+        <p>URLパラメータからデータ種別（音声・画像・テキスト）を判定し、適切なOGPタイトルと説明文を生成する。Codec2音声の場合はBase64長から秒数まで計算して「14.0秒の音声メモリー」のように表示する。OGP画像も3種類作成した。</p>
+
+        <p>実装は完了し、Cloudflareにデプロイし、<code>play.js</code>のシェア機能をWorker URL経由に切り替えた。curlでテストすると、クローラーUAには正しくOGP HTMLが返り、通常UAには302リダイレクトが返った。技術的には正しく動作していた。</p>
+
+
+        <h2>2. 何が起きたか</h2>
+
+        <p>LINEで実際にURLを送信した結果、OGPのタイトルと説明文、そしてアイコン画像は正しく表示された。しかし、カスタムサムネイル画像——1200x630pxのリッチな画像——は表示されなかった。</p>
+
+        <p>LINEのURL共有では、コンパクトカード（小さなアイコン＋タイトル＋説明文）しか表示されない。<code>og:image</code>に指定した大きな画像は、LINEのプレビューカードには反映されない仕様だった。</p>
+
+        <p>これはバグではない。LINEというプラットフォームの設計判断だ。</p>
+
+        <p>加えて、<code>play.html</code>のURLは最大4000文字近くになる（Base64エンコードされた音声データがパラメータに含まれるため）。この長さのURLがLINEのメッセージに貼り付けられると、URL自体がメッセージの大部分を占め、サムネイル以前の問題として見栄えが悪い。</p>
+
+
+        <h2>3. 短縮URLという誘惑</h2>
+
+        <p>技術的な解決策は存在した。Cloudflare Workers KV（Key-Value Store）を使って短縮URLを実装すれば、4000文字のURLを20文字程度に圧縮できる。LINEのメッセージも綺麗になる。</p>
+
+        <p>しかし、この解決策は<strong>設計原則に正面から反する</strong>。</p>
+
+        <p>TokiQRの核心は、データがURLパラメータとして自己完結していることだ。サーバーに問い合わせる必要がない。QRコードをスキャンし、ブラウザで開くだけで音声が再生される。CloudflareもGASもGitHubも関係ない。</p>
+
+        <p>短縮URLを導入した瞬間、この自己完結性が崩れる。短縮URLのマッピングはCloudflare KVに保存される。KVが消えたら、短縮URLは永久にデッドリンクになる。<strong>データの永続性を、外部サービスの寿命に委ねる</strong>ことになる。</p>
+
+        <blockquote>
+            短縮URLは便利だ。しかしそれは、4000文字のURLに込められた自己完結性を、20文字の外部依存に置き換える行為だ。
+        </blockquote>
+
+        <p>前回のエッセイ「<a href="cloudflare-gas.html">CloudflareとGAS——使うことと、頼ることは違う</a>」で定義した原則がここで機能した。運用レイヤーは外部に依存してよいが、永続レイヤーは何にも依存してはならない。短縮URLは永続レイヤーの問題だ。だから却下した。</p>
+
+
+        <h2>4. 原則が判断を代行する</h2>
+
+        <p>短縮URLの却下は即座だった。検討に要した時間はほぼゼロだ。</p>
+
+        <p>これは判断力の問題ではない。<strong>原則が判断を代行した</strong>のだ。</p>
+
+        <p>設計原則が明確に言語化されていれば、新しい問題に直面したとき、考える必要がない。原則に照らすだけで答えが出る。</p>
+
+        <table class="phase-table">
+            <tr>
+                <th>問い</th>
+                <th>原則との照合</th>
+                <th>判断</th>
+            </tr>
+            <tr>
+                <td>短縮URLを導入するか？</td>
+                <td>永続レイヤーが外部KVに依存する</td>
+                <td>却下</td>
+            </tr>
+            <tr>
+                <td>OGP Worker自体を維持するか？</td>
+                <td>LINEの制約で目的を達成できない</td>
+                <td>全コードを戻す</td>
+            </tr>
+            <tr>
+                <td>noindexは戻すか？</td>
+                <td>個人データURLの検索インデックスは不要</td>
+                <td>noindexだけ残す</td>
+            </tr>
+        </table>
+
+        <p>3つの判断すべてに迷いがなかった。原則が明確だからだ。原則がなければ、「短縮URLにすれば見栄えが良くなるし、とりあえず入れておこうか」という議論が始まっていただろう。そしてその議論は、技術的な実現可能性やユーザー体験やコストの話に分岐し、何時間もかかったかもしれない。</p>
+
+
+        <h2>5. 試すことの価値</h2>
+
+        <p>この一連の取り組みは無駄だったか。そうは思わない。</p>
+
+        <p>試す前には分からなかったことがある。LINEがカスタムサムネイルを表示しないこと。play.htmlの長大なURLがLINEのメッセージで視覚的に破綻すること。これらは実装してデプロイしてテストして初めて分かった事実だ。</p>
+
+        <p>そして、試したからこそ<strong>戻す判断に確信が持てた</strong>。「LINEがサムネイルを出せないらしい」という伝聞と、「自分で実装してデプロイして確認した結果、出ない」という経験では、判断の重みが違う。</p>
+
+        <p>加えて、OGP対応の過程で<code>play.html</code>に<code>noindex</code>を追加するという副産物が得られた。個人の音声データを含むURLが検索エンジンにインデックスされる必要はない。これは試みの中で自然に浮かんだ改善であり、OGPとは無関係に価値がある。</p>
+
+        <h3>半日の時系列</h3>
+
+        <table class="phase-table">
+            <tr>
+                <th>ステップ</th>
+                <th>内容</th>
+            </tr>
+            <tr>
+                <td>計画</td>
+                <td>Cloudflare Worker OGPプロキシの設計</td>
+            </tr>
+            <tr>
+                <td>実装</td>
+                <td>Worker拡張、OGP画像3枚生成、play.js修正</td>
+            </tr>
+            <tr>
+                <td>デプロイ</td>
+                <td>Cloudflareにデプロイ、curlで動作確認</td>
+            </tr>
+            <tr>
+                <td>検証</td>
+                <td>LINEで実際に送信、カスタムサムネイル非表示を確認</td>
+            </tr>
+            <tr>
+                <td>判断</td>
+                <td>短縮URL却下、全コードrevert、noindexだけ残す</td>
+            </tr>
+            <tr>
+                <td>復旧</td>
+                <td>Worker・play.js・OGP画像をすべて元に戻す</td>
+            </tr>
+        </table>
+
+        <p>6ステップが半日で完結した。「戻す」という判断に時間がかからなかったのは、原則が明確だったからだ。そして「戻す」という実作業に時間がかからなかったのは、Gitがあったからだ。</p>
+
+
+        <h2>6. 結び——原則は判断のキャッシュだ</h2>
+
+        <div class="highlight-box">
+            <p class="big">設計原則は、判断のキャッシュだ。</p>
+            <p>一度深く考えて言語化しておけば、<br>次から同じ問いに即座に答えられる。</p>
+        </div>
+
+        <p>設計原則が明確でないプロジェクトでは、同じ種類の判断が何度も議論される。「外部依存を増やしていいのか」「ユーザー体験のためなら許容するのか」「一時的なら問題ないのか」。毎回ゼロから議論するのは時間の浪費だ。</p>
+
+        <p>トキストレージでは「永続レイヤーは外部に依存しない」と言語化してある。だから短縮URLは即座に却下できた。OGP対応は目的を達成できないと分かった瞬間に全コードを戻せた。判断のたびに立ち止まる必要がなかった。</p>
+
+        <p>試して、原則に照らして、戻す。この循環を高速に回せることが、設計原則の実践的な価値だ。原則は理念ではなく、<strong>判断を加速する道具</strong>だ。</p>
+
+        <h2>関連エッセイ</h2>
+        <ul>
+            <li><a href="cloudflare-gas.html">CloudflareとGAS——使うことと、頼ることは違う</a></li>
+            <li><a href="rapid-prototyping.html">ラピッドプロトタイピング</a></li>
+            <li><a href="no-external-deps.html">外部依存性を増やさない</a></li>
+            <li><a href="poc.html">PoCの目線</a></li>
+            <li><a href="uptime.html">稼働率と外部依存</a></li>
+        </ul>
+
+    </article>
+
+    <footer class="article-footer">
+        <p id="essay-nav-links"></p>
+        <p style="margin-top: 2rem; font-size: 0.75rem;">&copy; 2026 TokiStorage</p>
+    </footer>
+
+</main>
+
+<script src="contact-form.js" defer></script>
+<script src="essay-tts.js?v=20260220"></script>
+<script src="essay-nav.js?v=20260222"></script>
+<script src="tracker.js" defer></script>
+</body>
+</html>

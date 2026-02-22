@@ -143,6 +143,7 @@
     { id: 'qualification-boundary', ja: '有資格の境界', en: 'The Boundary of Qualifications', date: '2026-02-22' },
     { id: 'evaluation-outside', ja: '評価制度の外側', en: 'Outside the Evaluation System', date: '2026-02-22' },
     { id: 'utilization-productivity', ja: '稼働率と生産性', en: 'Utilization & Productivity', date: '2026-02-22' },
+    { id: 'try-and-revert', ja: '試して、戻す', en: 'Try and Revert', date: '2026-02-22' },
 
     // ── メタ視点 ──
     { id: 'preserving-words', ja: 'ことばを残す', en: 'Preserving Words', date: '2026-02-19' },
@@ -157,6 +158,7 @@
   // LATEST_COUNT で表示件数を制御
   const LATEST_COUNT = 5;
   const latestEssayIds = [
+    'try-and-revert',
     'prime-location',
     'utilization-productivity',
     'evaluation-outside',
@@ -316,6 +318,7 @@
     'qualification-boundary':  ['evaluation-outside', 'no-external-deps', 'headhunter', 'enterprise-architecture', 'decision-maker'],
     'evaluation-outside':      ['qualification-boundary', 'no-external-deps', 'utilization-productivity', 'burn-rate-zero', 'decision-maker'],
     'utilization-productivity': ['evaluation-outside', 'no-external-deps', 'burn-rate-zero', 'qualification-boundary', 'vibe-coding'],
+    'try-and-revert':          ['cloudflare-gas', 'rapid-prototyping', 'no-external-deps', 'poc', 'uptime'],
     // ── メタ視点 ──
     'preserving-words':       ['why-essays', 'akashic-record', 'what-to-leave', 'narrative-trust', 'openness'],
     'why-essays':             ['preserving-words', 'brochure-essay', 'narrative-trust', 'openness', 'erasure'],
