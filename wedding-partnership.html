@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" type="image/png" sizes="32x32" href="asset/favicon-32.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="asset/apple-touch-icon.png">
+    <title>結婚式という共創 | トキストレージ</title>
+    <meta name="robots" content="index, follow">
+    <meta name="description" content="リトミック教室の繋がりから生まれたウェディング協業。インタラクティブ演出と音声QR記念品の融合が、結婚式を「持ち帰れる体験」に変える。">    <style>
+        :root {
+            --toki-blue: #2563EB;
+            --toki-blue-dark: #1D4ED8;
+            --toki-blue-pale: #EFF6FF;
+            --accent-blue: #3B82F6;
+            --bg-white: #FFFFFF;
+            --text-primary: #1E293B;
+            --text-secondary: #475569;
+            --text-muted: #94A3B8;
+            --border: #E2E8F0;
+            --font-display: 'Hiragino Mincho ProN', 'Yu Mincho', serif;
+            --font-body: 'Hiragino Kaku Gothic ProN', 'Yu Gothic', 'Meiryo', sans-serif;
+        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        html { scroll-behavior: smooth; }
+        body { font-family: var(--font-body); font-weight: 400; background: var(--bg-white); color: var(--text-primary); line-height: 2; font-size: 16px; }
+
+        .article-nav { position: fixed; top: 0; left: 0; right: 0; z-index: 1000; background: rgba(255,255,255,0.95); backdrop-filter: blur(12px); border-bottom: 1px solid var(--border); padding: 0.6rem 1.2rem; display: flex; align-items: center; justify-content: space-between; gap: 1rem; }
+        .article-nav .nav-brand { font-family: var(--font-display); font-size: 0.9rem; font-weight: 600; color: var(--toki-blue); text-decoration: none; white-space: nowrap; }
+        .article-nav .nav-brand::before { content: ''; display: inline-block; width: 20px; height: 20px; background: url('asset/tokistorage-icon-512.png') no-repeat center / contain; vertical-align: -3px; margin-right: 5px; }
+        .article-nav .nav-right { display: flex; align-items: center; gap: 1rem; }
+        .article-nav .nav-label { font-size: 0.6rem; color: var(--text-muted); letter-spacing: 0.08em; }
+        .article-nav .lang-switch { font-size: 0.75rem; color: var(--toki-blue); text-decoration: none; padding: 0.3rem 0.6rem; border: 1px solid var(--toki-blue); border-radius: 4px; }
+        .article-nav .lang-switch:hover { background: var(--toki-blue); color: #fff; }
+
+        .article-container { max-width: 680px; margin: 0 auto; padding: 7rem 2rem 4rem; }
+        .article-header { margin-bottom: 3rem; padding-bottom: 2rem; border-bottom: 1px solid var(--border); }
+        .article-category { font-size: 0.7rem; color: var(--toki-blue); letter-spacing: 0.15em; margin-bottom: 1rem; }
+        .article-header h1 { font-family: var(--font-display); font-size: 1.8rem; font-weight: 700; line-height: 1.5; margin-bottom: 1.5rem; }
+        .article-subtitle { font-size: 0.95rem; color: var(--text-secondary); line-height: 1.9; }
+
+        .article-content h2 { font-family: var(--font-display); font-size: 1.3rem; font-weight: 600; margin: 3rem 0 1.5rem; padding-bottom: 0.5rem; border-bottom: 2px solid var(--toki-blue-pale); }
+        .article-content h3 { font-family: var(--font-display); font-size: 1.1rem; font-weight: 600; margin: 2rem 0 1rem; color: var(--toki-blue-dark); }
+        .article-content p { margin-bottom: 1.5rem; text-align: justify; }
+        .article-content blockquote { border-left: 3px solid var(--toki-blue); padding-left: 1.5rem; margin: 2rem 0; font-family: var(--font-display); color: var(--text-secondary); }
+        .article-content ul { margin: 1.5rem 0; padding-left: 1.5rem; }
+        .article-content li { margin-bottom: 0.75rem; }
+
+        .core-message { background: var(--toki-blue-pale); border-left: 4px solid var(--toki-blue); padding: 1.5rem; margin: 2rem 0; font-size: 0.95rem; line-height: 1.8; }
+        .key-point { background: linear-gradient(135deg, var(--toki-blue-pale) 0%, #fff 100%); border: 1px solid var(--accent-blue); border-radius: 8px; padding: 1.5rem; margin: 2rem 0; text-align: center; }
+        .key-point p { font-family: var(--font-display); font-size: 1.1rem; color: var(--toki-blue-dark); margin: 0; }
+
+        .article-footer { margin-top: 4rem; padding-top: 2rem; border-top: 1px solid var(--border); text-align: center; }
+        .article-footer p { font-size: 0.8rem; color: var(--text-muted); margin-bottom: 1rem; }
+        .article-footer a { color: var(--toki-blue); text-decoration: none; }
+        .article-footer a:hover { text-decoration: underline; }
+
+        @media (max-width: 768px) {
+            .article-container { padding: 6rem 1.2rem 3rem; }
+            .article-header h1 { font-size: 1.5rem; }
+            .article-nav .nav-label { display: none; }
+        }
+        @media print { .article-nav { display: none; } .article-container { padding-top: 2rem; } }
+    </style>
+    <link rel="stylesheet" href="contact-form.css">
+    <meta property="og:type" content="article">
+    <meta property="og:title" content="結婚式という共創 | トキストレージ">
+    <meta property="og:description" content="リトミック教室の繋がりから生まれたウェディング協業。インタラクティブ演出と音声QR記念品の融合が、結婚式を「持ち帰れる体験」に変える。">
+    <meta property="og:url" content="https://tokistorage.github.io/lp/wedding-partnership.html">
+    <meta property="og:site_name" content="トキストレージ">
+    <meta name="twitter:card" content="summary">
+    <meta name="twitter:title" content="結婚式という共創 | トキストレージ">
+    <meta name="twitter:description" content="リトミック教室の繋がりから生まれたウェディング協業。インタラクティブ演出と音声QR記念品の融合が、結婚式を「持ち帰れる体験」に変える。">
+    <meta property="og:image" content="https://tokistorage.github.io/lp/asset/tokistorage-icon-512.png">
+    <meta property="og:image:width" content="512">
+    <meta property="og:image:height" content="512">
+    <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Article",
+  "headline": "結婚式という共創",
+  "author": {
+    "@type": "Person",
+    "name": "Takuya Sato",
+    "url": "https://tokistorage.github.io/lp/profile.html"
+  },
+  "publisher": {
+    "@type": "Organization",
+    "name": "TokiStorage",
+    "url": "https://tokistorage.github.io/lp",
+    "logo": {
+      "@type": "ImageObject",
+      "url": "https://tokistorage.github.io/lp/asset/tokistorage-icon-512.png"
+    }
+  },
+  "url": "https://tokistorage.github.io/lp/wedding-partnership.html",
+  "inLanguage": "ja",
+  "mainEntityOfPage": "https://tokistorage.github.io/lp/wedding-partnership.html",
+  "description": "リトミック教室の繋がりから生まれたウェディング協業。インタラクティブ演出と音声QR記念品の融合が、結婚式を「持ち帰れる体験」に変える。"
+}
+    </script>
+    <link rel="canonical" href="https://tokistorage.github.io/lp/wedding-partnership.html">
+</head>
+<body>
+
+<nav class="article-nav">
+    <a href="index.html" class="nav-brand">トキストレージ</a>
+    <div class="nav-right">
+        <span class="nav-label">文化・社会活動 / Culture & Social</span>
+        <a href="wedding-partnership-en.html" class="lang-switch">EN</a>
+    </div>
+</nav>
+
+<main class="article-container">
+
+    <header class="article-header">
+        <p class="article-category">ESSAY &mdash; 文化・社会活動</p>
+        <h1>結婚式という共創</h1>
+        <p class="article-subtitle">
+            「体験する技術」と「残す技術」が出会ったとき、<br>
+            結婚式は一度きりの瞬間でなくなる。
+        </p>
+    </header>
+
+    <article class="article-content">
+
+        <div class="core-message">
+            <strong>この記事で言いたいこと：</strong>結婚式の感動は、その場にいた人の記憶の中にしか残らない。演出が生む「体験」と、QRが刻む「記録」を掛け合わせれば、感動は物理的に持ち帰れるものになる。
+        </div>
+
+        <h2>1. たこ焼きパーティの発見</h2>
+
+        <p>娘のリトミック教室で一緒のクラスだった家族と、たこ焼きパーティをした。子どもたちがマリオパーティで遊ぶ横で、大人が話す。仕事のこと、子育てのこと、好きなもののこと。リトミック教室という接点がなければ出会わなかった家族だ。</p>
+
+        <p>相手家族は科学技術が大好きだった。キッズルームにはプロジェクターとウェブカメラとUnity ARが常設されていて、壁に映った映像に子どもが手をかざすとリアクションが返る。PCB基板を自分で設計して海外に発注するハードウェアエンジニア。趣味と仕事の境界がない人だった。</p>
+
+        <p>話題が結婚式に移ったとき、驚いた。自分たちの結婚式でオリジナルのキャンドルサービスを手作りしたという。来場者とゲストが手を繋ぎ、微弱電流を流して照明を点灯するセレモニー。脈拍をセンサーで拾い、リアルタイムで映像化するプロジェクション。アルコール検出で色が変わるLEDボックス。すべて自作。式場に持ち込んで、自分たちでセッティングした。</p>
+
+        <p>聞きながら、共通項に気づいた。「自分の手で作る」という姿勢だ。TokiStorageもCodec2のWASMコンパイルからUVラミネートの物理加工まで、一人で全部作っている。センサー回路を自分で設計する人と、音声圧縮を自分でビルドする人。領域は違うが、手を動かして作るという根っこは同じだった。</p>
+
+        <h2>2. 「体験」と「記録」の非対称</h2>
+
+        <p>結婚式の演出は、「その場の体験」に全力を注いでいる。プロジェクションマッピングで会場を異空間に変え、LED演出でテーブルを彩り、インタラクティブなセレモニーで来場者を巻き込む。演出のクオリティは年々上がっている。技術的にも、資金的にも、式場が投資する先は「その場の感動」だ。</p>
+
+        <p>しかし式が終われば、体験は記憶の中に溶けていく。あの瞬間の感動は確かにそこにあったのに、翌日には輪郭がぼやけ、一週間後には断片しか残らない。写真や映像は残るが、それは「体験そのもの」ではなく「体験の記録」だ。自分が感じたあの震えは、どこにも保存されていない。</p>
+
+        <p>一方、結婚式の記念品はその逆だ。カタログギフト、食器セット、タオル。物理的に永続はするが、「あの瞬間」との接続がない。上質なタオルを使うたびに結婚式の感動を思い出す人は少ない。記念品は形を持つが、記憶との紐付けが弱い。</p>
+
+        <p>この非対称に気づいた。体験は鮮烈だが消える。記念品は残るが感動とつながらない。この隙間を埋める方法がある。演出の瞬間に生まれた「声」をQRコードに刻み、物理的な記念品にすること。体験と記録が、同じ瞬間に結びつく。</p>
+
+        <blockquote>
+            演出は感動を生む。しかし感動は消える。<br>
+            記念品は残る。しかし感動とつながらない。<br>
+            声を刻んだQRは、その両方を一枚に閉じ込める。
+        </blockquote>
+
+        <h2>3. 技術的な補完</h2>
+
+        <p>TokiStorageの技術は「残すこと」に特化している。Codec2で人の声を極限まで圧縮し、QRコードに収める。UVラミネートで物理的な耐久性を与え、石英ガラスに刻めば数百年の寿命を持つ。サーバーに依存しない自己完結設計で、インターネットが消えても再生できる。すべてが「声を未来に届ける」ための技術だ。</p>
+
+        <p>パートナーの技術は「体験すること」に特化している。センサー回路で人の身体反応を拾い、LED制御でリアルタイムに視覚化する。Unity ARで現実空間に仮想レイヤーを重ね、プロジェクションマッピングで空間そのものを変容させる。すべてが「この瞬間を最大化する」ための技術だ。</p>
+
+        <p>両者の技術は完全に非重複だ。TokiStorageはセンサーもLEDもARも作らない。パートナーは音声圧縮もQRエンコードもラミネート加工もしない。競合する領域が一切ない。これは協業の理想形だ。互いの弱点を補い合うのではなく、互いの強みがそもそも別の次元にある。足し算ではなく、掛け算になる。</p>
+
+        <p>具体的に言えば、こうなる。パートナーがインタラクティブなセレモニーを設計し、その瞬間に来場者が声を吹き込む。TokiStorageがその声をCodec2で圧縮し、QRコードとしてラミネート用紙に刻む。来場者は式の体験を楽しみ、かつその体験の一部を物理的に持ち帰る。演出と記念品が、同じ時間軸の上で一体化する。</p>
+
+        <h2>4. 式場で自走できるモデル</h2>
+
+        <p>UVラミネートの製造に特殊な機材は不要だ。業務用プリンタ、ラミネーター、A4用紙。式場に既にある設備で記念品を作れる。TokiStorageが提供するのは製造マニュアルとUVフィルム、そしてQRエンコードのソフトウェアだけだ。</p>
+
+        <p>このモデルの強さは、毎回現場に行く必要がないことにある。従来のウェディング演出は、技術者が式場に張り付かなければならない。機材の搬入、セッティング、オペレーション、撤収。一件あたりの人的コストが大きく、スケールしない。</p>
+
+        <p>自走モデルでは、式場のスタッフがマニュアルに従って記念品を製造する。録音はスマートフォンのブラウザから行い、Codec2のWASMがクライアントサイドで圧縮する。サーバーは不要。QRコードを印刷し、ラミネートし、来場者に渡す。この一連の工程に、TokiStorageの人間は必要ない。</p>
+
+        <p>式場にとっても利点がある。新しいオプションメニューを自前で運用できる。外部業者に毎回発注するのではなく、自分たちのサービスとして提供できる。利益率が高く、差別化にもなる。「声を持ち帰れる結婚式」は、まだどの式場もやっていない。</p>
+
+        <h2>5. 持ち帰れる体験</h2>
+
+        <p>ウェディング市場を二つの軸で整理する。「テクノロジーの高低」と「価値の持続性」だ。</p>
+
+        <p>演出業者は高テクノロジーだが、価値は一時的だ。プロジェクションマッピングもLED演出も、式が終われば消える。引き出物業者は価値が永続的だが、テクノロジーは低い。カタログギフトにテクノロジーはない。</p>
+
+        <p>「高テクノロジー × 永続的価値」の象限に、競合がいない。インタラクティブな演出で生まれた声を、数十年残る物理媒体に刻む。この組み合わせを実現できるチームは、技術的に限られている。音声圧縮、QRエンコード、物理ラミネート、センサー制御、AR演出——これらすべてを自前で作れる二人が、たこ焼きパーティで出会った。</p>
+
+        <p>結婚式という一生に一度の瞬間を、その場で体験し、かつ永遠に手元に残す。新郎新婦の誓いの声、両親へのメッセージ、友人のスピーチ。それらがQRコードとしてラミネート用紙に刻まれ、来場者一人ひとりの手に渡る。10年後、20年後にQRをスキャンすれば、あの日の声がそのまま再生される。</p>
+
+        <p>週明けから浦安・東京の式場を回り始める。UVラミネートのサンプルを持って。表面にはTokiQRの出力——実際にスキャンすると声が再生されるデモ。裏面にはブローシャ——サービスの概要と技術的な裏付け。一枚で「体験」と「説明」が完結する営業ツールだ。式場のプランナーがこの一枚を手に取り、QRをスキャンし、声が流れた瞬間に理解する。言葉で説明するより、体験してもらうのが一番早い。</p>
+
+        <div class="key-point">
+            <p>体験は記憶に、声は手元に。<br>結婚式の感動を「持ち帰れるもの」にする——それが共創の答えだ。</p>
+        </div>
+
+    </article>
+
+    <footer class="article-footer">
+        <p id="essay-nav-links"></p>
+        <p style="margin-top: 2rem; font-size: 0.75rem;">&copy; 2026 TokiStorage</p>
+    </footer>
+
+</main>
+
+<script src="contact-form.js" defer></script>
+<script src="essay-nav.js?v=20260220"></script>
+<script src="tracker.js" defer></script>
+</body>
+</html>
