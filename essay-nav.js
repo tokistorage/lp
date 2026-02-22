@@ -78,6 +78,7 @@
     { id: 'burn-rate-zero', ja: 'バーンレートゼロ', en: 'Burn Rate Zero', date: '2026-02-19' },
     { id: 'uniform-pricing', ja: '均一価格の思想', en: 'Uniform Pricing', date: '2026-02-21' },
     { id: 'framework', ja: 'フレームワーク表現', en: 'Framework Expression', date: '2026-02-19' },
+    { id: 'prime-location', ja: '一等地の変容', en: 'The Transformation of Prime Locations', date: '2026-02-22' },
 
     // ── 文化・社会活動 ──
     { id: 'education', ja: '教育', en: 'Education', date: '2026-02-13' },
@@ -156,6 +157,7 @@
   // LATEST_COUNT で表示件数を制御
   const LATEST_COUNT = 5;
   const latestEssayIds = [
+    'prime-location',
     'utilization-productivity',
     'evaluation-outside',
     'qualification-boundary',
@@ -252,6 +254,7 @@
     'burn-rate-zero':         ['vibe-coding', 'rapid-prototyping', 'migration', 'free-strategy', 'headhunter'],
     'uniform-pricing':        ['price-acceptance', 'free-strategy', 'storage-strategy', 'sanpoyoshi', 'openness'],
     'framework':              ['burn-rate-zero', 'no-competition', 'enterprise-architecture', 'price-acceptance', 'global-niche'],
+    'prime-location':         ['realestate', 'post-nomad', 'utilization-productivity', 'urayasu', 'site-geology'],
     // ── 文化・社会活動 ──
     'education':              ['early-education', 'history', 'media', 'psychology', 'lifestyle'],
     'early-education':        ['education', 'recital-record', 'music', 'psychology', 'entertainment'],
