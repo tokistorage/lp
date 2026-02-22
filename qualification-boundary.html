@@ -1,0 +1,258 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" type="image/png" sizes="32x32" href="asset/favicon-32.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="asset/apple-touch-icon.png">
+    <title>有資格の境界 | トキストレージ</title>
+    <meta name="robots" content="index, follow">
+    <meta name="description" content="MBA、PMP、AWS認定、情報処理技術者——資格は知識を証明する。だが、全スタックを自分の手で回し、外部依存で会社を潰し、引き算の設計に至った経験を証明する資格は存在しない。">
+    <style>
+        :root {
+            --toki-blue: #2563EB;
+            --toki-blue-dark: #1D4ED8;
+            --toki-blue-pale: #EFF6FF;
+            --accent-blue: #3B82F6;
+            --bg-white: #FFFFFF;
+            --text-primary: #1E293B;
+            --text-secondary: #475569;
+            --text-muted: #94A3B8;
+            --border: #E2E8F0;
+            --font-display: 'Hiragino Mincho ProN', 'Yu Mincho', serif;
+            --font-body: 'Hiragino Kaku Gothic ProN', 'Yu Gothic', 'Meiryo', sans-serif;
+        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        html { scroll-behavior: smooth; }
+        body { font-family: var(--font-body); font-weight: 400; background: var(--bg-white); color: var(--text-primary); line-height: 2; font-size: 16px; }
+
+        .article-nav { position: fixed; top: 0; left: 0; right: 0; z-index: 1000; background: rgba(255,255,255,0.95); backdrop-filter: blur(12px); border-bottom: 1px solid var(--border); padding: 0.6rem 1.2rem; display: flex; align-items: center; justify-content: space-between; gap: 1rem; }
+        .article-nav .nav-brand { font-family: var(--font-display); font-size: 0.9rem; font-weight: 600; color: var(--toki-blue); text-decoration: none; white-space: nowrap; }
+        .article-nav .nav-brand::before { content: ''; display: inline-block; width: 20px; height: 20px; background: url('asset/tokistorage-icon-512.png') no-repeat center / contain; vertical-align: -3px; margin-right: 5px; }
+        .article-nav .nav-right { display: flex; align-items: center; gap: 1rem; }
+        .article-nav .nav-label { font-size: 0.6rem; color: var(--text-muted); letter-spacing: 0.08em; }
+        .article-nav .lang-switch { font-size: 0.75rem; color: var(--toki-blue); text-decoration: none; padding: 0.3rem 0.6rem; border: 1px solid var(--toki-blue); border-radius: 4px; }
+        .article-nav .lang-switch:hover { background: var(--toki-blue); color: #fff; }
+
+        .article-container { max-width: 680px; margin: 0 auto; padding: 7rem 2rem 4rem; }
+        .article-header { margin-bottom: 3rem; padding-bottom: 2rem; border-bottom: 1px solid var(--border); }
+        .article-category { font-size: 0.7rem; color: var(--toki-blue); letter-spacing: 0.15em; margin-bottom: 1rem; }
+        .article-header h1 { font-family: var(--font-display); font-size: 1.8rem; font-weight: 700; line-height: 1.5; margin-bottom: 1.5rem; }
+        .article-subtitle { font-size: 0.95rem; color: var(--text-secondary); line-height: 1.9; }
+
+        .article-content h2 { font-family: var(--font-display); font-size: 1.3rem; font-weight: 600; margin: 3rem 0 1.5rem; padding-bottom: 0.5rem; border-bottom: 2px solid var(--toki-blue-pale); }
+        .article-content h3 { font-family: var(--font-display); font-size: 1.1rem; font-weight: 600; margin: 2rem 0 1rem; color: var(--toki-blue-dark); }
+        .article-content p { margin-bottom: 1.5rem; text-align: justify; }
+        .article-content blockquote { border-left: 3px solid var(--toki-blue); padding-left: 1.5rem; margin: 2rem 0; font-family: var(--font-display); color: var(--text-secondary); }
+        .article-content ul { margin: 1.5rem 0; padding-left: 1.5rem; }
+        .article-content li { margin-bottom: 0.75rem; }
+
+        .core-message { background: var(--toki-blue-pale); border-left: 4px solid var(--toki-blue); padding: 1.5rem; margin: 2rem 0; font-size: 0.95rem; line-height: 1.8; }
+        .key-point { background: linear-gradient(135deg, var(--toki-blue-pale) 0%, #fff 100%); border: 1px solid var(--accent-blue); border-radius: 8px; padding: 1.5rem; margin: 2rem 0; text-align: center; }
+        .key-point p { font-family: var(--font-display); font-size: 1.1rem; color: var(--toki-blue-dark); margin: 0; }
+
+        .article-footer { margin-top: 4rem; padding-top: 2rem; border-top: 1px solid var(--border); text-align: center; }
+        .article-footer p { font-size: 0.8rem; color: var(--text-muted); margin-bottom: 1rem; }
+        .article-footer a { color: var(--toki-blue); text-decoration: none; }
+        .article-footer a:hover { text-decoration: underline; }
+
+        @media (max-width: 768px) {
+            .article-container { padding: 6rem 1.2rem 3rem; }
+            .article-header h1 { font-size: 1.5rem; }
+            .article-nav .nav-label { display: none; }
+        }
+        @media print { .article-nav { display: none; } .article-container { padding-top: 2rem; } }
+    </style>
+    <link rel="stylesheet" href="contact-form.css">
+    <meta property="og:type" content="article">
+    <meta property="og:title" content="有資格の境界 | トキストレージ">
+    <meta property="og:description" content="MBA、PMP、AWS認定、情報処理技術者——資格は知識を証明する。だが、全スタックを自分の手で回し、外部依存で会社を潰し、引き算の設計に至った経験を証明する資格は存在しない。">
+    <meta property="og:url" content="https://tokistorage.github.io/lp/qualification-boundary.html">
+    <meta property="og:site_name" content="トキストレージ">
+    <meta name="twitter:card" content="summary">
+    <meta name="twitter:title" content="有資格の境界 | トキストレージ">
+    <meta name="twitter:description" content="MBA、PMP、AWS認定、情報処理技術者——資格は知識を証明する。だが、全スタックを自分の手で回し、外部依存で会社を潰し、引き算の設計に至った経験を証明する資格は存在しない。">
+    <meta property="og:image" content="https://tokistorage.github.io/lp/asset/tokistorage-icon-512.png">
+    <meta property="og:image:width" content="512">
+    <meta property="og:image:height" content="512">
+    <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Article",
+  "headline": "有資格の境界",
+  "author": {
+    "@type": "Person",
+    "name": "Takuya Sato",
+    "url": "https://tokistorage.github.io/lp/profile.html"
+  },
+  "publisher": {
+    "@type": "Organization",
+    "name": "TokiStorage",
+    "url": "https://tokistorage.github.io/lp",
+    "logo": {
+      "@type": "ImageObject",
+      "url": "https://tokistorage.github.io/lp/asset/tokistorage-icon-512.png"
+    }
+  },
+  "url": "https://tokistorage.github.io/lp/qualification-boundary.html",
+  "inLanguage": "ja",
+  "mainEntityOfPage": "https://tokistorage.github.io/lp/qualification-boundary.html",
+  "description": "MBA、PMP、AWS認定、情報処理技術者——資格は知識を証明する。だが、全スタックを自分の手で回し、外部依存で会社を潰し、引き算の設計に至った経験を証明する資格は存在しない。"
+}
+    </script>
+    <link rel="canonical" href="https://tokistorage.github.io/lp/qualification-boundary.html">
+</head>
+<body>
+
+<nav class="article-nav">
+    <a href="index.html" class="nav-brand">トキストレージ</a>
+    <div class="nav-right">
+        <span class="nav-label">技術・設計 / Technology</span>
+    </div>
+</nav>
+
+<main class="article-container">
+
+    <header class="article-header">
+        <p class="article-category">ESSAY &mdash; 技術・設計</p>
+        <h1>有資格の境界<br><span style="font-size: 0.6em; font-weight: 400; color: var(--text-secondary);">&mdash;&mdash; 資格が測れるものと、測れないもの</span></h1>
+        <p class="article-subtitle">
+            資格は知識の証明であり、能力の証明ではない。<br>
+            まして、判断の証明ではない。<br>
+            「やった上でやらない」を証明する資格は、存在しない。
+        </p>
+    </header>
+
+    <article class="article-content">
+
+        <div class="core-message">
+            <strong>この記事で言いたいこと：</strong>資格は一定の知識水準を効率的に証明する。だが、全スタックを横断してハンズオンで回し、外部依存で事業が崩壊する痛みを経験し、その結果として引き算の設計思想に至る——そのような判断の厚みを測る資格は存在しない。資格の有効範囲を正確に理解することが、資格に振り回されないための第一歩だ。
+        </div>
+
+        <p style="font-size: 0.85rem; color: var(--text-muted); margin-bottom: 2rem;"><strong>注記：</strong>この記事は資格制度そのものを否定するものではありません。資格は多くの場面で有効であり、筆者自身も資格保持者と協業し、その価値を認めています。ここで論じるのは、資格が測定できる範囲には構造的な限界があるという事実です。</p>
+
+        <h2>1. 資格が測るもの</h2>
+
+        <p>資格試験は、一定の知識体系を習得したことを証明する。これは確かに価値がある。</p>
+
+        <ul>
+            <li><strong>MBA</strong> — 経営戦略、財務、マーケティング、組織論の体系的知識</li>
+            <li><strong>PMP</strong> — プロジェクト管理の方法論とフレームワーク</li>
+            <li><strong>AWS認定ソリューションアーキテクト</strong> — AWSサービスの設計パターンとベストプラクティス</li>
+            <li><strong>情報処理安全確保支援士</strong> — セキュリティの知識体系</li>
+            <li><strong>公認会計士・税理士</strong> — 会計・税務の専門知識と法的な業務独占</li>
+        </ul>
+
+        <p>これらは「この人は、この分野の知識を持っている」ということを、第三者が検証可能な形で示す。採用市場では効率的なフィルタリングとして機能し、公共事業の入札では参入要件として機能する。資格の社会的価値は明確だ。</p>
+
+        <h2>2. 資格が測れないもの</h2>
+
+        <p>だが、資格が測れないものがある。</p>
+
+        <p><strong>横断的な実装経験。</strong>AWS認定はAWSの知識を証明する。だが、AWS、GCP、Azureの三つを実際に運用し、比較した上で「このプロジェクトにはどれも要らない。GitHub Pagesで十分だ」と判断した経験は、どの資格でも測れない。Salesforce認定はSalesforceの操作を証明する。だが、Salesforce、HubSpot、Dynamics 365を全部回した上で「GASのスプレッドシートで足りる」と判断した経験は、どの資格にもない。</p>
+
+        <p><strong>失敗の経験。</strong>MBAは経営戦略を教える。だが、検索エンジンのアルゴリズム変動で売上が吹き飛び、上場計画が頓挫し、自ら辞任を選んだ経験から何を学んだかは、MBAの試験範囲に含まれない。成功事例はケーススタディになる。失敗から得た判断基準は、試験問題にならない。</p>
+
+        <p><strong>引き算の判断。</strong>資格試験は「何を知っているか」を問う。「何を使わないか」は問わない。13種類の外部サービスを検討し、すべて不採用にした理由を一覧表にまとめる——そのような判断は、資格の評価対象にならない。足し算は測れるが、引き算は測れない。</p>
+
+        <blockquote>
+            資格は「知っているか」を測る。<br>
+            だが「やった上でやらないか」は測れない。
+        </blockquote>
+
+        <h2>3. 公共事業と資格の構造</h2>
+
+        <p>公共事業の入札要件には、資格が並ぶ。「PMP保持者を1名以上含むこと」「情報処理安全確保支援士を配置すること」——これは合理的な制度設計だ。発注者は応札者の能力を個別に評価する時間がない。資格は、最低限の品質を担保するフィルタとして機能する。</p>
+
+        <p>だが、フィルタの限界は明確だ。資格は「知識がある」ことを保証するが、「最適な判断ができる」ことは保証しない。PMP保持者がプロジェクトを炎上させることはある。AWS認定者が過剰な設計をすることもある。知識と判断は別の能力だ。</p>
+
+        <p>公共事業における資格要件は、参入障壁としても機能する。資格を持たない者は、どれだけ実力があっても入札に参加できない。これは制度の意図した効果でもあり、副作用でもある。「全スタックを横断して運用した経験があるが、特定の資格を持たない人間」は、制度上は存在しないことになる。</p>
+
+        <h2>4. 資格の維持コスト</h2>
+
+        <p>資格には維持コストがある。</p>
+
+        <ul>
+            <li><strong>CPE（継続教育）</strong> — PMP、CISSP、公認会計士などは年間の学習時間を要求される</li>
+            <li><strong>年会費</strong> — 情報処理安全確保支援士は登録講習の受講義務がある</li>
+            <li><strong>更新試験</strong> — AWS認定は3年ごとに再認定が必要</li>
+            <li><strong>資格維持のための実務要件</strong> — 一部の資格は実務経験の継続を求める</li>
+        </ul>
+
+        <p>これは、<a href="no-external-deps.html">外部依存性エッセイ</a>で論じた構造と同じだ。資格を保持すること自体がランニングコストを生む。そしてランニングコストがあるものは、いつか維持できなくなるリスクを持つ。</p>
+
+        <p>資格が失効しても、経験は失効しない。AWS認定が切れても、AWSを3年間運用した経験は消えない。Salesforce認定を更新しなくても、CRMの導入で何が起き、何が問題になるかの知見は残る。資格は有限だが、経験は無限だ。</p>
+
+        <blockquote>
+            資格は更新しなければ消える。<br>
+            経験は更新しなくても消えない。
+        </blockquote>
+
+        <h2>5. 国家資格の優位性と限界</h2>
+
+        <p>国家資格には、民間資格にない優位性がある。法的な業務独占だ。</p>
+
+        <p>弁護士でなければ法律事務はできない。公認会計士でなければ監査はできない。税理士でなければ税務代理はできない。これらは資格が「できること」を定義するのではなく、「資格なしにはできないこと」を定義する。参入障壁ではなく、法的な排他権だ。</p>
+
+        <p>だが、法的な排他権を持つ国家資格でさえ、判断の質は保証しない。弁護士資格は法律知識を証明するが、最適な法務戦略を立てられるかは別問題だ。2026年2月、Anthropicの法務AIプラグインが発表され、法務SaaS株が暴落した。法務の「知識」はAIが代替し始めている。残るのは「判断」だ。そして判断の質は、資格では測れない。</p>
+
+        <h2>6. 測れないものの価値</h2>
+
+        <p>資格が測れない経験の例を挙げる。</p>
+
+        <p>クラウドプラットフォーム（AWS、GCP、Azure）、BIツール（Tableau、Looker Studio）、DWH（BigQuery、Redshift）、CRM（Salesforce、HubSpot、Dynamics 365）、プロジェクト管理（Jira、Redmine、Backlog）、CI/CD、APM（Datadog、New Relic）、SAST（Fortify、SonarQube）、CDN（Fastly、CloudFront）、生成AI 7カテゴリ（コーディング支援、画像生成、動画生成、LLM API、Agentic AI、Deep Research、ローカル生成AI）、マップエンジン4種——これらすべてを自分の手で導入・運用し、比較検証した経験。</p>
+
+        <p>そして、その全部を「このプロジェクトには要らない」と判断し、HTML + CSS + JavaScript + WASMだけで1000年持つサービスを設計した経験。</p>
+
+        <p>この経験を証明する資格は存在しない。個別の資格はある。AWSの資格、Salesforceの資格、PMPの資格。だが「全部やった上で全部引いた」を証明する資格はない。足し算の証明はできるが、引き算の証明はできない。</p>
+
+        <p>それは、資格という制度が「専門性の深さ」を測るように設計されているからだ。「横断性の広さ × 判断の深さ」を測る制度は、まだ存在しない。</p>
+
+        <h2>7. 資格を超えた証明</h2>
+
+        <p>では、資格が測れないものは、何が証明するのか。</p>
+
+        <p><strong>成果物が証明する。</strong>トキストレージは静的HTMLで動いている。サーバーなし、データベースなし、フレームワークなし。だがCodec2 WASMで音声をQRコードに変換し、三層分散保管で1000年の持続性を設計している。この成果物自体が、設計判断の質を証明している。</p>
+
+        <p><strong>公開された意思決定が証明する。</strong><a href="no-external-deps.html">外部依存性エッセイ</a>は、13項目の不採用理由を一覧表で公開している。なぜGoogle Analyticsを入れないか。なぜSalesforceを使わないか。なぜApp Storeに出さないか。判断の根拠がすべて公開されている。資格の代わりに、意思決定のプロセスが第三者に検証可能な形で示されている。</p>
+
+        <p><strong>時間が証明する。</strong>1000年の保管を目指すサービスが、10年後も20年後も動いていれば、設計判断は正しかったと証明される。資格は取得時点の知識を証明するが、成果物は時間の経過によって判断の質を証明する。</p>
+
+        <blockquote>
+            資格は取得した日に証明される。<br>
+            判断は、時間が経つほど証明される。
+        </blockquote>
+
+        <h2>8. 資格に対するスタンス</h2>
+
+        <p>資格を否定しているのではない。資格が測れる範囲を正確に理解した上で、測れないものがあることを認識すべきだと言っている。</p>
+
+        <p>採用面接で「AWS認定を持っています」は有効だ。「AWSとGCPとAzureを全部運用した上で、このプロジェクトにはGitHub Pagesで十分だと判断しました」は、資格では伝わらない。だがどちらの人材を採用したいかは、プロジェクトの性質による。</p>
+
+        <p>新卒採用や大量採用では、資格はフィルタとして機能する。だが、設計判断を任せる人材を探すとき、資格は参考情報であって決定要因ではない。経験の横断性と判断の根拠が問われる。</p>
+
+        <p>そして、資格が存在しない領域の経験——外部依存で事業が死ぬ経験、全スタックを引く判断、1000年の持続性を設計する経験——を持つ人材は、資格市場には出てこない。なぜなら、測る尺度が存在しないからだ。</p>
+
+        <div class="core-message">
+            資格は知識の証明として有効であり、多くの場面で合理的に機能する。だが、横断的な実装経験、失敗から得た判断基準、引き算の設計思想——これらを測る資格は存在しない。資格の有効範囲を理解し、資格が測れないものの価値を認めること。それが「有資格の境界」を知るということだ。
+        </div>
+
+        <div class="key-point">
+            <p>資格は知識を証明する。経験は判断を証明する。<br>そして判断は、時間だけが検証する。</p>
+        </div>
+
+    </article>
+
+    <footer class="article-footer">
+        <p id="essay-nav-links"></p>
+        <p style="margin-top: 2rem; font-size: 0.75rem;">&copy; 2026 TokiStorage</p>
+    </footer>
+
+</main>
+
+<script src="contact-form.js" defer></script>
+<script src="essay-tts.js?v=20260220"></script>
+<script src="essay-nav.js?v=20260222"></script>
+<script src="tracker.js" defer></script>
+</body>
+</html>
