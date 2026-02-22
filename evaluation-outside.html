@@ -1,0 +1,258 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" type="image/png" sizes="32x32" href="asset/favicon-32.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="asset/apple-touch-icon.png">
+    <title>評価制度の外側 | トキストレージ</title>
+    <meta name="robots" content="index, follow">
+    <meta name="description" content="KPI、OKR、人事考課、MBO——評価制度は組織の中での行動を最適化する。だが、1000年の保管を設計するプロダクトは、どの評価制度からも生まれない。評価の外側にあるものが、持続性を設計する。">
+    <style>
+        :root {
+            --toki-blue: #2563EB;
+            --toki-blue-dark: #1D4ED8;
+            --toki-blue-pale: #EFF6FF;
+            --accent-blue: #3B82F6;
+            --bg-white: #FFFFFF;
+            --text-primary: #1E293B;
+            --text-secondary: #475569;
+            --text-muted: #94A3B8;
+            --border: #E2E8F0;
+            --font-display: 'Hiragino Mincho ProN', 'Yu Mincho', serif;
+            --font-body: 'Hiragino Kaku Gothic ProN', 'Yu Gothic', 'Meiryo', sans-serif;
+        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        html { scroll-behavior: smooth; }
+        body { font-family: var(--font-body); font-weight: 400; background: var(--bg-white); color: var(--text-primary); line-height: 2; font-size: 16px; }
+
+        .article-nav { position: fixed; top: 0; left: 0; right: 0; z-index: 1000; background: rgba(255,255,255,0.95); backdrop-filter: blur(12px); border-bottom: 1px solid var(--border); padding: 0.6rem 1.2rem; display: flex; align-items: center; justify-content: space-between; gap: 1rem; }
+        .article-nav .nav-brand { font-family: var(--font-display); font-size: 0.9rem; font-weight: 600; color: var(--toki-blue); text-decoration: none; white-space: nowrap; }
+        .article-nav .nav-brand::before { content: ''; display: inline-block; width: 20px; height: 20px; background: url('asset/tokistorage-icon-512.png') no-repeat center / contain; vertical-align: -3px; margin-right: 5px; }
+        .article-nav .nav-right { display: flex; align-items: center; gap: 1rem; }
+        .article-nav .nav-label { font-size: 0.6rem; color: var(--text-muted); letter-spacing: 0.08em; }
+        .article-nav .lang-switch { font-size: 0.75rem; color: var(--toki-blue); text-decoration: none; padding: 0.3rem 0.6rem; border: 1px solid var(--toki-blue); border-radius: 4px; }
+        .article-nav .lang-switch:hover { background: var(--toki-blue); color: #fff; }
+
+        .article-container { max-width: 680px; margin: 0 auto; padding: 7rem 2rem 4rem; }
+        .article-header { margin-bottom: 3rem; padding-bottom: 2rem; border-bottom: 1px solid var(--border); }
+        .article-category { font-size: 0.7rem; color: var(--toki-blue); letter-spacing: 0.15em; margin-bottom: 1rem; }
+        .article-header h1 { font-family: var(--font-display); font-size: 1.8rem; font-weight: 700; line-height: 1.5; margin-bottom: 1.5rem; }
+        .article-subtitle { font-size: 0.95rem; color: var(--text-secondary); line-height: 1.9; }
+
+        .article-content h2 { font-family: var(--font-display); font-size: 1.3rem; font-weight: 600; margin: 3rem 0 1.5rem; padding-bottom: 0.5rem; border-bottom: 2px solid var(--toki-blue-pale); }
+        .article-content h3 { font-family: var(--font-display); font-size: 1.1rem; font-weight: 600; margin: 2rem 0 1rem; color: var(--toki-blue-dark); }
+        .article-content p { margin-bottom: 1.5rem; text-align: justify; }
+        .article-content blockquote { border-left: 3px solid var(--toki-blue); padding-left: 1.5rem; margin: 2rem 0; font-family: var(--font-display); color: var(--text-secondary); }
+        .article-content ul { margin: 1.5rem 0; padding-left: 1.5rem; }
+        .article-content li { margin-bottom: 0.75rem; }
+
+        .core-message { background: var(--toki-blue-pale); border-left: 4px solid var(--toki-blue); padding: 1.5rem; margin: 2rem 0; font-size: 0.95rem; line-height: 1.8; }
+        .key-point { background: linear-gradient(135deg, var(--toki-blue-pale) 0%, #fff 100%); border: 1px solid var(--accent-blue); border-radius: 8px; padding: 1.5rem; margin: 2rem 0; text-align: center; }
+        .key-point p { font-family: var(--font-display); font-size: 1.1rem; color: var(--toki-blue-dark); margin: 0; }
+
+        .article-footer { margin-top: 4rem; padding-top: 2rem; border-top: 1px solid var(--border); text-align: center; }
+        .article-footer p { font-size: 0.8rem; color: var(--text-muted); margin-bottom: 1rem; }
+        .article-footer a { color: var(--toki-blue); text-decoration: none; }
+        .article-footer a:hover { text-decoration: underline; }
+
+        @media (max-width: 768px) {
+            .article-container { padding: 6rem 1.2rem 3rem; }
+            .article-header h1 { font-size: 1.5rem; }
+            .article-nav .nav-label { display: none; }
+        }
+        @media print { .article-nav { display: none; } .article-container { padding-top: 2rem; } }
+    </style>
+    <link rel="stylesheet" href="contact-form.css">
+    <meta property="og:type" content="article">
+    <meta property="og:title" content="評価制度の外側 | トキストレージ">
+    <meta property="og:description" content="KPI、OKR、人事考課、MBO——評価制度は組織の中での行動を最適化する。だが、1000年の保管を設計するプロダクトは、どの評価制度からも生まれない。">
+    <meta property="og:url" content="https://tokistorage.github.io/lp/evaluation-outside.html">
+    <meta property="og:site_name" content="トキストレージ">
+    <meta name="twitter:card" content="summary">
+    <meta name="twitter:title" content="評価制度の外側 | トキストレージ">
+    <meta name="twitter:description" content="KPI、OKR、人事考課、MBO——評価制度は組織の中での行動を最適化する。だが、1000年の保管を設計するプロダクトは、どの評価制度からも生まれない。">
+    <meta property="og:image" content="https://tokistorage.github.io/lp/asset/tokistorage-icon-512.png">
+    <meta property="og:image:width" content="512">
+    <meta property="og:image:height" content="512">
+    <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Article",
+  "headline": "評価制度の外側",
+  "author": {
+    "@type": "Person",
+    "name": "Takuya Sato",
+    "url": "https://tokistorage.github.io/lp/profile.html"
+  },
+  "publisher": {
+    "@type": "Organization",
+    "name": "TokiStorage",
+    "url": "https://tokistorage.github.io/lp",
+    "logo": {
+      "@type": "ImageObject",
+      "url": "https://tokistorage.github.io/lp/asset/tokistorage-icon-512.png"
+    }
+  },
+  "url": "https://tokistorage.github.io/lp/evaluation-outside.html",
+  "inLanguage": "ja",
+  "mainEntityOfPage": "https://tokistorage.github.io/lp/evaluation-outside.html",
+  "description": "KPI、OKR、人事考課、MBO——評価制度は組織の中での行動を最適化する。だが、1000年の保管を設計するプロダクトは、どの評価制度からも生まれない。評価の外側にあるものが、持続性を設計する。"
+}
+    </script>
+    <link rel="canonical" href="https://tokistorage.github.io/lp/evaluation-outside.html">
+</head>
+<body>
+
+<nav class="article-nav">
+    <a href="index.html" class="nav-brand">トキストレージ</a>
+    <div class="nav-right">
+        <span class="nav-label">技術・設計 / Technology</span>
+    </div>
+</nav>
+
+<main class="article-container">
+
+    <header class="article-header">
+        <p class="article-category">ESSAY &mdash; 技術・設計</p>
+        <h1>評価制度の外側<br><span style="font-size: 0.6em; font-weight: 400; color: var(--text-secondary);">&mdash;&mdash; 評価制度からは生まれないプロダクト</span></h1>
+        <p class="article-subtitle">
+            KPI、OKR、人事考課、MBO。<br>
+            評価制度は組織の行動を最適化する。<br>
+            だが、1000年の保管を設計するプロダクトは、<br>
+            どの評価制度からも生まれない。
+        </p>
+    </header>
+
+    <article class="article-content">
+
+        <div class="core-message">
+            <strong>この記事で言いたいこと：</strong>評価制度は「組織が求める行動」を測り、促すための仕組みだ。四半期のKPI、年次のOKR、上司の人事考課——いずれも組織の時間軸と目標軸の中で機能する。だが「1000年後にコンテンツを届ける」という目標は、どの評価軸にも乗らない。評価制度の外側にあるものが、トキストレージを設計している。
+        </div>
+
+        <h2>1. 評価制度が測るもの</h2>
+
+        <p>評価制度は、組織の中での行動を測定し、報酬と結びつける仕組みだ。</p>
+
+        <ul>
+            <li><strong>KPI</strong> — 売上、コンバージョン率、チケット処理数。定量的に測れる短期成果</li>
+            <li><strong>OKR</strong> — 四半期ごとの目標と成果指標。野心的な方向性の設定</li>
+            <li><strong>MBO（目標管理）</strong> — 上司と合意した個人目標の達成度</li>
+            <li><strong>人事考課</strong> — コンピテンシー、行動評価、360度フィードバック</li>
+            <li><strong>昇進・昇格</strong> — 等級制度の中での上方移動</li>
+        </ul>
+
+        <p>これらに共通するのは、「組織の時間軸の中での成果」を測定するという前提だ。四半期、半期、年度——最長でも数年のスパンで評価が行われる。そして評価の対象は「組織が定義した目標にどれだけ貢献したか」だ。</p>
+
+        <p>この仕組み自体は合理的だ。組織は、限られたリソースを戦略的に配分する必要がある。評価制度は、個人の行動を組織の戦略に整合させるための道具として機能する。</p>
+
+        <h2>2. 評価制度が測れないもの</h2>
+
+        <p>だが、評価制度には構造的な盲点がある。</p>
+
+        <p><strong>時間軸の限界。</strong>「1000年後にコンテンツが届くか」は、四半期のKPIに落ちない。年次のOKRにも落ちない。上場を目指す会社なら3〜5年の事業計画が最長の時間軸だ。1000年は、評価制度が想定する時間軸の200倍以上ある。評価できない。</p>
+
+        <p><strong>引き算の評価不能。</strong>評価制度は成果——つまり「何をしたか」——を測る。「何をしなかったか」は測れない。13種類の外部サービスを検討してすべて不採用にした——これは<a href="no-external-deps.html">外部依存性エッセイ</a>で記録した設計判断だが、評価制度上は「何もしていない」と同義だ。導入しなかったサービスは成果として記録されない。</p>
+
+        <p><strong>ROI計測不能。</strong>ランニングコストゼロのサービスに、ROIという概念が成立しない。投資（I）がゼロに近く、リターン（R）は1000年後に判明する。この構造は、投資対効果で意思決定する組織の評価制度と根本的に相容れない。</p>
+
+        <p><strong>評価者の不在。</strong>ソロ開発には、上司がいない。同僚もいない。360度フィードバックの対象者がゼロだ。評価制度は評価者の存在を前提とするが、評価者が存在しない環境では制度そのものが機能しない。</p>
+
+        <blockquote>
+            評価制度は「何をしたか」を測る。<br>
+            だが「何をしなかったか」の価値は測れない。
+        </blockquote>
+
+        <h2>3. 組織が生めないプロダクト</h2>
+
+        <p>トキストレージの設計判断を、組織の評価制度の中で実現しようとしたらどうなるか。</p>
+
+        <p>「Google Analyticsの導入を見送りました」——上司の反応は「なぜ？ データドリブンな意思決定に必要だろう」。「Salesforceの導入を見送りました」——「顧客管理をどうするんだ」。「サーバーを持たず、データベースも使いません」——「スケーラビリティはどう担保する」。</p>
+
+        <p>どれも組織の文脈では正当な指摘だ。だが、1000年の持続性を基準にすると、これらの「正当な指摘」がすべて逆転する。Google Analyticsは外部依存を増やす。Salesforceはランニングコストを生む。サーバーとデータベースは運用負荷を生む。組織が正しいと評価するものが、1000年の基準では誤りになる。</p>
+
+        <p>ここに構造的な矛盾がある。評価制度は組織の合理性に最適化されている。だが組織の合理性と、1000年の持続性は、しばしば対立する。足し算が評価される環境で、引き算の設計は生まれない。</p>
+
+        <h2>4. 四半期の呪い</h2>
+
+        <p>上場企業の経営は、四半期決算に縛られる。四半期ごとの売上成長、利益率、ユーザー数——株主が見る指標に、経営は最適化される。従業員の評価もこの時間軸に同期する。</p>
+
+        <p>四半期で成果が出ない取り組みは、評価されない。1000年の保管設計は、四半期で成果が出ない。出るはずがない。成果が出るのは、10年後、100年後、1000年後だ。四半期の評価制度は、この取り組みを「成果なし」と判定する。</p>
+
+        <p>かつてCTOを務めていたとき、成果報酬型SEOサービスを提供していた。売上は四半期ごとに評価された。検索エンジンのアルゴリズム変動で売上が消えたとき、評価制度は「成果が出ていない」と判定した。評価制度は、外部依存によるリスクを評価の対象に含めていなかった。</p>
+
+        <p>その経験から学んだのは、評価制度が最適化する時間軸と、事業の持続性に必要な時間軸は、しばしば一致しないということだ。</p>
+
+        <h2>5. 等級制度の天井</h2>
+
+        <p>組織の等級制度——エンジニアならIC（Individual Contributor）のレベル1からスタッフ、プリンシパル、ディスティングイッシュト。マネジメントならリーダー、マネージャー、ディレクター、VP、CTO。</p>
+
+        <p>等級が上がるほど、専門性は深くなるか、管理範囲は広くなる。だが等級制度が想定していないキャリアパスがある。「全レイヤーを横断して自分の手で回し、その上で全部引く」というパスだ。</p>
+
+        <p>AWSに詳しいエンジニアはAWS担当として評価される。Salesforceに詳しいコンサルタントはCRM担当として評価される。だが「AWS、GCP、Azure、Salesforce、HubSpot、Dynamics 365、Datadog、Fortify、Jira、Redmine——全部自分で回した上で、このプロジェクトにはどれも要らないと判断する」人間を評価する等級は存在しない。</p>
+
+        <p>専門性の深さは等級で測れる。横断性の広さ×引き算の判断は、等級の外にある。</p>
+
+        <blockquote>
+            等級制度は専門性の深さを測る。<br>
+            だが「全部やった上で全部引く」は、等級の外にある。
+        </blockquote>
+
+        <h2>6. 評価の外側にあるもの</h2>
+
+        <p>評価制度の外側で、トキストレージの設計を駆動しているものは何か。</p>
+
+        <p><strong>原体験。</strong>外部依存で会社が死ぬのを見た。その痛みが「死なない設計」を選ばせている。痛みは評価制度に記録されない。だが判断の根拠として、どのKPIよりも強く機能する。</p>
+
+        <p><strong>美意識。</strong>HTML + CSS + JavaScript + WASMだけで1000年持つサービスを設計する。この構成の美しさは、評価シートに書けない。だが設計判断の一つひとつを支えている。引き算の設計は、足し算よりも美意識を要求する。</p>
+
+        <p><strong>時間感覚。</strong>1000年という時間軸を持つと、四半期の成果は意味を失う。今日の売上よりも、100年後にHTMLが読めるかの方が重要になる。この時間感覚は、組織の評価制度から生まれない。個人の内面から生まれる。</p>
+
+        <p><strong>説明可能性。</strong>「なぜこれを使わないか」を13項目すべてについて公開で説明できること。上司に説明するためではなく、1000年後の読者に説明するために。評価制度のための説明責任ではなく、時間に対する説明責任。</p>
+
+        <h2>7. 評価されないことの自由</h2>
+
+        <p>評価制度の外側にいるということは、評価されないということだ。評価されないということは、評価に最適化する必要がないということだ。</p>
+
+        <p>KPIを追わなくていい。四半期の売上目標を立てなくていい。上司の期待に応えなくていい。昇進を目指さなくていい。この「〜しなくていい」の集積が、引き算の設計を可能にしている。</p>
+
+        <p>組織の中にいると、評価制度に最適化することが合理的だ。評価が報酬に直結するからだ。だが評価に最適化すると、評価制度が測れないものに時間を使えなくなる。1000年の設計は「評価されない仕事」であり、組織の中では時間を割く合理性がない。</p>
+
+        <p>評価されない自由がなければ、トキストレージは生まれなかった。Google Analyticsを入れないという判断は、「入れた方がKPIに寄与する」という組織の合理性に抗する。App Storeに出さないという判断は、「出した方がユーザー獲得に寄与する」という評価基準に反する。これらの判断は、評価制度の外側にいなければ下せない。</p>
+
+        <blockquote>
+            評価されないことは、不遇ではない。<br>
+            評価に最適化しない自由を持つということだ。
+        </blockquote>
+
+        <h2>8. 評価制度の功罪</h2>
+
+        <p>評価制度を否定しているのではない。評価制度は、組織が機能するために不可欠だ。数千人の従業員が同じ方向に動くには、共通の評価軸が必要だ。個人の貢献を可視化し、報酬に反映し、成長を促す。評価制度なしに大規模組織は運営できない。</p>
+
+        <p>だが、評価制度は「組織が定義した成果」しか測れない。定義されていない成果——1000年の持続性、引き算の設計、ランニングコストゼロの構造——は、評価の対象にならない。これは評価制度の欠陥ではなく、構造的な限界だ。</p>
+
+        <p>評価制度が測れるものと測れないものがあることを理解した上で、自分が追求するものがどちらに属するかを見極める。それが<a href="qualification-boundary.html">有資格の境界</a>を知ることであり、評価制度の外側に立つということだ。</p>
+
+        <div class="core-message">
+            評価制度は組織の行動を最適化する仕組みであり、その機能は否定しない。だが、1000年の持続性を設計し、13項目の外部サービスを不採用にし、ランニングコストゼロの構造を追求する——そのような判断は、どの評価制度からも生まれない。評価の外側にいることが、評価では測れないものを作る条件になっている。
+        </div>
+
+        <div class="key-point">
+            <p>評価制度の中で最適解を出す人は多い。<br>評価制度の外側で最適解を出す人は、ほとんどいない。</p>
+        </div>
+
+    </article>
+
+    <footer class="article-footer">
+        <p id="essay-nav-links"></p>
+        <p style="margin-top: 2rem; font-size: 0.75rem;">&copy; 2026 TokiStorage</p>
+    </footer>
+
+</main>
+
+<script src="contact-form.js" defer></script>
+<script src="essay-tts.js?v=20260220"></script>
+<script src="essay-nav.js?v=20260222"></script>
+<script src="tracker.js" defer></script>
+</body>
+</html>
