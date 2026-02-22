@@ -141,6 +141,7 @@
     { id: 'no-external-deps', ja: '外部依存性を増やさない', en: 'No More External Dependencies', date: '2026-02-22' },
     { id: 'qualification-boundary', ja: '有資格の境界', en: 'The Boundary of Qualifications', date: '2026-02-22' },
     { id: 'evaluation-outside', ja: '評価制度の外側', en: 'Outside the Evaluation System', date: '2026-02-22' },
+    { id: 'utilization-productivity', ja: '稼働率と生産性', en: 'Utilization & Productivity', date: '2026-02-22' },
 
     // ── メタ視点 ──
     { id: 'preserving-words', ja: 'ことばを残す', en: 'Preserving Words', date: '2026-02-19' },
@@ -155,6 +156,7 @@
   // LATEST_COUNT で表示件数を制御
   const LATEST_COUNT = 5;
   const latestEssayIds = [
+    'utilization-productivity',
     'evaluation-outside',
     'qualification-boundary',
     'no-external-deps',
@@ -309,7 +311,8 @@
     'pwa-not-appstore':       ['burn-rate-zero', 'disintermediation', 'uptime', 'device-dependency', 'free-strategy'],
     'no-external-deps':       ['uptime', 'burn-rate-zero', 'pwa-not-appstore', 'cloudflare-gas', 'qualification-boundary'],
     'qualification-boundary':  ['evaluation-outside', 'no-external-deps', 'headhunter', 'enterprise-architecture', 'decision-maker'],
-    'evaluation-outside':      ['qualification-boundary', 'no-external-deps', 'burn-rate-zero', 'departure', 'decision-maker'],
+    'evaluation-outside':      ['qualification-boundary', 'no-external-deps', 'utilization-productivity', 'burn-rate-zero', 'decision-maker'],
+    'utilization-productivity': ['evaluation-outside', 'no-external-deps', 'burn-rate-zero', 'qualification-boundary', 'vibe-coding'],
     // ── メタ視点 ──
     'preserving-words':       ['why-essays', 'akashic-record', 'what-to-leave', 'narrative-trust', 'openness'],
     'why-essays':             ['preserving-words', 'brochure-essay', 'narrative-trust', 'openness', 'erasure'],
