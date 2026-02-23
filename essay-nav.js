@@ -270,7 +270,7 @@
     'uniform-pricing':        ['price-acceptance', 'free-strategy', 'storage-strategy', 'sanpoyoshi', 'openness'],
     'framework':              ['burn-rate-zero', 'no-competition', 'enterprise-architecture', 'price-acceptance', 'global-niche'],
     'prime-location':         ['realestate', 'post-nomad', 'utilization-productivity', 'urayasu', 'site-geology'],
-    'diy-partner':            ['wedding-partnership', 'uniform-pricing', 'community-benefit', 'sanpoyoshi', 'brides-letter'],
+    'diy-partner':            ['equipment-guide', 'wedding-partnership', 'uniform-pricing', 'community-benefit', 'sanpoyoshi'],
     // ── 文化・社会活動 ──
     'education':              ['early-education', 'history', 'media', 'psychology', 'lifestyle'],
     'early-education':        ['education', 'recital-record', 'music', 'psychology', 'entertainment'],
