@@ -145,7 +145,7 @@ def generate_ja(qr_path):
     pdf.set_text_color(*SECONDARY)
     pdf.set_x(MARGIN)
     pdf.cell(CONTENT_W, 6,
-             "歴史に名を残せるのは一握り。普通の人の存在は、3世代で忘れ去られる。",
+             "あなたが物語になり、世代の対話と重なり、未来が豊かになる。",
              align="C", new_x="LMARGIN", new_y="NEXT")
     pdf.set_x(MARGIN)
     pdf.cell(CONTENT_W, 6,
@@ -337,7 +337,7 @@ def generate_en(qr_path):
     pdf.set_text_color(*SECONDARY)
     pdf.set_x(MARGIN)
     pdf.cell(CONTENT_W, 6,
-             "Only a handful make it into history. Ordinary people are forgotten in three generations.",
+             "You become a story, interweaving with dialogue across generations, enriching the future.",
              align="C", new_x="LMARGIN", new_y="NEXT")
     pdf.set_x(MARGIN)
     pdf.cell(CONTENT_W, 6,
