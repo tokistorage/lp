@@ -1,0 +1,284 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" type="image/png" sizes="32x32" href="asset/favicon-32.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="asset/apple-touch-icon.png">
+    <title>機材選定の設計思想 | トキストレージ</title>
+    <meta name="robots" content="index, follow">
+    <meta name="description" content="セルフストレージ3拠点で全ての代替品を試し、最終的に残った機材だけを紹介する。TokiQR DIY機材とPearl Soap材料の選定記録。">    <style>
+        :root {
+            --toki-blue: #2563EB;
+            --toki-blue-dark: #1D4ED8;
+            --toki-blue-pale: #EFF6FF;
+            --accent-blue: #3B82F6;
+            --bg-white: #FFFFFF;
+            --text-primary: #1E293B;
+            --text-secondary: #475569;
+            --text-muted: #94A3B8;
+            --border: #E2E8F0;
+            --font-display: 'Hiragino Mincho ProN', 'Yu Mincho', serif;
+            --font-body: 'Hiragino Kaku Gothic ProN', 'Yu Gothic', 'Meiryo', sans-serif;
+        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        html { scroll-behavior: smooth; }
+        body { font-family: var(--font-body); font-weight: 400; background: var(--bg-white); color: var(--text-primary); line-height: 2; font-size: 16px; }
+
+        .article-nav { position: fixed; top: 0; left: 0; right: 0; z-index: 1000; background: rgba(255,255,255,0.95); backdrop-filter: blur(12px); border-bottom: 1px solid var(--border); padding: 0.6rem 1.2rem; display: flex; align-items: center; justify-content: space-between; gap: 1rem; }
+        .article-nav .nav-brand { font-family: var(--font-display); font-size: 0.9rem; font-weight: 600; color: var(--toki-blue); text-decoration: none; white-space: nowrap; }
+        .article-nav .nav-brand::before { content: ''; display: inline-block; width: 20px; height: 20px; background: url('asset/tokistorage-icon-512.png') no-repeat center / contain; vertical-align: -3px; margin-right: 5px; }
+        .article-nav .nav-right { display: flex; align-items: center; gap: 1rem; }
+        .article-nav .nav-label { font-size: 0.6rem; color: var(--text-muted); letter-spacing: 0.08em; }
+        .article-nav .lang-switch { font-size: 0.75rem; color: var(--toki-blue); text-decoration: none; padding: 0.3rem 0.6rem; border: 1px solid var(--toki-blue); border-radius: 4px; }
+        .article-nav .lang-switch:hover { background: var(--toki-blue); color: #fff; }
+
+        .article-container { max-width: 680px; margin: 0 auto; padding: 7rem 2rem 4rem; }
+        .article-header { margin-bottom: 3rem; padding-bottom: 2rem; border-bottom: 1px solid var(--border); }
+        .article-category { font-size: 0.7rem; color: var(--toki-blue); letter-spacing: 0.15em; margin-bottom: 1rem; }
+        .article-header h1 { font-family: var(--font-display); font-size: 1.8rem; font-weight: 700; line-height: 1.5; margin-bottom: 1.5rem; }
+        .article-subtitle { font-size: 0.95rem; color: var(--text-secondary); line-height: 1.9; }
+
+        .article-content h2 { font-family: var(--font-display); font-size: 1.3rem; font-weight: 600; margin: 3rem 0 1.5rem; padding-bottom: 0.5rem; border-bottom: 2px solid var(--toki-blue-pale); }
+        .article-content h3 { font-family: var(--font-display); font-size: 1.1rem; font-weight: 600; margin: 2rem 0 1rem; color: var(--toki-blue-dark); }
+        .article-content p { margin-bottom: 1.5rem; text-align: justify; }
+        .article-content blockquote { border-left: 3px solid var(--toki-blue); padding-left: 1.5rem; margin: 2rem 0; font-family: var(--font-display); color: var(--text-secondary); }
+        .article-content ul { margin: 1.5rem 0; padding-left: 1.5rem; }
+        .article-content li { margin-bottom: 0.75rem; }
+        .article-content a { color: var(--toki-blue); text-decoration: none; }
+        .article-content a:hover { text-decoration: underline; }
+
+        .core-message { background: var(--toki-blue-pale); border-left: 4px solid var(--toki-blue); padding: 1.5rem; margin: 2rem 0; font-size: 0.95rem; line-height: 1.8; }
+        .key-point { background: linear-gradient(135deg, var(--toki-blue-pale) 0%, #fff 100%); border: 1px solid var(--accent-blue); border-radius: 8px; padding: 1.5rem; margin: 2rem 0; text-align: center; }
+        .key-point p { font-family: var(--font-display); font-size: 1.1rem; color: var(--toki-blue-dark); margin: 0; }
+
+        .article-footer { margin-top: 4rem; padding-top: 2rem; border-top: 1px solid var(--border); text-align: center; }
+        .article-footer p { font-size: 0.8rem; color: var(--text-muted); margin-bottom: 1rem; }
+        .article-footer a { color: var(--toki-blue); text-decoration: none; }
+        .article-footer a:hover { text-decoration: underline; }
+
+        @media (max-width: 768px) {
+            .article-container { padding: 6rem 1.2rem 3rem; }
+            .article-header h1 { font-size: 1.5rem; }
+            .article-nav .nav-label { display: none; }
+        }
+        @media print { .article-nav { display: none; } .article-container { padding-top: 2rem; } }
+    </style>
+    <link rel="stylesheet" href="contact-form.css">
+    <meta property="og:type" content="article">
+    <meta property="og:title" content="機材選定の設計思想 | トキストレージ">
+    <meta property="og:description" content="セルフストレージ3拠点で全ての代替品を試し、最終的に残った機材だけを紹介する。TokiQR DIY機材とPearl Soap材料の選定記録。">
+    <meta property="og:url" content="https://tokistorage.github.io/lp/equipment-guide.html">
+    <meta property="og:site_name" content="トキストレージ">
+    <meta name="twitter:card" content="summary">
+    <meta name="twitter:title" content="機材選定の設計思想 | トキストレージ">
+    <meta name="twitter:description" content="セルフストレージ3拠点で全ての代替品を試し、最終的に残った機材だけを紹介する。TokiQR DIY機材とPearl Soap材料の選定記録。">
+    <meta property="og:image" content="https://tokistorage.github.io/lp/asset/tokistorage-icon-512.png">
+    <meta property="og:image:width" content="512">
+    <meta property="og:image:height" content="512">
+    <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Article",
+  "headline": "機材選定の設計思想",
+  "author": {
+    "@type": "Person",
+    "name": "Takuya Sato",
+    "url": "https://tokistorage.github.io/lp/profile.html"
+  },
+  "publisher": {
+    "@type": "Organization",
+    "name": "TokiStorage",
+    "url": "https://tokistorage.github.io/lp",
+    "logo": {
+      "@type": "ImageObject",
+      "url": "https://tokistorage.github.io/lp/asset/tokistorage-icon-512.png"
+    }
+  },
+  "url": "https://tokistorage.github.io/lp/equipment-guide.html",
+  "inLanguage": "ja",
+  "mainEntityOfPage": "https://tokistorage.github.io/lp/equipment-guide.html",
+  "description": "セルフストレージ3拠点で全ての代替品を試し、最終的に残った機材だけを紹介する。TokiQR DIY機材とPearl Soap材料の選定記録。"
+}
+    </script>
+    <link rel="canonical" href="https://tokistorage.github.io/lp/equipment-guide.html">
+</head>
+<body>
+
+<nav class="article-nav">
+    <a href="index.html" class="nav-brand">トキストレージ</a>
+    <div class="nav-right">
+        <span class="nav-label">技術・設計 / Technology &amp; Design</span>
+        <a href="equipment-guide-en.html" class="lang-switch">EN</a>
+    </div>
+</nav>
+
+<main class="article-container">
+
+    <header class="article-header">
+        <p class="article-category">ESSAY &mdash; 技術・設計</p>
+        <h1>機材選定の設計思想</h1>
+        <p class="article-subtitle">
+            セルフストレージ3拠点で全ての代替品を試し、<br>
+            最終的に残った機材だけを紹介する。
+        </p>
+    </header>
+
+    <article class="article-content">
+
+        <div class="core-message">
+            <strong>この記事で言いたいこと：</strong>正解は1つではない。しかし、すべての代替品を試した上で残った選択肢には、理由がある。その試行錯誤の記録を残すことで、次に始める人の時間を節約する。
+        </div>
+
+        <h2>1. 3拠点の試行錯誤</h2>
+
+        <p>TokiStorageの記念品は、量産設備ではなく家庭用機材で作る。QRコードを印刷し、UVラミネートで保護し、手で切って仕上げる。石鹸も同じだ。MPソープベースを溶かし、モールドに流し、ラベルを貼る。どの工程にも専門設備は登場しない。</p>
+
+        <p>この結論に至るまでに、セルフストレージを3拠点借りた。市川、浦安、新浦安。各拠点に代替候補の機材と消耗品を保管し、実際に製造して比較した。ラミネーターだけで4台、プリンターは3台、フィルムは5種類。石鹸に至っては、ソープベースの銘柄違い、オイルの種類違い、モールドの形状違い、着色料の素材違いを片端から試した。</p>
+
+        <p>記念品だからこそ、この手間をかける意味がある。量産品なら設備投資を回収する計算が先に来る。記念品は1つひとつが違い、数が読めない。初期投資を極限まで下げ、家庭にある機材で完結する設計にすること。それが「誰でも始められる」という設計思想の出発点だった。</p>
+
+        <h2>2. TokiQR DIY機材</h2>
+
+        <p>音声QRカードの製造に必要な機材は5つだけだ。PC、プリンター、ラミネーター、UVラミネートフィルム、コピー用紙。以下、それぞれの選定理由と、試して外した代替品について書く。</p>
+
+        <h3>PC &mdash; MacBook Air</h3>
+
+        <p>TokiQRのエンコード画面はブラウザで動作する。Chrome上でCodec2 WASMが音声を圧縮し、QRコードを生成する。技術的にはWindows PCやChromebookでも動く。ただし、色再現とフォントレンダリングの一貫性でmacOSに優位性がある。QRカードは視覚的な記念品でもあるため、画面で見た色と印刷結果が近いことは品質管理上重要だ。</p>
+
+        <p>持ち運びを考慮すると、MacBook Airのバッテリー駆動時間と軽さは式場での作業に適している。<a href="https://www.amazon.co.jp/dp/B0F4WMPXMQ?tag=tokistorage-22" target="_blank" rel="noopener">Amazon &rarr;</a></p>
+
+        <h3>モバイルプリンター &mdash; Canon TR163</h3>
+
+        <p>A4カラーインクジェットプリンター。最も重要な選定基準は「感熱式ではないこと」だ。感熱式プリンターは紫外線で印字が退色する。UVラミネートで保護する記念品に感熱式の印刷を使えば、フィルム越しに紫外線が入り、数年で文字が消える。インクジェットの顔料・染料インクはこの問題を回避できる。</p>
+
+        <p>据え置き型のインクジェット複合機でも機能的には問題ない。しかし式場に持ち込んでその場で印刷するユースケースを想定すると、モバイルプリンターが合理的だ。Canon TR163はA4フルカラー対応、Wi-Fi Direct接続、バッテリー内蔵で、鞄に入るサイズに収まる。<a href="https://www.amazon.co.jp/dp/B0DXZ4J5WW?tag=tokistorage-22" target="_blank" rel="noopener">Amazon &rarr;</a></p>
+
+        <h3>A4ラミネーター &mdash; bonsaii</h3>
+
+        <p>ラミネーターの選定で最も差が出たのは温度制御だ。安価な機種（3,000円台）を2台試したが、温度ムラが原因でフィルムの端が剥離する現象が頻発した。記念品として渡す以上、剥離は許容できない。</p>
+
+        <p>bonsaiiのラミネーターは温度調整が可能で、ウォームアップ時間が約1分と短い。100μmフィルムとの相性が良く、端まで均一に圧着される。1万円未満で、この品質が出る。十分だ。<a href="https://www.amazon.co.jp/dp/B0DRJ4CQ7C?tag=tokistorage-22" target="_blank" rel="noopener">Amazon &rarr;</a></p>
+
+        <h3>UVラミネートフィルム &mdash; アスカ A4 100枚</h3>
+
+        <p>ラミネートフィルムは厚さが選択肢を分ける。75μm、100μm、150μmを試した。75μmは安価だが、ラミネート後に用紙が反りやすい。150μmは厚すぎてQRコードのスキャン精度に影響が出た（光の屈折が増える）。100μmが反りと透過のバランスで最適だった。</p>
+
+        <p>UVカット機能は印刷面の退色防止に直結する。通常のラミネートフィルムと比較して、半年間の窓際放置テストで色差が明確に出た。記念品を日光の当たる場所に飾る可能性を考えると、UVカットは必須だ。<a href="https://www.amazon.co.jp/dp/B084H7J84Z?tag=tokistorage-22" target="_blank" rel="noopener">Amazon &rarr;</a></p>
+
+        <h3>コピー用紙 &mdash; コクヨ A4 500枚</h3>
+
+        <p>光沢紙、マット紙、普通紙の3種類を比較した。直感的には光沢紙が「記念品っぽい」仕上がりになると思った。しかし、ラミネート後は外側のフィルムが光沢を決めるため、用紙の光沢度は結果にほとんど影響しない。</p>
+
+        <p>マット紙はインクの乗りが良いが、コストが普通紙の3〜5倍になる。ラミネート後の見た目にほぼ差がない以上、コスト効率で普通紙が正解だ。コクヨの高白色度タイプは白さが安定しており、ロットによる色ブレが少ない。<a href="https://www.amazon.co.jp/dp/B0006L0120?tag=tokistorage-22" target="_blank" rel="noopener">Amazon &rarr;</a></p>
+
+        <h2>3. Pearl Soap材料</h2>
+
+        <p>ウェディング記念品としてのPearl Soapは、QRカードとセットで手渡す。石鹸は「使える記念品」だ。飾るだけでなく、実際に使ってもらえる。以下、各材料の選定記録。</p>
+
+        <h3>MPソープベース</h3>
+
+        <p>手作り石鹸には大きく2つの方式がある。CP法（Cold Process）は苛性ソーダ（水酸化ナトリウム）と油脂を反応させる本格的な製法で、自由度が高い反面、苛性ソーダの取り扱いに注意が必要だ。MP法（Melt and Pour）はグリセリンベースのソープを電子レンジや湯煎で溶かし、型に流すだけで完成する。</p>
+
+        <p>記念品を式場で作る可能性を考えると、苛性ソーダを現場に持ち込む選択肢はない。MP法一択だ。MPソープベースは透明度が高く、着色料との相性も良い。<a href="https://www.amazon.co.jp/dp/B0977GWWWJ?tag=tokistorage-22" target="_blank" rel="noopener">Amazon &rarr;</a></p>
+
+        <h3>ココナッツオイル</h3>
+
+        <p>MPソープにオイルを少量加えると、保湿力と泡立ちが向上する。オリーブオイル、ホホバオイル、ココナッツオイルの3種類を試した。オリーブオイルは保湿力が高いが、石鹸の固まりが遅くなり、型から外すまでの時間が延びる。ホホバオイルは高価で、少量使用では差が分かりにくい。</p>
+
+        <p>ココナッツオイルは泡立ちへの寄与が明確で、固まりへの悪影響が少ない。コストも手頃だ。<a href="https://www.amazon.co.jp/dp/B0CH3DRWNS?tag=tokistorage-22" target="_blank" rel="noopener">Amazon &rarr;</a></p>
+
+        <h3>食品安全グレード着色料 &mdash; 8色セット</h3>
+
+        <p>石鹸用の着色料には、石鹸専用顔料（マイカなど）と食品グレード着色料がある。石鹸専用顔料は発色が鮮やかだが、肌への安全性は「石鹸として洗い流す前提」の評価だ。食品グレード着色料は口に入れても安全な基準で作られている。</p>
+
+        <p>ウェディングギフトとして赤ちゃんのいる家庭にも届く可能性がある。安全マージンは広いほうが良い。食品グレードの8色セットがあれば、混色でほぼ全ての色を作れる。<a href="https://www.amazon.co.jp/dp/B0BDRNH1NX?tag=tokistorage-22" target="_blank" rel="noopener">Amazon &rarr;</a></p>
+
+        <h3>肉球モールド</h3>
+
+        <p>シリコンモールドは形状の選択肢が無限にある。ハート型、花型、貝殻型、動物型。複数試した中で、肉球型が最も「映える」結果になった。丸みのある形状は石鹸の角が欠けにくく、ポーチに入れても収まりが良い。</p>
+
+        <p>ウェディングギフトとして見たとき、肉球は老若男女に受け入れられる数少ない形状だ。犬好きでなくても「かわいい」という反応が返ってくる。<a href="https://www.amazon.co.jp/dp/B01CZBCP5O?tag=tokistorage-22" target="_blank" rel="noopener">Amazon &rarr;</a></p>
+
+        <h3>ミニフライパン &mdash; 湯煎用</h3>
+
+        <p>MPソープの溶解方法は電子レンジと湯煎の2択だ。電子レンジは手軽だが、温度ムラが出やすい。過加熱するとソープが沸騰し、気泡が大量に入る。湯煎は温度が安定し、溶解速度をコントロールできる。</p>
+
+        <p>ミニフライパンに水を張り、耐熱カップに入れたソープを湯煎する。フライパンが小さいほど水量が少なく、沸騰までの時間が短い。<a href="https://www.amazon.co.jp/dp/B0989XZWZV?tag=tokistorage-22" target="_blank" rel="noopener">Amazon &rarr;</a></p>
+
+        <h3>カセットコンロ &mdash; イワタニ 達人スリム</h3>
+
+        <p>湯煎の熱源はIHコンロ、ガスコンロ、カセットコンロの3択だ。IHはミニフライパンの底面積が小さすぎて加熱できない機種が多い。キッチンのガスコンロは使えるが、作業場所がキッチンに固定される。</p>
+
+        <p>カセットコンロなら作業テーブルの上で湯煎できる。イワタニの達人スリムは薄型で安定性が高く、火力調整も細かい。屋内使用を前提とした安全装置も備えている。<a href="https://www.amazon.co.jp/dp/B0F636YFKG?tag=tokistorage-22" target="_blank" rel="noopener">Amazon &rarr;</a></p>
+
+        <h3>かき混ぜ用カップ・かき混ぜ棒</h3>
+
+        <p>溶けたソープに着色料とオイルを混ぜる工程には、耐熱カップとスティックが必要だ。100円均一の計量カップを最初に試したが、耐熱温度が低く、湯煎中に変形した。専用の耐熱使い捨てカップなら、変形の心配がなく、着色料が残っても廃棄できる。</p>
+
+        <p>石鹸製造では色を変えるたびにカップを替えることになる。使い捨て前提で十分な数量が入ったセットが合理的だ。<a href="https://www.amazon.co.jp/dp/B0FQC1PMCV?tag=tokistorage-22" target="_blank" rel="noopener">Amazon &rarr;</a></p>
+
+        <h3>オーガンジーポーチ</h3>
+
+        <p>ギフトラッピングの選択肢は、紙箱、不織布袋、オーガンジーポーチの3種類を試した。紙箱は高級感があるが、石鹸の形状に合わせたサイズ選びが難しい。不織布袋はコストが安いが、中身が見えない。</p>
+
+        <p>オーガンジーポーチは透け感があり、中の石鹸の色と形状が外から見える。ウェディングギフトとして手渡す場面で、「開けなくても中身が伝わる」のは大きな利点だ。<a href="https://www.amazon.co.jp/dp/B0FLVHSP55?tag=tokistorage-22" target="_blank" rel="noopener">Amazon &rarr;</a></p>
+
+        <h3>OPP袋</h3>
+
+        <p>石鹸の個包装にはOPP袋（透明フィルム袋）を使う。ジップ袋も検討したが、石鹸の包装にジップの密封性は過剰だ。OPP袋は開封が簡単で、透明度が高く、コストはジップ袋の半分以下。香りが適度に透過するのも、ギフトとしては利点になる。<a href="https://www.amazon.co.jp/dp/B09P3K643R?tag=tokistorage-22" target="_blank" rel="noopener">Amazon &rarr;</a></p>
+
+        <h3>ラベルプリンター &mdash; P-touch Cube PT-P710BT</h3>
+
+        <p>石鹸やポーチにブランドラベルを貼る工程で、ラベルプリンターが必要になる。テプラ（キングジム）とP-touch（ブラザー）の2ブランドを比較した。テプラはシェアが高く入手性に優れるが、スマートフォンアプリのUIがP-touchに比べて直感的でない。印字品質は大差ないが、テープの互換性と価格でP-touchが僅かに優位。</p>
+
+        <p>PT-P710BTはBluetooth接続、24mm幅テープ対応で、スマートフォンから直接印刷できる。式場での現場作業に対応する携帯性がある。<a href="https://www.amazon.co.jp/dp/B0FNQ3W1M3?tag=tokistorage-22" target="_blank" rel="noopener">Amazon &rarr;</a></p>
+
+        <p>テープカートリッジは透明地に白文字のTZe-155（24mm）を使っている。透明ベースなので、どの色の石鹸に貼っても石鹸の色を活かせる。<a href="https://www.amazon.co.jp/dp/B09N17VNFN?tag=tokistorage-22" target="_blank" rel="noopener">Amazon &rarr;</a></p>
+
+        <h2>4. 初期投資の設計</h2>
+
+        <p>全機材を新規で揃えた場合の概算は以下の通りだ。</p>
+
+        <ul>
+            <li>MacBook Air — 既存PCがあれば不要。Chrome動作環境があれば良い</li>
+            <li>Canon TR163 — 約2万円。据え置きプリンターが既にあれば不要</li>
+            <li>bonsaiiラミネーター — 約7,000円</li>
+            <li>UVラミネートフィルム100枚 — 約2,400円</li>
+            <li>コピー用紙500枚 — 約600円</li>
+            <li>Pearl Soap材料一式 — 約1万円</li>
+            <li>カセットコンロ — 約4,000円。既にあれば不要</li>
+            <li>P-touch Cube — 約8,000円</li>
+        </ul>
+
+        <p>既存のPCとプリンターがあれば、追加投資は約3万円程度。記念品1個あたりの原材料費は、QRカードが約30円（用紙5円 + フィルム25円）、石鹸が約200円。量産設備の導入費用とは桁が違う。</p>
+
+        <blockquote>
+            量産設備ではなく、記念品に適した家庭用機材。<br>
+            初期投資を下げることは、始める障壁を下げることだ。
+        </blockquote>
+
+        <h2>5. 結論</h2>
+
+        <p>正解は1つではない。ここで紹介した機材がベストかどうかは、使う人の環境と目的によって変わる。ただ、すべての代替品を試した上で残った選択肢には、それぞれ残った理由がある。</p>
+
+        <p>この記録を公開する意図は単純だ。次に同じ道を歩く人が、同じ試行錯誤を繰り返さなくて済むように。セルフストレージ3拠点分の試行錯誤が、誰かの1日を節約できればそれで良い。</p>
+
+        <div class="key-point">
+            <p>試行錯誤の記録を残す。<br>それが、次に始める人への最も実用的な贈り物になる。</p>
+        </div>
+
+    </article>
+
+    <footer class="article-footer">
+        <p id="essay-nav-links"></p>
+        <p style="margin-top: 2rem; font-size: 0.75rem;">&copy; 2026 TokiStorage</p>
+    </footer>
+
+</main>
+
+<script src="contact-form.js" defer></script>
+<script src="essay-nav.js?v=20260224"></script>
+<script src="tracker.js" defer></script>
+</body>
+</html>
