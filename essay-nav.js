@@ -146,6 +146,7 @@
     { id: 'evaluation-outside', ja: '評価制度の外側', en: 'Outside the Evaluation System', date: '2026-02-22' },
     { id: 'utilization-productivity', ja: '稼働率と生産性', en: 'Utilization & Productivity', date: '2026-02-22' },
     { id: 'try-and-revert', ja: '試して、戻す', en: 'Try and Revert', date: '2026-02-22' },
+    { id: 'corporate-site', ja: 'コーポレートサイト', en: 'The Corporate Site', date: '2026-02-23' },
 
     // ── メタ視点 ──
     { id: 'preserving-words', ja: 'ことばを残す', en: 'Preserving Words', date: '2026-02-19' },
@@ -160,6 +161,7 @@
   // LATEST_COUNT で表示件数を制御
   const LATEST_COUNT = 5;
   const latestEssayIds = [
+    'corporate-site',
     'brides-letter',
     'wedding-partnership',
     'try-and-revert',
@@ -325,6 +327,7 @@
     'evaluation-outside':      ['qualification-boundary', 'no-external-deps', 'utilization-productivity', 'burn-rate-zero', 'decision-maker'],
     'utilization-productivity': ['evaluation-outside', 'no-external-deps', 'burn-rate-zero', 'qualification-boundary', 'vibe-coding'],
     'try-and-revert':          ['cloudflare-gas', 'rapid-prototyping', 'no-external-deps', 'poc', 'uptime'],
+    'corporate-site':          ['seo-aio', 'no-external-deps', 'brochure-essay', 'openness', 'burn-rate-zero'],
     // ── メタ視点 ──
     'preserving-words':       ['why-essays', 'akashic-record', 'what-to-leave', 'narrative-trust', 'openness'],
     'why-essays':             ['preserving-words', 'brochure-essay', 'narrative-trust', 'openness', 'erasure'],
