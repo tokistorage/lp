@@ -150,6 +150,7 @@
     { id: 'corporate-site', ja: 'コーポレートサイト', en: 'The Corporate Site', date: '2026-02-23' },
 
     // ── メタ視点 ──
+    { id: 'mission-statement', ja: 'ミッション・ステートメントの設計思想', en: 'Designing a Mission Statement', date: '2026-02-23' },
     { id: 'preserving-words', ja: 'ことばを残す', en: 'Preserving Words', date: '2026-02-19' },
     { id: 'why-essays', ja: 'エッセイを刻む意義', en: 'The Significance of Inscribing Essays', date: '2026-02-18' },
     { id: 'erasure', ja: '残さない選択', en: 'Choosing Not to Leave Behind', date: '2026-02-13' },
@@ -162,6 +163,7 @@
   // LATEST_COUNT で表示件数を制御
   const LATEST_COUNT = 5;
   const latestEssayIds = [
+    'mission-statement',
     'diy-partner',
     'corporate-site',
     'brides-letter',
@@ -332,6 +334,7 @@
     'try-and-revert':          ['cloudflare-gas', 'rapid-prototyping', 'no-external-deps', 'poc', 'uptime'],
     'corporate-site':          ['seo-aio', 'no-external-deps', 'brochure-essay', 'openness', 'burn-rate-zero'],
     // ── メタ視点 ──
+    'mission-statement':      ['narrative-trust', 'preserving-words', 'why-essays', 'corporate-site', 'integrity'],
     'preserving-words':       ['why-essays', 'akashic-record', 'what-to-leave', 'narrative-trust', 'openness'],
     'why-essays':             ['preserving-words', 'brochure-essay', 'narrative-trust', 'openness', 'erasure'],
     'erasure':                ['preserving-words', 'why-essays', 'shiseikan', 'what-to-leave', 'openness'],
