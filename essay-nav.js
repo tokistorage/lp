@@ -80,6 +80,7 @@
     { id: 'uniform-pricing', ja: '均一価格の思想', en: 'Uniform Pricing', date: '2026-02-21' },
     { id: 'framework', ja: 'フレームワーク表現', en: 'Framework Expression', date: '2026-02-19' },
     { id: 'prime-location', ja: '一等地の変容', en: 'The Transformation of Prime Locations', date: '2026-02-22' },
+    { id: 'diy-partner', ja: 'DIYパートナーの設計思想', en: 'The Design Philosophy of DIY Partners', date: '2026-02-23' },
 
     // ── 文化・社会活動 ──
     { id: 'education', ja: '教育', en: 'Education', date: '2026-02-13' },
@@ -161,6 +162,7 @@
   // LATEST_COUNT で表示件数を制御
   const LATEST_COUNT = 5;
   const latestEssayIds = [
+    'diy-partner',
     'corporate-site',
     'brides-letter',
     'wedding-partnership',
@@ -264,6 +266,7 @@
     'uniform-pricing':        ['price-acceptance', 'free-strategy', 'storage-strategy', 'sanpoyoshi', 'openness'],
     'framework':              ['burn-rate-zero', 'no-competition', 'enterprise-architecture', 'price-acceptance', 'global-niche'],
     'prime-location':         ['realestate', 'post-nomad', 'utilization-productivity', 'urayasu', 'site-geology'],
+    'diy-partner':            ['wedding-partnership', 'uniform-pricing', 'community-benefit', 'sanpoyoshi', 'brides-letter'],
     // ── 文化・社会活動 ──
     'education':              ['early-education', 'history', 'media', 'psychology', 'lifestyle'],
     'early-education':        ['education', 'recital-record', 'music', 'psychology', 'entertainment'],

@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" type="image/png" sizes="32x32" href="asset/favicon-32.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="asset/apple-touch-icon.png">
+    <title>DIYパートナーの設計思想 | トキストレージ</title>
+    <meta name="robots" content="index, follow">
+    <meta name="description" content="仕事をする側が90%取る。その原則がスケーラビリティの壁を溶かし、式場を「製造者」に変える。DIYパートナーの設計思想。">    <style>
+        :root {
+            --toki-blue: #2563EB;
+            --toki-blue-dark: #1D4ED8;
+            --toki-blue-pale: #EFF6FF;
+            --accent-blue: #3B82F6;
+            --bg-white: #FFFFFF;
+            --text-primary: #1E293B;
+            --text-secondary: #475569;
+            --text-muted: #94A3B8;
+            --border: #E2E8F0;
+            --font-display: 'Hiragino Mincho ProN', 'Yu Mincho', serif;
+            --font-body: 'Hiragino Kaku Gothic ProN', 'Yu Gothic', 'Meiryo', sans-serif;
+        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        html { scroll-behavior: smooth; }
+        body { font-family: var(--font-body); font-weight: 400; background: var(--bg-white); color: var(--text-primary); line-height: 2; font-size: 16px; }
+
+        .article-nav { position: fixed; top: 0; left: 0; right: 0; z-index: 1000; background: rgba(255,255,255,0.95); backdrop-filter: blur(12px); border-bottom: 1px solid var(--border); padding: 0.6rem 1.2rem; display: flex; align-items: center; justify-content: space-between; gap: 1rem; }
+        .article-nav .nav-brand { font-family: var(--font-display); font-size: 0.9rem; font-weight: 600; color: var(--toki-blue); text-decoration: none; white-space: nowrap; }
+        .article-nav .nav-brand::before { content: ''; display: inline-block; width: 20px; height: 20px; background: url('asset/tokistorage-icon-512.png') no-repeat center / contain; vertical-align: -3px; margin-right: 5px; }
+        .article-nav .nav-right { display: flex; align-items: center; gap: 1rem; }
+        .article-nav .nav-label { font-size: 0.6rem; color: var(--text-muted); letter-spacing: 0.08em; }
+        .article-nav .lang-switch { font-size: 0.75rem; color: var(--toki-blue); text-decoration: none; padding: 0.3rem 0.6rem; border: 1px solid var(--toki-blue); border-radius: 4px; }
+        .article-nav .lang-switch:hover { background: var(--toki-blue); color: #fff; }
+
+        .article-container { max-width: 680px; margin: 0 auto; padding: 7rem 2rem 4rem; }
+        .article-header { margin-bottom: 3rem; padding-bottom: 2rem; border-bottom: 1px solid var(--border); }
+        .article-category { font-size: 0.7rem; color: var(--toki-blue); letter-spacing: 0.15em; margin-bottom: 1rem; }
+        .article-header h1 { font-family: var(--font-display); font-size: 1.8rem; font-weight: 700; line-height: 1.5; margin-bottom: 1.5rem; }
+        .article-subtitle { font-size: 0.95rem; color: var(--text-secondary); line-height: 1.9; }
+
+        .article-content h2 { font-family: var(--font-display); font-size: 1.3rem; font-weight: 600; margin: 3rem 0 1.5rem; padding-bottom: 0.5rem; border-bottom: 2px solid var(--toki-blue-pale); }
+        .article-content h3 { font-family: var(--font-display); font-size: 1.1rem; font-weight: 600; margin: 2rem 0 1rem; color: var(--toki-blue-dark); }
+        .article-content p { margin-bottom: 1.5rem; text-align: justify; }
+        .article-content blockquote { border-left: 3px solid var(--toki-blue); padding-left: 1.5rem; margin: 2rem 0; font-family: var(--font-display); color: var(--text-secondary); }
+        .article-content ul { margin: 1.5rem 0; padding-left: 1.5rem; }
+        .article-content li { margin-bottom: 0.75rem; }
+
+        .core-message { background: var(--toki-blue-pale); border-left: 4px solid var(--toki-blue); padding: 1.5rem; margin: 2rem 0; font-size: 0.95rem; line-height: 1.8; }
+        .key-point { background: linear-gradient(135deg, var(--toki-blue-pale) 0%, #fff 100%); border: 1px solid var(--accent-blue); border-radius: 8px; padding: 1.5rem; margin: 2rem 0; text-align: center; }
+        .key-point p { font-family: var(--font-display); font-size: 1.1rem; color: var(--toki-blue-dark); margin: 0; }
+
+        .article-footer { margin-top: 4rem; padding-top: 2rem; border-top: 1px solid var(--border); text-align: center; }
+        .article-footer p { font-size: 0.8rem; color: var(--text-muted); margin-bottom: 1rem; }
+        .article-footer a { color: var(--toki-blue); text-decoration: none; }
+        .article-footer a:hover { text-decoration: underline; }
+
+        @media (max-width: 768px) {
+            .article-container { padding: 6rem 1.2rem 3rem; }
+            .article-header h1 { font-size: 1.5rem; }
+            .article-nav .nav-label { display: none; }
+        }
+        @media print { .article-nav { display: none; } .article-container { padding-top: 2rem; } }
+    </style>
+    <link rel="stylesheet" href="contact-form.css">
+    <meta property="og:type" content="article">
+    <meta property="og:title" content="DIYパートナーの設計思想 | トキストレージ">
+    <meta property="og:description" content="仕事をする側が90%取る。その原則がスケーラビリティの壁を溶かし、式場を「製造者」に変える。DIYパートナーの設計思想。">
+    <meta property="og:url" content="https://tokistorage.github.io/lp/diy-partner.html">
+    <meta property="og:site_name" content="トキストレージ">
+    <meta name="twitter:card" content="summary">
+    <meta name="twitter:title" content="DIYパートナーの設計思想 | トキストレージ">
+    <meta name="twitter:description" content="仕事をする側が90%取る。その原則がスケーラビリティの壁を溶かし、式場を「製造者」に変える。DIYパートナーの設計思想。">
+    <meta property="og:image" content="https://tokistorage.github.io/lp/asset/tokistorage-icon-512.png">
+    <meta property="og:image:width" content="512">
+    <meta property="og:image:height" content="512">
+    <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Article",
+  "headline": "DIYパートナーの設計思想",
+  "author": {
+    "@type": "Person",
+    "name": "Takuya Sato",
+    "url": "https://tokistorage.github.io/lp/profile.html"
+  },
+  "publisher": {
+    "@type": "Organization",
+    "name": "TokiStorage",
+    "url": "https://tokistorage.github.io/lp",
+    "logo": {
+      "@type": "ImageObject",
+      "url": "https://tokistorage.github.io/lp/asset/tokistorage-icon-512.png"
+    }
+  },
+  "url": "https://tokistorage.github.io/lp/diy-partner.html",
+  "inLanguage": "ja",
+  "mainEntityOfPage": "https://tokistorage.github.io/lp/diy-partner.html",
+  "description": "仕事をする側が90%取る。その原則がスケーラビリティの壁を溶かし、式場を「製造者」に変える。DIYパートナーの設計思想。"
+}
+    </script>
+    <link rel="alternate" hreflang="ja" href="https://tokistorage.github.io/lp/diy-partner.html">
+    <link rel="alternate" hreflang="en" href="https://tokistorage.github.io/lp/diy-partner-en.html">
+    <link rel="alternate" hreflang="x-default" href="https://tokistorage.github.io/lp/diy-partner.html">
+    <link rel="canonical" href="https://tokistorage.github.io/lp/diy-partner.html">
+</head>
+<body>
+
+<nav class="article-nav">
+    <a href="index.html" class="nav-brand">トキストレージ</a>
+    <div class="nav-right">
+        <span class="nav-label">経済・財産 / Economy & Property</span>
+        <a href="diy-partner-en.html" class="lang-switch">EN</a>
+    </div>
+</nav>
+
+<main class="article-container">
+
+    <header class="article-header">
+        <p class="article-category">ESSAY &mdash; 経済・財産</p>
+        <h1>DIYパートナーの設計思想</h1>
+        <p class="article-subtitle">
+            &mdash;&mdash; 仕事をする側が90%取る。その原則がスケーラビリティの壁を溶かす。
+        </p>
+    </header>
+
+    <article class="article-content">
+
+        <h2>1. スケーラビリティの壁</h2>
+
+        <p>佐藤1人 + 演出協業者。営業可能な式場数 = 土日に回れる範囲。演出協業者は本業があり、佐藤もTokiStorage全体を一人で回している。このままでは月に数件の挙式が限界だ。「自分たちが現場に行かなくても回る仕組み」が必要だった。</p>
+
+        <p>問題の本質は、人の移動に依存していることにある。どれほど製品が優れていても、製造と納品に人が張り付く限り、売上の天井は「稼働できる人日」で決まる。技術ではなく、物理的な制約がボトルネックだった。</p>
+
+        <h2>2. 代理店ではない。式場が製造者になる。</h2>
+
+        <p>代理店モデルは「仕入れて売る」。式場は在庫リスクを負い、マージンを乗せる。仕入れ値と売値の差額が利益。シンプルだが、式場にとっては「外部の商品を売らされている」感覚が残る。自社のサービスではなく、誰かの商品の販売窓口。</p>
+
+        <p>DIYパートナーは違う。式場が自ら製造し、自社サービスとして提供する。UVラミネーターとA4普通紙があれば、5分で記念品が完成する。式場にとっては「外注」ではなく「自社メニュー」。プランナーが演出の一部として自然に提案できる。</p>
+
+        <p>この違いは大きい。代理店は「売る動機」を外から注入しなければならない。DIYパートナーは「作る動機」が内側から生まれる。自分で作ったものは、自信を持って勧められる。</p>
+
+        <h2>3. 90/10の原則</h2>
+
+        <p>ライセンス料も月額費用もない。あるのは一つの原則だけだ。「仕事をする側が90%取る」。</p>
+
+        <p>式場がDIYで製造・お渡しすれば、売上の90%は式場のもの。本部は技術・プラットフォーム利用料として10%を受け取る。逆に、本部が製造・発送する通常注文なら、本部が90%を取る。誰も損をしない。動機がそのまま行動になる設計。</p>
+
+        <p>この原則は、フランチャイズ契約を不要にする。ロイヤリティの交渉も、最低発注数の縛りも、契約書の分厚い条項もいらない。やったぶんだけ取れる。やらなければゼロ。シンプルだからこそ、説明にかかる時間もゼロに近い。</p>
+
+        <h2>4. チェックボックス1つの技術的美</h2>
+
+        <p>この仕組みの実装に必要だったのは、注文画面のチェックボックス1つと、GASのif文1行だった。</p>
+
+        <p>既存のWise決済 + パートナータグ + 月次レポートがそのまま動く。新しいAPIも、新しいデータベースも、新しい管理画面もいらない。式場はWiseアカウントを作り、セットアップ画面にユーザー名を入力するだけ。あとは既存のパイプラインが回る。</p>
+
+        <p>技術的に美しい解決策とは、コードを大量に書くことではない。既存の仕組みに最小限の変更を加えて、新しい振る舞いを生み出すことだ。チェックボックス1つで、ビジネスモデルが変わる。それが設計の力だ。</p>
+
+        <h2>5. 模倣できない堀</h2>
+
+        <p>QRコードの印刷とUVラミネート加工は、誰でも真似できる。プリンターとラミネーターがあれば、明日から同じ物理的な製品を作れる。技術的な障壁はほぼゼロだ。</p>
+
+        <p>しかし、GitHubへの永久保管パイプラインと国立国会図書館への納本実績は模倣できない。「1000年残る」という価値の核心はインフラにあり、印刷工程にはない。式場が仮にパートナーを辞めて自力で同じことをしようとしても、保管の約束だけは果たせない。</p>
+
+        <p>堀は物理的な製造工程にではなく、デジタルの保管インフラに存在する。この非対称性が、DIYパートナーモデルの安全弁になっている。式場は自由に製造できる。しかし、価値の源泉には触れられない。</p>
+
+        <h2>6. 結論: ウェディング記念品の民主化</h2>
+
+        <p>特別な技術がなくても、高額な設備がなくても、式場が自らの力で「声を1000年残す」記念品を作れるようになった。A4のプリンターと1万円未満のラミネーターで。</p>
+
+        <p>必要なものは既にそこにある。それを解放するだけだった。</p>
+
+        <div class="core-message">
+            仕事をする側が90%取る。<br>
+            この原則が、スケーラビリティの壁を溶かし、フランチャイズ契約を不要にし、式場を「外注先」から「製造者」に変える。<br>
+            技術で守り、原則で走る。DIYパートナーはそういう設計だ。
+        </div>
+
+    </article>
+
+    <footer class="article-footer">
+        <p id="essay-nav-links"></p>
+        <p style="margin-top: 2rem; font-size: 0.75rem;">&copy; 2026 TokiStorage</p>
+    </footer>
+
+</main>
+
+<script src="contact-form.js" defer></script>
+<script src="essay-nav.js?v=20260223"></script>
+<script src="tracker.js" defer></script>
+</body>
+</html>
