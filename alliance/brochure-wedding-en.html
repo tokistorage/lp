@@ -1,0 +1,649 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Wedding Brochure | TokiStorage Wedding</title>
+    <style>
+        :root {
+            --toki-blue: #2563EB;
+            --toki-blue-pale: #EFF6FF;
+            --bg-white: #FFFFFF;
+            --bg-page: #F8FAFC;
+            --text-primary: #1E293B;
+            --text-secondary: #475569;
+            --text-muted: #94A3B8;
+            --border: #E2E8F0;
+            --font-display: 'Hiragino Mincho ProN', 'Yu Mincho', serif;
+            --font-body: 'Hiragino Kaku Gothic ProN', 'Yu Gothic', 'Meiryo', sans-serif;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            font-family: var(--font-body);
+            font-weight: 400;
+            background: var(--bg-page);
+            color: var(--text-primary);
+            line-height: 1.8;
+            font-size: 16px;
+        }
+
+        .br-nav {
+            position: fixed;
+            top: 0; left: 0; right: 0;
+            z-index: 1000;
+            background: rgba(255,255,255,0.95);
+            backdrop-filter: blur(12px);
+            border-bottom: 1px solid var(--border);
+            padding: 0.6rem 1.2rem;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+        .br-nav .nav-brand {
+            font-family: var(--font-display);
+            font-size: 0.9rem;
+            font-weight: 600;
+            color: var(--toki-blue);
+            text-decoration: none;
+        }
+        .br-nav .nav-right {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+        .br-nav .nav-label {
+            font-size: 0.6rem;
+            color: var(--text-muted);
+            letter-spacing: 0.08em;
+        }
+        .br-nav .lang-switch {
+            font-size: 0.75rem;
+            color: var(--toki-blue);
+            text-decoration: none;
+            padding: 0.3rem 0.6rem;
+            border: 1px solid var(--toki-blue);
+            border-radius: 4px;
+        }
+        .br-nav .lang-switch:hover { background: var(--toki-blue); color: #fff; }
+
+        .brochure {
+            max-width: 720px;
+            margin: 0 auto;
+            padding: 5rem 1.5rem 2rem;
+        }
+
+        .br-header {
+            text-align: center;
+            margin-bottom: 1.5rem;
+            padding-bottom: 1rem;
+            border-bottom: 1px solid var(--border);
+        }
+        .br-header .company {
+            font-family: var(--font-display);
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--text-primary);
+            margin-bottom: 0.2rem;
+        }
+        .br-header .sub {
+            font-size: 0.85rem;
+            color: var(--text-muted);
+        }
+
+        .tagline {
+            text-align: center;
+            margin-bottom: 1.5rem;
+        }
+        .tagline h1 {
+            font-family: var(--font-display);
+            font-size: 1.7rem;
+            font-weight: 700;
+            color: var(--toki-blue);
+            margin-bottom: 0.4rem;
+        }
+        .tagline .hook {
+            font-family: var(--font-display);
+            font-size: 1rem;
+            color: var(--text-primary);
+            margin-bottom: 0.4rem;
+        }
+        .tagline .hook-sub {
+            font-size: 0.85rem;
+            color: var(--text-secondary);
+            max-width: 560px;
+            margin: 0 auto;
+        }
+
+        .section-heading {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            margin: 1.8rem 0 0.8rem;
+        }
+        .section-heading::before {
+            content: '';
+            width: 3px;
+            height: 1.2rem;
+            background: var(--toki-blue);
+            border-radius: 2px;
+            flex-shrink: 0;
+        }
+        .section-heading h2 {
+            font-family: var(--font-display);
+            font-size: 1.1rem;
+            font-weight: 600;
+            color: var(--text-primary);
+        }
+
+        .layers-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 0.8rem;
+            margin-bottom: 0.5rem;
+        }
+        .layer-card {
+            background: var(--toki-blue-pale);
+            border: 1px solid var(--border);
+            border-radius: 10px;
+            padding: 1rem 0.8rem;
+            text-align: center;
+        }
+        .layer-card .layer-name {
+            font-family: var(--font-display);
+            font-weight: 600;
+            color: var(--toki-blue);
+            font-size: 0.9rem;
+            margin-bottom: 0.2rem;
+        }
+        .layer-card .layer-desc {
+            font-size: 0.75rem;
+            color: var(--text-secondary);
+            line-height: 1.6;
+        }
+
+        .tokiqr-box {
+            background: var(--bg-white);
+            border: 1px solid var(--border);
+            border-radius: 10px;
+            padding: 1rem 1.2rem;
+            margin-bottom: 0.5rem;
+        }
+        .tokiqr-box ul {
+            list-style: none;
+            padding: 0;
+        }
+        .tokiqr-box li {
+            font-size: 0.88rem;
+            color: var(--text-primary);
+            padding: 0.15rem 0;
+        }
+        .tokiqr-box li::before {
+            content: '\2022';
+            color: var(--toki-blue);
+            font-weight: bold;
+            margin-right: 0.5rem;
+        }
+
+        .areas {
+            margin-bottom: 0.5rem;
+        }
+        .area-row {
+            display: flex;
+            gap: 0.75rem;
+            padding: 0.35rem 0;
+        }
+        .area-label {
+            font-weight: 600;
+            color: var(--toki-blue);
+            font-size: 0.85rem;
+            min-width: 7rem;
+            flex-shrink: 0;
+        }
+        .area-desc {
+            font-size: 0.85rem;
+            color: var(--text-secondary);
+        }
+
+        .highlight-box {
+            background: var(--toki-blue-pale);
+            border-radius: 8px;
+            padding: 0.8rem 1.2rem;
+            margin: 0.8rem 0;
+            text-align: center;
+        }
+        .highlight-box p {
+            font-family: var(--font-display);
+            font-size: 0.9rem;
+            color: var(--text-primary);
+            line-height: 1.7;
+        }
+
+        .pricing-line {
+            font-size: 0.88rem;
+            color: var(--text-primary);
+            margin-bottom: 0.15rem;
+        }
+        .pricing-note {
+            font-size: 0.78rem;
+            color: var(--text-secondary);
+        }
+
+        .contact-section {
+            margin-top: 1.5rem;
+            padding-top: 1rem;
+            border-top: 1px solid var(--border);
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            gap: 2rem;
+        }
+        .contact-info .contact-name {
+            font-family: var(--font-display);
+            font-size: 1rem;
+            font-weight: 600;
+            color: var(--text-primary);
+            margin-bottom: 0.2rem;
+        }
+        .contact-info p {
+            font-size: 0.82rem;
+            color: var(--text-secondary);
+            line-height: 1.7;
+        }
+        .contact-info a {
+            color: var(--toki-blue);
+            text-decoration: none;
+        }
+        .contact-qr { text-align: center; flex-shrink: 0; }
+        .contact-qr img { width: 100px; height: 100px; }
+        .contact-qr p { font-size: 0.78rem; font-weight: 500; margin-top: 0.2rem; color: var(--text-primary); }
+
+        .br-footer {
+            text-align: center;
+            margin-top: 2rem;
+            padding: 1rem 0;
+            font-size: 0.75rem;
+            color: var(--text-muted);
+        }
+
+        .qr-pair {
+            display: flex;
+            gap: 1.5rem;
+            margin: 1rem 0;
+        }
+        .qr-pair-item { flex: 1; }
+        .qr-pair .section-heading { margin: 0 0 0.4rem; }
+        .essay-qr-box { text-align: center; }
+        .essay-qr-box .print-only-qr { display: none; }
+        .essay-qr-box .try-link {
+            display: inline-block;
+            margin-top: 0.5rem;
+            font-size: 0.85rem;
+            color: var(--toki-blue);
+            text-decoration: none;
+        }
+        .essay-qr-box .try-link:hover { text-decoration: underline; }
+
+        @media screen and (max-width: 600px) {
+            .qr-pair { flex-direction: column; gap: 0.8rem; }
+            .layers-grid { grid-template-columns: 1fr; }
+            .contact-section { flex-direction: column; }
+            .tagline h1 { font-size: 1.3rem; }
+        }
+
+        /* PDF download */
+        .pdf-download {
+            text-align: center;
+            margin-top: 2rem;
+            padding: 1.5rem;
+            background: var(--toki-blue-pale);
+            border-radius: 10px;
+        }
+        .pdf-download .pdf-title {
+            font-size: 0.85rem;
+            color: var(--text-secondary);
+            margin-bottom: 0.75rem;
+        }
+        .pdf-buttons {
+            display: flex;
+            justify-content: center;
+            gap: 0.75rem;
+            flex-wrap: wrap;
+        }
+        .pdf-buttons a {
+            display: inline-block;
+            padding: 0.6rem 1.5rem;
+            border-radius: 6px;
+            font-size: 0.9rem;
+            font-weight: 500;
+            text-decoration: none;
+            cursor: pointer;
+        }
+        .pdf-buttons .btn-current {
+            background: var(--toki-blue);
+            color: #fff;
+        }
+        .pdf-buttons .btn-current:hover { background: #1D4ED8; }
+        .pdf-buttons .btn-other {
+            background: #fff;
+            color: var(--toki-blue);
+            border: 1px solid var(--toki-blue);
+        }
+        .pdf-buttons .btn-other:hover { background: #DBEAFE; }
+
+        @media screen {
+            .pdf-download { display: block !important; }
+        }
+
+        @media print {
+            .br-nav, .br-footer, .pdf-download, .essay-qr-box .try-link, .highlight-box .try-link { display: none; }
+            .essay-qr-box .print-only-qr { display: block; }
+            .brochure { padding: 0; max-width: 100%; }
+            body {
+                background: white;
+                line-height: 1.4;
+                font-size: 12.5px;
+                -webkit-print-color-adjust: exact;
+                print-color-adjust: exact;
+                --text-secondary: #334155;
+                --text-muted: #64748B;
+            }
+            .br-header { margin-bottom: 0.4rem; padding-bottom: 0.3rem; }
+            .br-header .company { font-size: 1.3rem; }
+            .tagline { margin-bottom: 0.4rem; }
+            .tagline h1 { font-size: 1.25rem; margin-bottom: 0.15rem; }
+            .tagline .hook { font-size: 0.88rem; margin-bottom: 0.15rem; }
+            .tagline .hook-sub { font-size: 0.76rem; }
+            .section-heading { margin: 0.4rem 0 0.2rem; }
+            .section-heading h2 { font-size: 0.95rem; }
+            .layers-grid { gap: 0.35rem; margin-bottom: 0.25rem; }
+            .layer-card { padding: 0.35rem 0.35rem; border-radius: 6px; }
+            .layer-card .layer-name { font-size: 0.82rem; }
+            .layer-card .layer-desc { font-size: 0.65rem; line-height: 1.35; }
+            .tokiqr-box { padding: 0.35rem 0.6rem; margin-bottom: 0.25rem; }
+            .tokiqr-box li { padding: 0.01rem 0; font-size: 0.76rem; line-height: 1.3; }
+            .areas { margin-bottom: 0.2rem; }
+            .area-row { padding: 0.08rem 0; }
+            .area-label { font-size: 0.76rem; min-width: 6rem; }
+            .area-desc { font-size: 0.76rem; }
+            .highlight-box { padding: 0.4rem 0.8rem; margin: 0.3rem 0; }
+            .highlight-box p { font-size: 0.76rem; line-height: 1.5; }
+            .pricing-line { font-size: 0.78rem; margin-bottom: 0.06rem; }
+            .pricing-note { font-size: 0.7rem; }
+            .contact-section {
+                margin-top: 0.4rem;
+                padding-top: 0.3rem;
+                flex-direction: row;
+                align-items: flex-end;
+                gap: 1.5rem;
+            }
+            .contact-info .contact-name { font-size: 0.88rem; }
+            .contact-info p { font-size: 0.76rem; line-height: 1.4; }
+            .contact-qr img { width: 80px; height: 80px; }
+            .contact-qr p { font-size: 0.7rem; }
+            .qr-pair { margin: 0.3rem 0; gap: 0.8rem; break-inside: avoid; }
+            .qr-pair .section-heading { margin: 0 0 0.1rem; text-align: center; }
+            .qr-pair .section-heading h2 { font-size: 0.82rem; }
+            .qr-pair .essay-qr-box { display: flex; align-items: flex-start; gap: 0.4rem; padding: 0.2rem 0.3rem; border: none; text-align: left !important; }
+            .qr-pair .essay-qr-box p { font-size: 0.6rem; line-height: 1.35; margin-bottom: 0.1rem; }
+            .qr-pair .essay-qr-box img { width: 64px; height: 64px; flex-shrink: 0; }
+            .qr-pair .essay-qr-box p:first-of-type { display: none; }
+        }
+        /* Landscape print override */
+        @media print {
+            body.landscape-mode { line-height: 1.45; font-size: 12.5px; }
+            body.landscape-mode .brochure {
+                -webkit-column-count: 2;
+                column-count: 2;
+                -webkit-column-gap: 13mm;
+                column-gap: 13mm;
+                width: 100%;
+            }
+            body.landscape-mode .br-header,
+            body.landscape-mode .tagline {
+                column-span: all;
+            }
+            body.landscape-mode .section-heading,
+            body.landscape-mode .layers-grid,
+            body.landscape-mode .tokiqr-box,
+            body.landscape-mode .areas,
+            body.landscape-mode .highlight-box,
+            body.landscape-mode .qr-pair,
+            body.landscape-mode .contact-section {
+                break-inside: avoid;
+            }
+            body.landscape-mode .revenue-heading {
+                break-before: column;
+            }
+            body.landscape-mode .contact-section {
+                margin-top: 0.4rem;
+                padding-top: 0.3rem;
+            }
+            body.landscape-mode .br-header { margin-bottom: 0.5rem; padding-bottom: 0.35rem; }
+            body.landscape-mode .br-header .company { font-size: 1.35rem; }
+            body.landscape-mode .tagline { margin-bottom: 0.45rem; }
+            body.landscape-mode .tagline h1 { font-size: 1.3rem; margin-bottom: 0.18rem; }
+            body.landscape-mode .tagline .hook { font-size: 0.95rem; margin-bottom: 0.18rem; }
+            body.landscape-mode .tagline .hook-sub { font-size: 0.8rem; }
+            body.landscape-mode .section-heading { margin: 0.4rem 0 0.22rem; }
+            body.landscape-mode .section-heading h2 { font-size: 0.98rem; }
+            body.landscape-mode .layers-grid { gap: 0.4rem; margin-bottom: 0.3rem; }
+            body.landscape-mode .layer-card { padding: 0.4rem 0.4rem; }
+            body.landscape-mode .layer-card .layer-name { font-size: 0.88rem; }
+            body.landscape-mode .layer-card .layer-desc { font-size: 0.68rem; line-height: 1.4; }
+            body.landscape-mode .tokiqr-box { padding: 0.4rem 0.6rem; margin-bottom: 0.3rem; }
+            body.landscape-mode .tokiqr-box li { font-size: 0.8rem; line-height: 1.35; padding: 0.02rem 0; }
+            body.landscape-mode .area-row { padding: 0.08rem 0; }
+            body.landscape-mode .area-label { font-size: 0.78rem; }
+            body.landscape-mode .area-desc { font-size: 0.78rem; }
+            body.landscape-mode .highlight-box { padding: 0.4rem 0.8rem; margin: 0.3rem 0; }
+            body.landscape-mode .highlight-box p { font-size: 0.78rem; }
+            body.landscape-mode .contact-info .contact-name { font-size: 0.92rem; }
+            body.landscape-mode .contact-info p { font-size: 0.8rem; line-height: 1.45; }
+            body.landscape-mode .qr-pair { margin: 0.3rem 0; gap: 0.6rem; break-inside: avoid; }
+            body.landscape-mode .qr-pair .section-heading { margin: 0 0 0.1rem; text-align: center; }
+            body.landscape-mode .qr-pair .section-heading h2 { font-size: 0.8rem; }
+            body.landscape-mode .qr-pair .essay-qr-box { display: flex; align-items: flex-start; gap: 0.3rem; padding: 0.15rem 0.25rem; margin-bottom: 0; border: none; text-align: left !important; }
+            body.landscape-mode .qr-pair .essay-qr-box p { font-size: 0.52rem; line-height: 1.3; margin-bottom: 0.06rem; }
+            body.landscape-mode .qr-pair .essay-qr-box img { width: 52px; height: 52px; flex-shrink: 0; }
+        }
+    </style>
+    <style id="portrait-page-style">
+        @page { size: A4; margin: 9mm 11mm; }
+    </style>
+    <style id="landscape-page-style" media="not all">
+        @page { size: A4 landscape; margin: 8mm 10mm; }
+    </style>
+</head>
+<body>
+
+<nav class="br-nav">
+    <span class="nav-brand">TokiStorage Wedding</span>
+    <div class="nav-right">
+        <span class="nav-label">WEDDING BROCHURE</span>
+        <a href="brochure-wedding.html" class="lang-switch">JA</a>
+    </div>
+</nav>
+
+<main class="brochure">
+
+    <div class="br-header">
+        <div class="company"><img src="asset/tokistorage-icon-512.png" alt="TokiStorage" width="28" height="28" style="vertical-align:-5px;margin-right:8px;">TokiStorage Wedding</div>
+        <div class="sub">For Venue Partners &mdash; Interactive Performances &times; Everlasting Keepsakes</div>
+    </div>
+
+    <div class="tagline">
+        <h1>Make your ceremonies unforgettable with &ldquo;takeable experiences.&rdquo;</h1>
+        <p class="hook">Interactive performances &times; voice QR keepsakes&mdash;experience value no other venue can offer</p>
+        <p class="hook-sub">The emotional moments created by interactive performances are preserved forever as voice QR keepsakes. A new option to offer your couples.</p>
+    </div>
+
+    <div class="highlight-box" style="margin-bottom: 1rem; text-align: left; display: flex; align-items: center; gap: 0.8rem;">
+        <p style="flex: 1;">Stand out as &ldquo;the venue where experiences go home.&rdquo; Produce keepsakes with your own equipment for direct revenue. TokiQR runs server-free, offline, and virtually forever. Try it here.<a href="https://tokistorage.github.io/qr/" class="try-link">Try TokiQR &rarr;</a></p>
+        <img src="asset/qr-tokiqr.png" alt="TokiQR" style="width: 64px; height: 64px; flex-shrink: 0;">
+    </div>
+
+    <div class="section-heading"><h2>Performances We Offer</h2></div>
+    <div class="layers-grid">
+        <div class="layer-card">
+            <div class="layer-name">Candle Ceremony</div>
+            <div class="layer-desc">Guests and the couple join hands;<br>a micro-current lights the central<br>lamp&mdash;a shared vow of light</div>
+        </div>
+        <div class="layer-card">
+            <div class="layer-name">Pulse Visualization</div>
+            <div class="layer-desc">The couple's heartbeats<br>rendered as real-time visuals&mdash;<br>see the pulse of the vow</div>
+        </div>
+        <div class="layer-card">
+            <div class="layer-name">LED Performance</div>
+            <div class="layer-desc">Alcohol-sensing LEDs<br>shift from blue to red&mdash;<br>a colorful toast moment</div>
+        </div>
+    </div>
+
+    <div class="section-heading"><h2>Voice QR Keepsakes&mdash;Mementos That Preserve Voice</h2></div>
+    <div class="tokiqr-box">
+        <ul>
+            <li><strong>Digital QR (Free)</strong> &mdash; Encode voice, images, and text into a QR with just a smartphone. Also works for guest-participation activities</li>
+            <li><strong>UV Laminate (&yen;5,000)</strong> &mdash; Producible with a printer, laminator, and A4 paper. A same-day keepsake made with your own equipment</li>
+            <li><strong>Quartz Glass Plate (&yen;50,000)</strong> &mdash; High-durability, premium keepsake shipped after the event. For the couple and their parents</li>
+        </ul>
+    </div>
+
+    <div class="section-heading"><h2>Performances &times; Keepsakes&mdash;Ceremony Scenes</h2></div>
+    <div class="areas">
+        <div class="area-row">
+            <span class="area-label">Vow Keepsake</span>
+            <span class="area-desc">The vow audio from the candle ceremony, UV laminated. A special keepsake for the couple and both families</span>
+        </div>
+        <div class="area-row">
+            <span class="area-label">Pulse Memory</span>
+            <span class="area-desc">The heartbeat waveform at the moment of the vow, recorded as a QR image. A visual keepsake of the heart</span>
+        </div>
+        <div class="area-row">
+            <span class="area-label">Bride's Letter</span>
+            <span class="area-desc">Her voice reading the letter, captured in a voice QR. Gratitude to her parents, replayable anytime</span>
+        </div>
+    </div>
+
+    <div class="section-heading revenue-heading"><h2>Revenue Model</h2></div>
+    <div class="tokiqr-box">
+        <ul>
+            <li><strong>Franchise Model</strong> &mdash; Your venue produces and sells UV laminates. Option pricing flows directly to your revenue</li>
+            <li><strong>Low Operating Cost</strong> &mdash; Running costs are consumables only: A4 paper and UV film</li>
+            <li><strong>Revenue Share</strong> &mdash; Per-event license fee. Initial cost is equipment setup and training only</li>
+        </ul>
+    </div>
+
+    <div class="section-heading"><h2>Getting Started</h2></div>
+    <div class="areas">
+        <div class="area-row">
+            <span class="area-label">&nbsp;Contact Us</span>
+            <span class="area-desc">Reach out by email for a demo or any questions</span>
+        </div>
+        <div class="area-row">
+            <span class="area-label">&nbsp;Plan Proposal</span>
+            <span class="area-desc">We tailor a deployment plan to your equipment and needs</span>
+        </div>
+        <div class="area-row">
+            <span class="area-label">&nbsp;Setup &amp; Training</span>
+            <span class="area-desc">Equipment setup and production manual provided. Ready to operate from day one</span>
+        </div>
+        <div class="area-row">
+            <span class="area-label">&nbsp;Start Offering</span>
+            <span class="area-desc">Add it to your couples' plans and start generating revenue</span>
+        </div>
+    </div>
+
+    <div class="highlight-box">
+        <p>Scan the QR codes below with your phone.<br>This is what guests take home&mdash;a &ldquo;voice keepsake.&rdquo;</p>
+    </div>
+
+    <div class="qr-pair">
+        <div class="qr-pair-item">
+            <div class="section-heading"><h2>Co-Creation in Weddings</h2></div>
+            <div class="tokiqr-box essay-qr-box" style="text-align: center;">
+                <img src="asset/qr-wedding-partnership.png" alt="QR" class="print-only-qr">
+                <div>
+                    <p style="font-family: var(--font-display); font-size: 0.88rem; color: var(--text-primary); margin-bottom: 0.3rem;">Where experiential tech met preservation tech</p>
+                    <p style="font-size: 0.8rem; color: var(--text-secondary); line-height: 1.6;">The story of a wedding collaboration that started at a takoyaki party.</p>
+                    <a href="https://tokistorage.github.io/lp/wedding-partnership-en.html" class="try-link">Read the essay &rarr;</a>
+                </div>
+            </div>
+        </div>
+        <div class="qr-pair-item">
+            <div class="section-heading"><h2>The Bride's Letter</h2></div>
+            <div class="tokiqr-box essay-qr-box" style="text-align: center;">
+                <img src="asset/qr-brides-letter.png" alt="QR" class="print-only-qr">
+                <div>
+                    <p style="font-family: var(--font-display); font-size: 0.88rem; color: var(--text-primary); margin-bottom: 0.3rem;">Her voice, always within reach</p>
+                    <p style="font-size: 0.8rem; color: var(--text-secondary); line-height: 1.6;">A story of a letter read aloud, inscribed in QR, and delivered to her parents.</p>
+                    <a href="https://tokistorage.github.io/lp/brides-letter-en.html" class="try-link">Read the essay &rarr;</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="contact-section">
+        <div class="contact-info">
+            <div class="contact-name">TokiStorage Wedding</div>
+            <p>Founder: Takuya Sato</p>
+            <p>2-11-13 Akemi, Urayasu, Chiba 279-0014, Japan</p>
+            <p><a href="mailto:tokistorage1000@gmail.com">tokistorage1000@gmail.com</a></p>
+        </div>
+        <div class="contact-qr">
+            <img src="asset/qr-contact.png" alt="QR code to contact form">
+            <p>Consultation &amp; Inquiries</p>
+        </div>
+    </div>
+
+    <div class="pdf-download">
+        <p class="pdf-title">Printable A4 Brochure (PDF)</p>
+        <div class="pdf-buttons">
+            <a href="asset/brochure-wedding-en-landscape.pdf" download class="btn-current">A4 Landscape Download</a>
+            <a href="asset/brochure-wedding-en.pdf" download class="btn-other">A4 Portrait Download</a>
+        </div>
+    </div>
+
+</main>
+
+<footer class="br-footer">
+    <p>&copy; 2026 TokiStorage Wedding</p>
+</footer>
+
+<script>
+(function() {
+    var p = new URLSearchParams(location.search);
+    if (p.get('landscape') === '1') {
+        document.body.classList.add('landscape-mode');
+        document.getElementById('portrait-page-style').media = 'not all';
+        document.getElementById('landscape-page-style').media = 'all';
+        try {
+            var css = '';
+            var sheets = document.styleSheets;
+            for (var i = 0; i < sheets.length; i++) {
+                var rules = sheets[i].cssRules;
+                if (!rules) continue;
+                for (var j = 0; j < rules.length; j++) {
+                    if (rules[j] instanceof CSSMediaRule && rules[j].conditionText === 'print') {
+                        for (var k = 0; k < rules[j].cssRules.length; k++) {
+                            css += rules[j].cssRules[k].cssText + '\n';
+                        }
+                    }
+                }
+            }
+            if (css) {
+                var s = document.createElement('style');
+                s.textContent = css;
+                document.head.appendChild(s);
+            }
+        } catch(e) {}
+    }
+    if (p.get('grayscale') === '1') {
+        var s = document.createElement('style');
+        s.textContent = ':root{--toki-blue:#444;--toki-blue-pale:#F0F0F0;--text-muted:#777;}img{filter:grayscale(100%);}';
+        document.head.appendChild(s);
+    }
+})();
+</script>
+</body>
+</html>
