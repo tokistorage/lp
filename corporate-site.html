@@ -1,0 +1,339 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" type="image/png" sizes="32x32" href="asset/favicon-32.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="asset/apple-touch-icon.png">
+    <title>コーポレートサイトという設計判断——LPと玄関を分離する理由 | トキストレージ</title>
+    <meta name="robots" content="index, follow">
+    <meta name="description" content="LPに同居していたトップページを独立したコーポレートサイトに分離した。情報密度を下げ、余白を増やし、初めて訪れる人が迷わない玄関を設計する。サブディレクトリ構成とミニマルデザインの設計判断を記録する。">    <style>
+        :root {
+            --toki-blue: #1E40AF;
+            --toki-blue-dark: #1E3A5F;
+            --toki-blue-pale: #EFF6FF;
+            --accent-blue: #3B82F6;
+            --bg-white: #FFFFFF;
+            --bg-section: #DBEAFE;
+            --text-primary: #1E293B;
+            --text-secondary: #475569;
+            --text-muted: #94A3B8;
+            --border: #E2E8F0;
+            --font-display: 'Hiragino Mincho ProN', 'Yu Mincho', serif;
+            --font-body: 'Hiragino Kaku Gothic ProN', 'Yu Gothic', 'Meiryo', sans-serif;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        html { scroll-behavior: smooth; }
+
+        body {
+            font-family: var(--font-body);
+            font-weight: 400;
+            background: var(--bg-white);
+            color: var(--text-primary);
+            line-height: 1.9;
+            font-size: 16px;
+        }
+
+        .article-nav {
+            position: fixed; top: 0; left: 0; right: 0; z-index: 1000;
+            background: rgba(255,255,255,0.95);
+            backdrop-filter: blur(12px);
+            border-bottom: 1px solid var(--border);
+            padding: 0.6rem 1.2rem;
+            display: flex; align-items: center; justify-content: space-between; gap: 1rem;
+        }
+        .article-nav .nav-brand {
+            font-family: var(--font-display); font-size: 0.9rem; font-weight: 600;
+            color: var(--toki-blue); text-decoration: none; white-space: nowrap; flex-shrink: 0;
+        }
+        .article-nav .nav-right { display: flex; align-items: center; gap: 1rem; }
+        .article-nav .nav-label { font-size: 0.6rem; color: var(--text-muted); letter-spacing: 0.08em; text-align: right; line-height: 1.4; }
+        .article-nav .lang-switch { font-size: 0.75rem; color: var(--toki-blue); text-decoration: none; padding: 0.3rem 0.6rem; border: 1px solid var(--toki-blue); border-radius: 4px; }
+        .article-nav .lang-switch:hover { background: var(--toki-blue); color: #fff; }
+
+        .article-container { max-width: 720px; margin: 0 auto; padding: 5rem 2rem 4rem; }
+        .article-header { margin-bottom: 3rem; }
+        .article-category { font-size: 0.7rem; letter-spacing: 0.15em; color: var(--toki-blue); margin-bottom: 0.5rem; }
+        .article-header h1 { font-family: var(--font-display); font-size: 1.8rem; font-weight: 700; line-height: 1.5; color: var(--text-primary); margin-bottom: 1rem; }
+        .article-subtitle { font-size: 0.95rem; color: var(--text-secondary); line-height: 1.8; }
+
+        .article-content h2 { font-family: var(--font-display); font-size: 1.3rem; font-weight: 600; color: var(--toki-blue-dark); margin: 3rem 0 1rem; padding-bottom: 0.5rem; border-bottom: 1px solid var(--border); }
+        .article-content h3 { font-family: var(--font-display); font-size: 1.1rem; font-weight: 600; color: var(--text-primary); margin: 2rem 0 0.8rem; }
+        .article-content p { margin-bottom: 1.2rem; text-align: justify; }
+        .article-content ul, .article-content ol { margin: 0.5rem 0 1.5rem 1.5rem; }
+        .article-content li { margin-bottom: 0.5rem; }
+        .article-content blockquote { border-left: 3px solid var(--toki-blue); padding: 1rem 1.5rem; margin: 1.5rem 0; background: var(--toki-blue-pale); font-style: italic; color: var(--text-secondary); }
+        .article-content strong { color: var(--toki-blue-dark); }
+        .article-content code { font-size: 0.88em; background: var(--toki-blue-pale); padding: 0.15em 0.4em; border-radius: 3px; }
+
+        .core-message { background: var(--toki-blue-pale); border-left: 4px solid var(--toki-blue); padding: 1.2rem 1.5rem; margin: 0 0 2rem; font-size: 0.95rem; line-height: 1.8; }
+
+        .phase-table { width: 100%; border-collapse: collapse; margin: 1.5rem 0; font-size: 0.9rem; }
+        .phase-table th, .phase-table td { padding: 0.7rem 1rem; border: 1px solid var(--border); text-align: left; }
+        .phase-table th { background: var(--toki-blue-pale); font-weight: 600; color: var(--toki-blue-dark); font-size: 0.85rem; }
+        .phase-table td { vertical-align: top; }
+
+        .highlight-box { background: linear-gradient(135deg, var(--toki-blue-pale), #fff); border: 1px solid var(--accent-blue); border-radius: 8px; padding: 1.5rem; margin: 2rem 0; text-align: center; }
+        .highlight-box p { text-align: center; margin-bottom: 0.5rem; }
+        .highlight-box .big { font-family: var(--font-display); font-size: 1.3rem; font-weight: 700; color: var(--toki-blue-dark); }
+
+        .article-footer { margin-top: 4rem; padding: 2rem 0; border-top: 1px solid var(--border); font-size: 0.7rem; color: var(--text-muted); line-height: 2.2; }
+        .article-footer a { color: var(--text-muted); text-decoration: none; }
+        .article-footer a:hover { text-decoration: underline; }
+
+        @media (max-width: 768px) {
+            .article-container { padding: 6rem 1.2rem 3rem; }
+            .article-header h1 { font-size: 1.5rem; }
+            .article-nav .nav-label { display: none; }
+            .phase-table { font-size: 0.8rem; }
+            .phase-table th, .phase-table td { padding: 0.5rem 0.6rem; }
+        }
+        @media print { .article-nav { display: none; } .article-container { padding-top: 2rem; } }
+        .nav-brand::before { content: ''; display: inline-block; width: 20px; height: 20px; background: url('asset/tokistorage-icon-512.png') no-repeat center / contain; vertical-align: -3px; margin-right: 5px; }
+    </style>
+<link rel="stylesheet" href="contact-form.css">
+    <meta property="og:type" content="article">
+    <meta property="og:title" content="コーポレートサイトという設計判断——LPと玄関を分離する理由 | トキストレージ">
+    <meta property="og:description" content="LPに同居していたトップページを独立したコーポレートサイトに分離した。情報密度を下げ、余白を増やし、初めて訪れる人が迷わない玄関を設計する。">
+    <meta property="og:url" content="https://tokistorage.github.io/lp/corporate-site.html">
+    <meta property="og:site_name" content="トキストレージ">
+    <meta name="twitter:card" content="summary">
+    <meta name="twitter:title" content="コーポレートサイトという設計判断——LPと玄関を分離する理由 | トキストレージ">
+    <meta name="twitter:description" content="LPに同居していたトップページを独立したコーポレートサイトに分離した。情報密度を下げ、余白を増やし、初めて訪れる人が迷わない玄関を設計する。">
+    <meta property="og:image" content="https://tokistorage.github.io/lp/asset/tokistorage-icon-512.png">
+    <meta property="og:image:width" content="512">
+    <meta property="og:image:height" content="512">
+    <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Article",
+  "headline": "コーポレートサイトという設計判断——LPと玄関を分離する理由",
+  "author": {
+    "@type": "Person",
+    "name": "Takuya Sato",
+    "url": "https://tokistorage.github.io/lp/profile.html"
+  },
+  "publisher": {
+    "@type": "Organization",
+    "name": "TokiStorage",
+    "url": "https://tokistorage.github.io/lp",
+    "logo": {
+      "@type": "ImageObject",
+      "url": "https://tokistorage.github.io/lp/asset/tokistorage-icon-512.png"
+    }
+  },
+  "url": "https://tokistorage.github.io/lp/corporate-site.html",
+  "inLanguage": "ja",
+  "mainEntityOfPage": "https://tokistorage.github.io/lp/corporate-site.html",
+  "description": "LPに同居していたトップページを独立したコーポレートサイトに分離した。情報密度を下げ、余白を増やし、初めて訪れる人が迷わない玄関を設計する。サブディレクトリ構成とミニマルデザインの設計判断を記録する。"
+}
+    </script>
+    <link rel="alternate" hreflang="ja" href="https://tokistorage.github.io/lp/corporate-site.html">
+    <link rel="alternate" hreflang="en" href="https://tokistorage.github.io/lp/corporate-site-en.html">
+    <link rel="alternate" hreflang="x-default" href="https://tokistorage.github.io/lp/corporate-site.html">
+    <link rel="canonical" href="https://tokistorage.github.io/lp/corporate-site.html">
+</head>
+<body>
+
+<nav class="article-nav">
+    <a href="index.html" class="nav-brand">トキストレージ</a>
+    <div class="nav-right">
+        <span class="nav-label">技術・設計 / コーポレートサイト</span>
+        <a href="corporate-site-en.html" class="lang-switch">EN</a>
+    </div>
+</nav>
+
+<main class="article-container">
+
+    <header class="article-header">
+        <p class="article-category">ESSAY — 技術・設計</p>
+        <h1>コーポレートサイトという設計判断——LPと玄関を分離する理由</h1>
+        <p class="article-subtitle">
+            LPに同居していたトップページを独立したコーポレートサイトに分離した。<br>
+            情報密度を下げ、余白を増やし、初めて訪れる人が迷わない玄関を設計する。<br>
+            サブディレクトリ構成とミニマルデザインの設計判断を記録する。
+        </p>
+    </header>
+
+    <article class="article-content">
+
+        <div class="core-message">
+            <strong>この記事で言いたいこと：</strong>トキストレージはドメインルート（<code>tokistorage.github.io</code>）を、LPへのリダイレクトから独立したコーポレートサイトに昇格させた。LPは116本のエッセイと詳細なサービス情報を持つ「図書館」であり、初めての訪問者には情報過多だ。コーポレートサイトは「玄関」として機能し、最小限の情報で全体像を伝え、LPやTokiQRへ送り出す。この分離は見栄えの問題ではなく、情報アーキテクチャの問題だ。
+        </div>
+
+
+        <h2>1. なぜ分離したのか</h2>
+
+        <p>これまで<code>tokistorage.github.io</code>にアクセスすると、<code>/lp/</code>にリダイレクトされていた。LPがトップページを兼ねていたのだ。</p>
+
+        <p>LPは悪いページではない。サービスの詳細、料金、技術仕様、116本のエッセイ、マニフェスト、提案資料——すべてがそこにある。しかし「すべてがある」ということは、初めて訪れた人にとって「どこから見ればいいか分からない」ことと同義だ。</p>
+
+        <p>図書館は素晴らしい場所だが、建物の玄関が書庫の中にあったら困る。必要なのは、広いロビーと案内板だ。</p>
+
+        <blockquote>
+            LPは図書館。コーポレートサイトは玄関。<br>
+            訪問者はまず玄関に立ち、自分がどこに行きたいかを決める。
+        </blockquote>
+
+
+        <h2>2. 何を作ったか</h2>
+
+        <p>コーポレートサイトは6ページで構成される。</p>
+
+        <table class="phase-table">
+            <tr>
+                <th>ページ</th>
+                <th>役割</th>
+            </tr>
+            <tr>
+                <td><code>index.html</code></td>
+                <td>トップページ。ヒーロー、ミッション、サービスカード3枚、代表者概要</td>
+            </tr>
+            <tr>
+                <td><code>services.html</code></td>
+                <td>サービス一覧。三層保管の概要、TokiQR、ウェディング</td>
+            </tr>
+            <tr>
+                <td><code>about.html</code></td>
+                <td>会社概要。ミッション、代表者経歴、会社情報、SNS</td>
+            </tr>
+            <tr>
+                <td colspan="2" style="text-align: center; color: var(--text-muted); font-size: 0.85rem;">+ 各ページの英語版（計6ページ）</td>
+            </tr>
+        </table>
+
+        <p>LPの情報を圧縮してコーポレートに載せたのではない。コーポレートには概要だけを置き、詳細へのリンクでLPに送り出す。情報の重複を避けるこの構造は、メンテナンスコストの低減にも直結する。</p>
+
+
+        <h2>3. デザインの差分</h2>
+
+        <p>LPと同じカラーパレット（Toki Blue <code>#2563EB</code> / Hiragino Mincho + Sans）を使いながら、意図的に差をつけた。</p>
+
+        <table class="phase-table">
+            <tr>
+                <th>項目</th>
+                <th>LP</th>
+                <th>コーポレート</th>
+            </tr>
+            <tr>
+                <td>最大幅</td>
+                <td>960px</td>
+                <td>1080px</td>
+            </tr>
+            <tr>
+                <td>セクション余白</td>
+                <td>4rem</td>
+                <td>6rem</td>
+            </tr>
+            <tr>
+                <td>カード</td>
+                <td>背景色＋ボーダー</td>
+                <td>ボーダーレス、下線のみ</td>
+            </tr>
+            <tr>
+                <td>装飾</td>
+                <td>テキスト中心</td>
+                <td>テキストのみ、装飾排除</td>
+            </tr>
+            <tr>
+                <td>ナビゲーション</td>
+                <td>固定ナビ＋サイドバー</td>
+                <td>フロストガラス固定ナビのみ</td>
+            </tr>
+        </table>
+
+        <p>要するに「同じブランドだが、密度が違う」。コーポレートはLPより余白が多く、情報密度が低い。初めての訪問者が3秒で「何の会社か」を理解できるよう設計した。</p>
+
+
+        <h2>4. サブディレクトリ構成</h2>
+
+        <p>GitHub Pagesでは、ユーザーページ（<code>username.github.io</code>リポジトリ）がドメインルートに配置され、プロジェクトページはサブディレクトリとして配置される。この仕組みを活用した。</p>
+
+        <table class="phase-table">
+            <tr>
+                <th>URL</th>
+                <th>リポジトリ</th>
+                <th>役割</th>
+            </tr>
+            <tr>
+                <td><code>tokistorage.github.io/</code></td>
+                <td>tokistorage.github.io</td>
+                <td>コーポレート（玄関）</td>
+            </tr>
+            <tr>
+                <td><code>tokistorage.github.io/lp/</code></td>
+                <td>lp</td>
+                <td>LP・エッセイ（図書館）</td>
+            </tr>
+            <tr>
+                <td><code>tokistorage.github.io/qr/</code></td>
+                <td>qr</td>
+                <td>TokiQRアプリ</td>
+            </tr>
+        </table>
+
+        <p>3つのリポジトリが独立してデプロイ・管理される。CSSもJSもアセットもすべて自己完結しており、あるリポジトリの変更が他に影響しない。これは<a href="no-external-deps.html">外部依存性を増やさない</a>という設計原則の自然な延長だ。</p>
+
+
+        <h2>5. SEOへの影響</h2>
+
+        <p>ドメインルートにコンテンツがなかった（リダイレクトのみだった）問題を解消したことで、いくつかのSEO上の利点が生まれた。</p>
+
+        <ul>
+            <li><strong>robots.txt</strong>が正しく200を返す。以前は404（Site not found）だった</li>
+            <li><strong>sitemap.xml</strong>をドメインルートに配置し、<code>sitemapindex</code>でコーポレートとLPの両方を参照</li>
+            <li><strong>Organization構造化データ</strong>をルートページに配置。Google検索結果でのナレッジパネル認識に寄与する</li>
+            <li><strong>hreflang</strong>で日英の対応関係を明示。言語切替がSEO上も正しく認識される</li>
+        </ul>
+
+        <p>コーポレートサイトの構築は、見た目の問題だけでなく、検索エンジンに対する「会社の顔」を整える行為でもあった。</p>
+
+
+        <h2>6. 自己完結性という一貫性</h2>
+
+        <p>トキストレージの設計思想には「外部依存を増やさない」という原則がある。CDNからライブラリを読み込まない。フレームワークを使わない。CSSは自己完結。</p>
+
+        <p>コーポレートサイトも例外ではない。<code>style.css</code>は1ファイルで完結し、LPの<code>index.css</code>とは完全に独立している。<code>main.js</code>はナビのトグルとスクロールシャドウだけを担う50行のコード。ファビコンやOGP画像も<code>asset/</code>にコピーして、<code>/lp/asset/</code>へのクロスリポ参照を排除した。</p>
+
+        <blockquote>
+            3つのリポジトリは、3つの独立した島だ。<br>
+            橋がなくても、それぞれが自立して機能する。
+        </blockquote>
+
+
+        <h2>7. 結び——玄関は静かであるべきだ</h2>
+
+        <div class="highlight-box">
+            <p class="big">玄関は静かであるべきだ。</p>
+            <p>情報の洪水は図書館に任せ、<br>玄関では「ここは何の場所か」だけを伝える。</p>
+        </div>
+
+        <p>コーポレートサイトに載せた情報は、LPの1割にも満たない。それでいい。玄関に百科事典を置く必要はない。訪問者が「存在証明の民主化」というミッションを理解し、興味があればLPへ進み、TokiQRを試す。この導線が機能すれば、コーポレートサイトの役割は果たされる。</p>
+
+        <p>6ページ、1つのCSS、50行のJS。これが玄関のすべてだ。</p>
+
+        <h2>関連エッセイ</h2>
+        <ul>
+            <li><a href="seo-aio.html">見つけてもらうための設計</a></li>
+            <li><a href="no-external-deps.html">外部依存性を増やさない</a></li>
+            <li><a href="brochure-essay.html">ブローシャの限界と超越</a></li>
+            <li><a href="openness.html">公開主義</a></li>
+            <li><a href="burn-rate-zero.html">バーンレートゼロ</a></li>
+        </ul>
+
+    </article>
+
+    <footer class="article-footer">
+        <p id="essay-nav-links"></p>
+        <p style="margin-top: 2rem; font-size: 0.75rem;">&copy; 2026 TokiStorage</p>
+    </footer>
+
+</main>
+
+<script src="contact-form.js" defer></script>
+<script src="essay-tts.js?v=20260220"></script>
+<script src="essay-nav.js?v=20260223"></script>
+<script src="tracker.js" defer></script>
+</body>
+</html>
