@@ -22,7 +22,7 @@
         close:       isEn ? 'Close'                          : '閉じる',
         placeholder: isEn ? 'Please tell us what you\'d like to discuss.' : 'ご相談内容をお書きください。',
         cta:         isEn ? 'Contact Us'                     : 'お問い合わせ',
-        mission:     isEn ? 'Democratizing Proof of Existence — Three-layer distributed storage to perpetuate your existence' : '存在証明の民主化 — 三層分散保管で、あなたの存在を永続化する'
+        mission:     isEn ? 'You become a story, interweaving with dialogue across generations, enriching the future' : 'あなたが物語になり、世代の対話が重なり、未来が豊かになる'
     };
 
     // Cookie helpers
