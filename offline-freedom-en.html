@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" type="image/png" sizes="32x32" href="asset/favicon-32.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="asset/apple-touch-icon.png">
+    <title>Freedom from the Network | TokiStorage</title>
+    <meta name="robots" content="index, follow">
+    <meta name="description" content="The data lives inside the QR code. It plays without a server. But if the playback page itself requires the internet, the design remains incomplete.">    <style>
+        :root {
+            --toki-blue: #2563EB;
+            --toki-blue-dark: #1D4ED8;
+            --toki-blue-pale: #EFF6FF;
+            --accent-blue: #3B82F6;
+            --bg-white: #FFFFFF;
+            --text-primary: #1E293B;
+            --text-secondary: #475569;
+            --text-muted: #94A3B8;
+            --border: #E2E8F0;
+            --font-display: 'Hiragino Mincho ProN', 'Yu Mincho', serif;
+            --font-body: 'Hiragino Kaku Gothic ProN', 'Yu Gothic', 'Meiryo', sans-serif;
+        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        html { scroll-behavior: smooth; }
+        body { font-family: var(--font-body); font-weight: 400; background: var(--bg-white); color: var(--text-primary); line-height: 2; font-size: 16px; }
+
+        .article-nav { position: fixed; top: 0; left: 0; right: 0; z-index: 1000; background: rgba(255,255,255,0.95); backdrop-filter: blur(12px); border-bottom: 1px solid var(--border); padding: 0.6rem 1.2rem; display: flex; align-items: center; justify-content: space-between; gap: 1rem; }
+        .article-nav .nav-brand { font-family: var(--font-display); font-size: 0.9rem; font-weight: 600; color: var(--toki-blue); text-decoration: none; white-space: nowrap; }
+        .article-nav .nav-brand::before { content: ''; display: inline-block; width: 20px; height: 20px; background: url('asset/tokistorage-icon-512.png') no-repeat center / contain; vertical-align: -3px; margin-right: 5px; }
+        .article-nav .nav-right { display: flex; align-items: center; gap: 1rem; }
+        .article-nav .nav-label { font-size: 0.6rem; color: var(--text-muted); letter-spacing: 0.08em; }
+        .article-nav .lang-switch { font-size: 0.75rem; color: var(--toki-blue); text-decoration: none; padding: 0.3rem 0.6rem; border: 1px solid var(--toki-blue); border-radius: 4px; }
+        .article-nav .lang-switch:hover { background: var(--toki-blue); color: #fff; }
+
+        .article-container { max-width: 680px; margin: 0 auto; padding: 7rem 2rem 4rem; }
+        .article-header { margin-bottom: 3rem; padding-bottom: 2rem; border-bottom: 1px solid var(--border); }
+        .article-category { font-size: 0.7rem; color: var(--toki-blue); letter-spacing: 0.15em; margin-bottom: 1rem; }
+        .article-header h1 { font-family: var(--font-display); font-size: 1.8rem; font-weight: 700; line-height: 1.5; margin-bottom: 1.5rem; }
+        .article-subtitle { font-size: 0.95rem; color: var(--text-secondary); line-height: 1.9; }
+
+        .article-content h2 { font-family: var(--font-display); font-size: 1.3rem; font-weight: 600; margin: 3rem 0 1.5rem; padding-bottom: 0.5rem; border-bottom: 2px solid var(--toki-blue-pale); }
+        .article-content h3 { font-family: var(--font-display); font-size: 1.1rem; font-weight: 600; margin: 2rem 0 1rem; color: var(--toki-blue-dark); }
+        .article-content p { margin-bottom: 1.5rem; text-align: justify; }
+        .article-content blockquote { border-left: 3px solid var(--toki-blue); padding-left: 1.5rem; margin: 2rem 0; font-family: var(--font-display); color: var(--text-secondary); }
+        .article-content ul { margin: 1.5rem 0; padding-left: 1.5rem; }
+        .article-content li { margin-bottom: 0.75rem; }
+
+        .core-message { background: var(--toki-blue-pale); border-left: 4px solid var(--toki-blue); padding: 1.5rem; margin: 2rem 0; font-size: 0.95rem; line-height: 1.8; }
+        .key-point { background: linear-gradient(135deg, var(--toki-blue-pale) 0%, #fff 100%); border: 1px solid var(--accent-blue); border-radius: 8px; padding: 1.5rem; margin: 2rem 0; text-align: center; }
+        .key-point p { font-family: var(--font-display); font-size: 1.1rem; color: var(--toki-blue-dark); margin: 0; }
+
+        .article-footer { margin-top: 4rem; padding-top: 2rem; border-top: 1px solid var(--border); text-align: center; }
+        .article-footer p { font-size: 0.8rem; color: var(--text-muted); margin-bottom: 1rem; }
+        .article-footer a { color: var(--toki-blue); text-decoration: none; }
+        .article-footer a:hover { text-decoration: underline; }
+
+        @media (max-width: 768px) {
+            .article-container { padding: 6rem 1.2rem 3rem; }
+            .article-header h1 { font-size: 1.5rem; }
+            .article-nav .nav-label { display: none; }
+        }
+        @media print { .article-nav { display: none; } .article-container { padding-top: 2rem; } }
+    </style>
+    <link rel="stylesheet" href="contact-form.css">
+    <meta property="og:type" content="article">
+    <meta property="og:title" content="Freedom from the Network | TokiStorage">
+    <meta property="og:description" content="The data lives inside the QR code. It plays without a server. But if the playback page itself requires the internet, the design remains incomplete.">
+    <meta property="og:url" content="https://tokistorage.github.io/lp/offline-freedom-en.html">
+    <meta property="og:site_name" content="TokiStorage">
+    <meta name="twitter:card" content="summary">
+    <meta name="twitter:title" content="Freedom from the Network | TokiStorage">
+    <meta name="twitter:description" content="The data lives inside the QR code. It plays without a server. But if the playback page itself requires the internet, the design remains incomplete.">
+    <meta property="og:image" content="https://tokistorage.github.io/lp/asset/tokistorage-icon-512.png">
+    <meta property="og:image:width" content="512">
+    <meta property="og:image:height" content="512">
+    <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Article",
+  "headline": "Freedom from the Network",
+  "author": {
+    "@type": "Person",
+    "name": "Takuya Sato",
+    "url": "https://tokistorage.github.io/lp/profile.html"
+  },
+  "publisher": {
+    "@type": "Organization",
+    "name": "TokiStorage",
+    "url": "https://tokistorage.github.io/lp",
+    "logo": {
+      "@type": "ImageObject",
+      "url": "https://tokistorage.github.io/lp/asset/tokistorage-icon-512.png"
+    }
+  },
+  "url": "https://tokistorage.github.io/lp/offline-freedom-en.html",
+  "inLanguage": "en",
+  "mainEntityOfPage": "https://tokistorage.github.io/lp/offline-freedom-en.html",
+  "description": "The data lives inside the QR code. It plays without a server. But if the playback page itself requires the internet, the design remains incomplete."
+}
+    </script>
+    <link rel="alternate" hreflang="ja" href="https://tokistorage.github.io/lp/offline-freedom.html">
+    <link rel="alternate" hreflang="en" href="https://tokistorage.github.io/lp/offline-freedom-en.html">
+    <link rel="alternate" hreflang="x-default" href="https://tokistorage.github.io/lp/offline-freedom.html">
+    <link rel="canonical" href="https://tokistorage.github.io/lp/offline-freedom-en.html">
+</head>
+<body>
+
+<nav class="article-nav">
+    <a href="index-en.html" class="nav-brand">TokiStorage</a>
+    <div class="nav-right">
+        <span class="nav-label">Technology & Design</span>
+        <a href="offline-freedom.html" class="lang-switch">JA</a>
+    </div>
+</nav>
+
+<main class="article-container">
+
+    <header class="article-header">
+        <p class="article-category">ESSAY &mdash; Technology &amp; Design</p>
+        <h1>Freedom from the Network</h1>
+        <p class="article-subtitle">
+            &mdash;&mdash; The data lives inside the QR code. It plays without a server. But if the playback page itself requires the internet, the design remains incomplete.
+        </p>
+    </header>
+
+    <article class="article-content">
+
+        <h2>1. When the server disappears, the voice remains</h2>
+
+        <p>Every QR code generated by TokiQR has the audio, image, or text data fully embedded within it. It is not a link to an external server. The QR code itself is the data. That means even if TokiStorage's servers vanish, even if you're somewhere with no internet, scanning the QR code still retrieves the data. This is the foundational design principle of TokiQR.</p>
+
+        <h2>2. The last dependency</h2>
+
+        <p>Yet one dependency remained: the playback page itself. When you scan a QR code, play.html opens in a browser. If this page can only be fetched over the network, nothing works offline. The data is self-contained in the QR code, but the tool to play it lives on the other side of the internet. It's as if the book is in your hands, but the reading glasses are in the cloud.</p>
+
+        <div class="core-message">
+            By adding TokiQR to your home screen, the playback page is saved to your smartphone. From that point on, you can scan QR codes and play audio, view images, and read text without any network connection.
+        </div>
+
+        <h2>3. The home screen solution</h2>
+
+        <p>Through PWA (Progressive Web App) technology, adding TokiQR to your smartphone's home screen caches the playback page on your device — including the audio decoder (Codec2) and compression engine (Brotli) binaries. Once added to the home screen, you can scan and play QR codes without network access. On an airplane, in the mountains, or 20 years from now when Wi-Fi standards have changed.</p>
+
+        <h2>4. How to add to your home screen</h2>
+
+        <p>Follow these steps for your device to add TokiQR to your home screen.</p>
+
+        <ul>
+            <li><strong>iPhone (Safari)</strong>: Tap the Share button (□↑) → Select "Add to Home Screen"</li>
+            <li><strong>Android (Chrome)</strong>: Tap the "Add to Home Screen" banner at the bottom, or tap Menu (⋮) → "Add to Home Screen"</li>
+            <li><strong>PC (Chrome / Edge)</strong>: Click the install icon in the address bar</li>
+        </ul>
+
+        <h2>5. Keep the tools in your own hands</h2>
+
+        <p>TokiQR eliminated server dependency by sealing data inside QR codes. And now, by saving the playback page to the device, it severs the last dependency on the network. If you're making a QR code meant to last 1,000 years, it only makes sense to keep the tool for reading it in your own hands.</p>
+
+        <div class="core-message">
+            Inside the QR code, there is a voice. Inside your smartphone, there is the tool to play it. Even when the network is gone, that memory keeps sounding in your hands.
+        </div>
+
+    </article>
+
+    <footer class="article-footer">
+        <p id="essay-nav-links"></p>
+        <p style="margin-top: 2rem; font-size: 0.75rem;">&copy; 2026 TokiStorage</p>
+    </footer>
+
+</main>
+
+<script src="contact-form.js" defer></script>
+<script src="essay-nav.js?v=20260224"></script>
+<script src="tracker.js" defer></script>
+</body>
+</html>
