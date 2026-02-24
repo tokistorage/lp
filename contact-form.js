@@ -21,7 +21,8 @@
         errorMsg:    isEn ? 'Please try again, or contact us directly at:' : 'もう一度お試しいただくか、こちらに直接ご連絡ください：',
         close:       isEn ? 'Close'                          : '閉じる',
         placeholder: isEn ? 'Please tell us what you\'d like to discuss.' : 'ご相談内容をお書きください。',
-        cta:         isEn ? 'Contact Us'                     : 'お問い合わせ'
+        cta:         isEn ? 'Contact Us'                     : 'お問い合わせ',
+        mission:     isEn ? 'Democratizing Proof of Existence — Three-layer distributed storage to perpetuate your existence' : '存在証明の民主化 — 三層分散保管で、あなたの存在を永続化する'
     };
 
     // Cookie helpers
@@ -61,6 +62,7 @@
                     '<h2>' + t.title + '</h2>' +
                     '<button class="contact-close" id="contactClose" aria-label="Close">&times;</button>' +
                 '</div>' +
+                '<p class="contact-mission">' + t.mission + '</p>' +
                 '<form class="contact-form" id="contactForm">' +
                     '<div class="contact-field">' +
                         '<label>' + t.name + '<span class="required">' + t.required + '</span></label>' +
@@ -184,13 +186,13 @@
         ctaLinks.forEach(function(link) {
             link.addEventListener('click', function(e) {
                 e.preventDefault();
-                openModal(document.title);
+                openModal();
             });
         });
 
         // Auto-open modal when URL contains #contact
         if (window.location.hash === '#contact') {
-            openModal(document.title);
+            openModal();
         }
 
         closeBtn.addEventListener('click', closeModal);
