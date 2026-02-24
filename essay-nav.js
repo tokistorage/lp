@@ -151,6 +151,7 @@
     { id: 'corporate-site', ja: 'コーポレートサイト', en: 'The Corporate Site', date: '2026-02-23' },
     { id: 'equipment-guide', ja: '機材選定の設計思想', en: 'The Design Philosophy of Equipment Selection', date: '2026-02-24' },
     { id: 'hero-parallax', ja: '一枚の写真が玄関を変えた', en: 'One Photo Changed the Front Door', date: '2026-02-24' },
+    { id: 'offline-freedom', ja: 'ネットワークからの自由', en: 'Freedom from the Network', date: '2026-02-24' },
 
     // ── メタ視点 ──
     { id: 'mission-statement', ja: 'ミッション・ステートメントの設計思想', en: 'Designing a Mission Statement', date: '2026-02-23' },
@@ -166,6 +167,7 @@
   // LATEST_COUNT で表示件数を制御
   const LATEST_COUNT = 5;
   const latestEssayIds = [
+    'offline-freedom',
     'copyright-jasrac',
     'hero-parallax',
     'equipment-guide',
@@ -341,6 +343,7 @@
     'corporate-site':          ['seo-aio', 'no-external-deps', 'brochure-essay', 'openness', 'burn-rate-zero'],
     'equipment-guide':         ['uv-laminate', 'diy-partner', 'backup-rule', 'try-and-revert', 'burn-rate-zero'],
     'hero-parallax':           ['corporate-site', 'no-external-deps', 'seo-aio', 'image-clarity', 'burn-rate-zero'],
+    'offline-freedom':        ['device-dependency', 'pwa-not-appstore', 'no-external-deps', '30seconds', 'storage-strategy'],
     // ── メタ視点 ──
     'mission-statement':      ['narrative-trust', 'preserving-words', 'why-essays', 'corporate-site', 'integrity'],
     'preserving-words':       ['why-essays', 'akashic-record', 'what-to-leave', 'narrative-trust', 'openness'],
