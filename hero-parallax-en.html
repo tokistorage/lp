@@ -1,0 +1,276 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" type="image/png" sizes="32x32" href="asset/favicon-32.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="asset/apple-touch-icon.png">
+    <title>One Photo Changed the Front Door — Designing a Parallax Hero | TokiStorage</title>
+    <meta name="robots" content="index, follow">
+    <meta name="description" content="A single photograph of Ise Shrine's torii gate transformed the hero section of both the corporate site and LP. From 1.1MB to 245KB, position:fixed parallax scroll — a design record.">    <style>
+        :root {
+            --toki-blue: #1E40AF;
+            --toki-blue-dark: #1E3A5F;
+            --toki-blue-pale: #EFF6FF;
+            --accent-blue: #3B82F6;
+            --bg-white: #FFFFFF;
+            --bg-section: #DBEAFE;
+            --text-primary: #1E293B;
+            --text-secondary: #475569;
+            --text-muted: #94A3B8;
+            --border: #E2E8F0;
+            --font-display: 'Hiragino Mincho ProN', 'Yu Mincho', serif;
+            --font-body: 'Hiragino Kaku Gothic ProN', 'Yu Gothic', 'Meiryo', sans-serif;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        html { scroll-behavior: smooth; }
+
+        body {
+            font-family: var(--font-body);
+            font-weight: 400;
+            background: var(--bg-white);
+            color: var(--text-primary);
+            line-height: 1.9;
+            font-size: 16px;
+        }
+
+        .article-nav {
+            position: fixed; top: 0; left: 0; right: 0; z-index: 1000;
+            background: rgba(255,255,255,0.95);
+            backdrop-filter: blur(12px);
+            border-bottom: 1px solid var(--border);
+            padding: 0.6rem 1.2rem;
+            display: flex; align-items: center; justify-content: space-between; gap: 1rem;
+        }
+        .article-nav .nav-brand {
+            font-family: var(--font-display); font-size: 0.9rem; font-weight: 600;
+            color: var(--toki-blue); text-decoration: none; white-space: nowrap; flex-shrink: 0;
+        }
+        .article-nav .nav-right { display: flex; align-items: center; gap: 1rem; }
+        .article-nav .nav-label { font-size: 0.6rem; color: var(--text-muted); letter-spacing: 0.08em; text-align: right; line-height: 1.4; }
+        .article-nav .lang-switch { font-size: 0.75rem; color: var(--toki-blue); text-decoration: none; padding: 0.3rem 0.6rem; border: 1px solid var(--toki-blue); border-radius: 4px; }
+        .article-nav .lang-switch:hover { background: var(--toki-blue); color: #fff; }
+
+        .article-container { max-width: 720px; margin: 0 auto; padding: 5rem 2rem 4rem; }
+        .article-header { margin-bottom: 3rem; }
+        .article-category { font-size: 0.7rem; letter-spacing: 0.15em; color: var(--toki-blue); margin-bottom: 0.5rem; }
+        .article-header h1 { font-family: var(--font-display); font-size: 1.8rem; font-weight: 700; line-height: 1.5; color: var(--text-primary); margin-bottom: 1rem; }
+        .article-subtitle { font-size: 0.95rem; color: var(--text-secondary); line-height: 1.8; }
+
+        .article-content h2 { font-family: var(--font-display); font-size: 1.3rem; font-weight: 600; color: var(--toki-blue-dark); margin: 3rem 0 1rem; padding-bottom: 0.5rem; border-bottom: 1px solid var(--border); }
+        .article-content h3 { font-family: var(--font-display); font-size: 1.1rem; font-weight: 600; color: var(--text-primary); margin: 2rem 0 0.8rem; }
+        .article-content p { margin-bottom: 1.2rem; text-align: justify; }
+        .article-content ul, .article-content ol { margin: 0.5rem 0 1.5rem 1.5rem; }
+        .article-content li { margin-bottom: 0.5rem; }
+        .article-content blockquote { border-left: 3px solid var(--toki-blue); padding: 1rem 1.5rem; margin: 1.5rem 0; background: var(--toki-blue-pale); font-style: italic; color: var(--text-secondary); }
+        .article-content strong { color: var(--toki-blue-dark); }
+        .article-content code { font-size: 0.88em; background: var(--toki-blue-pale); padding: 0.15em 0.4em; border-radius: 3px; }
+
+        .core-message { background: var(--toki-blue-pale); border-left: 4px solid var(--toki-blue); padding: 1.2rem 1.5rem; margin: 0 0 2rem; font-size: 0.95rem; line-height: 1.8; }
+
+        .phase-table { width: 100%; border-collapse: collapse; margin: 1.5rem 0; font-size: 0.9rem; }
+        .phase-table th, .phase-table td { padding: 0.7rem 1rem; border: 1px solid var(--border); text-align: left; }
+        .phase-table th { background: var(--toki-blue-pale); font-weight: 600; color: var(--toki-blue-dark); font-size: 0.85rem; }
+        .phase-table td { vertical-align: top; }
+
+        .highlight-box { background: linear-gradient(135deg, var(--toki-blue-pale), #fff); border: 1px solid var(--accent-blue); border-radius: 8px; padding: 1.5rem; margin: 2rem 0; text-align: center; }
+        .highlight-box p { text-align: center; margin-bottom: 0.5rem; }
+        .highlight-box .big { font-family: var(--font-display); font-size: 1.3rem; font-weight: 700; color: var(--toki-blue-dark); }
+
+        .article-footer { margin-top: 4rem; padding: 2rem 0; border-top: 1px solid var(--border); font-size: 0.7rem; color: var(--text-muted); line-height: 2.2; }
+        .article-footer a { color: var(--text-muted); text-decoration: none; }
+        .article-footer a:hover { text-decoration: underline; }
+
+        @media (max-width: 768px) {
+            .article-container { padding: 6rem 1.2rem 3rem; }
+            .article-header h1 { font-size: 1.5rem; }
+            .article-nav .nav-label { display: none; }
+            .phase-table { font-size: 0.8rem; }
+            .phase-table th, .phase-table td { padding: 0.5rem 0.6rem; }
+        }
+        @media print { .article-nav { display: none; } .article-container { padding-top: 2rem; } }
+        .nav-brand::before { content: ''; display: inline-block; width: 20px; height: 20px; background: url('asset/tokistorage-icon-512.png') no-repeat center / contain; vertical-align: -3px; margin-right: 5px; }
+    </style>
+<link rel="stylesheet" href="contact-form.css">
+    <meta property="og:type" content="article">
+    <meta property="og:title" content="One Photo Changed the Front Door — Designing a Parallax Hero | TokiStorage">
+    <meta property="og:description" content="A single photograph of Ise Shrine's torii gate transformed the hero section of both the corporate site and LP. From 1.1MB to 245KB, position:fixed parallax scroll — a design record.">
+    <meta property="og:url" content="https://tokistorage.github.io/lp/hero-parallax-en.html">
+    <meta property="og:site_name" content="TokiStorage">
+    <meta name="twitter:card" content="summary">
+    <meta name="twitter:title" content="One Photo Changed the Front Door — Designing a Parallax Hero | TokiStorage">
+    <meta name="twitter:description" content="A single photograph of Ise Shrine's torii gate transformed the hero section of both the corporate site and LP. From 1.1MB to 245KB, position:fixed parallax scroll — a design record.">
+    <meta property="og:image" content="https://tokistorage.github.io/lp/asset/tokistorage-icon-512.png">
+    <meta property="og:image:width" content="512">
+    <meta property="og:image:height" content="512">
+    <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Article",
+  "headline": "One Photo Changed the Front Door — Designing a Parallax Hero",
+  "author": {
+    "@type": "Person",
+    "name": "Takuya Sato",
+    "url": "https://tokistorage.github.io/lp/profile-en.html"
+  },
+  "publisher": {
+    "@type": "Organization",
+    "name": "TokiStorage",
+    "url": "https://tokistorage.github.io/lp",
+    "logo": {
+      "@type": "ImageObject",
+      "url": "https://tokistorage.github.io/lp/asset/tokistorage-icon-512.png"
+    }
+  },
+  "url": "https://tokistorage.github.io/lp/hero-parallax-en.html",
+  "inLanguage": "en",
+  "mainEntityOfPage": "https://tokistorage.github.io/lp/hero-parallax-en.html",
+  "description": "A single photograph of Ise Shrine's torii gate transformed the hero section of both the corporate site and LP. From 1.1MB to 245KB, position:fixed parallax scroll — a design record."
+}
+    </script>
+    <link rel="alternate" hreflang="ja" href="https://tokistorage.github.io/lp/hero-parallax.html">
+    <link rel="alternate" hreflang="en" href="https://tokistorage.github.io/lp/hero-parallax-en.html">
+    <link rel="alternate" hreflang="x-default" href="https://tokistorage.github.io/lp/hero-parallax.html">
+    <link rel="canonical" href="https://tokistorage.github.io/lp/hero-parallax-en.html">
+</head>
+<body>
+
+<nav class="article-nav">
+    <a href="index-en.html" class="nav-brand">TokiStorage</a>
+    <div class="nav-right">
+        <span class="nav-label">Technology &amp; Design / Parallax Hero</span>
+        <a href="hero-parallax.html" class="lang-switch">JA</a>
+    </div>
+</nav>
+
+<main class="article-container">
+
+    <header class="article-header">
+        <p class="article-category">ESSAY — TECHNOLOGY &amp; DESIGN</p>
+        <h1>One Photo Changed the Front Door — Designing a Parallax Hero</h1>
+        <p class="article-subtitle">
+            We placed a photograph of Ise Shrine's torii gate and backlight as the hero background on a previously white top page.<br>
+            A single photo changed the weight of the message "Preserve Existence for a Thousand Years."<br>
+            The parallax effect — where the background stays fixed and content flows over it as you scroll — visualizes the sensation of the future layering upon the past.
+        </p>
+    </header>
+
+    <article class="article-content">
+
+        <div class="core-message">
+            <strong>The point of this essay:</strong> We placed a photograph of Ise Shrine's torii gate and backlight as the hero background on a previously white top page. A single photo changed the weight of the message "Preserve Existence for a Thousand Years." The parallax effect — where the background stays fixed and content flows over it as you scroll — visualizes the sensation of the future layering upon the past.
+        </div>
+
+
+        <h2>1. The White Front Door</h2>
+
+        <p>Both the corporate site and the LP had white hero sections. Minimalism completed with text alone. Not bad, but somehow too abstract to speak of "a thousand years."</p>
+
+        <p>"Preserve Existence for a Thousand Years" — this message sat on a white screen. The font was beautiful, the whitespace generous. But there was nothing to convey the scale of a thousand years. Text delivers meaning, but not the felt sense of it.</p>
+
+        <p>If the first thing a visitor sees at the front door is a white wall and text, the information is correct — but the impression falls short.</p>
+
+
+        <h2>2. One Photograph</h2>
+
+        <p>The torii gate of Ise Shrine. Rebuilt every twenty years through the Shikinen Sengu ceremony, yet unbroken for over 1,300 years. There is no better backdrop for the message "Preserve Existence for a Thousand Years."</p>
+
+        <p>Backlight streams through the torii. Morning light filters through the wooden pillars, casting long shadows along the approach. This photograph carries the atmosphere of a place where time has passed through. Renewed with each rebuilding, yet standing in the same place in the same form. That is the very philosophy of TokiStorage — enduring through renewal.</p>
+
+        <p>TokiStorage also contributes to the Ise Shrine Shikinen Sengu Fund. This torii gate is not mere decoration — it is where the company's philosophy and practice connect.</p>
+
+
+        <h2>3. 245KB — Designing the Optimization</h2>
+
+        <p>The original image was 1.1MB at 2392x1782 pixels. Far too heavy for a hero background.</p>
+
+        <p>The hero background is the first image every user loads. It directly impacts LCP (Largest Contentful Paint), so file size is non-negotiable.</p>
+
+        <table class="phase-table">
+            <tr>
+                <th>Step</th>
+                <th>Size</th>
+            </tr>
+            <tr>
+                <td>Original (2392x1782)</td>
+                <td>1.1MB</td>
+            </tr>
+            <tr>
+                <td>Resized (1920px width)</td>
+                <td>~700KB</td>
+            </tr>
+            <tr>
+                <td><code>cjpeg -quality 75</code></td>
+                <td><strong>245KB</strong></td>
+            </tr>
+        </table>
+
+        <p>Quality 75 is the threshold where degradation is hard to detect with the naked eye. Since the hero background is viewed through a dark overlay, compression artifacts become even less noticeable. From 1.1MB to 245KB — a 78% reduction. Displays within one second even on mobile connections.</p>
+
+
+        <h2>4. Implementing the Parallax</h2>
+
+        <p>The most straightforward parallax implementation is <code>background-attachment: fixed</code>. However, this property does not work on macOS Safari or iOS. A technique that fails on iOS — which accounts for the majority of mobile users — cannot be adopted.</p>
+
+        <p>Instead, we used an HTML element with <code>position: fixed</code> to cover the entire screen.</p>
+
+        <ul>
+            <li><code>&lt;div class="hero-bg"&gt;</code> — background image placed full-screen with <code>position: fixed</code></li>
+            <li><code>&lt;div class="hero-overlay"&gt;</code> — dark overlay <code>rgba(15, 23, 42, 0.55)</code> to ensure text readability</li>
+            <li>Sections after the hero receive <code>position: relative; z-index: 1; background</code></li>
+        </ul>
+
+        <p>We use real DOM elements — not <code>::before</code> pseudo-elements — for ease of debugging and maintenance. Elements can be directly selected in DevTools, and style overrides are straightforward.</p>
+
+        <p>Technically simple, but the experience this structure produces is more than a scroll effect. The torii gate in the background stays fixed while content flows over it. <strong>The future layers upon the past</strong> — this is that sensation made visual.</p>
+
+        <p>On mobile, we fall back to scroll-following behavior, prioritizing performance.</p>
+
+
+        <h2>5. One Background for Two Sites</h2>
+
+        <p>The corporate site (front door) and the LP (library) share the same torii photograph. Whichever entrance a visitor arrives through, the same view greets them.</p>
+
+        <p>Following the principle of self-containment, the image is copied into each repository. Rather than having the corporate side reference <code>/lp/asset/</code>, we place the same image in the corporate <code>asset/</code> directory. Cross-repository dependencies are eliminated.</p>
+
+        <p>Placing the same photo in two locations may appear redundant. But this redundancy guarantees independence. Changes to one repository do not affect the other. And for visitors, it functions as a unifying thread — an implicit signal that sites of different depths belong to one brand.</p>
+
+
+        <h2>6. Conclusion</h2>
+
+        <p>You can convey information by laying out text on a white page. But if you want to speak of "a thousand years," it is faster to show a place that embodies a thousand years.</p>
+
+        <p>The torii gate of Ise Shrine has stood in the same place for 1,300 years. Rebuilt every twenty years, always new, yet always the same. It is a living example of the message "Preserve Existence for a Thousand Years" — and a metaphor for the architecture TokiStorage aspires to.</p>
+
+        <div class="highlight-box">
+            <p class="big">Text tells. A photograph lets you experience.</p>
+            <p>Parallax lets you feel the layers of time.</p>
+        </div>
+
+        <p>A single 245KB photograph transformed a white front door into an entrance spanning a thousand years.</p>
+
+        <h2>Related Essays</h2>
+        <ul>
+            <li><a href="corporate-site-en.html">The Corporate Site as a Design Decision</a></li>
+            <li><a href="no-external-deps-en.html">No More External Dependencies</a></li>
+            <li><a href="seo-aio-en.html">Designing for Discoverability</a></li>
+            <li><a href="ise-jingu-en.html">Ise Shrine and the Shikinen Sengu</a></li>
+            <li><a href="burn-rate-zero-en.html">Burn Rate Zero</a></li>
+        </ul>
+
+    </article>
+
+    <footer class="article-footer">
+        <p id="essay-nav-links"></p>
+        <p style="margin-top: 2rem; font-size: 0.75rem;">&copy; 2026 TokiStorage</p>
+    </footer>
+
+</main>
+
+<script src="contact-form.js" defer></script>
+<script src="essay-tts.js?v=20260220"></script>
+<script src="essay-nav.js?v=20260223"></script>
+<script src="tracker.js" defer></script>
+</body>
+</html>

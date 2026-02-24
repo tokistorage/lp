@@ -149,6 +149,7 @@
     { id: 'try-and-revert', ja: '試して、戻す', en: 'Try and Revert', date: '2026-02-22' },
     { id: 'corporate-site', ja: 'コーポレートサイト', en: 'The Corporate Site', date: '2026-02-23' },
     { id: 'equipment-guide', ja: '機材選定の設計思想', en: 'The Design Philosophy of Equipment Selection', date: '2026-02-24' },
+    { id: 'hero-parallax', ja: '一枚の写真が玄関を変えた', en: 'One Photo Changed the Front Door', date: '2026-02-24' },
 
     // ── メタ視点 ──
     { id: 'mission-statement', ja: 'ミッション・ステートメントの設計思想', en: 'Designing a Mission Statement', date: '2026-02-23' },
@@ -164,8 +165,8 @@
   // LATEST_COUNT で表示件数を制御
   const LATEST_COUNT = 5;
   const latestEssayIds = [
+    'hero-parallax',
     'equipment-guide',
-    'mission-statement',
     'diy-partner',
     'corporate-site',
     'brides-letter',
@@ -336,6 +337,7 @@
     'try-and-revert':          ['cloudflare-gas', 'rapid-prototyping', 'no-external-deps', 'poc', 'uptime'],
     'corporate-site':          ['seo-aio', 'no-external-deps', 'brochure-essay', 'openness', 'burn-rate-zero'],
     'equipment-guide':         ['uv-laminate', 'diy-partner', 'backup-rule', 'try-and-revert', 'burn-rate-zero'],
+    'hero-parallax':           ['corporate-site', 'no-external-deps', 'seo-aio', 'image-clarity', 'burn-rate-zero'],
     // ── メタ視点 ──
     'mission-statement':      ['narrative-trust', 'preserving-words', 'why-essays', 'corporate-site', 'integrity'],
     'preserving-words':       ['why-essays', 'akashic-record', 'what-to-leave', 'narrative-trust', 'openness'],

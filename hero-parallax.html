@@ -1,0 +1,276 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" type="image/png" sizes="32x32" href="asset/favicon-32.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="asset/apple-touch-icon.png">
+    <title>一枚の写真が玄関を変えた——パララックスヒーローの設計記録 | トキストレージ</title>
+    <meta name="robots" content="index, follow">
+    <meta name="description" content="伊勢神宮の鳥居を撮影した一枚の写真から、コーポレートサイトとLPのヒーロー背景にパララックス効果を実装した。1.1MBを245KBに最適化し、position:fixedで視差スクロールを実現。設計判断の記録。">    <style>
+        :root {
+            --toki-blue: #1E40AF;
+            --toki-blue-dark: #1E3A5F;
+            --toki-blue-pale: #EFF6FF;
+            --accent-blue: #3B82F6;
+            --bg-white: #FFFFFF;
+            --bg-section: #DBEAFE;
+            --text-primary: #1E293B;
+            --text-secondary: #475569;
+            --text-muted: #94A3B8;
+            --border: #E2E8F0;
+            --font-display: 'Hiragino Mincho ProN', 'Yu Mincho', serif;
+            --font-body: 'Hiragino Kaku Gothic ProN', 'Yu Gothic', 'Meiryo', sans-serif;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        html { scroll-behavior: smooth; }
+
+        body {
+            font-family: var(--font-body);
+            font-weight: 400;
+            background: var(--bg-white);
+            color: var(--text-primary);
+            line-height: 1.9;
+            font-size: 16px;
+        }
+
+        .article-nav {
+            position: fixed; top: 0; left: 0; right: 0; z-index: 1000;
+            background: rgba(255,255,255,0.95);
+            backdrop-filter: blur(12px);
+            border-bottom: 1px solid var(--border);
+            padding: 0.6rem 1.2rem;
+            display: flex; align-items: center; justify-content: space-between; gap: 1rem;
+        }
+        .article-nav .nav-brand {
+            font-family: var(--font-display); font-size: 0.9rem; font-weight: 600;
+            color: var(--toki-blue); text-decoration: none; white-space: nowrap; flex-shrink: 0;
+        }
+        .article-nav .nav-right { display: flex; align-items: center; gap: 1rem; }
+        .article-nav .nav-label { font-size: 0.6rem; color: var(--text-muted); letter-spacing: 0.08em; text-align: right; line-height: 1.4; }
+        .article-nav .lang-switch { font-size: 0.75rem; color: var(--toki-blue); text-decoration: none; padding: 0.3rem 0.6rem; border: 1px solid var(--toki-blue); border-radius: 4px; }
+        .article-nav .lang-switch:hover { background: var(--toki-blue); color: #fff; }
+
+        .article-container { max-width: 720px; margin: 0 auto; padding: 5rem 2rem 4rem; }
+        .article-header { margin-bottom: 3rem; }
+        .article-category { font-size: 0.7rem; letter-spacing: 0.15em; color: var(--toki-blue); margin-bottom: 0.5rem; }
+        .article-header h1 { font-family: var(--font-display); font-size: 1.8rem; font-weight: 700; line-height: 1.5; color: var(--text-primary); margin-bottom: 1rem; }
+        .article-subtitle { font-size: 0.95rem; color: var(--text-secondary); line-height: 1.8; }
+
+        .article-content h2 { font-family: var(--font-display); font-size: 1.3rem; font-weight: 600; color: var(--toki-blue-dark); margin: 3rem 0 1rem; padding-bottom: 0.5rem; border-bottom: 1px solid var(--border); }
+        .article-content h3 { font-family: var(--font-display); font-size: 1.1rem; font-weight: 600; color: var(--text-primary); margin: 2rem 0 0.8rem; }
+        .article-content p { margin-bottom: 1.2rem; text-align: justify; }
+        .article-content ul, .article-content ol { margin: 0.5rem 0 1.5rem 1.5rem; }
+        .article-content li { margin-bottom: 0.5rem; }
+        .article-content blockquote { border-left: 3px solid var(--toki-blue); padding: 1rem 1.5rem; margin: 1.5rem 0; background: var(--toki-blue-pale); font-style: italic; color: var(--text-secondary); }
+        .article-content strong { color: var(--toki-blue-dark); }
+        .article-content code { font-size: 0.88em; background: var(--toki-blue-pale); padding: 0.15em 0.4em; border-radius: 3px; }
+
+        .core-message { background: var(--toki-blue-pale); border-left: 4px solid var(--toki-blue); padding: 1.2rem 1.5rem; margin: 0 0 2rem; font-size: 0.95rem; line-height: 1.8; }
+
+        .phase-table { width: 100%; border-collapse: collapse; margin: 1.5rem 0; font-size: 0.9rem; }
+        .phase-table th, .phase-table td { padding: 0.7rem 1rem; border: 1px solid var(--border); text-align: left; }
+        .phase-table th { background: var(--toki-blue-pale); font-weight: 600; color: var(--toki-blue-dark); font-size: 0.85rem; }
+        .phase-table td { vertical-align: top; }
+
+        .highlight-box { background: linear-gradient(135deg, var(--toki-blue-pale), #fff); border: 1px solid var(--accent-blue); border-radius: 8px; padding: 1.5rem; margin: 2rem 0; text-align: center; }
+        .highlight-box p { text-align: center; margin-bottom: 0.5rem; }
+        .highlight-box .big { font-family: var(--font-display); font-size: 1.3rem; font-weight: 700; color: var(--toki-blue-dark); }
+
+        .article-footer { margin-top: 4rem; padding: 2rem 0; border-top: 1px solid var(--border); font-size: 0.7rem; color: var(--text-muted); line-height: 2.2; }
+        .article-footer a { color: var(--text-muted); text-decoration: none; }
+        .article-footer a:hover { text-decoration: underline; }
+
+        @media (max-width: 768px) {
+            .article-container { padding: 6rem 1.2rem 3rem; }
+            .article-header h1 { font-size: 1.5rem; }
+            .article-nav .nav-label { display: none; }
+            .phase-table { font-size: 0.8rem; }
+            .phase-table th, .phase-table td { padding: 0.5rem 0.6rem; }
+        }
+        @media print { .article-nav { display: none; } .article-container { padding-top: 2rem; } }
+        .nav-brand::before { content: ''; display: inline-block; width: 20px; height: 20px; background: url('asset/tokistorage-icon-512.png') no-repeat center / contain; vertical-align: -3px; margin-right: 5px; }
+    </style>
+<link rel="stylesheet" href="contact-form.css">
+    <meta property="og:type" content="article">
+    <meta property="og:title" content="一枚の写真が玄関を変えた——パララックスヒーローの設計記録 | トキストレージ">
+    <meta property="og:description" content="伊勢神宮の鳥居を撮影した一枚の写真から、コーポレートサイトとLPのヒーロー背景にパララックス効果を実装した。1.1MBを245KBに最適化し、position:fixedで視差スクロールを実現。">
+    <meta property="og:url" content="https://tokistorage.github.io/lp/hero-parallax.html">
+    <meta property="og:site_name" content="トキストレージ">
+    <meta name="twitter:card" content="summary">
+    <meta name="twitter:title" content="一枚の写真が玄関を変えた——パララックスヒーローの設計記録 | トキストレージ">
+    <meta name="twitter:description" content="伊勢神宮の鳥居を撮影した一枚の写真から、コーポレートサイトとLPのヒーロー背景にパララックス効果を実装した。1.1MBを245KBに最適化し、position:fixedで視差スクロールを実現。">
+    <meta property="og:image" content="https://tokistorage.github.io/lp/asset/tokistorage-icon-512.png">
+    <meta property="og:image:width" content="512">
+    <meta property="og:image:height" content="512">
+    <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Article",
+  "headline": "一枚の写真が玄関を変えた——パララックスヒーローの設計記録",
+  "author": {
+    "@type": "Person",
+    "name": "Takuya Sato",
+    "url": "https://tokistorage.github.io/lp/profile.html"
+  },
+  "publisher": {
+    "@type": "Organization",
+    "name": "TokiStorage",
+    "url": "https://tokistorage.github.io/lp",
+    "logo": {
+      "@type": "ImageObject",
+      "url": "https://tokistorage.github.io/lp/asset/tokistorage-icon-512.png"
+    }
+  },
+  "url": "https://tokistorage.github.io/lp/hero-parallax.html",
+  "inLanguage": "ja",
+  "mainEntityOfPage": "https://tokistorage.github.io/lp/hero-parallax.html",
+  "description": "伊勢神宮の鳥居を撮影した一枚の写真から、コーポレートサイトとLPのヒーロー背景にパララックス効果を実装した。1.1MBを245KBに最適化し、position:fixedで視差スクロールを実現。設計判断の記録。"
+}
+    </script>
+    <link rel="alternate" hreflang="ja" href="https://tokistorage.github.io/lp/hero-parallax.html">
+    <link rel="alternate" hreflang="en" href="https://tokistorage.github.io/lp/hero-parallax-en.html">
+    <link rel="alternate" hreflang="x-default" href="https://tokistorage.github.io/lp/hero-parallax.html">
+    <link rel="canonical" href="https://tokistorage.github.io/lp/hero-parallax.html">
+</head>
+<body>
+
+<nav class="article-nav">
+    <a href="index.html" class="nav-brand">トキストレージ</a>
+    <div class="nav-right">
+        <span class="nav-label">技術・設計 / パララックスヒーロー</span>
+        <a href="hero-parallax-en.html" class="lang-switch">EN</a>
+    </div>
+</nav>
+
+<main class="article-container">
+
+    <header class="article-header">
+        <p class="article-category">ESSAY — 技術・設計</p>
+        <h1>一枚の写真が玄関を変えた——パララックスヒーローの設計記録</h1>
+        <p class="article-subtitle">
+            白背景だったトップページに、伊勢神宮の鳥居と逆光を背景として載せた。<br>
+            写真一枚で「存在を、千年先へ」というメッセージの重みが変わる。<br>
+            パララックスで背景が固定されスクロールとともにコンテンツが覆いかぶさる動きは、過去の上に未来が重なる感覚を視覚化している。
+        </p>
+    </header>
+
+    <article class="article-content">
+
+        <div class="core-message">
+            <strong>この記事で言いたいこと：</strong>白背景だったトップページに、伊勢神宮の鳥居と逆光を背景として載せた。写真一枚で「存在を、千年先へ」というメッセージの重みが変わる。パララックスで背景が固定されスクロールとともにコンテンツが覆いかぶさる動きは、過去の上に未来が重なる感覚を視覚化している。
+        </div>
+
+
+        <h2>1. 白い玄関</h2>
+
+        <p>コーポレートサイトもLPも、ヒーローセクションは白背景だった。テキストだけで完結するミニマリズム。悪くはないが、「千年」を語るにはどこか抽象的だった。</p>
+
+        <p>「存在を、千年先へ」——このメッセージは白い画面の上に置かれていた。フォントは美しく、余白は十分にあった。だが、千年という時間のスケールを感じさせるものは何もなかった。テキストは意味を伝えるが、体感を与えない。</p>
+
+        <p>玄関に立った訪問者が最初に目にするものが白い壁とテキストだけだとしたら、それは情報としては正しいが、印象としては物足りない。</p>
+
+
+        <h2>2. 一枚の写真</h2>
+
+        <p>伊勢神宮の鳥居。式年遷宮で20年ごとに建て替えられながら、1300年以上途絶えていない。「存在を、千年先へ」のメッセージにこれ以上の背景はない。</p>
+
+        <p>鳥居の向こうに逆光が差し込む。朝の光が木の柱を透かし、参道に長い影を落とす。この写真には「時間が通過してきた場所」の空気がある。建て替えられるたびに新しくなりながら、同じ場所に同じ形で立ち続ける。それは更新されながら永続するというトキストレージの思想そのものだ。</p>
+
+        <p>トキストレージは伊勢神宮式年遷宮奉賛もしている。この鳥居は単なる装飾ではなく、事業の思想と実践が接続する場所だ。</p>
+
+
+        <h2>3. 245KB——最適化の設計</h2>
+
+        <p>元画像は1.1MB、2392x1782ピクセル。ヒーロー背景として使うには重すぎる。</p>
+
+        <p>ヒーロー背景は全ユーザーが最初に読み込む画像だ。LCP（Largest Contentful Paint）に直結するため、ファイルサイズは妥協できない。</p>
+
+        <table class="phase-table">
+            <tr>
+                <th>工程</th>
+                <th>サイズ</th>
+            </tr>
+            <tr>
+                <td>元画像（2392x1782）</td>
+                <td>1.1MB</td>
+            </tr>
+            <tr>
+                <td>リサイズ（1920px幅）</td>
+                <td>約700KB</td>
+            </tr>
+            <tr>
+                <td><code>cjpeg -quality 75</code></td>
+                <td><strong>245KB</strong></td>
+            </tr>
+        </table>
+
+        <p>quality 75は肉眼で劣化が判別しにくい閾値だ。ヒーロー背景はダークオーバーレイ越しに見るため、圧縮アーティファクトはさらに目立たなくなる。1.1MBから245KBへ、78%の削減。モバイル回線でも1秒以内に表示できる。</p>
+
+
+        <h2>4. パララックスの実装</h2>
+
+        <p>パララックス（視差スクロール）の最も素朴な実装は<code>background-attachment: fixed</code>だ。しかしこのプロパティはmacOS SafariとiOSで動作しない。モバイルユーザーの大半を占めるiOSで機能しない手法は採用できない。</p>
+
+        <p>代わりに、HTML要素を<code>position: fixed</code>で画面全体に配置する方法を採った。</p>
+
+        <ul>
+            <li><code>&lt;div class="hero-bg"&gt;</code> — 背景画像を<code>position: fixed</code>で全画面配置</li>
+            <li><code>&lt;div class="hero-overlay"&gt;</code> — ダークオーバーレイ <code>rgba(15, 23, 42, 0.55)</code> で文字の視認性を確保</li>
+            <li>ヒーロー以降のセクションに<code>position: relative; z-index: 1; background</code>を指定</li>
+        </ul>
+
+        <p><code>::before</code>疑似要素ではなく実DOM要素を使うのは、デバッグとメンテナンスのしやすさのためだ。DevToolsで要素を直接選択でき、スタイルの上書きも容易になる。</p>
+
+        <p>技術的にはシンプルだが、この構造が生み出す体験は単なるスクロール効果ではない。背景の鳥居は固定され、コンテンツがその上を覆いかぶさるように流れていく。<strong>過去の上に未来が重なる</strong>——この感覚を視覚化している。</p>
+
+        <p>モバイルではスクロール追従にフォールバックし、パフォーマンスを優先する。</p>
+
+
+        <h2>5. 二つのサイトに同じ背景</h2>
+
+        <p>コーポレートサイト（玄関）とLP（図書館）が同じ鳥居の写真を共有する。訪問者がどちらから入っても、同じ入口の風景が迎える。</p>
+
+        <p>自己完結の原則に従い、画像はそれぞれのリポジトリにコピーした。<code>/lp/asset/</code>からコーポレート側が参照するのではなく、コーポレートの<code>asset/</code>にも同じ画像を配置する。クロスリポジトリ依存は排除する。</p>
+
+        <p>同じ写真を二つの場所に置くことは冗長に見えるかもしれない。だが、この冗長性が独立性を担保する。一方のリポジトリを変更しても、他方は影響を受けない。そして訪問者にとっては、異なる深度のサイトがひとつのブランドであることを暗示する統一感として機能する。</p>
+
+
+        <h2>6. 結び</h2>
+
+        <p>白いページにテキストを並べるだけでも情報は伝わる。だが「千年」を語るなら、千年を体現する場所を見せた方が早い。</p>
+
+        <p>伊勢神宮の鳥居は1300年間、同じ場所に立ち続けている。20年ごとに建て替えられ、常に新しく、しかし常に同じだ。これは「存在を、千年先へ」というメッセージの実例であり、トキストレージが目指すアーキテクチャの比喩でもある。</p>
+
+        <div class="highlight-box">
+            <p class="big">テキストは伝える。写真は体験させる。</p>
+            <p>パララックスは、時間の重なりを感じさせる。</p>
+        </div>
+
+        <p>245KBの一枚の写真が、白い玄関を千年の入口に変えた。</p>
+
+        <h2>関連エッセイ</h2>
+        <ul>
+            <li><a href="corporate-site.html">コーポレートサイトという設計判断</a></li>
+            <li><a href="no-external-deps.html">外部依存性を増やさない</a></li>
+            <li><a href="seo-aio.html">見つけてもらうための設計</a></li>
+            <li><a href="ise-jingu.html">伊勢神宮と式年遷宮</a></li>
+            <li><a href="burn-rate-zero.html">バーンレートゼロ</a></li>
+        </ul>
+
+    </article>
+
+    <footer class="article-footer">
+        <p id="essay-nav-links"></p>
+        <p style="margin-top: 2rem; font-size: 0.75rem;">&copy; 2026 TokiStorage</p>
+    </footer>
+
+</main>
+
+<script src="contact-form.js" defer></script>
+<script src="essay-tts.js?v=20260220"></script>
+<script src="essay-nav.js?v=20260223"></script>
+<script src="tracker.js" defer></script>
+</body>
+</html>
