@@ -235,6 +235,16 @@ body.has-soap-banner .hero {
 /* =============================================
    Hero Section
    ============================================= */
+/* ── Hero Background (parallax) ── */
+.hero-bg {
+    position: fixed; inset: 0; z-index: -2;
+    background: url('asset/hero-bg.jpg') center center / cover no-repeat;
+}
+.hero-overlay {
+    position: fixed; inset: 0; z-index: -1;
+    background: rgba(15, 23, 42, 0.55);
+}
+
 .hero {
     min-height: 100vh;
     display: flex;
@@ -244,9 +254,6 @@ body.has-soap-banner .hero {
     text-align: center;
     position: relative;
     padding: 7rem 2rem 4rem;
-    background:
-        radial-gradient(ellipse 80% 60% at 50% 20%, rgba(37, 99, 235, 0.04) 0%, transparent 60%),
-        var(--bg-white);
 }
 
 .hero-content {
@@ -259,7 +266,7 @@ body.has-soap-banner .hero {
     font-family: var(--font-display);
     font-size: clamp(0.85rem, 2vw, 1rem);
     letter-spacing: 0.25em;
-    color: var(--text-muted);
+    color: rgba(255,255,255,0.7);
     margin-bottom: 1.5rem;
     opacity: 0;
     animation: fadeUp 0.8s ease forwards 0.2s;
@@ -272,7 +279,7 @@ body.has-soap-banner .hero {
     line-height: 1.2;
     margin-bottom: 1rem;
     letter-spacing: 0.15em;
-    color: var(--text-primary);
+    color: #FFFFFF;
     opacity: 0;
     animation: fadeUp 0.8s ease forwards 0.35s;
 }
@@ -280,7 +287,7 @@ body.has-soap-banner .hero {
 .hero-subtitle {
     font-family: var(--font-display);
     font-size: clamp(0.9rem, 2.5vw, 1.2rem);
-    color: var(--text-muted);
+    color: rgba(255,255,255,0.8);
     margin-bottom: 2.5rem;
     letter-spacing: 0.08em;
     opacity: 0;
@@ -301,7 +308,7 @@ body.has-soap-banner .hero {
     display: inline-flex;
     align-items: center;
     gap: 0.5rem;
-    color: var(--text-muted);
+    color: rgba(255,255,255,0.7);
     text-decoration: none;
     font-size: 0.9rem;
     padding: 0.4rem 1rem;
@@ -310,15 +317,15 @@ body.has-soap-banner .hero {
 }
 
 .hero-hook:hover {
-    color: var(--toki-blue);
-    background: var(--toki-blue-pale);
+    color: #FFFFFF;
+    background: rgba(255,255,255,0.1);
 }
 
 .hook-icon { font-size: 1rem; }
 
 .hero-desc {
     font-size: 0.9rem;
-    color: var(--text-muted);
+    color: rgba(255,255,255,0.75);
     line-height: 2;
     margin-bottom: 2.5rem;
     opacity: 0;
@@ -390,19 +397,25 @@ body.has-soap-banner .hero {
 .scroll-indicator span {
     font-size: 0.6rem;
     letter-spacing: 0.4em;
-    color: var(--text-dim);
+    color: rgba(255,255,255,0.5);
 }
 
 .scroll-line {
     width: 1px;
     height: 30px;
-    background: linear-gradient(to bottom, var(--toki-blue), transparent);
+    background: linear-gradient(to bottom, rgba(255,255,255,0.6), transparent);
     animation: scrollPulse 2s ease-in-out infinite;
 }
 
 /* =============================================
    Trust Bar (Hero直下)
    ============================================= */
+/* Ensure all sections below hero cover the fixed background */
+.trust-bar, .solution-section, .testimonials-section, .ai-review-section,
+.faq-section, .pricing-section, .cta-section, .toki-footer, .soap-banner {
+    position: relative; z-index: 1;
+}
+
 .trust-bar {
     background: var(--toki-blue-pale);
     border-bottom: 1px solid var(--border);
