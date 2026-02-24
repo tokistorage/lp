@@ -10,26 +10,18 @@ const fs = require('fs');
 const CHROME = '/Applications/Google Chrome.app/Contents/MacOS/Google Chrome';
 const BASE = 'http://localhost:8080';
 
-const PORTRAIT = { paperWidth: 8.27, paperHeight: 11.69, marginTop: 0.35, marginBottom: 0.35, marginLeft: 0.43, marginRight: 0.43 };
-const LANDSCAPE = { landscape: true, paperWidth: 11.69, paperHeight: 8.27, marginTop: 0.31, marginBottom: 0.31, marginLeft: 0.39, marginRight: 0.39 };
-
-const TARGETS = [
-    // Standard brochure
-    { url: '/brochure.html',            out: 'asset',           name: 'brochure-ja.pdf',                    opts: PORTRAIT },
-    { url: '/brochure.html?landscape=1', out: 'asset',          name: 'brochure-ja-landscape.pdf',          opts: LANDSCAPE },
-    { url: '/brochure-en.html',          out: 'asset',          name: 'brochure-en.pdf',                    opts: PORTRAIT },
-    { url: '/brochure-en.html?landscape=1', out: 'asset',       name: 'brochure-en-landscape.pdf',          opts: LANDSCAPE },
-    // Wedding brochure
-    { url: '/alliance/brochure-wedding.html',            out: 'alliance/asset', name: 'brochure-wedding.pdf',               opts: PORTRAIT },
-    { url: '/alliance/brochure-wedding.html?landscape=1', out: 'alliance/asset', name: 'brochure-wedding-landscape.pdf',     opts: LANDSCAPE },
-    { url: '/alliance/brochure-wedding-en.html',          out: 'alliance/asset', name: 'brochure-wedding-en.pdf',            opts: PORTRAIT },
-    { url: '/alliance/brochure-wedding-en.html?landscape=1', out: 'alliance/asset', name: 'brochure-wedding-en-landscape.pdf', opts: LANDSCAPE },
-];
-
 async function generatePDF(page, url, outDir, filename, opts) {
     await page.goto(url, { waitUntil: 'networkidle0' });
+    if (opts.landscape) {
+        await page.evaluate(() => {
+            var s = document.getElementById('landscape-page-style');
+            if (s) s.media = 'all';
+            document.body.classList.add('landscape-mode');
+        });
+    }
     var client = await page.createCDPSession();
     var result = await client.send('Page.printToPDF', Object.assign({ printBackground: true }, opts));
+    await client.detach();
     var outPath = path.join(__dirname, outDir, filename);
     fs.writeFileSync(outPath, Buffer.from(result.data, 'base64'));
     console.log('Generated:', outDir + '/' + filename, '(' + fs.statSync(outPath).size + ' bytes)');
@@ -39,10 +31,50 @@ async function generatePDF(page, url, outDir, filename, opts) {
     var browser = await puppeteer.launch({ executablePath: CHROME, headless: true });
     var page = await browser.newPage();
 
-    for (var t of TARGETS) {
-        await generatePDF(page, BASE + t.url, t.out, t.name, t.opts);
-    }
+    // Standard brochure — JA
+    await generatePDF(page, BASE + '/brochure.html', 'asset', 'brochure-ja.pdf', {
+        paperWidth: 8.27, paperHeight: 11.69,
+        marginTop: 0.35, marginBottom: 0.35, marginLeft: 0.43, marginRight: 0.43,
+    });
+    await generatePDF(page, BASE + '/brochure.html?landscape=1', 'asset', 'brochure-ja-landscape.pdf', {
+        landscape: true,
+        paperWidth: 11.69, paperHeight: 8.27,
+        marginTop: 0.31, marginBottom: 0.31, marginLeft: 0.39, marginRight: 0.39,
+    });
+
+    // Standard brochure — EN
+    await generatePDF(page, BASE + '/brochure-en.html', 'asset', 'brochure-en.pdf', {
+        paperWidth: 8.27, paperHeight: 11.69,
+        marginTop: 0.35, marginBottom: 0.35, marginLeft: 0.43, marginRight: 0.43,
+    });
+    await generatePDF(page, BASE + '/brochure-en.html?landscape=1', 'asset', 'brochure-en-landscape.pdf', {
+        landscape: true,
+        paperWidth: 11.69, paperHeight: 8.27,
+        marginTop: 0.31, marginBottom: 0.31, marginLeft: 0.39, marginRight: 0.39,
+    });
+
+    // Wedding brochure — JA
+    await generatePDF(page, BASE + '/alliance/brochure-wedding.html', 'alliance/asset', 'brochure-wedding.pdf', {
+        paperWidth: 8.27, paperHeight: 11.69,
+        marginTop: 0.35, marginBottom: 0.35, marginLeft: 0.43, marginRight: 0.43,
+    });
+    await generatePDF(page, BASE + '/alliance/brochure-wedding.html?landscape=1', 'alliance/asset', 'brochure-wedding-landscape.pdf', {
+        landscape: true,
+        paperWidth: 11.69, paperHeight: 8.27,
+        marginTop: 0.31, marginBottom: 0.31, marginLeft: 0.39, marginRight: 0.39,
+    });
+
+    // Wedding brochure — EN
+    await generatePDF(page, BASE + '/alliance/brochure-wedding-en.html', 'alliance/asset', 'brochure-wedding-en.pdf', {
+        paperWidth: 8.27, paperHeight: 11.69,
+        marginTop: 0.35, marginBottom: 0.35, marginLeft: 0.43, marginRight: 0.43,
+    });
+    await generatePDF(page, BASE + '/alliance/brochure-wedding-en.html?landscape=1', 'alliance/asset', 'brochure-wedding-en-landscape.pdf', {
+        landscape: true,
+        paperWidth: 11.69, paperHeight: 8.27,
+        marginTop: 0.31, marginBottom: 0.31, marginLeft: 0.39, marginRight: 0.39,
+    });
 
     await browser.close();
-    console.log('Done — ' + TARGETS.length + ' PDFs generated');
+    console.log('Done — 8 PDFs generated');
 })();
