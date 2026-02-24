@@ -188,6 +188,11 @@
             });
         });
 
+        // Auto-open modal when URL contains #contact
+        if (window.location.hash === '#contact') {
+            openModal(document.title);
+        }
+
         closeBtn.addEventListener('click', closeModal);
         overlay.addEventListener('click', function(e) {
             if (e.target === overlay) closeModal();
