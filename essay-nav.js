@@ -81,6 +81,7 @@
     { id: 'framework', ja: 'フレームワーク表現', en: 'Framework Expression', date: '2026-02-19' },
     { id: 'prime-location', ja: '一等地の変容', en: 'The Transformation of Prime Locations', date: '2026-02-22' },
     { id: 'diy-partner', ja: 'DIYパートナーの設計思想', en: 'The Design Philosophy of DIY Partners', date: '2026-02-23' },
+    { id: 'copyright-jasrac', ja: '著作権とJASRAC', en: 'Copyright and JASRAC', date: '2026-02-24' },
 
     // ── 文化・社会活動 ──
     { id: 'education', ja: '教育', en: 'Education', date: '2026-02-13' },
@@ -165,6 +166,7 @@
   // LATEST_COUNT で表示件数を制御
   const LATEST_COUNT = 5;
   const latestEssayIds = [
+    'copyright-jasrac',
     'hero-parallax',
     'equipment-guide',
     'diy-partner',
@@ -272,13 +274,14 @@
     'framework':              ['burn-rate-zero', 'no-competition', 'enterprise-architecture', 'price-acceptance', 'global-niche'],
     'prime-location':         ['realestate', 'post-nomad', 'utilization-productivity', 'urayasu', 'site-geology'],
     'diy-partner':            ['equipment-guide', 'wedding-partnership', 'uniform-pricing', 'community-benefit', 'sanpoyoshi'],
+    'copyright-jasrac':       ['music', 'ownership', 'platform', 'disintermediation', 'ecosystem'],
     // ── 文化・社会活動 ──
     'education':              ['early-education', 'history', 'media', 'psychology', 'lifestyle'],
     'early-education':        ['education', 'recital-record', 'music', 'psychology', 'entertainment'],
     'media':                  ['entertainment', 'advertising', 'platform', 'history', 'openness'],
     'entertainment':          ['media', 'music', 'art', 'sports', 'tourism'],
     'art':                    ['music', 'hands', 'entertainment', 'preserving-words', 'history'],
-    'music':                  ['art', 'entertainment', '30seconds', 'recital-record', 'voice-future'],
+    'music':                  ['copyright-jasrac', 'art', 'entertainment', '30seconds', 'recital-record'],
     'community-benefit':      ['sanpoyoshi', 'hyoutanjima', 'walking-partner', 'ecology', 'global-honbinos'],
     'tourism':                ['commemorative-photo', 'urayasu', 'hyoutanjima', 'sports', 'entertainment'],
     'commemorative-photo':    ['recital-record', 'tourism', 'image-clarity', 'what-to-leave', 'hands'],

@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" type="image/png" sizes="32x32" href="asset/favicon-32.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="asset/apple-touch-icon.png">
+    <title>著作権とJASRAC | トキストレージ</title>
+    <meta name="robots" content="index, follow">
+    <meta name="description" content="自分で歌っても、楽曲の著作権は作詞作曲者のもの。音声QRコードと著作権の関係を整理する。">    <style>
+        :root {
+            --toki-blue: #2563EB;
+            --toki-blue-dark: #1D4ED8;
+            --toki-blue-pale: #EFF6FF;
+            --accent-blue: #3B82F6;
+            --bg-white: #FFFFFF;
+            --text-primary: #1E293B;
+            --text-secondary: #475569;
+            --text-muted: #94A3B8;
+            --border: #E2E8F0;
+            --font-display: 'Hiragino Mincho ProN', 'Yu Mincho', serif;
+            --font-body: 'Hiragino Kaku Gothic ProN', 'Yu Gothic', 'Meiryo', sans-serif;
+        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        html { scroll-behavior: smooth; }
+        body { font-family: var(--font-body); font-weight: 400; background: var(--bg-white); color: var(--text-primary); line-height: 2; font-size: 16px; }
+
+        .article-nav { position: fixed; top: 0; left: 0; right: 0; z-index: 1000; background: rgba(255,255,255,0.95); backdrop-filter: blur(12px); border-bottom: 1px solid var(--border); padding: 0.6rem 1.2rem; display: flex; align-items: center; justify-content: space-between; gap: 1rem; }
+        .article-nav .nav-brand { font-family: var(--font-display); font-size: 0.9rem; font-weight: 600; color: var(--toki-blue); text-decoration: none; white-space: nowrap; }
+        .article-nav .nav-brand::before { content: ''; display: inline-block; width: 20px; height: 20px; background: url('asset/tokistorage-icon-512.png') no-repeat center / contain; vertical-align: -3px; margin-right: 5px; }
+        .article-nav .nav-right { display: flex; align-items: center; gap: 1rem; }
+        .article-nav .nav-label { font-size: 0.6rem; color: var(--text-muted); letter-spacing: 0.08em; }
+        .article-nav .lang-switch { font-size: 0.75rem; color: var(--toki-blue); text-decoration: none; padding: 0.3rem 0.6rem; border: 1px solid var(--toki-blue); border-radius: 4px; }
+        .article-nav .lang-switch:hover { background: var(--toki-blue); color: #fff; }
+
+        .article-container { max-width: 680px; margin: 0 auto; padding: 7rem 2rem 4rem; }
+        .article-header { margin-bottom: 3rem; padding-bottom: 2rem; border-bottom: 1px solid var(--border); }
+        .article-category { font-size: 0.7rem; color: var(--toki-blue); letter-spacing: 0.15em; margin-bottom: 1rem; }
+        .article-header h1 { font-family: var(--font-display); font-size: 1.8rem; font-weight: 700; line-height: 1.5; margin-bottom: 1.5rem; }
+        .article-subtitle { font-size: 0.95rem; color: var(--text-secondary); line-height: 1.9; }
+
+        .article-content h2 { font-family: var(--font-display); font-size: 1.3rem; font-weight: 600; margin: 3rem 0 1.5rem; padding-bottom: 0.5rem; border-bottom: 2px solid var(--toki-blue-pale); }
+        .article-content h3 { font-family: var(--font-display); font-size: 1.1rem; font-weight: 600; margin: 2rem 0 1rem; color: var(--toki-blue-dark); }
+        .article-content p { margin-bottom: 1.5rem; text-align: justify; }
+        .article-content blockquote { border-left: 3px solid var(--toki-blue); padding-left: 1.5rem; margin: 2rem 0; font-family: var(--font-display); color: var(--text-secondary); }
+        .article-content ul { margin: 1.5rem 0; padding-left: 1.5rem; }
+        .article-content li { margin-bottom: 0.75rem; }
+
+        .core-message { background: var(--toki-blue-pale); border-left: 4px solid var(--toki-blue); padding: 1.5rem; margin: 2rem 0; font-size: 0.95rem; line-height: 1.8; }
+        .key-point { background: linear-gradient(135deg, var(--toki-blue-pale) 0%, #fff 100%); border: 1px solid var(--accent-blue); border-radius: 8px; padding: 1.5rem; margin: 2rem 0; text-align: center; }
+        .key-point p { font-family: var(--font-display); font-size: 1.1rem; color: var(--toki-blue-dark); margin: 0; }
+
+        .article-footer { margin-top: 4rem; padding-top: 2rem; border-top: 1px solid var(--border); text-align: center; }
+        .article-footer p { font-size: 0.8rem; color: var(--text-muted); margin-bottom: 1rem; }
+        .article-footer a { color: var(--toki-blue); text-decoration: none; }
+        .article-footer a:hover { text-decoration: underline; }
+
+        @media (max-width: 768px) {
+            .article-container { padding: 6rem 1.2rem 3rem; }
+            .article-header h1 { font-size: 1.5rem; }
+            .article-nav .nav-label { display: none; }
+        }
+        @media print { .article-nav { display: none; } .article-container { padding-top: 2rem; } }
+    </style>
+    <link rel="stylesheet" href="contact-form.css">
+    <meta property="og:type" content="article">
+    <meta property="og:title" content="著作権とJASRAC | トキストレージ">
+    <meta property="og:description" content="自分で歌っても、楽曲の著作権は作詞作曲者のもの。音声QRコードと著作権の関係を整理する。">
+    <meta property="og:url" content="https://tokistorage.github.io/lp/copyright-jasrac.html">
+    <meta property="og:site_name" content="トキストレージ">
+    <meta name="twitter:card" content="summary">
+    <meta name="twitter:title" content="著作権とJASRAC | トキストレージ">
+    <meta name="twitter:description" content="自分で歌っても、楽曲の著作権は作詞作曲者のもの。音声QRコードと著作権の関係を整理する。">
+    <meta property="og:image" content="https://tokistorage.github.io/lp/asset/tokistorage-icon-512.png">
+    <meta property="og:image:width" content="512">
+    <meta property="og:image:height" content="512">
+    <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Article",
+  "headline": "著作権とJASRAC",
+  "author": {
+    "@type": "Person",
+    "name": "Takuya Sato",
+    "url": "https://tokistorage.github.io/lp/profile.html"
+  },
+  "publisher": {
+    "@type": "Organization",
+    "name": "TokiStorage",
+    "url": "https://tokistorage.github.io/lp",
+    "logo": {
+      "@type": "ImageObject",
+      "url": "https://tokistorage.github.io/lp/asset/tokistorage-icon-512.png"
+    }
+  },
+  "url": "https://tokistorage.github.io/lp/copyright-jasrac.html",
+  "inLanguage": "ja",
+  "mainEntityOfPage": "https://tokistorage.github.io/lp/copyright-jasrac.html",
+  "description": "自分で歌っても、楽曲の著作権は作詞作曲者のもの。音声QRコードと著作権の関係を整理する。"
+}
+    </script>
+    <link rel="alternate" hreflang="ja" href="https://tokistorage.github.io/lp/copyright-jasrac.html">
+    <link rel="alternate" hreflang="en" href="https://tokistorage.github.io/lp/copyright-jasrac-en.html">
+    <link rel="alternate" hreflang="x-default" href="https://tokistorage.github.io/lp/copyright-jasrac.html">
+    <link rel="canonical" href="https://tokistorage.github.io/lp/copyright-jasrac.html">
+</head>
+<body>
+
+<nav class="article-nav">
+    <a href="index.html" class="nav-brand">トキストレージ</a>
+    <div class="nav-right">
+        <span class="nav-label">経済・財産 / Economy & Property</span>
+        <a href="copyright-jasrac-en.html" class="lang-switch">EN</a>
+    </div>
+</nav>
+
+<main class="article-container">
+
+    <header class="article-header">
+        <p class="article-category">ESSAY &mdash; 経済・財産</p>
+        <h1>著作権とJASRAC</h1>
+        <p class="article-subtitle">
+            &mdash;&mdash; 自分で歌っても、楽曲の著作権は作詞作曲者のもの。音声QRコードと著作権の関係を整理する。
+        </p>
+    </header>
+
+    <article class="article-content">
+
+        <h2>1. 歌えバンバンを歌ってみた</h2>
+
+        <p>TokiQRの音声QRコードは、最大約30秒の声を1枚のQRコードに収める。自分の声でメッセージを残すことを想定した設計だ。ある日、試しに「歌えバンバン」を自分で歌って録音し、QRコードにしてみた。</p>
+
+        <p>できあがったQRコードを見て、ふと思った。これ、配布して良いのだろうか。自分の声で歌っている。録音も自分でやった。でもこの曲は、自分が作ったものではない。</p>
+
+        <h2>2. 著作権の二層構造</h2>
+
+        <p>音楽には二つの権利がある。一つは「演奏・歌唱の権利」。歌った人、演奏した人に帰属する。もう一つは「楽曲の著作権」。メロディと歌詞を作った人に帰属する。</p>
+
+        <p>自分で歌えば、その録音の権利は自分のものだ。しかし、メロディと歌詞の著作権は作詞作曲者のもの。自分で歌ったかどうかは、楽曲の著作権には何の影響も与えない。</p>
+
+        <div class="core-message">
+            歌った人の権利と、曲を作った人の権利は別物。<br>
+            自分で歌っても、楽曲の著作権は動かない。
+        </div>
+
+        <h2>3. JASRACという仕組み</h2>
+
+        <p>JASRAC（一般社団法人日本音楽著作権協会）は、作詞者・作曲者に代わって楽曲の利用許諾を管理する団体だ。日本で流通する楽曲の大部分がJASRACの管理下にある。</p>
+
+        <p>利用者が個々の作詞作曲者に直接許諾を求める必要はない。JASRACに申請し、所定の使用料を支払えば、合法的に楽曲を利用できる。この集中管理の仕組みが、音楽の流通を支えている。</p>
+
+        <p>逆に言えば、JASRACの管理楽曲を許諾なく配布すれば、著作権侵害になる。個人の善意や非営利目的であっても、この原則は変わらない。</p>
+
+        <h2>4. 歌えバンバンの著作権</h2>
+
+        <p>「歌えバンバン」は1975年にNHK「みんなのうた」で放送された楽曲だ。作詞は阪田寛夫（2005年没）、作曲は山本直純（2002年没）。</p>
+
+        <p>日本の著作権法では、著作権は著作者の死後70年間存続する。つまり、作曲の著作権は2072年まで、作詞の著作権は2075年まで有効だ。私たちが生きている間に著作権が切れることはない。</p>
+
+        <h2>5. QRコードでも変わらない</h2>
+
+        <p>音声QRコードは紙に印刷される。一見するとデジタル配信とは異なる媒体に思える。しかし、QRコードの中身はURLであり、そのURLにアクセスすると音声が再生される。法的には、インターネットを通じた音声配信と同じ扱いだ。</p>
+
+        <p>媒体が紙であっても、CDであっても、ストリーミングであっても、著作権のある楽曲を複製・配布するには許諾が必要。これは技術の新旧に関係なく適用される原則だ。</p>
+
+        <h2>6. TokiQRで安心して使えるもの</h2>
+
+        <p>では、TokiQRの音声QRコードで安心して配布できるものは何か。</p>
+
+        <ul>
+            <li><strong>自分の声のメッセージ</strong> &mdash; 誰かへの手紙、感謝の言葉、記念日のメッセージ。自分の言葉で語る内容は、著作権の心配がない。</li>
+            <li><strong>著作権切れの楽曲</strong> &mdash; 作詞者・作曲者の没後70年を経過した楽曲は、パブリックドメインとして自由に利用できる。</li>
+            <li><strong>自作の曲や鼻歌</strong> &mdash; 自分で作った曲であれば、著作権は自分にある。</li>
+            <li><strong>許諾を得た楽曲</strong> &mdash; JASRACに申請し、使用料を支払った上で利用する楽曲。</li>
+        </ul>
+
+        <p>TokiQRが本来想定しているのは「自分の声を残す」ことだ。結婚式での誓いの言葉、親から子への手紙、旅先での感想。これらはすべて、著作権の問題が生じない。最も尊い使い方が、最も安全な使い方でもある。</p>
+
+        <h2>7. 技術が新しくても、権利は変わらない</h2>
+
+        <p>QRコードに音声を格納するという技術は新しい。しかし、著作権という権利のフレームワークは変わらない。新しい技術が登場するたびに、既存の権利体系との整合性を確認する必要がある。</p>
+
+        <p>歌えバンバンを歌ってQRコードにしたあの日、私は著作権の二層構造を体感した。自分の声であっても、曲は誰かのものだ。その理解が、サービス提供者としての責任の一つだと考えている。</p>
+
+        <div class="core-message">
+            技術が新しくても、権利のフレームワークは変わらない。<br>
+            理解した上で使うことが、作り手への敬意であり、使い手の安心になる。
+        </div>
+
+    </article>
+
+    <footer class="article-footer">
+        <p id="essay-nav-links"></p>
+        <p style="margin-top: 2rem; font-size: 0.75rem;">&copy; 2026 TokiStorage</p>
+    </footer>
+
+</main>
+
+<script src="contact-form.js" defer></script>
+<script src="essay-nav.js?v=20260224"></script>
+<script src="tracker.js" defer></script>
+</body>
+</html>
