@@ -192,7 +192,7 @@ def build_newsletter(materials_path, config_path, output_dir):
     pdf.set_y(-25)
     pdf.set_font("JP", "", 7)
     pdf.set_text_color(*SECONDARY)
-    pdf.cell(0, 4, "あなたが物語になり、世代の対話と重なり、未来が豊かになる",
+    pdf.cell(0, 4, "あなたが物語となり、世代の対話が重なり、未来の道になる",
              align="C", new_x="LMARGIN", new_y="NEXT")
     pdf.ln(2)
     pdf.set_draw_color(*BORDER)
