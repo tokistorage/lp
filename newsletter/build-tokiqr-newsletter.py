@@ -178,7 +178,12 @@ def build_newsletter(materials_path, config_path, output_dir):
         pdf.multi_cell(CONTENT_W - 20, 4, note)
 
     # Footer
-    pdf.set_y(-20)
+    pdf.set_y(-25)
+    pdf.set_font("JP", "", 7)
+    pdf.set_text_color(*SECONDARY)
+    pdf.cell(0, 4, "あなたが物語になり、世代の対話と重なり、未来が豊かになる",
+             align="C", new_x="LMARGIN", new_y="NEXT")
+    pdf.ln(2)
     pdf.set_draw_color(*BORDER)
     pdf.line(MARGIN, pdf.get_y(), PAGE_W - MARGIN, pdf.get_y())
     pdf.ln(3)
