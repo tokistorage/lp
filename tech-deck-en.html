@@ -949,7 +949,7 @@
                 </div>
             </div>
             <div class="callout" style="margin-top:0.3rem;">
-                <p>Zero fixed monthly costs. Zero proprietary servers &mdash; development, delivery, payments, and archiving all run on external services and public institutions.</p>
+                <p>Zero fixed monthly costs. Zero proprietary servers &mdash; development, delivery, payments, and archiving all run on external services and public institutions. Frontend, GAS, and Cloudflare Workers run on JavaScript / HTML / CSS; generator scripts in Python.</p>
             </div>
         </div>
     </div>
@@ -966,43 +966,43 @@
         <h2>Zero servers in the data flow &mdash; an architecture with no dependencies</h2>
     </div>
     <div class="slide-body">
-        <div class="slide-content">
+        <div class="slide-content" style="display:flex;flex-direction:column;padding-top:0.8rem;">
             <p class="section-label">Architecture Overview</p>
-            <div class="arch-flow">
-                <div class="arch-node">
-                    <div class="arch-node-icon">&#x1F3A4;</div>
-                    <h4>Recording</h4>
-                    <p>User's voice</p>
+            <div class="arch-flow" style="padding:0.8rem 0;">
+                <div class="arch-node" style="padding:0.6rem 0.7rem;">
+                    <div class="arch-node-icon" style="font-size:1.3rem;">&#x1F4E5;</div>
+                    <h4 style="font-size:0.58rem;">Input</h4>
+                    <p style="font-size:0.42rem;">Voice / Image / Text</p>
                 </div>
-                <span class="arch-arrow">&#x2192;</span>
-                <div class="arch-node highlight">
-                    <div class="arch-node-icon">&#x2699;&#xFE0F;</div>
-                    <h4>Codec2 WASM</h4>
-                    <p>Encoded in browser</p>
+                <span class="arch-arrow" style="font-size:1rem;">&#x2192;</span>
+                <div class="arch-node highlight" style="padding:0.6rem 0.7rem;">
+                    <div class="arch-node-icon" style="font-size:1.3rem;">&#x2699;&#xFE0F;</div>
+                    <h4 style="font-size:0.58rem;">Encoder</h4>
+                    <p style="font-size:0.42rem;">Encoded in browser</p>
                 </div>
-                <span class="arch-arrow">&#x2192;</span>
-                <div class="arch-node">
-                    <div class="arch-node-icon">&#x25A3;</div>
-                    <h4>QR Code</h4>
-                    <p>Data stored in URL</p>
+                <span class="arch-arrow" style="font-size:1rem;">&#x2192;</span>
+                <div class="arch-node" style="padding:0.6rem 0.7rem;">
+                    <div class="arch-node-icon" style="font-size:1.3rem;">&#x25A3;</div>
+                    <h4 style="font-size:0.58rem;">QR Code</h4>
+                    <p style="font-size:0.42rem;">Data stored in URL</p>
                 </div>
-                <span class="arch-arrow">&#x2192;</span>
-                <div class="arch-node">
-                    <div class="arch-node-icon">&#x1F4F1;</div>
-                    <h4>Smartphone</h4>
-                    <p>Scan &amp; play</p>
+                <span class="arch-arrow" style="font-size:1rem;">&#x2192;</span>
+                <div class="arch-node" style="padding:0.6rem 0.7rem;">
+                    <div class="arch-node-icon" style="font-size:1.3rem;">&#x1F4F1;</div>
+                    <h4 style="font-size:0.58rem;">Smartphone</h4>
+                    <p style="font-size:0.42rem;">Scan &amp; play</p>
                 </div>
-                <span class="arch-arrow">&#x2192;</span>
-                <div class="arch-node highlight">
-                    <div class="arch-node-icon">&#x1F310;</div>
-                    <h4>Decoder</h4>
-                    <p>GitHub Pages / 3MB</p>
+                <span class="arch-arrow" style="font-size:1rem;">&#x2192;</span>
+                <div class="arch-node highlight" style="padding:0.6rem 0.7rem;">
+                    <div class="arch-node-icon" style="font-size:1.3rem;">&#x1F310;</div>
+                    <h4 style="font-size:0.58rem;">Decoder</h4>
+                    <p style="font-size:0.42rem;">GitHub Pages / PWA cache / 3MB</p>
                 </div>
             </div>
-            <div class="no-server-badge">NO SERVER IN DATA FLOW &mdash; No server, no database, no API</div>
-            <div class="callout">
+            <div class="no-server-badge" style="font-size:0.48rem;padding:0.3rem 0.6rem;">NO SERVER IN DATA FLOW &mdash; No server, no database, no API, no account</div>
+            <div class="callout" style="margin-top:0.5rem;padding:0.5rem 0.7rem;">
                 <h4>Design Principle</h4>
-                <p>To eliminate service shutdown risk, servers are completely removed from the data flow. The QR code's paper surface itself is the storage, and the decoder is just a 3 MB static site.</p>
+                <p>To eliminate service shutdown risk, servers are completely removed from the data flow. The QR code itself is the storage, and the decoder is just a 3 MB static site. With PWA, fully offline playback is possible. No customer data, personal information, or confidential data is held.</p>
             </div>
         </div>
     </div>
@@ -1013,76 +1013,25 @@
     </div>
 </section>
 
-<!-- ━━━ SLIDE 04: THREE-LAYER DEPLOYMENT ━━━ -->
+<!-- ━━━ SLIDE 04: DATA FLOW (Input → QR) ━━━ -->
 <section class="slide">
     <div class="action-bar">
-        <h2>Three independent layers &mdash; physical, national, and private &mdash; geographically and institutionally distributed</h2>
+        <h2>All data is processed entirely in the browser &mdash; never sent to a server &mdash; and becomes a QR code</h2>
     </div>
     <div class="slide-body">
         <div class="slide-content">
-            <p class="section-label">Three-Layer Deployment</p>
-            <div class="cols3">
-                <div class="layer-col physical">
-                    <div class="layer-col-icon">&#x1F48E;</div>
-                    <h4>Physical Layer</h4>
-                    <p>Quartz glass engraving (300M+ year durability)</p>
-                    <p>UV laminate film (10-year outdoor durability)</p>
-                    <div style="margin-top:0.15rem;">
-                        <span class="location-tag physical">Sado Island</span>
-                        <span class="location-tag physical">Maui Island</span>
-                    </div>
-                </div>
-                <div class="layer-col national">
-                    <div class="layer-col-icon">&#x1F3DB;</div>
-                    <h4>National Layer</h4>
-                    <p>National Diet Library deposit (Legal Deposit Law)</p>
-                    <p>Voice QR converted to PDF newsletters and deposited periodically</p>
-                    <div style="margin-top:0.15rem;">
-                        <span class="location-tag national">Tokyo, Nagatacho</span>
-                    </div>
-                </div>
-                <div class="layer-col private">
-                    <div class="layer-col-icon">&#x1F4BB;</div>
-                    <h4>Private Layer</h4>
-                    <p>GitHub Pages decoder (3 MB)</p>
-                    <p>Data lives inside QR paper's URLs</p>
-                    <p>O(1) &mdash; storage independent of record count</p>
-                    <div style="margin-top:0.15rem;">
-                        <span class="location-tag private">Worldwide</span>
-                    </div>
-                </div>
-            </div>
-            <div class="callout" style="margin-top:0.3rem;">
-                <p>Each layer is fully independent. Physical distance, managing authority, and legal basis all differ &mdash; no single point of failure.</p>
-            </div>
-        </div>
-    </div>
-    <div class="slide-footer">
-        <span>TokiStorage &mdash; Technical Architecture</span>
-        <span>Confidential</span>
-        <span class="pg">4</span>
-    </div>
-</section>
-
-<!-- ━━━ SLIDE 05: DATA FLOW (Voice → QR) ━━━ -->
-<section class="slide">
-    <div class="action-bar">
-        <h2>Voice is processed entirely in the browser &mdash; never sent to a server &mdash; and becomes a QR code</h2>
-    </div>
-    <div class="slide-body">
-        <div class="slide-content">
-            <p class="section-label">Data Flow: Voice &rarr; QR</p>
+            <p class="section-label">Data Flow: Input &rarr; QR</p>
             <div class="arch-flow" style="padding:0.3rem 0;">
                 <div class="arch-node" style="min-width:85px;">
-                    <div class="arch-node-icon">&#x1F3A4;</div>
-                    <h4>Microphone</h4>
-                    <p>Voice input</p>
+                    <div class="arch-node-icon">&#x1F4E5;</div>
+                    <h4>Input</h4>
+                    <p>Voice / Image / Text</p>
                 </div>
                 <span class="arch-arrow">&#x2192;</span>
                 <div class="arch-node highlight" style="min-width:95px;">
                     <div class="arch-node-icon">&#x2699;&#xFE0F;</div>
-                    <h4>Codec2 WASM</h4>
-                    <p>450 bps encoding</p>
+                    <h4>Encoder</h4>
+                    <p>In-browser encoding</p>
                 </div>
                 <span class="arch-arrow">&#x2192;</span>
                 <div class="arch-node" style="min-width:85px;">
@@ -1094,7 +1043,7 @@
                 <div class="arch-node" style="min-width:105px;">
                     <div class="arch-node-icon">&#x1F517;</div>
                     <h4>URL Generation</h4>
-                    <p>play.html?m=5&amp;c2=...</p>
+                    <p>play.html?...=&lt;data&gt;</p>
                 </div>
                 <span class="arch-arrow">&#x2192;</span>
                 <div class="arch-node highlight" style="min-width:95px;">
@@ -1112,28 +1061,28 @@
                 </thead>
                 <tbody>
                     <tr>
-                        <th>Codec</th>
-                        <td class="hl">Codec2 (Mode 5: 450 bps)</td>
+                        <th>Voice Codec</th>
+                        <td class="hl">Codec2 WASM (6 modes: 3200 / 2400 / 1600 / 1200 / 700C / 450 bps)</td>
                     </tr>
                     <tr>
-                        <th>Max Recording</th>
-                        <td class="hl">~29 seconds</td>
+                        <th>Voice Max</th>
+                        <td class="hl">~29 seconds (450 bps)</td>
                     </tr>
                     <tr>
-                        <th>QR Version</th>
-                        <td>Version 40, Error Correction L</td>
+                        <th>Image</th>
+                        <td>JPEG / WebP &mdash; in-browser resize + Base64URL</td>
                     </tr>
                     <tr>
-                        <th>Max Capacity</th>
-                        <td>2,953 bytes</td>
+                        <th>Text</th>
+                        <td>UTF-8 &mdash; up to ~2,900 characters</td>
+                    </tr>
+                    <tr>
+                        <th>QR</th>
+                        <td>Version 40, Error Correction L, max 2,953 bytes</td>
                     </tr>
                     <tr>
                         <th>URL Format</th>
-                        <td><code style="font-size:0.44rem;background:var(--bg-alt);padding:0.05rem 0.2rem;border-radius:2px;">play.html?m=&lt;mode&gt;&amp;c2=&lt;base64url&gt;</code></td>
-                    </tr>
-                    <tr>
-                        <th>Supported Modes</th>
-                        <td>6 modes (3200 / 2400 / 1600 / 1200 / 700C / 450 bps)</td>
+                        <td><code style="font-size:0.44rem;background:var(--bg-alt);padding:0.05rem 0.2rem;border-radius:2px;">play.html?m=&lt;mode&gt;&amp;c2=&lt;data&gt;</code> / <code style="font-size:0.44rem;background:var(--bg-alt);padding:0.05rem 0.2rem;border-radius:2px;">?img=</code> / <code style="font-size:0.44rem;background:var(--bg-alt);padding:0.05rem 0.2rem;border-radius:2px;">?txt=</code></td>
                     </tr>
                 </tbody>
             </table>
@@ -1142,62 +1091,62 @@
     <div class="slide-footer">
         <span>TokiStorage &mdash; Technical Architecture</span>
         <span>Confidential</span>
-        <span class="pg">5</span>
+        <span class="pg">4</span>
     </div>
 </section>
 
-<!-- ━━━ SLIDE 06: BULK MODE ━━━ -->
+<!-- ━━━ SLIDE 05: BULK MODE ━━━ -->
 <section class="slide">
     <div class="action-bar">
         <h2>Bulk Mode &mdash; split into N QR codes, credit managed via IndexedDB. No server required</h2>
     </div>
     <div class="slide-body">
-        <div class="slide-content">
+        <div class="slide-content" style="display:flex;flex-direction:column;padding-top:0.3rem;">
             <p class="section-label">Bulk Mode Architecture</p>
-            <p class="body-lead">Supports long audio, high-res images, and long text beyond the single QR's 30-second limit</p>
-            <div class="split-layout">
-                <div style="display:flex;flex-direction:column;gap:0.4rem;">
-                    <div class="arch-flow" style="padding:0.3rem 0;justify-content:flex-start;">
-                        <div class="arch-node" style="min-width:75px;padding:0.35rem 0.4rem;">
-                            <div class="arch-node-icon" style="font-size:1rem;">&#x1F4C1;</div>
+            <p class="body-lead" style="font-size:0.48rem;">Supports long audio, high-res images, and long text beyond the single QR's 30-second limit</p>
+            <div class="split-layout" style="flex:1;margin-top:0.3rem;">
+                <div style="display:flex;flex-direction:column;gap:0.5rem;">
+                    <div class="arch-flow" style="padding:0.4rem 0;justify-content:flex-start;">
+                        <div class="arch-node" style="min-width:85px;padding:0.45rem 0.5rem;">
+                            <div class="arch-node-icon" style="font-size:1.2rem;">&#x1F4C1;</div>
                             <h4>Source Data</h4>
                         </div>
                         <span class="arch-arrow">&#x2192;</span>
-                        <div class="arch-node highlight" style="min-width:90px;padding:0.35rem 0.4rem;">
-                            <div class="arch-node-icon" style="font-size:1rem;">&#x2699;&#xFE0F;</div>
+                        <div class="arch-node highlight" style="min-width:100px;padding:0.45rem 0.5rem;">
+                            <div class="arch-node-icon" style="font-size:1.2rem;">&#x2699;&#xFE0F;</div>
                             <h4>Codec</h4>
                             <p>Opus / Image / Text</p>
                         </div>
                         <span class="arch-arrow">&#x2192;</span>
-                        <div class="arch-node" style="min-width:75px;padding:0.35rem 0.4rem;">
-                            <div class="arch-node-icon" style="font-size:1rem;">&#x2702;&#xFE0F;</div>
+                        <div class="arch-node" style="min-width:85px;padding:0.45rem 0.5rem;">
+                            <div class="arch-node-icon" style="font-size:1.2rem;">&#x2702;&#xFE0F;</div>
                             <h4>N-Split</h4>
                         </div>
                     </div>
-                    <div class="arch-flow" style="padding:0.2rem 0;justify-content:flex-start;">
-                        <div class="arch-node" style="min-width:55px;padding:0.3rem 0.35rem;">
-                            <h4 style="font-size:0.44rem;">QR 1</h4>
+                    <div class="arch-flow" style="padding:0.3rem 0;justify-content:flex-start;">
+                        <div class="arch-node" style="min-width:60px;padding:0.35rem 0.4rem;">
+                            <h4 style="font-size:0.48rem;">QR 1</h4>
                         </div>
-                        <div class="arch-node" style="min-width:55px;padding:0.3rem 0.35rem;">
-                            <h4 style="font-size:0.44rem;">QR 2</h4>
+                        <div class="arch-node" style="min-width:60px;padding:0.35rem 0.4rem;">
+                            <h4 style="font-size:0.48rem;">QR 2</h4>
                         </div>
-                        <span style="font-size:0.6rem;color:var(--text-light);padding:0 0.2rem;">...</span>
-                        <div class="arch-node" style="min-width:55px;padding:0.3rem 0.35rem;">
-                            <h4 style="font-size:0.44rem;">QR n</h4>
+                        <span style="font-size:0.7rem;color:var(--text-light);padding:0 0.25rem;">...</span>
+                        <div class="arch-node" style="min-width:60px;padding:0.35rem 0.4rem;">
+                            <h4 style="font-size:0.48rem;">QR n</h4>
                         </div>
                         <span class="arch-arrow">&#x2192;</span>
-                        <div class="arch-node" style="min-width:75px;padding:0.3rem 0.35rem;">
-                            <div class="arch-node-icon" style="font-size:0.9rem;">&#x1F5A8;&#xFE0F;</div>
-                            <h4 style="font-size:0.44rem;">Self-Print</h4>
+                        <div class="arch-node" style="min-width:85px;padding:0.35rem 0.4rem;">
+                            <div class="arch-node-icon" style="font-size:1.1rem;">&#x1F5A8;&#xFE0F;</div>
+                            <h4 style="font-size:0.48rem;">Self-Print</h4>
                         </div>
                     </div>
-                    <div class="callout" style="margin-top:0.15rem;padding:0.25rem 0.45rem;">
-                        <p style="font-size:0.38rem;">The server cannot see balances, revoke credits, or recover lost ones. This asymmetry is intentional by design.</p>
+                    <div class="callout" style="margin-top:0.2rem;padding:0.3rem 0.5rem;">
+                        <p style="font-size:0.4rem;">The server cannot see balances, revoke credits, or recover lost ones. This asymmetry is intentional by design.</p>
                     </div>
                 </div>
-                <div class="credit-panel">
-                    <h4>&#x1F4B3; Prepaid Credits</h4>
-                    <ul style="padding:0;margin:0;">
+                <div class="credit-panel" style="padding:0.5rem 0.6rem;">
+                    <h4 style="font-size:0.52rem;">&#x1F4B3; Prepaid Credits</h4>
+                    <ul style="padding:0;margin:0;font-size:0.44rem;">
                         <li>&yen;150 / 1 code ($1)</li>
                         <li>IndexedDB (browser storage)</li>
                         <li>No account required</li>
@@ -1212,136 +1161,7 @@
     <div class="slide-footer">
         <span>TokiStorage &mdash; Technical Architecture</span>
         <span>Confidential</span>
-        <span class="pg">6</span>
-    </div>
-</section>
-
-<!-- ━━━ SLIDE 07: REDUNDANCY & RECOVERY ━━━ -->
-<section class="slide">
-    <div class="action-bar">
-        <h2>If any layer is lost, the remaining layers can recover all data &mdash; no single point of failure</h2>
-    </div>
-    <div class="slide-body">
-        <div class="slide-content">
-            <p class="section-label">Redundancy &amp; Recovery</p>
-            <div class="cols3" style="flex:none;min-height:auto;">
-                <div class="layer-col physical" style="padding:0.35rem 0.5rem;">
-                    <div class="layer-col-icon" style="font-size:0.9rem;">&#x1F48E;</div>
-                    <h4 style="font-size:0.48rem;">Physical</h4>
-                    <p style="font-size:0.38rem;">Quartz glass + laminate</p>
-                </div>
-                <div class="layer-col national" style="padding:0.35rem 0.5rem;">
-                    <div class="layer-col-icon" style="font-size:0.9rem;">&#x1F3DB;</div>
-                    <h4 style="font-size:0.48rem;">National</h4>
-                    <p style="font-size:0.38rem;">National Diet Library legal deposit</p>
-                </div>
-                <div class="layer-col private" style="padding:0.35rem 0.5rem;">
-                    <div class="layer-col-icon" style="font-size:0.9rem;">&#x1F4BB;</div>
-                    <h4 style="font-size:0.48rem;">Private</h4>
-                    <p style="font-size:0.38rem;">GitHub Pages decoder</p>
-                </div>
-            </div>
-            <table class="redundancy-matrix">
-                <thead>
-                    <tr>
-                        <th style="text-align:left;width:30%;">Scenario</th>
-                        <th style="width:15%;">Physical</th>
-                        <th style="width:15%;">National</th>
-                        <th style="width:15%;">Private</th>
-                        <th style="width:15%;">Recovery</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr>
-                        <th>Physical layer lost</th>
-                        <td class="lost">&#x2715;</td>
-                        <td class="ok">&#x25CB;</td>
-                        <td class="ok">&#x25CB;</td>
-                        <td class="result">Yes</td>
-                    </tr>
-                    <tr>
-                        <th>National layer lost</th>
-                        <td class="ok">&#x25CB;</td>
-                        <td class="lost">&#x2715;</td>
-                        <td class="ok">&#x25CB;</td>
-                        <td class="result">Yes</td>
-                    </tr>
-                    <tr>
-                        <th>Private layer lost</th>
-                        <td class="ok">&#x25CB;</td>
-                        <td class="ok">&#x25CB;</td>
-                        <td class="lost">&#x2715;</td>
-                        <td class="result">Yes</td>
-                    </tr>
-                    <tr>
-                        <th>Two layers lost simultaneously</th>
-                        <td class="ok">&#x25CB;</td>
-                        <td class="lost">&#x2715;</td>
-                        <td class="lost">&#x2715;</td>
-                        <td class="result">Yes</td>
-                    </tr>
-                </tbody>
-            </table>
-            <div class="callout" style="margin-top:0.3rem;">
-                <p>A single surviving layer is sufficient to recover all data. This is not coincidence &mdash; it is a design principle of three-layer distributed preservation.</p>
-            </div>
-        </div>
-    </div>
-    <div class="slide-footer">
-        <span>TokiStorage &mdash; Technical Architecture</span>
-        <span>Confidential</span>
-        <span class="pg">7</span>
-    </div>
-</section>
-
-<!-- ━━━ SLIDE 08: 20-YEAR RENEWAL CYCLE ━━━ -->
-<section class="slide">
-    <div class="action-bar">
-        <h2>Inspired by Ise Grand Shrine's Shikinen Sengu &mdash; renewing technology every 20 years to outlast a millennium</h2>
-    </div>
-    <div class="slide-body">
-        <div class="slide-content">
-            <p class="section-label">20-Year Renewal Cycle</p>
-            <p class="body-lead" style="margin-bottom:0.4rem;">Preservation for 1,000 years is not a "build once and forget" design. Technology is renewed every 20 years and handed off to the next cycle.</p>
-            <div class="timeline">
-                <div class="timeline-node">
-                    <div class="timeline-dot"></div>
-                    <div class="timeline-year">2026</div>
-                    <div class="timeline-label">Founded<br>Codec2, QR V40</div>
-                </div>
-                <div class="timeline-node">
-                    <div class="timeline-dot gold"></div>
-                    <div class="timeline-year">2046</div>
-                    <div class="timeline-label">1st Renewal<br>Codec &amp; QR standard review</div>
-                </div>
-                <div class="timeline-node">
-                    <div class="timeline-dot emerald"></div>
-                    <div class="timeline-year">2066</div>
-                    <div class="timeline-label">2nd Renewal<br>Physical media generation change</div>
-                </div>
-                <div class="timeline-gap">&#x22EF;</div>
-                <div class="timeline-node">
-                    <div class="timeline-dot future"></div>
-                    <div class="timeline-year">2526</div>
-                    <div class="timeline-label">25th Renewal<br>Year 500</div>
-                </div>
-                <div class="timeline-gap">&#x22EF;</div>
-                <div class="timeline-node">
-                    <div class="timeline-dot"></div>
-                    <div class="timeline-year">3026</div>
-                    <div class="timeline-label">Millennium Achieved</div>
-                </div>
-            </div>
-            <div class="callout" style="margin-top:0.4rem;">
-                <h4>Comparison with Shikinen Sengu</h4>
-                <p>Ise Grand Shrine has rebuilt its halls every 20 years since 690 AD, transmitting craftsmanship and culture for over 1,300 years. TokiStorage applies this philosophy to digital preservation, renewing recording media, encoding technology, and storage sites on a 20-year cycle.</p>
-            </div>
-        </div>
-    </div>
-    <div class="slide-footer">
-        <span>TokiStorage &mdash; Technical Architecture</span>
-        <span>Confidential</span>
-        <span class="pg">8</span>
+        <span class="pg">5</span>
     </div>
 </section>
 
