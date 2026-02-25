@@ -14,7 +14,6 @@ concurrency:
 
 permissions:
   contents: write
-  pull-requests: write
 
 jobs:
   build:
@@ -37,6 +36,7 @@ jobs:
       - name: Build missing newsletters
         run: |
           for material in materials/*.json; do
+            [ "$material" = "materials/*.json" ] && continue
             SERIAL=$(jq -r '.serial' "$material")
             SERIAL_STR=$(printf "%05d" "$SERIAL")
             if [ ! -f "output/TQ-${SERIAL_STR}.pdf" ]; then
@@ -45,7 +45,7 @@ jobs:
             fi
           done
 
-      - name: Create PR if changes exist
+      - name: Commit and push if changes exist
         run: |
           python3 -c "
           import json, glob, os
@@ -64,11 +64,6 @@ jobs:
           git config user.email "github-actions[bot]@users.noreply.github.com"
           git add output/ schedule.json
           if ! git diff --cached --quiet; then
-            BRANCH="build-$(date +%Y%m%d-%H%M%S)"
-            git checkout -b "$BRANCH"
             git commit -m "Build newsletter PDF(s)"
-            git push origin "$BRANCH"
-            gh pr create --title "Publish newsletter PDF(s)" --body "Automated build."
+            git push origin main
           fi
-        env:
-          GH_TOKEN: ${{ github.token }}
