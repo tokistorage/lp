@@ -194,7 +194,69 @@
             <p>We store credits in the browser, not on our server. We cannot track, cannot revoke, cannot help with losses. That asymmetry is intentional. A tool that respects independence must also accept the limits of that respect.</p>
         </div>
 
-        <h2>7. The Coexistence of Physical QR and Self-Print</h2>
+        <h2>7. Why a "Service That Holds Nothing" Is Abnormal</h2>
+
+        <p>As a premise, virtually every modern web service operates by "holding user information." This is not malice but structural inevitability. Provide a service → need to identify users → create accounts → collect personal information → store that information → storage requires security → security costs money → need ads or subscriptions to recoup costs → ads require user behavior data → collect even more information. This chain is something like the original sin of web services.</p>
+
+        <p>TokiStorage's self-print economy severs this chain by refusing the very first step: "identify the user." How abnormal this is becomes clear when you think about it in reverse.</p>
+
+        <h3>What "No Account Required" Really Means</h3>
+
+        <p>Other services also claim to be "no account required." But the vast majority offer anonymous use as a "trial version," requiring account registration for full features. In other words, "no account required" means the front door is open, but the rooms beyond are locked.</p>
+
+        <p>TokiStorage is different. If your voice fits in a single QR code, the front door and every room beyond it are wide open. Billing only begins when bulk mode splits data across two or more codes, and even that billing requires no account. Just buy a prepaid code and enter it. The system does not know who bought it. It is not designed to know.</p>
+
+        <p>This is a fundamentally different level of "no account required." It is not a surface-level UX decision but a guarantee of user anonymity at the system architecture level.</p>
+
+        <h3>The Structural Difficulty of Requiring No Personal Information</h3>
+
+        <p>Not collecting personal information in a paid service is harder than it sounds. Use credit card payments and PCI DSS compliance becomes mandatory, making collection of card numbers, names, and addresses unavoidable. Use PayPal or Stripe and email addresses get linked. Even Apple Pay or Google Pay accumulate user information on the payment provider's side.</p>
+
+        <p>The choice of Wise transfers elegantly sidesteps this problem. The transfer itself is completed between banks, and TokiStorage only matches codes against amounts. There is simply no structure for incorporating sender's personal information into TokiStorage's system.</p>
+
+        <p>This is not "being careful not to collect personal information" but rather "no pathway for personal information to enter exists by design." The difference is decisive. The former is a policy issue, breakable depending on operations. The latter is an architecture issue, unbreakable without changing the design.</p>
+
+        <h3>The Courage of No Expiration</h3>
+
+        <p>The decision not to set an expiration date on prepaid credits may look "user-friendly" on the surface, but from a business perspective, it requires considerable resolve.</p>
+
+        <p>Typical prepaid services set expiration dates. The reason is straightforward: unused balances become "liabilities" in accounting. With expiration dates, expired balances can be removed from liabilities and recognized as revenue. This is the basic structure of the gift card business &mdash; even Amazon gift cards set expiration dates (within legal constraints).</p>
+
+        <p>TokiStorage has forfeited this "expiration revenue." Credits bought ten years ago still work. This is financially disadvantageous by design, but it is the inevitable conclusion of the philosophy: "do not impose deadlines on the act of preserving a voice." The moment someone wants to preserve their voice may not be the day they purchased credits. It might be five years later. Ten years later. If the credits had expired by then, the very purpose of the service would be undermined.</p>
+
+        <h3>The Abnormality of Storing Balances in IndexedDB</h3>
+
+        <p>This is perhaps the boldest design decision of all.</p>
+
+        <p>Normally, balances in a billing system are managed server-side. This is "common sense" from security, user experience, and business perspectives alike. With server-side balances, changing devices preserves the balance. Fraudulent use can be frozen. Failures can be recovered from.</p>
+
+        <p>TokiStorage discarded all of this common sense. Balances live in the browser's IndexedDB. Nothing exists on the server. Clear browser data and the balance vanishes. Switch devices and the balance does not transfer. Contact TokiStorage and there is no data to restore from.</p>
+
+        <p>A typical service designer would classify this as a "bug" or "not yet implemented." But TokiStorage declares it as intentional design. If balances were stored on a server, a user identification ID would be necessary. With an ID, purchase history gets linked. With history, profiling becomes possible. The moment balances are placed on a server, the principle of "holding no personal data" collapses.</p>
+
+        <p>What makes this decision remarkable is that it is not "technically impossible" but "technically possible yet deliberately not done." Server-side balance management is an absolute basic of implementation. By deliberately not implementing it, the design principle is upheld.</p>
+
+        <h3>The Abnormality of Everything Working Simultaneously</h3>
+
+        <p>Individual elements &mdash; no account required, no personal information, no expiration, first QR free &mdash; might each be found in other services on their own. But a service where all of these hold true simultaneously, and with billing functionality, honestly does not come to mind.</p>
+
+        <p>The reason is that these elements are normally in a trade-off relationship. Removing accounts makes billing management difficult. Removing personal information limits payment methods. Removing expiration dates swells accounting liabilities. Making the first unit free raises the bar for monetization. Normally, compromise happens somewhere. "Accounts are required but personal information is minimized." "A free tier exists but is time-limited."</p>
+
+        <p>TokiStorage has not compromised. An architecture satisfying all constraints simultaneously has been achieved through the combination of Wise transfers, IndexedDB, and prepaid codes. This is possible not because each individual technology choice is superior, but because the design philosophy is consistent throughout. Had the philosophy wavered, some element would have bent: "actually, we do need accounts" or "actually, let's store balances on the server."</p>
+
+        <h3>Why "Design by Subtraction" Is Fundamentally Difficult</h3>
+
+        <p>Adding features is easy. Add account functionality, build a dashboard, visualize usage history, implement cloud sync for balances. These cost development effort, but as design decisions, "just add it" requires no hesitation.</p>
+
+        <p>Subtraction is different. You must envision everything that will happen when a feature is removed, everything lost by not holding certain information, and then decide to remove it anyway. And the inconveniences that result from removal &mdash; balances disappearing, no recovery, no cross-device sync &mdash; must be honestly communicated to users, with the resolve to explain why this design is still correct.</p>
+
+        <p>TokiStorage's self-print economy is the result of pushing that subtraction to its limit. What remains is "a tool, a price, and freedom" &mdash; this single phrase condenses the entire design philosophy. The tool is provided. The price is stated. The rest is your freedom. TokiStorage's presence as a service provider is intentionally minimized.</p>
+
+        <p>This is the implementation of "democratizing proof of existence" at the infrastructure layer. The means of preserving a voice is not placed under the control of any specific platform or company. Anyone, anywhere, by their own judgment, on their own printer. To structurally guarantee that freedom, this much has been stripped away.</p>
+
+        <p>The very concept of a user base has been abandoned. We do not know who is using it. We do not even know precisely how many are using it. Yet a service that works has been built. This is a technical achievement and, at the same time, an intellectual one.</p>
+
+        <h2>8. The Coexistence of Physical QR and Self-Print</h2>
 
         <p>Physical QR products and self-print are not in competition. Nor are they premium and budget versions of the same service. They are expressions of fundamentally different design philosophies serving fundamentally different needs.</p>
 
@@ -204,7 +266,7 @@
 
         <p>This relationship resembles that between a professional photo studio and a home printer. Having a studio produce a family portrait album versus printing a smartphone photo yourself. Both are acts of preserving a photograph, but what they seek differs. One offers professional finishing and archival quality. The other offers immediacy and self-determination. Not a matter of superiority, but of choice.</p>
 
-        <h2>8. What the Self-Print Economy Means</h2>
+        <h2>9. What the Self-Print Economy Means</h2>
 
         <p>Bulk mode, prepaid credits, Wise transfers, IndexedDB storage, no account required &mdash; when these elements combine, what emerges is an economy.</p>
 
