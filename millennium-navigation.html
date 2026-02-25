@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" type="image/png" sizes="32x32" href="asset/favicon-32.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="asset/apple-touch-icon.png">
+    <title>1000年のナビゲーション設計 | トキストレージ</title>
+    <meta name="robots" content="index, follow">
+    <meta name="description" content="1000年分のコンテンツを並べるとき、問題はデータ量ではなく見渡し方だった。世紀→巻→年の三層アコーディオンで、HTMLネイティブのdetails要素だけで解決する。">    <style>
+        :root {
+            --toki-gold: #92702A;
+            --toki-gold-dark: #7A5C1F;
+            --toki-gold-pale: #FFFBEB;
+            --accent-gold: #C9A962;
+            --bg-white: #FFFFFF;
+            --text-primary: #1E293B;
+            --text-secondary: #475569;
+            --text-muted: #94A3B8;
+            --border: #E2E8F0;
+            --font-display: 'Hiragino Mincho ProN', 'Yu Mincho', serif;
+            --font-body: 'Hiragino Kaku Gothic ProN', 'Yu Gothic', 'Meiryo', sans-serif;
+        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        html { scroll-behavior: smooth; }
+        body { font-family: var(--font-body); font-weight: 400; background: var(--bg-white); color: var(--text-primary); line-height: 2; font-size: 16px; }
+
+        .article-nav { position: fixed; top: 0; left: 0; right: 0; z-index: 1000; background: rgba(255,255,255,0.95); backdrop-filter: blur(12px); border-bottom: 1px solid var(--border); padding: 0.6rem 1.2rem; display: flex; align-items: center; justify-content: space-between; gap: 1rem; }
+        .article-nav .nav-brand { font-family: var(--font-display); font-size: 0.9rem; font-weight: 600; color: var(--toki-gold); text-decoration: none; white-space: nowrap; }
+        .article-nav .nav-brand::before { content: ''; display: inline-block; width: 20px; height: 20px; background: url('asset/tokistorage-icon-512.png') no-repeat center / contain; vertical-align: -3px; margin-right: 5px; }
+        .article-nav .nav-right { display: flex; align-items: center; gap: 1rem; }
+        .article-nav .nav-label { font-size: 0.6rem; color: var(--text-muted); letter-spacing: 0.08em; }
+        .article-nav .lang-switch { font-size: 0.75rem; color: var(--toki-gold); text-decoration: none; padding: 0.3rem 0.6rem; border: 1px solid var(--toki-gold); border-radius: 4px; }
+        .article-nav .lang-switch:hover { background: var(--toki-gold); color: #fff; }
+
+        .article-container { max-width: 680px; margin: 0 auto; padding: 7rem 2rem 4rem; }
+        .article-header { margin-bottom: 3rem; padding-bottom: 2rem; border-bottom: 1px solid var(--border); }
+        .article-category { font-size: 0.7rem; color: var(--toki-gold); letter-spacing: 0.15em; margin-bottom: 1rem; }
+        .article-header h1 { font-family: var(--font-display); font-size: 1.8rem; font-weight: 700; line-height: 1.5; margin-bottom: 1.5rem; }
+        .article-subtitle { font-size: 0.95rem; color: var(--text-secondary); line-height: 1.9; }
+
+        .article-content h2 { font-family: var(--font-display); font-size: 1.3rem; font-weight: 600; margin: 3rem 0 1.5rem; padding-bottom: 0.5rem; border-bottom: 2px solid var(--toki-gold-pale); }
+        .article-content h3 { font-family: var(--font-display); font-size: 1.1rem; font-weight: 600; margin: 2rem 0 1rem; color: var(--toki-gold-dark); }
+        .article-content p { margin-bottom: 1.5rem; text-align: justify; }
+        .article-content blockquote { border-left: 3px solid var(--toki-gold); padding-left: 1.5rem; margin: 2rem 0; font-family: var(--font-display); color: var(--text-secondary); }
+        .article-content ul { margin: 1.5rem 0; padding-left: 1.5rem; }
+        .article-content li { margin-bottom: 0.75rem; }
+
+        .core-message { background: var(--toki-gold-pale); border-left: 4px solid var(--toki-gold); padding: 1.5rem; margin: 2rem 0; font-size: 0.95rem; line-height: 1.8; }
+        .key-point { background: linear-gradient(135deg, var(--toki-gold-pale) 0%, #fff 100%); border: 1px solid var(--accent-gold); border-radius: 8px; padding: 1.5rem; margin: 2rem 0; text-align: center; }
+        .key-point p { font-family: var(--font-display); font-size: 1.1rem; color: var(--toki-gold-dark); margin: 0; }
+
+        .article-footer { margin-top: 4rem; padding-top: 2rem; border-top: 1px solid var(--border); text-align: center; }
+        .article-footer p { font-size: 0.8rem; color: var(--text-muted); margin-bottom: 1rem; }
+        .article-footer a { color: var(--toki-gold); text-decoration: none; }
+        .article-footer a:hover { text-decoration: underline; }
+
+        @media (max-width: 768px) {
+            .article-container { padding: 6rem 1.2rem 3rem; }
+            .article-header h1 { font-size: 1.5rem; }
+            .article-nav .nav-label { display: none; }
+        }
+        @media print { .article-nav { display: none; } .article-container { padding-top: 2rem; } }
+    </style>
+    <link rel="stylesheet" href="contact-form.css">
+    <meta property="og:type" content="article">
+    <meta property="og:title" content="1000年のナビゲーション設計 | トキストレージ">
+    <meta property="og:description" content="1000年分のコンテンツを並べるとき、問題はデータ量ではなく見渡し方だった。世紀→巻→年の三層アコーディオンで、HTMLネイティブのdetails要素だけで解決する。">
+    <meta property="og:url" content="https://tokistorage.github.io/lp/millennium-navigation.html">
+    <meta property="og:site_name" content="トキストレージ">
+    <meta name="twitter:card" content="summary">
+    <meta name="twitter:title" content="1000年のナビゲーション設計 | トキストレージ">
+    <meta name="twitter:description" content="1000年分のコンテンツを並べるとき、問題はデータ量ではなく見渡し方だった。世紀→巻→年の三層アコーディオンで、HTMLネイティブのdetails要素だけで解決する。">
+    <meta property="og:image" content="https://tokistorage.github.io/lp/asset/tokistorage-icon-512.png">
+    <meta property="og:image:width" content="512">
+    <meta property="og:image:height" content="512">
+    <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Article",
+  "headline": "1000年のナビゲーション設計",
+  "author": {
+    "@type": "Person",
+    "name": "Takuya Sato",
+    "url": "https://tokistorage.github.io/lp/profile.html"
+  },
+  "publisher": {
+    "@type": "Organization",
+    "name": "TokiStorage",
+    "url": "https://tokistorage.github.io/lp",
+    "logo": {
+      "@type": "ImageObject",
+      "url": "https://tokistorage.github.io/lp/asset/tokistorage-icon-512.png"
+    }
+  },
+  "url": "https://tokistorage.github.io/lp/millennium-navigation.html",
+  "inLanguage": "ja",
+  "mainEntityOfPage": "https://tokistorage.github.io/lp/millennium-navigation.html",
+  "description": "1000年分のコンテンツを並べるとき、問題はデータ量ではなく見渡し方だった。世紀→巻→年の三層アコーディオンで、HTMLネイティブのdetails要素だけで解決する。"
+}
+    </script>
+    <link rel="alternate" hreflang="ja" href="https://tokistorage.github.io/lp/millennium-navigation.html">
+    <link rel="alternate" hreflang="en" href="https://tokistorage.github.io/lp/millennium-navigation-en.html">
+    <link rel="alternate" hreflang="x-default" href="https://tokistorage.github.io/lp/millennium-navigation.html">
+    <link rel="canonical" href="https://tokistorage.github.io/lp/millennium-navigation.html">
+</head>
+<body>
+
+<nav class="article-nav">
+    <a href="index.html" class="nav-brand">トキストレージ</a>
+    <div class="nav-right">
+        <span class="nav-label">技術・設計 / Technology & Design</span>
+        <a href="millennium-navigation-en.html" class="lang-switch">EN</a>
+    </div>
+</nav>
+
+<main class="article-container">
+
+    <header class="article-header">
+        <p class="article-category">ESSAY &mdash; 技術・設計</p>
+        <h1>1000年のナビゲーション設計<br><span style="font-size:0.7em; font-weight:400;">世紀・巻・年 &mdash;&mdash; 三層アコーディオンが解決する永続UIの問題</span></h1>
+        <p class="article-subtitle">
+            &mdash;&mdash; 1000年分のコンテンツを並べるとき、問題はデータ量ではなく、見渡し方だった。
+        </p>
+    </header>
+
+    <article class="article-content">
+
+        <div class="core-message">
+            <strong>この記事で言いたいこと：</strong>世紀→巻→年の三層構造で折り畳むだけで、10世紀分のリンクが10行になる。HTMLネイティブの <code>&lt;details&gt;</code> 要素だけで、JavaScript依存なし・クローラビリティ完全・アクセシブル。過剰設計に見えるかもしれないが、これは1000年を見据えた最小限の設計だ。
+        </div>
+
+        <h2>1. フラットリストの限界</h2>
+
+        <p>TokiStorageのニュースレターには二つの系統がある。ひとつは自社のバックナンバー。もうひとつは、各クライアントの別冊特集シリーズだ。どちらも半年に1号のペースで刊行される。20年で40号。100年で200号。1000年で2000号。</p>
+
+        <p>別冊特集シリーズは、さらに件数が膨れ上がる。式場、ホテル、自治会、記念館——声のQRコードを導入する組織がひとつ増えるたびに、シリーズが1件増える。全国に広がれば数百件。世紀を超えれば数千件。それらをすべてフラットなリストで並べたらどうなるか。</p>
+
+        <p>ページネーションは検索エンジンに不利だ。2ページ目以降のコンテンツはインデックスされにくい。無限スクロールはクローラビリティが皆無に近い。JavaScriptで遅延読み込みすれば、検索エンジンから見えない。つまりフラットリストの延長線上には、どの選択肢にも構造的な限界がある。</p>
+
+        <h2>2. 思考実験：50年後、100年後、1000年後</h2>
+
+        <p>設計判断をするとき、「今どうするか」ではなく「将来どうなるか」から逆算する。バックキャスティングだ。</p>
+
+        <p>50年後。別冊特集シリーズは30件前後。バックナンバーは100号。まだフラットリストでもギリギリ使える。スクロールすれば全体を見渡せる。だが、すでに快適とは言えない。</p>
+
+        <p>100年後。特集シリーズは100件を超える。バックナンバーは200号。カテゴリ分けなしには、もう目的の記事にたどり着けない。何らかの構造が必要だ。</p>
+
+        <p>1000年後。特集シリーズは1000件以上。バックナンバーは2000号を超え、式年遷宮を50回繰り返し、50巻に達する。フラットリストどころか、単純なカテゴリ分けでも破綻する。ここで必要になるのが、三層構造だ。</p>
+
+        <p>問いは「いつ導入するか」ではない。「最小限の構造を今入れておくことで、将来の破綻を防げるか」だ。</p>
+
+        <h2>3. 式年遷宮と時間軸</h2>
+
+        <p>TokiStorageのニュースレターは「式年遷宮型」の採番体系を採用している。1巻＝20年。20年ごとに新しいリポジトリを立ち上げ、バトンを渡す。伊勢神宮が20年ごとに社殿を建て替えるのと同じ発想だ。壊すのではなく、継ぐ。古い巻はアーカイブとして永続的に公開し続ける。</p>
+
+        <p>この「巻」という概念は、時間の自然な区切りになる。第1巻は2026年から2045年。第2巻は2046年から2065年。巻を知れば時代がわかり、時代を知れば巻がわかる。</p>
+
+        <p>そしてもうひとつ上のレイヤーがある。世紀だ。21世紀には巻1〜巻4が収まる。22世紀には巻5〜巻9。世紀→巻→年。この三層は、データに新しいフィールドを追加しなくても、既存の日付フィールド（<code>createdAt</code>）だけで導出できる。スキーマの変更は不要だ。</p>
+
+        <blockquote>
+            <p>時間は唯一の普遍的な分類軸だ。カテゴリ分類は主観的だが、時間は客観的に決まる。</p>
+        </blockquote>
+
+        <h2>4. 三層アコーディオン</h2>
+
+        <p>HTMLには <code>&lt;details&gt;</code> と <code>&lt;summary&gt;</code> という標準要素がある。クリックすると開閉するアコーディオンだ。JavaScriptは不要。ブラウザのネイティブ機能として動作する。</p>
+
+        <p>これを三層にネストする。最外層が世紀。その中に巻。巻の中に年ごとのリンク。</p>
+
+        <p>折り畳まれた状態では、1000年分のコンテンツが10行になる。21世紀、22世紀、23世紀……と、世紀の見出しだけが並ぶ。ひとつの世紀を開けば、そこに5つほどの巻が並ぶ。巻を開けば、年ごとのリンクが現れる。</p>
+
+        <p>最新の世紀と最新の巻だけに <code>open</code> 属性を付与する。初回訪問で直近のコンテンツが見える。過去の世紀は折り畳まれているが、DOM上にはすべてのリンクが存在する。検索エンジンのクローラは <code>&lt;details&gt;</code> の開閉状態に関わらず、DOM内のすべてのリンクをインデックスできる。</p>
+
+        <div class="core-message">
+            折り畳みは「隠す」のではない。「見渡す」ための構造だ。1000年分のリンクがすべてDOMに存在しながら、10行のUIに収まる。
+        </div>
+
+        <h2>5. なぜ「過剰設計」ではないのか</h2>
+
+        <p>追加したコードは、<code>buildCenturyNav()</code> という関数ひとつと、CSSが数十行だ。外部ライブラリは使っていない。<code>&lt;details&gt;</code> はHTML Living Standardに定義された標準要素であり、2026年現在、すべてのモダンブラウザが対応している。</p>
+
+        <p>既存のJSONスキーマには何も手を加えていない。別冊特集シリーズの <code>createdAt</code> フィールドから年を取り出し、巻と世紀を算出するだけだ。バックナンバーの <code>date</code> フィールドも同様。新しいデータ構造は作っていない。</p>
+
+        <p>そして、バックナンバーと別冊特集シリーズの両方が、同じ <code>buildCenturyNav()</code> 関数でナビゲーションを描画する。二つの異なるコンテンツ系統に、ひとつの関数で一貫したUIを提供している。これは重複の排除であり、過剰設計の対極にある。</p>
+
+        <blockquote>
+            <p>1000年分のリンクを並べられる設計と、1000年分のリンクが並んでも使える設計は、まったく違う。</p>
+        </blockquote>
+
+        <p>今やらなければ、100年後に「なぜフラットリストで設計したのか」と問われる。そのときに構造を入れ替えるのは、今やるよりもはるかに難しい。100年分のコンテンツが既に存在し、100年分のURLが外部からリンクされているからだ。</p>
+
+        <h2>6. 見渡せることの価値</h2>
+
+        <p>伊勢神宮の式年遷宮は、20年ごとに社殿を建て替える。しかしそれは「壊す」ことではない。「継ぐ」ことだ。古い社殿の技術と記憶を次の世代に手渡すための儀式だ。</p>
+
+        <p>TokiStorageの式年遷宮型ナビゲーションも同じだ。20年ごとに新しい巻が始まる。古い巻は読み取り専用のアーカイブとして残り続ける。世紀が変わっても、すべての巻がひとつのアコーディオンの中に収まる。過去を捨てるのではなく、過去を折り畳んで、未来と同じ画面に置く。</p>
+
+        <p>大切なのは、全体を一望できることだ。2026年の創刊号と、2200年の第350号が、同じナビゲーションの中に並ぶ。折り畳みを開けば、いつでもどこへでもたどり着ける。閉じれば、1000年が10行に収まる。</p>
+
+        <div class="key-point">
+            <p>世紀→巻→年。三層の折り畳みは、1000年の情報設計における最小単位である。</p>
+        </div>
+
+        <section class="references">
+            <h2>参考文献</h2>
+            <ul>
+                <li>HTML Living Standard — <a href="https://html.spec.whatwg.org/multipage/interactive-elements.html#the-details-element" style="color: var(--toki-gold);">The details element</a></li>
+                <li>Rosenfeld, L., Morville, P., Arango, J. (2015). <em>Information Architecture: For the Web and Beyond</em>. O'Reilly Media.</li>
+                <li>神宮司庁 — <a href="https://www.isejingu.or.jp/about/sengu/" style="color: var(--toki-gold);">式年遷宮</a></li>
+            </ul>
+        </section>
+
+    </article>
+
+    <footer class="article-footer">
+        <p id="essay-nav-links"></p>
+        <p style="margin-top: 2rem; font-size: 0.75rem;">&copy; 2026 TokiStorage</p>
+    </footer>
+
+</main>
+
+<script src="contact-form.js" defer></script>
+<script src="essay-tts.js?v=20260226"></script>
+<script src="essay-nav.js?v=20260226"></script>
+<script src="tracker.js" defer></script>
+</body>
+</html>
