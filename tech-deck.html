@@ -1,0 +1,1211 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" type="image/png" sizes="32x32" href="asset/favicon-32.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="asset/apple-touch-icon.png">
+    <title>技術アーキテクチャ | TokiStorage</title>
+    <meta name="robots" content="index, follow">
+    <meta name="description" content="TokiStorage 技術アーキテクチャ。サーバーなし・月額課金なし。三層分散保管で声と記憶を千年先に届ける技術基盤。">
+    <style>
+        :root {
+            --navy: #1B2A4A;
+            --navy-deep: #0F1B33;
+            --accent: #2563EB;
+            --accent-light: #DBEAFE;
+            --accent-pale: #EFF6FF;
+            --gold: #C9A962;
+            --emerald: #059669;
+            --text: #1E293B;
+            --text-mid: #475569;
+            --text-light: #94A3B8;
+            --border: #E2E8F0;
+            --bg: #FFFFFF;
+            --bg-alt: #F8FAFC;
+            --font: 'Noto Sans JP', 'Helvetica Neue', Arial, sans-serif;
+            --layer-physical: #2563EB;
+            --layer-physical-bg: #EFF6FF;
+            --layer-national: #C9A962;
+            --layer-national-bg: #FDF8E8;
+            --layer-private: #059669;
+            --layer-private-bg: #ECFDF5;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            font-family: var(--font);
+            font-weight: 400;
+            background: #E5E7EB;
+            color: var(--text);
+            line-height: 1.6;
+            font-size: 14px;
+        }
+
+        /* ── Web toolbar (hidden in print) ── */
+        .toolbar {
+            position: fixed;
+            top: 0; left: 0; right: 0;
+            z-index: 1000;
+            background: var(--navy-deep);
+            padding: 0.45rem 1.5rem;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+        .toolbar-brand {
+            font-size: 0.7rem;
+            font-weight: 600;
+            color: rgba(255,255,255,0.7);
+            text-decoration: none;
+            letter-spacing: 0.05em;
+        }
+        .toolbar-actions {
+            display: flex;
+            align-items: center;
+            gap: 0.6rem;
+        }
+        .toolbar-actions a, .toolbar-actions button {
+            font-family: var(--font);
+            font-size: 0.65rem;
+            color: rgba(255,255,255,0.6);
+            text-decoration: none;
+            padding: 0.25rem 0.7rem;
+            border: 1px solid rgba(255,255,255,0.2);
+            border-radius: 3px;
+            background: transparent;
+            cursor: pointer;
+            transition: all 0.15s;
+        }
+        .toolbar-actions a:hover, .toolbar-actions button:hover {
+            color: #fff;
+            border-color: rgba(255,255,255,0.5);
+        }
+        .toolbar-actions .btn-pdf {
+            color: var(--gold);
+            border-color: var(--gold);
+        }
+        .toolbar-actions .btn-pdf:hover {
+            background: var(--gold);
+            color: var(--navy-deep);
+        }
+
+        /* ── Slide frame ── */
+        .slide {
+            width: 960px;
+            height: 540px;
+            margin: 2.5rem auto;
+            background: var(--bg);
+            position: relative;
+            overflow: hidden;
+            box-shadow: 0 2px 20px rgba(0,0,0,0.12);
+            display: flex;
+            flex-direction: column;
+        }
+        .slide:first-of-type { margin-top: 4rem; }
+
+        /* ── Action title bar ── */
+        .action-bar {
+            background: var(--navy);
+            padding: 0.5rem 2rem;
+            flex-shrink: 0;
+            max-height: 52px;
+            overflow: hidden;
+        }
+        .action-bar h2 {
+            font-size: 0.78rem;
+            font-weight: 600;
+            color: #fff;
+            line-height: 1.35;
+            display: -webkit-box;
+            -webkit-line-clamp: 2;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+        }
+
+        /* ── Slide body ── */
+        .slide-body {
+            flex: 1 1 0%;
+            min-height: 0;
+            padding: 0.8rem 2rem 0.25rem;
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+        }
+        .slide-content {
+            flex: 1 1 0%;
+            min-height: 0;
+            overflow: hidden;
+        }
+
+        /* ── Slide footer ── */
+        .slide-footer {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0 2rem 0.35rem;
+            border-top: 1px solid var(--border);
+            margin-top: auto;
+            padding-top: 0.25rem;
+            flex-shrink: 0;
+        }
+        .slide-footer span {
+            font-size: 0.5rem;
+            color: var(--text-light);
+            letter-spacing: 0.03em;
+        }
+        .slide-footer .pg {
+            font-weight: 600;
+        }
+
+        /* ── Cover slide (special) ── */
+        .slide.cover {
+            background: var(--navy);
+            flex-direction: column;
+            justify-content: center;
+            align-items: stretch;
+        }
+        .cover-body {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            padding: 2.5rem 3rem;
+        }
+        .cover-label {
+            font-size: 0.55rem;
+            font-weight: 700;
+            letter-spacing: 0.25em;
+            color: var(--gold);
+            margin-bottom: 1.5rem;
+            text-transform: uppercase;
+        }
+        .cover-title {
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: #fff;
+            line-height: 1.6;
+            margin-bottom: 0.75rem;
+        }
+        .cover-sub {
+            font-size: 0.85rem;
+            color: rgba(255,255,255,0.5);
+            line-height: 1.8;
+            max-width: 500px;
+        }
+        .cover-sub strong { color: var(--gold); }
+        .cover-stripe {
+            height: 4px;
+            background: linear-gradient(90deg, var(--accent), var(--gold));
+        }
+        .cover-footer {
+            padding: 0.8rem 3rem;
+            display: flex;
+            justify-content: space-between;
+        }
+        .cover-footer span {
+            font-size: 0.6rem;
+            color: rgba(255,255,255,0.3);
+            letter-spacing: 0.05em;
+        }
+
+        /* ── Typography helpers ── */
+        .section-label {
+            font-size: 0.5rem;
+            font-weight: 700;
+            letter-spacing: 0.2em;
+            color: var(--accent);
+            text-transform: uppercase;
+            margin-bottom: 0.35rem;
+            flex-shrink: 0;
+        }
+        .body-lead {
+            font-size: 0.7rem;
+            color: var(--text-mid);
+            line-height: 1.5;
+            margin-bottom: 0.6rem;
+            flex-shrink: 0;
+        }
+
+        /* ── 3-column cards ── */
+        .cols3 {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 0.5rem;
+            flex: 1 1 0%;
+            min-height: 0;
+        }
+        .col-card {
+            background: var(--bg-alt);
+            border: 1px solid var(--border);
+            border-radius: 4px;
+            padding: 0.4rem 0.55rem;
+            overflow: hidden;
+        }
+        .col-card-num {
+            font-size: 0.72rem;
+            font-weight: 700;
+            color: var(--accent);
+            margin-bottom: 0.1rem;
+        }
+        .col-card h4 {
+            font-size: 0.56rem;
+            font-weight: 600;
+            color: var(--text);
+            margin-bottom: 0.1rem;
+        }
+        .col-card p {
+            font-size: 0.48rem;
+            color: var(--text-mid);
+            line-height: 1.4;
+        }
+
+        /* ── Table ── */
+        .dk-table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 0.5rem;
+        }
+        .dk-table th, .dk-table td {
+            padding: 0.25rem 0.4rem;
+            text-align: left;
+            border-bottom: 1px solid var(--border);
+        }
+        .dk-table thead th {
+            background: var(--navy);
+            color: #fff;
+            font-weight: 600;
+            font-size: 0.46rem;
+            border-bottom: none;
+        }
+        .dk-table tbody th {
+            font-weight: 600;
+            color: var(--text);
+            background: var(--bg-alt);
+            width: 15%;
+        }
+        .dk-table td {
+            color: var(--text-mid);
+        }
+        .dk-table .hl {
+            color: var(--accent);
+            font-weight: 600;
+        }
+        .dk-table tbody tr:last-child th,
+        .dk-table tbody tr:last-child td { border-bottom: none; }
+
+        /* ── Flow row ── */
+        .flow-row {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0;
+            margin: 0.5rem 0;
+        }
+        .flow-box {
+            text-align: center;
+            padding: 0.4rem 0.8rem;
+            border-radius: 4px;
+            border: 1px solid var(--border);
+            min-width: 140px;
+        }
+        .flow-box h4 {
+            font-size: 0.54rem;
+            font-weight: 600;
+            margin-bottom: 0.05rem;
+        }
+        .flow-box p {
+            font-size: 0.42rem;
+            color: var(--text-mid);
+            line-height: 1.25;
+        }
+        .flow-arrow {
+            font-size: 0.75rem;
+            color: var(--text-light);
+            padding: 0 0.25rem;
+        }
+
+        /* ── Callout ── */
+        .callout {
+            background: var(--accent-pale);
+            border-left: 3px solid var(--accent);
+            border-radius: 0 4px 4px 0;
+            padding: 0.35rem 0.55rem;
+            margin-top: 0.4rem;
+            flex-shrink: 0;
+        }
+        .callout h4 {
+            font-size: 0.48rem;
+            font-weight: 600;
+            color: var(--text);
+            margin-bottom: 0.05rem;
+        }
+        .callout p {
+            font-size: 0.42rem;
+            color: var(--text-mid);
+            line-height: 1.3;
+        }
+
+        /* ── Architecture flow ── */
+        .arch-flow {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0;
+            padding: 0.5rem 0;
+        }
+        .arch-node {
+            text-align: center;
+            padding: 0.5rem 0.6rem;
+            border-radius: 6px;
+            border: 2px solid var(--border);
+            background: var(--bg);
+            min-width: 100px;
+        }
+        .arch-node.highlight {
+            border-color: var(--accent);
+            background: var(--accent-pale);
+        }
+        .arch-node-icon {
+            font-size: 1.2rem;
+            margin-bottom: 0.15rem;
+        }
+        .arch-node h4 {
+            font-size: 0.52rem;
+            font-weight: 600;
+            color: var(--text);
+        }
+        .arch-node p {
+            font-size: 0.4rem;
+            color: var(--text-mid);
+            line-height: 1.3;
+        }
+        .arch-arrow {
+            font-size: 0.8rem;
+            color: var(--text-light);
+            padding: 0 0.15rem;
+        }
+
+        /* ── No-server badge ── */
+        .no-server-badge {
+            display: block;
+            margin: 0.5rem auto;
+            padding: 0.3rem 1.2rem;
+            background: #FEF2F2;
+            border: 2px dashed #EF4444;
+            border-radius: 6px;
+            font-size: 0.5rem;
+            font-weight: 700;
+            color: #DC2626;
+            letter-spacing: 0.1em;
+            text-align: center;
+            width: fit-content;
+        }
+
+        /* ── Layer columns (three-layer color-coded cards) ── */
+        .layer-col {
+            border-radius: 6px;
+            padding: 0.5rem 0.6rem;
+            text-align: center;
+            display: flex;
+            flex-direction: column;
+            gap: 0.25rem;
+        }
+        .layer-col.physical {
+            background: var(--layer-physical-bg);
+            border: 2px solid var(--layer-physical);
+        }
+        .layer-col.national {
+            background: var(--layer-national-bg);
+            border: 2px solid var(--layer-national);
+        }
+        .layer-col.private {
+            background: var(--layer-private-bg);
+            border: 2px solid var(--layer-private);
+        }
+        .layer-col-icon {
+            font-size: 1.1rem;
+        }
+        .layer-col h4 {
+            font-size: 0.56rem;
+            font-weight: 700;
+        }
+        .layer-col.physical h4 { color: var(--layer-physical); }
+        .layer-col.national h4 { color: var(--layer-national); }
+        .layer-col.private h4 { color: var(--layer-private); }
+        .layer-col p {
+            font-size: 0.42rem;
+            color: var(--text-mid);
+            line-height: 1.4;
+        }
+        .location-tag {
+            display: inline-block;
+            font-size: 0.36rem;
+            padding: 0.1rem 0.35rem;
+            border-radius: 3px;
+            font-weight: 500;
+            margin: 0.08rem 0.04rem;
+            color: #fff;
+        }
+        .location-tag.physical { background: var(--layer-physical); }
+        .location-tag.national { background: var(--layer-national); }
+        .location-tag.private { background: var(--layer-private); }
+
+        /* ── Split layout (for bulk mode) ── */
+        .split-layout {
+            display: grid;
+            grid-template-columns: 3fr 2fr;
+            gap: 0.6rem;
+            flex: 1 1 0%;
+            min-height: 0;
+        }
+        .credit-panel {
+            background: var(--bg-alt);
+            border: 1px solid var(--border);
+            border-radius: 6px;
+            padding: 0.5rem 0.6rem;
+        }
+        .credit-panel h4 {
+            font-size: 0.52rem;
+            font-weight: 600;
+            color: var(--text);
+            margin-bottom: 0.3rem;
+        }
+        .credit-panel li {
+            font-size: 0.42rem;
+            color: var(--text-mid);
+            line-height: 1.5;
+            list-style: none;
+            padding: 0.06rem 0;
+        }
+        .credit-panel li::before {
+            content: '\2022';
+            color: var(--accent);
+            font-weight: bold;
+            margin-right: 0.3rem;
+        }
+
+        /* ── Redundancy matrix ── */
+        .redundancy-matrix {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 0.44rem;
+            margin-top: 0.4rem;
+        }
+        .redundancy-matrix th, .redundancy-matrix td {
+            padding: 0.2rem 0.35rem;
+            text-align: center;
+            border-bottom: 1px solid var(--border);
+        }
+        .redundancy-matrix thead th {
+            background: var(--navy);
+            color: #fff;
+            font-weight: 600;
+            font-size: 0.42rem;
+            border-bottom: none;
+        }
+        .redundancy-matrix tbody th {
+            text-align: left;
+            font-weight: 600;
+            color: var(--text);
+            background: var(--bg-alt);
+        }
+        .redundancy-matrix .ok { color: #16A34A; font-weight: 700; }
+        .redundancy-matrix .lost { color: #DC2626; font-weight: 700; }
+        .redundancy-matrix .result { color: #16A34A; font-weight: 700; }
+
+        /* ── Timeline (horizontal renewal cycle) ── */
+        .timeline {
+            position: relative;
+            display: flex;
+            align-items: flex-start;
+            justify-content: space-between;
+            padding: 0.8rem 0.5rem 0;
+        }
+        .timeline::before {
+            content: '';
+            position: absolute;
+            top: 1.15rem;
+            left: 2rem;
+            right: 2rem;
+            height: 3px;
+            background: linear-gradient(90deg, var(--accent), var(--gold), var(--emerald));
+            border-radius: 2px;
+        }
+        .timeline-node {
+            position: relative;
+            text-align: center;
+            z-index: 1;
+            width: 70px;
+        }
+        .timeline-dot {
+            width: 1.3rem;
+            height: 1.3rem;
+            border-radius: 50%;
+            background: var(--accent);
+            border: 3px solid #fff;
+            box-shadow: 0 0 0 2px var(--accent);
+            margin: 0 auto 0.25rem;
+        }
+        .timeline-dot.gold {
+            background: var(--gold);
+            box-shadow: 0 0 0 2px var(--gold);
+        }
+        .timeline-dot.emerald {
+            background: var(--emerald);
+            box-shadow: 0 0 0 2px var(--emerald);
+        }
+        .timeline-dot.future {
+            background: var(--border);
+            box-shadow: 0 0 0 2px var(--border);
+        }
+        .timeline-year {
+            font-size: 0.46rem;
+            font-weight: 700;
+            color: var(--text);
+        }
+        .timeline-label {
+            font-size: 0.36rem;
+            color: var(--text-mid);
+            line-height: 1.3;
+            margin-top: 0.08rem;
+        }
+        .timeline-gap {
+            position: relative;
+            z-index: 1;
+            display: flex;
+            align-items: center;
+            font-size: 0.8rem;
+            color: var(--text-light);
+            padding-top: 0.1rem;
+        }
+
+        /* ── Responsive: always maintain 16:9 ── */
+        @media (max-width: 1000px) {
+            .slide {
+                width: 100%;
+                height: auto;
+                aspect-ratio: 16 / 9;
+                margin: 1rem auto;
+                border-radius: 0;
+            }
+            .slide.cover { aspect-ratio: 16 / 9; }
+            body { background: #fff; }
+            .action-bar { padding: 0.6rem 1.2rem; }
+            .action-bar h2 { font-size: 0.75rem; }
+            .slide-body { padding: 0.8rem 1.2rem 0.3rem; }
+            .slide-footer { padding: 0 1.2rem 0.4rem; }
+            .section-label { margin-bottom: 0.4rem; }
+            .cols3 { gap: 0.5rem; }
+            .col-card { padding: 0.6rem; }
+            .col-card-num { font-size: 0.9rem; }
+            .col-card h4 { font-size: 0.65rem; }
+            .col-card p { font-size: 0.55rem; }
+            .dk-table { font-size: 0.58rem; }
+            .dk-table th, .dk-table td { padding: 0.35rem 0.5rem; }
+            .flow-box { padding: 0.6rem 0.8rem; min-width: 120px; }
+            .flow-box h4 { font-size: 0.6rem; }
+            .flow-box p { font-size: 0.48rem; }
+            .callout { padding: 0.5rem 0.7rem; }
+            .callout h4 { font-size: 0.58rem; }
+            .callout p { font-size: 0.5rem; }
+            .body-lead { font-size: 0.6rem; margin-bottom: 0.6rem; }
+            .toolbar-brand { font-size: 0.6rem; }
+            .cover-body { padding: 1.5rem 2rem; }
+            .cover-title { font-size: 1.3rem; }
+            .cover-sub { font-size: 0.65rem; }
+            .cover-label { font-size: 0.45rem; margin-bottom: 0.8rem; }
+            .arch-node { min-width: 80px; padding: 0.4rem 0.4rem; }
+            .arch-node h4 { font-size: 0.48rem; }
+            .arch-node p { font-size: 0.36rem; }
+            .layer-col { padding: 0.4rem 0.4rem; }
+            .layer-col h4 { font-size: 0.5rem; }
+            .layer-col p { font-size: 0.38rem; }
+            .split-layout { gap: 0.4rem; }
+            .credit-panel { padding: 0.4rem 0.5rem; }
+            .redundancy-matrix { font-size: 0.4rem; }
+            .timeline-node { width: 60px; }
+            .timeline-year { font-size: 0.42rem; }
+            .timeline-label { font-size: 0.32rem; }
+        }
+        @media (max-width: 640px) {
+            .slide {
+                aspect-ratio: auto;
+                height: auto;
+                min-height: auto;
+                overflow: visible;
+            }
+            .slide-body {
+                overflow: visible;
+                padding: 0.8rem 1rem 0.5rem;
+            }
+            .slide-content {
+                overflow: visible;
+            }
+            .action-bar {
+                max-height: none;
+                padding: 0.5rem 1rem;
+            }
+            .action-bar h2 {
+                font-size: 0.75rem;
+                -webkit-line-clamp: unset;
+            }
+            .slide-footer { padding: 0.3rem 1rem; }
+            .cols3 { grid-template-columns: 1fr; gap: 0.5rem; }
+            .col-card { padding: 0.5rem 0.6rem; overflow: visible; }
+            .col-card-num { font-size: 0.8rem; }
+            .col-card h4 { font-size: 0.7rem; }
+            .col-card p { font-size: 0.6rem; line-height: 1.5; }
+            .dk-table { font-size: 0.6rem; }
+            .dk-table th, .dk-table td { padding: 0.35rem 0.4rem; }
+            .dk-table thead th { font-size: 0.55rem; }
+            .flow-row { flex-direction: column; gap: 0.4rem; }
+            .flow-arrow { transform: rotate(90deg); }
+            .flow-box { min-width: auto; padding: 0.5rem 0.8rem; }
+            .flow-box h4 { font-size: 0.7rem; }
+            .flow-box p { font-size: 0.6rem; line-height: 1.4; }
+            .callout { padding: 0.5rem 0.6rem; }
+            .callout h4 { font-size: 0.65rem; }
+            .callout p { font-size: 0.55rem; line-height: 1.4; }
+            .section-label { font-size: 0.55rem; margin-bottom: 0.4rem; }
+            .body-lead { font-size: 0.7rem; }
+            .cover-title { font-size: 1.2rem; }
+            .cover-sub { font-size: 0.7rem; }
+            .arch-flow { flex-direction: column; gap: 0.3rem; }
+            .arch-arrow { transform: rotate(90deg); }
+            .arch-node { min-width: auto; width: 100%; }
+            .arch-node h4 { font-size: 0.6rem; }
+            .arch-node p { font-size: 0.5rem; }
+            .layer-col { padding: 0.5rem 0.6rem; overflow: visible; }
+            .layer-col h4 { font-size: 0.65rem; }
+            .layer-col p { font-size: 0.55rem; }
+            .location-tag { font-size: 0.45rem; }
+            .split-layout { grid-template-columns: 1fr; }
+            .credit-panel li { font-size: 0.55rem; }
+            .redundancy-matrix { font-size: 0.5rem; }
+            .redundancy-matrix th, .redundancy-matrix td { padding: 0.3rem 0.3rem; }
+            .timeline { flex-wrap: wrap; gap: 0.3rem; justify-content: center; }
+            .timeline::before { display: none; }
+            .timeline-node { width: auto; min-width: 60px; }
+            .timeline-year { font-size: 0.5rem; }
+            .timeline-label { font-size: 0.42rem; }
+            .no-server-badge { font-size: 0.55rem; }
+        }
+
+        /* ── Print / PDF ── */
+        @media print {
+            body { background: white; }
+            .toolbar { display: none !important; }
+            .slide {
+                width: 100%;
+                height: 100vh;
+                aspect-ratio: 16 / 9;
+                margin: 0;
+                box-shadow: none;
+                page-break-after: always;
+                page-break-inside: avoid;
+                border-radius: 0;
+            }
+            .slide:last-child { page-break-after: auto; }
+            .slide:first-of-type { margin-top: 0; }
+            .action-bar, .col-card, .callout, .flow-box {
+                -webkit-print-color-adjust: exact;
+                print-color-adjust: exact;
+            }
+            .slide.cover, .slide.cover * {
+                -webkit-print-color-adjust: exact;
+                print-color-adjust: exact;
+            }
+            .dk-table thead th, .dk-table tbody th {
+                -webkit-print-color-adjust: exact;
+                print-color-adjust: exact;
+            }
+            .layer-col, .layer-col.physical, .layer-col.national, .layer-col.private {
+                -webkit-print-color-adjust: exact;
+                print-color-adjust: exact;
+            }
+            .location-tag, .location-tag.physical, .location-tag.national, .location-tag.private {
+                -webkit-print-color-adjust: exact;
+                print-color-adjust: exact;
+            }
+            .no-server-badge {
+                -webkit-print-color-adjust: exact;
+                print-color-adjust: exact;
+            }
+            .timeline-dot, .timeline-dot.gold, .timeline-dot.emerald, .timeline-dot.future {
+                -webkit-print-color-adjust: exact;
+                print-color-adjust: exact;
+            }
+            .timeline::before {
+                -webkit-print-color-adjust: exact;
+                print-color-adjust: exact;
+            }
+            .redundancy-matrix thead th {
+                -webkit-print-color-adjust: exact;
+                print-color-adjust: exact;
+            }
+            .redundancy-matrix tbody th {
+                -webkit-print-color-adjust: exact;
+                print-color-adjust: exact;
+            }
+            .arch-node, .arch-node.highlight {
+                -webkit-print-color-adjust: exact;
+                print-color-adjust: exact;
+            }
+            .credit-panel {
+                -webkit-print-color-adjust: exact;
+                print-color-adjust: exact;
+            }
+        }
+
+        @page {
+            size: landscape;
+            margin: 0;
+        }
+    </style>
+    <meta property="og:type" content="article">
+    <meta property="og:title" content="技術アーキテクチャ | TokiStorage">
+    <meta property="og:description" content="TokiStorage 技術アーキテクチャ。サーバーなし・月額課金なし。三層分散保管で声と記憶を千年先に届ける技術基盤。">
+    <meta property="og:url" content="https://tokistorage.github.io/lp/tech-deck.html">
+    <meta property="og:site_name" content="トキストレージ">
+    <meta name="twitter:card" content="summary">
+    <meta name="twitter:title" content="技術アーキテクチャ | TokiStorage">
+    <meta name="twitter:description" content="TokiStorage 技術アーキテクチャ。サーバーなし・月額課金なし。三層分散保管で声と記憶を千年先に届ける技術基盤。">
+    <meta property="og:image" content="https://tokistorage.github.io/lp/asset/tokistorage-icon-512.png">
+    <meta property="og:image:width" content="512">
+    <meta property="og:image:height" content="512">
+    <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "WebPage",
+  "name": "技術アーキテクチャ | TokiStorage",
+  "url": "https://tokistorage.github.io/lp/tech-deck.html",
+  "inLanguage": "ja",
+  "publisher": {
+    "@type": "Organization",
+    "name": "TokiStorage",
+    "url": "https://tokistorage.github.io/lp"
+  },
+  "description": "TokiStorage 技術アーキテクチャ。サーバーなし・月額課金なし。三層分散保管で声と記憶を千年先に届ける技術基盤。"
+}
+    </script>
+    <link rel="alternate" hreflang="ja" href="https://tokistorage.github.io/lp/tech-deck.html">
+    <link rel="alternate" hreflang="en" href="https://tokistorage.github.io/lp/tech-deck-en.html">
+    <link rel="alternate" hreflang="x-default" href="https://tokistorage.github.io/lp/tech-deck.html">
+    <link rel="canonical" href="https://tokistorage.github.io/lp/tech-deck.html">
+</head>
+<body>
+
+<!-- Toolbar -->
+<nav class="toolbar">
+    <a href="index.html" class="toolbar-brand">TOKISTORAGE &mdash; 技術アーキテクチャ</a>
+    <div class="toolbar-actions">
+        <a href="tech-deck-en.html">EN</a>
+        <a href="index.html">トップ</a>
+        <button class="btn-pdf" onclick="window.print()">PDF ダウンロード</button>
+    </div>
+</nav>
+
+<!-- ━━━ SLIDE 01: COVER ━━━ -->
+<section class="slide cover">
+    <div class="cover-body">
+        <p class="cover-label">Technical Architecture &mdash; Confidential</p>
+        <h1 class="cover-title">TokiStorage<br>Technical Architecture</h1>
+        <p class="cover-sub">サーバーなし。月額課金なし。<br>三層分散保管で声と記憶を<strong>千年先</strong>に届ける技術基盤。</p>
+    </div>
+    <div class="cover-stripe"></div>
+    <div class="cover-footer">
+        <span>TokiStorage</span>
+        <span>tokistorage.github.io</span>
+        <span>Confidential</span>
+    </div>
+</section>
+
+<!-- ━━━ SLIDE 02: HIGH-LEVEL ARCHITECTURE ━━━ -->
+<section class="slide">
+    <div class="action-bar">
+        <h2>データフロー上にサーバーが一切存在しない——依存ゼロのアーキテクチャ</h2>
+    </div>
+    <div class="slide-body">
+        <div class="slide-content">
+            <p class="section-label">Architecture Overview</p>
+            <div class="arch-flow">
+                <div class="arch-node">
+                    <div class="arch-node-icon">&#x1F3A4;</div>
+                    <h4>録音</h4>
+                    <p>ユーザーの声</p>
+                </div>
+                <span class="arch-arrow">&#x2192;</span>
+                <div class="arch-node highlight">
+                    <div class="arch-node-icon">&#x2699;&#xFE0F;</div>
+                    <h4>Codec2 WASM</h4>
+                    <p>ブラウザ内で符号化</p>
+                </div>
+                <span class="arch-arrow">&#x2192;</span>
+                <div class="arch-node">
+                    <div class="arch-node-icon">&#x25A3;</div>
+                    <h4>QR Code</h4>
+                    <p>URL内にデータ格納</p>
+                </div>
+                <span class="arch-arrow">&#x2192;</span>
+                <div class="arch-node">
+                    <div class="arch-node-icon">&#x1F4F1;</div>
+                    <h4>スマホ</h4>
+                    <p>読み取り・再生</p>
+                </div>
+                <span class="arch-arrow">&#x2192;</span>
+                <div class="arch-node highlight">
+                    <div class="arch-node-icon">&#x1F310;</div>
+                    <h4>デコーダー</h4>
+                    <p>GitHub Pages / 3MB</p>
+                </div>
+            </div>
+            <div class="no-server-badge">NO SERVER IN DATA FLOW &mdash; サーバー・DB・API 一切不要</div>
+            <div class="callout">
+                <h4>設計原則</h4>
+                <p>サービス終了リスクをゼロにするため、データフローからサーバーを完全に排除。QRコードの紙面自体がストレージであり、デコーダーはわずか3MBの静的サイト。</p>
+            </div>
+        </div>
+    </div>
+    <div class="slide-footer">
+        <span>TokiStorage &mdash; 技術アーキテクチャ</span>
+        <span>Confidential</span>
+        <span class="pg">2</span>
+    </div>
+</section>
+
+<!-- ━━━ SLIDE 03: THREE-LAYER DEPLOYMENT ━━━ -->
+<section class="slide">
+    <div class="action-bar">
+        <h2>三つの独立層——物理・国家・民間——が地理的・制度的に分散</h2>
+    </div>
+    <div class="slide-body">
+        <div class="slide-content">
+            <p class="section-label">Three-Layer Deployment</p>
+            <div class="cols3">
+                <div class="layer-col physical">
+                    <div class="layer-col-icon">&#x1F48E;</div>
+                    <h4>物理層<br><span style="font-size:0.4rem;font-weight:400;opacity:0.7;">Physical Layer</span></h4>
+                    <p>石英ガラス刻印（3億年超耐久）</p>
+                    <p>UVラミネートフィルム（屋外10年）</p>
+                    <div style="margin-top:0.15rem;">
+                        <span class="location-tag physical">佐渡島</span>
+                        <span class="location-tag physical">マウイ島</span>
+                    </div>
+                </div>
+                <div class="layer-col national">
+                    <div class="layer-col-icon">&#x1F3DB;</div>
+                    <h4>国家層<br><span style="font-size:0.4rem;font-weight:400;opacity:0.7;">National Layer</span></h4>
+                    <p>国立国会図書館納本（納本制度法）</p>
+                    <p>音声QRをPDFニュースレターに変換し定期納本</p>
+                    <div style="margin-top:0.15rem;">
+                        <span class="location-tag national">東京・永田町</span>
+                    </div>
+                </div>
+                <div class="layer-col private">
+                    <div class="layer-col-icon">&#x1F4BB;</div>
+                    <h4>民間層<br><span style="font-size:0.4rem;font-weight:400;opacity:0.7;">Private Layer</span></h4>
+                    <p>GitHub Pages デコーダー（3MB）</p>
+                    <p>データはQR紙面のURL内に分散</p>
+                    <p>O(1) &mdash; 件数に依存しないストレージ</p>
+                    <div style="margin-top:0.15rem;">
+                        <span class="location-tag private">全世界</span>
+                    </div>
+                </div>
+            </div>
+            <div class="callout" style="margin-top:0.3rem;">
+                <p>各層は完全に独立。物理的な距離、管理主体、法的根拠がすべて異なり、単一障害点が存在しない。</p>
+            </div>
+        </div>
+    </div>
+    <div class="slide-footer">
+        <span>TokiStorage &mdash; 技術アーキテクチャ</span>
+        <span>Confidential</span>
+        <span class="pg">3</span>
+    </div>
+</section>
+
+<!-- ━━━ SLIDE 04: DATA FLOW (Voice → QR) ━━━ -->
+<section class="slide">
+    <div class="action-bar">
+        <h2>音声はブラウザ内で完結し、サーバーに一切送信されずQRコードになる</h2>
+    </div>
+    <div class="slide-body">
+        <div class="slide-content">
+            <p class="section-label">Data Flow: Voice &rarr; QR</p>
+            <div class="arch-flow" style="padding:0.3rem 0;">
+                <div class="arch-node" style="min-width:85px;">
+                    <div class="arch-node-icon">&#x1F3A4;</div>
+                    <h4>マイク</h4>
+                    <p>音声入力</p>
+                </div>
+                <span class="arch-arrow">&#x2192;</span>
+                <div class="arch-node highlight" style="min-width:95px;">
+                    <div class="arch-node-icon">&#x2699;&#xFE0F;</div>
+                    <h4>Codec2 WASM</h4>
+                    <p>450 bps 符号化</p>
+                </div>
+                <span class="arch-arrow">&#x2192;</span>
+                <div class="arch-node" style="min-width:85px;">
+                    <div class="arch-node-icon">&#x1F504;</div>
+                    <h4>Base64URL</h4>
+                    <p>エンコード</p>
+                </div>
+                <span class="arch-arrow">&#x2192;</span>
+                <div class="arch-node" style="min-width:105px;">
+                    <div class="arch-node-icon">&#x1F517;</div>
+                    <h4>URL生成</h4>
+                    <p>play.html?m=5&amp;c2=...</p>
+                </div>
+                <span class="arch-arrow">&#x2192;</span>
+                <div class="arch-node highlight" style="min-width:95px;">
+                    <div class="arch-node-icon">&#x25A3;</div>
+                    <h4>QR Code V40</h4>
+                    <p>2,953 バイト</p>
+                </div>
+            </div>
+            <table class="dk-table" style="margin-top:0.2rem;">
+                <thead>
+                    <tr>
+                        <th style="width:25%;">パラメータ</th>
+                        <th>値</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <th>コーデック</th>
+                        <td class="hl">Codec2 (Mode 5: 450 bps)</td>
+                    </tr>
+                    <tr>
+                        <th>最大録音時間</th>
+                        <td class="hl">約29秒</td>
+                    </tr>
+                    <tr>
+                        <th>QRバージョン</th>
+                        <td>Version 40, 誤り訂正 L</td>
+                    </tr>
+                    <tr>
+                        <th>最大容量</th>
+                        <td>2,953 バイト</td>
+                    </tr>
+                    <tr>
+                        <th>URL形式</th>
+                        <td><code style="font-size:0.44rem;background:var(--bg-alt);padding:0.05rem 0.2rem;border-radius:2px;">play.html?m=&lt;mode&gt;&amp;c2=&lt;base64url&gt;</code></td>
+                    </tr>
+                    <tr>
+                        <th>対応モード</th>
+                        <td>6段階 (3200 / 2400 / 1600 / 1200 / 700C / 450 bps)</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <div class="slide-footer">
+        <span>TokiStorage &mdash; 技術アーキテクチャ</span>
+        <span>Confidential</span>
+        <span class="pg">4</span>
+    </div>
+</section>
+
+<!-- ━━━ SLIDE 05: BULK MODE ━━━ -->
+<section class="slide">
+    <div class="action-bar">
+        <h2>バルクモード——N枚のQRに分割し、IndexedDBでクレジット管理。サーバー不要</h2>
+    </div>
+    <div class="slide-body">
+        <div class="slide-content">
+            <p class="section-label">Bulk Mode Architecture</p>
+            <p class="body-lead">単一QRの30秒制限を超える長時間音声・高解像度画像・長文テキストに対応</p>
+            <div class="split-layout">
+                <div style="display:flex;flex-direction:column;gap:0.4rem;">
+                    <div class="arch-flow" style="padding:0.3rem 0;justify-content:flex-start;">
+                        <div class="arch-node" style="min-width:75px;padding:0.35rem 0.4rem;">
+                            <div class="arch-node-icon" style="font-size:1rem;">&#x1F4C1;</div>
+                            <h4>ソースデータ</h4>
+                        </div>
+                        <span class="arch-arrow">&#x2192;</span>
+                        <div class="arch-node highlight" style="min-width:90px;padding:0.35rem 0.4rem;">
+                            <div class="arch-node-icon" style="font-size:1rem;">&#x2699;&#xFE0F;</div>
+                            <h4>コーデック</h4>
+                            <p>Opus/画像/テキスト</p>
+                        </div>
+                        <span class="arch-arrow">&#x2192;</span>
+                        <div class="arch-node" style="min-width:75px;padding:0.35rem 0.4rem;">
+                            <div class="arch-node-icon" style="font-size:1rem;">&#x2702;&#xFE0F;</div>
+                            <h4>N分割</h4>
+                        </div>
+                    </div>
+                    <div class="arch-flow" style="padding:0.2rem 0;justify-content:flex-start;">
+                        <div class="arch-node" style="min-width:55px;padding:0.3rem 0.35rem;">
+                            <h4 style="font-size:0.44rem;">QR 1</h4>
+                        </div>
+                        <div class="arch-node" style="min-width:55px;padding:0.3rem 0.35rem;">
+                            <h4 style="font-size:0.44rem;">QR 2</h4>
+                        </div>
+                        <span style="font-size:0.6rem;color:var(--text-light);padding:0 0.2rem;">...</span>
+                        <div class="arch-node" style="min-width:55px;padding:0.3rem 0.35rem;">
+                            <h4 style="font-size:0.44rem;">QR n</h4>
+                        </div>
+                        <span class="arch-arrow">&#x2192;</span>
+                        <div class="arch-node" style="min-width:75px;padding:0.3rem 0.35rem;">
+                            <div class="arch-node-icon" style="font-size:0.9rem;">&#x1F5A8;&#xFE0F;</div>
+                            <h4 style="font-size:0.44rem;">セルフ印刷</h4>
+                        </div>
+                    </div>
+                    <div class="callout" style="margin-top:0.15rem;padding:0.25rem 0.45rem;">
+                        <p style="font-size:0.38rem;">サーバーは残高を把握せず、取り消しも復旧もできない。この非対称性は意図的な設計。</p>
+                    </div>
+                </div>
+                <div class="credit-panel">
+                    <h4>&#x1F4B3; プリペイドクレジット</h4>
+                    <ul style="padding:0;margin:0;">
+                        <li>&yen;150 / 1コード ($1)</li>
+                        <li>IndexedDB（ブラウザ保存）</li>
+                        <li>アカウント不要</li>
+                        <li>個人情報不要</li>
+                        <li>有効期限なし</li>
+                        <li>Wise送金で購入</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="slide-footer">
+        <span>TokiStorage &mdash; 技術アーキテクチャ</span>
+        <span>Confidential</span>
+        <span class="pg">5</span>
+    </div>
+</section>
+
+<!-- ━━━ SLIDE 06: REDUNDANCY & RECOVERY ━━━ -->
+<section class="slide">
+    <div class="action-bar">
+        <h2>どの層が失われても、残りの層から復元可能——単一障害点がない</h2>
+    </div>
+    <div class="slide-body">
+        <div class="slide-content">
+            <p class="section-label">Redundancy &amp; Recovery</p>
+            <div class="cols3" style="flex:none;min-height:auto;">
+                <div class="layer-col physical" style="padding:0.35rem 0.5rem;">
+                    <div class="layer-col-icon" style="font-size:0.9rem;">&#x1F48E;</div>
+                    <h4 style="font-size:0.48rem;">物理層</h4>
+                    <p style="font-size:0.38rem;">石英ガラス + ラミネート</p>
+                </div>
+                <div class="layer-col national" style="padding:0.35rem 0.5rem;">
+                    <div class="layer-col-icon" style="font-size:0.9rem;">&#x1F3DB;</div>
+                    <h4 style="font-size:0.48rem;">国家層</h4>
+                    <p style="font-size:0.38rem;">国立国会図書館 法定納本</p>
+                </div>
+                <div class="layer-col private" style="padding:0.35rem 0.5rem;">
+                    <div class="layer-col-icon" style="font-size:0.9rem;">&#x1F4BB;</div>
+                    <h4 style="font-size:0.48rem;">民間層</h4>
+                    <p style="font-size:0.38rem;">GitHub Pages デコーダー</p>
+                </div>
+            </div>
+            <table class="redundancy-matrix">
+                <thead>
+                    <tr>
+                        <th style="text-align:left;width:30%;">シナリオ</th>
+                        <th style="width:15%;">物理層</th>
+                        <th style="width:15%;">国家層</th>
+                        <th style="width:15%;">民間層</th>
+                        <th style="width:15%;">復旧</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <th>物理層の消失</th>
+                        <td class="lost">&#x2715;</td>
+                        <td class="ok">&#x25CB;</td>
+                        <td class="ok">&#x25CB;</td>
+                        <td class="result">可能</td>
+                    </tr>
+                    <tr>
+                        <th>国家層の消失</th>
+                        <td class="ok">&#x25CB;</td>
+                        <td class="lost">&#x2715;</td>
+                        <td class="ok">&#x25CB;</td>
+                        <td class="result">可能</td>
+                    </tr>
+                    <tr>
+                        <th>民間層の消失</th>
+                        <td class="ok">&#x25CB;</td>
+                        <td class="ok">&#x25CB;</td>
+                        <td class="lost">&#x2715;</td>
+                        <td class="result">可能</td>
+                    </tr>
+                    <tr>
+                        <th>2層同時消失</th>
+                        <td class="ok">&#x25CB;</td>
+                        <td class="lost">&#x2715;</td>
+                        <td class="lost">&#x2715;</td>
+                        <td class="result">可能</td>
+                    </tr>
+                </tbody>
+            </table>
+            <div class="callout" style="margin-top:0.3rem;">
+                <p>生存する1層だけで全データを復元可能。これは偶然ではなく、三層分散保管の設計原則。</p>
+            </div>
+        </div>
+    </div>
+    <div class="slide-footer">
+        <span>TokiStorage &mdash; 技術アーキテクチャ</span>
+        <span>Confidential</span>
+        <span class="pg">6</span>
+    </div>
+</section>
+
+<!-- ━━━ SLIDE 07: 20-YEAR RENEWAL CYCLE ━━━ -->
+<section class="slide">
+    <div class="action-bar">
+        <h2>伊勢神宮の式年遷宮に学ぶ——20年サイクルで技術を更新し、千年を超える</h2>
+    </div>
+    <div class="slide-body">
+        <div class="slide-content">
+            <p class="section-label">20-Year Renewal Cycle</p>
+            <p class="body-lead" style="margin-bottom:0.4rem;">千年保管は「一度作って放置する」設計ではない。20年ごとに技術を更新し、次の20年に引き継ぐサイクル設計。</p>
+            <div class="timeline">
+                <div class="timeline-node">
+                    <div class="timeline-dot"></div>
+                    <div class="timeline-year">2026</div>
+                    <div class="timeline-label">創業<br>Codec2, QR V40</div>
+                </div>
+                <div class="timeline-node">
+                    <div class="timeline-dot gold"></div>
+                    <div class="timeline-year">2046</div>
+                    <div class="timeline-label">第1回更新<br>コーデック・QR規格見直し</div>
+                </div>
+                <div class="timeline-node">
+                    <div class="timeline-dot emerald"></div>
+                    <div class="timeline-year">2066</div>
+                    <div class="timeline-label">第2回更新<br>物理メディア世代交代</div>
+                </div>
+                <div class="timeline-gap">&#x22EF;</div>
+                <div class="timeline-node">
+                    <div class="timeline-dot future"></div>
+                    <div class="timeline-year">2526</div>
+                    <div class="timeline-label">第25回更新<br>500年目</div>
+                </div>
+                <div class="timeline-gap">&#x22EF;</div>
+                <div class="timeline-node">
+                    <div class="timeline-dot"></div>
+                    <div class="timeline-year">3026</div>
+                    <div class="timeline-label">千年達成</div>
+                </div>
+            </div>
+            <div class="callout" style="margin-top:0.4rem;">
+                <h4>式年遷宮との対比</h4>
+                <p>伊勢神宮は690年から20年ごとに社殿を建て替え、1300年以上にわたり技術と文化を伝承してきた。TokiStorageはこの思想をデジタル保管に応用し、20年サイクルで記録媒体・符号化技術・保管拠点を更新する。</p>
+            </div>
+        </div>
+    </div>
+    <div class="slide-footer">
+        <span>TokiStorage &mdash; 技術アーキテクチャ</span>
+        <span>Confidential</span>
+        <span class="pg">7</span>
+    </div>
+</section>
+
+</body>
+</html>
