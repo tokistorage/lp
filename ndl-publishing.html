@@ -1,0 +1,272 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" type="image/png" sizes="32x32" href="asset/favicon-32.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="asset/apple-touch-icon.png">
+    <title>NDLニュースレター発行サービス | トキストレージ</title>
+    <meta name="robots" content="index, follow">
+    <meta name="description" content="お客様の声を国立国会図書館の永久保存記録にする。個別オリジナルのニュースレター発行支援・申請代行・運用代行をワンストップで提供します。">
+    <style>
+        :root {
+            --toki-blue: #2563EB;
+            --toki-blue-dark: #1D4ED8;
+            --toki-blue-pale: #EFF6FF;
+            --accent-blue: #3B82F6;
+            --bg-white: #FFFFFF;
+            --text-primary: #1E293B;
+            --text-secondary: #475569;
+            --text-muted: #94A3B8;
+            --border: #E2E8F0;
+            --gold: #C9A962;
+            --gold-pale: #FDF8ED;
+            --emerald: #059669;
+            --font-display: 'Hiragino Mincho ProN', 'Yu Mincho', serif;
+            --font-body: 'Hiragino Kaku Gothic ProN', 'Yu Gothic', 'Meiryo', sans-serif;
+        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        html { scroll-behavior: smooth; }
+        body { font-family: var(--font-body); font-weight: 400; background: var(--bg-white); color: var(--text-primary); line-height: 2; font-size: 16px; }
+
+        .article-nav { position: fixed; top: 0; left: 0; right: 0; z-index: 1000; background: rgba(255,255,255,0.95); backdrop-filter: blur(12px); border-bottom: 1px solid var(--border); padding: 0.6rem 1.2rem; display: flex; align-items: center; justify-content: space-between; gap: 1rem; }
+        .article-nav .nav-brand { font-family: var(--font-display); font-size: 0.9rem; font-weight: 600; color: var(--toki-blue); text-decoration: none; white-space: nowrap; }
+        .article-nav .nav-brand::before { content: ''; display: inline-block; width: 20px; height: 20px; background: url('asset/tokistorage-icon-512.png') no-repeat center / contain; vertical-align: -3px; margin-right: 5px; }
+        .article-nav .nav-right { display: flex; align-items: center; gap: 1rem; }
+        .article-nav .nav-label { font-size: 0.6rem; color: var(--text-muted); letter-spacing: 0.08em; }
+        .article-nav .lang-switch { font-size: 0.75rem; color: var(--toki-blue); text-decoration: none; padding: 0.3rem 0.6rem; border: 1px solid var(--toki-blue); border-radius: 4px; }
+        .article-nav .lang-switch:hover { background: var(--toki-blue); color: #fff; }
+
+        .article-container { max-width: 680px; margin: 0 auto; padding: 7rem 2rem 4rem; }
+        .article-header { margin-bottom: 3rem; padding-bottom: 2rem; border-bottom: 1px solid var(--border); }
+        .article-category { font-size: 0.7rem; color: var(--toki-blue); letter-spacing: 0.15em; margin-bottom: 1rem; }
+        .article-header h1 { font-family: var(--font-display); font-size: 1.8rem; font-weight: 700; line-height: 1.5; margin-bottom: 1.5rem; }
+        .article-subtitle { font-size: 0.95rem; color: var(--text-secondary); line-height: 1.9; }
+
+        .article-content h2 { font-family: var(--font-display); font-size: 1.3rem; font-weight: 600; margin: 3rem 0 1.5rem; padding-bottom: 0.5rem; border-bottom: 2px solid var(--toki-blue-pale); }
+        .article-content h3 { font-family: var(--font-display); font-size: 1.1rem; font-weight: 600; margin: 2rem 0 1rem; color: var(--toki-blue-dark); }
+        .article-content p { margin-bottom: 1.5rem; text-align: justify; }
+        .article-content blockquote { border-left: 3px solid var(--toki-blue); padding-left: 1.5rem; margin: 2rem 0; font-family: var(--font-display); color: var(--text-secondary); }
+        .article-content ul, .article-content ol { margin: 1.5rem 0; padding-left: 1.5rem; }
+        .article-content li { margin-bottom: 0.75rem; }
+
+        .core-message { background: var(--toki-blue-pale); border-left: 4px solid var(--toki-blue); padding: 1.5rem; margin: 2rem 0; font-size: 0.95rem; line-height: 1.8; }
+        .key-point { background: linear-gradient(135deg, var(--toki-blue-pale) 0%, #fff 100%); border: 1px solid var(--accent-blue); border-radius: 8px; padding: 1.5rem; margin: 2rem 0; text-align: center; }
+        .key-point p { font-family: var(--font-display); font-size: 1.1rem; color: var(--toki-blue-dark); margin: 0; }
+
+        .pipeline { display: flex; align-items: center; justify-content: center; gap: 0.5rem; flex-wrap: wrap; margin: 2rem 0; }
+        .pipeline-step { background: var(--toki-blue); color: #fff; padding: 0.8rem 1.2rem; border-radius: 8px; font-weight: 600; font-size: 0.95rem; text-align: center; min-width: 120px; }
+        .pipeline-arrow { color: var(--toki-blue); font-size: 1.5rem; font-weight: 700; }
+
+        .pricing-table { width: 100%; border-collapse: collapse; margin: 2rem 0; font-size: 0.95rem; }
+        .pricing-table th { background: var(--toki-blue); color: #fff; padding: 0.8rem 1rem; text-align: left; font-weight: 600; }
+        .pricing-table td { padding: 0.8rem 1rem; border-bottom: 1px solid var(--border); }
+        .pricing-table tr:nth-child(even) td { background: var(--toki-blue-pale); }
+        .pricing-table .price { font-weight: 700; color: var(--toki-blue-dark); white-space: nowrap; }
+
+        .faq dt { font-weight: 600; margin: 1.5rem 0 0.5rem; color: var(--toki-blue-dark); }
+        .faq dd { margin-bottom: 1rem; color: var(--text-secondary); }
+
+        .ndl-badge { display: inline-block; background: var(--gold-pale); border: 1px solid var(--gold); color: #92750B; padding: 0.3rem 0.8rem; border-radius: 4px; font-size: 0.8rem; font-weight: 600; }
+
+        .article-footer { margin-top: 4rem; padding-top: 2rem; border-top: 1px solid var(--border); text-align: center; }
+        .article-footer p { font-size: 0.8rem; color: var(--text-muted); margin-bottom: 1rem; }
+        .article-footer a { color: var(--toki-blue); text-decoration: none; }
+        .article-footer a:hover { text-decoration: underline; }
+
+        .cta-button { display: inline-block; background: var(--toki-blue); color: #fff; padding: 0.8rem 2rem; border-radius: 8px; text-decoration: none; font-weight: 600; font-size: 1rem; transition: background 0.2s; }
+        .cta-button:hover { background: var(--toki-blue-dark); }
+
+        @media (max-width: 768px) {
+            .article-container { padding: 6rem 1.2rem 3rem; }
+            .article-header h1 { font-size: 1.5rem; }
+            .pipeline { flex-direction: column; }
+            .pipeline-arrow { transform: rotate(90deg); }
+        }
+    </style>
+</head>
+<body>
+
+<nav class="article-nav">
+    <a href="index.html" class="nav-brand">TokiStorage</a>
+    <div class="nav-right">
+        <span class="nav-label">B2B SERVICE</span>
+        <a href="ndl-publishing-en.html" class="lang-switch">EN</a>
+    </div>
+</nav>
+
+<article class="article-container">
+
+    <header class="article-header">
+        <p class="article-category">B2B サービス</p>
+        <h1>NDLニュースレター発行サービス</h1>
+        <p class="article-subtitle">
+            お客様の声を、国立国会図書館の永久保存記録にする。<br>
+            個別オリジナルのニュースレター発行支援・申請代行・運用代行をワンストップで提供します。
+        </p>
+    </header>
+
+    <div class="article-content">
+
+        <div class="key-point">
+            <p>結婚式の声、イベントの記憶、企業の記録——<br>あなたのお客様の声が国家の永久保存記録になる</p>
+        </div>
+
+        <h2>サービス概要</h2>
+
+        <p>
+            トキストレージは、国立国会図書館法（第25条・第25条の4）に基づき、
+            ニュースレターを逐次刊行物として国立国会図書館に納本しています。
+            <span class="ndl-badge">受付番号 EA202602160140</span>
+        </p>
+        <p>
+            本サービスは、この納本パイプラインをお客様（式場・イベント主催者・企業）にも開放し、
+            個別オリジナルのニュースレターを発行・納本するためのフルマネージドサービスです。
+        </p>
+
+        <div class="core-message">
+            トキストレージが発行者となり、お客様は「特集元」として奥付に記載されます。<br>
+            お客様側の手続きはゼロ。技術的な準備も不要です。
+        </div>
+
+        <h2>パイプライン</h2>
+
+        <div class="pipeline">
+            <div class="pipeline-step">見積もり</div>
+            <span class="pipeline-arrow">&rarr;</span>
+            <div class="pipeline-step">生成</div>
+            <span class="pipeline-arrow">&rarr;</span>
+            <div class="pipeline-step">保管</div>
+        </div>
+
+        <h3>1. 見積もり（オンボーディング）</h3>
+        <ul>
+            <li>クライアント専用のニュースレター名・ブランディングを決定</li>
+            <li>発行頻度（四半期・半年・年次）を選択</li>
+            <li>専用リポジトリを自動作成、GitHub Pagesでアーカイブ公開</li>
+        </ul>
+
+        <h3>2. 生成（PDF自動生成）</h3>
+        <ul>
+            <li>お客様のTokiQRコード（音声・画像・テキスト）が自動的に蓄積</li>
+            <li>発行時期に達したらPDFニュースレターを自動生成</li>
+            <li>奥付にはTokiStorage（発行者）と貴社名（特集元）を併記</li>
+            <li>品質レビュー後に公開</li>
+        </ul>
+
+        <h3>3. 保管（NDL永久保存）</h3>
+        <ul>
+            <li>GitHub Pagesで公開されたPDFをNDLが定期自動収集</li>
+            <li>国立国会図書館法に基づく法的な永久保存</li>
+            <li>ISSN取得もオプションで代行可能</li>
+        </ul>
+
+        <h2>料金</h2>
+
+        <table class="pricing-table">
+            <thead>
+                <tr>
+                    <th>項目</th>
+                    <th>金額</th>
+                    <th>備考</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>セットアップ</td>
+                    <td class="price">&yen;50,000</td>
+                    <td>リポジトリ作成・ブランディング設定・初期config</td>
+                </tr>
+                <tr>
+                    <td>発行費</td>
+                    <td class="price">&yen;30,000/号</td>
+                    <td>50 QRスロット込み</td>
+                </tr>
+                <tr>
+                    <td>追加QR</td>
+                    <td class="price">&yen;150/件</td>
+                    <td>51件目以降、1件あたり</td>
+                </tr>
+                <tr>
+                    <td>ISSN取得代行</td>
+                    <td class="price">&yen;10,000</td>
+                    <td>オプション（ISSN自体は無料、手続き代行費）</td>
+                </tr>
+            </tbody>
+        </table>
+
+        <p>
+            月額固定費はありません。発行した号数に応じた従量課金です。<br>
+            お支払いはWise（国際送金プラットフォーム）で承ります。
+        </p>
+
+        <h2>ユースケース</h2>
+
+        <h3>ウェディング</h3>
+        <p>
+            結婚式場・ホテルが、挙式で音声記録サービスをご利用いただいた新郎新婦の声を
+            四半期ごとにニュースレターにまとめ、国立国会図書館に永久保存。
+            「あなたの誓いの言葉が、国家の記録になる」——他にない体験価値を提供できます。
+        </p>
+
+        <h3>企業・団体</h3>
+        <p>
+            創業記念、社員の声、イベント記録をニュースレター化。
+            企業のCSR活動として、または社史の一部として国会図書館に残せます。
+        </p>
+
+        <h2>よくある質問</h2>
+
+        <dl class="faq">
+            <dt>国立国会図書館とは？</dt>
+            <dd>
+                日本唯一の国立図書館であり、国立国会図書館法に基づき
+                出版物の収集・保存を行う機関です。納本された資料は永久に保存されます。
+            </dd>
+
+            <dt>発行頻度は自由に選べますか？</dt>
+            <dd>
+                はい。四半期（年4回）、半年（年2回）、年次（年1回）から選択いただけます。
+                不定期での発行も可能です。
+            </dd>
+
+            <dt>ISSNは必要ですか？</dt>
+            <dd>
+                ISSNは任意です。NDL納本にISSNは必須ではありませんが、
+                学術的な位置づけを求める場合は取得をお勧めします。代行手数料は¥10,000です。
+            </dd>
+
+            <dt>お客様側の技術的な準備は必要ですか？</dt>
+            <dd>
+                一切不要です。リポジトリ作成からPDF生成、NDL納本まで
+                すべてトキストレージが代行します。
+            </dd>
+
+            <dt>納本されたニュースレターは一般に公開されますか？</dt>
+            <dd>
+                はい。NDLに納本された資料は原則として一般に公開されます。
+                また、GitHub Pages上でもPDFが公開されます。
+            </dd>
+        </dl>
+
+        <h2>お問い合わせ</h2>
+
+        <p>
+            サービスの詳細やお見積もりについては、お気軽にお問い合わせください。
+        </p>
+
+        <p style="text-align: center; margin: 2rem 0;">
+            <a href="https://tokistorage.github.io/qr/contact.html" class="cta-button">お問い合わせ</a>
+        </p>
+
+    </div>
+
+    <footer class="article-footer">
+        <p><a href="index.html">トップページ</a> &middot; <a href="details.html">サービス詳細</a> &middot; <a href="tech-deck.html">テクニカルアーキテクチャ</a></p>
+        <p>&copy; 2026 TokiStorage</p>
+    </footer>
+
+</article>
+
+</body>
+</html>
