@@ -1114,5 +1114,87 @@
     </div>
 </section>
 
+<!-- ━━━ SLIDE 05: MIGRATION ROADMAP ━━━ -->
+<section class="slide">
+    <div class="action-bar">
+        <h2>すべてのコンポーネントにトリガーと移行先を事前設計——危機が来る前に動く</h2>
+    </div>
+    <div class="slide-body">
+        <div class="slide-content">
+            <p class="section-label">Migration Roadmap</p>
+            <table class="dk-table" style="margin-top:0.2rem;">
+                <thead>
+                    <tr>
+                        <th style="width:16%;">コンポーネント</th>
+                        <th style="width:24%;">現行</th>
+                        <th style="width:24%;">移行先候補</th>
+                        <th style="width:24%;">トリガー</th>
+                        <th style="width:12%;">フェーズ</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <th>メール配信</th>
+                        <td>GAS + Gmail (100件/日)</td>
+                        <td class="hl">Amazon SES (62,000件/月)</td>
+                        <td>注文数 &gt; 100件/日</td>
+                        <td>Phase 2</td>
+                    </tr>
+                    <tr>
+                        <th>生産</th>
+                        <td>手動（印刷・ラミネート・梱包・発送）</td>
+                        <td class="hl">国内外注（一括委託）</td>
+                        <td>注文数 &gt; 50件/日</td>
+                        <td>Phase 2</td>
+                    </tr>
+                    <tr>
+                        <th>パートナー還元</th>
+                        <td>Wise手動送金（月次集計）</td>
+                        <td>CSV一括 &rarr; API自動化</td>
+                        <td>取引量増加</td>
+                        <td>段階的</td>
+                    </tr>
+                    <tr>
+                        <th>音声コーデック</th>
+                        <td>Codec2 WASM (450 bps)</td>
+                        <td>次世代低ビットレートコーデック</td>
+                        <td>QR容量拡大 or 音質改善要求</td>
+                        <td>10年監査</td>
+                    </tr>
+                    <tr>
+                        <th>QR規格</th>
+                        <td>Version 40, ECC-L (2,953B)</td>
+                        <td>rMQR / JAB Code / 次世代2Dコード</td>
+                        <td>ISO規格更新・リーダー普及</td>
+                        <td>10年監査</td>
+                    </tr>
+                    <tr>
+                        <th>ホスティング</th>
+                        <td>GitHub Pages</td>
+                        <td>Cloudflare Pages / IPFS / ミラー</td>
+                        <td>サービス終了 or 制約超過</td>
+                        <td>10年監査</td>
+                    </tr>
+                    <tr>
+                        <th>再生スタック</th>
+                        <td>WebAudio API + WASM</td>
+                        <td>後継ブラウザAPI</td>
+                        <td>API廃止予告</td>
+                        <td>10年監査</td>
+                    </tr>
+                </tbody>
+            </table>
+            <div class="callout" style="margin-top:0.2rem;">
+                <p>継ぎ目を事前設計し、危機前に動く。sendEmail()一つ差し替えればGAS→SES移行が完了する抽象化。全コンポーネントが独立交換可能——ロックインは存在しない。</p>
+            </div>
+        </div>
+    </div>
+    <div class="slide-footer">
+        <span>TokiStorage &mdash; 技術アーキテクチャ</span>
+        <span>Confidential</span>
+        <span class="pg">5</span>
+    </div>
+</section>
+
 </body>
 </html>
