@@ -439,6 +439,16 @@ function provisionClientRepo(clientId, clientName, config) {
     // Pages が既に有効の場合は無視
   }
 
+  // 4. Actions ワークフロー権限（write + PR作成許可）
+  try {
+    fetchGitHubApi('/repos/' + repo + '/actions/permissions/workflow', 'PUT', {
+      default_workflow_permissions: 'write',
+      can_approve_pull_request_reviews: true
+    });
+  } catch (e) {
+    Logger.log('Actions permissions update failed: ' + e.message);
+  }
+
   return repo;
 }
 
