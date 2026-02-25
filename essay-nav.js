@@ -82,6 +82,7 @@
     { id: 'prime-location', ja: '一等地の変容', en: 'The Transformation of Prime Locations', date: '2026-02-22' },
     { id: 'diy-partner', ja: 'DIYパートナーの設計思想', en: 'The Design Philosophy of DIY Partners', date: '2026-02-23' },
     { id: 'copyright-jasrac', ja: '著作権とJASRAC', en: 'Copyright and JASRAC', date: '2026-02-24' },
+    { id: 'self-print-economy', ja: 'セルフプリント経済圏', en: 'The Self-Print Economy', date: '2026-02-25' },
 
     // ── 文化・社会活動 ──
     { id: 'education', ja: '教育', en: 'Education', date: '2026-02-13' },
@@ -167,6 +168,7 @@
   // LATEST_COUNT で表示件数を制御
   const LATEST_COUNT = 5;
   const latestEssayIds = [
+    'self-print-economy',
     'offline-freedom',
     'copyright-jasrac',
     'hero-parallax',
@@ -277,6 +279,7 @@
     'prime-location':         ['realestate', 'post-nomad', 'utilization-productivity', 'urayasu', 'site-geology'],
     'diy-partner':            ['equipment-guide', 'wedding-partnership', 'uniform-pricing', 'community-benefit', 'sanpoyoshi'],
     'copyright-jasrac':       ['music', 'ownership', 'platform', 'disintermediation', 'ecosystem'],
+    'self-print-economy':     ['free-strategy', 'uniform-pricing', 'payment', 'diy-partner', '30seconds'],
     // ── 文化・社会活動 ──
     'education':              ['early-education', 'history', 'media', 'psychology', 'lifestyle'],
     'early-education':        ['education', 'recital-record', 'music', 'psychology', 'entertainment'],
