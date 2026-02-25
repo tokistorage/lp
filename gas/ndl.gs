@@ -177,6 +177,21 @@ function handleSeriesOpen(ss, data) {
     new Date(), seriesName, clientId, repo, 'active', 0, new Date(), ''
   ]);
 
+  // LP newsletter/series-registry.json に追加
+  try {
+    updateSeriesRegistry({
+      seriesName: seriesName,
+      repo: repo,
+      pagesUrl: 'https://tokistorage.github.io/' + repoName + '/',
+      serviceType: config.serviceType || 'general',
+      createdAt: Utilities.formatDate(new Date(), 'Asia/Tokyo', 'yyyy-MM-dd'),
+      issueCount: 0,
+      status: 'active'
+    });
+  } catch (e) {
+    Logger.log('Registry update failed: ' + e.message);
+  }
+
   // 管理者通知
   sendEmail(NOTIFY_EMAIL,
     '【NDL】新シリーズ開設: ' + seriesName,
@@ -425,6 +440,37 @@ function provisionClientRepo(clientId, clientName, config) {
   }
 
   return repo;
+}
+
+// ── シリーズレジストリ更新（LP newsletters.html 用） ──
+
+/**
+ * newsletter/series-registry.json を更新
+ * LP の newsletters.html が別冊特集セクションを動的表示するためのデータソース
+ *
+ * @param {Object} entry - { seriesName, repo, pagesUrl, serviceType, createdAt, issueCount, status }
+ */
+function updateSeriesRegistry(entry) {
+  var registryPath = 'newsletter/series-registry.json';
+  var registryJson = readFileFromGitHub(registryPath);
+  var registry = registryJson ? JSON.parse(registryJson) : { series: [] };
+
+  // 同名シリーズが既にあれば更新、なければ追加
+  var found = false;
+  for (var i = 0; i < registry.series.length; i++) {
+    if (registry.series[i].seriesName === entry.seriesName) {
+      registry.series[i] = entry;
+      found = true;
+      break;
+    }
+  }
+  if (!found) {
+    registry.series.push(entry);
+  }
+
+  pushFileToGitHub(registryPath,
+    JSON.stringify(registry, null, 2),
+    'Update series registry: ' + entry.seriesName);
 }
 
 // ── 月次レポート ──

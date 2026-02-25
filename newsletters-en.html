@@ -204,6 +204,94 @@
             border-color: #2563EB;
         }
 
+        /* Special Feature Series */
+        .series-section {
+            margin-bottom: 4rem;
+        }
+
+        .series-section h2 {
+            font-family: 'Hiragino Mincho ProN', 'Yu Mincho', serif;
+            font-size: 1.5rem;
+            color: #1e293b;
+            margin-bottom: 0.5rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .series-section h2::before {
+            content: '';
+            width: 4px;
+            height: 1.5rem;
+            background: #C9A962;
+            border-radius: 2px;
+        }
+
+        .series-lead {
+            font-size: 0.9rem;
+            color: #64748b;
+            margin-bottom: 1.5rem;
+            line-height: 1.7;
+        }
+
+        .series-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 1.5rem;
+        }
+
+        .series-card {
+            background: #fff;
+            border: 1px solid #e2e8f0;
+            border-radius: 12px;
+            padding: 1.5rem;
+            text-decoration: none;
+            color: inherit;
+            transition: all 0.2s ease;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .series-card:hover {
+            border-color: #C9A962;
+            box-shadow: 0 4px 20px rgba(201, 169, 98, 0.1);
+        }
+
+        .series-badge {
+            display: inline-block;
+            font-size: 0.68rem;
+            font-weight: 600;
+            letter-spacing: 0.08em;
+            padding: 0.15rem 0.6rem;
+            border-radius: 2rem;
+            background: #FDF8ED;
+            color: #92750B;
+            border: 1px solid #C9A962;
+            margin-bottom: 0.75rem;
+            width: fit-content;
+        }
+
+        .series-card h3 {
+            font-family: 'Hiragino Mincho ProN', 'Yu Mincho', serif;
+            font-size: 1.05rem;
+            color: #1e293b;
+            margin-bottom: 0.5rem;
+        }
+
+        .series-card .series-meta {
+            font-size: 0.8rem;
+            color: #94a3b8;
+            margin-top: auto;
+            padding-top: 0.75rem;
+        }
+
+        .series-empty {
+            color: #94a3b8;
+            font-size: 0.9rem;
+            text-align: center;
+            padding: 2rem;
+        }
+
         .newsletters-footer {
             text-align: center;
             padding: 3rem 0;
@@ -374,6 +462,18 @@
         </div>
     </section>
 
+    <!-- Special Feature Series -->
+    <section class="series-section" id="special-features">
+        <h2>Special Feature Series</h2>
+        <p class="series-lead">
+            Dedicated newsletter series created for each TokiQR Series Rights holder.<br>
+            Each series is deposited as an independent serial publication with the National Diet Library.
+        </p>
+        <div class="series-grid" id="series-list">
+            <p class="series-empty">No special feature series have been opened yet.</p>
+        </div>
+    </section>
+
     <footer class="newsletters-footer">
         <a href="index-en.html">&larr; TokiStorage Home</a>
         <a href="#contact">Contact</a>
@@ -382,6 +482,28 @@
 
 </div>
 
+<script>
+(async function() {
+  try {
+    var res = await fetch('newsletter/series-registry.json');
+    if (!res.ok) return;
+    var data = await res.json();
+    var list = (data.series || []).filter(function(s) { return s.status !== 'inactive'; });
+    if (list.length === 0) return;
+    var container = document.getElementById('series-list');
+    container.innerHTML = list.map(function(s) {
+      var typeLabel = s.serviceType === 'wedding' ? 'Wedding' : 'Special Feature';
+      return '<a href="' + s.pagesUrl + '" class="series-card" target="_blank" rel="noopener">'
+        + '<span class="series-badge">' + typeLabel + '</span>'
+        + '<h3>' + s.seriesName + ' Special Feature</h3>'
+        + '<span class="series-meta">'
+        + (s.issueCount ? s.issueCount + ' issues' : 'Preparing')
+        + (s.createdAt ? ' / Est. ' + s.createdAt : '')
+        + '</span></a>';
+    }).join('');
+  } catch (e) {}
+})();
+</script>
 <script src="index.js" defer></script>
 <script src="contact-form.js" defer></script>
 <script src="tracker.js" defer></script>
