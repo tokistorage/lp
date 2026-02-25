@@ -1,0 +1,235 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" type="image/png" sizes="32x32" href="asset/favicon-32.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="asset/apple-touch-icon.png">
+    <title>セルフプリント経済圏 | トキストレージ</title>
+    <meta name="robots" content="index, follow">
+    <meta name="description" content="1枚なら無料。2枚目から150円。アカウント不要、個人情報不要、有効期限なし。バルクモードとプリペイドクレジットが作る、セルフプリント経済圏の設計思想。">    <style>
+        :root {
+            --toki-blue: #2563EB;
+            --toki-blue-dark: #1D4ED8;
+            --toki-blue-pale: #EFF6FF;
+            --accent-blue: #3B82F6;
+            --bg-white: #FFFFFF;
+            --text-primary: #1E293B;
+            --text-secondary: #475569;
+            --text-muted: #94A3B8;
+            --border: #E2E8F0;
+            --font-display: 'Hiragino Mincho ProN', 'Yu Mincho', serif;
+            --font-body: 'Hiragino Kaku Gothic ProN', 'Yu Gothic', 'Meiryo', sans-serif;
+        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        html { scroll-behavior: smooth; }
+        body { font-family: var(--font-body); font-weight: 400; background: var(--bg-white); color: var(--text-primary); line-height: 2; font-size: 16px; }
+
+        .article-nav { position: fixed; top: 0; left: 0; right: 0; z-index: 1000; background: rgba(255,255,255,0.95); backdrop-filter: blur(12px); border-bottom: 1px solid var(--border); padding: 0.6rem 1.2rem; display: flex; align-items: center; justify-content: space-between; gap: 1rem; }
+        .article-nav .nav-brand { font-family: var(--font-display); font-size: 0.9rem; font-weight: 600; color: var(--toki-blue); text-decoration: none; white-space: nowrap; }
+        .article-nav .nav-brand::before { content: ''; display: inline-block; width: 20px; height: 20px; background: url('asset/tokistorage-icon-512.png') no-repeat center / contain; vertical-align: -3px; margin-right: 5px; }
+        .article-nav .nav-right { display: flex; align-items: center; gap: 1rem; }
+        .article-nav .nav-label { font-size: 0.6rem; color: var(--text-muted); letter-spacing: 0.08em; }
+        .article-nav .lang-switch { font-size: 0.75rem; color: var(--toki-blue); text-decoration: none; padding: 0.3rem 0.6rem; border: 1px solid var(--toki-blue); border-radius: 4px; }
+        .article-nav .lang-switch:hover { background: var(--toki-blue); color: #fff; }
+
+        .article-container { max-width: 680px; margin: 0 auto; padding: 7rem 2rem 4rem; }
+        .article-header { margin-bottom: 3rem; padding-bottom: 2rem; border-bottom: 1px solid var(--border); }
+        .article-category { font-size: 0.7rem; color: var(--toki-blue); letter-spacing: 0.15em; margin-bottom: 1rem; }
+        .article-header h1 { font-family: var(--font-display); font-size: 1.8rem; font-weight: 700; line-height: 1.5; margin-bottom: 1.5rem; }
+        .article-subtitle { font-size: 0.95rem; color: var(--text-secondary); line-height: 1.9; }
+
+        .article-content h2 { font-family: var(--font-display); font-size: 1.3rem; font-weight: 600; margin: 3rem 0 1.5rem; padding-bottom: 0.5rem; border-bottom: 2px solid var(--toki-blue-pale); }
+        .article-content h3 { font-family: var(--font-display); font-size: 1.1rem; font-weight: 600; margin: 2rem 0 1rem; color: var(--toki-blue-dark); }
+        .article-content p { margin-bottom: 1.5rem; text-align: justify; }
+        .article-content blockquote { border-left: 3px solid var(--toki-blue); padding-left: 1.5rem; margin: 2rem 0; font-family: var(--font-display); color: var(--text-secondary); }
+        .article-content ul { margin: 1.5rem 0; padding-left: 1.5rem; }
+        .article-content li { margin-bottom: 0.75rem; }
+
+        .core-message { background: var(--toki-blue-pale); border-left: 4px solid var(--toki-blue); padding: 1.5rem; margin: 2rem 0; font-size: 0.95rem; line-height: 1.8; }
+        .key-point { background: linear-gradient(135deg, var(--toki-blue-pale) 0%, #fff 100%); border: 1px solid var(--accent-blue); border-radius: 8px; padding: 1.5rem; margin: 2rem 0; text-align: center; }
+        .key-point p { font-family: var(--font-display); font-size: 1.1rem; color: var(--toki-blue-dark); margin: 0; }
+
+        .article-footer { margin-top: 4rem; padding-top: 2rem; border-top: 1px solid var(--border); text-align: center; }
+        .article-footer p { font-size: 0.8rem; color: var(--text-muted); margin-bottom: 1rem; }
+        .article-footer a { color: var(--toki-blue); text-decoration: none; }
+        .article-footer a:hover { text-decoration: underline; }
+
+        @media (max-width: 768px) {
+            .article-container { padding: 6rem 1.2rem 3rem; }
+            .article-header h1 { font-size: 1.5rem; }
+            .article-nav .nav-label { display: none; }
+        }
+        @media print { .article-nav { display: none; } .article-container { padding-top: 2rem; } }
+    </style>
+    <link rel="stylesheet" href="contact-form.css">
+    <meta property="og:type" content="article">
+    <meta property="og:title" content="セルフプリント経済圏 | トキストレージ">
+    <meta property="og:description" content="1枚なら無料。2枚目から150円。アカウント不要、個人情報不要、有効期限なし。バルクモードとプリペイドクレジットが作る、セルフプリント経済圏の設計思想。">
+    <meta property="og:url" content="https://tokistorage.github.io/lp/self-print-economy.html">
+    <meta property="og:site_name" content="トキストレージ">
+    <meta name="twitter:card" content="summary">
+    <meta name="twitter:title" content="セルフプリント経済圏 | トキストレージ">
+    <meta name="twitter:description" content="1枚なら無料。2枚目から150円。アカウント不要、個人情報不要、有効期限なし。バルクモードとプリペイドクレジットが作る、セルフプリント経済圏の設計思想。">
+    <meta property="og:image" content="https://tokistorage.github.io/lp/asset/tokistorage-icon-512.png">
+    <meta property="og:image:width" content="512">
+    <meta property="og:image:height" content="512">
+    <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Article",
+  "headline": "セルフプリント経済圏",
+  "author": {
+    "@type": "Person",
+    "name": "Takuya Sato",
+    "url": "https://tokistorage.github.io/lp/profile.html"
+  },
+  "publisher": {
+    "@type": "Organization",
+    "name": "TokiStorage",
+    "url": "https://tokistorage.github.io/lp",
+    "logo": {
+      "@type": "ImageObject",
+      "url": "https://tokistorage.github.io/lp/asset/tokistorage-icon-512.png"
+    }
+  },
+  "url": "https://tokistorage.github.io/lp/self-print-economy.html",
+  "inLanguage": "ja",
+  "mainEntityOfPage": "https://tokistorage.github.io/lp/self-print-economy.html",
+  "description": "1枚なら無料。2枚目から150円。アカウント不要、個人情報不要、有効期限なし。バルクモードとプリペイドクレジットが作る、セルフプリント経済圏の設計思想。"
+}
+    </script>
+    <link rel="alternate" hreflang="ja" href="https://tokistorage.github.io/lp/self-print-economy.html">
+    <link rel="alternate" hreflang="en" href="https://tokistorage.github.io/lp/self-print-economy-en.html">
+    <link rel="alternate" hreflang="x-default" href="https://tokistorage.github.io/lp/self-print-economy.html">
+    <link rel="canonical" href="https://tokistorage.github.io/lp/self-print-economy.html">
+</head>
+<body>
+
+<nav class="article-nav">
+    <a href="index.html" class="nav-brand">トキストレージ</a>
+    <div class="nav-right">
+        <span class="nav-label">経済・財産 / Economy & Property</span>
+        <a href="self-print-economy-en.html" class="lang-switch">EN</a>
+    </div>
+</nav>
+
+<main class="article-container">
+
+    <header class="article-header">
+        <p class="article-category">ESSAY &mdash; 経済・財産</p>
+        <h1>セルフプリント経済圏</h1>
+        <p class="article-subtitle">
+            &mdash;&mdash; 1枚なら無料。2枚目から150円。アカウント不要、個人情報不要、有効期限なし。バルクモードとプリペイドクレジットが作る、セルフプリント経済圏の設計思想。
+        </p>
+    </header>
+
+    <article class="article-content">
+
+        <h2>1. 物理QRの限界と自由</h2>
+
+        <p>TokiStorageの物理QR商品——UV耐性ラミネートと石英ガラス——は、声を1000年残すために設計された。素材の選定、印刷の精度、保管庫への配送。すべてTokiStorageの手を経由する。その手触りこそが物理QRの価値であり、同時に限界でもある。</p>
+
+        <p>作り手の手を経由するということは、作り手のキャパシティに制約されるということだ。1日に製造できる数には限りがあり、配送には時間がかかる。物理QRは美しいが、スケールしない。それは意図的な設計でもある。大量生産に向かないからこそ、1枚1枚に意味が宿る。</p>
+
+        <p>しかし、すべての人が1000年の耐久性を必要としているわけではない。結婚式のスピーチを来週までに30枚印刷したい人がいる。教室の生徒ひとりひとりにメッセージを配りたい先生がいる。今日録った子どもの声を、今日のうちにQRコードにして冷蔵庫に貼りたい親がいる。そうした人々にとって必要なのは、石英ガラスの永続性ではなく、自分のプリンタと自分の判断で、今すぐ形にできる手段だ。</p>
+
+        <h2>2. バルクモードという分水嶺</h2>
+
+        <p>TokiQRの通常モードは、データをQRコード1枚に収める。Codec2の450bpsモードで最大約29秒。これは無料で、制限はない。誰でも、何度でも、アカウントなしで使える。この原則は変わらない。</p>
+
+        <p>バルクモードは、この1枚の壁を越える。データを複数のQRコードに分割し、より長い音声、より高品質な音声（Opusコーデック対応）、より高解像度の画像を扱えるようにする。3分のスピーチも、10分の朗読も、QRコードの束として形にできる。</p>
+
+        <p>ここで重要なのは、バルクモードが通常モードの「上位版」ではないということだ。通常モードは1枚のQRコードに凝縮するという制約の中で最大の密度を追求する。バルクモードは枚数を増やすことで制約そのものを外す。設計思想が異なる。前者は凝縮、後者は拡張。どちらが優れているかではなく、何を残したいかで選ぶものだ。</p>
+
+        <p>そしてバルクモードで生成したQRコードは、ご自身で印刷して使う。TokiStorageが製造するのではない。自分のプリンタで、自分の紙に、自分のタイミングで。これがセルフプリントという概念の核心だ。</p>
+
+        <h2>3. N-1 — 最初の1枚が無料であることの意味</h2>
+
+        <p>バルクモードの課金構造は「N-1」と呼んでいる。Nはデータが分割されるQRコードの枚数。1枚目は常に無料。2枚目以降に1枚あたり1クレジット（150円）がかかる。つまり、データが1枚に収まる場合、バルクモードを使っても料金はゼロだ。</p>
+
+        <p>これは見かけの些細な違いに思えるかもしれないが、設計思想としては決定的に重要だ。多くのフリーミアムサービスは、無料版に人工的な機能制限を設け、有料版への移行を促す。無料は「体験版」であり、本質的な利用には課金が前提になる。</p>
+
+        <p>N-1はその逆を行く。1枚のQRコードに収まるなら、それは完全な製品だ。制限されたデモ版ではない。通常モードで30秒の声を残す行為と、バルクモードで1枚に収まるデータを生成する行為は、まったく同じ価値を持つ。課金が発生するのは、ユーザーが自らの意思で「もっと長く」「もっと高品質に」と選択した場合だけだ。</p>
+
+        <p>では、なぜ2枚目から有料にするのか。収益のためだけではない。ハワイの日本移民資料館「仁保島村」の川島館長の言葉がある。「情報は無料だと軽く扱われる。お金を稼ぎたいからではなく、大切に扱ってもらうために有料にしている」。この考え方に深く共感した。声を残す行為に対価が伴うとき、人はその声を軽く扱わなくなる。150円は経済的な障壁ではない。自分の声に向き合うための、静かな覚悟の表明だ。</p>
+
+        <div class="core-message">
+            1枚に収まるなら無料。2枚以上なら、世界中どこでも同じ価格——1枚150円。サブスクリプションなし、アカウントなし、個人情報なし。これは価格戦略ではなく、設計原則である。
+        </div>
+
+        <h2>4. プリペイドクレジットの設計思想</h2>
+
+        <p>バルクモードの課金手段として、プリペイドクレジットを設計した。1クレジット＝150円（$1）。パック単位で購入し、コードを入力して有効化する。この仕組みのすべてに、意図がある。</p>
+
+        <p>まず、アカウント登録がない。メールアドレスもパスワードも求めない。クレジット購入時に記録されるのは、コード（TOKI-XXXX-XXXX-XXXX形式）と購入枚数だけだ。誰が買ったかをTokiStorageは知らない。知る必要がないからだ。</p>
+
+        <p>次に、有効期限がない。購入したクレジットは、1年後でも10年後でも使える。「期限切れ前に使い切らなければ」という圧力を設計に組み込みたくなかった。声を残す行為は、締め切りに追われてするものではない。</p>
+
+        <p>そして、クレジットの残高はユーザーのブラウザ（IndexedDB）に保存される。サーバーには残高情報がない。これについては後述するが、この選択には覚悟が必要だった。</p>
+
+        <h2>5. なぜWise送金なのか</h2>
+
+        <p>クレジットカード決済を採用しなかった理由は明快だ。150円の商品に対してクレジットカードの手数料は3〜5%かかる。加えて、決済代行サービスの月額固定費、PCI DSSへの準拠コスト、そして何より——カード決済には氏名・住所・カード番号という個人情報の取得が不可避だ。</p>
+
+        <p>TokiStorageの設計原則は「個人情報を持たない」ことにある。QR生成時のデータはサーバーに送信されない。クレジット購入時にも個人情報を取得しない。この原則をカード決済で維持することは構造的に不可能だ。</p>
+
+        <p>Wiseは国際送金サービスとして、送金手数料が0.3〜1%と低く、為替レートが透明で、150カ国以上に対応している。ドイツのユーザーもブラジルのユーザーも、同じ手順でクレジットを購入できる。そして送金情報から個人を特定する仕組みをTokiStorage側は持たない。コードと金額だけを照合する。</p>
+
+        <p>均一価格——1クレジット150円（$1）——は、国や通貨に関係なく適用される。日本円で買っても、ユーロで買っても、ブラジルレアルで買っても、1クレジットは1クレジットだ。これは「均一価格の思想」エッセイで述べた原則の、クレジットシステムへの適用にほかならない。</p>
+
+        <h2>6. IndexedDBという選択 — データを預からない覚悟</h2>
+
+        <p>クレジット残高をサーバーではなくブラウザのIndexedDBに保存する。この設計判断には、一般的なサービス設計の常識から見れば明らかな欠点がある。</p>
+
+        <p>ユーザーがブラウザのデータを消去すれば、クレジット残高は消える。デバイスを買い替えたとき、残高は自動的に移行されない。TokiStorageに「残高を復元してほしい」と問い合わせても、サーバーにデータがない以上、対応する術がない。</p>
+
+        <p>それでもこの設計を選んだのは、代替案のほうが問題だと判断したからだ。サーバーに残高を保存すれば、ユーザーを識別する仕組みが必要になる。アカウント、メールアドレス、少なくとも何らかのIDが必要だ。そしてそのIDに紐づく購入履歴、利用履歴、残高推移がサーバーに蓄積される。それはTokiStorageが「個人情報を持たない」という原則を放棄することを意味する。</p>
+
+        <p>IndexedDBに保存するということは、TokiStorageがユーザーの残高を追跡できないということだ。誰がいくら持っているか知らない。誰がいつ使ったか知らない。取り消しもできない。凍結もできない。この非対称性は、ユーザーの側に完全な主権を置く設計だ。</p>
+
+        <div class="key-point">
+            <p>クレジットをサーバーではなくブラウザに保存する。追跡できない、取り消せない、紛失を助けられない。その非対称性は意図的だ。独立を尊重するツールは、尊重の限界も引き受けなければならない。</p>
+        </div>
+
+        <h2>7. 物理QRとセルフプリントの併存</h2>
+
+        <p>物理QR商品とセルフプリントは、競合関係にない。サービスの上位版と下位版でもない。根本的に異なるニーズに応える、異なる設計思想の表現だ。</p>
+
+        <p>物理QRは、素材の力で時間に抗う。石英ガラスは数千年の耐久性を持ち、UV耐性ラミネートは屋外環境に耐える。三層保管——物理層、国家層（国立国会図書館）、民間層（GitHub）——により、データは複数の経路で未来に届く。これはTokiStorageが製造者として責任を持つ領域だ。</p>
+
+        <p>セルフプリントは、ユーザーの手で即座に形になる。自宅のプリンタで、オフィスの複合機で、コンビニのネットプリントで。ラミネーターを持っているなら、自分でラミネート加工もできる。品質も枚数もタイミングも、すべてユーザーが決める。TokiStorageは道具を提供するだけだ。</p>
+
+        <p>この関係は、プロの写真スタジオと自宅のプリンタの関係に近い。スタジオで撮った家族写真をアルバムに仕立ててもらうのと、スマートフォンで撮った写真を自分で印刷するのと。どちらも写真を残す行為だが、求めるものが違う。一方はプロの手による仕上がりと保存性。もう一方は即時性と自己決定。優劣ではなく、選択だ。</p>
+
+        <h2>8. セルフプリント経済圏が意味するもの</h2>
+
+        <p>バルクモード、プリペイドクレジット、Wise送金、IndexedDB保存、アカウント不要——これらの要素を組み合わせたとき、浮かび上がるのは一つの経済圏だ。</p>
+
+        <p>何を残すかはユーザーが決める。どのくらいの長さにするかもユーザーが決める。いつ印刷するか、どの紙に刷るか、何枚複製するか、誰に配るか。すべてユーザーの判断と行動に委ねられている。TokiStorageが提供するのは、コーデック（音声圧縮）、QRコード生成エンジン、そしてクレジットシステムだけだ。</p>
+
+        <p>このミニマリズムは、製品の未成熟ではない。意図的な設計だ。ツールが提供すべきは機能であって、判断ではない。何を記録し、何を残すかという判断は、声の持ち主にしかできない。TokiStorageにできるのは、その判断を実行するための道具を、できるだけ安く、できるだけシンプルに、できるだけ多くの人に届けることだ。</p>
+
+        <p>セルフプリント経済圏は、まだ名前のない経済モデルかもしれない。サブスクリプションではない。買い切りでもない。従量課金に近いが、最初の1枚は常に無料だ。アカウントがないから顧客管理もない。個人情報がないからターゲティング広告もない。データがサーバーにないからデータ漏洩のリスクもない。</p>
+
+        <p>あるのは、ツールと価格と自由だけだ。</p>
+
+        <div class="key-point">
+            <p>バルクモードとプリペイドクレジットは、TokiQRに追加された機能ではない。声を残す行為が、作り手の手を離れ、声の持ち主の手に渡るための、構造的な設計である。</p>
+        </div>
+
+    </article>
+
+    <footer class="article-footer">
+        <p id="essay-nav-links"></p>
+        <p style="margin-top: 2rem; font-size: 0.75rem;">&copy; 2026 TokiStorage</p>
+    </footer>
+
+</main>
+
+<script src="contact-form.js" defer></script>
+<script src="essay-tts.js?v=20260224"></script>
+<script src="essay-nav.js?v=20260224"></script>
+<script src="tracker.js" defer></script>
+</body>
+</html>

@@ -1,0 +1,235 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" type="image/png" sizes="32x32" href="asset/favicon-32.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="asset/apple-touch-icon.png">
+    <title>The Self-Print Economy | TokiStorage</title>
+    <meta name="robots" content="index, follow">
+    <meta name="description" content="One QR free. 150 yen from the second. No account, no personal data, no expiry. The design philosophy behind bulk mode and prepaid credits.">    <style>
+        :root {
+            --toki-blue: #2563EB;
+            --toki-blue-dark: #1D4ED8;
+            --toki-blue-pale: #EFF6FF;
+            --accent-blue: #3B82F6;
+            --bg-white: #FFFFFF;
+            --text-primary: #1E293B;
+            --text-secondary: #475569;
+            --text-muted: #94A3B8;
+            --border: #E2E8F0;
+            --font-display: 'Hiragino Mincho ProN', 'Yu Mincho', serif;
+            --font-body: 'Hiragino Kaku Gothic ProN', 'Yu Gothic', 'Meiryo', sans-serif;
+        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        html { scroll-behavior: smooth; }
+        body { font-family: var(--font-body); font-weight: 400; background: var(--bg-white); color: var(--text-primary); line-height: 2; font-size: 16px; }
+
+        .article-nav { position: fixed; top: 0; left: 0; right: 0; z-index: 1000; background: rgba(255,255,255,0.95); backdrop-filter: blur(12px); border-bottom: 1px solid var(--border); padding: 0.6rem 1.2rem; display: flex; align-items: center; justify-content: space-between; gap: 1rem; }
+        .article-nav .nav-brand { font-family: var(--font-display); font-size: 0.9rem; font-weight: 600; color: var(--toki-blue); text-decoration: none; white-space: nowrap; }
+        .article-nav .nav-brand::before { content: ''; display: inline-block; width: 20px; height: 20px; background: url('asset/tokistorage-icon-512.png') no-repeat center / contain; vertical-align: -3px; margin-right: 5px; }
+        .article-nav .nav-right { display: flex; align-items: center; gap: 1rem; }
+        .article-nav .nav-label { font-size: 0.6rem; color: var(--text-muted); letter-spacing: 0.08em; }
+        .article-nav .lang-switch { font-size: 0.75rem; color: var(--toki-blue); text-decoration: none; padding: 0.3rem 0.6rem; border: 1px solid var(--toki-blue); border-radius: 4px; }
+        .article-nav .lang-switch:hover { background: var(--toki-blue); color: #fff; }
+
+        .article-container { max-width: 680px; margin: 0 auto; padding: 7rem 2rem 4rem; }
+        .article-header { margin-bottom: 3rem; padding-bottom: 2rem; border-bottom: 1px solid var(--border); }
+        .article-category { font-size: 0.7rem; color: var(--toki-blue); letter-spacing: 0.15em; margin-bottom: 1rem; }
+        .article-header h1 { font-family: var(--font-display); font-size: 1.8rem; font-weight: 700; line-height: 1.5; margin-bottom: 1.5rem; }
+        .article-subtitle { font-size: 0.95rem; color: var(--text-secondary); line-height: 1.9; }
+
+        .article-content h2 { font-family: var(--font-display); font-size: 1.3rem; font-weight: 600; margin: 3rem 0 1.5rem; padding-bottom: 0.5rem; border-bottom: 2px solid var(--toki-blue-pale); }
+        .article-content h3 { font-family: var(--font-display); font-size: 1.1rem; font-weight: 600; margin: 2rem 0 1rem; color: var(--toki-blue-dark); }
+        .article-content p { margin-bottom: 1.5rem; text-align: justify; }
+        .article-content blockquote { border-left: 3px solid var(--toki-blue); padding-left: 1.5rem; margin: 2rem 0; font-family: var(--font-display); color: var(--text-secondary); }
+        .article-content ul { margin: 1.5rem 0; padding-left: 1.5rem; }
+        .article-content li { margin-bottom: 0.75rem; }
+
+        .core-message { background: var(--toki-blue-pale); border-left: 4px solid var(--toki-blue); padding: 1.5rem; margin: 2rem 0; font-size: 0.95rem; line-height: 1.8; }
+        .key-point { background: linear-gradient(135deg, var(--toki-blue-pale) 0%, #fff 100%); border: 1px solid var(--accent-blue); border-radius: 8px; padding: 1.5rem; margin: 2rem 0; text-align: center; }
+        .key-point p { font-family: var(--font-display); font-size: 1.1rem; color: var(--toki-blue-dark); margin: 0; }
+
+        .article-footer { margin-top: 4rem; padding-top: 2rem; border-top: 1px solid var(--border); text-align: center; }
+        .article-footer p { font-size: 0.8rem; color: var(--text-muted); margin-bottom: 1rem; }
+        .article-footer a { color: var(--toki-blue); text-decoration: none; }
+        .article-footer a:hover { text-decoration: underline; }
+
+        @media (max-width: 768px) {
+            .article-container { padding: 6rem 1.2rem 3rem; }
+            .article-header h1 { font-size: 1.5rem; }
+            .article-nav .nav-label { display: none; }
+        }
+        @media print { .article-nav { display: none; } .article-container { padding-top: 2rem; } }
+    </style>
+    <link rel="stylesheet" href="contact-form.css">
+    <meta property="og:type" content="article">
+    <meta property="og:title" content="The Self-Print Economy | TokiStorage">
+    <meta property="og:description" content="One QR free. 150 yen from the second. No account, no personal data, no expiry. The design philosophy behind bulk mode and prepaid credits.">
+    <meta property="og:url" content="https://tokistorage.github.io/lp/self-print-economy-en.html">
+    <meta property="og:site_name" content="TokiStorage">
+    <meta name="twitter:card" content="summary">
+    <meta name="twitter:title" content="The Self-Print Economy | TokiStorage">
+    <meta name="twitter:description" content="One QR free. 150 yen from the second. No account, no personal data, no expiry. The design philosophy behind bulk mode and prepaid credits.">
+    <meta property="og:image" content="https://tokistorage.github.io/lp/asset/tokistorage-icon-512.png">
+    <meta property="og:image:width" content="512">
+    <meta property="og:image:height" content="512">
+    <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Article",
+  "headline": "The Self-Print Economy",
+  "author": {
+    "@type": "Person",
+    "name": "Takuya Sato",
+    "url": "https://tokistorage.github.io/lp/profile.html"
+  },
+  "publisher": {
+    "@type": "Organization",
+    "name": "TokiStorage",
+    "url": "https://tokistorage.github.io/lp",
+    "logo": {
+      "@type": "ImageObject",
+      "url": "https://tokistorage.github.io/lp/asset/tokistorage-icon-512.png"
+    }
+  },
+  "url": "https://tokistorage.github.io/lp/self-print-economy-en.html",
+  "inLanguage": "en",
+  "mainEntityOfPage": "https://tokistorage.github.io/lp/self-print-economy-en.html",
+  "description": "One QR free. 150 yen from the second. No account, no personal data, no expiry. The design philosophy behind bulk mode and prepaid credits."
+}
+    </script>
+    <link rel="alternate" hreflang="ja" href="https://tokistorage.github.io/lp/self-print-economy.html">
+    <link rel="alternate" hreflang="en" href="https://tokistorage.github.io/lp/self-print-economy-en.html">
+    <link rel="alternate" hreflang="x-default" href="https://tokistorage.github.io/lp/self-print-economy.html">
+    <link rel="canonical" href="https://tokistorage.github.io/lp/self-print-economy-en.html">
+</head>
+<body>
+
+<nav class="article-nav">
+    <a href="index-en.html" class="nav-brand">TokiStorage</a>
+    <div class="nav-right">
+        <span class="nav-label">Economy & Property</span>
+        <a href="self-print-economy.html" class="lang-switch">JA</a>
+    </div>
+</nav>
+
+<main class="article-container">
+
+    <header class="article-header">
+        <p class="article-category">ESSAY &mdash; Economy &amp; Property</p>
+        <h1>The Self-Print Economy</h1>
+        <p class="article-subtitle">
+            &mdash;&mdash; One QR free. 150 yen from the second. No account, no personal data, no expiry. The design philosophy behind bulk mode and prepaid credits.
+        </p>
+    </header>
+
+    <article class="article-content">
+
+        <h2>1. The Limits and Freedom of Physical QR</h2>
+
+        <p>TokiStorage's physical QR products &mdash; UV-resistant laminate and quartz glass &mdash; are designed to preserve voices for 1,000 years. Material selection, printing precision, delivery to storage vaults. Everything passes through TokiStorage's hands. That handcrafted quality is the value of physical QR, and simultaneously its limitation.</p>
+
+        <p>Passing through the maker's hands means being constrained by the maker's capacity. There is a limit to how many can be manufactured in a day, and shipping takes time. Physical QR is beautiful, but it does not scale. This is also intentional. Because it resists mass production, each piece carries meaning.</p>
+
+        <p>However, not everyone needs 1,000 years of durability. Someone needs 30 copies of a wedding speech printed by next week. A teacher wants to give each student a personal message. A parent wants to record their child's voice today and stick the QR code on the fridge today. What these people need is not the permanence of quartz glass, but the means to make it real, right now, with their own printer and their own judgment.</p>
+
+        <h2>2. Bulk Mode as a Watershed</h2>
+
+        <p>TokiQR's normal mode fits data into a single QR code. Up to approximately 29 seconds at Codec2's 450 bps mode. This is free, with no restrictions. Anyone can use it, as many times as they want, without an account. This principle remains unchanged.</p>
+
+        <p>Bulk mode breaks through the single-QR barrier. By splitting data across multiple QR codes, it handles longer audio, higher-quality audio (with Opus codec support), and higher-resolution images. A three-minute speech, a ten-minute reading &mdash; all can take shape as a set of QR codes.</p>
+
+        <p>What matters here is that bulk mode is not an "upgraded version" of normal mode. Normal mode pursues maximum density within the constraint of a single QR code. Bulk mode removes the constraint itself by increasing the number of codes. The design philosophies differ. The former is about compression; the latter, expansion. It is not a question of which is superior, but of what you want to preserve.</p>
+
+        <p>And QR codes generated in bulk mode are for you to print yourself. TokiStorage does not manufacture them. On your own printer, on your own paper, at your own timing. This is the essence of the self-print concept.</p>
+
+        <h2>3. N-1 &mdash; The Meaning of the First QR Being Free</h2>
+
+        <p>The billing structure of bulk mode is called "N-1." N is the number of QR codes your data is split into. The first is always free. From the second onward, each costs 1 credit (150 yen). This means that if your data fits in a single code, bulk mode costs nothing.</p>
+
+        <p>This may seem like a minor distinction, but as a design philosophy, it is decisive. Many freemium services impose artificial feature restrictions on the free tier, pushing users toward paid plans. Free becomes a "trial," and meaningful use presupposes payment.</p>
+
+        <p>N-1 takes the opposite approach. If your data fits in one QR code, that is the complete product. Not a limited demo. Recording 30 seconds of voice in normal mode and generating single-QR data in bulk mode carry exactly the same value. Charges arise only when the user consciously chooses "longer" or "higher quality."</p>
+
+        <p>So why charge from the second QR onward? It is not solely for revenue. Director Kawashima of the Japanese Immigration Museum "Nihojimamura" in Hawaii once said: "When information is free, people treat it lightly. I charge not because I want to make money, but so that people recognize its importance." This resonated deeply. When preserving a voice carries a cost, people stop treating that voice casually. 150 yen is not an economic barrier. It is a quiet declaration of commitment to one's own voice.</p>
+
+        <div class="core-message">
+            If it fits in one QR code, it is free. For two or more, the price is the same everywhere in the world &mdash; 150 yen per code. No subscription, no account, no personal information. This is not a pricing strategy. It is a design principle.
+        </div>
+
+        <h2>4. The Design Philosophy of Prepaid Credits</h2>
+
+        <p>As the billing mechanism for bulk mode, we designed prepaid credits. One credit equals 150 yen ($1). Purchased in packs and activated by entering a code. Every aspect of this system is intentional.</p>
+
+        <p>First, there is no account registration. No email address, no password. The only data recorded during a credit purchase is the code (in TOKI-XXXX-XXXX-XXXX format) and the quantity purchased. TokiStorage does not know who bought them. It does not need to.</p>
+
+        <p>Second, there is no expiration. Credits purchased today can be used a year from now, or ten years from now. We did not want to build "use it before it expires" pressure into the design. Preserving a voice is not something to be rushed by a deadline.</p>
+
+        <p>Third, the credit balance is stored in the user's browser (IndexedDB). The server holds no balance information. More on this later, but this choice required resolve.</p>
+
+        <h2>5. Why Wise, Not Credit Cards</h2>
+
+        <p>The reason for not adopting credit card payments is straightforward. Credit card processing fees run 3&ndash;5% on a 150-yen product. Add monthly fixed costs for a payment processor, PCI DSS compliance costs, and above all &mdash; card payments inevitably require collecting personal information: name, address, card number.</p>
+
+        <p>TokiStorage's design principle is "hold no personal data." Data during QR generation is never sent to any server. No personal information is collected during credit purchases either. Maintaining this principle with card payments is structurally impossible.</p>
+
+        <p>Wise, as an international money transfer service, offers fees of 0.3&ndash;1%, transparent exchange rates, and coverage in over 150 countries. A user in Germany and a user in Brazil follow the same procedure to purchase credits. And TokiStorage has no mechanism to identify individuals from transfer information. Only codes and amounts are matched.</p>
+
+        <p>The uniform price &mdash; 1 credit at 150 yen ($1) &mdash; applies regardless of country or currency. Whether purchased in Japanese yen, euros, or Brazilian reais, one credit is one credit. This is none other than the application of the principle articulated in the "Uniform Pricing" essay to the credit system.</p>
+
+        <h2>6. IndexedDB as a Choice &mdash; The Resolve Not to Hold User Data</h2>
+
+        <p>Storing credit balances in the browser's IndexedDB rather than on a server. By conventional service design standards, this choice has obvious drawbacks.</p>
+
+        <p>If a user clears their browser data, the credit balance disappears. When switching devices, the balance does not transfer automatically. If a user contacts TokiStorage asking to "restore my balance," there is no data on the server to restore from.</p>
+
+        <p>We chose this design anyway because the alternative was worse. Storing balances on a server would require a system to identify users. Accounts, email addresses, at minimum some form of ID. And purchase history, usage history, and balance changes tied to that ID would accumulate on the server. That would mean TokiStorage abandoning its principle of "holding no personal data."</p>
+
+        <p>Storing in IndexedDB means TokiStorage cannot track user balances. We do not know who holds how much. We do not know who used what, or when. We cannot revoke. We cannot freeze. This asymmetry is a design that places complete sovereignty on the user's side.</p>
+
+        <div class="key-point">
+            <p>We store credits in the browser, not on our server. We cannot track, cannot revoke, cannot help with losses. That asymmetry is intentional. A tool that respects independence must also accept the limits of that respect.</p>
+        </div>
+
+        <h2>7. The Coexistence of Physical QR and Self-Print</h2>
+
+        <p>Physical QR products and self-print are not in competition. Nor are they premium and budget versions of the same service. They are expressions of fundamentally different design philosophies serving fundamentally different needs.</p>
+
+        <p>Physical QR resists time through the power of materials. Quartz glass endures for thousands of years; UV-resistant laminate withstands outdoor environments. Three-layer preservation &mdash; Physical (quartz glass/laminate), National (National Diet Library), and Private (GitHub) &mdash; delivers data to the future through multiple pathways. This is the domain where TokiStorage takes responsibility as a manufacturer.</p>
+
+        <p>Self-print takes shape instantly in the user's hands. On a home printer, an office copier, a convenience store print service. If you own a laminator, you can laminate them yourself. Quality, quantity, timing &mdash; the user decides everything. TokiStorage merely provides the tool.</p>
+
+        <p>This relationship resembles that between a professional photo studio and a home printer. Having a studio produce a family portrait album versus printing a smartphone photo yourself. Both are acts of preserving a photograph, but what they seek differs. One offers professional finishing and archival quality. The other offers immediacy and self-determination. Not a matter of superiority, but of choice.</p>
+
+        <h2>8. What the Self-Print Economy Means</h2>
+
+        <p>Bulk mode, prepaid credits, Wise transfers, IndexedDB storage, no account required &mdash; when these elements combine, what emerges is an economy.</p>
+
+        <p>What to preserve is the user's decision. How long to make it is the user's decision. When to print, on what paper, how many copies, who to give them to. Everything is entrusted to the user's judgment and action. TokiStorage provides only the codec (audio compression), the QR code generation engine, and the credit system.</p>
+
+        <p>This minimalism is not product immaturity. It is intentional design. What a tool should provide is capability, not judgment. The decision of what to record and what to preserve can only be made by the person whose voice it is. What TokiStorage can do is deliver the tools for executing that decision &mdash; as affordably, as simply, and to as many people as possible.</p>
+
+        <p>The self-print economy may be an economic model that does not yet have a name. It is not a subscription. It is not a one-time purchase. It resembles pay-per-use, but the first unit is always free. Without accounts, there is no customer management. Without personal data, there is no targeted advertising. Without data on our servers, there is no risk of data breach.</p>
+
+        <p>All that exists is a tool, a price, and freedom.</p>
+
+        <div class="key-point">
+            <p>Bulk mode and prepaid credits are not features added to TokiQR. They are the structural design for the act of preserving a voice to leave the maker's hands and pass into the hands of the person whose voice it is.</p>
+        </div>
+
+    </article>
+
+    <footer class="article-footer">
+        <p id="essay-nav-links"></p>
+        <p style="margin-top: 2rem; font-size: 0.75rem;">&copy; 2026 TokiStorage</p>
+    </footer>
+
+</main>
+
+<script src="contact-form.js" defer></script>
+<script src="essay-tts.js?v=20260224"></script>
+<script src="essay-nav.js?v=20260224"></script>
+<script src="tracker.js" defer></script>
+</body>
+</html>
