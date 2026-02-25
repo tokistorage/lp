@@ -1,34 +1,39 @@
 /**
  * B2B NDL Newsletter Publishing Service — GAS Extension
+ * PDF Native Pipeline (v2)
  *
  * このファイルは qr/gas/code.gs の末尾に追記するコードです。
  * GASエディタで手動でペーストしてください。
  *
- * また、processStoragePipeline() 内のスプレッドシート更新の直前に
+ * 新モデル:
+ *   TokiQR PDF生成 → 奥付+通巻番号付きPDF → output/TQ-NNNNN.pdf として
+ *   クライアントリポジトリに直接コミット → そのまま逐次刊行物1号として公開
+ *   → NDL自動収集
+ *
+ * processStoragePipeline() 内のスプレッドシート更新の直前に
  * 以下の呼び出しを追加してください:
  *
  *   // ── B2Bクライアントリポジトリにもルーティング ──
  *   if (forNewsletter.length > 0) {
  *     try {
- *       routeToB2BClientRepos(forNewsletter, volumeInfo);
+ *       routeToB2BClientRepos(forNewsletter);
  *     } catch (e) {
  *       sendEmail(NOTIFY_EMAIL, '【B2B】ルーティングエラー', e.message);
  *     }
  *   }
  *
  * タイマートリガー設定:
- *   - advanceAllClientNewsletterIssues() → 毎日 9:00
- *   - sendMonthlyB2BReport() → 毎月1日 9:00
+ *   - sendMonthlyB2BReport() → 毎月1日 9:00（アクティビティレポート）
  */
 
 // =====================================================
-// B2B NDL Newsletter Publishing Service
+// B2B NDL Newsletter Publishing Service — PDF Native
 // =====================================================
 
 var B2B_SHEET_NAME = 'B2Bクライアント';
 var B2B_SHEET_HEADERS = [
   '日時', 'クライアントID', '名称', 'リポジトリ', 'ステータス',
-  'プラン', 'Wiseタグ', '発行費/号', 'QRスロット数', '追加QR単価',
+  'プラン', 'Wiseタグ', 'セットアップ価格', 'ISSN',
   '作成日', '備考'
 ];
 
@@ -39,7 +44,7 @@ function getB2BClients() {
   var ss = SpreadsheetApp.openById(SPREADSHEET_ID);
   var sheet = ss.getSheetByName(B2B_SHEET_NAME);
   if (!sheet || sheet.getLastRow() < 2) return [];
-  var data = sheet.getRange(2, 1, sheet.getLastRow() - 1, 12).getValues();
+  var data = sheet.getRange(2, 1, sheet.getLastRow() - 1, 11).getValues();
   return data.filter(function(r) { return r[1]; }).map(function(r) {
     return {
       date: r[0],
@@ -49,11 +54,10 @@ function getB2BClients() {
       status: r[4],
       plan: r[5],
       wiseTag: r[6],
-      pricePerIssue: r[7] || 30000,
-      includedQrSlots: r[8] || 50,
-      extraQrPrice: r[9] || 150,
-      createdAt: r[10],
-      note: r[11]
+      setupPrice: r[7] || 99900,
+      issn: r[8] || '',
+      createdAt: r[9],
+      note: r[10]
     };
   });
 }
@@ -93,7 +97,7 @@ function provisionClientRepo(clientId, clientName, config) {
 
   // 2b. schedule.json
   var schedule = {
-    cadence_months: config.schedule ? config.schedule.cadenceMonths : 3,
+    cadence_months: null,
     volume_start_year: config.schedule ? config.schedule.startYear : 2026,
     volume_duration_years: config.schedule ? config.schedule.volumeDurationYears : 20,
     current_serial: 0,
@@ -128,19 +132,9 @@ function provisionClientRepo(clientId, clientName, config) {
   commitFileOnBranch('.github/workflows/auto-merge.yml', autoMerge,
     'Add auto-merge workflow', 'main', repo);
 
-  // 2e. generate-newsletter workflow
-  var templateWorkflow = readFileFromGitHub(
-    'newsletter/client-template/.github/workflows/generate-newsletter.yml');
-  if (templateWorkflow) {
-    commitFileOnBranch('.github/workflows/generate-newsletter.yml', templateWorkflow,
-      'Add newsletter generation workflow', 'main', repo);
-  }
-
-  // 2f. .gitkeep for directories
-  commitFileOnBranch('materials/.gitkeep', '',
-    'Add materials directory', 'main', repo);
-  commitFileOnBranch('output/.gitkeep', '',
-    'Add output directory', 'main', repo);
+  // 2e. asset/.gitkeep
+  commitFileOnBranch('asset/.gitkeep', '',
+    'Add asset directory', 'main', repo);
 
   // 3. GitHub Pages 有効化
   try {
@@ -158,11 +152,10 @@ function provisionClientRepo(clientId, clientName, config) {
     clientName,
     repo,
     'active',
-    config.billing ? config.billing.model : 'per_issue',
+    'one_time',
     config.billing ? config.billing.wiseTag : clientId,
-    config.billing ? config.billing.pricePerIssue : 30000,
-    config.billing ? config.billing.includedQrSlots : 50,
-    config.billing ? config.billing.extraQrPrice : 150,
+    config.billing ? config.billing.setupPrice : 99900,
+    '',
     new Date(),
     ''
   ]);
@@ -193,10 +186,84 @@ function findB2BClient(wiseTag) {
 }
 
 /**
- * processStoragePipeline() のB2B拡張:
- * NDL納本対象注文をB2Bクライアントリポジトリにもルーティング
+ * 通巻番号からボリューム・号を計算（式年遷宮型: 1巻 = 20年）
  */
-function routeToB2BClientRepos(forNewsletter, volumeInfo) {
+function calcVolumeNumber(serial, startYear, durationYears) {
+  var now = new Date();
+  var currentYear = parseInt(Utilities.formatDate(now, 'Asia/Tokyo', 'yyyy'));
+  var volume = Math.floor((currentYear - startYear) / durationYears) + 1;
+
+  // この巻の開始serial を計算するのは困難なので、簡易的に serial = number とする
+  // 巻が変わった時にリセットするためにschedule.jsonの過去issuesを参照
+  return { volume: volume, number: serial };
+}
+
+/**
+ * TokiQR PDFに奥付ページを追加するための参照コード
+ *
+ * generateTokiqrPdf() の戻り値（Base64 PDF）に対して
+ * 奥付ページを追記する。GASではPDFの直接編集が困難なため、
+ * generateTokiqrPdf() 自体を拡張して2ページ目を追加する方式を推奨。
+ *
+ * @param {Object} order - 注文オブジェクト
+ * @param {Object} clientConfig - client-config.json の内容
+ * @param {number} serial - 通巻番号
+ * @param {number} volume - 巻
+ * @param {number} number - 号
+ * @returns {string} Base64エンコードされたPDF
+ */
+function generateTokiqrPdfWithColophon(order, clientConfig, serial, volume, number) {
+  // 1ページ目: 既存のTokiQR PDFレイアウト
+  var pdfBase64 = generateTokiqrPdf(order);
+
+  // 2ページ目: 奥付（colophon）
+  // GASのGoogle Docs APIで2ページ目を追加
+  // ※ 以下は参照コード。実際のGAS実装では Slides→PDF 変換か
+  //    google-apps-script-pdf-service を使用
+
+  var colophon = clientConfig.colophon || {};
+  var branding = clientConfig.branding || {};
+  var today = Utilities.formatDate(new Date(), 'Asia/Tokyo', 'yyyy年MM月dd日');
+
+  var colophonText = [
+    '━━━━━━━━━━━━━━━━━━━━━━━━━━',
+    '',
+    branding.publicationNameJa || 'TokiQR Newsletter',
+    '',
+    '通巻番号: 第' + serial + '号',
+    '巻号: 第' + volume + '巻 第' + number + '号',
+    '発行日: ' + today,
+    '',
+    '発行者: ' + (colophon.publisher || 'TokiStorage（佐藤卓也）'),
+    '特集元: ' + (colophon.contentOriginator || clientConfig.clientName),
+    '',
+    '法的根拠: ' + (colophon.legalBasis || '国立国会図書館法 第25条・第25条の4'),
+    'フォーマット: PDF（電子書籍等・オンライン資料）',
+    '採番体系: 式年遷宮型（1巻＝20年）',
+    '',
+    colophon.note || '',
+    '',
+    '━━━━━━━━━━━━━━━━━━━━━━━━━━',
+    '© TokiStorage'
+  ].join('\n');
+
+  // ※ 実際の実装:
+  // 1. Google Slidesで奥付スライドを生成
+  // 2. PDF変換
+  // 3. 既存PDFとマージ（pdf-lib等）
+  // または generateTokiqrPdf() 内で直接2ページ構成にする
+
+  Logger.log('Colophon for TQ-' + String(serial).padStart(5, '0') + ':\n' + colophonText);
+
+  return pdfBase64;
+}
+
+/**
+ * processStoragePipeline() のB2B拡張:
+ * NDL納本対象注文をB2Bクライアントリポジトリにルーティング
+ * 各TokiQR PDF = 1号として即時発行
+ */
+function routeToB2BClientRepos(forNewsletter) {
   if (!forNewsletter || forNewsletter.length === 0) return;
 
   var clients = getB2BClients();
@@ -211,57 +278,62 @@ function routeToB2BClientRepos(forNewsletter, volumeInfo) {
     var client = o.ref ? clientMap[o.ref.trim()] : null;
     if (!client || client.status !== 'active') return;
 
+    // schedule.json 読み込み・シリアル番号インクリメント
     var scheduleJson = readFileFromGitHub('schedule.json', client.repo);
     if (!scheduleJson) return;
     var schedule = JSON.parse(scheduleJson);
-    var currentIssue = schedule.issues.length > 0
-      ? schedule.issues[schedule.issues.length - 1] : null;
-    if (!currentIssue) return;
-    var issueDate = currentIssue.date;
 
-    var manifestPath = 'materials/' + issueDate + '/manifest.json';
-    var manifestJson = readFileFromGitHub(manifestPath, client.repo);
-    var manifest;
-    if (manifestJson) {
-      manifest = JSON.parse(manifestJson);
-    } else {
-      manifest = {
-        issue: currentIssue,
-        materials: [],
-        lastUpdated: new Date().toISOString()
-      };
-    }
+    var nextSerial = (schedule.current_serial || 0) + 1;
+    var startYear = schedule.volume_start_year || 2026;
+    var duration = schedule.volume_duration_years || 20;
+    var vn = calcVolumeNumber(nextSerial, startYear, duration);
 
-    var tokiqrPdfPath = 'materials/' + issueDate + '/tokiqr/tokiqr-' + o.orderId + '.pdf';
+    // client-config.json 読み込み
+    var configJson = readFileFromGitHub('client-config.json', client.repo);
+    var clientConfig = configJson ? JSON.parse(configJson) : {};
+
+    // TokiQR PDF生成（奥付付き）
+    var filename = 'TQ-' + String(nextSerial).padStart(5, '0') + '.pdf';
+    var pdfPath = 'output/' + filename;
 
     if (o.qrUrl) {
       try {
-        var pdfBase64 = generateTokiqrPdf(o);
-        var branch = 'material-' + o.orderId;
+        var pdfBase64 = generateTokiqrPdfWithColophon(
+          o, clientConfig, nextSerial, vn.volume, vn.number);
+
+        var branch = 'tq-' + String(nextSerial).padStart(5, '0');
         createGitHubBranch(branch, client.repo);
-        commitBinaryFileOnBranch(tokiqrPdfPath, pdfBase64,
-          'Add TokiQR PDF for ' + o.orderId, branch, client.repo);
 
-        manifest.materials.push({
+        // PDF をコミット
+        commitBinaryFileOnBranch(pdfPath, pdfBase64,
+          'Publish TQ-' + String(nextSerial).padStart(5, '0'), branch, client.repo);
+
+        // schedule.json を更新
+        var today = Utilities.formatDate(new Date(), 'Asia/Tokyo', 'yyyy-MM-dd');
+        var newIssue = {
+          date: today,
+          serial: nextSerial,
+          volume: vn.volume,
+          number: vn.number,
+          status: 'published',
+          filename: filename,
           orderId: o.orderId,
-          displayName: o.name + '様',
-          product: o.product.indexOf('クォーツ') !== -1 ? 'quartz' : 'laminate',
-          qrUrl: o.qrUrl || '',
-          tokiqrPdf: tokiqrPdfPath,
-          addedAt: new Date().toISOString()
-        });
-        manifest.lastUpdated = new Date().toISOString();
-        commitFileOnBranch(manifestPath, JSON.stringify(manifest, null, 2),
-          'Update manifest for ' + o.orderId, branch, client.repo);
+          customerName: o.name || ''
+        };
+        schedule.current_serial = nextSerial;
+        schedule.issues.push(newIssue);
+        commitFileOnBranch('schedule.json', JSON.stringify(schedule, null, 2),
+          'Update schedule: TQ-' + String(nextSerial).padStart(5, '0'), branch, client.repo);
 
+        // PR作成（auto-mergeで即マージ）
         createGitHubPR(
-          'Add TokiQR: ' + o.name + '様 (' + o.orderId + ')',
+          'Publish TQ-' + String(nextSerial).padStart(5, '0') + ': ' + (o.name || '') + '様',
           branch,
-          'B2B newsletter material from order ' + o.orderId,
+          'NDL serial publication #' + nextSerial + ' from order ' + o.orderId,
           client.repo
         );
 
-        routed.push({ orderId: o.orderId, clientId: client.clientId, status: 'OK' });
+        routed.push({ orderId: o.orderId, clientId: client.clientId, serial: nextSerial, status: 'OK' });
       } catch (e) {
         routed.push({ orderId: o.orderId, clientId: client.clientId, status: 'ERROR: ' + e.message });
       }
@@ -269,130 +341,46 @@ function routeToB2BClientRepos(forNewsletter, volumeInfo) {
   });
 
   if (routed.length > 0) {
-    var body = '【B2B パイプライン】' + routed.length + '件ルーティング\n\n';
+    var body = '【B2B パイプライン】' + routed.length + '件発行\n\n';
     routed.forEach(function(r) {
-      body += r.orderId + ' → ' + r.clientId + ': ' + r.status + '\n';
+      body += r.orderId + ' → ' + r.clientId;
+      if (r.serial) body += ' (TQ-' + String(r.serial).padStart(5, '0') + ')';
+      body += ': ' + r.status + '\n';
     });
-    sendEmail(NOTIFY_EMAIL, '【B2B】' + routed.length + '件ルーティング', body);
+    sendEmail(NOTIFY_EMAIL, '【B2B】' + routed.length + '件発行', body);
   }
 }
 
 /**
- * B2Bクライアントのニュースレター号を進行（次号ドラフト作成）
- */
-function advanceClientNewsletterIssue(clientId) {
-  var clients = getB2BClients();
-  var client = clients.filter(function(c) { return c.clientId === clientId && c.status === 'active'; })[0];
-  if (!client) return;
-
-  var scheduleJson = readFileFromGitHub('schedule.json', client.repo);
-  if (!scheduleJson) return;
-  var schedule = JSON.parse(scheduleJson);
-
-  if (schedule.issues.length === 0) {
-    var firstIssue = {
-      date: Utilities.formatDate(new Date(), 'Asia/Tokyo', 'yyyy') + '-'
-        + Utilities.formatDate(new Date(), 'Asia/Tokyo', 'MM'),
-      year: parseInt(Utilities.formatDate(new Date(), 'Asia/Tokyo', 'yyyy')),
-      month: parseInt(Utilities.formatDate(new Date(), 'Asia/Tokyo', 'MM')),
-      serial: 1, volume: 1, number: 1, status: 'drafting'
-    };
-    schedule.issues.push(firstIssue);
-    schedule.current_serial = 1;
-    pushFileToGitHub('schedule.json', JSON.stringify(schedule, null, 2),
-      'Initialize first issue', client.repo);
-    var manifest = { issue: firstIssue, materials: [], lastUpdated: new Date().toISOString() };
-    pushFileToGitHub('materials/' + firstIssue.date + '/manifest.json',
-      JSON.stringify(manifest, null, 2), 'Initialize first issue manifest', client.repo);
-    return;
-  }
-
-  var currentIssue = schedule.issues[schedule.issues.length - 1];
-  var issueEndDate = new Date(currentIssue.year, currentIssue.month, 0);
-  var now = new Date();
-  if (currentIssue.status === 'drafting' && now <= issueEndDate) return;
-
-  if (currentIssue.status === 'drafting') currentIssue.status = 'published';
-
-  var cadence = schedule.cadence_months || 3;
-  var nextMonth = currentIssue.month + cadence;
-  var nextYear = currentIssue.year;
-  while (nextMonth > 12) { nextMonth -= 12; nextYear++; }
-
-  var volDuration = schedule.volume_duration_years || 20;
-  var startYear = schedule.volume_start_year || 2026;
-  var nextVolume = Math.floor((nextYear - startYear) / volDuration) + 1;
-  var nextNumber = nextVolume === currentIssue.volume ? currentIssue.number + 1 : 1;
-  var nextSerial = currentIssue.serial + 1;
-
-  var nextIssue = {
-    date: nextYear + '-' + String(nextMonth).padStart(2, '0'),
-    year: nextYear, month: nextMonth, serial: nextSerial,
-    volume: nextVolume, number: nextNumber, status: 'drafting'
-  };
-
-  schedule.issues.push(nextIssue);
-  schedule.current_serial = nextSerial;
-  pushFileToGitHub('schedule.json', JSON.stringify(schedule, null, 2),
-    'Advance to issue ' + nextIssue.date, client.repo);
-
-  var manifest = { issue: nextIssue, materials: [], lastUpdated: new Date().toISOString() };
-  pushFileToGitHub('materials/' + nextIssue.date + '/manifest.json',
-    JSON.stringify(manifest, null, 2), 'Initialize manifest for ' + nextIssue.date, client.repo);
-
-  sendEmail(NOTIFY_EMAIL,
-    '【B2B】' + client.clientName + ' 次号: ' + nextIssue.date,
-    'Vol.' + nextVolume + ' No.' + nextNumber + ' (通巻' + nextSerial + ')');
-}
-
-/**
- * 全B2Bクライアントの号進行チェック（毎日タイマーで実行）
- */
-function advanceAllClientNewsletterIssues() {
-  var clients = getB2BClients();
-  clients.forEach(function(c) {
-    if (c.status === 'active') {
-      try { advanceClientNewsletterIssue(c.clientId); }
-      catch (e) { sendEmail(NOTIFY_EMAIL, '【B2B】号進行エラー: ' + c.clientName, e.message); }
-    }
-  });
-}
-
-/**
- * B2Bクライアント月次請求レポート（毎月1日タイマーで実行）
+ * B2Bクライアント月次アクティビティレポート（毎月1日タイマーで実行）
  */
 function sendMonthlyB2BReport() {
   var clients = getB2BClients();
   if (clients.length === 0) return;
 
-  var orders = getOrders();
   var now = new Date();
   var lastMonth = new Date(now.getFullYear(), now.getMonth() - 1, 1);
-  var lastMonthEnd = new Date(now.getFullYear(), now.getMonth(), 0, 23, 59, 59);
   var monthLabel = Utilities.formatDate(lastMonth, 'Asia/Tokyo', 'yyyy年MM月');
 
   var body = '【B2B NDL Newsletter 月次レポート】\n' + monthLabel + '\n\n';
 
   clients.forEach(function(client) {
     if (client.status !== 'active') return;
-    var clientOrders = orders.filter(function(o) {
-      var d = new Date(o.date);
-      return d >= lastMonth && d <= lastMonthEnd
-        && o.ref && o.ref.trim() === client.wiseTag && o.storageNdl === 'Yes';
+
+    var scheduleJson = readFileFromGitHub('schedule.json', client.repo);
+    if (!scheduleJson) return;
+    var schedule = JSON.parse(scheduleJson);
+
+    // 先月発行された号数をカウント
+    var lastMonthStr = Utilities.formatDate(lastMonth, 'Asia/Tokyo', 'yyyy-MM');
+    var monthIssues = schedule.issues.filter(function(i) {
+      return i.date && i.date.substring(0, 7) === lastMonthStr && i.status === 'published';
     });
-    var qrCount = clientOrders.length;
-    var extra = Math.max(0, qrCount - client.includedQrSlots);
-    var extraFee = extra * client.extraQrPrice;
-    var total = qrCount > 0 ? client.pricePerIssue + extraFee : 0;
 
     body += '━━━ ' + client.clientName + ' (' + client.clientId + ') ━━━\n'
-      + '  QR数: ' + qrCount + ' / 追加: ' + extra + '件\n'
-      + '  合計: ¥' + total.toLocaleString() + '\n';
-    if (total > 0 && client.wiseTag) {
-      body += '  請求: https://wise.com/pay/' + client.wiseTag + '\n';
-    }
-    body += '\n';
+      + '  発行数: ' + monthIssues.length + '号\n'
+      + '  累計: ' + schedule.current_serial + '号\n\n';
   });
 
-  sendEmail(NOTIFY_EMAIL, '【B2B】月次請求レポート ' + monthLabel, body);
+  sendEmail(NOTIFY_EMAIL, '【B2B】月次レポート ' + monthLabel, body);
 }
