@@ -80,7 +80,6 @@ def build_newsletter(materials_path, config_path, output_dir):
     colophon = config.get("colophon", {})
     accent = tuple(branding.get("accentColor", list(TOKI_BLUE)))
     pub_name_ja = branding.get("publicationNameJa", f"{series_name} ニュースレター")
-    pub_name_en = branding.get("publicationNameEn", "")
 
     serial_str = f"{serial:05d}"
     filename = f"TQ-{serial_str}.pdf"
@@ -145,7 +144,6 @@ def build_newsletter(materials_path, config_path, output_dir):
     pdf.ln(8)
     colophon_data = [
         ("刊行物名", pub_name_ja),
-        ("英題", pub_name_en),
         ("巻号", f"第{volume}巻 第{number}号（通巻第{serial}号）"),
         ("発行年月日", date_formal),
         ("発行者", colophon.get("publisher", "TokiStorage（佐藤卓也）")),

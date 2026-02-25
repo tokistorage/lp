@@ -149,7 +149,6 @@ function handleSeriesOpen(ss, data) {
     branding: {
       accentColor: [37, 99, 235],
       publicationNameJa: seriesName + ' 特集',
-      publicationNameEn: seriesName + ' Special Feature',
       tagline: '── ' + seriesName + ' ──'
     },
     colophon: {
