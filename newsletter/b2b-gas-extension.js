@@ -54,7 +54,7 @@ function getB2BClients() {
       status: r[4],
       plan: r[5],
       wiseTag: r[6],
-      setupPrice: r[7] || 99900,
+      setupPrice: r[7] || 9900,
       createdAt: r[8],
       note: r[9]
     };
@@ -153,7 +153,7 @@ function provisionClientRepo(clientId, clientName, config) {
     'active',
     'one_time',
     config.billing ? config.billing.wiseTag : clientId,
-    config.billing ? config.billing.setupPrice : 99900,
+    config.billing ? config.billing.setupPrice : 9900,
     '',
     new Date(),
     ''
