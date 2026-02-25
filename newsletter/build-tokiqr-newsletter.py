@@ -88,8 +88,7 @@ def build_newsletter(materials_path, config_path, output_dir):
     try:
         dt = datetime.strptime(date_str, "%Y-%m-%d")
         date_ja = f"{dt.year}年{dt.month}月{dt.day}日"
-        reiwa = dt.year - 2018
-        date_formal = f"{dt.year}年（令和{reiwa}年）{dt.month}月{dt.day}日"
+        date_formal = date_ja
     except ValueError:
         date_ja = date_str
         date_formal = date_str
