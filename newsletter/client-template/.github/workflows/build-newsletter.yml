@@ -4,6 +4,9 @@ on:
   push:
     branches: [main]
     paths: ['materials/*.json']
+  workflow_run:
+    workflows: ["Auto Merge"]
+    types: [completed]
 
 concurrency:
   group: build-newsletter
