@@ -33,7 +33,7 @@
 var B2B_SHEET_NAME = 'B2Bクライアント';
 var B2B_SHEET_HEADERS = [
   '日時', 'クライアントID', '名称', 'リポジトリ', 'ステータス',
-  'プラン', 'Wiseタグ', 'セットアップ価格', 'ISSN',
+  'プラン', 'Wiseタグ', 'セットアップ価格',
   '作成日', '備考'
 ];
 
@@ -44,7 +44,7 @@ function getB2BClients() {
   var ss = SpreadsheetApp.openById(SPREADSHEET_ID);
   var sheet = ss.getSheetByName(B2B_SHEET_NAME);
   if (!sheet || sheet.getLastRow() < 2) return [];
-  var data = sheet.getRange(2, 1, sheet.getLastRow() - 1, 11).getValues();
+  var data = sheet.getRange(2, 1, sheet.getLastRow() - 1, 10).getValues();
   return data.filter(function(r) { return r[1]; }).map(function(r) {
     return {
       date: r[0],
@@ -55,9 +55,8 @@ function getB2BClients() {
       plan: r[5],
       wiseTag: r[6],
       setupPrice: r[7] || 99900,
-      issn: r[8] || '',
-      createdAt: r[9],
-      note: r[10]
+      createdAt: r[8],
+      note: r[9]
     };
   });
 }
