@@ -22,7 +22,7 @@
         close:       isEn ? 'Close'                          : '閉じる',
         placeholder: isEn ? 'Please tell us what you\'d like to discuss.' : 'ご相談内容をお書きください。',
         cta:         isEn ? 'Contact Us'                     : 'お問い合わせ',
-        mission:     isEn ? 'You become a story, interweaving with dialogue across generations, enriching the future | TokiStorage' : 'あなたが物語になり、世代の対話が重なり、未来が豊かになる | トキストレージ'
+        mission:     isEn ? 'You become a story, generations connect in dialogue, the path forward | TokiStorage' : 'あなたが物語となり、世代の対話が重なり、未来の道になる | トキストレージ'
     };
 
     // Cookie helpers
