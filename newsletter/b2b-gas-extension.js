@@ -199,11 +199,14 @@ function calcVolumeNumber(serial, startYear, durationYears) {
 }
 
 /**
- * TokiQR PDFに奥付ページを追加するための参照コード
+ * TokiQR PDFを別冊特集ニュースレターとして生成するための参照コード
  *
- * generateTokiqrPdf() の戻り値（Base64 PDF）に対して
- * 奥付ページを追記する。GASではPDFの直接編集が困難なため、
- * generateTokiqrPdf() 自体を拡張して2ページ目を追加する方式を推奨。
+ * 各TokiQR PDFは独立した「別冊特集ニュースレター」として成立する。
+ * 1ページ目がTokiQRコンテンツ、2ページ目が発行情報ページ。
+ * NDLに献本されると逐次刊行物の1号になる。
+ *
+ * generateTokiqrPdf() を拡張して2ページ構成にする方式を推奨。
+ * GASではPDFの直接編集が困難なため、Slides→PDF変換を使用。
  *
  * @param {Object} order - 注文オブジェクト
  * @param {Object} clientConfig - client-config.json の内容
@@ -212,30 +215,29 @@ function calcVolumeNumber(serial, startYear, durationYears) {
  * @param {number} number - 号
  * @returns {string} Base64エンコードされたPDF
  */
-function generateTokiqrPdfWithColophon(order, clientConfig, serial, volume, number) {
-  // 1ページ目: 既存のTokiQR PDFレイアウト
+function generateTokiqrNewsletter(order, clientConfig, serial, volume, number) {
+  // 1ページ目: TokiQRコンテンツ（既存レイアウト）
   var pdfBase64 = generateTokiqrPdf(order);
 
-  // 2ページ目: 奥付（colophon）
-  // GASのGoogle Docs APIで2ページ目を追加
-  // ※ 以下は参照コード。実際のGAS実装では Slides→PDF 変換か
-  //    google-apps-script-pdf-service を使用
+  // 2ページ目: 別冊特集ニュースレター 発行情報
+  // ※ 以下は参照コード。実際のGAS実装では Slides→PDF 変換
 
   var colophon = clientConfig.colophon || {};
   var branding = clientConfig.branding || {};
   var today = Utilities.formatDate(new Date(), 'Asia/Tokyo', 'yyyy年MM月dd日');
 
-  var colophonText = [
+  var newsletterText = [
     '━━━━━━━━━━━━━━━━━━━━━━━━━━',
     '',
-    branding.publicationNameJa || 'TokiQR Newsletter',
+    (branding.publicationNameJa || 'TokiQR') + ' 別冊特集',
+    '「' + (order.name || '') + '様」',
     '',
     '通巻番号: 第' + serial + '号',
     '巻号: 第' + volume + '巻 第' + number + '号',
     '発行日: ' + today,
     '',
     '発行者: ' + (colophon.publisher || 'TokiStorage（佐藤卓也）'),
-    '特集元: ' + (colophon.contentOriginator || clientConfig.clientName),
+    '特集: ' + (colophon.contentOriginator || clientConfig.clientName),
     '',
     '法的根拠: ' + (colophon.legalBasis || '国立国会図書館法 第25条・第25条の4'),
     'フォーマット: PDF（電子書籍等・オンライン資料）',
@@ -248,12 +250,12 @@ function generateTokiqrPdfWithColophon(order, clientConfig, serial, volume, numb
   ].join('\n');
 
   // ※ 実際の実装:
-  // 1. Google Slidesで奥付スライドを生成
+  // 1. Google Slidesで発行情報スライドを生成
   // 2. PDF変換
   // 3. 既存PDFとマージ（pdf-lib等）
   // または generateTokiqrPdf() 内で直接2ページ構成にする
 
-  Logger.log('Colophon for TQ-' + String(serial).padStart(5, '0') + ':\n' + colophonText);
+  Logger.log('Newsletter TQ-' + String(serial).padStart(5, '0') + ':\n' + newsletterText);
 
   return pdfBase64;
 }
@@ -298,7 +300,7 @@ function routeToB2BClientRepos(forNewsletter) {
 
     if (o.qrUrl) {
       try {
-        var pdfBase64 = generateTokiqrPdfWithColophon(
+        var pdfBase64 = generateTokiqrNewsletter(
           o, clientConfig, nextSerial, vn.volume, vn.number);
 
         var branch = 'tq-' + String(nextSerial).padStart(5, '0');
