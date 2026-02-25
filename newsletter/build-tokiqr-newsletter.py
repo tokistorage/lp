@@ -139,6 +139,17 @@ def build_newsletter(materials_path, config_path, output_dir):
     pdf.set_draw_color(*BORDER)
     pdf.line(MARGIN + 30, pdf.get_y(), PAGE_W - MARGIN - 30, pdf.get_y())
 
+    # Usage guide
+    pdf.ln(8)
+    pdf.set_font("JP", "", 9)
+    pdf.set_text_color(*SECONDARY)
+    pdf.cell(0, 6,
+             "tokistorage.github.io/qr/ のアーカイブページでPDF読込すると再生できます。",
+             align="C", new_x="LMARGIN", new_y="NEXT")
+    pdf.cell(0, 6,
+             "QRコードを1枚ずつ読み取ることでも復元可能です。",
+             align="C", new_x="LMARGIN", new_y="NEXT")
+
     # ── Colophon section on cover ──
     pdf.ln(8)
     colophon_data = [
