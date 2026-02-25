@@ -1077,13 +1077,401 @@ def generate_issue(year, month, issue_num, serial):
     return out_path
 
 
+def load_client_config(config_path):
+    """Load client-config.json and return parsed dict."""
+    import json
+    with open(config_path, encoding="utf-8") as f:
+        return json.load(f)
+
+
+def generate_client_issue(config_path, year, month, issue_num, serial):
+    """Generate newsletter for a B2B client based on client-config.json.
+
+    The client repo layout is expected to be:
+      client-config.json
+      schedule.json
+      materials/{YYYY-MM}/manifest.json
+      materials/{YYYY-MM}/tokiqr/*.pdf
+      output/  (generated PDFs go here)
+
+    TokiStorage is the publisher; the client appears as content originator (特集元).
+    """
+    import json
+
+    config = load_client_config(config_path)
+    repo_dir = os.path.dirname(os.path.abspath(config_path))
+
+    volume = (year - config.get("schedule", {}).get("startYear", INAUGURAL_YEAR)) // \
+             config.get("schedule", {}).get("volumeDurationYears", VOLUME_SPAN) + 1
+    month_str = f"{year}-{month:02d}"
+
+    # Client-specific publication constants
+    pub_name_ja = config["branding"]["publicationNameJa"]
+    pub_name_en = config["branding"].get("publicationNameEn", pub_name_ja)
+    client_name = config["clientName"]
+    client_name_en = config.get("clientNameEn", client_name)
+    tagline = config["branding"].get("tagline", "")
+    accent = tuple(config["branding"].get("accentColor", list(TOKI_BLUE)))
+
+    # Colophon info
+    col = config.get("colophon", {})
+    publisher = col.get("publisher", PUBLISHER)
+    publisher_addr = col.get("publisherAddress", PUBLISHER_ADDRESS)
+    content_originator = col.get("contentOriginator", client_name)
+    legal_basis = col.get("legalBasis", "国立国会図書館法 第25条・第25条の4")
+    colophon_note = col.get("note", "")
+
+    # Load manifest if exists
+    manifest_path = os.path.join(repo_dir, "materials", month_str, "manifest.json")
+    manifest = {}
+    if os.path.exists(manifest_path):
+        with open(manifest_path, encoding="utf-8") as f:
+            manifest = json.load(f)
+
+    materials = manifest.get("materials", [])
+
+    pdf = NewsletterPDF()
+    pdf.set_title(f"{pub_name_en} Vol.{volume} No.{issue_num}")
+    pdf.set_author(publisher)
+    pdf.set_subject(pub_name_ja)
+    pdf.set_creator("generate-newsletter.py (client mode)")
+
+    footer_text = f"{pub_name_ja}　第{volume}巻 第{issue_num}号（通巻第{serial}号）　{year}年{month}月"
+
+    # ═══════════════════════════════════════════════════════════════════
+    # PAGE 1: Cover
+    # ═══════════════════════════════════════════════════════════════════
+    pdf.add_page()
+    # Use client accent color for bar
+    pdf.set_fill_color(*accent)
+    pdf.rect(0, 0, PAGE_W, 3.5, "F")
+    pdf.set_auto_page_break(auto=False)
+
+    # Icon (use client icon if exists, else TokiStorage icon)
+    client_icon = os.path.join(repo_dir, "asset", "client-icon.png")
+    icon = client_icon if os.path.exists(client_icon) else ICON_PATH
+    if os.path.exists(icon):
+        pdf.image(icon, x=(PAGE_W - 50) / 2, y=12, w=50)
+
+    pdf.set_y(68)
+    pdf.set_font("JP", "", 10)
+    pdf.set_text_color(*accent)
+    pdf.cell(0, 6, pub_name_en, align="C", new_x="LMARGIN", new_y="NEXT")
+
+    pdf.set_font("JP", "", 8)
+    pdf.set_text_color(*MUTED)
+    pdf.cell(0, 5, f"第{volume}巻 第{issue_num}号（通巻第{serial}号）", align="C",
+             new_x="LMARGIN", new_y="NEXT")
+    pdf.ln(8)
+
+    title_ja = manifest.get("issue", {}).get("title_ja", f"第{issue_num}号")
+    pdf.set_font("JP", "B", 24)
+    pdf.set_text_color(*DARK)
+    pdf.cell(0, 18, title_ja, align="C", new_x="LMARGIN", new_y="NEXT")
+
+    if tagline:
+        pdf.ln(4)
+        pdf.set_font("JP", "", 11)
+        pdf.set_text_color(*SECONDARY)
+        pdf.cell(0, 7, tagline, align="C", new_x="LMARGIN", new_y="NEXT")
+
+    pdf.ln(12)
+    pdf.set_font("JP", "", 9)
+    pdf.set_text_color(*SECONDARY)
+    pdf.cell(0, 6, f"{year}年{month}月", align="C", new_x="LMARGIN", new_y="NEXT")
+    pdf.ln(2)
+    pdf.cell(0, 6, f"Vol.{volume}  No.{issue_num}  Serial #{serial:05d}", align="C",
+             new_x="LMARGIN", new_y="NEXT")
+
+    pdf.ln(12)
+
+    # Publisher + Content Originator box
+    box_w = 180
+    box_x = (PAGE_W - box_w) / 2
+    box_y = pdf.get_y()
+    pdf.set_draw_color(*BORDER)
+    pdf.rect(box_x, box_y, box_w, 42, "D")
+    pdf.set_xy(box_x + 5, box_y + 4)
+    pdf.set_font("JP", "B", 9)
+    pdf.set_text_color(*DARK)
+    pdf.cell(box_w - 10, 6, "発行者", align="C", new_x="LMARGIN", new_y="NEXT")
+    pdf.set_x(box_x + 5)
+    pdf.set_font("JP", "", 9)
+    pdf.set_text_color(*SECONDARY)
+    pdf.cell(box_w - 10, 6, publisher, align="C", new_x="LMARGIN", new_y="NEXT")
+    pdf.set_x(box_x + 5)
+    pdf.cell(box_w - 10, 6, publisher_addr, align="C", new_x="LMARGIN", new_y="NEXT")
+    pdf.set_x(box_x + 5)
+    pdf.set_font("JP", "B", 8)
+    pdf.set_text_color(*MUTED)
+    pdf.cell(box_w - 10, 6, f"特集元：{content_originator}", align="C",
+             new_x="LMARGIN", new_y="NEXT")
+
+    pdf._footer_line(footer_text)
+
+    # ═══════════════════════════════════════════════════════════════════
+    # PAGE 2: Colophon (奥付)
+    # ═══════════════════════════════════════════════════════════════════
+    pdf.add_page()
+    pdf.set_fill_color(*accent)
+    pdf.rect(0, 0, PAGE_W, 3.5, "F")
+    pdf.set_auto_page_break(auto=False)
+
+    pdf.set_y(15)
+    pdf.set_font("JP", "B", 14)
+    pdf.set_text_color(*DARK)
+    pdf.cell(0, 10, "奥付（Colophon）", align="C", new_x="LMARGIN", new_y="NEXT")
+    pdf.ln(2)
+    pdf.set_font("JP", "", 8)
+    pdf.set_text_color(*MUTED)
+    pdf.cell(0, 5, "国立国会図書館法に基づく納本に必要な刊行情報", align="C",
+             new_x="LMARGIN", new_y="NEXT")
+    pdf.ln(5)
+
+    colophon_data = [
+        ("刊行物名", pub_name_ja),
+        ("英題", pub_name_en),
+        ("巻号", f"第{volume}巻 第{issue_num}号（通巻第{serial}号）"),
+        ("発行年月日", f"{year}年（令和{year - 2018}年）{month}月"),
+        ("発行者", publisher.split("（")[0] if "（" in publisher else publisher),
+        ("屋号", "TokiStorage（トキストレージ）"),
+        ("特集元", content_originator),
+        ("発行者住所", publisher_addr),
+        ("URL", PUBLISHER_URL),
+        ("連絡先", PUBLISHER_EMAIL),
+        ("刊行頻度", "不定期"),
+        ("フォーマット", "PDF（電子書籍等・オンライン資料）"),
+        ("根拠法", legal_basis),
+        ("採番体系", "式年遷宮型（1巻＝20年）"),
+    ]
+
+    pdf.set_fill_color(*BG_LIGHT)
+    for i, (label, value) in enumerate(colophon_data):
+        y = pdf.get_y()
+        if i % 2 == 0:
+            pdf.set_fill_color(*BG_LIGHT)
+            pdf.rect(MARGIN, y, CONTENT_W, 8, "F")
+        pdf.set_xy(MARGIN + 3, y)
+        pdf.set_font("JP", "B", 8)
+        pdf.set_text_color(*MUTED)
+        pdf.cell(50, 8, label)
+        pdf.set_font("JP", "", 9)
+        pdf.set_text_color(*DARK)
+        pdf.cell(0, 8, value, new_x="LMARGIN", new_y="NEXT")
+
+    if colophon_note:
+        pdf.ln(4)
+        pdf.set_font("JP", "", 7.5)
+        pdf.set_text_color(*MUTED)
+        pdf.set_x(MARGIN)
+        pdf.multi_cell(CONTENT_W, 4, colophon_note)
+
+    pdf._footer_line(f"{pub_name_ja}　奥付")
+
+    # ═══════════════════════════════════════════════════════════════════
+    # PAGE 3+: Content
+    # ═══════════════════════════════════════════════════════════════════
+    pdf.add_page()
+    pdf.set_fill_color(*accent)
+    pdf.rect(0, 0, PAGE_W, 3.5, "F")
+    pdf.set_auto_page_break(auto=True, margin=20)
+    pdf.set_y(12)
+
+    # Client custom intro sections
+    custom_sections = config.get("content", {}).get("customSections", [])
+    for section in custom_sections:
+        sec_type = section.get("type", "body")
+        title_ja = section.get("titleJa", "")
+        body_ja = section.get("bodyJa", "")
+        if title_ja:
+            pdf.section_heading(title_ja)
+        if body_ja:
+            pdf.body(body_ja)
+        pdf.divider()
+
+    # ── Customer Voices (list, grouped by product) ──
+    if materials:
+        pdf.section_heading("掲載者一覧 ── TokiQR")
+        pdf.body(
+            "本号に掲載されているTokiQRの一覧です。"
+            "QRコードをスマートフォンでスキャンすると肉声を再生できます。"
+        )
+
+        quartz = [m for m in materials if m.get("product") == "quartz"]
+        laminate = [m for m in materials if m.get("product") != "quartz"]
+
+        if quartz:
+            pdf.body_bold("◆ クォーツガラス版")
+            for m in quartz:
+                pdf.body(f"　{m['displayName']}（{m['orderId']}）")
+
+        if laminate:
+            pdf.body_bold("◆ ラミネート版")
+            for m in laminate:
+                pdf.body(f"　{m['displayName']}（{m['orderId']}）")
+
+        pdf.divider()
+
+    # ═══════════════════════════════════════════════════════════════════
+    # TokiQR Cover Page (巻末扉) — only if materials exist
+    # ═══════════════════════════════════════════════════════════════════
+    if materials:
+        pdf.add_page()
+        pdf.set_fill_color(*accent)
+        pdf.rect(0, 0, PAGE_W, 3.5, "F")
+        pdf.set_auto_page_break(auto=False)
+        pdf.set_y(30)
+        pdf.set_font("JP", "", 9)
+        pdf.set_text_color(*accent)
+        pdf.cell(0, 6, "── 巻末セクション ──", align="C", new_x="LMARGIN", new_y="NEXT")
+        pdf.ln(6)
+
+        pdf.set_font("JP", "B", 20)
+        pdf.set_text_color(*DARK)
+        pdf.cell(0, 14, "TokiQR：ご利用者さまの声", align="C", new_x="LMARGIN", new_y="NEXT")
+        pdf.ln(8)
+
+        desc_w = 220
+        desc_x = (PAGE_W - desc_w) / 2
+        pdf.set_font("JP", "", 9.5)
+        pdf.set_text_color(*SECONDARY)
+        pdf.set_x(desc_x)
+
+        names_parts = []
+        if quartz:
+            names_parts.append("【クォーツガラス版】" + "、".join([m["displayName"] for m in quartz]))
+        if laminate:
+            names_parts.append("【ラミネート版】" + "、".join([m["displayName"] for m in laminate]))
+        names_text = "\n".join(names_parts)
+        pdf.multi_cell(desc_w, 6, (
+            f"{names_text}\n\n"
+            "次のページ以降に印刷されたQRコードをスマートフォンでスキャンすると、"
+            "ご利用者さまの肉声を再生できます。"
+        ), align="C")
+        pdf.ln(6)
+
+        box_w = 240
+        box_x = (PAGE_W - box_w) / 2
+        box_y = pdf.get_y()
+        pdf.set_fill_color(*BG_LIGHT)
+        pdf.set_draw_color(*BORDER)
+        pdf.rect(box_x, box_y, box_w, 30, "DF")
+        pdf.set_xy(box_x + 10, box_y + 5)
+        pdf.set_font("JP", "B", 9)
+        pdf.set_text_color(*DARK)
+        pdf.multi_cell(box_w - 20, 6, (
+            "サーバーは不要です。データはQRコード内に完全に埋め込まれています。\n"
+            "インターネット接続があればスマートフォンだけで再生可能。\n"
+            "100年後でも、このQRコードが残っていれば声は蘇ります。"
+        ), align="C")
+
+        pdf._footer_line(f"{pub_name_ja}　巻末 TokiQR")
+
+    # ═══════════════════════════════════════════════════════════════════
+    # Back Cover
+    # ═══════════════════════════════════════════════════════════════════
+    pdf.add_page()
+    pdf.set_fill_color(*accent)
+    pdf.rect(0, 0, PAGE_W, 3.5, "F")
+    pdf.set_auto_page_break(auto=False)
+
+    pdf.set_y(35)
+    pdf.set_font("JP", "B", 12)
+    pdf.set_text_color(*DARK)
+    pdf.cell(0, 8, "国立国会図書館 納本宣言", align="C", new_x="LMARGIN", new_y="NEXT")
+    pdf.ln(6)
+
+    decl_w = 200
+    decl_x = (PAGE_W - decl_w) / 2
+    pdf.set_font("JP", "", 9)
+    pdf.set_text_color(*SECONDARY)
+    pdf.set_x(decl_x)
+    pdf.multi_cell(decl_w, 6, (
+        "本誌は、国立国会図書館法（第25条の4）に基づき、"
+        "オンライン資料として国立国会図書館に納本されます。\n\n"
+        "This publication is deposited with the National Diet Library "
+        "of Japan under Article 25-4 of the National Diet Library Law."
+    ), align="C")
+
+    pdf.ln(12)
+    pdf.divider()
+    pdf.ln(4)
+
+    pdf.set_font("JP", "", 8)
+    pdf.set_text_color(*MUTED)
+    pdf.cell(0, 5, f"© {year} {publisher}. All rights reserved.", align="C",
+             new_x="LMARGIN", new_y="NEXT")
+    pdf.cell(0, 5, PUBLISHER_URL, align="C", new_x="LMARGIN", new_y="NEXT")
+
+    pdf._footer_line(f"{pub_name_ja}　第{volume}巻 第{issue_num}号　裏表紙")
+
+    # ═══════════════════════════════════════════════════════════════════
+    # Output — merge TokiQR PDFs before back cover
+    # ═══════════════════════════════════════════════════════════════════
+    out_dir = os.path.join(repo_dir, "output")
+    os.makedirs(out_dir, exist_ok=True)
+    out_path = os.path.join(out_dir, f"{month_str}.pdf")
+
+    # Collect TokiQR PDFs from client repo materials
+    tokiqr_pdfs = []
+    for m in materials:
+        p = os.path.join(repo_dir, m.get("tokiqrPdf", ""))
+        if os.path.exists(p):
+            tokiqr_pdfs.append(p)
+
+    if tokiqr_pdfs:
+        from pypdf import PdfReader, PdfWriter
+
+        tmp_path = out_path + ".tmp"
+        pdf.output(tmp_path)
+        print(f"  Base PDF: {tmp_path}")
+
+        newsletter = PdfReader(tmp_path)
+        writer = PdfWriter()
+
+        for i in range(len(newsletter.pages) - 1):
+            writer.add_page(newsletter.pages[i])
+
+        for tp in tokiqr_pdfs:
+            reader = PdfReader(tp)
+            for page in reader.pages:
+                writer.add_page(page)
+            print(f"  TokiQR merged: {tp}")
+
+        writer.add_page(newsletter.pages[-1])
+
+        with open(out_path, "wb") as f:
+            writer.write(f)
+        os.remove(tmp_path)
+    else:
+        pdf.output(out_path)
+        print("  (No TokiQR PDFs found — skipped merge)")
+
+    size_kb = os.path.getsize(out_path) / 1024
+    print(f"  -> {out_path} ({size_kb:.1f} KB)")
+    return out_path
+
+
 if __name__ == "__main__":
     print("Generating TokiStorage Newsletter...")
-    if len(sys.argv) >= 5:
-        year = int(sys.argv[1])
-        month = int(sys.argv[2])
-        issue_num = int(sys.argv[3])
-        serial = int(sys.argv[4])
+
+    # Parse --client-config flag
+    client_config = None
+    args = sys.argv[1:]
+    if "--client-config" in args:
+        idx = args.index("--client-config")
+        client_config = args[idx + 1]
+        args = args[:idx] + args[idx + 2:]
+
+    if client_config:
+        if len(args) >= 4:
+            year, month, issue_num, serial = int(args[0]), int(args[1]), int(args[2]), int(args[3])
+        else:
+            print("Usage: generate-newsletter.py <year> <month> <issue_num> <serial> --client-config <path>")
+            sys.exit(1)
+        generate_client_issue(client_config, year, month, issue_num, serial)
+    elif len(args) >= 4:
+        year, month, issue_num, serial = int(args[0]), int(args[1]), int(args[2]), int(args[3])
         generate_issue(year, month, issue_num, serial)
     else:
         generate_vol1()
