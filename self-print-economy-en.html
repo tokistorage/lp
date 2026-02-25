@@ -144,7 +144,37 @@
 
         <p>And QR codes generated in bulk mode are for you to print yourself. TokiStorage does not manufacture them. On your own printer, on your own paper, at your own timing. This is the essence of the self-print concept.</p>
 
-        <h2>3. N-1 &mdash; The Meaning of the First QR Being Free</h2>
+        <h2>3. The Experience Bulk Mode Unlocks</h2>
+
+        <p>Let the numbers speak. In normal mode, the data capacity of a single QR code is approximately 2,140 bytes. For audio, that means a maximum of about 29 seconds at Codec2's 450 bps mode. For images, a maximum of 320&times;320 pixels, roughly 2 KB of WebP. For text, 5,000 characters. This is the physical ceiling of a single QR code.</p>
+
+        <p>Bulk mode removes that ceiling. Data is split across multiple QR codes, stacking approximately 2,140 bytes per code. 24 codes yield about 50 KB; 48 codes about 100 KB. Add more codes, and the capacity has no upper bound.</p>
+
+        <h3>The Impact of the Opus Codec</h3>
+
+        <p>Normal mode audio is encoded with Codec2. Codec2 is an audio codec compressed to the extreme &mdash; at 450 bps, just 57 bytes per second. It can pack 29 seconds of voice into a single QR, but the sound quality is robotic. You can tell who is speaking, but the subtleties of emotion, the nuances of tone, are lost.</p>
+
+        <p>Bulk mode unlocks the Opus codec. Opus is the industry-standard codec used in VoIP calls worldwide, Discord, YouTube, and Spotify. At the 12 kbps mode, recording quality approaches natural human voice. Laughter, sighs, trembling in the voice, the trailing echo of a sentence &mdash; emotional details that vanish in Codec2 are preserved intact in Opus.</p>
+
+        <p>And there is no time limit. More precisely, there is a recording cap, but duration is determined by the number of QR codes, not by codec constraints. At Opus 12 kbps, approximately 1.5 KB per second. 48 QR codes hold about 64 seconds. 96 codes hold over two minutes. Add more and it keeps growing. A five-minute speech, a ten-minute reading, a thirty-minute lecture &mdash; all physically possible.</p>
+
+        <p>What this means is that voice preservation shifts from "memo" to "work." Twenty-nine seconds of Codec2 is for leaving a brief message. Opus in bulk mode is for speaking your heart. A wedding speech in full. A letter to your child, emotions and all. A parent's voice during illness, trembling included.</p>
+
+        <h3>Images Unbound</h3>
+
+        <p>Images undergo the same structural liberation. Normal mode images max out at 320&times;320 pixels, roughly 2 KB of WebP. That is thumbnail-scale &mdash; you can barely make out a person's expression, and background detail is crushed.</p>
+
+        <p>Bulk mode supports up to 1024&times;1024 pixels at 85% WebP quality, approximately 100 KB. This is resolution fit for viewing as a photograph. You can read each person's expression in a family photo. Depth perception in a landscape comes through. Handwritten text becomes legible. Roughly 50 times the data of normal mode transforms an image from "symbol" to "record."</p>
+
+        <p>Moreover, there are no height or width constraints. Normal mode forces compression into near-square dimensions, but bulk mode handles tall scroll images and wide panorama photographs as they are. Aspect ratio need not be sacrificed.</p>
+
+        <h3>Unlimited Text</h3>
+
+        <p>Text in normal mode caps at 5,000 characters. Brotli compression effectively stretches this somewhat, but long-form writing hits a wall. In bulk mode, the character limit is removed entirely. Wills, letters, diaries, poetry collections &mdash; write as much as you want without counting characters.</p>
+
+        <p>All of these expansions run on the same principle: split the data, secure capacity through QR code count. Technically simple, yet revolutionary as a user experience. From a world of compressing everything into a single QR code to a world of adding as many codes as expression demands. From design that optimizes within constraints to design that removes the constraints themselves.</p>
+
+        <h2>4. N-1 &mdash; The Meaning of the First QR Being Free</h2>
 
         <p>The billing structure of bulk mode is called "N-1." N is the number of QR codes your data is split into. The first is always free. From the second onward, each costs 1 credit (150 yen). This means that if your data fits in a single code, bulk mode costs nothing.</p>
 
@@ -158,7 +188,7 @@
             If it fits in one QR code, it is free. For two or more, the price is the same everywhere in the world &mdash; 150 yen per code. No subscription, no account, no personal information. This is not a pricing strategy. It is a design principle.
         </div>
 
-        <h2>4. The Design Philosophy of Prepaid Credits</h2>
+        <h2>5. The Design Philosophy of Prepaid Credits</h2>
 
         <p>As the billing mechanism for bulk mode, we designed prepaid credits. One credit equals 150 yen ($1). Purchased in packs and activated by entering a code. Every aspect of this system is intentional.</p>
 
@@ -168,7 +198,7 @@
 
         <p>Third, the credit balance is stored in the user's browser (IndexedDB). The server holds no balance information. More on this later, but this choice required resolve.</p>
 
-        <h2>5. Why Wise, Not Credit Cards</h2>
+        <h2>6. Why Wise, Not Credit Cards</h2>
 
         <p>The reason for not adopting credit card payments is straightforward. Credit card processing fees run 3&ndash;5% on a 150-yen product. Add monthly fixed costs for a payment processor, PCI DSS compliance costs, and above all &mdash; card payments inevitably require collecting personal information: name, address, card number.</p>
 
@@ -178,7 +208,7 @@
 
         <p>The uniform price &mdash; 1 credit at 150 yen ($1) &mdash; applies regardless of country or currency. Whether purchased in Japanese yen, euros, or Brazilian reais, one credit is one credit. This is none other than the application of the principle articulated in the "Uniform Pricing" essay to the credit system.</p>
 
-        <h2>6. IndexedDB as a Choice &mdash; The Resolve Not to Hold User Data</h2>
+        <h2>7. IndexedDB as a Choice &mdash; The Resolve Not to Hold User Data</h2>
 
         <p>Storing credit balances in the browser's IndexedDB rather than on a server. By conventional service design standards, this choice has obvious drawbacks.</p>
 
@@ -194,7 +224,7 @@
             <p>We store credits in the browser, not on our server. We cannot track, cannot revoke, cannot help with losses. That asymmetry is intentional. A tool that respects independence must also accept the limits of that respect.</p>
         </div>
 
-        <h2>7. Why a "Service That Holds Nothing" Is Abnormal</h2>
+        <h2>8. Why a "Service That Holds Nothing" Is Abnormal</h2>
 
         <p>As a premise, virtually every modern web service operates by "holding user information." This is not malice but structural inevitability. Provide a service → need to identify users → create accounts → collect personal information → store that information → storage requires security → security costs money → need ads or subscriptions to recoup costs → ads require user behavior data → collect even more information. This chain is something like the original sin of web services.</p>
 
@@ -256,7 +286,7 @@
 
         <p>The very concept of a user base has been abandoned. We do not know who is using it. We do not even know precisely how many are using it. Yet a service that works has been built. This is a technical achievement and, at the same time, an intellectual one.</p>
 
-        <h2>8. The Coexistence of Physical QR and Self-Print</h2>
+        <h2>9. The Coexistence of Physical QR and Self-Print</h2>
 
         <p>Physical QR products and self-print are not in competition. Nor are they premium and budget versions of the same service. They are expressions of fundamentally different design philosophies serving fundamentally different needs.</p>
 
@@ -266,7 +296,7 @@
 
         <p>This relationship resembles that between a professional photo studio and a home printer. Having a studio produce a family portrait album versus printing a smartphone photo yourself. Both are acts of preserving a photograph, but what they seek differs. One offers professional finishing and archival quality. The other offers immediacy and self-determination. Not a matter of superiority, but of choice.</p>
 
-        <h2>9. What the Self-Print Economy Means</h2>
+        <h2>10. What the Self-Print Economy Means</h2>
 
         <p>Bulk mode, prepaid credits, Wise transfers, IndexedDB storage, no account required &mdash; when these elements combine, what emerges is an economy.</p>
 
