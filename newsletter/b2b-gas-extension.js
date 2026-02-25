@@ -1,73 +1,440 @@
 /**
- * B2B NDL Newsletter Publishing Service — GAS Extension
- * PDF Native Pipeline (v2)
+ * NDL Newsletter Publishing Service — GAS Extension
+ * PDF Native Pipeline (v3: 特集権ベース)
  *
  * このファイルは qr/gas/code.gs の末尾に追記するコードです。
  * GASエディタで手動でペーストしてください。
  *
- * 新モデル:
- *   TokiQR PDF生成 → 奥付+通巻番号付きPDF → output/TQ-NNNNN.pdf として
- *   クライアントリポジトリに直接コミット → そのまま逐次刊行物1号として公開
- *   → NDL自動収集
+ * v3 変更点 (v2からの移行):
+ *   - B2B wiseTagベース → 特集権ベース（個人・法人共通）
+ *   - バッチ発行 → 即時発行（TokiQR PDF = 1号）
+ *   - processStoragePipeline()経由 → クライアント直接リクエスト
  *
- * processStoragePipeline() 内のスプレッドシート更新の直前に
- * 以下の呼び出しを追加してください:
+ * アーキテクチャ:
+ *   1. ユーザーが特集権を購入（Wise → TOKI-XXXX コード → type: tokushu）
+ *   2. ユーザーがコードを有効化 → { tokushu: N } を返す
+ *   3. ユーザーがバルクモードで新シリーズ開設 → series_open リクエスト
+ *      → GitHub リポジトリ自動作成 → GitHub Pages 有効化
+ *   4. ユーザーがバルク生成（献本チェック済み）→ ndl_submit リクエスト
+ *      → TokiQR PDF（奥付付き）生成 → output/TQ-NNNNN.pdf コミット
+ *      → schedule.json 更新 → PR自動マージ → NDL自動収集
  *
- *   // ── B2Bクライアントリポジトリにもルーティング ──
- *   if (forNewsletter.length > 0) {
- *     try {
- *       routeToB2BClientRepos(forNewsletter);
- *     } catch (e) {
- *       sendEmail(NOTIFY_EMAIL, '【B2B】ルーティングエラー', e.message);
- *     }
- *   }
+ * ┌──────────────────────────────────────────────┐
+ * │ code.gs doPost() に追加するルーティング:      │
+ * │                                              │
+ * │   if (data.type === 'series_open')           │
+ * │     return handleSeriesOpen(ss, data);       │
+ * │                                              │
+ * │   if (data.type === 'ndl_submit')            │
+ * │     return handleNdlSubmit(ss, data);        │
+ * └──────────────────────────────────────────────┘
+ *
+ * ┌──────────────────────────────────────────────────────────────┐
+ * │ code.gs handleWiseWebhook() の TOKI コード検出部分を置換:    │
+ * │ (transfers#state-change / balances#credit 両方)              │
+ * │                                                              │
+ * │   var tokiMatch = ref.match(                                 │
+ * │     /TOKI-[A-Z0-9]{4}-[A-Z0-9]{4}-[A-Z0-9]{4}/);          │
+ * │   if (!orderMatch && tokiMatch) {                            │
+ * │     var amt = ...; var cur = ...;                            │
+ * │     var isTokushu = /Tokushu/i.test(ref);                   │
+ * │     if (isTokushu) {                                         │
+ * │       var count = Math.floor(                                │
+ * │         amt / (PRICES_TOKUSHU[cur]                           │
+ * │               || PRICES_TOKUSHU['JPY']));                    │
+ * │       if (count < 1) count = 1;                              │
+ * │       registerCreditCode(ss, tokiMatch[0], count, 'tokushu');│
+ * │     } else {                                                 │
+ * │       var count = Math.floor(                                │
+ * │         amt / (PRICES.credit[cur]                            │
+ * │               || PRICES.credit['JPY']));                     │
+ * │       if (count < 1) count = 1;                              │
+ * │       registerCreditCode(ss, tokiMatch[0], count, 'multiQR');│
+ * │     }                                                        │
+ * │   }                                                          │
+ * └──────────────────────────────────────────────────────────────┘
+ *
+ * ┌──────────────────────────────────────────────────────────────┐
+ * │ code.gs CREDIT_SHEET_NAME のヘッダー変更:                    │
+ * │   旧: '日時','コード','クレジット数','注文番号',             │
+ * │       'メールアドレス','ステータス','使用日時'               │
+ * │   新: '日時','コード','数量','タイプ',                       │
+ * │       '注文番号','メールアドレス','ステータス','使用日時'    │
+ * │                                                              │
+ * │ registerCreditCode() 修正:                                   │
+ * │   function registerCreditCode(ss, code, count, type) {       │
+ * │     type = type || 'multiQR';                                │
+ * │     var sheet = getOrCreateSheet(ss, CREDIT_SHEET_NAME, [    │
+ * │       '日時','コード','数量','タイプ',                       │
+ * │       '注文番号','メールアドレス','ステータス','使用日時'    │
+ * │     ]);                                                      │
+ * │     // 重複チェック（既存と同じ）                            │
+ * │     sheet.appendRow([                                        │
+ * │       new Date(), code, count, type,                         │
+ * │       'codeless', '', '未使用', ''                           │
+ * │     ]);                                                      │
+ * │   }                                                          │
+ * │                                                              │
+ * │ handleCreditActivation() 修正:                               │
+ * │   var type = rows[i][3]; // タイプ列（新: index 3）         │
+ * │   var count = rows[i][2];                                    │
+ * │   sheet.getRange(i + 2, 7).setValue('使用済み');  // 列ずれ  │
+ * │   sheet.getRange(i + 2, 8).setValue(new Date()); // 列ずれ  │
+ * │   if (type === 'tokushu') {                                  │
+ * │     return json({ success: true, tokushu: count });          │
+ * │   } else {                                                   │
+ * │     return json({ success: true, credits: count });          │
+ * │   }                                                          │
+ * └──────────────────────────────────────────────────────────────┘
  *
  * タイマートリガー設定:
- *   - sendMonthlyB2BReport() → 毎月1日 9:00（アクティビティレポート）
+ *   - sendMonthlySeriesReport() → 毎月1日 9:00（アクティビティレポート）
  */
 
 // =====================================================
-// B2B NDL Newsletter Publishing Service — PDF Native
+// NDL Newsletter Publishing — PDF Native (v3)
 // =====================================================
 
-var B2B_SHEET_NAME = 'B2Bクライアント';
-var B2B_SHEET_HEADERS = [
-  '日時', 'クライアントID', '名称', 'リポジトリ', 'ステータス',
-  'プラン', 'Wiseタグ', 'セットアップ価格',
-  '作成日', '備考'
+var PRICES_TOKUSHU = { JPY: 9900, USD: 66 };
+
+var SERIES_SHEET_NAME = '特集シリーズ';
+var SERIES_SHEET_HEADERS = [
+  '日時', 'シリーズ名', 'クライアントID', 'リポジトリ', 'ステータス',
+  '発行数', '作成日', '備考'
 ];
 
+// ── ヘルパー ──
+
+function jsonResponse(obj) {
+  return ContentService
+    .createTextOutput(JSON.stringify(obj))
+    .setMimeType(ContentService.MimeType.JSON);
+}
+
+// ── シリーズ管理 ──
+
 /**
- * B2Bクライアント一覧を取得
+ * 特集シリーズ一覧を取得
  */
-function getB2BClients() {
+function getSeriesList() {
   var ss = SpreadsheetApp.openById(SPREADSHEET_ID);
-  var sheet = ss.getSheetByName(B2B_SHEET_NAME);
+  var sheet = ss.getSheetByName(SERIES_SHEET_NAME);
   if (!sheet || sheet.getLastRow() < 2) return [];
-  var data = sheet.getRange(2, 1, sheet.getLastRow() - 1, 10).getValues();
+  var data = sheet.getRange(2, 1, sheet.getLastRow() - 1, 8).getValues();
   return data.filter(function(r) { return r[1]; }).map(function(r) {
     return {
       date: r[0],
-      clientId: r[1],
-      clientName: r[2],
+      seriesName: r[1],
+      clientId: r[2],
       repo: r[3],
       status: r[4],
-      plan: r[5],
-      wiseTag: r[6],
-      setupPrice: r[7] || 9900,
-      createdAt: r[8],
-      note: r[9]
+      issueCount: r[5],
+      createdAt: r[6],
+      note: r[7]
     };
   });
 }
 
 /**
- * B2Bクライアント用リポジトリをプロビジョニング
- * newsletter/client-template/ をベースにリポジトリを作成
+ * シリーズ名からアクティブなシリーズを検索
+ */
+function findSeries(seriesName) {
+  if (!seriesName) return null;
+  var list = getSeriesList();
+  for (var i = 0; i < list.length; i++) {
+    if (list[i].seriesName === seriesName && list[i].status === 'active') {
+      return list[i];
+    }
+  }
+  return null;
+}
+
+/**
+ * シリーズ名からクライアントIDを生成
+ * ハッシュ + タイムスタンプで一意性を確保
+ */
+function generateClientId(seriesName) {
+  var hash = 0;
+  for (var i = 0; i < seriesName.length; i++) {
+    hash = ((hash << 5) - hash) + seriesName.charCodeAt(i);
+    hash |= 0;
+  }
+  var ts = Utilities.formatDate(new Date(), 'Asia/Tokyo', 'yyyyMMddHHmm');
+  return 'ts-' + Math.abs(hash).toString(36) + '-' + ts;
+}
+
+/**
+ * シリーズの発行数を更新
+ */
+function updateSeriesIssueCount(ss, seriesName, count) {
+  var sheet = ss.getSheetByName(SERIES_SHEET_NAME);
+  if (!sheet || sheet.getLastRow() < 2) return;
+  var rows = sheet.getRange(2, 2, sheet.getLastRow() - 1, 1).getValues();
+  for (var i = 0; i < rows.length; i++) {
+    if (rows[i][0] === seriesName) {
+      sheet.getRange(i + 2, 6).setValue(count); // 発行数列
+      return;
+    }
+  }
+}
+
+// ── 通巻番号計算 ──
+
+/**
+ * 通巻番号からボリューム・号を計算（式年遷宮型: 1巻 = 20年）
+ */
+function calcVolumeNumber(serial, startYear, durationYears) {
+  var now = new Date();
+  var currentYear = parseInt(Utilities.formatDate(now, 'Asia/Tokyo', 'yyyy'));
+  var volume = Math.floor((currentYear - startYear) / durationYears) + 1;
+  return { volume: volume, number: serial };
+}
+
+// ── エンドポイント: series_open ──
+
+/**
+ * 特集シリーズ開設
  *
- * @param {string} clientId - クライアントID (e.g., "hilton-urayasu")
- * @param {string} clientName - クライアント名 (e.g., "ヒルトン東京ベイ")
+ * リクエスト:
+ *   { type: 'series_open', seriesName: '佐藤家族' }
+ *
+ * レスポンス:
+ *   { success: true, repo: 'tokistorage/newsletter-client-ts-xxx',
+ *     pagesUrl: 'https://tokistorage.github.io/newsletter-client-ts-xxx/' }
+ *
+ * 処理:
+ *   1. 同名シリーズが存在すれば既存情報を返す
+ *   2. なければ client-config.json を組み立て
+ *   3. provisionClientRepo() でリポジトリ作成
+ *   4. シリーズシートに記録
+ *   5. 管理者通知
+ */
+function handleSeriesOpen(ss, data) {
+  var seriesName = (data.seriesName || '').trim();
+  if (!seriesName) {
+    return jsonResponse({ success: false, error: 'missing_series_name' });
+  }
+
+  // 既存シリーズチェック（冪等性: 同名で再呼び出しされても安全）
+  var existing = findSeries(seriesName);
+  if (existing) {
+    var existingRepoName = existing.repo.split('/')[1] || existing.repo;
+    return jsonResponse({
+      success: true,
+      repo: existing.repo,
+      pagesUrl: 'https://tokistorage.github.io/' + existingRepoName + '/',
+      note: 'already_exists'
+    });
+  }
+
+  var clientId = generateClientId(seriesName);
+  var startYear = parseInt(Utilities.formatDate(new Date(), 'Asia/Tokyo', 'yyyy'));
+
+  var config = {
+    clientId: clientId,
+    clientName: seriesName,
+    serviceType: 'general',
+    branding: {
+      accentColor: [37, 99, 235],
+      publicationNameJa: seriesName + ' 特集',
+      publicationNameEn: seriesName + ' Special Feature',
+      tagline: '\u2500\u2500 ' + seriesName + ' \u2500\u2500'
+    },
+    colophon: {
+      publisher: 'TokiStorage\uff08\u4f50\u85e4\u5353\u4e5f\uff09',
+      publisherAddress: '\u3012279-0014 \u5343\u8449\u770c\u6d66\u5b89\u5e02\u660e\u6d772-11-13',
+      contentOriginator: seriesName,
+      legalBasis: '\u56fd\u7acb\u56fd\u4f1a\u56f3\u66f8\u9928\u6cd5 \u7b2c25\u6761\u30fb\u7b2c25\u6761\u306e4',
+      note: '\u672c\u8a8c\u306f TokiStorage \u304c\u767a\u884c\u8005\u3068\u3057\u3066\u7d0d\u672c\u3059\u308b\u9010\u6b21\u520a\u884c\u7269\u3067\u3059\u3002'
+    },
+    schedule: {
+      volumeDurationYears: 20,
+      startYear: startYear
+    },
+    status: 'active'
+  };
+
+  // リポジトリ作成
+  var repo = provisionClientRepo(clientId, seriesName, config);
+  var repoName = repo.split('/')[1];
+
+  // シリーズシートに記録
+  var sheet = getOrCreateSheet(ss, SERIES_SHEET_NAME, SERIES_SHEET_HEADERS);
+  sheet.appendRow([
+    new Date(), seriesName, clientId, repo, 'active', 0, new Date(), ''
+  ]);
+
+  // 管理者通知
+  sendEmail(NOTIFY_EMAIL,
+    '\u3010NDL\u3011\u65b0\u30b7\u30ea\u30fc\u30ba\u958b\u8a2d: ' + seriesName,
+    '\u30b7\u30ea\u30fc\u30ba: ' + seriesName + '\n'
+    + '\u30ea\u30dd\u30b8\u30c8\u30ea: https://github.com/' + repo + '\n'
+    + 'Pages: https://tokistorage.github.io/' + repoName + '/\n');
+
+  return jsonResponse({
+    success: true,
+    repo: repo,
+    pagesUrl: 'https://tokistorage.github.io/' + repoName + '/'
+  });
+}
+
+// ── エンドポイント: ndl_submit ──
+
+/**
+ * NDL献本提出
+ *
+ * リクエスト:
+ *   {
+ *     type: 'ndl_submit',
+ *     seriesName: '佐藤家族',
+ *     title: '結婚式メッセージ',
+ *     urls: ['play.html?m=7&c2=...', 'play.html?m=7&c2=...'],
+ *     metadata: {
+ *       ts: '2026-02-25T10:00:00',
+ *       tz: 'Asia/Tokyo',
+ *       type: 'audio',
+ *       chunkCount: 3
+ *     }
+ *   }
+ *
+ * レスポンス:
+ *   { success: true, serial: 1, filename: 'TQ-00001.pdf',
+ *     pagesUrl: 'https://tokistorage.github.io/.../output/TQ-00001.pdf' }
+ *
+ * 処理:
+ *   1. シリーズ検索 → クライアントリポジトリ特定
+ *   2. schedule.json → 通巻番号インクリメント
+ *   3. client-config.json → 奥付データ取得
+ *   4. TokiQR PDF生成（奥付付き）
+ *   5. output/TQ-NNNNN.pdf をブランチにコミット
+ *   6. schedule.json を更新・コミット
+ *   7. PR作成（auto-mergeで即マージ）
+ *   8. シリーズシートの発行数を更新
+ *   9. 管理者通知
+ */
+function handleNdlSubmit(ss, data) {
+  var seriesName = (data.seriesName || '').trim();
+  if (!seriesName) {
+    return jsonResponse({ success: false, error: 'missing_series_name' });
+  }
+
+  var series = findSeries(seriesName);
+  if (!series) {
+    return jsonResponse({ success: false, error: 'series_not_found' });
+  }
+
+  var urls = data.urls || [];
+  if (urls.length === 0) {
+    return jsonResponse({ success: false, error: 'no_urls' });
+  }
+
+  // schedule.json 読み込み
+  var scheduleJson = readFileFromGitHub('schedule.json', series.repo);
+  if (!scheduleJson) {
+    return jsonResponse({ success: false, error: 'schedule_not_found' });
+  }
+  var schedule = JSON.parse(scheduleJson);
+
+  // 通巻番号インクリメント
+  var nextSerial = (schedule.current_serial || 0) + 1;
+  var startYear = schedule.volume_start_year || 2026;
+  var duration = schedule.volume_duration_years || 20;
+  var vn = calcVolumeNumber(nextSerial, startYear, duration);
+
+  // client-config.json 読み込み
+  var configJson = readFileFromGitHub('client-config.json', series.repo);
+  var clientConfig = configJson ? JSON.parse(configJson) : {};
+
+  // ファイル名
+  var serialStr = String(nextSerial).padStart(5, '0');
+  var filename = 'TQ-' + serialStr + '.pdf';
+  var pdfPath = 'output/' + filename;
+
+  // PDF生成（奥付付き）
+  var order = {
+    name: data.title || seriesName,
+    qrUrl: urls[0],
+    urls: urls,
+    metadata: data.metadata || {}
+  };
+
+  try {
+    var pdfBase64 = generateTokiqrNewsletter(
+      order, clientConfig, nextSerial, vn.volume, vn.number);
+
+    // ブランチ作成 → PDF + schedule.json コミット → PR
+    var branch = 'tq-' + serialStr;
+    createGitHubBranch(branch, series.repo);
+
+    commitBinaryFileOnBranch(pdfPath, pdfBase64,
+      'Publish ' + filename, branch, series.repo);
+
+    var today = Utilities.formatDate(new Date(), 'Asia/Tokyo', 'yyyy-MM-dd');
+    var newIssue = {
+      date: today,
+      serial: nextSerial,
+      volume: vn.volume,
+      number: vn.number,
+      status: 'published',
+      filename: filename,
+      title: data.title || '',
+      urlCount: urls.length
+    };
+    schedule.current_serial = nextSerial;
+    schedule.issues.push(newIssue);
+    commitFileOnBranch('schedule.json', JSON.stringify(schedule, null, 2),
+      'Update schedule: ' + filename, branch, series.repo);
+
+    createGitHubPR(
+      'Publish ' + filename + ': ' + (data.title || seriesName),
+      branch,
+      'NDL serial publication #' + nextSerial + '\n'
+      + 'URLs: ' + urls.length + '\n'
+      + 'Title: ' + (data.title || ''),
+      series.repo
+    );
+
+    // シリーズシートの発行数を更新
+    updateSeriesIssueCount(ss, seriesName, nextSerial);
+
+    // 管理者通知
+    var repoName = series.repo.split('/')[1] || series.repo;
+    sendEmail(NOTIFY_EMAIL,
+      '\u3010NDL\u3011' + filename + ' \u767a\u884c: ' + (data.title || seriesName),
+      '\u30b7\u30ea\u30fc\u30ba: ' + seriesName + '\n'
+      + '\u30bf\u30a4\u30c8\u30eb: ' + (data.title || '') + '\n'
+      + '\u30d5\u30a1\u30a4\u30eb: ' + filename + '\n'
+      + '\u901a\u5dfb: \u7b2c' + nextSerial + '\u53f7\uff08\u7b2c' + vn.volume + '\u5dfb \u7b2c' + vn.number + '\u53f7\uff09\n'
+      + 'URL\u6570: ' + urls.length + '\n'
+      + '\u30ea\u30dd\u30b8\u30c8\u30ea: https://github.com/' + series.repo + '\n'
+      + 'PDF: https://tokistorage.github.io/' + repoName + '/' + pdfPath);
+
+    return jsonResponse({
+      success: true,
+      serial: nextSerial,
+      filename: filename,
+      pagesUrl: 'https://tokistorage.github.io/' + repoName + '/' + pdfPath
+    });
+  } catch (e) {
+    sendEmail(NOTIFY_EMAIL,
+      '\u3010NDL\u3011\u767a\u884c\u30a8\u30e9\u30fc: ' + seriesName,
+      '\u30b7\u30ea\u30fc\u30ba: ' + seriesName + '\n'
+      + '\u30a8\u30e9\u30fc: ' + e.message + '\n'
+      + '\u30b9\u30bf\u30c3\u30af: ' + e.stack);
+    return jsonResponse({ success: false, error: 'publish_failed', message: e.message });
+  }
+}
+
+// ── リポジトリプロビジョニング ──
+
+/**
+ * クライアントリポジトリを作成
+ * newsletter/client-template/ をベースに GitHub リポジトリを自動構築
+ *
+ * @param {string} clientId - クライアントID (e.g., "ts-abc123-202602251000")
+ * @param {string} clientName - 表示名 (e.g., "佐藤家族")
  * @param {object} config - client-config.json の内容
+ * @returns {string} リポジトリフルネーム (e.g., "tokistorage/newsletter-client-ts-abc123-202602251000")
  */
 function provisionClientRepo(clientId, clientName, config) {
   var repoName = 'newsletter-client-' + clientId;
@@ -76,7 +443,7 @@ function provisionClientRepo(clientId, clientName, config) {
   // 1. リポジトリ作成
   fetchGitHubApi('/user/repos', 'POST', {
     name: repoName,
-    description: clientName + ' NDL Newsletter — Published by TokiStorage',
+    description: clientName + ' NDL Newsletter \u2014 Published by TokiStorage',
     homepage: 'https://tokistorage.github.io/' + repoName + '/',
     'private': false,
     has_issues: false,
@@ -105,7 +472,7 @@ function provisionClientRepo(clientId, clientName, config) {
   commitFileOnBranch('schedule.json', JSON.stringify(schedule, null, 2),
     'Add publication schedule', 'main', repo);
 
-  // 2c. index.html (GitHub Pages archive)
+  // 2c. index.html (GitHub Pages archive listing)
   var templateIndex = readFileFromGitHub('newsletter/client-template/index.html');
   if (templateIndex) {
     commitFileOnBranch('index.html', templateIndex,
@@ -131,83 +498,31 @@ function provisionClientRepo(clientId, clientName, config) {
   commitFileOnBranch('.github/workflows/auto-merge.yml', autoMerge,
     'Add auto-merge workflow', 'main', repo);
 
-  // 2e. asset/.gitkeep
-  commitFileOnBranch('asset/.gitkeep', '',
-    'Add asset directory', 'main', repo);
+  // 2e. output/.gitkeep (PDFの配置先)
+  commitFileOnBranch('output/.gitkeep', '',
+    'Add output directory', 'main', repo);
 
   // 3. GitHub Pages 有効化
   try {
     fetchGitHubApi('/repos/' + repo + '/pages', 'POST', {
       source: { branch: 'main', path: '/' }
     });
-  } catch (e) {}
-
-  // 4. B2Bクライアントシートに記録
-  var ss = SpreadsheetApp.openById(SPREADSHEET_ID);
-  var sheet = getOrCreateSheet(ss, B2B_SHEET_NAME, B2B_SHEET_HEADERS);
-  sheet.appendRow([
-    new Date(),
-    clientId,
-    clientName,
-    repo,
-    'active',
-    'one_time',
-    config.billing ? config.billing.wiseTag : clientId,
-    config.billing ? config.billing.setupPrice : 9900,
-    '',
-    new Date(),
-    ''
-  ]);
-
-  // 5. 管理者通知
-  sendEmail(NOTIFY_EMAIL,
-    '【B2B】クライアントリポジトリ作成: ' + clientName,
-    'クライアント: ' + clientName + ' (' + clientId + ')\n'
-    + 'リポジトリ: https://github.com/' + repo + '\n'
-    + 'Pages: https://tokistorage.github.io/' + repoName + '/\n\n'
-    + 'config:\n' + configJson);
+  } catch (e) {
+    // Pages が既に有効の場合は無視
+  }
 
   return repo;
 }
 
-/**
- * 注文のパートナータグからB2Bクライアントを判定
- */
-function findB2BClient(wiseTag) {
-  if (!wiseTag) return null;
-  var clients = getB2BClients();
-  for (var i = 0; i < clients.length; i++) {
-    if (clients[i].wiseTag === wiseTag && clients[i].status === 'active') {
-      return clients[i];
-    }
-  }
-  return null;
-}
+// ── TokiQR ニュースレター PDF 生成 ──
 
 /**
- * 通巻番号からボリューム・号を計算（式年遷宮型: 1巻 = 20年）
- */
-function calcVolumeNumber(serial, startYear, durationYears) {
-  var now = new Date();
-  var currentYear = parseInt(Utilities.formatDate(now, 'Asia/Tokyo', 'yyyy'));
-  var volume = Math.floor((currentYear - startYear) / durationYears) + 1;
-
-  // この巻の開始serial を計算するのは困難なので、簡易的に serial = number とする
-  // 巻が変わった時にリセットするためにschedule.jsonの過去issuesを参照
-  return { volume: volume, number: serial };
-}
-
-/**
- * TokiQR PDFを別冊特集ニュースレターとして生成するための参照コード
+ * TokiQR PDFを別冊特集ニュースレターとして生成
  *
  * 各TokiQR PDFは独立した「別冊特集ニュースレター」として成立する。
- * 1ページ目がTokiQRコンテンツ、2ページ目が発行情報ページ。
- * NDLに献本されると逐次刊行物の1号になる。
+ * 1ページ目がTokiQRコンテンツ、最終ページが発行情報（奥付）。
  *
- * generateTokiqrPdf() を拡張して2ページ構成にする方式を推奨。
- * GASではPDFの直接編集が困難なため、Slides→PDF変換を使用。
- *
- * @param {Object} order - 注文オブジェクト
+ * @param {Object} order - { name, qrUrl, urls[], metadata }
  * @param {Object} clientConfig - client-config.json の内容
  * @param {number} serial - 通巻番号
  * @param {number} volume - 巻
@@ -215,72 +530,116 @@ function calcVolumeNumber(serial, startYear, durationYears) {
  * @returns {string} Base64エンコードされたPDF
  */
 function generateTokiqrNewsletter(order, clientConfig, serial, volume, number) {
-  // 1ページ目: TokiQRコンテンツ（既存レイアウト）
+  // 1ページ目: TokiQRコンテンツ（既存 generateTokiqrPdf を流用）
   var pdfBase64 = generateTokiqrPdf(order);
 
-  // 2ページ目: 別冊特集ニュースレター 発行情報
-  // ※ 以下は参照コード。実際のGAS実装では Slides→PDF 変換
+  // 2ページ目: 別冊特集ニュースレター 発行情報（奥付）
+  // ※ GAS実装では Google Slides → PDF → PDFマージ を推奨
+  // ※ または generateTokiqrPdf() 自体を2ページ構成に拡張
 
   var colophon = clientConfig.colophon || {};
   var branding = clientConfig.branding || {};
-  var today = Utilities.formatDate(new Date(), 'Asia/Tokyo', 'yyyy年MM月dd日');
+  var today = Utilities.formatDate(new Date(), 'Asia/Tokyo', 'yyyy\u5e74MM\u6708dd\u65e5');
+  var serialStr = String(serial).padStart(5, '0');
 
-  var newsletterText = [
-    '━━━━━━━━━━━━━━━━━━━━━━━━━━',
+  var colophonText = [
+    '\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501',
     '',
-    (branding.publicationNameJa || 'TokiQR') + ' 別冊特集',
-    '「' + (order.name || '') + '様」',
+    (branding.publicationNameJa || 'TokiQR') + ' \u5225\u518a\u7279\u96c6',
+    '\u300c' + (order.name || '') + '\u300d',
     '',
-    '通巻番号: 第' + serial + '号',
-    '巻号: 第' + volume + '巻 第' + number + '号',
-    '発行日: ' + today,
+    'TQ-' + serialStr,
+    '\u901a\u5dfb\u756a\u53f7: \u7b2c' + serial + '\u53f7',
+    '\u5dfb\u53f7: \u7b2c' + volume + '\u5dfb \u7b2c' + number + '\u53f7',
+    '\u767a\u884c\u65e5: ' + today,
     '',
-    '発行者: ' + (colophon.publisher || 'TokiStorage（佐藤卓也）'),
-    '特集: ' + (colophon.contentOriginator || clientConfig.clientName),
+    '\u767a\u884c\u8005: ' + (colophon.publisher || 'TokiStorage\uff08\u4f50\u85e4\u5353\u4e5f\uff09'),
+    '\u7279\u96c6: ' + (colophon.contentOriginator || clientConfig.clientName || ''),
     '',
-    '法的根拠: ' + (colophon.legalBasis || '国立国会図書館法 第25条・第25条の4'),
-    'フォーマット: PDF（電子書籍等・オンライン資料）',
-    '採番体系: 式年遷宮型（1巻＝20年）',
+    '\u6cd5\u7684\u6839\u62e0: ' + (colophon.legalBasis || '\u56fd\u7acb\u56fd\u4f1a\u56f3\u66f8\u9928\u6cd5 \u7b2c25\u6761\u30fb\u7b2c25\u6761\u306e4'),
+    '\u30d5\u30a9\u30fc\u30de\u30c3\u30c8: PDF\uff08\u96fb\u5b50\u66f8\u7c4d\u7b49\u30fb\u30aa\u30f3\u30e9\u30a4\u30f3\u8cc7\u6599\uff09',
+    '\u63a1\u756a\u4f53\u7cfb: \u5f0f\u5e74\u9077\u5bae\u578b\uff081\u5dfb\uff1d20\u5e74\uff09',
     '',
     colophon.note || '',
     '',
-    '━━━━━━━━━━━━━━━━━━━━━━━━━━',
-    '© TokiStorage'
+    '\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501',
+    '\u00a9 TokiStorage'
   ].join('\n');
 
-  // ※ 実際の実装:
-  // 1. Google Slidesで発行情報スライドを生成
-  // 2. PDF変換
-  // 3. 既存PDFとマージ（pdf-lib等）
-  // または generateTokiqrPdf() 内で直接2ページ構成にする
-
-  Logger.log('Newsletter TQ-' + String(serial).padStart(5, '0') + ':\n' + newsletterText);
+  // TODO: Slides→PDF変換 + PDFマージの実装
+  // 暫定的にログ出力のみ（pdfBase64 にはQRコンテンツのみ）
+  Logger.log('Newsletter TQ-' + serialStr + ':\n' + colophonText);
 
   return pdfBase64;
 }
 
+// ── 月次レポート ──
+
 /**
- * processStoragePipeline() のB2B拡張:
- * NDL納本対象注文をB2Bクライアントリポジトリにルーティング
- * 各TokiQR PDF = 1号として即時発行
+ * 全シリーズの月次アクティビティレポート（毎月1日タイマーで実行）
  */
-function routeToB2BClientRepos(forNewsletter) {
+function sendMonthlySeriesReport() {
+  var series = getSeriesList();
+  if (series.length === 0) return;
+
+  var now = new Date();
+  var lastMonth = new Date(now.getFullYear(), now.getMonth() - 1, 1);
+  var monthLabel = Utilities.formatDate(lastMonth, 'Asia/Tokyo', 'yyyy\u5e74MM\u6708');
+
+  var body = '\u3010NDL Newsletter \u6708\u6b21\u30ec\u30dd\u30fc\u30c8\u3011\n' + monthLabel + '\n\n';
+
+  series.forEach(function(s) {
+    if (s.status !== 'active') return;
+
+    var scheduleJson = readFileFromGitHub('schedule.json', s.repo);
+    if (!scheduleJson) return;
+    var schedule = JSON.parse(scheduleJson);
+
+    var lastMonthStr = Utilities.formatDate(lastMonth, 'Asia/Tokyo', 'yyyy-MM');
+    var monthIssues = schedule.issues.filter(function(i) {
+      return i.date && i.date.substring(0, 7) === lastMonthStr && i.status === 'published';
+    });
+
+    body += '\u2501\u2501\u2501 ' + s.seriesName + ' \u2501\u2501\u2501\n'
+      + '  \u767a\u884c\u6570: ' + monthIssues.length + '\u53f7\n'
+      + '  \u7d2f\u8a08: ' + schedule.current_serial + '\u53f7\n\n';
+  });
+
+  sendEmail(NOTIFY_EMAIL, '\u3010NDL\u3011\u6708\u6b21\u30ec\u30dd\u30fc\u30c8 ' + monthLabel, body);
+}
+
+// ── processStoragePipeline() 連携（物理注文からのルーティング）──
+
+/**
+ * processStoragePipeline() の拡張:
+ * NDL納本対象の物理注文をシリーズリポジトリにルーティング
+ *
+ * processStoragePipeline() 内で以下のように呼び出す:
+ *
+ *   if (forNewsletter.length > 0) {
+ *     try {
+ *       routeOrdersToSeries(forNewsletter);
+ *     } catch (e) {
+ *       sendEmail(NOTIFY_EMAIL, '【NDL】ルーティングエラー', e.message);
+ *     }
+ *   }
+ *
+ * ※ 物理注文（ラミネート/クォーツ）でstorageNdl='Yes'の場合に使用
+ * ※ 物理注文はデフォルトシリーズ 'TokiStorage' にルーティング
+ */
+function routeOrdersToSeries(forNewsletter) {
   if (!forNewsletter || forNewsletter.length === 0) return;
 
-  var clients = getB2BClients();
-  if (clients.length === 0) return;
-
-  var clientMap = {};
-  clients.forEach(function(c) { clientMap[c.wiseTag] = c; });
+  // デフォルトシリーズ（TokiStorage自身の特集）
+  var defaultSeries = findSeries('TokiStorage');
+  if (!defaultSeries) return;
 
   var routed = [];
 
   forNewsletter.forEach(function(o) {
-    var client = o.ref ? clientMap[o.ref.trim()] : null;
-    if (!client || client.status !== 'active') return;
+    if (!o.qrUrl) return;
 
-    // schedule.json 読み込み・シリアル番号インクリメント
-    var scheduleJson = readFileFromGitHub('schedule.json', client.repo);
+    var scheduleJson = readFileFromGitHub('schedule.json', defaultSeries.repo);
     if (!scheduleJson) return;
     var schedule = JSON.parse(scheduleJson);
 
@@ -289,99 +648,65 @@ function routeToB2BClientRepos(forNewsletter) {
     var duration = schedule.volume_duration_years || 20;
     var vn = calcVolumeNumber(nextSerial, startYear, duration);
 
-    // client-config.json 読み込み
-    var configJson = readFileFromGitHub('client-config.json', client.repo);
+    var configJson = readFileFromGitHub('client-config.json', defaultSeries.repo);
     var clientConfig = configJson ? JSON.parse(configJson) : {};
 
-    // TokiQR PDF生成（奥付付き）
-    var filename = 'TQ-' + String(nextSerial).padStart(5, '0') + '.pdf';
+    var serialStr = String(nextSerial).padStart(5, '0');
+    var filename = 'TQ-' + serialStr + '.pdf';
     var pdfPath = 'output/' + filename;
 
-    if (o.qrUrl) {
-      try {
-        var pdfBase64 = generateTokiqrNewsletter(
-          o, clientConfig, nextSerial, vn.volume, vn.number);
+    try {
+      var pdfBase64 = generateTokiqrNewsletter(
+        o, clientConfig, nextSerial, vn.volume, vn.number);
 
-        var branch = 'tq-' + String(nextSerial).padStart(5, '0');
-        createGitHubBranch(branch, client.repo);
+      var branch = 'tq-' + serialStr;
+      createGitHubBranch(branch, defaultSeries.repo);
 
-        // PDF をコミット
-        commitBinaryFileOnBranch(pdfPath, pdfBase64,
-          'Publish TQ-' + String(nextSerial).padStart(5, '0'), branch, client.repo);
+      commitBinaryFileOnBranch(pdfPath, pdfBase64,
+        'Publish ' + filename, branch, defaultSeries.repo);
 
-        // schedule.json を更新
-        var today = Utilities.formatDate(new Date(), 'Asia/Tokyo', 'yyyy-MM-dd');
-        var newIssue = {
-          date: today,
-          serial: nextSerial,
-          volume: vn.volume,
-          number: vn.number,
-          status: 'published',
-          filename: filename,
-          orderId: o.orderId,
-          customerName: o.name || ''
-        };
-        schedule.current_serial = nextSerial;
-        schedule.issues.push(newIssue);
-        commitFileOnBranch('schedule.json', JSON.stringify(schedule, null, 2),
-          'Update schedule: TQ-' + String(nextSerial).padStart(5, '0'), branch, client.repo);
+      var today = Utilities.formatDate(new Date(), 'Asia/Tokyo', 'yyyy-MM-dd');
+      schedule.current_serial = nextSerial;
+      schedule.issues.push({
+        date: today,
+        serial: nextSerial,
+        volume: vn.volume,
+        number: vn.number,
+        status: 'published',
+        filename: filename,
+        orderId: o.orderId,
+        customerName: o.name || ''
+      });
+      commitFileOnBranch('schedule.json', JSON.stringify(schedule, null, 2),
+        'Update schedule: ' + filename, branch, defaultSeries.repo);
 
-        // PR作成（auto-mergeで即マージ）
-        createGitHubPR(
-          'Publish TQ-' + String(nextSerial).padStart(5, '0') + ': ' + (o.name || '') + '様',
-          branch,
-          'NDL serial publication #' + nextSerial + ' from order ' + o.orderId,
-          client.repo
-        );
+      createGitHubPR(
+        'Publish ' + filename + ': ' + (o.name || '') + '\u69d8',
+        branch,
+        'NDL serial publication #' + nextSerial + ' from order ' + o.orderId,
+        defaultSeries.repo
+      );
 
-        routed.push({ orderId: o.orderId, clientId: client.clientId, serial: nextSerial, status: 'OK' });
-      } catch (e) {
-        routed.push({ orderId: o.orderId, clientId: client.clientId, status: 'ERROR: ' + e.message });
-      }
+      routed.push({ orderId: o.orderId, serial: nextSerial, status: 'OK' });
+    } catch (e) {
+      routed.push({ orderId: o.orderId, status: 'ERROR: ' + e.message });
     }
   });
 
   if (routed.length > 0) {
-    var body = '【B2B パイプライン】' + routed.length + '件発行\n\n';
+    var ss = SpreadsheetApp.openById(SPREADSHEET_ID);
+    var lastSerial = routed.filter(function(r) { return r.serial; });
+    if (lastSerial.length > 0) {
+      var maxSerial = Math.max.apply(null, lastSerial.map(function(r) { return r.serial; }));
+      updateSeriesIssueCount(ss, 'TokiStorage', maxSerial);
+    }
+
+    var body = '\u3010NDL \u30d1\u30a4\u30d7\u30e9\u30a4\u30f3\u3011' + routed.length + '\u4ef6\u767a\u884c\n\n';
     routed.forEach(function(r) {
-      body += r.orderId + ' → ' + r.clientId;
+      body += r.orderId;
       if (r.serial) body += ' (TQ-' + String(r.serial).padStart(5, '0') + ')';
       body += ': ' + r.status + '\n';
     });
-    sendEmail(NOTIFY_EMAIL, '【B2B】' + routed.length + '件発行', body);
+    sendEmail(NOTIFY_EMAIL, '\u3010NDL\u3011' + routed.length + '\u4ef6\u767a\u884c', body);
   }
-}
-
-/**
- * B2Bクライアント月次アクティビティレポート（毎月1日タイマーで実行）
- */
-function sendMonthlyB2BReport() {
-  var clients = getB2BClients();
-  if (clients.length === 0) return;
-
-  var now = new Date();
-  var lastMonth = new Date(now.getFullYear(), now.getMonth() - 1, 1);
-  var monthLabel = Utilities.formatDate(lastMonth, 'Asia/Tokyo', 'yyyy年MM月');
-
-  var body = '【B2B NDL Newsletter 月次レポート】\n' + monthLabel + '\n\n';
-
-  clients.forEach(function(client) {
-    if (client.status !== 'active') return;
-
-    var scheduleJson = readFileFromGitHub('schedule.json', client.repo);
-    if (!scheduleJson) return;
-    var schedule = JSON.parse(scheduleJson);
-
-    // 先月発行された号数をカウント
-    var lastMonthStr = Utilities.formatDate(lastMonth, 'Asia/Tokyo', 'yyyy-MM');
-    var monthIssues = schedule.issues.filter(function(i) {
-      return i.date && i.date.substring(0, 7) === lastMonthStr && i.status === 'published';
-    });
-
-    body += '━━━ ' + client.clientName + ' (' + client.clientId + ') ━━━\n'
-      + '  発行数: ' + monthIssues.length + '号\n'
-      + '  累計: ' + schedule.current_serial + '号\n\n';
-  });
-
-  sendEmail(NOTIFY_EMAIL, '【B2B】月次レポート ' + monthLabel, body);
 }
