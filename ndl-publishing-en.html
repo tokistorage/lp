@@ -1,0 +1,274 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" type="image/png" sizes="32x32" href="asset/favicon-32.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="asset/apple-touch-icon.png">
+    <title>NDL Newsletter Publishing Service | TokiStorage</title>
+    <meta name="robots" content="index, follow">
+    <meta name="description" content="Turn your customers' voices into permanent records at the National Diet Library of Japan. Full-service newsletter publishing, application, and archival support.">
+    <style>
+        :root {
+            --toki-blue: #2563EB;
+            --toki-blue-dark: #1D4ED8;
+            --toki-blue-pale: #EFF6FF;
+            --accent-blue: #3B82F6;
+            --bg-white: #FFFFFF;
+            --text-primary: #1E293B;
+            --text-secondary: #475569;
+            --text-muted: #94A3B8;
+            --border: #E2E8F0;
+            --gold: #C9A962;
+            --gold-pale: #FDF8ED;
+            --emerald: #059669;
+            --font-display: 'Georgia', 'Times New Roman', serif;
+            --font-body: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        html { scroll-behavior: smooth; }
+        body { font-family: var(--font-body); font-weight: 400; background: var(--bg-white); color: var(--text-primary); line-height: 1.8; font-size: 16px; }
+
+        .article-nav { position: fixed; top: 0; left: 0; right: 0; z-index: 1000; background: rgba(255,255,255,0.95); backdrop-filter: blur(12px); border-bottom: 1px solid var(--border); padding: 0.6rem 1.2rem; display: flex; align-items: center; justify-content: space-between; gap: 1rem; }
+        .article-nav .nav-brand { font-family: var(--font-display); font-size: 0.9rem; font-weight: 600; color: var(--toki-blue); text-decoration: none; white-space: nowrap; }
+        .article-nav .nav-brand::before { content: ''; display: inline-block; width: 20px; height: 20px; background: url('asset/tokistorage-icon-512.png') no-repeat center / contain; vertical-align: -3px; margin-right: 5px; }
+        .article-nav .nav-right { display: flex; align-items: center; gap: 1rem; }
+        .article-nav .nav-label { font-size: 0.6rem; color: var(--text-muted); letter-spacing: 0.08em; }
+        .article-nav .lang-switch { font-size: 0.75rem; color: var(--toki-blue); text-decoration: none; padding: 0.3rem 0.6rem; border: 1px solid var(--toki-blue); border-radius: 4px; }
+        .article-nav .lang-switch:hover { background: var(--toki-blue); color: #fff; }
+
+        .article-container { max-width: 680px; margin: 0 auto; padding: 7rem 2rem 4rem; }
+        .article-header { margin-bottom: 3rem; padding-bottom: 2rem; border-bottom: 1px solid var(--border); }
+        .article-category { font-size: 0.7rem; color: var(--toki-blue); letter-spacing: 0.15em; margin-bottom: 1rem; }
+        .article-header h1 { font-family: var(--font-display); font-size: 1.8rem; font-weight: 700; line-height: 1.4; margin-bottom: 1.5rem; }
+        .article-subtitle { font-size: 0.95rem; color: var(--text-secondary); line-height: 1.8; }
+
+        .article-content h2 { font-family: var(--font-display); font-size: 1.3rem; font-weight: 600; margin: 3rem 0 1.5rem; padding-bottom: 0.5rem; border-bottom: 2px solid var(--toki-blue-pale); }
+        .article-content h3 { font-family: var(--font-display); font-size: 1.1rem; font-weight: 600; margin: 2rem 0 1rem; color: var(--toki-blue-dark); }
+        .article-content p { margin-bottom: 1.5rem; }
+        .article-content blockquote { border-left: 3px solid var(--toki-blue); padding-left: 1.5rem; margin: 2rem 0; font-family: var(--font-display); color: var(--text-secondary); }
+        .article-content ul, .article-content ol { margin: 1.5rem 0; padding-left: 1.5rem; }
+        .article-content li { margin-bottom: 0.75rem; }
+
+        .core-message { background: var(--toki-blue-pale); border-left: 4px solid var(--toki-blue); padding: 1.5rem; margin: 2rem 0; font-size: 0.95rem; line-height: 1.8; }
+        .key-point { background: linear-gradient(135deg, var(--toki-blue-pale) 0%, #fff 100%); border: 1px solid var(--accent-blue); border-radius: 8px; padding: 1.5rem; margin: 2rem 0; text-align: center; }
+        .key-point p { font-family: var(--font-display); font-size: 1.1rem; color: var(--toki-blue-dark); margin: 0; }
+
+        .pipeline { display: flex; align-items: center; justify-content: center; gap: 0.5rem; flex-wrap: wrap; margin: 2rem 0; }
+        .pipeline-step { background: var(--toki-blue); color: #fff; padding: 0.8rem 1.2rem; border-radius: 8px; font-weight: 600; font-size: 0.95rem; text-align: center; min-width: 120px; }
+        .pipeline-arrow { color: var(--toki-blue); font-size: 1.5rem; font-weight: 700; }
+
+        .pricing-table { width: 100%; border-collapse: collapse; margin: 2rem 0; font-size: 0.95rem; }
+        .pricing-table th { background: var(--toki-blue); color: #fff; padding: 0.8rem 1rem; text-align: left; font-weight: 600; }
+        .pricing-table td { padding: 0.8rem 1rem; border-bottom: 1px solid var(--border); }
+        .pricing-table tr:nth-child(even) td { background: var(--toki-blue-pale); }
+        .pricing-table .price { font-weight: 700; color: var(--toki-blue-dark); white-space: nowrap; }
+
+        .faq dt { font-weight: 600; margin: 1.5rem 0 0.5rem; color: var(--toki-blue-dark); }
+        .faq dd { margin-bottom: 1rem; color: var(--text-secondary); }
+
+        .ndl-badge { display: inline-block; background: var(--gold-pale); border: 1px solid var(--gold); color: #92750B; padding: 0.3rem 0.8rem; border-radius: 4px; font-size: 0.8rem; font-weight: 600; }
+
+        .article-footer { margin-top: 4rem; padding-top: 2rem; border-top: 1px solid var(--border); text-align: center; }
+        .article-footer p { font-size: 0.8rem; color: var(--text-muted); margin-bottom: 1rem; }
+        .article-footer a { color: var(--toki-blue); text-decoration: none; }
+        .article-footer a:hover { text-decoration: underline; }
+
+        .cta-button { display: inline-block; background: var(--toki-blue); color: #fff; padding: 0.8rem 2rem; border-radius: 8px; text-decoration: none; font-weight: 600; font-size: 1rem; transition: background 0.2s; }
+        .cta-button:hover { background: var(--toki-blue-dark); }
+
+        @media (max-width: 768px) {
+            .article-container { padding: 6rem 1.2rem 3rem; }
+            .article-header h1 { font-size: 1.5rem; }
+            .pipeline { flex-direction: column; }
+            .pipeline-arrow { transform: rotate(90deg); }
+        }
+    </style>
+</head>
+<body>
+
+<nav class="article-nav">
+    <a href="index-en.html" class="nav-brand">TokiStorage</a>
+    <div class="nav-right">
+        <span class="nav-label">B2B SERVICE</span>
+        <a href="ndl-publishing.html" class="lang-switch">JA</a>
+    </div>
+</nav>
+
+<article class="article-container">
+
+    <header class="article-header">
+        <p class="article-category">B2B SERVICE</p>
+        <h1>NDL Newsletter Publishing Service</h1>
+        <p class="article-subtitle">
+            Turn your customers' voices into permanent records at the National Diet Library of Japan.
+            Full-service newsletter publishing, application, and archival support.
+        </p>
+    </header>
+
+    <div class="article-content">
+
+        <div class="key-point">
+            <p>Wedding vows, event memories, corporate records&mdash;<br>your customers' voices become permanent national archives</p>
+        </div>
+
+        <h2>Service Overview</h2>
+
+        <p>
+            TokiStorage publishes newsletters as serial publications deposited with
+            the National Diet Library (NDL) of Japan under the NDL Law (Articles 25 &amp; 25-4).
+            <span class="ndl-badge">Receipt No. EA202602160140</span>
+        </p>
+        <p>
+            This service opens our NDL publishing pipeline to businesses&mdash;wedding venues,
+            event organizers, and corporations&mdash;enabling them to create their own
+            branded newsletters deposited as permanent national records.
+        </p>
+
+        <div class="core-message">
+            TokiStorage serves as the publisher of record. Your organization appears as the
+            "content originator" in the colophon. Zero paperwork on your end. No technical setup required.
+        </div>
+
+        <h2>Pipeline</h2>
+
+        <div class="pipeline">
+            <div class="pipeline-step">Estimate</div>
+            <span class="pipeline-arrow">&rarr;</span>
+            <div class="pipeline-step">Generate</div>
+            <span class="pipeline-arrow">&rarr;</span>
+            <div class="pipeline-step">Archive</div>
+        </div>
+
+        <h3>1. Estimate (Onboarding)</h3>
+        <ul>
+            <li>Choose your newsletter name and branding</li>
+            <li>Select publication frequency (quarterly, biannual, or annual)</li>
+            <li>Dedicated repository created automatically with GitHub Pages archive</li>
+        </ul>
+
+        <h3>2. Generate (Automated PDF)</h3>
+        <ul>
+            <li>Your customers' TokiQR codes (voice, image, text) accumulate automatically</li>
+            <li>Newsletter PDF generated automatically when the publication period arrives</li>
+            <li>Colophon lists TokiStorage (publisher) and your organization (content originator)</li>
+            <li>Quality review before publication</li>
+        </ul>
+
+        <h3>3. Archive (NDL Permanent Storage)</h3>
+        <ul>
+            <li>Published PDFs on GitHub Pages are periodically harvested by NDL</li>
+            <li>Legally mandated permanent preservation under the NDL Law</li>
+            <li>Optional ISSN registration available</li>
+        </ul>
+
+        <h2>Pricing</h2>
+
+        <table class="pricing-table">
+            <thead>
+                <tr>
+                    <th>Item</th>
+                    <th>Price</th>
+                    <th>Notes</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>Setup</td>
+                    <td class="price">&yen;50,000</td>
+                    <td>Repository creation, branding, initial configuration</td>
+                </tr>
+                <tr>
+                    <td>Per Issue</td>
+                    <td class="price">&yen;30,000</td>
+                    <td>Includes 50 QR slots</td>
+                </tr>
+                <tr>
+                    <td>Additional QR</td>
+                    <td class="price">&yen;150/each</td>
+                    <td>From the 51st QR onward</td>
+                </tr>
+                <tr>
+                    <td>ISSN Registration</td>
+                    <td class="price">&yen;10,000</td>
+                    <td>Optional (ISSN itself is free; this covers processing)</td>
+                </tr>
+            </tbody>
+        </table>
+
+        <p>
+            No monthly fees. Pay only for issues published.
+            Payments accepted via Wise (international transfer platform).
+        </p>
+
+        <h2>Use Cases</h2>
+
+        <h3>Weddings</h3>
+        <p>
+            Wedding venues and hotels compile voice recordings from ceremonies
+            into quarterly newsletters deposited at the National Diet Library.
+            "Your wedding vows become a national record"&mdash;an experience no one else can offer.
+        </p>
+
+        <h3>Corporate &amp; Organizations</h3>
+        <p>
+            Founding anniversaries, employee voices, event recordings&mdash;all preserved
+            as newsletter publications in the national archive. Ideal for CSR activities
+            or as part of your corporate history.
+        </p>
+
+        <h2>FAQ</h2>
+
+        <dl class="faq">
+            <dt>What is the National Diet Library?</dt>
+            <dd>
+                Japan's sole national library, mandated by law to collect and permanently
+                preserve publications. Materials deposited are preserved indefinitely.
+            </dd>
+
+            <dt>Can I choose the publication frequency?</dt>
+            <dd>
+                Yes. Choose from quarterly (4x/year), biannual (2x/year), or annual (1x/year).
+                Irregular schedules are also available.
+            </dd>
+
+            <dt>Is an ISSN required?</dt>
+            <dd>
+                No. ISSN is optional for NDL deposit. However, if you need an academic-grade
+                identifier, we can handle the registration for &yen;10,000.
+            </dd>
+
+            <dt>Do I need any technical setup?</dt>
+            <dd>
+                None at all. TokiStorage handles everything from repository creation
+                to PDF generation to NDL submission.
+            </dd>
+
+            <dt>Will the newsletter be publicly accessible?</dt>
+            <dd>
+                Yes. Materials deposited at NDL are publicly accessible by default.
+                The PDFs are also published on GitHub Pages.
+            </dd>
+        </dl>
+
+        <h2>Contact</h2>
+
+        <p>
+            For details, custom quotes, or to get started, please reach out.
+        </p>
+
+        <p style="text-align: center; margin: 2rem 0;">
+            <a href="https://tokistorage.github.io/qr/contact.html" class="cta-button">Contact Us</a>
+        </p>
+
+    </div>
+
+    <footer class="article-footer">
+        <p><a href="index-en.html">Home</a> &middot; <a href="details-en.html">Service Details</a> &middot; <a href="tech-deck-en.html">Technical Architecture</a></p>
+        <p>&copy; 2026 TokiStorage</p>
+    </footer>
+
+</article>
+
+</body>
+</html>
