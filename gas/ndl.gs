@@ -146,7 +146,6 @@ function handleSeriesOpen(ss, data) {
   var config = {
     clientId: clientId,
     clientName: seriesName,
-    serviceType: 'general',
     branding: {
       accentColor: [37, 99, 235],
       publicationNameJa: seriesName + ' 特集',
@@ -183,7 +182,6 @@ function handleSeriesOpen(ss, data) {
       seriesName: seriesName,
       repo: repo,
       pagesUrl: 'https://tokistorage.github.io/' + repoName + '/',
-      serviceType: config.serviceType || 'general',
       createdAt: Utilities.formatDate(new Date(), 'Asia/Tokyo', 'yyyy-MM-dd'),
       issueCount: 0,
       status: 'active'
