@@ -12,7 +12,7 @@ h1{font-size:1.5rem;margin-bottom:8px}
 .sub{color:#64748b;font-size:.875rem;margin-bottom:32px}
 .issue{display:flex;align-items:center;gap:12px;padding:16px;background:#fff;border:1px solid #e2e8f0;border-radius:8px;margin-bottom:12px;text-decoration:none;color:inherit;transition:box-shadow .15s}
 .issue:hover{box-shadow:0 2px 8px rgba(0,0,0,.08)}
-.issue-date{font-weight:700;font-size:1rem;min-width:80px}
+.issue-serial{font-weight:700;font-size:.875rem;min-width:80px;color:#2563eb}
 .issue-meta{color:#64748b;font-size:.875rem}
 .empty{color:#94a3b8;text-align:center;padding:40px}
 footer{margin-top:40px;text-align:center;color:#94a3b8;font-size:.75rem}
@@ -36,15 +36,14 @@ footer a{color:#2563eb;text-decoration:none}
   const s=await res.json();
   const published=s.issues.filter(i=>i.status==='published').reverse();
   if(!published.length){document.getElementById('list').innerHTML='<p class="empty">No published issues yet.</p>';return}
-  // Load client config for title
   try{
     const cr=await fetch('client-config.json');
     if(cr.ok){const c=await cr.json();document.getElementById('title').textContent=c.branding.publicationNameJa||'Newsletter Archive'}
   }catch(e){}
   document.getElementById('list').innerHTML=published.map(i=>`
-    <a class="issue" href="output/${i.date}.pdf">
-      <span class="issue-date">${i.date}</span>
-      <span class="issue-meta">Vol.${i.volume} No.${i.number} (Serial #${String(i.serial).padStart(5,'0')})</span>
+    <a class="issue" href="output/${i.filename||('TQ-'+String(i.serial).padStart(5,'0')+'.pdf')}">
+      <span class="issue-serial">TQ-${String(i.serial).padStart(5,'0')}</span>
+      <span class="issue-meta">${i.date} — ${i.customerName||''}</span>
     </a>`).join('');
 })();
 </script>
