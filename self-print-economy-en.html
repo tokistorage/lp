@@ -194,7 +194,27 @@
 
         <p>All of these expansions run on the same principle: split the data, secure capacity through QR code count. Technically simple, yet revolutionary as a user experience. From a world of compressing everything into a single QR code to a world of adding as many codes as expression demands. From design that optimizes within constraints to design that removes the constraints themselves.</p>
 
-        <h2>4. N-1 &mdash; The Meaning of the First QR Being Free</h2>
+        <h2>4. The Question: "Why Not Just Use the Cloud?"</h2>
+
+        <p>Having read this far, a natural question arises. Audio, images, text &mdash; just save them to iCloud, Google Drive, or Dropbox. Why bother converting anything into QR codes?</p>
+
+        <p>Let us address this head-on. Cloud storage is excellent technology. Syncing is fast, capacity is generous, and search works well. For everyday file management, it is ideal. But to the question "will it still be there in 100 years," no one can answer.</p>
+
+        <p>Google has shut down Google Reader, Google+, Picasa, Hangouts, Stadia &mdash; countless services over the years. Google is not at fault. Companies have lifecycles. When revenue structures shift, unprofitable services close. That is sound business judgment. The problem is that user data gets caught in that judgment.</p>
+
+        <p>Sometimes a grace period is offered: "Please download your data." But those who missed the notification, those who have already passed away, those who changed their email address &mdash; their data quietly disappears. The lifespan of data entrusted to the cloud depends not on your lifespan, but on the service's.</p>
+
+        <p>Data stored in a QR code severs that dependency. Reading a QR code printed on paper requires no account. No WiFi. No corporate survival. All it takes is a decoder &mdash; and TokiQR's decoder is nothing more than a combination of open standard technologies that anyone can reimplement &mdash; and the data is resurrected.</p>
+
+        <p>A QR code etched into quartz glass has physical durability measured in millennia. Laminated, it lasts decades. Even on plain paper, in a dry environment, it can endure for centuries. Which timeframe to choose is up to the user, but in every case, the survival of the data is decoupled from the survival of any company.</p>
+
+        <p>There is another difference, easily overlooked. A file in the cloud requires the act of "opening." Navigate to the folder, select the file, press play. Those who do this routinely are fine. But five years from now, ten years from now, how many people will remember to open "that file in that folder"? Cloud data, from the moment it stops being accessed, exists but is absent.</p>
+
+        <p>A QR code exists physically. Stuck on the fridge. Placed on the family altar. Tucked into a photo album. Engraved on a headstone. Each time it catches your eye, you hold up your phone and sound pours out. This "physical serendipity" &mdash; happening to see it, happening to play it &mdash; is an experience that no cloud folder hierarchy can architect.</p>
+
+        <p>The cloud is infrastructure for convenient management. A QR code is infrastructure for permanence. The purposes differ. They are not things to compare, but things to use together. Daily backups go to the cloud. What you want to reach 100 years into the future goes into a QR code.</p>
+
+        <h2>5. N-1 &mdash; The Meaning of the First QR Being Free</h2>
 
         <p>The billing structure of bulk mode is called "N-1." N is the number of QR codes your data is split into. The first is always free. From the second onward, each costs 1 credit (150 yen). This means that if your data fits in a single code, bulk mode costs nothing.</p>
 
@@ -208,7 +228,7 @@
             If it fits in one QR code, it is free. For two or more, the price is the same everywhere in the world &mdash; 150 yen per code. No subscription, no account, no personal information. This is not a pricing strategy. It is a design principle.
         </div>
 
-        <h2>5. The Design Philosophy of Prepaid Credits</h2>
+        <h2>6. The Design Philosophy of Prepaid Credits</h2>
 
         <p>As the billing mechanism for bulk mode, we designed prepaid credits. One credit equals 150 yen ($1). Purchased in packs and activated by entering a code. Every aspect of this system is intentional.</p>
 
@@ -218,7 +238,7 @@
 
         <p>Third, the credit balance is stored in the user's browser (IndexedDB). The server holds no balance information. More on this later, but this choice required resolve.</p>
 
-        <h2>6. Why Wise, Not Credit Cards</h2>
+        <h2>7. Why Wise, Not Credit Cards</h2>
 
         <p>The reason for not adopting credit card payments is straightforward. Credit card processing fees run 3&ndash;5% on a 150-yen product. Add monthly fixed costs for a payment processor, PCI DSS compliance costs, and above all &mdash; card payments inevitably require collecting personal information: name, address, card number.</p>
 
@@ -228,7 +248,7 @@
 
         <p>The uniform price &mdash; 1 credit at 150 yen ($1) &mdash; applies regardless of country or currency. Whether purchased in Japanese yen, euros, or Brazilian reais, one credit is one credit. This is none other than the application of the principle articulated in the "Uniform Pricing" essay to the credit system.</p>
 
-        <h2>7. IndexedDB as a Choice &mdash; The Resolve Not to Hold User Data</h2>
+        <h2>8. IndexedDB as a Choice &mdash; The Resolve Not to Hold User Data</h2>
 
         <p>Storing credit balances in the browser's IndexedDB rather than on a server. By conventional service design standards, this choice has obvious drawbacks.</p>
 
@@ -244,7 +264,7 @@
             <p>We store credits in the browser, not on our server. We cannot track, cannot revoke, cannot help with losses. That asymmetry is intentional. A tool that respects independence must also accept the limits of that respect.</p>
         </div>
 
-        <h2>8. Why a "Service That Holds Nothing" Is Abnormal</h2>
+        <h2>9. Why a "Service That Holds Nothing" Is Abnormal</h2>
 
         <p>As a premise, virtually every modern web service operates by "holding user information." This is not malice but structural inevitability. Provide a service → need to identify users → create accounts → collect personal information → store that information → storage requires security → security costs money → need ads or subscriptions to recoup costs → ads require user behavior data → collect even more information. This chain is something like the original sin of web services.</p>
 
@@ -306,7 +326,7 @@
 
         <p>The very concept of a user base has been abandoned. We do not know who is using it. We do not even know precisely how many are using it. Yet a service that works has been built. This is a technical achievement and, at the same time, an intellectual one.</p>
 
-        <h2>9. The Coexistence of Physical QR and Self-Print</h2>
+        <h2>10. The Coexistence of Physical QR and Self-Print</h2>
 
         <p>Physical QR products and self-print are not in competition. Nor are they premium and budget versions of the same service. They are expressions of fundamentally different design philosophies serving fundamentally different needs.</p>
 
@@ -316,7 +336,7 @@
 
         <p>This relationship resembles that between a professional photo studio and a home printer. Having a studio produce a family portrait album versus printing a smartphone photo yourself. Both are acts of preserving a photograph, but what they seek differs. One offers professional finishing and archival quality. The other offers immediacy and self-determination. Not a matter of superiority, but of choice.</p>
 
-        <h2>10. What the Self-Print Economy Means</h2>
+        <h2>11. What the Self-Print Economy Means</h2>
 
         <p>Bulk mode, prepaid credits, Wise transfers, IndexedDB storage, no account required &mdash; when these elements combine, what emerges is an economy.</p>
 
