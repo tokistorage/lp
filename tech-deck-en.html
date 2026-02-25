@@ -581,6 +581,64 @@
             padding-top: 0.1rem;
         }
 
+        /* ── Infrastructure layer stack (Slide 02) ── */
+        .infra-stack {
+            display: flex;
+            flex-direction: column;
+            flex: 1;
+        }
+        .infra-layer {
+            flex: 1;
+            display: flex;
+            align-items: center;
+            padding: 0.25rem 0.6rem;
+            gap: 0.5rem;
+            border-bottom: 1px solid rgba(255,255,255,0.15);
+        }
+        .infra-layer:last-child { border-bottom: none; }
+        .infra-layer-label {
+            width: 6.5rem;
+            font-size: 0.4rem;
+            font-weight: 700;
+            color: white;
+            text-transform: uppercase;
+            letter-spacing: 0.03em;
+            flex-shrink: 0;
+        }
+        .infra-layer-content {
+            flex: 1;
+            display: flex;
+            align-items: center;
+            gap: 0.4rem;
+            flex-wrap: wrap;
+        }
+        .infra-svc {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.2rem;
+            background: rgba(255,255,255,0.92);
+            border-radius: 0.2rem;
+            padding: 0.15rem 0.3rem;
+            font-size: 0.4rem;
+            font-weight: 600;
+            color: var(--text);
+            box-shadow: 0 1px 3px rgba(0,0,0,0.08);
+        }
+        .infra-svc-icon { font-size: 0.6rem; }
+        .infra-svc-desc { font-size: 0.3rem; font-weight: 400; color: var(--text-mid); margin-left: 0.1rem; }
+        .infra-flow-arrow {
+            color: rgba(255,255,255,0.6);
+            font-size: 0.5rem;
+            font-weight: 300;
+        }
+        .layer-touch   { background: linear-gradient(135deg, #BE185D, #EC4899); }
+        .layer-dev     { background: linear-gradient(135deg, #047857, #059669); }
+        .layer-hosting { background: linear-gradient(135deg, #1D4ED8, #2563EB); }
+        .layer-payment { background: linear-gradient(135deg, #B45309, #D97706); }
+        .layer-auto    { background: linear-gradient(135deg, #6D28D9, #7C3AED); }
+        .layer-seo     { background: linear-gradient(135deg, #0E7490, #06B6D4); }
+        .layer-archive { background: linear-gradient(135deg, #A68B3C, #C9A962); }
+
         /* ── Responsive: always maintain 16:9 ── */
         @media (max-width: 1000px) {
             .slide {
@@ -757,6 +815,10 @@
                 -webkit-print-color-adjust: exact;
                 print-color-adjust: exact;
             }
+            .infra-layer, .infra-svc, .infra-layer-label {
+                -webkit-print-color-adjust: exact;
+                print-color-adjust: exact;
+            }
         }
 
         @page {
@@ -822,7 +884,83 @@
     </div>
 </section>
 
-<!-- ━━━ SLIDE 02: HIGH-LEVEL ARCHITECTURE ━━━ -->
+<!-- ━━━ SLIDE 02: INFRASTRUCTURE & SERVICE MAP ━━━ -->
+<section class="slide">
+    <div class="action-bar">
+        <h2>Zero proprietary servers &mdash; hosting, payments, and development all composed from external services</h2>
+    </div>
+    <div class="slide-body">
+        <div class="slide-content" style="display:flex;flex-direction:column;">
+            <p class="section-label">Infrastructure &amp; Service Map</p>
+            <div class="infra-stack" style="border-radius:0.3rem;overflow:hidden;">
+                <div class="infra-layer layer-touch">
+                    <div class="infra-layer-label">User Touch</div>
+                    <div class="infra-layer-content">
+                        <div class="infra-svc"><span class="infra-svc-icon">&#x1F4C4;</span> Brochure <span class="infra-svc-desc">Sales &amp; partner distribution</span></div>
+                        <div class="infra-svc"><span class="infra-svc-icon">&#x1F9FC;</span> Pearl Soap <span class="infra-svc-desc">QR sample included</span></div>
+                        <div class="infra-svc"><span class="infra-svc-icon">&#x1F310;</span> Organic Traffic <span class="infra-svc-desc">SEO &amp; word of mouth</span></div>
+                        <div class="infra-svc"><span class="infra-svc-icon">&#x1F916;</span> AIO <span class="infra-svc-desc">AI search referral</span></div>
+                        <div class="infra-svc"><span class="infra-svc-icon">&#x1F4F1;</span> SNS</div>
+                        <span class="infra-flow-arrow">&#x2192;</span>
+                        <div class="infra-svc"><span class="infra-svc-icon">&#x1F5A5;&#xFE0F;</span> PC / Mobile Web / PWA</div>
+                    </div>
+                </div>
+                <div class="infra-layer layer-hosting">
+                    <div class="infra-layer-label">Cloud</div>
+                    <div class="infra-layer-content">
+                        <div class="infra-svc"><span class="infra-svc-icon">&#x1F4BB;</span> GitHub Pages <span class="infra-svc-desc">Decoder 3 MB / LP / Archive</span></div>
+                        <div class="infra-svc"><span class="infra-svc-icon">&#x2601;&#xFE0F;</span> Cloudflare <span class="infra-svc-desc">Workers &amp; GAS proxy &amp; Wise endpoint</span></div>
+                        <div class="infra-svc"><span class="infra-svc-icon">&#x26A1;</span> Google Apps Script <span class="infra-svc-desc">Forms &amp; Analytics &amp; Newsletter &amp; Notifications</span></div>
+                        <div class="infra-svc"><span class="infra-svc-icon">&#x1F4CA;</span> Google Sheets <span class="infra-svc-desc">Data management</span></div>
+                        <div class="infra-svc"><span class="infra-svc-icon">&#x1F4E7;</span> Gmail <span class="infra-svc-desc">Send &amp; receive &amp; notifications</span></div>
+                        <div class="infra-svc"><span class="infra-svc-icon">&#x1F4B8;</span> Wise <span class="infra-svc-desc">Intl. transfers &amp; partner payouts</span></div>
+                        <div class="infra-svc"><span class="infra-svc-icon">&#x1F517;</span> Wise API / Webhook <span class="infra-svc-desc">Payment detection &amp; automation</span></div>
+                    </div>
+                </div>
+                <div class="infra-layer layer-archive">
+                    <div class="infra-layer-label">Archive</div>
+                    <div class="infra-layer-content">
+                        <div class="infra-svc"><span class="infra-svc-icon">&#x1F4F0;</span> Newsletter PDF <span class="infra-svc-desc">Irregular, multiple per year</span></div>
+                        <span class="infra-flow-arrow">&#x2192;</span>
+                        <div class="infra-svc"><span class="infra-svc-icon">&#x1F3DB;&#xFE0F;</span> National Diet Library <span class="infra-svc-desc">Legal deposit &amp; digital archive</span></div>
+                    </div>
+                </div>
+                <div class="infra-layer layer-seo">
+                    <div class="infra-layer-label">SEO</div>
+                    <div class="infra-layer-content">
+                        <div class="infra-svc"><span class="infra-svc-icon">&#x1F50D;</span> Google Search Console</div>
+                        <div class="infra-svc"><span class="infra-svc-icon">&#x1F50E;</span> Bing Webmaster Tools</div>
+                    </div>
+                </div>
+                <div class="infra-layer layer-dev">
+                    <div class="infra-layer-label">Development</div>
+                    <div class="infra-layer-content">
+                        <div class="infra-svc"><span class="infra-svc-icon">&#x1F34E;</span> macOS / iPhone</div>
+                        <span class="infra-flow-arrow">&#x2192;</span>
+                        <div class="infra-svc"><span class="infra-svc-icon">&#x1F4DD;</span> VS Code</div>
+                        <span class="infra-flow-arrow">&#x2192;</span>
+                        <div class="infra-svc"><span class="infra-svc-icon">&#x1F916;</span> Claude Code <span class="infra-svc-desc">AI pair programming</span></div>
+                        <span class="infra-flow-arrow">&#x2192;</span>
+                        <div class="infra-svc"><span class="infra-svc-icon">&#x1F4BB;</span> GitHub <span class="infra-svc-desc">git push &rarr; Pages</span></div>
+                        <span class="infra-flow-arrow">&#x2192;</span>
+                        <div class="infra-svc"><span class="infra-svc-icon">&#x2699;&#xFE0F;</span> GitHub Actions <span class="infra-svc-desc">CI/CD &amp; auto-merge</span></div>
+                        <div class="infra-svc"><span class="infra-svc-icon">&#x1F4C4;</span> PDF Generator <span class="infra-svc-desc">Puppeteer &amp; auto-generation</span></div>
+                    </div>
+                </div>
+            </div>
+            <div class="callout" style="margin-top:0.3rem;">
+                <p>Zero fixed monthly costs. Zero proprietary servers &mdash; development, delivery, payments, and archiving all run on external services and public institutions.</p>
+            </div>
+        </div>
+    </div>
+    <div class="slide-footer">
+        <span>TokiStorage &mdash; Technical Architecture</span>
+        <span>Confidential</span>
+        <span class="pg">2</span>
+    </div>
+</section>
+
+<!-- ━━━ SLIDE 03: HIGH-LEVEL ARCHITECTURE ━━━ -->
 <section class="slide">
     <div class="action-bar">
         <h2>Zero servers in the data flow &mdash; an architecture with no dependencies</h2>
@@ -871,11 +1009,11 @@
     <div class="slide-footer">
         <span>TokiStorage &mdash; Technical Architecture</span>
         <span>Confidential</span>
-        <span class="pg">2</span>
+        <span class="pg">3</span>
     </div>
 </section>
 
-<!-- ━━━ SLIDE 03: THREE-LAYER DEPLOYMENT ━━━ -->
+<!-- ━━━ SLIDE 04: THREE-LAYER DEPLOYMENT ━━━ -->
 <section class="slide">
     <div class="action-bar">
         <h2>Three independent layers &mdash; physical, national, and private &mdash; geographically and institutionally distributed</h2>
@@ -922,11 +1060,11 @@
     <div class="slide-footer">
         <span>TokiStorage &mdash; Technical Architecture</span>
         <span>Confidential</span>
-        <span class="pg">3</span>
+        <span class="pg">4</span>
     </div>
 </section>
 
-<!-- ━━━ SLIDE 04: DATA FLOW (Voice → QR) ━━━ -->
+<!-- ━━━ SLIDE 05: DATA FLOW (Voice → QR) ━━━ -->
 <section class="slide">
     <div class="action-bar">
         <h2>Voice is processed entirely in the browser &mdash; never sent to a server &mdash; and becomes a QR code</h2>
@@ -1004,11 +1142,11 @@
     <div class="slide-footer">
         <span>TokiStorage &mdash; Technical Architecture</span>
         <span>Confidential</span>
-        <span class="pg">4</span>
+        <span class="pg">5</span>
     </div>
 </section>
 
-<!-- ━━━ SLIDE 05: BULK MODE ━━━ -->
+<!-- ━━━ SLIDE 06: BULK MODE ━━━ -->
 <section class="slide">
     <div class="action-bar">
         <h2>Bulk Mode &mdash; split into N QR codes, credit managed via IndexedDB. No server required</h2>
@@ -1074,11 +1212,11 @@
     <div class="slide-footer">
         <span>TokiStorage &mdash; Technical Architecture</span>
         <span>Confidential</span>
-        <span class="pg">5</span>
+        <span class="pg">6</span>
     </div>
 </section>
 
-<!-- ━━━ SLIDE 06: REDUNDANCY & RECOVERY ━━━ -->
+<!-- ━━━ SLIDE 07: REDUNDANCY & RECOVERY ━━━ -->
 <section class="slide">
     <div class="action-bar">
         <h2>If any layer is lost, the remaining layers can recover all data &mdash; no single point of failure</h2>
@@ -1152,11 +1290,11 @@
     <div class="slide-footer">
         <span>TokiStorage &mdash; Technical Architecture</span>
         <span>Confidential</span>
-        <span class="pg">6</span>
+        <span class="pg">7</span>
     </div>
 </section>
 
-<!-- ━━━ SLIDE 07: 20-YEAR RENEWAL CYCLE ━━━ -->
+<!-- ━━━ SLIDE 08: 20-YEAR RENEWAL CYCLE ━━━ -->
 <section class="slide">
     <div class="action-bar">
         <h2>Inspired by Ise Grand Shrine's Shikinen Sengu &mdash; renewing technology every 20 years to outlast a millennium</h2>
@@ -1203,7 +1341,7 @@
     <div class="slide-footer">
         <span>TokiStorage &mdash; Technical Architecture</span>
         <span>Confidential</span>
-        <span class="pg">7</span>
+        <span class="pg">8</span>
     </div>
 </section>
 
