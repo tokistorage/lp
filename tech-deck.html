@@ -960,48 +960,79 @@
     </div>
 </section>
 
-<!-- ━━━ SLIDE 03: HIGH-LEVEL ARCHITECTURE ━━━ -->
+<!-- ━━━ SLIDE 03: ARCHITECTURE & DATA FLOW ━━━ -->
 <section class="slide">
     <div class="action-bar">
         <h2>データフロー上にサーバーが一切存在しない——依存ゼロのアーキテクチャ</h2>
     </div>
     <div class="slide-body">
-        <div class="slide-content" style="display:flex;flex-direction:column;padding-top:0.8rem;">
-            <p class="section-label">Architecture Overview</p>
-            <div class="arch-flow" style="padding:0.8rem 0;">
-                <div class="arch-node" style="padding:0.6rem 0.7rem;">
-                    <div class="arch-node-icon" style="font-size:1.3rem;">&#x1F4E5;</div>
-                    <h4 style="font-size:0.58rem;">入力</h4>
-                    <p style="font-size:0.42rem;">音声 / 画像 / テキスト</p>
+        <div class="slide-content">
+            <p class="section-label">Architecture &amp; Data Flow</p>
+            <div class="arch-flow" style="padding:0.3rem 0;">
+                <div class="arch-node" style="min-width:80px;">
+                    <div class="arch-node-icon">&#x1F4E5;</div>
+                    <h4>入力</h4>
+                    <p>音声 / 画像 / テキスト</p>
                 </div>
-                <span class="arch-arrow" style="font-size:1rem;">&#x2192;</span>
-                <div class="arch-node highlight" style="padding:0.6rem 0.7rem;">
-                    <div class="arch-node-icon" style="font-size:1.3rem;">&#x2699;&#xFE0F;</div>
-                    <h4 style="font-size:0.58rem;">エンコーダー</h4>
-                    <p style="font-size:0.42rem;">ブラウザ内で符号化</p>
+                <span class="arch-arrow">&#x2192;</span>
+                <div class="arch-node highlight" style="min-width:90px;">
+                    <div class="arch-node-icon">&#x2699;&#xFE0F;</div>
+                    <h4>エンコーダー</h4>
+                    <p>ブラウザ内で符号化</p>
                 </div>
-                <span class="arch-arrow" style="font-size:1rem;">&#x2192;</span>
-                <div class="arch-node" style="padding:0.6rem 0.7rem;">
-                    <div class="arch-node-icon" style="font-size:1.3rem;">&#x25A3;</div>
-                    <h4 style="font-size:0.58rem;">QR Code</h4>
-                    <p style="font-size:0.42rem;">URL内にデータ格納</p>
+                <span class="arch-arrow">&#x2192;</span>
+                <div class="arch-node" style="min-width:80px;">
+                    <div class="arch-node-icon">&#x1F517;</div>
+                    <h4>URL生成</h4>
+                    <p>Base64URL埋込</p>
                 </div>
-                <span class="arch-arrow" style="font-size:1rem;">&#x2192;</span>
-                <div class="arch-node" style="padding:0.6rem 0.7rem;">
-                    <div class="arch-node-icon" style="font-size:1.3rem;">&#x1F4F1;</div>
-                    <h4 style="font-size:0.58rem;">スマホ</h4>
-                    <p style="font-size:0.42rem;">読み取り・再生</p>
+                <span class="arch-arrow">&#x2192;</span>
+                <div class="arch-node" style="min-width:80px;">
+                    <div class="arch-node-icon">&#x25A3;</div>
+                    <h4>QR Code</h4>
+                    <p>V40 / 2,953B</p>
                 </div>
-                <span class="arch-arrow" style="font-size:1rem;">&#x2192;</span>
-                <div class="arch-node highlight" style="padding:0.6rem 0.7rem;">
-                    <div class="arch-node-icon" style="font-size:1.3rem;">&#x1F310;</div>
-                    <h4 style="font-size:0.58rem;">デコーダー</h4>
-                    <p style="font-size:0.42rem;">GitHub Pages / PWAキャッシュ / 3MB</p>
+                <span class="arch-arrow">&#x2192;</span>
+                <div class="arch-node" style="min-width:80px;">
+                    <div class="arch-node-icon">&#x1F4F1;</div>
+                    <h4>読み取り</h4>
+                    <p>スマホ / 3倍ズーム推奨</p>
+                </div>
+                <span class="arch-arrow">&#x2192;</span>
+                <div class="arch-node highlight" style="min-width:90px;">
+                    <div class="arch-node-icon">&#x1F310;</div>
+                    <h4>デコーダー</h4>
+                    <p>GitHub Pages / PWA / 3MB</p>
                 </div>
             </div>
-            <div class="no-server-badge" style="font-size:0.48rem;padding:0.3rem 0.6rem;">NO SERVER IN DATA FLOW &mdash; サーバー・DB・API・アカウント 一切不要</div>
-            <div class="callout" style="margin-top:0.5rem;padding:0.5rem 0.7rem;">
-                <h4>設計原則</h4>
+            <div class="no-server-badge">NO SERVER IN DATA FLOW &mdash; サーバー・DB・API・アカウント 一切不要</div>
+            <table class="dk-table" style="margin-top:0.25rem;">
+                <thead>
+                    <tr>
+                        <th style="width:22%;">データ種別</th>
+                        <th>エンコード方式</th>
+                        <th style="width:22%;">最大容量</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <th>音声</th>
+                        <td class="hl">Codec2 WASM (6段階: 3200〜450 bps)</td>
+                        <td class="hl">約29秒 (450 bps)</td>
+                    </tr>
+                    <tr>
+                        <th>画像</th>
+                        <td>JPEG / WebP &mdash; ブラウザ内リサイズ + Base64URL</td>
+                        <td>~2.2 KB</td>
+                    </tr>
+                    <tr>
+                        <th>テキスト</th>
+                        <td>UTF-8 &mdash; Base64URL</td>
+                        <td>約2,900文字</td>
+                    </tr>
+                </tbody>
+            </table>
+            <div class="callout" style="margin-top:0.25rem;">
                 <p>サービス終了リスクをゼロにするため、データフローからサーバーを完全に排除。QRコード自体がストレージであり、デコーダーはわずか3MBの静的サイト。PWAなら完全オフラインで再生可能。顧客情報・個人情報・機密情報を一切保持しない構成。</p>
             </div>
         </div>
@@ -1013,90 +1044,7 @@
     </div>
 </section>
 
-<!-- ━━━ SLIDE 04: DATA FLOW (Input → QR) ━━━ -->
-
-<section class="slide">
-    <div class="action-bar">
-        <h2>すべてのデータはブラウザ内で完結し、サーバーに一切送信されずQRコードになる</h2>
-    </div>
-    <div class="slide-body">
-        <div class="slide-content">
-            <p class="section-label">Data Flow: Input &rarr; QR</p>
-            <div class="arch-flow" style="padding:0.3rem 0;">
-                <div class="arch-node" style="min-width:85px;">
-                    <div class="arch-node-icon">&#x1F4E5;</div>
-                    <h4>入力</h4>
-                    <p>音声 / 画像 / テキスト</p>
-                </div>
-                <span class="arch-arrow">&#x2192;</span>
-                <div class="arch-node highlight" style="min-width:95px;">
-                    <div class="arch-node-icon">&#x2699;&#xFE0F;</div>
-                    <h4>エンコーダー</h4>
-                    <p>ブラウザ内で符号化</p>
-                </div>
-                <span class="arch-arrow">&#x2192;</span>
-                <div class="arch-node" style="min-width:85px;">
-                    <div class="arch-node-icon">&#x1F504;</div>
-                    <h4>Base64URL</h4>
-                    <p>エンコード</p>
-                </div>
-                <span class="arch-arrow">&#x2192;</span>
-                <div class="arch-node" style="min-width:105px;">
-                    <div class="arch-node-icon">&#x1F517;</div>
-                    <h4>URL生成</h4>
-                    <p>play.html?...=&lt;data&gt;</p>
-                </div>
-                <span class="arch-arrow">&#x2192;</span>
-                <div class="arch-node highlight" style="min-width:95px;">
-                    <div class="arch-node-icon">&#x25A3;</div>
-                    <h4>QR Code V40</h4>
-                    <p>2,953 バイト</p>
-                </div>
-            </div>
-            <table class="dk-table" style="margin-top:0.2rem;">
-                <thead>
-                    <tr>
-                        <th style="width:25%;">パラメータ</th>
-                        <th>値</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr>
-                        <th>音声コーデック</th>
-                        <td class="hl">Codec2 WASM (6段階: 3200 / 2400 / 1600 / 1200 / 700C / 450 bps)</td>
-                    </tr>
-                    <tr>
-                        <th>音声最大</th>
-                        <td class="hl">約29秒 (450 bps)</td>
-                    </tr>
-                    <tr>
-                        <th>画像</th>
-                        <td>JPEG / WebP &mdash; ブラウザ内リサイズ + Base64URL</td>
-                    </tr>
-                    <tr>
-                        <th>テキスト</th>
-                        <td>UTF-8 &mdash; 最大約2,900文字</td>
-                    </tr>
-                    <tr>
-                        <th>QR</th>
-                        <td>Version 40, 誤り訂正 L, 最大 2,953 バイト</td>
-                    </tr>
-                    <tr>
-                        <th>URL形式</th>
-                        <td><code style="font-size:0.44rem;background:var(--bg-alt);padding:0.05rem 0.2rem;border-radius:2px;">play.html?m=&lt;mode&gt;&amp;c2=&lt;data&gt;</code> / <code style="font-size:0.44rem;background:var(--bg-alt);padding:0.05rem 0.2rem;border-radius:2px;">?img=</code> / <code style="font-size:0.44rem;background:var(--bg-alt);padding:0.05rem 0.2rem;border-radius:2px;">?txt=</code></td>
-                    </tr>
-                </tbody>
-            </table>
-        </div>
-    </div>
-    <div class="slide-footer">
-        <span>TokiStorage &mdash; 技術アーキテクチャ</span>
-        <span>Confidential</span>
-        <span class="pg">4</span>
-    </div>
-</section>
-
-<!-- ━━━ SLIDE 05: BULK MODE ━━━ -->
+<!-- ━━━ SLIDE 04: BULK MODE ━━━ -->
 <section class="slide">
     <div class="action-bar">
         <h2>バルクモード——N枚のQRに分割し、IndexedDBでクレジット管理。サーバー不要</h2>
@@ -1162,7 +1110,7 @@
     <div class="slide-footer">
         <span>TokiStorage &mdash; 技術アーキテクチャ</span>
         <span>Confidential</span>
-        <span class="pg">5</span>
+        <span class="pg">4</span>
     </div>
 </section>
 

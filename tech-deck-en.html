@@ -960,48 +960,79 @@
     </div>
 </section>
 
-<!-- ━━━ SLIDE 03: HIGH-LEVEL ARCHITECTURE ━━━ -->
+<!-- ━━━ SLIDE 03: ARCHITECTURE & DATA FLOW ━━━ -->
 <section class="slide">
     <div class="action-bar">
         <h2>Zero servers in the data flow &mdash; an architecture with no dependencies</h2>
     </div>
     <div class="slide-body">
-        <div class="slide-content" style="display:flex;flex-direction:column;padding-top:0.8rem;">
-            <p class="section-label">Architecture Overview</p>
-            <div class="arch-flow" style="padding:0.8rem 0;">
-                <div class="arch-node" style="padding:0.6rem 0.7rem;">
-                    <div class="arch-node-icon" style="font-size:1.3rem;">&#x1F4E5;</div>
-                    <h4 style="font-size:0.58rem;">Input</h4>
-                    <p style="font-size:0.42rem;">Voice / Image / Text</p>
+        <div class="slide-content">
+            <p class="section-label">Architecture &amp; Data Flow</p>
+            <div class="arch-flow" style="padding:0.3rem 0;">
+                <div class="arch-node" style="min-width:80px;">
+                    <div class="arch-node-icon">&#x1F4E5;</div>
+                    <h4>Input</h4>
+                    <p>Voice / Image / Text</p>
                 </div>
-                <span class="arch-arrow" style="font-size:1rem;">&#x2192;</span>
-                <div class="arch-node highlight" style="padding:0.6rem 0.7rem;">
-                    <div class="arch-node-icon" style="font-size:1.3rem;">&#x2699;&#xFE0F;</div>
-                    <h4 style="font-size:0.58rem;">Encoder</h4>
-                    <p style="font-size:0.42rem;">Encoded in browser</p>
+                <span class="arch-arrow">&#x2192;</span>
+                <div class="arch-node highlight" style="min-width:90px;">
+                    <div class="arch-node-icon">&#x2699;&#xFE0F;</div>
+                    <h4>Encoder</h4>
+                    <p>In-browser encoding</p>
                 </div>
-                <span class="arch-arrow" style="font-size:1rem;">&#x2192;</span>
-                <div class="arch-node" style="padding:0.6rem 0.7rem;">
-                    <div class="arch-node-icon" style="font-size:1.3rem;">&#x25A3;</div>
-                    <h4 style="font-size:0.58rem;">QR Code</h4>
-                    <p style="font-size:0.42rem;">Data stored in URL</p>
+                <span class="arch-arrow">&#x2192;</span>
+                <div class="arch-node" style="min-width:80px;">
+                    <div class="arch-node-icon">&#x1F517;</div>
+                    <h4>URL Generation</h4>
+                    <p>Base64URL embed</p>
                 </div>
-                <span class="arch-arrow" style="font-size:1rem;">&#x2192;</span>
-                <div class="arch-node" style="padding:0.6rem 0.7rem;">
-                    <div class="arch-node-icon" style="font-size:1.3rem;">&#x1F4F1;</div>
-                    <h4 style="font-size:0.58rem;">Smartphone</h4>
-                    <p style="font-size:0.42rem;">Scan &amp; play</p>
+                <span class="arch-arrow">&#x2192;</span>
+                <div class="arch-node" style="min-width:80px;">
+                    <div class="arch-node-icon">&#x25A3;</div>
+                    <h4>QR Code</h4>
+                    <p>V40 / 2,953B</p>
                 </div>
-                <span class="arch-arrow" style="font-size:1rem;">&#x2192;</span>
-                <div class="arch-node highlight" style="padding:0.6rem 0.7rem;">
-                    <div class="arch-node-icon" style="font-size:1.3rem;">&#x1F310;</div>
-                    <h4 style="font-size:0.58rem;">Decoder</h4>
-                    <p style="font-size:0.42rem;">GitHub Pages / PWA cache / 3MB</p>
+                <span class="arch-arrow">&#x2192;</span>
+                <div class="arch-node" style="min-width:80px;">
+                    <div class="arch-node-icon">&#x1F4F1;</div>
+                    <h4>Scan</h4>
+                    <p>Smartphone / 3x zoom</p>
+                </div>
+                <span class="arch-arrow">&#x2192;</span>
+                <div class="arch-node highlight" style="min-width:90px;">
+                    <div class="arch-node-icon">&#x1F310;</div>
+                    <h4>Decoder</h4>
+                    <p>GitHub Pages / PWA / 3MB</p>
                 </div>
             </div>
-            <div class="no-server-badge" style="font-size:0.48rem;padding:0.3rem 0.6rem;">NO SERVER IN DATA FLOW &mdash; No server, no database, no API, no account</div>
-            <div class="callout" style="margin-top:0.5rem;padding:0.5rem 0.7rem;">
-                <h4>Design Principle</h4>
+            <div class="no-server-badge">NO SERVER IN DATA FLOW &mdash; No server, no database, no API, no account</div>
+            <table class="dk-table" style="margin-top:0.25rem;">
+                <thead>
+                    <tr>
+                        <th style="width:22%;">Data Type</th>
+                        <th>Encoding</th>
+                        <th style="width:22%;">Max Capacity</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <th>Voice</th>
+                        <td class="hl">Codec2 WASM (6 modes: 3200&ndash;450 bps)</td>
+                        <td class="hl">~29 sec (450 bps)</td>
+                    </tr>
+                    <tr>
+                        <th>Image</th>
+                        <td>JPEG / WebP &mdash; in-browser resize + Base64URL</td>
+                        <td>~2.2 KB</td>
+                    </tr>
+                    <tr>
+                        <th>Text</th>
+                        <td>UTF-8 &mdash; Base64URL</td>
+                        <td>~2,900 chars</td>
+                    </tr>
+                </tbody>
+            </table>
+            <div class="callout" style="margin-top:0.25rem;">
                 <p>To eliminate service shutdown risk, servers are completely removed from the data flow. The QR code itself is the storage, and the decoder is just a 3 MB static site. With PWA, fully offline playback is possible. No customer data, personal information, or confidential data is held.</p>
             </div>
         </div>
@@ -1013,89 +1044,7 @@
     </div>
 </section>
 
-<!-- ━━━ SLIDE 04: DATA FLOW (Input → QR) ━━━ -->
-<section class="slide">
-    <div class="action-bar">
-        <h2>All data is processed entirely in the browser &mdash; never sent to a server &mdash; and becomes a QR code</h2>
-    </div>
-    <div class="slide-body">
-        <div class="slide-content">
-            <p class="section-label">Data Flow: Input &rarr; QR</p>
-            <div class="arch-flow" style="padding:0.3rem 0;">
-                <div class="arch-node" style="min-width:85px;">
-                    <div class="arch-node-icon">&#x1F4E5;</div>
-                    <h4>Input</h4>
-                    <p>Voice / Image / Text</p>
-                </div>
-                <span class="arch-arrow">&#x2192;</span>
-                <div class="arch-node highlight" style="min-width:95px;">
-                    <div class="arch-node-icon">&#x2699;&#xFE0F;</div>
-                    <h4>Encoder</h4>
-                    <p>In-browser encoding</p>
-                </div>
-                <span class="arch-arrow">&#x2192;</span>
-                <div class="arch-node" style="min-width:85px;">
-                    <div class="arch-node-icon">&#x1F504;</div>
-                    <h4>Base64URL</h4>
-                    <p>Encoding</p>
-                </div>
-                <span class="arch-arrow">&#x2192;</span>
-                <div class="arch-node" style="min-width:105px;">
-                    <div class="arch-node-icon">&#x1F517;</div>
-                    <h4>URL Generation</h4>
-                    <p>play.html?...=&lt;data&gt;</p>
-                </div>
-                <span class="arch-arrow">&#x2192;</span>
-                <div class="arch-node highlight" style="min-width:95px;">
-                    <div class="arch-node-icon">&#x25A3;</div>
-                    <h4>QR Code V40</h4>
-                    <p>2,953 bytes</p>
-                </div>
-            </div>
-            <table class="dk-table" style="margin-top:0.2rem;">
-                <thead>
-                    <tr>
-                        <th style="width:25%;">Parameter</th>
-                        <th>Value</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr>
-                        <th>Voice Codec</th>
-                        <td class="hl">Codec2 WASM (6 modes: 3200 / 2400 / 1600 / 1200 / 700C / 450 bps)</td>
-                    </tr>
-                    <tr>
-                        <th>Voice Max</th>
-                        <td class="hl">~29 seconds (450 bps)</td>
-                    </tr>
-                    <tr>
-                        <th>Image</th>
-                        <td>JPEG / WebP &mdash; in-browser resize + Base64URL</td>
-                    </tr>
-                    <tr>
-                        <th>Text</th>
-                        <td>UTF-8 &mdash; up to ~2,900 characters</td>
-                    </tr>
-                    <tr>
-                        <th>QR</th>
-                        <td>Version 40, Error Correction L, max 2,953 bytes</td>
-                    </tr>
-                    <tr>
-                        <th>URL Format</th>
-                        <td><code style="font-size:0.44rem;background:var(--bg-alt);padding:0.05rem 0.2rem;border-radius:2px;">play.html?m=&lt;mode&gt;&amp;c2=&lt;data&gt;</code> / <code style="font-size:0.44rem;background:var(--bg-alt);padding:0.05rem 0.2rem;border-radius:2px;">?img=</code> / <code style="font-size:0.44rem;background:var(--bg-alt);padding:0.05rem 0.2rem;border-radius:2px;">?txt=</code></td>
-                    </tr>
-                </tbody>
-            </table>
-        </div>
-    </div>
-    <div class="slide-footer">
-        <span>TokiStorage &mdash; Technical Architecture</span>
-        <span>Confidential</span>
-        <span class="pg">4</span>
-    </div>
-</section>
-
-<!-- ━━━ SLIDE 05: BULK MODE ━━━ -->
+<!-- ━━━ SLIDE 04: BULK MODE ━━━ -->
 <section class="slide">
     <div class="action-bar">
         <h2>Bulk Mode &mdash; split into N QR codes, credit managed via IndexedDB. No server required</h2>
@@ -1161,7 +1110,7 @@
     <div class="slide-footer">
         <span>TokiStorage &mdash; Technical Architecture</span>
         <span>Confidential</span>
-        <span class="pg">5</span>
+        <span class="pg">4</span>
     </div>
 </section>
 
