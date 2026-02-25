@@ -75,6 +75,20 @@ async function generatePDF(page, url, outDir, filename, opts) {
         marginTop: 0.31, marginBottom: 0.31, marginLeft: 0.39, marginRight: 0.39,
     });
 
+    // Tech deck — JA
+    await generatePDF(page, BASE + '/tech-deck.html', 'asset', 'tech-deck-ja.pdf', {
+        landscape: true,
+        paperWidth: 11.69, paperHeight: 8.27,
+        marginTop: 0, marginBottom: 0, marginLeft: 0, marginRight: 0,
+    });
+
+    // Tech deck — EN
+    await generatePDF(page, BASE + '/tech-deck-en.html', 'asset', 'tech-deck-en.pdf', {
+        landscape: true,
+        paperWidth: 11.69, paperHeight: 8.27,
+        marginTop: 0, marginBottom: 0, marginLeft: 0, marginRight: 0,
+    });
+
     await browser.close();
-    console.log('Done — 8 PDFs generated');
+    console.log('Done — 10 PDFs generated');
 })();
