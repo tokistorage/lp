@@ -1,0 +1,70 @@
+name: Generate Newsletter PDF
+
+on:
+  workflow_dispatch:
+    inputs:
+      issue_date:
+        description: 'Issue date (YYYY-MM)'
+        required: true
+
+permissions:
+  contents: write
+  pull-requests: write
+
+jobs:
+  generate:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Install dependencies
+        run: |
+          sudo apt-get update && sudo apt-get install -y fonts-ipafont-gothic
+          pip install fpdf2 pypdf
+
+      - name: Fetch generator from LP repo
+        run: |
+          curl -sL https://raw.githubusercontent.com/tokistorage/lp/main/generate-newsletter.py \
+            -o generate-newsletter.py
+
+      - name: Read schedule parameters
+        id: params
+        run: |
+          python3 -c "
+          import json
+          s = json.load(open('schedule.json'))
+          issues = s.get('issues', [])
+          current = [i for i in issues if i['date'] == '${{ github.event.inputs.issue_date }}']
+          if current:
+              i = current[0]
+          else:
+              i = issues[-1]
+          print(f'year={i[\"year\"]}')
+          print(f'month={i[\"month\"]}')
+          print(f'number={i[\"number\"]}')
+          print(f'serial={i[\"serial\"]}')
+          " >> "$GITHUB_OUTPUT"
+
+      - name: Generate PDF
+        run: |
+          python3 generate-newsletter.py \
+            ${{ steps.params.outputs.year }} \
+            ${{ steps.params.outputs.month }} \
+            ${{ steps.params.outputs.number }} \
+            ${{ steps.params.outputs.serial }} \
+            --client-config client-config.json
+
+      - name: Commit and create PR
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          BRANCH="newsletter-${{ github.event.inputs.issue_date }}"
+          git checkout -b "$BRANCH"
+          git add output/*.pdf
+          git commit -m "Generate newsletter ${{ github.event.inputs.issue_date }}"
+          git push origin "$BRANCH"
+          gh pr create \
+            --title "Newsletter ${{ github.event.inputs.issue_date }}" \
+            --body "Auto-generated newsletter PDF for ${{ github.event.inputs.issue_date }}"
+        env:
+          GH_TOKEN: ${{ github.token }}
