@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" type="image/png" sizes="32x32" href="asset/favicon-32.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="asset/apple-touch-icon.png">
+    <title>Thirteen Days of Building | TokiStorage</title>
+    <meta name="robots" content="index, follow">
+    <meta name="description" content="765 commits, 376 pull requests, 13 days. A chronicle of TokiQR's development traced through Git logs. What was chosen, what was discarded — a record of decisions.">    <style>
+        :root {
+            --toki-blue: #2563EB;
+            --toki-blue-dark: #1E40AF;
+            --toki-blue-pale: #EFF6FF;
+            --accent-blue: #60A5FA;
+            --bg-white: #FFFFFF;
+            --text-primary: #1E293B;
+            --text-secondary: #475569;
+            --text-muted: #94A3B8;
+            --border: #E2E8F0;
+            --font-display: 'Hiragino Mincho ProN', 'Yu Mincho', serif;
+            --font-body: 'Hiragino Kaku Gothic ProN', 'Yu Gothic', 'Meiryo', sans-serif;
+        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        html { scroll-behavior: smooth; }
+        body { font-family: var(--font-body); font-weight: 400; background: var(--bg-white); color: var(--text-primary); line-height: 2; font-size: 16px; }
+
+        .article-nav { position: fixed; top: 0; left: 0; right: 0; z-index: 1000; background: rgba(255,255,255,0.95); backdrop-filter: blur(12px); border-bottom: 1px solid var(--border); padding: 0.6rem 1.2rem; display: flex; align-items: center; justify-content: space-between; gap: 1rem; }
+        .article-nav .nav-brand { font-family: var(--font-display); font-size: 0.9rem; font-weight: 600; color: var(--toki-blue); text-decoration: none; white-space: nowrap; }
+        .article-nav .nav-brand::before { content: ''; display: inline-block; width: 20px; height: 20px; background: url('asset/tokistorage-icon-512.png') no-repeat center / contain; vertical-align: -3px; margin-right: 5px; }
+        .article-nav .nav-right { display: flex; align-items: center; gap: 1rem; }
+        .article-nav .nav-label { font-size: 0.6rem; color: var(--text-muted); letter-spacing: 0.08em; }
+        .article-nav .lang-switch { font-size: 0.75rem; color: var(--toki-blue); text-decoration: none; padding: 0.3rem 0.6rem; border: 1px solid var(--toki-blue); border-radius: 4px; }
+        .article-nav .lang-switch:hover { background: var(--toki-blue); color: #fff; }
+
+        .article-container { max-width: 680px; margin: 0 auto; padding: 7rem 2rem 4rem; }
+        .article-header { margin-bottom: 3rem; padding-bottom: 2rem; border-bottom: 1px solid var(--border); }
+        .article-category { font-size: 0.7rem; color: var(--toki-blue); letter-spacing: 0.15em; margin-bottom: 1rem; }
+        .article-header h1 { font-family: var(--font-display); font-size: 1.8rem; font-weight: 700; line-height: 1.5; margin-bottom: 1.5rem; }
+        .article-subtitle { font-size: 0.95rem; color: var(--text-secondary); line-height: 1.9; }
+
+        .article-content h2 { font-family: var(--font-display); font-size: 1.3rem; font-weight: 600; margin: 3rem 0 1.5rem; padding-bottom: 0.5rem; border-bottom: 2px solid var(--toki-blue-pale); }
+        .article-content h3 { font-family: var(--font-display); font-size: 1.1rem; font-weight: 600; margin: 2rem 0 1rem; color: var(--toki-blue-dark); }
+        .article-content p { margin-bottom: 1.5rem; text-align: justify; }
+        .article-content blockquote { border-left: 3px solid var(--toki-blue); padding-left: 1.5rem; margin: 2rem 0; font-family: var(--font-display); color: var(--text-secondary); }
+        .article-content ul { margin: 1.5rem 0; padding-left: 1.5rem; }
+        .article-content li { margin-bottom: 0.75rem; }
+
+        .core-message { background: var(--toki-blue-pale); border-left: 4px solid var(--toki-blue); padding: 1.5rem; margin: 2rem 0; font-size: 0.95rem; line-height: 1.8; }
+        .key-point { background: linear-gradient(135deg, var(--toki-blue-pale) 0%, #fff 100%); border: 1px solid var(--accent-blue); border-radius: 8px; padding: 1.5rem; margin: 2rem 0; text-align: center; }
+        .key-point p { font-family: var(--font-display); font-size: 1.1rem; color: var(--toki-blue-dark); margin: 0; }
+
+        .article-footer { margin-top: 4rem; padding-top: 2rem; border-top: 1px solid var(--border); text-align: center; }
+        .article-footer p { font-size: 0.8rem; color: var(--text-muted); margin-bottom: 1rem; }
+        .article-footer a { color: var(--toki-blue); text-decoration: none; }
+        .article-footer a:hover { text-decoration: underline; }
+
+        @media (max-width: 768px) {
+            .article-container { padding: 6rem 1.2rem 3rem; }
+            .article-header h1 { font-size: 1.5rem; }
+            .article-nav .nav-label { display: none; }
+        }
+        @media print { .article-nav { display: none; } .article-container { padding-top: 2rem; } }
+    </style>
+    <link rel="stylesheet" href="contact-form.css">
+    <meta property="og:type" content="article">
+    <meta property="og:title" content="Thirteen Days of Building | TokiStorage">
+    <meta property="og:description" content="765 commits, 376 pull requests, 13 days. A chronicle of TokiQR's development traced through Git logs. What was chosen, what was discarded — a record of decisions.">
+    <meta property="og:url" content="https://tokistorage.github.io/lp/development-chronicle-en.html">
+    <meta property="og:site_name" content="TokiStorage">
+    <meta name="twitter:card" content="summary">
+    <meta name="twitter:title" content="Thirteen Days of Building | TokiStorage">
+    <meta name="twitter:description" content="765 commits, 376 pull requests, 13 days. A chronicle of TokiQR's development traced through Git logs. What was chosen, what was discarded — a record of decisions.">
+    <meta property="og:image" content="https://tokistorage.github.io/lp/asset/tokistorage-icon-512.png">
+    <meta property="og:image:width" content="512">
+    <meta property="og:image:height" content="512">
+    <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Article",
+  "headline": "Thirteen Days of Building",
+  "author": {
+    "@type": "Person",
+    "name": "Takuya Sato",
+    "url": "https://tokistorage.github.io/lp/profile.html"
+  },
+  "publisher": {
+    "@type": "Organization",
+    "name": "TokiStorage",
+    "url": "https://tokistorage.github.io/lp",
+    "logo": {
+      "@type": "ImageObject",
+      "url": "https://tokistorage.github.io/lp/asset/tokistorage-icon-512.png"
+    }
+  },
+  "url": "https://tokistorage.github.io/lp/development-chronicle-en.html",
+  "inLanguage": "en",
+  "mainEntityOfPage": "https://tokistorage.github.io/lp/development-chronicle-en.html",
+  "description": "765 commits, 376 pull requests, 13 days. A chronicle of TokiQR's development traced through Git logs. What was chosen, what was discarded — a record of decisions."
+}
+    </script>
+    <link rel="alternate" hreflang="ja" href="https://tokistorage.github.io/lp/development-chronicle.html">
+    <link rel="alternate" hreflang="en" href="https://tokistorage.github.io/lp/development-chronicle-en.html">
+    <link rel="alternate" hreflang="x-default" href="https://tokistorage.github.io/lp/development-chronicle.html">
+    <link rel="canonical" href="https://tokistorage.github.io/lp/development-chronicle-en.html">
+</head>
+<body>
+
+<nav class="article-nav">
+    <a href="index.html" class="nav-brand">TokiStorage</a>
+    <div class="nav-right">
+        <span class="nav-label">技術・設計 / Technology & Design</span>
+        <a href="development-chronicle.html" class="lang-switch">JA</a>
+    </div>
+</nav>
+
+<main class="article-container">
+
+    <header class="article-header">
+        <p class="article-category">ESSAY &mdash; Technology &amp; Design</p>
+        <h1>Thirteen Days of Building<br><span style="font-size:0.7em; font-weight:400;">The contours of a product, carved by 765 commits</span></h1>
+        <p class="article-subtitle">
+            &mdash;&mdash; February 14, 2026, the first commit. Over the next thirteen days, 765 commits and 376 pull requests accumulated. Zero external dependencies, the Codec2 pivot, abandoning Safari print support, deleting the entire video feature, declining a patent&mdash;what was chosen and what was discarded at each phase. A chronicle of development as told by Git logs.
+        </p>
+    </header>
+
+    <article class="article-content">
+
+        <div class="core-message">
+            <strong>The point of this essay:</strong> TokiQR went from concept to finished product in thirteen days. The speed came from AI collaboration (vibe coding), but the essence lies in the decisions about what to discard. Eliminating external dependencies, pivoting to Codec2, abandoning Safari support, deleting the video feature entirely, declining a patent&mdash;a series of decisions to cut shaped the contours of the product.
+        </div>
+
+        <h2>1. Day One Decisions</h2>
+
+        <p>February 14, 2026, 18:06. The first commit was inscribed. &ldquo;Initial commit: Voice QR application&rdquo;&mdash;an application that embeds audio into QR codes. Everything began here.</p>
+
+        <p>Within the first 75 minutes, the foundational principle of the project was established. ffmpeg.wasm was introduced for a fully static site, CDN dependencies were entirely eliminated, Google Fonts were moved to self-hosting, and ultimately web fonts themselves were discarded in favor of system fonts. External dependencies were stripped away one by one.</p>
+
+        <p>This principle of &ldquo;no external dependencies&rdquo; governed every subsequent architectural decision. No server. No database. No external authentication. The principle established on day one never wavered across all thirteen days.</p>
+
+        <h2>2. The Codec2 Pivot</h2>
+
+        <p>The next morning at 7:36, the most significant technical pivot occurred. Opus/FFmpeg was abandoned in favor of Codec2 WASM.</p>
+
+        <p>Opus is a high-quality audio codec, but at low bitrates (1&ndash;2 kbps), it outputs DTX (Discontinuous Transmission) silence frames. Silence is recorded instead of speech. Above 4 kbps, entropy is too high for compression to be effective, fitting only 2&ndash;3 seconds into a single QR code. Between 2&ndash;4 kbps lies a steep DTX cliff with no usable middle ground.</p>
+
+        <p>Codec2 is a military-grade low-bitrate speech codec. At 450 bps mode, it produces 75 bytes per second. Robotic but intelligible speech that fits up to approximately 29 seconds into a single QR code (2,953 bytes). A human voice for 29 seconds&mdash;a self-introduction, a brief greeting, a fragment of feeling. The limits of what fits in one QR code were pushed to their maximum.</p>
+
+        <p>By the end of that same day, i18n (Japanese-English bilingual support), service worker offline capability, and the rebrand from &ldquo;Voice QR&rdquo; to &ldquo;TokiQR&rdquo; were all complete. By day two, the skeleton of the product had taken shape.</p>
+
+        <h2>3. Commerce in a Day</h2>
+
+        <p>February 17 was the day the entire commercial infrastructure was built. Order forms, the Commercial Transactions Act disclosure page, Wise payment integration, partner guides, a coupon system&mdash;from morning to night, the business layer was stood up in a single day.</p>
+
+        <p>That same day, the concept of three-layer storage was born. The first layer is the QR paper itself. The second layer is the GitHub repository. The third layer is deposit at the National Diet Library (NDL) of Japan. A triple structure of physical, digital, and public archive ensures data permanence. This concept later became the core value proposition of the product.</p>
+
+        <p>A Cloudflare Worker API proxy was also introduced that day. Rather than direct access to Google Apps Script, endpoints were unified through a single proxy. Within the principle of minimizing external dependencies, only the thinnest possible intermediary layer was permitted.</p>
+
+        <h2>4. What Was Discarded</h2>
+
+        <p>The story of development cannot be told only by what was added. What was discarded defined the product&rsquo;s contours.</p>
+
+        <p><strong>Safari print support (February 20).</strong> Over 28 commits were spent on print layout in a single day. iframe, image, canvas, PDF.js&mdash;every approach was attempted. Safari&rsquo;s print rendering lacked consistency, and each workaround added complexity. Ultimately, the decision was made to limit printing to macOS Chrome, and all Safari-specific code was deleted. The temptation to deliver to every browser was severed.</p>
+
+        <p><strong>Video feature (February 25, 02:34&ndash;04:25).</strong> An FFmpeg pipeline and TokiVideo binary format were built in two hours. Tab UI, playback, metadata routing&mdash;all implemented. But WASM memory limits caused frequent OOM errors, making it impractical. At 04:25, everything was deleted. Two hours of work erased without hesitation.</p>
+
+        <p><strong>Patent (February 21).</strong> A patent attorney was retained, and the assessment was that a patent could be obtained. But the filing was declined before submission. Publishing openly and leading through speed aligned better with the product&rsquo;s philosophy than protecting through patents. All patent-related language was removed from every page.</p>
+
+        <blockquote><p>Do not cling to what does not work. Even if it functions, discard it if it does not align with the philosophy. This stance was consistent throughout the thirteen days.</p></blockquote>
+
+        <h2>5. From Bulk Mode to Credits</h2>
+
+        <p>Between February 24 and 25, the commercial pillars of the product were erected in rapid succession.</p>
+
+        <p>First, PWA conversion and IndexedDB. Data was persisted in the browser, and history and archive pages were added. The local-first foundation was in place.</p>
+
+        <p>Next, bulk mode. A feature that splits long audio across multiple QR codes and compiles them into a single PDF. Records that do not fit on one code are preserved across many&mdash;the core of TokiQR&rsquo;s &ldquo;multi-QR&rdquo; experience.</p>
+
+        <p>A credit system was introduced to monetize bulk mode. HMAC-SHA256 tamper detection, codeless purchase (no personal information required), first chunk free. Wise payment links are auto-generated, and credits are activated upon transfer confirmation.</p>
+
+        <p>Another pivot occurred that day. ZIP export was entirely replaced by PDF (jsPDF). Collections of QR codes became distributable in a universal format. The &ldquo;Tokushu&rdquo; (special feature series) concept was born, and the NDL deposit pipeline was connected. A user&rsquo;s voice QR codes could be deposited at the National Diet Library&mdash;the moment product and public archive became directly linked.</p>
+
+        <h2>6. Designing the Monitor Program</h2>
+
+        <p>On February 26, the monitor program launched. A system where participants experience paid products through the standard purchase flow and leave public feedback.</p>
+
+        <p>Monitors purchase credits through the same flow as regular customers. After the experience, the same amount is returned via Wise. The experience is effectively free. This structure echoes the principles of a gift economy&mdash;money circulates, and the real exchange occurs between &ldquo;experience&rdquo; and &ldquo;feedback.&rdquo;</p>
+
+        <p>Feedback is published linked to a Wisetag&mdash;the Wise payment account name. It is not an anonymous review. It is a verifiable trust signal where a third party can confirm &ldquo;this person actually purchased.&rdquo; The &ldquo;real purchase plus refund&rdquo; of mystery shoppers, the &ldquo;public review&rdquo; of Amazon Vine, the &ldquo;monetary return&rdquo; of cashback&mdash;elements of existing models were recombined, landing in a unique position defined by verifiability and the absence of a conversion step.</p>
+
+        <p>The completion of the monitor program marks a milestone for the product. The phase of building has transitioned to the phase of having people use it and gathering their voices.</p>
+
+        <h2>7. What the Numbers Tell</h2>
+
+        <p>The qr repository: 765 commits, 376 pull requests, 13 days. The lp repository: 881 commits, over 130 essays, 499 pages, 15 days. Over 1,600 commits compressed into two weeks.</p>
+
+        <p>An average of 59 commits and 29 pull requests per day. The contact form was completed through 12 iterations in 44 minutes. Print layout consumed 28 commits in a single day. This velocity would not have been possible without AI collaboration&mdash;what is known as vibe coding.</p>
+
+        <p>But velocity is a means, not the essence. Because you can build fast, you can discard fast. The ability to delete a two-hour video feature without hesitation comes from knowing it can be rebuilt in two hours. Speed lowered the psychological cost of the decision to discard, preserving the product&rsquo;s purity.</p>
+
+        <blockquote><p>What was built in thirteen days matters less than what was discarded in thirteen days. The latter tells the product&rsquo;s story more truthfully.</p></blockquote>
+
+        <div class="key-point">
+            <p>765 commits, thirteen days.<br>It was not what was added but what was discarded that defined the product&rsquo;s contours.</p>
+        </div>
+
+        <p style="font-size: 0.85rem; color: var(--text-secondary);">For the technical rationale behind the audio codec, see &ldquo;<a href="30sec-audio-en.html" style="color: var(--toki-blue);">The World of 30-Second Audio</a>.&rdquo; For storage permanence design, see &ldquo;<a href="storage-strategy-en.html" style="color: var(--toki-blue);">Storage Strategy</a>.&rdquo; For the monitor program&rsquo;s detailed philosophy, see &ldquo;<a href="monitor-program-en.html" style="color: var(--toki-blue);">Designing the Monitor Program</a>.&rdquo; For AI collaboration, see &ldquo;<a href="vibe-coding-en.html" style="color: var(--toki-blue);">Vibe Coding</a>.&rdquo;</p>
+
+    </article>
+
+    <footer class="article-footer">
+        <p id="essay-nav-links"></p>
+        <p style="margin-top: 2rem; font-size: 0.75rem; color: var(--text-muted); font-style: italic;">You become a story, generations connect in dialogue, the path forward. — TokiStorage</p>
+        <p style="font-size: 0.75rem; color: var(--text-muted);">&copy; 2026 TokiStorage. All rights reserved.</p>
+    </footer>
+
+</main>
+
+<script src="contact-form.js" defer></script>
+<script src="essay-tts.js?v=20260226"></script>
+<script src="essay-nav.js?v=20260226"></script>
+<script src="tracker.js" defer></script>
+</body>
+</html>
