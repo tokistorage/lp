@@ -99,6 +99,24 @@ async function generatePDF(page, url, outDir, filename, opts) {
         marginTop: 0, marginBottom: 0, marginLeft: 0, marginRight: 0,
     });
 
+    // Government templates
+    await generatePDF(page, BASE + '/government-template-overview.html', '.', 'government-template-overview.pdf', {
+        paperWidth: 8.27, paperHeight: 11.69,
+        marginTop: 0, marginBottom: 0, marginLeft: 0, marginRight: 0,
+    });
+    await generatePDF(page, BASE + '/government-template-estimate.html', '.', 'government-template-estimate.pdf', {
+        paperWidth: 8.27, paperHeight: 11.69,
+        marginTop: 0, marginBottom: 0, marginLeft: 0, marginRight: 0,
+    });
+    await generatePDF(page, BASE + '/government-template-specification.html', '.', 'government-template-specification.pdf', {
+        paperWidth: 8.27, paperHeight: 11.69,
+        marginTop: 0, marginBottom: 0, marginLeft: 0, marginRight: 0,
+    });
+    await generatePDF(page, BASE + '/government-template-proposal.html', '.', 'government-template-proposal.pdf', {
+        paperWidth: 8.27, paperHeight: 11.69,
+        marginTop: 0, marginBottom: 0, marginLeft: 0, marginRight: 0,
+    });
+
     // Tech deck — JA
     await generatePDF(page, BASE + '/tech-deck.html', 'asset', 'tech-deck-ja.pdf', {
         landscape: true,
@@ -114,5 +132,5 @@ async function generatePDF(page, url, outDir, filename, opts) {
     });
 
     await browser.close();
-    console.log('Done — 14 PDFs generated');
+    console.log('Done — 18 PDFs generated');
 })();

@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>業務仕様書 | TokiStorage</title>
+<style>
+    :root { --toki-blue: #2563EB; --text: #1E293B; --text-sub: #475569; --text-muted: #94A3B8; --border: #E2E8F0; --bg-section: #F1F5F9; }
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body { font-family: 'Hiragino Kaku Gothic ProN', 'Yu Gothic', 'Meiryo', sans-serif; font-size: 14px; color: var(--text); line-height: 1.8; }
+    .page { max-width: 700px; margin: 0 auto; padding: 2rem 2.5rem; }
+    .header { display: flex; justify-content: space-between; align-items: center; padding-bottom: 0.5rem; border-bottom: 3px solid var(--toki-blue); margin-bottom: 2rem; }
+    .header-left { display: flex; align-items: center; gap: 0.6rem; }
+    .header-left img { width: 40px; height: 40px; }
+    .header-left .name { font-weight: 700; font-size: 1rem; }
+    .header-left .sub { font-size: 0.75rem; color: var(--text-sub); }
+    .header-right { font-size: 0.7rem; color: var(--text-muted); letter-spacing: 0.1em; }
+    .doc-title { text-align: center; margin-bottom: 0.3rem; }
+    .doc-title h1 { font-family: 'Hiragino Mincho ProN', 'Yu Mincho', serif; font-size: 1.6rem; font-weight: 700; }
+    .doc-title .en { font-size: 0.8rem; color: var(--text-sub); margin-bottom: 2rem; }
+    .divider { border: none; border-top: 1px solid var(--border); margin: 1.5rem 0; }
+    h2 { font-size: 0.95rem; font-weight: 700; margin: 1.8rem 0 0.6rem; }
+    h2 .num { color: var(--toki-blue); }
+    p { font-size: 0.85rem; color: var(--text-sub); margin-bottom: 0.4rem; }
+    .task-row { display: flex; margin-bottom: 0.3rem; font-size: 0.85rem; }
+    .task-id { width: 3rem; color: var(--toki-blue); font-weight: 600; flex-shrink: 0; }
+    .task-name { width: 9rem; font-weight: 600; flex-shrink: 0; }
+    .task-desc { color: var(--text-sub); }
+    ul { padding-left: 1.2rem; margin-bottom: 0.5rem; }
+    li { font-size: 0.85rem; color: var(--text-sub); margin-bottom: 0.15rem; }
+    .footer { text-align: center; margin-top: 3rem; padding-top: 1rem; border-top: 1px solid var(--border); }
+    .footer p { font-size: 0.7rem; color: var(--text-muted); }
+    @media print { body { -webkit-print-color-adjust: exact; print-color-adjust: exact; } .page { padding: 0; max-width: 100%; } }
+    @page { size: A4; margin: 15mm 18mm; }
+</style>
+</head>
+<body>
+<div class="page">
+    <div class="header">
+        <div class="header-left">
+            <img src="asset/tokistorage-icon-512.png" alt="TokiStorage">
+            <div>
+                <div class="name">TokiStorage（佐藤卓也）</div>
+                <div class="sub">TokiStorage</div>
+            </div>
+        </div>
+        <div class="header-right">TEMPLATE / 見本</div>
+    </div>
+
+    <div class="doc-title">
+        <h1>業務仕様書</h1>
+        <p class="en">Service Specification</p>
+    </div>
+    <hr class="divider">
+
+    <h2><span class="num">1.</span> 業務名称</h2>
+    <p>〇〇市 〇〇事業に係るQR記録プレート制作業務</p>
+
+    <h2><span class="num">2.</span> 業務目的</h2>
+    <p>本業務は、〇〇の記録をQRコードプレートに保存することを目的とする。TokiQR（無料）による市民参加型の音声・顔・テキスト記録から、UVラミネートQR（屋外設置用）、石英ガラスQR（千年保存用）まで、段階的な記録保存を実現する。独自音声符号化技術により、QR1枚に最大30秒の音声を記録可能。バルクモード（¥150／コード）では時間制限なしの高品質音声記録にも対応。ニュースレター（PDF逐次刊行物）に収録され国立国会図書館に納本・GitHubバックアップの三層分散保管で永続性を確保する。</p>
+
+    <h2><span class="num">3.</span> 業務内容</h2>
+    <div class="task-row"><span class="task-id">3-1</span><span class="task-name">TokiQR体験支援</span><span class="task-desc">市民向けワークショップでの声・顔・テキスト記録体験の実施</span></div>
+    <div class="task-row"><span class="task-id">3-2</span><span class="task-name">コンテンツ設計</span><span class="task-desc">記録対象の選定、テキスト編集・QRコードリンク先コンテンツの構成</span></div>
+    <div class="task-row"><span class="task-id">3-3</span><span class="task-name">QRプレート制作</span><span class="task-desc">UVラミネートQRまたは石英ガラスQRの制作</span></div>
+    <div class="task-row"><span class="task-id">3-4</span><span class="task-name">ニュースレター設定</span><span class="task-desc">別冊特集ニュースレターの開設・QR収録・NDL納本手続き</span></div>
+    <div class="task-row"><span class="task-id">3-5</span><span class="task-name">動作検証</span><span class="task-desc">QRコード読取テスト・リンク先表示確認</span></div>
+    <div class="task-row"><span class="task-id">3-6</span><span class="task-name">設置・取付</span><span class="task-desc">指定場所への取付工事（屋内／屋外）</span></div>
+    <div class="task-row"><span class="task-id">3-7</span><span class="task-name">納品・報告</span><span class="task-desc">完了報告書の提出</span></div>
+
+    <h2><span class="num">4.</span> 成果物</h2>
+    <ul>
+        <li>TokiQRワークショップ実施報告</li>
+        <li>UVラミネートQRプレート ×〇〇枚 および/または 石英ガラスQRプレート ×〇〇枚</li>
+        <li>別冊特集ニュースレター（自治体専用シリーズ）の開設・初号発行</li>
+        <li>QRコードリンク先コンテンツ（三層分散保管: 国立国会図書館＋GitHub＋物理媒体）</li>
+        <li>完了報告書 1部</li>
+    </ul>
+
+    <h2><span class="num">5.</span> 履行期間</h2>
+    <p>契約締結日から　　年　月　日まで</p>
+
+    <h2><span class="num">6.</span> 品質・耐久性要件</h2>
+    <ul>
+        <li>TokiQR: 三層分散保管（国立国会図書館＋GitHub＋物理媒体）</li>
+        <li>ニュースレター: 国立国会図書館に定期収集対象として納本</li>
+        <li>UVラミネートQR: 屋外耐候性を有すること</li>
+        <li>石英ガラスQR: 理論耐久性 1,000年以上</li>
+        <li>QRコード読取: 市販スマートフォンカメラで読取可能であること</li>
+        <li>音声記録: QR1枚あたり最大30秒の音声を格納可能</li>
+        <li>バルクモード: 時間制限なしの高品質音声記録に対応</li>
+    </ul>
+
+    <h2><span class="num">7.</span> 随意契約の根拠</h2>
+    <p>石英ガラスへの千年記録は高度に専門的な技術であり、「その性質又は目的が競争入札に適しないもの」に該当する。</p>
+    <ul>
+        <li>地方自治体: 地方自治法施行令 第167条の2 第1項第2号</li>
+        <li>国の機関: 予算決算及び会計令 第99条第2号</li>
+    </ul>
+
+    <div class="footer">
+        <p>TokiStorage ｜ 行政提案書類</p>
+        <p>本書は見本です。実際の書類は内容確定後に発行いたします。</p>
+    </div>
+</div>
+</body>
+</html>
