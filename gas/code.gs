@@ -90,6 +90,7 @@ function doPost(e) {
     if (data.type === 'ndl_submit') return handleNdlSubmit(ss, data);
     if (data.type === 'monitor_apply') return handleMonitorApply(ss, data);
     if (data.type === 'monitor_feedback') return handleMonitorFeedback(ss, data);
+    if (data.type === 'monitor_voices') return handleMonitorVoices(ss);
     if (data.type === 'order') return handleOrder(ss, data);
     return handleContact(ss, data);
 
