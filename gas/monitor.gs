@@ -25,15 +25,6 @@ function handleMonitorApply(ss, data) {
 // ── モニターフィードバック ──
 
 function handleMonitorFeedback(ss, data) {
-  sendEmail(NOTIFY_EMAIL,
-    '【モニターフィードバック】' + (data.wisetag || ''),
-    'Wisetag: ' + (data.wisetag || '') + '\n'
-    + 'コメント:\n' + (data.comment || '') + '\n\n'
-    + 'デバイス: ' + (data.device || '') + '\n'
-    + '言語: ' + (data.lang || '') + '\n'
-    + '日時: ' + new Date().toLocaleString('ja-JP', { timeZone: 'Asia/Tokyo' })
-  );
-
   // voices.json に追記して qr リポジトリの main に直接コミット（排他制御）
   var lock = LockService.getScriptLock();
   lock.waitLock(30000);
