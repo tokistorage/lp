@@ -178,7 +178,133 @@
 
         <p style="text-align: center; margin: 2rem 0;"><a href="newsletters.html" style="display: inline-block; color: var(--toki-gold-dark); border: 1.5px solid var(--toki-gold); border-radius: 6px; padding: 0.6rem 1.8rem; font-size: 0.9rem; text-decoration: none; transition: background 0.2s, color 0.2s;">実際のナビゲーションを見る &rarr;</a></p>
 
-        <h2>5. なぜ「過剰設計」ではないのか</h2>
+        <h2>5. 定量的スケーラビリティ分析</h2>
+
+        <p>三層アコーディオンの有効性を定量的に検証する。比較対象はフラットリスト、ページネーション（20件/頁）、検索ボックスの3パターンだ。</p>
+
+        <h3>到達コストの比較</h3>
+
+        <p>ユーザーが任意のアイテムにたどり着くまでの操作を「到達コスト」と定義する。クリック数とスクロール量で測る。</p>
+
+        <div style="overflow-x: auto; margin: 2rem 0;">
+        <table style="width: 100%; border-collapse: collapse; font-size: 0.85rem; line-height: 1.6;">
+            <thead>
+                <tr style="border-bottom: 2px solid var(--toki-gold); text-align: left;">
+                    <th style="padding: 0.5rem;">パターン</th>
+                    <th style="padding: 0.5rem;">100年後<br>(200号)</th>
+                    <th style="padding: 0.5rem;">500年後<br>(1,000号)</th>
+                    <th style="padding: 0.5rem;">1000年後<br>(2,000号)</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr style="border-bottom: 1px solid var(--border);">
+                    <td style="padding: 0.5rem;"><strong>フラットリスト</strong></td>
+                    <td style="padding: 0.5rem;">最大200行スクロール</td>
+                    <td style="padding: 0.5rem;">最大1,000行スクロール</td>
+                    <td style="padding: 0.5rem;">最大2,000行スクロール</td>
+                </tr>
+                <tr style="border-bottom: 1px solid var(--border); background: var(--toki-gold-pale);">
+                    <td style="padding: 0.5rem;"><strong>ページネーション</strong><br>(20件/頁)</td>
+                    <td style="padding: 0.5rem;">最大10クリック<br>+ スクロール</td>
+                    <td style="padding: 0.5rem;">最大50クリック<br>+ スクロール</td>
+                    <td style="padding: 0.5rem;">最大100クリック<br>+ スクロール</td>
+                </tr>
+                <tr style="border-bottom: 1px solid var(--border);">
+                    <td style="padding: 0.5rem;"><strong>検索ボックス</strong></td>
+                    <td style="padding: 0.5rem;">1操作（知っている場合）<br>∞（知らない場合）</td>
+                    <td style="padding: 0.5rem;">同左</td>
+                    <td style="padding: 0.5rem;">同左</td>
+                </tr>
+                <tr style="background: var(--toki-gold-pale);">
+                    <td style="padding: 0.5rem;"><strong>三層アコーディオン</strong></td>
+                    <td style="padding: 0.5rem;">最大3クリック<br>(世紀→巻→年)</td>
+                    <td style="padding: 0.5rem;">最大3クリック<br>(世紀→巻→年)</td>
+                    <td style="padding: 0.5rem;">最大3クリック<br>(世紀→巻→年)</td>
+                </tr>
+            </tbody>
+        </table>
+        </div>
+
+        <p>三層アコーディオンの到達コストは <strong>O(1)</strong> だ。アイテム数が200でも2,000でも20,000でも、任意の号に到達するまでのクリック数は最大3回で変わらない。世紀を開く、巻を開く、年のリンクを選ぶ。フラットリストの O(n) やページネーションの O(n/k) と比べ、スケールに対して定数時間で到達できる。</p>
+
+        <h3>DOM上の表示行数</h3>
+
+        <p>折り畳まれた状態でユーザーの目に入る行数を比較する。</p>
+
+        <ul>
+            <li><strong>100年後</strong>（1世紀、巻5つ）：世紀見出し1行。最新巻を開いても5行前後。合計 <strong>6行</strong></li>
+            <li><strong>500年後</strong>（5世紀、巻25）：世紀見出し5行。最新を開いて +5行。合計 <strong>10行</strong></li>
+            <li><strong>1000年後</strong>（10世紀、巻50）：世紀見出し10行。最新を開いて +5行。合計 <strong>15行</strong></li>
+        </ul>
+
+        <p>1000年経っても、初期表示はわずか15行だ。しかしDOMにはすべてのリンク（2,000+件）が存在し、クローラはすべてをインデックスできる。<strong>視覚的な簡潔さとDOM上の完全性が両立する</strong>——これが <code>&lt;details&gt;</code> の本質的な強みだ。</p>
+
+        <h2>6. 劣化耐性と技術寿命</h2>
+
+        <p>1000年の設計において、最大のリスクは技術の陳腐化だ。いま選ぶ技術が何年持つかを見積もる。</p>
+
+        <h3>Web技術の平均寿命</h3>
+
+        <div style="overflow-x: auto; margin: 2rem 0;">
+        <table style="width: 100%; border-collapse: collapse; font-size: 0.85rem; line-height: 1.6;">
+            <thead>
+                <tr style="border-bottom: 2px solid var(--toki-gold); text-align: left;">
+                    <th style="padding: 0.5rem;">技術レイヤー</th>
+                    <th style="padding: 0.5rem;">実例</th>
+                    <th style="padding: 0.5rem;">実績寿命</th>
+                    <th style="padding: 0.5rem;">推定余命</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr style="border-bottom: 1px solid var(--border);">
+                    <td style="padding: 0.5rem;">JSフレームワーク</td>
+                    <td style="padding: 0.5rem;">AngularJS → Angular, Backbone → 消滅</td>
+                    <td style="padding: 0.5rem;">3〜7年</td>
+                    <td style="padding: 0.5rem;">次のフレームワークまで</td>
+                </tr>
+                <tr style="border-bottom: 1px solid var(--border); background: var(--toki-gold-pale);">
+                    <td style="padding: 0.5rem;">JSライブラリ</td>
+                    <td style="padding: 0.5rem;">jQuery（2006〜現在）</td>
+                    <td style="padding: 0.5rem;">20年</td>
+                    <td style="padding: 0.5rem;">衰退期</td>
+                </tr>
+                <tr style="border-bottom: 1px solid var(--border);">
+                    <td style="padding: 0.5rem;">Web標準（CSS）</td>
+                    <td style="padding: 0.5rem;">CSS2（1998〜現在）</td>
+                    <td style="padding: 0.5rem;">28年+</td>
+                    <td style="padding: 0.5rem;">後方互換で存続</td>
+                </tr>
+                <tr style="background: var(--toki-gold-pale);">
+                    <td style="padding: 0.5rem;">Web標準（HTML要素）</td>
+                    <td style="padding: 0.5rem;"><code>&lt;table&gt;</code>（1995〜）、<code>&lt;details&gt;</code>（2011〜）</td>
+                    <td style="padding: 0.5rem;">15〜31年+</td>
+                    <td style="padding: 0.5rem;">ブラウザが存在する限り</td>
+                </tr>
+            </tbody>
+        </table>
+        </div>
+
+        <p>HTML要素はブラウザの後方互換性によって保護される。1995年に定義された <code>&lt;table&gt;</code> は2026年現在もすべてのブラウザで動作する。一方、2010年代に主流だったAngularJSは、2021年にサポートが終了した。<strong>標準仕様に書かれた要素は、フレームワークの10倍以上の寿命を持つ</strong>。</p>
+
+        <h3>劣化シナリオ分析</h3>
+
+        <p>三層アコーディオンが各種の障害シナリオにどう耐えるかを検証する。</p>
+
+        <ul>
+            <li><strong>JavaScript無効</strong>：<code>&lt;details&gt;</code> はHTML標準要素であり、JSなしで完全に動作する。開閉もブラウザネイティブ。影響ゼロ</li>
+            <li><strong>CSS無効</strong>：装飾は消えるが、<code>&lt;details&gt;</code> の開閉機能は維持される。<code>&lt;summary&gt;</code> のテキストが見出しとして機能し、構造は読み取れる</li>
+            <li><strong>テキストブラウザ</strong>（Lynx等）：<code>&lt;details&gt;</code> 非対応のブラウザでは、内容がすべて展開された状態で表示される。つまりフラットリストにフォールバックする。情報は失われない</li>
+            <li><strong>スクリーンリーダー</strong>：<code>&lt;details&gt;</code> はWAI-ARIAの <code>role="group"</code> を暗黙的に持ち、<code>&lt;summary&gt;</code> は <code>role="button"</code> として振る舞う。展開状態は <code>aria-expanded</code> で自動的に通知される。キーボード操作（Enter/Space）で開閉可能。WCAG 2.1 AA準拠</li>
+            <li><strong>検索エンジンクローラ</strong>：DOM上にすべてのリンクが存在するため、<code>&lt;details&gt;</code> の開閉状態に関わらずインデックスされる。GoogleはHTML標準要素のコンテンツをインデックス対象として扱う</li>
+        </ul>
+
+        <p>いずれのシナリオでも、情報の損失はゼロだ。最悪のケース（完全なCSS/JS無効・非対応ブラウザ）でも、すべてのリンクが展開状態で表示されるだけだ。これは他のナビゲーションパターン——SPAはJSなしで空白、無限スクロールはJSなしで1ページ目だけ——と決定的に異なる。</p>
+
+        <blockquote>
+            <p>最悪のフォールバックがフラットリストであるということは、最悪でも「情報にはアクセスできる」ことを意味する。</p>
+        </blockquote>
+
+        <h2>7. コスト分析：追加コードの最小性</h2>
 
         <p>追加したコードは、<code>buildCenturyNav()</code> という関数ひとつと、CSSが数十行だ。外部ライブラリは使っていない。<code>&lt;details&gt;</code> はHTML Living Standardに定義された標準要素であり、2026年現在、すべてのモダンブラウザが対応している。</p>
 
@@ -192,7 +318,7 @@
 
         <p>今やらなければ、100年後に「なぜフラットリストで設計したのか」と問われる。そのときに構造を入れ替えるのは、今やるよりもはるかに難しい。100年分のコンテンツが既に存在し、100年分のURLが外部からリンクされているからだ。</p>
 
-        <h2>6. 世界の長寿機関はどう設計しているか</h2>
+        <h2>8. 世界の長寿機関はどう設計しているか</h2>
 
         <p>この設計思想を持った上で、超長期でコンテンツを残すべき組織——国立図書館、博物館、宗教施設、行政機関——のWebナビゲーションを見てみると、興味深い現実が浮かび上がる。</p>
 
@@ -232,6 +358,82 @@
             <p>検索は「知っている人」のためのツール。物語は「聴く人」のための語り。アコーディオンは「見渡す人」のための構造。</p>
         </blockquote>
 
+        <h3>ナビゲーションパターン評価マトリクス</h3>
+
+        <div style="overflow-x: auto; margin: 2rem 0;">
+        <table style="width: 100%; border-collapse: collapse; font-size: 0.8rem; line-height: 1.5;">
+            <thead>
+                <tr style="border-bottom: 2px solid var(--toki-gold); text-align: center;">
+                    <th style="padding: 0.4rem; text-align: left;">機関</th>
+                    <th style="padding: 0.4rem;">パターン</th>
+                    <th style="padding: 0.4rem;">JS依存</th>
+                    <th style="padding: 0.4rem;">一覧性</th>
+                    <th style="padding: 0.4rem;">到達コスト</th>
+                    <th style="padding: 0.4rem;">クローラ</th>
+                    <th style="padding: 0.4rem;">1000年</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr style="border-bottom: 1px solid var(--border);">
+                    <td style="padding: 0.4rem;">議会図書館</td>
+                    <td style="padding: 0.4rem; text-align: center;">検索+ファセット</td>
+                    <td style="padding: 0.4rem; text-align: center;">低</td>
+                    <td style="padding: 0.4rem; text-align: center;">×</td>
+                    <td style="padding: 0.4rem; text-align: center;">O(1)*</td>
+                    <td style="padding: 0.4rem; text-align: center;">○</td>
+                    <td style="padding: 0.4rem; text-align: center;">○</td>
+                </tr>
+                <tr style="border-bottom: 1px solid var(--border); background: var(--toki-gold-pale);">
+                    <td style="padding: 0.4rem;">NDL</td>
+                    <td style="padding: 0.4rem; text-align: center;">SPA検索</td>
+                    <td style="padding: 0.4rem; text-align: center;">完全</td>
+                    <td style="padding: 0.4rem; text-align: center;">×</td>
+                    <td style="padding: 0.4rem; text-align: center;">O(1)*</td>
+                    <td style="padding: 0.4rem; text-align: center;">×</td>
+                    <td style="padding: 0.4rem; text-align: center;">×</td>
+                </tr>
+                <tr style="border-bottom: 1px solid var(--border);">
+                    <td style="padding: 0.4rem;">バチカン</td>
+                    <td style="padding: 0.4rem; text-align: center;">フラットテーブル</td>
+                    <td style="padding: 0.4rem; text-align: center;">なし</td>
+                    <td style="padding: 0.4rem; text-align: center;">○</td>
+                    <td style="padding: 0.4rem; text-align: center;">O(n)</td>
+                    <td style="padding: 0.4rem; text-align: center;">○</td>
+                    <td style="padding: 0.4rem; text-align: center;">△</td>
+                </tr>
+                <tr style="border-bottom: 1px solid var(--border); background: var(--toki-gold-pale);">
+                    <td style="padding: 0.4rem;">伊勢神宮</td>
+                    <td style="padding: 0.4rem; text-align: center;">物語</td>
+                    <td style="padding: 0.4rem; text-align: center;">なし</td>
+                    <td style="padding: 0.4rem; text-align: center;">—</td>
+                    <td style="padding: 0.4rem; text-align: center;">—</td>
+                    <td style="padding: 0.4rem; text-align: center;">○</td>
+                    <td style="padding: 0.4rem; text-align: center;">○</td>
+                </tr>
+                <tr style="border-bottom: 1px solid var(--border);">
+                    <td style="padding: 0.4rem;">Wayback Machine</td>
+                    <td style="padding: 0.4rem; text-align: center;">時間ドリルダウン</td>
+                    <td style="padding: 0.4rem; text-align: center;">完全</td>
+                    <td style="padding: 0.4rem; text-align: center;">△</td>
+                    <td style="padding: 0.4rem; text-align: center;">O(1)</td>
+                    <td style="padding: 0.4rem; text-align: center;">×</td>
+                    <td style="padding: 0.4rem; text-align: center;">△</td>
+                </tr>
+                <tr style="background: var(--toki-gold-pale);">
+                    <td style="padding: 0.4rem;"><strong>TokiStorage</strong></td>
+                    <td style="padding: 0.4rem; text-align: center;"><strong>三層アコーディオン</strong></td>
+                    <td style="padding: 0.4rem; text-align: center;"><strong>なし</strong></td>
+                    <td style="padding: 0.4rem; text-align: center;"><strong>○</strong></td>
+                    <td style="padding: 0.4rem; text-align: center;"><strong>O(1)</strong></td>
+                    <td style="padding: 0.4rem; text-align: center;"><strong>○</strong></td>
+                    <td style="padding: 0.4rem; text-align: center;"><strong>○</strong></td>
+                </tr>
+            </tbody>
+        </table>
+        </div>
+
+        <p style="font-size: 0.8rem; color: var(--text-muted);">* 検索は既知の目標がある場合のみ O(1)。未知の探索には対応できない。一覧性 ○ = 全体構造を一目で把握可能。△ = 部分的。× = 不可。— = 対象外。</p>
+
         <h3>なぜ誰もやっていないのか</h3>
 
         <p>Long Now Foundationは10,000年時計のプロジェクトで超長期思考を掲げている。しかしあれは思想プロジェクトだ。実際のWebナビゲーションを1000年対応で設計しているわけではない。思想としての超長期と、実装としての超長期は、まったく別の話だ。</p>
@@ -248,7 +450,7 @@
 
         <p>どれかひとつなら他にもあるかもしれない。しかし全部を統合して「千年のナビゲーション」として設計し、実際に運用しているのは、おそらくここだけだ。</p>
 
-        <h2>7. 見渡せることの価値</h2>
+        <h2>9. 見渡せることの価値</h2>
 
         <p>伊勢神宮の式年遷宮は、20年ごとに社殿を建て替える。しかしそれは「壊す」ことではない。「継ぐ」ことだ。古い社殿の技術と記憶を次の世代に手渡すための儀式だ。</p>
 
@@ -264,9 +466,13 @@
             <h2>参考文献</h2>
             <ul>
                 <li>HTML Living Standard — <a href="https://html.spec.whatwg.org/multipage/interactive-elements.html#the-details-element" style="color: var(--toki-gold);">The details element</a></li>
+                <li>W3C WAI-ARIA Authoring Practices — <a href="https://www.w3.org/WAI/ARIA/apg/patterns/disclosure/" style="color: var(--toki-gold);">Disclosure (Show/Hide) Pattern</a></li>
                 <li>Rosenfeld, L., Morville, P., Arango, J. (2015). <em>Information Architecture: For the Web and Beyond</em>. O'Reilly Media.</li>
+                <li>Nielsen, J. (2000). <em>Designing Web Usability</em>. New Riders. — 情報の「匂い」(information scent) と到達コストの理論</li>
+                <li>Hearst, M. (2009). <em>Search User Interfaces</em>. Cambridge University Press. — ファセット検索とブラウジングの比較分析</li>
                 <li>神宮司庁 — <a href="https://www.isejingu.or.jp/about/sengu/" style="color: var(--toki-gold);">式年遷宮</a></li>
                 <li>The Long Now Foundation — <a href="https://longnow.org/" style="color: var(--toki-gold);">longnow.org</a></li>
+                <li>Cerf, V. (2011). "Avoiding a Digital Dark Age." <em>American Scientist</em>, 99(2). — デジタルデータの長期保存に関する問題提起</li>
             </ul>
         </section>
 
