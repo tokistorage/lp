@@ -156,6 +156,7 @@
     { id: 'millennium-navigation', ja: '1000年のナビゲーション設計', en: 'Designing Navigation for a Millennium', date: '2026-02-26' },
     { id: 'restoration-architecture', ja: '多層復元アーキテクチャ', en: 'Multi-Layered Restoration Architecture', date: '2026-02-26' },
     { id: 'monitor-program', ja: 'モニタープログラムの設計', en: 'Designing the Monitor Program', date: '2026-02-26' },
+    { id: 'development-chronicle', ja: '13日間の開発記録', en: 'Thirteen Days of Building', date: '2026-02-27' },
 
     // ── メタ視点 ──
     { id: 'mission-statement', ja: 'ミッション・ステートメントの設計思想', en: 'Designing a Mission Statement', date: '2026-02-23' },
@@ -171,6 +172,7 @@
   // LATEST_COUNT で表示件数を制御
   const LATEST_COUNT = 5;
   const latestEssayIds = [
+    'development-chronicle',
     'monitor-program',
     'restoration-architecture',
     'millennium-navigation',
@@ -356,6 +358,7 @@
     'millennium-navigation':  ['storage-strategy', 'openness', 'recital-record', 'legacy', 'offline-freedom'],
     'restoration-architecture': ['backup-rule', 'self-print-economy', 'storage-strategy', 'millennium-navigation', 'offline-freedom'],
     'monitor-program':        ['payment', 'storage-strategy', 'no-external-deps', 'cloudflare-gas', 'narrative-trust'],
+    'development-chronicle':  ['storage-strategy', 'vibe-coding', 'monitor-program', 'burn-rate-zero', 'rapid-prototyping'],
     // ── メタ視点 ──
     'mission-statement':      ['narrative-trust', 'preserving-words', 'why-essays', 'corporate-site', 'integrity'],
     'preserving-words':       ['why-essays', 'akashic-record', 'what-to-leave', 'narrative-trust', 'openness'],
