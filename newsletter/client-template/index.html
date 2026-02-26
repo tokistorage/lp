@@ -35,6 +35,10 @@ footer a{color:var(--accent,#2563eb);text-decoration:none}
 .vol-count{font-size:.72rem;font-weight:400;color:#94a3b8}
 .vol-issues{padding:.3rem .8rem .5rem 1.5rem}
 
+.issue-row{display:flex;align-items:stretch;gap:0;margin-bottom:8px}
+.issue-row .issue{flex:1;margin-bottom:0;border-radius:6px 0 0 6px;border-right:none}
+.play-btn{display:flex;align-items:center;justify-content:center;width:44px;background:#fff;border:1px solid #e2e8f0;border-left:none;border-radius:0 6px 6px 0;color:var(--accent,#2563eb);font-size:1rem;text-decoration:none;transition:background .15s,color .15s;flex-shrink:0}
+.play-btn:hover{background:var(--accent,#2563eb);color:#fff}
 .issue{display:flex;align-items:center;gap:12px;padding:10px 12px;background:#fff;border:1px solid #e2e8f0;border-radius:6px;margin-bottom:8px;text-decoration:none;color:inherit;transition:box-shadow .15s,border-color .15s}
 .issue:hover{box-shadow:0 2px 8px rgba(0,0,0,.08);border-color:var(--accent,#C9A962)}
 .issue-serial{font-weight:700;font-size:.8rem;min-width:72px;color:var(--accent,#2563eb)}
@@ -89,7 +93,8 @@ footer a{color:var(--accent,#2563eb);text-decoration:none}
       pwaTitle:'ホーム画面に追加',
       pwaDesc:'オフラインでもバックナンバーを閲覧できます',
       pwaInstall:'追加',
-      pwaIos:'共有ボタン（□↑）→「ホーム画面に追加」をタップ'
+      pwaIos:'共有ボタン（□↑）→「ホーム画面に追加」をタップ',
+      play:'TokiQRで再生'
     },
     en:{
       sub:'Published newsletters deposited with the National Diet Library of Japan.',
@@ -106,7 +111,8 @@ footer a{color:var(--accent,#2563eb);text-decoration:none}
       pwaTitle:'Add to Home Screen',
       pwaDesc:'Browse back issues offline',
       pwaInstall:'Install',
-      pwaIos:'Tap Share then "Add to Home Screen"'
+      pwaIos:'Tap Share then "Add to Home Screen"',
+      play:'Play in TokiQR'
     }
   };
 
@@ -141,6 +147,8 @@ footer a{color:var(--accent,#2563eb);text-decoration:none}
   function centuryRange(c){return((c-1)*100)+'–'+(c*100-1)}
   function issueYear(i){return parseInt(i.date.split('-')[0],10)}
   function issuePath(i){return'output/'+(i.filename||('TQ-'+String(i.serial).padStart(5,'0')+'.pdf'))}
+  function issueFullUrl(i){return window.location.href.replace(/[^/]*$/,'')+issuePath(i)}
+  function tokiqrPlayUrl(i){return'https://tokistorage.github.io/qr/archive.html?pdf='+encodeURIComponent(issueFullUrl(i))}
 
   function render(){
     var t=L[lang];
@@ -183,10 +191,13 @@ footer a{color:var(--accent,#2563eb);text-decoration:none}
 
     var html='<p class="section-label">'+t.latest+'</p>';
     latest.forEach(function(i){
-      html+='<a class="issue" href="'+issuePath(i)+'">'
+      html+='<div class="issue-row">'
+        +'<a class="issue" href="'+issuePath(i)+'">'
         +'<span class="issue-serial">TQ-'+String(i.serial).padStart(5,'0')+'</span>'
         +'<span class="issue-meta">'+i.date+(i.title?' — '+i.title:'')+'</span>'
-        +'</a>';
+        +'</a>'
+        +'<a class="play-btn" href="'+tokiqrPlayUrl(i)+'" target="_blank" title="'+t.play+'">\u25B6</a>'
+        +'</div>';
     });
 
     html+='<p class="section-label">'+t.backissues+'</p>';
@@ -210,10 +221,13 @@ footer a{color:var(--accent,#2563eb);text-decoration:none}
           +'<span class="vol-count">'+t.count(issues.length)+'</span></summary>'
           +'<div class="vol-issues">';
         issues.forEach(function(i){
-          html+='<a class="issue" href="'+issuePath(i)+'">'
+          html+='<div class="issue-row">'
+            +'<a class="issue" href="'+issuePath(i)+'">'
             +'<span class="issue-serial">TQ-'+String(i.serial).padStart(5,'0')+'</span>'
             +'<span class="issue-meta">'+i.date+(i.title?' — '+i.title:'')+'</span>'
-            +'</a>';
+            +'</a>'
+            +'<a class="play-btn" href="'+tokiqrPlayUrl(i)+'" target="_blank" title="'+t.play+'">\u25B6</a>'
+            +'</div>';
         });
         html+='</div></details>';
       });
