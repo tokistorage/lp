@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" type="image/png" sizes="32x32" href="asset/favicon-32.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="asset/apple-touch-icon.png">
+    <title>Designing the Monitor Program | TokiStorage</title>
+    <meta name="robots" content="index, follow">
+    <meta name="description" content="A monitor program where participants experience the paid product through the standard purchase flow. Only feedback grounded in actual use can refine a product.">    <style>
+        :root {
+            --toki-blue: #2563EB;
+            --toki-blue-dark: #1E40AF;
+            --toki-blue-pale: #EFF6FF;
+            --accent-blue: #60A5FA;
+            --bg-white: #FFFFFF;
+            --text-primary: #1E293B;
+            --text-secondary: #475569;
+            --text-muted: #94A3B8;
+            --border: #E2E8F0;
+            --font-display: Georgia, 'Times New Roman', 'Hiragino Mincho ProN', 'Yu Mincho', serif;
+            --font-body: -apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, 'Hiragino Kaku Gothic ProN', 'Yu Gothic', sans-serif;
+        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        html { scroll-behavior: smooth; }
+        body { font-family: var(--font-body); font-weight: 400; background: var(--bg-white); color: var(--text-primary); line-height: 2; font-size: 16px; }
+
+        .article-nav { position: fixed; top: 0; left: 0; right: 0; z-index: 1000; background: rgba(255,255,255,0.95); backdrop-filter: blur(12px); border-bottom: 1px solid var(--border); padding: 0.6rem 1.2rem; display: flex; align-items: center; justify-content: space-between; gap: 1rem; }
+        .article-nav .nav-brand { font-family: var(--font-display); font-size: 0.9rem; font-weight: 600; color: var(--toki-blue); text-decoration: none; white-space: nowrap; }
+        .article-nav .nav-brand::before { content: ''; display: inline-block; width: 20px; height: 20px; background: url('asset/tokistorage-icon-512.png') no-repeat center / contain; vertical-align: -3px; margin-right: 5px; }
+        .article-nav .nav-right { display: flex; align-items: center; gap: 1rem; }
+        .article-nav .nav-label { font-size: 0.6rem; color: var(--text-muted); letter-spacing: 0.08em; }
+        .article-nav .lang-switch { font-size: 0.75rem; color: var(--toki-blue); text-decoration: none; padding: 0.3rem 0.6rem; border: 1px solid var(--toki-blue); border-radius: 4px; }
+        .article-nav .lang-switch:hover { background: var(--toki-blue); color: #fff; }
+
+        .article-container { max-width: 680px; margin: 0 auto; padding: 7rem 2rem 4rem; }
+        .article-header { margin-bottom: 3rem; padding-bottom: 2rem; border-bottom: 1px solid var(--border); }
+        .article-category { font-size: 0.7rem; color: var(--toki-blue); letter-spacing: 0.15em; margin-bottom: 1rem; }
+        .article-header h1 { font-family: var(--font-display); font-size: 1.8rem; font-weight: 700; line-height: 1.5; margin-bottom: 1.5rem; }
+        .article-subtitle { font-size: 0.95rem; color: var(--text-secondary); line-height: 1.9; }
+
+        .article-content h2 { font-family: var(--font-display); font-size: 1.3rem; font-weight: 600; margin: 3rem 0 1.5rem; padding-bottom: 0.5rem; border-bottom: 2px solid var(--toki-blue-pale); }
+        .article-content h3 { font-family: var(--font-display); font-size: 1.1rem; font-weight: 600; margin: 2rem 0 1rem; color: var(--toki-blue-dark); }
+        .article-content p { margin-bottom: 1.5rem; text-align: left; }
+        .article-content blockquote { border-left: 3px solid var(--toki-blue); padding-left: 1.5rem; margin: 2rem 0; font-family: var(--font-display); color: var(--text-secondary); }
+        .article-content ul { margin: 1.5rem 0; padding-left: 1.5rem; }
+        .article-content li { margin-bottom: 0.75rem; }
+
+        .core-message { background: var(--toki-blue-pale); border-left: 4px solid var(--toki-blue); padding: 1.5rem; margin: 2rem 0; font-size: 0.95rem; line-height: 1.8; }
+        .key-point { background: linear-gradient(135deg, var(--toki-blue-pale) 0%, #fff 100%); border: 1px solid var(--accent-blue); border-radius: 8px; padding: 1.5rem; margin: 2rem 0; text-align: center; }
+        .key-point p { font-family: var(--font-display); font-size: 1.1rem; color: var(--toki-blue-dark); margin: 0; }
+
+        .article-footer { margin-top: 4rem; padding-top: 2rem; border-top: 1px solid var(--border); text-align: center; }
+        .article-footer p { font-size: 0.8rem; color: var(--text-muted); margin-bottom: 1rem; }
+        .article-footer a { color: var(--toki-blue); text-decoration: none; }
+        .article-footer a:hover { text-decoration: underline; }
+
+        @media (max-width: 768px) {
+            .article-container { padding: 6rem 1.2rem 3rem; }
+            .article-header h1 { font-size: 1.5rem; }
+            .article-nav .nav-label { display: none; }
+        }
+        @media print { .article-nav { display: none; } .article-container { padding-top: 2rem; } }
+    </style>
+    <link rel="stylesheet" href="contact-form.css">
+    <meta property="og:type" content="article">
+    <meta property="og:title" content="Designing the Monitor Program | TokiStorage">
+    <meta property="og:description" content="A monitor program where participants experience the paid product through the standard purchase flow. Only feedback grounded in actual use can refine a product.">
+    <meta property="og:url" content="https://tokistorage.github.io/lp/monitor-program-en.html">
+    <meta property="og:site_name" content="TokiStorage">
+    <meta name="twitter:card" content="summary">
+    <meta name="twitter:title" content="Designing the Monitor Program | TokiStorage">
+    <meta name="twitter:description" content="A monitor program where participants experience the paid product through the standard purchase flow. Only feedback grounded in actual use can refine a product.">
+    <meta property="og:image" content="https://tokistorage.github.io/lp/asset/tokistorage-icon-512.png">
+    <meta property="og:image:width" content="512">
+    <meta property="og:image:height" content="512">
+    <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Article",
+  "headline": "Designing the Monitor Program",
+  "author": {
+    "@type": "Person",
+    "name": "Takuya Sato",
+    "url": "https://tokistorage.github.io/lp/profile.html"
+  },
+  "publisher": {
+    "@type": "Organization",
+    "name": "TokiStorage",
+    "url": "https://tokistorage.github.io/lp",
+    "logo": {
+      "@type": "ImageObject",
+      "url": "https://tokistorage.github.io/lp/asset/tokistorage-icon-512.png"
+    }
+  },
+  "url": "https://tokistorage.github.io/lp/monitor-program-en.html",
+  "inLanguage": "en",
+  "mainEntityOfPage": "https://tokistorage.github.io/lp/monitor-program-en.html",
+  "description": "A monitor program where participants experience the paid product through the standard purchase flow. Only feedback grounded in actual use can refine a product."
+}
+    </script>
+    <link rel="alternate" hreflang="ja" href="https://tokistorage.github.io/lp/monitor-program.html">
+    <link rel="alternate" hreflang="en" href="https://tokistorage.github.io/lp/monitor-program-en.html">
+    <link rel="alternate" hreflang="x-default" href="https://tokistorage.github.io/lp/monitor-program.html">
+    <link rel="canonical" href="https://tokistorage.github.io/lp/monitor-program-en.html">
+</head>
+<body>
+
+<nav class="article-nav">
+    <a href="index.html" class="nav-brand">TokiStorage</a>
+    <div class="nav-right">
+        <span class="nav-label">Technology & Design</span>
+        <a href="monitor-program.html" class="lang-switch">JA</a>
+    </div>
+</nav>
+
+<main class="article-container">
+
+    <header class="article-header">
+        <p class="article-category">ESSAY &mdash; Technology &amp; Design</p>
+        <h1>Designing the Monitor Program<br><span style="font-size:0.7em; font-weight:400;">Only paid experience validates feedback</span></h1>
+        <p class="article-subtitle">
+            &mdash;&mdash; Not a free trial, but a program where monitors go through the same purchase flow as regular customers. Quest-guided experience, public Wisetag trust signals, and GitHub static JSON for thousand-year persistence. A record of the design philosophy behind the monitor program.
+        </p>
+    </header>
+
+    <article class="article-content">
+
+        <div class="core-message">
+            <strong>The point of this essay:</strong> The monitor program is not a "try for free" mechanism. It is a system where participants experience the paid product through the standard purchase flow and leave public, verifiable feedback. Quest-guided exploration, Wisetag-linked transparency, and permanent recording on GitHub&mdash;these three elements transform a monitor's voice into the foundation of product trust.
+        </div>
+
+        <h2>1. Why "Paid Experience"</h2>
+
+        <p>In the software world, free trials are standard. Fourteen days, thirty days, feature-limited. Users try casually and leave if it does not fit. But TokiStorage is a service that includes physical products for thousand-year preservation. QR code generation, printing, lamination, delivery to storage sites. These experiences only occur when you actually place an order.</p>
+
+        <p>The range of what can be tried for free stops at "generating a QR code." TokiQR's encoder is completely open&mdash;anyone can create voice QR codes in a browser. But what comes after&mdash;the quality of the printed material, the feel of the lamination, the unboxing experience, the peace of mind from the storage service&mdash;can only be known through purchase.</p>
+
+        <blockquote>
+            <p>Free trial feedback is an impression of "trying it out." Paid experience feedback is a fact of "having used it."</p>
+        </blockquote>
+
+        <p>The monitor program was designed to obtain this "having used it" feedback. Monitors go through the standard order flow, receive the actual product, use it, and then provide feedback.</p>
+
+        <h2>2. Quests as Experience Design</h2>
+
+        <p>When monitors open the monitor page, five quests appear. "Record audio and create a QR code." "Print it and scan it." "Generate multiple pages in bulk mode." Each quest corresponds to a core feature of TokiQR.</p>
+
+        <p>The quest format was adopted because an open-ended "try anything you like" approach produces scattered feedback. "What should I try?" "How far should I go?"&mdash;such uncertainty ultimately degrades feedback quality. Quests make explicit what monitors should experience and define completion conditions.</p>
+
+        <h3>Not Gamification</h3>
+
+        <p>The name "quest" sounds game-like, but the purpose is not gamification. There are no points, badges, or rankings. A quest is simply a guide saying "please try things in this order"&mdash;the shortest path to comprehensively experiencing the product's features. By having the provider take responsibility for experience design, the monitor's burden is minimized.</p>
+
+        <h2>3. Wisetag as Public Identity</h2>
+
+        <p>Monitors register a Wisetag when they apply. A Wisetag is a Wise (international money transfer service) account name. Since TokiStorage payments are processed through Wise, a Wisetag inherently proves that "this person actually paid."</p>
+
+        <p>Feedback is published publicly, linked to the Wisetag. It is not an anonymous review. It is verifiable feedback tied to a payment account. This functions as a trust signal. "This voice belongs to someone who actually purchased"&mdash;a third party can confirm this.</p>
+
+        <blockquote>
+            <p>Anonymous reviews compete on volume. Wisetag reviews compete on verifiability.</p>
+        </blockquote>
+
+        <h2>4. Feedback Inscribed on GitHub</h2>
+
+        <p>Monitor feedback is stored not in a database but as JSON files in a GitHub repository. One JSON file per year&mdash;<code>monitor/voices/2026.json</code>&mdash;is created, and new feedback is prepended to the top.</p>
+
+        <p>Why JSON instead of a database? TokiQR is a PWA (Progressive Web App) with no backend server. It is a static site served from GitHub Pages. Using a database would require server operations, authentication, backups, and scaling. With JSON files, a simple browser fetch is all that is needed.</p>
+
+        <h3>Exclusive Locking and Commits</h3>
+
+        <p>Feedback writing is handled by Google Apps Script. It acquires an exclusive lock via LockService, reads the year file through the GitHub API, prepends the new entry, and commits directly to the main branch. Not a branch-and-pull-request approach, but a direct commit under exclusive lock.</p>
+
+        <p>This design decision eliminates the risk of auto-merge conflicts. If two monitors submit feedback nearly simultaneously, the pull request approach could produce file conflicts. LockService serializes concurrent execution, and direct commits to the GitHub API eliminate conflicts by design.</p>
+
+        <h2>5. Archive Rotation</h2>
+
+        <p>What happens when a year file exceeds 1,000 entries? The answer is to retire the excess into numbered files.</p>
+
+        <p>The threshold is 1,000 entries; the retirement size is 500. When a year file exceeds 1,000 entries, the trailing 500 (the oldest entries) are extracted into <code>2026-001.json</code>. The next time it overflows, <code>2026-002.json</code> is created. The year file always holds only the most recent 500 to 1,000 entries.</p>
+
+        <p>The client side handles this with pagination. Click a year and the active year file is displayed first. If archived files exist, a page navigator appears, allowing users to browse older feedback.</p>
+
+        <blockquote>
+            <p>To prevent file bloat from breaking the system a thousand years from now, the retirement logic is built in from the start. Retrofitting is far harder.</p>
+        </blockquote>
+
+        <h2>6. Newsletter-Style Navigation</h2>
+
+        <p>The feedback browsing interface adopts the same century-volume-year navigation structure as TokiQR's newsletter. A simple year list suffices at first, but after ten or a hundred years, that list becomes unwieldy. Century-level collapsing, twenty-year volumes&mdash;this hierarchy provides a path to feedback from any era.</p>
+
+        <p>The default view shows the ten most recent entries. Click a year to see all feedback for that year. It might look like over-engineering, but changing the navigation structure later would affect existing URLs and display logic. Design for a thousand years from the start, and after that, entries simply accumulate.</p>
+
+        <h2>7. The Trust Design Pattern</h2>
+
+        <p>The monitor program builds trust through three layers.</p>
+
+        <ul>
+            <li><strong>Experience layer</strong>: Going through the paid purchase flow guarantees the foundation of feedback</li>
+            <li><strong>Public layer</strong>: Wisetag-linked public voices provide verifiability that anonymous reviews lack</li>
+            <li><strong>Persistence layer</strong>: GitHub static JSON eliminates the risk of data loss from database failures or service shutdown</li>
+        </ul>
+
+        <p>Every layer stands on existing infrastructure&mdash;Wise, GitHub, the browser. No authentication server or user management system exists specifically for the monitor program. Designing trust through combinations of standard technology, without adding external dependencies. TokiStorage's consistent design philosophy manifests here as well.</p>
+
+        <div class="key-point">
+            <p>Paid experience, public Wisetag, GitHub persistence.<br>Three layers of trust turn a monitor's voice into the product's foundation.</p>
+        </div>
+
+        <p style="font-size: 0.85rem; color: var(--text-secondary);">For Wise as a payment method, see "<a href="payment-en.html" style="color: var(--toki-blue);">Payment Methods</a>." For the persistence design of storage, see "<a href="storage-strategy-en.html" style="color: var(--toki-blue);">Storage Strategy</a>." For the policy of not adding external dependencies, see "<a href="no-external-deps-en.html" style="color: var(--toki-blue);">No More External Dependencies</a>."</p>
+
+    </article>
+
+    <footer class="article-footer">
+        <p id="essay-nav-links"></p>
+        <p style="margin-top: 2rem; font-size: 0.75rem; color: var(--text-muted); font-style: italic;">You become a story, generations connect in dialogue, the path forward. &mdash; TokiStorage</p>
+        <p style="font-size: 0.75rem; color: var(--text-muted);">&copy; 2026 TokiStorage. All rights reserved.</p>
+    </footer>
+
+</main>
+
+<script src="contact-form.js" defer></script>
+<script src="essay-tts.js?v=20260226"></script>
+<script src="essay-nav.js?v=20260226"></script>
+<script src="tracker.js" defer></script>
+</body>
+</html>

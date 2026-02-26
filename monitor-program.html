@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" type="image/png" sizes="32x32" href="asset/favicon-32.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="asset/apple-touch-icon.png">
+    <title>モニタープログラムの設計 | トキストレージ</title>
+    <meta name="robots" content="index, follow">
+    <meta name="description" content="有料プロダクトを正規フローで体験するモニタープログラム。無料トライアルではなく、購入者と同じ体験を経たフィードバックだけが、プロダクトを正しく磨く。">    <style>
+        :root {
+            --toki-blue: #2563EB;
+            --toki-blue-dark: #1E40AF;
+            --toki-blue-pale: #EFF6FF;
+            --accent-blue: #60A5FA;
+            --bg-white: #FFFFFF;
+            --text-primary: #1E293B;
+            --text-secondary: #475569;
+            --text-muted: #94A3B8;
+            --border: #E2E8F0;
+            --font-display: 'Hiragino Mincho ProN', 'Yu Mincho', serif;
+            --font-body: 'Hiragino Kaku Gothic ProN', 'Yu Gothic', 'Meiryo', sans-serif;
+        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        html { scroll-behavior: smooth; }
+        body { font-family: var(--font-body); font-weight: 400; background: var(--bg-white); color: var(--text-primary); line-height: 2; font-size: 16px; }
+
+        .article-nav { position: fixed; top: 0; left: 0; right: 0; z-index: 1000; background: rgba(255,255,255,0.95); backdrop-filter: blur(12px); border-bottom: 1px solid var(--border); padding: 0.6rem 1.2rem; display: flex; align-items: center; justify-content: space-between; gap: 1rem; }
+        .article-nav .nav-brand { font-family: var(--font-display); font-size: 0.9rem; font-weight: 600; color: var(--toki-blue); text-decoration: none; white-space: nowrap; }
+        .article-nav .nav-brand::before { content: ''; display: inline-block; width: 20px; height: 20px; background: url('asset/tokistorage-icon-512.png') no-repeat center / contain; vertical-align: -3px; margin-right: 5px; }
+        .article-nav .nav-right { display: flex; align-items: center; gap: 1rem; }
+        .article-nav .nav-label { font-size: 0.6rem; color: var(--text-muted); letter-spacing: 0.08em; }
+        .article-nav .lang-switch { font-size: 0.75rem; color: var(--toki-blue); text-decoration: none; padding: 0.3rem 0.6rem; border: 1px solid var(--toki-blue); border-radius: 4px; }
+        .article-nav .lang-switch:hover { background: var(--toki-blue); color: #fff; }
+
+        .article-container { max-width: 680px; margin: 0 auto; padding: 7rem 2rem 4rem; }
+        .article-header { margin-bottom: 3rem; padding-bottom: 2rem; border-bottom: 1px solid var(--border); }
+        .article-category { font-size: 0.7rem; color: var(--toki-blue); letter-spacing: 0.15em; margin-bottom: 1rem; }
+        .article-header h1 { font-family: var(--font-display); font-size: 1.8rem; font-weight: 700; line-height: 1.5; margin-bottom: 1.5rem; }
+        .article-subtitle { font-size: 0.95rem; color: var(--text-secondary); line-height: 1.9; }
+
+        .article-content h2 { font-family: var(--font-display); font-size: 1.3rem; font-weight: 600; margin: 3rem 0 1.5rem; padding-bottom: 0.5rem; border-bottom: 2px solid var(--toki-blue-pale); }
+        .article-content h3 { font-family: var(--font-display); font-size: 1.1rem; font-weight: 600; margin: 2rem 0 1rem; color: var(--toki-blue-dark); }
+        .article-content p { margin-bottom: 1.5rem; text-align: justify; }
+        .article-content blockquote { border-left: 3px solid var(--toki-blue); padding-left: 1.5rem; margin: 2rem 0; font-family: var(--font-display); color: var(--text-secondary); }
+        .article-content ul { margin: 1.5rem 0; padding-left: 1.5rem; }
+        .article-content li { margin-bottom: 0.75rem; }
+
+        .core-message { background: var(--toki-blue-pale); border-left: 4px solid var(--toki-blue); padding: 1.5rem; margin: 2rem 0; font-size: 0.95rem; line-height: 1.8; }
+        .key-point { background: linear-gradient(135deg, var(--toki-blue-pale) 0%, #fff 100%); border: 1px solid var(--accent-blue); border-radius: 8px; padding: 1.5rem; margin: 2rem 0; text-align: center; }
+        .key-point p { font-family: var(--font-display); font-size: 1.1rem; color: var(--toki-blue-dark); margin: 0; }
+
+        .article-footer { margin-top: 4rem; padding-top: 2rem; border-top: 1px solid var(--border); text-align: center; }
+        .article-footer p { font-size: 0.8rem; color: var(--text-muted); margin-bottom: 1rem; }
+        .article-footer a { color: var(--toki-blue); text-decoration: none; }
+        .article-footer a:hover { text-decoration: underline; }
+
+        @media (max-width: 768px) {
+            .article-container { padding: 6rem 1.2rem 3rem; }
+            .article-header h1 { font-size: 1.5rem; }
+            .article-nav .nav-label { display: none; }
+        }
+        @media print { .article-nav { display: none; } .article-container { padding-top: 2rem; } }
+    </style>
+    <link rel="stylesheet" href="contact-form.css">
+    <meta property="og:type" content="article">
+    <meta property="og:title" content="モニタープログラムの設計 | トキストレージ">
+    <meta property="og:description" content="有料プロダクトを正規フローで体験するモニタープログラム。無料トライアルではなく、購入者と同じ体験を経たフィードバックだけが、プロダクトを正しく磨く。">
+    <meta property="og:url" content="https://tokistorage.github.io/lp/monitor-program.html">
+    <meta property="og:site_name" content="トキストレージ">
+    <meta name="twitter:card" content="summary">
+    <meta name="twitter:title" content="モニタープログラムの設計 | トキストレージ">
+    <meta name="twitter:description" content="有料プロダクトを正規フローで体験するモニタープログラム。無料トライアルではなく、購入者と同じ体験を経たフィードバックだけが、プロダクトを正しく磨く。">
+    <meta property="og:image" content="https://tokistorage.github.io/lp/asset/tokistorage-icon-512.png">
+    <meta property="og:image:width" content="512">
+    <meta property="og:image:height" content="512">
+    <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Article",
+  "headline": "モニタープログラムの設計",
+  "author": {
+    "@type": "Person",
+    "name": "Takuya Sato",
+    "url": "https://tokistorage.github.io/lp/profile.html"
+  },
+  "publisher": {
+    "@type": "Organization",
+    "name": "TokiStorage",
+    "url": "https://tokistorage.github.io/lp",
+    "logo": {
+      "@type": "ImageObject",
+      "url": "https://tokistorage.github.io/lp/asset/tokistorage-icon-512.png"
+    }
+  },
+  "url": "https://tokistorage.github.io/lp/monitor-program.html",
+  "inLanguage": "ja",
+  "mainEntityOfPage": "https://tokistorage.github.io/lp/monitor-program.html",
+  "description": "有料プロダクトを正規フローで体験するモニタープログラム。無料トライアルではなく、購入者と同じ体験を経たフィードバックだけが、プロダクトを正しく磨く。"
+}
+    </script>
+    <link rel="alternate" hreflang="ja" href="https://tokistorage.github.io/lp/monitor-program.html">
+    <link rel="alternate" hreflang="en" href="https://tokistorage.github.io/lp/monitor-program-en.html">
+    <link rel="alternate" hreflang="x-default" href="https://tokistorage.github.io/lp/monitor-program.html">
+    <link rel="canonical" href="https://tokistorage.github.io/lp/monitor-program.html">
+</head>
+<body>
+
+<nav class="article-nav">
+    <a href="index.html" class="nav-brand">トキストレージ</a>
+    <div class="nav-right">
+        <span class="nav-label">技術・設計 / Technology & Design</span>
+        <a href="monitor-program-en.html" class="lang-switch">EN</a>
+    </div>
+</nav>
+
+<main class="article-container">
+
+    <header class="article-header">
+        <p class="article-category">ESSAY &mdash; 技術・設計</p>
+        <h1>モニタープログラムの設計<br><span style="font-size:0.7em; font-weight:400;">有料体験だけがフィードバックの根拠になる</span></h1>
+        <p class="article-subtitle">
+            &mdash;&mdash; 無料トライアルではなく、購入者と同じ正規フローを経たモニターだけが、プロダクトを正しく磨くフィードバックを返せる。クエスト形式のガイド体験、公開Wisetagによる信頼シグナル、GitHub静的JSONによる1000年保存。モニタープログラムの設計思想を記す。
+        </p>
+    </header>
+
+    <article class="article-content">
+
+        <div class="core-message">
+            <strong>この記事で言いたいこと：</strong>モニタープログラムは「無料で試す」仕組みではない。有料プロダクトを正規の購入フローで体験し、その体験に基づいたフィードバックをパブリックに残す仕組みだ。クエストによるガイド、Wisetagによる公開性、GitHubへの永続的な記録——この三つが、モニターの声をプロダクトの信頼基盤に変える。
+        </div>
+
+        <h2>1. なぜ「有料体験」なのか</h2>
+
+        <p>ソフトウェアの世界では無料トライアルが標準だ。14日間、30日間、機能制限つき。ユーザーは気軽に試し、合わなければ離脱する。しかしTokiStorageは、1000年保管という物理プロダクトを含むサービスだ。QRコードの生成、印刷、ラミネート加工、保管場所への納品。これらの体験は、実際に注文して初めて発生する。</p>
+
+        <p>無料で試せる範囲は「QRコードを作ってみる」ところまでだ。TokiQRのエンコーダーは完全にオープンで、誰でもブラウザ上で音声QRを生成できる。しかし、その先——印刷物の品質、ラミネートの手触り、パッケージの開封体験、保管サービスの安心感——は、購入しなければ分からない。</p>
+
+        <blockquote>
+            <p>無料トライアルのフィードバックは「試してみた」という感想だ。有料体験のフィードバックは「使った」という事実だ。</p>
+        </blockquote>
+
+        <p>モニタープログラムは、この「使った」というフィードバックを得るために設計された。モニターは正規の注文フローを経て、実際のプロダクトを受け取り、使い、そのうえでフィードバックを返す。</p>
+
+        <h2>2. クエストという体験設計</h2>
+
+        <p>モニターページを開くと、5つのクエストが表示される。「音声を録音してQRを作る」「印刷してスキャンする」「バルクモードで複数ページを生成する」——といった具合だ。各クエストは、TokiQRの核心的な機能に対応している。</p>
+
+        <p>クエストという形式を採用した理由は、自由度の高い「何でもお試しください」ではフィードバックが散漫になるからだ。「何を試せばいいか分からない」「どこまでやればいいのか」——そうした迷いが、結果としてフィードバックの質を下げる。クエストは、モニターが体験すべき核心を明示し、完了条件を示す。</p>
+
+        <h3>ゲーミフィケーションではない</h3>
+
+        <p>クエストという名前はゲーム的だが、目的はゲーミフィケーションではない。ポイントもバッジもランキングもない。クエストは単に「この順番で試してほしい」というガイドであり、プロダクトの機能を網羅的に体験するための最短経路だ。体験の設計を提供者側が引き受けることで、モニターの負担を最小化する。</p>
+
+        <h2>3. Wisetagという公開アイデンティティ</h2>
+
+        <p>モニターは申し込み時にWisetagを登録する。WisetagはWise（国際送金サービス）のアカウント名だ。TokiStorageの決済はWise経由で行われるため、Wisetagはそのまま「この人は実際に決済した」ことの証明になる。</p>
+
+        <p>フィードバックはWisetagと紐づけてパブリックに公開される。匿名のレビューではない。決済アカウントと結びついた、検証可能なフィードバックだ。これが信頼シグナルとして機能する。「この声は、実際に買った人の声だ」と、第三者が確認できる。</p>
+
+        <blockquote>
+            <p>匿名レビューは量で勝負する。Wisetagレビューは検証可能性で勝負する。</p>
+        </blockquote>
+
+        <h2>4. GitHubに刻むフィードバック</h2>
+
+        <p>モニターのフィードバックは、データベースではなくGitHubリポジトリのJSONファイルとして保存される。年ごとに1つのJSONファイル——<code>monitor/voices/2026.json</code>——が作られ、新しいフィードバックが先頭に追記される。</p>
+
+        <p>なぜデータベースではなくJSONなのか。TokiQRはPWA（プログレッシブウェブアプリ）であり、バックエンドサーバーを持たない。GitHub Pagesから配信される静的サイトだ。データベースを使えば、サーバーの運用、認証、バックアップ、スケーリングが必要になる。JSONファイルなら、ブラウザからfetchで取得するだけでいい。</p>
+
+        <h3>排他制御とコミット</h3>
+
+        <p>フィードバックの書き込みはGoogle Apps Scriptが担う。LockServiceによる排他制御を取得し、GitHub APIで年ファイルを読み取り、新しいエントリを先頭に追加し、mainブランチに直接コミットする。ブランチを作ってプルリクエストを出す方式ではなく、排他制御下での直接コミットだ。</p>
+
+        <p>この設計判断は、auto-mergeの競合リスクを排除するためだ。2人のモニターがほぼ同時にフィードバックを送信した場合、プルリクエスト方式ではファイルのコンフリクトが発生しうる。LockServiceが同時実行を直列化し、GitHub APIへの直接コミットがコンフリクトを原理的に排除する。</p>
+
+        <h2>5. アーカイブローテーション</h2>
+
+        <p>年ファイルが1000件を超えたらどうするか。答えは、超過分をナンバリングファイルに退避することだ。</p>
+
+        <p>閾値は1000件、退避サイズは500件。年ファイルが1000件を超えた時点で、末尾の500件（最も古いエントリ）が <code>2026-001.json</code> として切り出される。次に超えたときは <code>2026-002.json</code>。年ファイルは常に最新の500〜1000件だけを保持する。</p>
+
+        <p>クライアント側はページングで対応する。年をクリックすると、まずアクティブな年ファイルが表示される。退避ファイルがあれば、ページナビが出現し、古いフィードバックを辿ることができる。</p>
+
+        <blockquote>
+            <p>1000年後にファイルが肥大化して破綻しないよう、最初から退避ロジックを組み込んでおく。遡って修正するほうが、はるかに難しい。</p>
+        </blockquote>
+
+        <h2>6. ニュースレター式ナビゲーション</h2>
+
+        <p>フィードバックの閲覧画面には、TokiQRのニュースレターと同じ世紀→巻→年のナビゲーション構造を採用した。最初は年ナビだけで十分だが、10年、100年と続けば、年の一覧は長大になる。世紀ごとの折りたたみ、20年ごとの巻——この階層構造が、いつの時代のフィードバックにも辿り着ける導線を提供する。</p>
+
+        <p>デフォルト表示は「最新10件」だ。年をクリックすれば、その年のすべてのフィードバックが表示される。過剰設計に見えるかもしれないが、ナビゲーション構造の変更は既存のURLや表示ロジックに影響する。最初から1000年を前提にしておけば、あとは件数が増えるだけだ。</p>
+
+        <h2>7. 信頼の設計パターン</h2>
+
+        <p>モニタープログラムは、以下の三層で信頼を構築する。</p>
+
+        <ul>
+            <li><strong>体験層</strong>：有料の正規フローを経ることで、フィードバックの根拠を担保する</li>
+            <li><strong>公開層</strong>：Wisetagと紐づけたパブリックな声が、匿名レビューにはない検証可能性を提供する</li>
+            <li><strong>永続層</strong>：GitHubの静的JSONが、データベース障害やサービス終了による消失リスクを排除する</li>
+        </ul>
+
+        <p>どの層も、既存のインフラ——Wise、GitHub、ブラウザ——の上に成り立っている。モニタープログラム専用の認証サーバーもユーザー管理システムも存在しない。外部依存性を増やさず、標準技術の組み合わせで信頼を設計する。TokiStorageの一貫した設計思想が、ここにも表れている。</p>
+
+        <div class="key-point">
+            <p>有料体験、公開Wisetag、GitHub永続保存。<br>三層の信頼が、モニターの声をプロダクトの基盤に変える。</p>
+        </div>
+
+        <p style="font-size: 0.85rem; color: var(--text-secondary);">決済手段としてのWiseについては「<a href="payment.html" style="color: var(--toki-blue);">決済手段</a>」で、ストレージの永続設計については「<a href="storage-strategy.html" style="color: var(--toki-blue);">ストレージ戦略</a>」で、外部依存性を増やさない方針については「<a href="no-external-deps.html" style="color: var(--toki-blue);">外部依存性を増やさない</a>」で詳しく論じている。</p>
+
+    </article>
+
+    <footer class="article-footer">
+        <p id="essay-nav-links"></p>
+        <p style="margin-top: 2rem; font-size: 0.75rem; color: var(--text-muted); font-style: italic;">あなたが物語となり、世代の対話が重なり、未来の道となる。― トキストレージ</p>
+        <p style="font-size: 0.75rem; color: var(--text-muted);">&copy; 2026 TokiStorage. All rights reserved.</p>
+    </footer>
+
+</main>
+
+<script src="contact-form.js" defer></script>
+<script src="essay-tts.js?v=20260226"></script>
+<script src="essay-nav.js?v=20260226"></script>
+<script src="tracker.js" defer></script>
+</body>
+</html>
