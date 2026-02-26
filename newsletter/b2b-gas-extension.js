@@ -502,6 +502,32 @@ function provisionClientRepo(clientId, clientName, config) {
   commitFileOnBranch('output/.gitkeep', '',
     'Add output directory', 'main', repo);
 
+  // 2f. manifest.json (PWA)
+  var accentRgb = config.branding && config.branding.accentColor
+    ? config.branding.accentColor : [37, 99, 235];
+  var manifest = {
+    name: (config.branding.publicationNameJa || clientName) + ' | TokiStorage',
+    short_name: config.branding.publicationNameJa || clientName,
+    start_url: './',
+    scope: './',
+    display: 'standalone',
+    background_color: '#F8FAFC',
+    theme_color: 'rgb(' + accentRgb.join(',') + ')',
+    icons: [{
+      src: 'https://tokistorage.github.io/lp/asset/tokistorage-icon-512.png',
+      sizes: '512x512', type: 'image/png', purpose: 'any'
+    }]
+  };
+  commitFileOnBranch('manifest.json', JSON.stringify(manifest, null, 2),
+    'Add PWA manifest', 'main', repo);
+
+  // 2g. service-worker.js (PWA offline)
+  var templateSw = readFileFromGitHub('newsletter/client-template/service-worker.js');
+  if (templateSw) {
+    commitFileOnBranch('service-worker.js', templateSw,
+      'Add service worker for offline support', 'main', repo);
+  }
+
   // 3. GitHub Pages 有効化
   try {
     fetchGitHubApi('/repos/' + repo + '/pages', 'POST', {
