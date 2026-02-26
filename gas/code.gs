@@ -9,6 +9,7 @@
  *   pipeline.gs   — 保管パイプライン（GitHub + NDL）
  *   newsletter.gs — ニュースレター自動更新
  *   ndl.gs        — NDL特集シリーズ（series_open / ndl_submit）
+ *   monitor.gs    — モニタープログラム（申し込み / フィードバック）
  *   reports.gs    — デイリー / 月次レポート
  *
  * タイマートリガー（GASエディタで設定）:
@@ -87,6 +88,8 @@ function doPost(e) {
     if (data.type === 'credit_activate') return handleCreditActivation(ss, data);
     if (data.type === 'series_open') return handleSeriesOpen(ss, data);
     if (data.type === 'ndl_submit') return handleNdlSubmit(ss, data);
+    if (data.type === 'monitor_apply') return handleMonitorApply(ss, data);
+    if (data.type === 'monitor_feedback') return handleMonitorFeedback(ss, data);
     if (data.type === 'order') return handleOrder(ss, data);
     return handleContact(ss, data);
 
