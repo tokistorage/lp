@@ -1,0 +1,288 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" type="image/png" sizes="32x32" href="asset/favicon-32.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="asset/apple-touch-icon.png">
+    <title>多層復元アーキテクチャ | トキストレージ</title>
+    <meta name="robots" content="index, follow">
+    <meta name="description" content="100枚のマルチQRのうち1枚が生き残れば全体が復元できる。5つの独立した経路が、外部依存性ゼロで、紙とデジタルの両面からデータへの到達を保証する。">    <style>
+        :root {
+            --toki-blue: #2563EB;
+            --toki-blue-dark: #1E40AF;
+            --toki-blue-pale: #EFF6FF;
+            --accent-blue: #60A5FA;
+            --bg-white: #FFFFFF;
+            --text-primary: #1E293B;
+            --text-secondary: #475569;
+            --text-muted: #94A3B8;
+            --border: #E2E8F0;
+            --font-display: 'Hiragino Mincho ProN', 'Yu Mincho', serif;
+            --font-body: 'Hiragino Kaku Gothic ProN', 'Yu Gothic', 'Meiryo', sans-serif;
+        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        html { scroll-behavior: smooth; }
+        body { font-family: var(--font-body); font-weight: 400; background: var(--bg-white); color: var(--text-primary); line-height: 2; font-size: 16px; }
+
+        .article-nav { position: fixed; top: 0; left: 0; right: 0; z-index: 1000; background: rgba(255,255,255,0.95); backdrop-filter: blur(12px); border-bottom: 1px solid var(--border); padding: 0.6rem 1.2rem; display: flex; align-items: center; justify-content: space-between; gap: 1rem; }
+        .article-nav .nav-brand { font-family: var(--font-display); font-size: 0.9rem; font-weight: 600; color: var(--toki-blue); text-decoration: none; white-space: nowrap; }
+        .article-nav .nav-brand::before { content: ''; display: inline-block; width: 20px; height: 20px; background: url('asset/tokistorage-icon-512.png') no-repeat center / contain; vertical-align: -3px; margin-right: 5px; }
+        .article-nav .nav-right { display: flex; align-items: center; gap: 1rem; }
+        .article-nav .nav-label { font-size: 0.6rem; color: var(--text-muted); letter-spacing: 0.08em; }
+        .article-nav .lang-switch { font-size: 0.75rem; color: var(--toki-blue); text-decoration: none; padding: 0.3rem 0.6rem; border: 1px solid var(--toki-blue); border-radius: 4px; }
+        .article-nav .lang-switch:hover { background: var(--toki-blue); color: #fff; }
+
+        .article-container { max-width: 680px; margin: 0 auto; padding: 7rem 2rem 4rem; }
+        .article-header { margin-bottom: 3rem; padding-bottom: 2rem; border-bottom: 1px solid var(--border); }
+        .article-category { font-size: 0.7rem; color: var(--toki-blue); letter-spacing: 0.15em; margin-bottom: 1rem; }
+        .article-header h1 { font-family: var(--font-display); font-size: 1.8rem; font-weight: 700; line-height: 1.5; margin-bottom: 1.5rem; }
+        .article-subtitle { font-size: 0.95rem; color: var(--text-secondary); line-height: 1.9; }
+
+        .article-content h2 { font-family: var(--font-display); font-size: 1.3rem; font-weight: 600; margin: 3rem 0 1.5rem; padding-bottom: 0.5rem; border-bottom: 2px solid var(--toki-blue-pale); }
+        .article-content h3 { font-family: var(--font-display); font-size: 1.1rem; font-weight: 600; margin: 2rem 0 1rem; color: var(--toki-blue-dark); }
+        .article-content p { margin-bottom: 1.5rem; text-align: justify; }
+        .article-content blockquote { border-left: 3px solid var(--toki-blue); padding-left: 1.5rem; margin: 2rem 0; font-family: var(--font-display); color: var(--text-secondary); }
+        .article-content ul { margin: 1.5rem 0; padding-left: 1.5rem; }
+        .article-content li { margin-bottom: 0.75rem; }
+
+        .core-message { background: var(--toki-blue-pale); border-left: 4px solid var(--toki-blue); padding: 1.5rem; margin: 2rem 0; font-size: 0.95rem; line-height: 1.8; }
+        .key-point { background: linear-gradient(135deg, var(--toki-blue-pale) 0%, #fff 100%); border: 1px solid var(--accent-blue); border-radius: 8px; padding: 1.5rem; margin: 2rem 0; text-align: center; }
+        .key-point p { font-family: var(--font-display); font-size: 1.1rem; color: var(--toki-blue-dark); margin: 0; }
+
+        .article-footer { margin-top: 4rem; padding-top: 2rem; border-top: 1px solid var(--border); text-align: center; }
+        .article-footer p { font-size: 0.8rem; color: var(--text-muted); margin-bottom: 1rem; }
+        .article-footer a { color: var(--toki-blue); text-decoration: none; }
+        .article-footer a:hover { text-decoration: underline; }
+
+        @media (max-width: 768px) {
+            .article-container { padding: 6rem 1.2rem 3rem; }
+            .article-header h1 { font-size: 1.5rem; }
+            .article-nav .nav-label { display: none; }
+        }
+        @media print { .article-nav { display: none; } .article-container { padding-top: 2rem; } }
+    </style>
+    <link rel="stylesheet" href="contact-form.css">
+    <meta property="og:type" content="article">
+    <meta property="og:title" content="多層復元アーキテクチャ | トキストレージ">
+    <meta property="og:description" content="100枚のマルチQRのうち1枚が生き残れば全体が復元できる。5つの独立した経路が、外部依存性ゼロで、紙とデジタルの両面からデータへの到達を保証する。">
+    <meta property="og:url" content="https://tokistorage.github.io/lp/restoration-architecture.html">
+    <meta property="og:site_name" content="トキストレージ">
+    <meta name="twitter:card" content="summary">
+    <meta name="twitter:title" content="多層復元アーキテクチャ | トキストレージ">
+    <meta name="twitter:description" content="100枚のマルチQRのうち1枚が生き残れば全体が復元できる。5つの独立した経路が、外部依存性ゼロで、紙とデジタルの両面からデータへの到達を保証する。">
+    <meta property="og:image" content="https://tokistorage.github.io/lp/asset/tokistorage-icon-512.png">
+    <meta property="og:image:width" content="512">
+    <meta property="og:image:height" content="512">
+    <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Article",
+  "headline": "多層復元アーキテクチャ",
+  "author": {
+    "@type": "Person",
+    "name": "Takuya Sato",
+    "url": "https://tokistorage.github.io/lp/profile.html"
+  },
+  "publisher": {
+    "@type": "Organization",
+    "name": "TokiStorage",
+    "url": "https://tokistorage.github.io/lp",
+    "logo": {
+      "@type": "ImageObject",
+      "url": "https://tokistorage.github.io/lp/asset/tokistorage-icon-512.png"
+    }
+  },
+  "url": "https://tokistorage.github.io/lp/restoration-architecture.html",
+  "inLanguage": "ja",
+  "mainEntityOfPage": "https://tokistorage.github.io/lp/restoration-architecture.html",
+  "description": "100枚のマルチQRのうち1枚が生き残れば全体が復元できる。5つの独立した経路が、外部依存性ゼロで、紙とデジタルの両面からデータへの到達を保証する。"
+}
+    </script>
+    <link rel="alternate" hreflang="ja" href="https://tokistorage.github.io/lp/restoration-architecture.html">
+    <link rel="alternate" hreflang="en" href="https://tokistorage.github.io/lp/restoration-architecture-en.html">
+    <link rel="alternate" hreflang="x-default" href="https://tokistorage.github.io/lp/restoration-architecture.html">
+    <link rel="canonical" href="https://tokistorage.github.io/lp/restoration-architecture.html">
+</head>
+<body>
+
+<nav class="article-nav">
+    <a href="index.html" class="nav-brand">トキストレージ</a>
+    <div class="nav-right">
+        <span class="nav-label">技術・設計 / Technology & Design</span>
+        <a href="restoration-architecture-en.html" class="lang-switch">EN</a>
+    </div>
+</nav>
+
+<main class="article-container">
+
+    <header class="article-header">
+        <p class="article-category">ESSAY &mdash; 技術・設計</p>
+        <h1>多層復元アーキテクチャ<br><span style="font-size:0.7em; font-weight:400;">紙1枚が生き残れば、すべてが戻る</span></h1>
+        <p class="article-subtitle">
+            &mdash;&mdash; 100枚のマルチQRのうち1枚が残れば、全体を復元できる。5つの独立した経路が、外部サービスに依存せず、データへの到達を保証する。
+        </p>
+    </header>
+
+    <article class="article-content">
+
+        <div class="core-message">
+            <strong>この記事で言いたいこと：</strong>マルチQR PDFの各ページに「再生QR」と「復元QR」を埋め込み、ニュースレターに再生ボタンを追加し、URLパラメータによる自動デコードを実装した。紙、PDFビューアー、ニュースレター、手動スキャン——どの入口からでもデータに辿り着ける多層構造を、既存の標準技術だけで構築した。
+        </div>
+
+        <h2>1. 100枚のうち1枚が残れば</h2>
+
+        <p>TokiQRのバルクモードは、長時間の音声を複数のQRコードに分割する。30分の録音は100枚のA4用紙になることがある。印刷し、綴じ、保管する。しかし100年後、その綴じた紙束がすべて無事である保証はない。水害、火災、引越し、劣化。90枚が失われることは、十分にありえる。</p>
+
+        <p>残った10枚からデータを復元するには、100枚すべてをカメラで1枚ずつスキャンする方法しかなかった。しかし90枚が失われていれば、10枚をスキャンしても完全な復元はできない。では、たった1枚だけが生き残った場合はどうか。</p>
+
+        <p>答えは「1枚あれば十分」だ。なぜなら、その1枚にはメインのQRコードだけでなく、全体のPDFへの復元経路が埋め込まれているからだ。</p>
+
+        <h2>2. 五つの復元経路</h2>
+
+        <p>各A4ページには、メインQRコード（180mm角）に加えて、二つの小さなQRコード（18mm角）が配置されている。左下に青い「再生QR」、右下にグレーの「復元QR」。これに加えて、PDFのハイパーリンク、ニュースレターの再生ボタン、従来の手動スキャンを合わせると、五つの独立した復元経路が存在する。</p>
+
+        <div style="overflow-x: auto; margin: 2rem 0;">
+        <table style="width: 100%; border-collapse: collapse; font-size: 0.85rem; line-height: 1.6;">
+            <thead>
+                <tr style="border-bottom: 2px solid var(--toki-blue); text-align: left;">
+                    <th style="padding: 0.5rem;">経路</th>
+                    <th style="padding: 0.5rem;">入口</th>
+                    <th style="padding: 0.5rem;">動作</th>
+                    <th style="padding: 0.5rem;">必要なもの</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr style="border-bottom: 1px solid var(--border); background: var(--toki-blue-pale);">
+                    <td style="padding: 0.5rem;"><strong>A. 再生QR</strong></td>
+                    <td style="padding: 0.5rem;">紙面・左下（青）</td>
+                    <td style="padding: 0.5rem;">スマホスキャン &rarr; 自動デコード &rarr; 即再生</td>
+                    <td style="padding: 0.5rem;">スマホ + ネットワーク</td>
+                </tr>
+                <tr style="border-bottom: 1px solid var(--border);">
+                    <td style="padding: 0.5rem;"><strong>B. 復元QR</strong></td>
+                    <td style="padding: 0.5rem;">紙面・右下（グレー）</td>
+                    <td style="padding: 0.5rem;">スマホスキャン &rarr; PDF直リンク &rarr; ダウンロード</td>
+                    <td style="padding: 0.5rem;">スマホ + ネットワーク</td>
+                </tr>
+                <tr style="border-bottom: 1px solid var(--border); background: var(--toki-blue-pale);">
+                    <td style="padding: 0.5rem;"><strong>C. PDFリンク</strong></td>
+                    <td style="padding: 0.5rem;">PDFビューアー内</td>
+                    <td style="padding: 0.5rem;">QR画像/テキストをクリック &rarr; ブラウザで遷移</td>
+                    <td style="padding: 0.5rem;">PC/タブレット + PDFビューアー</td>
+                </tr>
+                <tr style="border-bottom: 1px solid var(--border);">
+                    <td style="padding: 0.5rem;"><strong>D. 再生ボタン</strong></td>
+                    <td style="padding: 0.5rem;">ニュースレター</td>
+                    <td style="padding: 0.5rem;">&#9654; ボタン &rarr; 自動デコード &rarr; 即再生</td>
+                    <td style="padding: 0.5rem;">ブラウザ + ネットワーク</td>
+                </tr>
+                <tr style="background: var(--toki-blue-pale);">
+                    <td style="padding: 0.5rem;"><strong>E. 手動スキャン</strong></td>
+                    <td style="padding: 0.5rem;">紙面・メインQR</td>
+                    <td style="padding: 0.5rem;">1枚ずつカメラでスキャン &rarr; 順次再生</td>
+                    <td style="padding: 0.5rem;">スマホ（オフライン可）</td>
+                </tr>
+            </tbody>
+        </table>
+        </div>
+
+        <p>経路AからDはいずれも、1枚の紙またはニュースレター上のリンクから、全体のPDFを取得して一括再生する。経路Eだけが従来の「1枚ずつスキャン」方式だが、これはネットワーク不要で動作するため、オフライン環境での最終手段として機能する。</p>
+
+        <h2>3. 再生QRと復元QRの設計判断</h2>
+
+        <p>左下の再生QR（青）は <code>archive.html?pdf=&lt;url&gt;</code> というURLをエンコードしている。スマホでスキャンすると、TokiQRのアーカイブページが開き、PDFを自動取得し、QRコードをデコードし、再生画面に直接遷移する。ユーザーの操作は「スキャンする」だけだ。</p>
+
+        <p>右下の復元QR（グレー）はPDFファイルへの直リンクをエンコードしている。GitHub PagesまたはNDL（国立国会図書館）のURLだ。スキャンするとPDFが開く。即再生はしないが、PDFそのものを手元に保存できる。再生QRが動作しない将来の環境でも、PDFさえ取得できれば手動インポートで復元できる。</p>
+
+        <blockquote>
+            <p>青は「今すぐ聴く」ための経路。グレーは「未来のために保存する」ための経路。色で役割が一目で判る。</p>
+        </blockquote>
+
+        <h3>メインQRへの干渉がない理由</h3>
+
+        <p>PDFをTokiQRにインポートすると、全ページのQRコードがスキャンされる。再生QRと復元QRも検出される。しかし、TokiQRのデコーダーはURLフィルタを持っている。<code>play.html</code> または <code>m=</code> を含むURLだけを抽出し、それ以外は無視する。再生QR（<code>archive.html?pdf=...</code>）も復元QR（<code>.../output/TQ-00001.pdf</code>）も、このフィルタで自動的に除外される。</p>
+
+        <p>つまり、小さなQRコードを2つ追加しても、メインQRのデコードには一切干渉しない。これは追加のフィルタルールを書いたのではなく、既存のフィルタが元から正しく設計されていたためだ。</p>
+
+        <h2>4. 紙とデジタルの非対称性</h2>
+
+        <p>紙は劣化する。日光、湿気、虫害、火災。しかし紙は特定のサービスに依存しない。電源も不要だ。焼け残った紙は、1000年後でも読み取れる可能性がある。</p>
+
+        <p>デジタルデータは劣化しない。ビット列はコピーを繰り返しても変化しない。しかしデジタルデータは、それを格納するサービスの存続に依存する。サービスが終了すれば、ビット列ごと消失する。</p>
+
+        <p>この非対称性に対する回答が、復元経路の多層化だ。紙面のQRコードは物理世界に存在し、GitHub PagesのPDFはデジタル世界に存在し、NDLの納本は法的保存として存在する。どれかひとつが失われても、別の層からデータに辿り着ける。</p>
+
+        <div class="core-message">
+            紙は物理的に存在し続けるが劣化する。デジタルは劣化しないが消失する。両方にリンクを張ることで、非対称なリスクを相殺する。
+        </div>
+
+        <h2>5. 外部依存性ゼロ</h2>
+
+        <p>五つの復元経路で使われている技術を列挙する。QRコード（ISO/IEC 18004）。PDF（ISO 32000）。HTML（WHATWG Living Standard）。GitHub Pages（静的ファイルホスティング）。jsPDF（クライアントサイドPDF生成）。qrcode.js（クライアントサイドQR生成）。</p>
+
+        <p>いずれも国際標準規格またはオープンソースの実装だ。特定のクラウドサービスのAPI、特定のアプリストアのレビュー、特定の認証プロバイダの可用性に依存しない。GitHub Pagesが停止しても、PDFファイルを別のホスティングに移せば全経路が復旧する。URLさえ変わらなければ——あるいは変わったとしても、紙面の復元QRを手動でスキャンすれば、NDL経由で辿り着ける。</p>
+
+        <blockquote>
+            <p>標準技術の組み合わせが最も堅牢なアーキテクチャだ。プロプライエタリなサービスが増えるたびに、障害点が増える。</p>
+        </blockquote>
+
+        <h2>6. 冗長性と最小性の両立</h2>
+
+        <p>五つの復元経路は、一見すると過剰に見えるかもしれない。しかしこの冗長性を実現するために追加されたコードは、驚くほど少ない。</p>
+
+        <ul>
+            <li><strong>再生QR + 復元QR</strong>：<code>pdf-export.js</code> の <code>createPdf()</code> に約40行追加。既存のQR生成ライブラリ（<code>QRCode.toDataURL</code>）とjsPDFの <code>addImage</code>/<code>link</code>/<code>textWithLink</code> を呼ぶだけ</li>
+            <li><strong>自動デコード</strong>：<code>archive.html</code> に約30行追加。既存の <code>parsePdf()</code> と <code>TokiDB.saveArchive()</code> をそのまま呼ぶだけ。<code>parsePdf</code> は <code>File</code> にも <code>Blob</code> にも対応していたため、変更不要</li>
+            <li><strong>再生ボタン</strong>：ニュースレターテンプレートのCSS 4行 + ヘルパー関数2行 + レンダリング変更数行</li>
+        </ul>
+
+        <p>合計で100行に満たない。冗長性は設計の複雑さからではなく、<strong>接続点の多さ</strong>から生まれている。既存のモジュールが正しく分離されていたからこそ、最小限のコードで新しい経路を開通できた。</p>
+
+        <h3>parsePdfの偶然の互換性</h3>
+
+        <p><code>parsePdf(file)</code> は元々、<code>&lt;input type="file"&gt;</code> から受け取った <code>File</code> オブジェクトを処理するために設計された。内部では <code>file.arrayBuffer()</code> を呼んでバイナリデータを取得する。<code>Blob</code> オブジェクトも <code>.arrayBuffer()</code> メソッドを持っている。つまり、<code>fetch</code> で取得した <code>Blob</code> をそのまま渡せば、<code>parsePdf</code> は何の変更もなく動作する。</p>
+
+        <p>これは意図的な設計ではない。<code>File</code> が <code>Blob</code> を継承しているという JavaScript の型階層が、結果としてAPI互換性を担保した。偶然だが、この偶然が成立するのは、標準のWeb APIに忠実な設計だったからだ。独自のラッパーやアダプターを挟んでいたら、この互換性は壊れていた。</p>
+
+        <blockquote>
+            <p>標準に従うことは、未来の自分に選択肢を残すことだ。</p>
+        </blockquote>
+
+        <h2>7. 構造的完全性</h2>
+
+        <p>このエッセイには自己言及的な構造がある。</p>
+
+        <ul>
+            <li>エッセイは「PDFに復元QRを埋め込む」ことを論じている</li>
+            <li>このエッセイ自体が、ニュースレターPDFに収録される</li>
+            <li>そのPDFには、まさにこのエッセイで論じた復元QRが埋め込まれている</li>
+            <li>そのPDFが国立国会図書館に納本される</li>
+        </ul>
+
+        <p>主張と実装と保存が、同一の成果物上で三位一体をなしている。このエッセイを読んでいる紙面の右下を見れば、グレーの復元QRが印刷されているはずだ。左下の青い再生QRをスキャンすれば、全体が即座に再生される。</p>
+
+        <p>学術論文は「こうすべきだ」と論じるが、その論文自体は復元経路を持たない。技術ブログは「こう実装した」と書くが、その記事自体がアーカイブされる保証はない。このエッセイは、論じている仕組みが、論じているエッセイ自体に実装されている。</p>
+
+        <div class="key-point">
+            <p>冗長性は複雑さではない。接続点の多さだ。</p>
+        </div>
+
+        <p style="font-size: 0.85rem; color: var(--text-secondary);">バックアップ戦略の基本原則については「<a href="backup-rule.html" style="color: var(--toki-blue);">3-2-1ルール</a>」で、印刷物とデジタルの双方向性については「<a href="self-print-economy.html" style="color: var(--toki-blue);">セルフプリント経済圏</a>」で、ストレージ設計の全体像については「<a href="storage-strategy.html" style="color: var(--toki-blue);">ストレージ戦略</a>」で詳しく論じている。</p>
+
+    </article>
+
+    <footer class="article-footer">
+        <p id="essay-nav-links"></p>
+        <p style="margin-top: 2rem; font-size: 0.75rem; color: var(--text-muted); font-style: italic;">あなたが物語となり、世代の対話が重なり、未来の道となる。― トキストレージ</p>
+        <p style="font-size: 0.75rem; color: var(--text-muted);">&copy; 2026 TokiStorage. All rights reserved.</p>
+    </footer>
+
+</main>
+
+<script src="contact-form.js" defer></script>
+<script src="essay-tts.js?v=20260226"></script>
+<script src="essay-nav.js?v=20260226"></script>
+<script src="tracker.js" defer></script>
+</body>
+</html>

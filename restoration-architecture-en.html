@@ -1,0 +1,288 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" type="image/png" sizes="32x32" href="asset/favicon-32.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="asset/apple-touch-icon.png">
+    <title>Multi-Layered Restoration Architecture | TokiStorage</title>
+    <meta name="robots" content="index, follow">
+    <meta name="description" content="If even one page out of a hundred multi-QR sheets survives, the entire dataset can be restored. Five independent pathways guarantee data reachability with zero external dependencies.">    <style>
+        :root {
+            --toki-blue: #2563EB;
+            --toki-blue-dark: #1E40AF;
+            --toki-blue-pale: #EFF6FF;
+            --accent-blue: #60A5FA;
+            --bg-white: #FFFFFF;
+            --text-primary: #1E293B;
+            --text-secondary: #475569;
+            --text-muted: #94A3B8;
+            --border: #E2E8F0;
+            --font-display: Georgia, 'Times New Roman', 'Hiragino Mincho ProN', 'Yu Mincho', serif;
+            --font-body: -apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, 'Hiragino Kaku Gothic ProN', 'Yu Gothic', sans-serif;
+        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        html { scroll-behavior: smooth; }
+        body { font-family: var(--font-body); font-weight: 400; background: var(--bg-white); color: var(--text-primary); line-height: 2; font-size: 16px; }
+
+        .article-nav { position: fixed; top: 0; left: 0; right: 0; z-index: 1000; background: rgba(255,255,255,0.95); backdrop-filter: blur(12px); border-bottom: 1px solid var(--border); padding: 0.6rem 1.2rem; display: flex; align-items: center; justify-content: space-between; gap: 1rem; }
+        .article-nav .nav-brand { font-family: var(--font-display); font-size: 0.9rem; font-weight: 600; color: var(--toki-blue); text-decoration: none; white-space: nowrap; }
+        .article-nav .nav-brand::before { content: ''; display: inline-block; width: 20px; height: 20px; background: url('asset/tokistorage-icon-512.png') no-repeat center / contain; vertical-align: -3px; margin-right: 5px; }
+        .article-nav .nav-right { display: flex; align-items: center; gap: 1rem; }
+        .article-nav .nav-label { font-size: 0.6rem; color: var(--text-muted); letter-spacing: 0.08em; }
+        .article-nav .lang-switch { font-size: 0.75rem; color: var(--toki-blue); text-decoration: none; padding: 0.3rem 0.6rem; border: 1px solid var(--toki-blue); border-radius: 4px; }
+        .article-nav .lang-switch:hover { background: var(--toki-blue); color: #fff; }
+
+        .article-container { max-width: 680px; margin: 0 auto; padding: 7rem 2rem 4rem; }
+        .article-header { margin-bottom: 3rem; padding-bottom: 2rem; border-bottom: 1px solid var(--border); }
+        .article-category { font-size: 0.7rem; color: var(--toki-blue); letter-spacing: 0.15em; margin-bottom: 1rem; }
+        .article-header h1 { font-family: var(--font-display); font-size: 1.8rem; font-weight: 700; line-height: 1.5; margin-bottom: 1.5rem; }
+        .article-subtitle { font-size: 0.95rem; color: var(--text-secondary); line-height: 1.9; }
+
+        .article-content h2 { font-family: var(--font-display); font-size: 1.3rem; font-weight: 600; margin: 3rem 0 1.5rem; padding-bottom: 0.5rem; border-bottom: 2px solid var(--toki-blue-pale); }
+        .article-content h3 { font-family: var(--font-display); font-size: 1.1rem; font-weight: 600; margin: 2rem 0 1rem; color: var(--toki-blue-dark); }
+        .article-content p { margin-bottom: 1.5rem; text-align: left; }
+        .article-content blockquote { border-left: 3px solid var(--toki-blue); padding-left: 1.5rem; margin: 2rem 0; font-family: var(--font-display); color: var(--text-secondary); }
+        .article-content ul { margin: 1.5rem 0; padding-left: 1.5rem; }
+        .article-content li { margin-bottom: 0.75rem; }
+
+        .core-message { background: var(--toki-blue-pale); border-left: 4px solid var(--toki-blue); padding: 1.5rem; margin: 2rem 0; font-size: 0.95rem; line-height: 1.8; }
+        .key-point { background: linear-gradient(135deg, var(--toki-blue-pale) 0%, #fff 100%); border: 1px solid var(--accent-blue); border-radius: 8px; padding: 1.5rem; margin: 2rem 0; text-align: center; }
+        .key-point p { font-family: var(--font-display); font-size: 1.1rem; color: var(--toki-blue-dark); margin: 0; }
+
+        .article-footer { margin-top: 4rem; padding-top: 2rem; border-top: 1px solid var(--border); text-align: center; }
+        .article-footer p { font-size: 0.8rem; color: var(--text-muted); margin-bottom: 1rem; }
+        .article-footer a { color: var(--toki-blue); text-decoration: none; }
+        .article-footer a:hover { text-decoration: underline; }
+
+        @media (max-width: 768px) {
+            .article-container { padding: 6rem 1.2rem 3rem; }
+            .article-header h1 { font-size: 1.5rem; }
+            .article-nav .nav-label { display: none; }
+        }
+        @media print { .article-nav { display: none; } .article-container { padding-top: 2rem; } }
+    </style>
+    <link rel="stylesheet" href="contact-form.css">
+    <meta property="og:type" content="article">
+    <meta property="og:title" content="Multi-Layered Restoration Architecture | TokiStorage">
+    <meta property="og:description" content="If even one page out of a hundred multi-QR sheets survives, the entire dataset can be restored. Five independent pathways guarantee data reachability with zero external dependencies.">
+    <meta property="og:url" content="https://tokistorage.github.io/lp/restoration-architecture-en.html">
+    <meta property="og:site_name" content="TokiStorage">
+    <meta name="twitter:card" content="summary">
+    <meta name="twitter:title" content="Multi-Layered Restoration Architecture | TokiStorage">
+    <meta name="twitter:description" content="If even one page out of a hundred multi-QR sheets survives, the entire dataset can be restored. Five independent pathways guarantee data reachability with zero external dependencies.">
+    <meta property="og:image" content="https://tokistorage.github.io/lp/asset/tokistorage-icon-512.png">
+    <meta property="og:image:width" content="512">
+    <meta property="og:image:height" content="512">
+    <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Article",
+  "headline": "Multi-Layered Restoration Architecture",
+  "author": {
+    "@type": "Person",
+    "name": "Takuya Sato",
+    "url": "https://tokistorage.github.io/lp/profile.html"
+  },
+  "publisher": {
+    "@type": "Organization",
+    "name": "TokiStorage",
+    "url": "https://tokistorage.github.io/lp",
+    "logo": {
+      "@type": "ImageObject",
+      "url": "https://tokistorage.github.io/lp/asset/tokistorage-icon-512.png"
+    }
+  },
+  "url": "https://tokistorage.github.io/lp/restoration-architecture-en.html",
+  "inLanguage": "en",
+  "mainEntityOfPage": "https://tokistorage.github.io/lp/restoration-architecture-en.html",
+  "description": "If even one page out of a hundred multi-QR sheets survives, the entire dataset can be restored. Five independent pathways guarantee data reachability with zero external dependencies."
+}
+    </script>
+    <link rel="alternate" hreflang="ja" href="https://tokistorage.github.io/lp/restoration-architecture.html">
+    <link rel="alternate" hreflang="en" href="https://tokistorage.github.io/lp/restoration-architecture-en.html">
+    <link rel="alternate" hreflang="x-default" href="https://tokistorage.github.io/lp/restoration-architecture.html">
+    <link rel="canonical" href="https://tokistorage.github.io/lp/restoration-architecture-en.html">
+</head>
+<body>
+
+<nav class="article-nav">
+    <a href="index.html" class="nav-brand">TokiStorage</a>
+    <div class="nav-right">
+        <span class="nav-label">Technology & Design</span>
+        <a href="restoration-architecture.html" class="lang-switch">JA</a>
+    </div>
+</nav>
+
+<main class="article-container">
+
+    <header class="article-header">
+        <p class="article-category">ESSAY &mdash; Technology &amp; Design</p>
+        <h1>Multi-Layered Restoration Architecture<br><span style="font-size:0.7em; font-weight:400;">If one page survives, everything comes back</span></h1>
+        <p class="article-subtitle">
+            &mdash;&mdash; If even one page out of a hundred multi-QR sheets survives, the entire dataset can be restored. Five independent pathways guarantee data reachability with zero external dependencies.
+        </p>
+    </header>
+
+    <article class="article-content">
+
+        <div class="core-message">
+            <strong>The point of this essay:</strong> By embedding a "play QR" and a "recovery QR" on each page of a multi-QR PDF, adding a play button to the newsletter, and implementing automatic decoding via URL parameters, we built a multi-layered structure where data can be reached from any entry point&mdash;paper, PDF viewer, newsletter, or manual scan&mdash;using nothing but existing standard technologies.
+        </div>
+
+        <h2>1. If One Page Out of a Hundred Survives</h2>
+
+        <p>TokiQR's bulk mode splits long audio recordings into multiple QR codes. A 30-minute recording can produce a hundred A4 sheets. They are printed, bound, and stored. But a hundred years from now, there is no guarantee that the entire bundle remains intact. Water damage, fire, moving, deterioration. Losing ninety pages is entirely plausible.</p>
+
+        <p>Previously, restoring data from the remaining pages required scanning each one individually with a camera. But if ninety pages are lost, scanning ten will not produce a complete restoration. What if only a single page survives?</p>
+
+        <p>The answer is: one page is enough. Because each page carries not only the main QR code but also embedded pathways to restore the entire PDF.</p>
+
+        <h2>2. Five Restoration Pathways</h2>
+
+        <p>Each A4 page contains, in addition to the main QR code (180mm square), two small QR codes (18mm square). A blue "play QR" in the bottom-left and a gray "recovery QR" in the bottom-right. Combined with PDF hyperlinks, the newsletter play button, and conventional manual scanning, five independent restoration pathways exist.</p>
+
+        <div style="overflow-x: auto; margin: 2rem 0;">
+        <table style="width: 100%; border-collapse: collapse; font-size: 0.85rem; line-height: 1.6;">
+            <thead>
+                <tr style="border-bottom: 2px solid var(--toki-blue); text-align: left;">
+                    <th style="padding: 0.5rem;">Pathway</th>
+                    <th style="padding: 0.5rem;">Entry Point</th>
+                    <th style="padding: 0.5rem;">Action</th>
+                    <th style="padding: 0.5rem;">Requirements</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr style="border-bottom: 1px solid var(--border); background: var(--toki-blue-pale);">
+                    <td style="padding: 0.5rem;"><strong>A. Play QR</strong></td>
+                    <td style="padding: 0.5rem;">Paper, bottom-left (blue)</td>
+                    <td style="padding: 0.5rem;">Phone scan &rarr; auto-decode &rarr; instant playback</td>
+                    <td style="padding: 0.5rem;">Smartphone + network</td>
+                </tr>
+                <tr style="border-bottom: 1px solid var(--border);">
+                    <td style="padding: 0.5rem;"><strong>B. Recovery QR</strong></td>
+                    <td style="padding: 0.5rem;">Paper, bottom-right (gray)</td>
+                    <td style="padding: 0.5rem;">Phone scan &rarr; PDF direct link &rarr; download</td>
+                    <td style="padding: 0.5rem;">Smartphone + network</td>
+                </tr>
+                <tr style="border-bottom: 1px solid var(--border); background: var(--toki-blue-pale);">
+                    <td style="padding: 0.5rem;"><strong>C. PDF Link</strong></td>
+                    <td style="padding: 0.5rem;">Inside PDF viewer</td>
+                    <td style="padding: 0.5rem;">Click QR image/text &rarr; browser navigation</td>
+                    <td style="padding: 0.5rem;">PC/tablet + PDF viewer</td>
+                </tr>
+                <tr style="border-bottom: 1px solid var(--border);">
+                    <td style="padding: 0.5rem;"><strong>D. Play Button</strong></td>
+                    <td style="padding: 0.5rem;">Newsletter</td>
+                    <td style="padding: 0.5rem;">&#9654; button &rarr; auto-decode &rarr; instant playback</td>
+                    <td style="padding: 0.5rem;">Browser + network</td>
+                </tr>
+                <tr style="background: var(--toki-blue-pale);">
+                    <td style="padding: 0.5rem;"><strong>E. Manual Scan</strong></td>
+                    <td style="padding: 0.5rem;">Paper, main QR</td>
+                    <td style="padding: 0.5rem;">Scan each page with camera &rarr; sequential playback</td>
+                    <td style="padding: 0.5rem;">Smartphone (offline OK)</td>
+                </tr>
+            </tbody>
+        </table>
+        </div>
+
+        <p>Pathways A through D each retrieve the entire PDF from a single page or newsletter link and play back the full recording at once. Only pathway E is the traditional "scan one page at a time" method, but it functions as a last resort in offline environments since it requires no network access.</p>
+
+        <h2>3. Design Decisions: Play QR vs. Recovery QR</h2>
+
+        <p>The bottom-left play QR (blue) encodes a URL of the form <code>archive.html?pdf=&lt;url&gt;</code>. When scanned with a smartphone, TokiQR's archive page opens, automatically fetches the PDF, decodes the QR codes, and navigates directly to the playback screen. The user's only action is to scan.</p>
+
+        <p>The bottom-right recovery QR (gray) encodes a direct link to the PDF file. A GitHub Pages or NDL (National Diet Library) URL. Scanning opens the PDF itself. It does not play instantly, but the PDF can be saved locally. Even in a future environment where the play QR no longer functions, manual import remains possible as long as the PDF can be obtained.</p>
+
+        <blockquote>
+            <p>Blue is the pathway for "listen now." Gray is the pathway for "preserve for the future." The color tells you the role at a glance.</p>
+        </blockquote>
+
+        <h3>Why They Don't Interfere with the Main QR</h3>
+
+        <p>When a PDF is imported into TokiQR, all QR codes on every page are scanned. The play QR and recovery QR are detected as well. However, TokiQR's decoder has a URL filter. It extracts only URLs containing <code>play.html</code> or <code>m=</code>, and ignores everything else. The play QR (<code>archive.html?pdf=...</code>) and recovery QR (<code>.../output/TQ-00001.pdf</code>) are automatically excluded by this filter.</p>
+
+        <p>Adding two small QR codes to each page causes zero interference with main QR decoding. This was not achieved by writing additional filter rules&mdash;the existing filter was correctly designed from the start.</p>
+
+        <h2>4. The Asymmetry of Paper and Digital</h2>
+
+        <p>Paper deteriorates. Sunlight, humidity, insects, fire. But paper does not depend on any particular service. It requires no power. A page that survives a fire can still be read a thousand years later.</p>
+
+        <p>Digital data does not deteriorate. Bit sequences remain unchanged through unlimited copies. But digital data depends on the continued existence of the service that hosts it. When the service shuts down, the bits vanish with it.</p>
+
+        <p>The answer to this asymmetry is multi-layered restoration pathways. QR codes on paper exist in the physical world. PDFs on GitHub Pages exist in the digital world. NDL deposit exists as legally mandated preservation. If any one layer is lost, data can be reached through another.</p>
+
+        <div class="core-message">
+            Paper persists physically but deteriorates. Digital data never deteriorates but can vanish. By linking both, the asymmetric risks cancel each other out.
+        </div>
+
+        <h2>5. Zero External Dependencies</h2>
+
+        <p>The technologies used across all five restoration pathways: QR codes (ISO/IEC 18004). PDF (ISO 32000). HTML (WHATWG Living Standard). GitHub Pages (static file hosting). jsPDF (client-side PDF generation). qrcode.js (client-side QR generation).</p>
+
+        <p>All are international standards or open-source implementations. None depend on a specific cloud service's API, a specific app store's review process, or a specific authentication provider's availability. Even if GitHub Pages goes down, moving the PDF files to another host restores all pathways. As long as URLs remain unchanged&mdash;or even if they change, scanning the recovery QR on paper leads to the NDL copy.</p>
+
+        <blockquote>
+            <p>A combination of standard technologies is the most robust architecture. Every proprietary service you add is another point of failure.</p>
+        </blockquote>
+
+        <h2>6. Redundancy Meets Minimalism</h2>
+
+        <p>Five restoration pathways might seem excessive at first glance. But the amount of code added to achieve this redundancy is remarkably small.</p>
+
+        <ul>
+            <li><strong>Play QR + Recovery QR</strong>: Approximately 40 lines added to <code>createPdf()</code> in <code>pdf-export.js</code>. Simply calls the existing QR generation library (<code>QRCode.toDataURL</code>) and jsPDF's <code>addImage</code>/<code>link</code>/<code>textWithLink</code></li>
+            <li><strong>Auto-decode</strong>: Approximately 30 lines added to <code>archive.html</code>. Simply calls the existing <code>parsePdf()</code> and <code>TokiDB.saveArchive()</code>. No changes to <code>parsePdf</code> were needed because it already worked with both <code>File</code> and <code>Blob</code> objects</li>
+            <li><strong>Play button</strong>: 4 lines of CSS + 2 helper functions + a few rendering changes in the newsletter template</li>
+        </ul>
+
+        <p>Under a hundred lines total. The redundancy arises not from design complexity but from the <strong>number of connection points</strong>. Because existing modules were properly separated, new pathways could be opened with minimal code.</p>
+
+        <h3>The Accidental Compatibility of parsePdf</h3>
+
+        <p><code>parsePdf(file)</code> was originally designed to process <code>File</code> objects from <code>&lt;input type="file"&gt;</code>. Internally, it calls <code>file.arrayBuffer()</code> to obtain binary data. <code>Blob</code> objects also have an <code>.arrayBuffer()</code> method. This means passing a <code>Blob</code> obtained via <code>fetch</code> works without any modification to <code>parsePdf</code>.</p>
+
+        <p>This was not intentional design. JavaScript's type hierarchy&mdash;where <code>File</code> inherits from <code>Blob</code>&mdash;happened to guarantee API compatibility. An accident, but one that was possible only because the design adhered faithfully to standard Web APIs. Had a custom wrapper or adapter been interposed, this compatibility would have broken.</p>
+
+        <blockquote>
+            <p>Following standards is leaving options for your future self.</p>
+        </blockquote>
+
+        <h2>7. Structural Completeness</h2>
+
+        <p>This essay has a self-referential structure.</p>
+
+        <ul>
+            <li>The essay discusses embedding recovery QR codes in PDFs</li>
+            <li>This essay itself will be included in a newsletter PDF</li>
+            <li>That PDF will contain the very recovery QR codes discussed in this essay</li>
+            <li>That PDF will be deposited with the National Diet Library of Japan</li>
+        </ul>
+
+        <p>Argument, implementation, and preservation form a trinity on the same artifact. If you are reading this on paper, look at the bottom-right corner&mdash;the gray recovery QR should be printed there. Scan the blue play QR at the bottom-left, and the entire recording plays back instantly.</p>
+
+        <p>Academic papers argue "this should be done," but the papers themselves carry no restoration pathway. Technical blog posts write "this is how we built it," but there is no guarantee the post itself will be archived. This essay is different: the mechanism it describes is implemented in the very artifact that contains the essay.</p>
+
+        <div class="key-point">
+            <p>Redundancy is not complexity. It is the number of connection points.</p>
+        </div>
+
+        <p style="font-size: 0.85rem; color: var(--text-secondary);">For the fundamental principles of backup strategy, see "<a href="backup-rule-en.html" style="color: var(--toki-blue);">3-2-1 Backup Rule</a>." For the bidirectionality of print and digital, see "<a href="self-print-economy-en.html" style="color: var(--toki-blue);">The Self-Print Economy</a>." For the full picture of storage design, see "<a href="storage-strategy-en.html" style="color: var(--toki-blue);">Storage Strategy</a>."</p>
+
+    </article>
+
+    <footer class="article-footer">
+        <p id="essay-nav-links"></p>
+        <p style="margin-top: 2rem; font-size: 0.75rem; color: var(--text-muted); font-style: italic;">You become a story, generations connect in dialogue, the path forward. &mdash; TokiStorage</p>
+        <p style="font-size: 0.75rem; color: var(--text-muted);">&copy; 2026 TokiStorage. All rights reserved.</p>
+    </footer>
+
+</main>
+
+<script src="contact-form.js" defer></script>
+<script src="essay-tts.js?v=20260226"></script>
+<script src="essay-nav.js?v=20260226"></script>
+<script src="tracker.js" defer></script>
+</body>
+</html>
