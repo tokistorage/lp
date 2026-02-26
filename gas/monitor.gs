@@ -24,6 +24,9 @@ function handleMonitorApply(ss, data) {
 
 // ── モニターフィードバック ──
 
+var VOICES_ARCHIVE_THRESHOLD = 1000;
+var VOICES_ARCHIVE_SIZE = 500;
+
 function handleMonitorFeedback(ss, data) {
   // 年ファイル + インデックスを qr リポジトリの main に直接コミット（排他制御）
   var lock = LockService.getScriptLock();
@@ -49,6 +52,42 @@ function handleMonitorFeedback(ss, data) {
     }
     voices.unshift(newVoice);
 
+    // インデックス読み取り
+    var indexPath = 'monitor/voices/index.json';
+    var indexRaw = readFileFromGitHub(indexPath, GITHUB_REPO_QR);
+    var index = [];
+    if (indexRaw) {
+      try { index = JSON.parse(indexRaw); } catch (e) { index = []; }
+    }
+
+    // 年エントリを取得または作成
+    var entry = null;
+    for (var i = 0; i < index.length; i++) {
+      if (index[i].year === year) { entry = index[i]; break; }
+    }
+    if (!entry) {
+      entry = { year: year, count: 0 };
+      index.push(entry);
+    }
+
+    // 退避チェック: 1000件超なら古い500件をアーカイブ
+    if (voices.length > VOICES_ARCHIVE_THRESHOLD) {
+      var archiveVoices = voices.splice(-VOICES_ARCHIVE_SIZE);
+      var nextNum = (entry.archives || 0) + 1;
+      var archiveName = year + '-' + ('000' + nextNum).slice(-3);
+
+      commitFileOnBranch(
+        'monitor/voices/' + archiveName + '.json',
+        JSON.stringify(archiveVoices, null, 2) + '\n',
+        'Archive voices: ' + archiveName,
+        'main',
+        GITHUB_REPO_QR
+      );
+
+      entry.archives = nextNum;
+    }
+
+    // 年ファイルコミット
     commitFileOnBranch(
       yearPath,
       JSON.stringify(voices, null, 2) + '\n',
@@ -58,23 +97,7 @@ function handleMonitorFeedback(ss, data) {
     );
 
     // インデックス更新
-    var indexPath = 'monitor/voices/index.json';
-    var indexRaw = readFileFromGitHub(indexPath, GITHUB_REPO_QR);
-    var index = [];
-    if (indexRaw) {
-      try { index = JSON.parse(indexRaw); } catch (e) { index = []; }
-    }
-    var found = false;
-    for (var i = 0; i < index.length; i++) {
-      if (index[i].year === year) {
-        index[i].count = voices.length;
-        found = true;
-        break;
-      }
-    }
-    if (!found) {
-      index.push({ year: year, count: voices.length });
-    }
+    entry.count = voices.length + (entry.archives || 0) * VOICES_ARCHIVE_SIZE;
     index.sort(function(a, b) { return b.year - a.year; });
 
     commitFileOnBranch(
