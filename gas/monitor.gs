@@ -25,12 +25,13 @@ function handleMonitorApply(ss, data) {
 // ── モニターフィードバック ──
 
 function handleMonitorFeedback(ss, data) {
-  // voices.json に追記して qr リポジトリの main に直接コミット（排他制御）
+  // 年ファイル + インデックスを qr リポジトリの main に直接コミット（排他制御）
   var lock = LockService.getScriptLock();
   lock.waitLock(30000);
   try {
     var now = new Date();
-    var dateStr = now.getFullYear() + '-'
+    var year = now.getFullYear();
+    var dateStr = year + '-'
       + ('0' + (now.getMonth() + 1)).slice(-2) + '-'
       + ('0' + now.getDate()).slice(-2);
     var newVoice = {
@@ -39,7 +40,9 @@ function handleMonitorFeedback(ss, data) {
       comment: (data.comment || '').toString().trim()
     };
 
-    var existing = readFileFromGitHub('monitor/voices.json', GITHUB_REPO_QR);
+    // 年ファイルに追記
+    var yearPath = 'monitor/voices/' + year + '.json';
+    var existing = readFileFromGitHub(yearPath, GITHUB_REPO_QR);
     var voices = [];
     if (existing) {
       try { voices = JSON.parse(existing); } catch (e) { voices = []; }
@@ -47,14 +50,42 @@ function handleMonitorFeedback(ss, data) {
     voices.unshift(newVoice);
 
     commitFileOnBranch(
-      'monitor/voices.json',
+      yearPath,
       JSON.stringify(voices, null, 2) + '\n',
       'Add monitor voice: ' + (data.wisetag || ''),
       'main',
       GITHUB_REPO_QR
     );
+
+    // インデックス更新
+    var indexPath = 'monitor/voices/index.json';
+    var indexRaw = readFileFromGitHub(indexPath, GITHUB_REPO_QR);
+    var index = [];
+    if (indexRaw) {
+      try { index = JSON.parse(indexRaw); } catch (e) { index = []; }
+    }
+    var found = false;
+    for (var i = 0; i < index.length; i++) {
+      if (index[i].year === year) {
+        index[i].count = voices.length;
+        found = true;
+        break;
+      }
+    }
+    if (!found) {
+      index.push({ year: year, count: voices.length });
+    }
+    index.sort(function(a, b) { return b.year - a.year; });
+
+    commitFileOnBranch(
+      indexPath,
+      JSON.stringify(index, null, 2) + '\n',
+      'Update voices index',
+      'main',
+      GITHUB_REPO_QR
+    );
   } catch (ghErr) {
-    Logger.log('voices.json commit failed: ' + ghErr.toString());
+    Logger.log('voices commit failed: ' + ghErr.toString());
   } finally {
     lock.releaseLock();
   }
