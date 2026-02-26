@@ -155,6 +155,7 @@
     { id: 'offline-freedom', ja: 'ネットワークからの自由', en: 'Freedom from the Network', date: '2026-02-24' },
     { id: 'millennium-navigation', ja: '1000年のナビゲーション設計', en: 'Designing Navigation for a Millennium', date: '2026-02-26' },
     { id: 'restoration-architecture', ja: '多層復元アーキテクチャ', en: 'Multi-Layered Restoration Architecture', date: '2026-02-26' },
+    { id: 'monitor-program', ja: 'モニタープログラムの設計', en: 'Designing the Monitor Program', date: '2026-02-26' },
 
     // ── メタ視点 ──
     { id: 'mission-statement', ja: 'ミッション・ステートメントの設計思想', en: 'Designing a Mission Statement', date: '2026-02-23' },
@@ -170,6 +171,7 @@
   // LATEST_COUNT で表示件数を制御
   const LATEST_COUNT = 5;
   const latestEssayIds = [
+    'monitor-program',
     'restoration-architecture',
     'millennium-navigation',
     'self-print-economy',
@@ -353,6 +355,7 @@
     'offline-freedom':        ['device-dependency', 'pwa-not-appstore', 'no-external-deps', '30seconds', 'storage-strategy'],
     'millennium-navigation':  ['storage-strategy', 'openness', 'recital-record', 'legacy', 'offline-freedom'],
     'restoration-architecture': ['backup-rule', 'self-print-economy', 'storage-strategy', 'millennium-navigation', 'offline-freedom'],
+    'monitor-program':        ['payment', 'storage-strategy', 'no-external-deps', 'cloudflare-gas', 'narrative-trust'],
     // ── メタ視点 ──
     'mission-statement':      ['narrative-trust', 'preserving-words', 'why-essays', 'corporate-site', 'integrity'],
     'preserving-words':       ['why-essays', 'akashic-record', 'what-to-leave', 'narrative-trust', 'openness'],
