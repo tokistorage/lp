@@ -460,6 +460,38 @@
             text-decoration: none;
         }
 
+        /* Partner type tabs */
+        .pp-tabs {
+            display: flex;
+            justify-content: center;
+            gap: 0;
+            max-width: 480px;
+            margin: -1rem auto 0;
+            position: relative;
+            z-index: 1;
+        }
+        .pp-tab {
+            flex: 1;
+            padding: 0.85rem 1.5rem;
+            font-family: var(--font-body);
+            font-size: 0.9rem;
+            font-weight: 500;
+            border: 1px solid var(--border);
+            background: var(--bg-section);
+            color: var(--text-secondary);
+            cursor: pointer;
+            transition: background 0.2s, color 0.2s, border-color 0.2s;
+        }
+        .pp-tab:first-child { border-radius: 8px 0 0 8px; }
+        .pp-tab:last-child { border-radius: 0 8px 8px 0; border-left: none; }
+        .pp-tab.active {
+            background: var(--toki-blue);
+            color: #fff;
+            border-color: var(--toki-blue);
+        }
+        .pp-tab-panel { display: none; }
+        .pp-tab-panel.active { display: block; }
+
         @media (max-width: 768px) {
             .pp-hero { padding: 6rem 1.2rem 3rem; }
             .pp-hero h1 { font-size: 1.5rem; }
@@ -581,7 +613,13 @@
     </p>
 </header>
 
+<div class="pp-tabs">
+    <button class="pp-tab active" data-tab="individual">個人パートナー</button>
+    <button class="pp-tab" data-tab="corporate">法人パートナーシップ</button>
+</div>
+
 <!-- Individual Partner -->
+<div id="tab-individual" class="pp-tab-panel active">
 <section class="pp-section">
     <h2 class="pp-section-title">個人パートナー</h2>
     <p class="pp-section-sub">体験したあなたが、いちばん近い存在です</p>
@@ -613,8 +651,10 @@
         <a href="https://tokistorage.github.io/qr/setup.html" style="display:inline-flex; align-items:center; gap:0.5rem; padding:0.85rem 2.5rem; background:var(--toki-blue); color:#fff; border-radius:0.4rem; font-size:1rem; font-weight:500; text-decoration:none;">セットアップを始める</a>
     </div>
 </section>
+</div><!-- /tab-individual -->
 
 <!-- Background (Corporate) -->
+<div id="tab-corporate" class="pp-tab-panel">
 <section class="pp-section pp-section-border">
     <h2 class="pp-section-title">法人パートナーシップ</h2>
     <p class="pp-section-sub">コンサルティングファーム・事業会社との提携モデル</p>
@@ -920,6 +960,7 @@
         </div>
     </div>
 </section>
+</div><!-- /tab-corporate -->
 
 <!-- Founder -->
 <section class="pp-section pp-section-border">
@@ -1013,6 +1054,20 @@
     <p>TokiStorage | <a href="partnership-en.html">English Version</a></p>
 </footer>
 
+<script>
+(function() {
+    var tabs = document.querySelectorAll('.pp-tab');
+    var panels = document.querySelectorAll('.pp-tab-panel');
+    tabs.forEach(function(tab) {
+        tab.addEventListener('click', function() {
+            tabs.forEach(function(t) { t.classList.remove('active'); });
+            panels.forEach(function(p) { p.classList.remove('active'); });
+            tab.classList.add('active');
+            document.getElementById('tab-' + tab.dataset.tab).classList.add('active');
+        });
+    });
+})();
+</script>
 <script src="contact-form.js" defer></script>
 <script src="tracker.js" defer></script>
 </body>
