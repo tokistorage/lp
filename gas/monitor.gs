@@ -25,17 +25,6 @@ function handleMonitorApply(ss, data) {
 // ── モニターフィードバック ──
 
 function handleMonitorFeedback(ss, data) {
-  var sheet = getOrCreateSheet(ss, 'モニターフィードバック', ['日時', 'Wisetag', 'コメント', 'デバイス', '言語', 'UA']);
-  sheet.insertRowAfter(1);
-  sheet.getRange(2, 1, 1, 6).setValues([[
-    new Date(),
-    data.wisetag || '',
-    data.comment || '',
-    data.device || '',
-    data.lang || '',
-    (data.ua || '').substring(0, 500)
-  ]]);
-
   sendEmail(NOTIFY_EMAIL,
     '【モニターフィードバック】' + (data.wisetag || ''),
     'Wisetag: ' + (data.wisetag || '') + '\n'
@@ -45,7 +34,9 @@ function handleMonitorFeedback(ss, data) {
     + '日時: ' + new Date().toLocaleString('ja-JP', { timeZone: 'Asia/Tokyo' })
   );
 
-  // voices.json に追記して qr リポジトリにコミット
+  // voices.json に追記して qr リポジトリの main に直接コミット（排他制御）
+  var lock = LockService.getScriptLock();
+  lock.waitLock(30000);
   try {
     var now = new Date();
     var dateStr = now.getFullYear() + '-'
@@ -64,15 +55,17 @@ function handleMonitorFeedback(ss, data) {
     }
     voices.unshift(newVoice);
 
-    pushFileToGitHub(
+    commitFileOnBranch(
       'monitor/voices.json',
       JSON.stringify(voices, null, 2) + '\n',
       'Add monitor voice: ' + (data.wisetag || ''),
+      'main',
       GITHUB_REPO_QR
     );
   } catch (ghErr) {
-    // GitHub commit failure should not block the response
     Logger.log('voices.json commit failed: ' + ghErr.toString());
+  } finally {
+    lock.releaseLock();
   }
 
   return jsonResponse({ success: true });
