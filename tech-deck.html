@@ -1114,7 +1114,97 @@
     </div>
 </section>
 
-<!-- ━━━ SLIDE 05: MIGRATION ROADMAP ━━━ -->
+<!-- ━━━ SLIDE 05: RESTORATION ARCHITECTURE ━━━ -->
+<section class="slide">
+    <div class="action-bar">
+        <h2>100枚のうち1枚が残れば全体を復元可能——五つの独立した復元経路</h2>
+    </div>
+    <div class="slide-body">
+        <div class="slide-content" style="display:flex;flex-direction:column;">
+            <p class="section-label">Multi-Layer Restoration Architecture</p>
+            <div style="display:grid;grid-template-columns:1fr 1fr;gap:0.5rem;flex:1;min-height:0;">
+                <!-- Left: A4 page diagram -->
+                <div style="display:flex;flex-direction:column;gap:0.35rem;">
+                    <div style="border:2px solid var(--border);border-radius:4px;padding:0.4rem 0.5rem;flex:1;display:flex;flex-direction:column;justify-content:space-between;background:var(--bg-alt);position:relative;">
+                        <div style="font-size:0.36rem;color:var(--text-light);text-align:center;letter-spacing:0.1em;">A4 ページ構造</div>
+                        <div style="text-align:center;flex:1;display:flex;align-items:center;justify-content:center;">
+                            <div style="border:2px solid var(--text);padding:0.5rem 1rem;font-size:0.48rem;font-weight:700;">&#x25A3; メインQR<br><span style="font-weight:400;font-size:0.38rem;">180mm角 &mdash; 音声/画像/テキスト</span></div>
+                        </div>
+                        <div style="display:flex;justify-content:space-between;align-items:flex-end;">
+                            <div style="border:2px solid var(--accent);border-radius:3px;padding:0.15rem 0.3rem;font-size:0.36rem;font-weight:600;color:var(--accent);background:#EFF6FF;">&#x25A3; 再生QR<br><span style="font-weight:400;font-size:0.32rem;">archive.html?pdf=...</span></div>
+                            <div style="border:2px solid var(--text-light);border-radius:3px;padding:0.15rem 0.3rem;font-size:0.36rem;font-weight:600;color:var(--text-mid);background:#F8FAFC;">&#x25A3; 復元QR<br><span style="font-weight:400;font-size:0.32rem;">PDF直リンク</span></div>
+                        </div>
+                    </div>
+                    <div class="callout" style="margin:0;padding:0.25rem 0.4rem;">
+                        <p style="font-size:0.38rem;">全経路が ISO / WHATWG 標準技術のみ——プロプライエタリ依存ゼロ。追加コード100行未満。</p>
+                    </div>
+                </div>
+                <!-- Right: 5 paths table -->
+                <div style="display:flex;flex-direction:column;">
+                    <table class="dk-table" style="font-size:0.42rem;margin:0;">
+                        <thead>
+                            <tr>
+                                <th style="width:22%;">経路</th>
+                                <th style="width:32%;">入口</th>
+                                <th>動作</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <th style="color:var(--accent);">A. 再生QR</th>
+                                <td>紙面・左下（青）</td>
+                                <td>スキャン &rarr; 自動デコード &rarr; 即再生</td>
+                            </tr>
+                            <tr>
+                                <th>B. 復元QR</th>
+                                <td>紙面・右下（グレー）</td>
+                                <td>スキャン &rarr; PDF取得 &rarr; 保存</td>
+                            </tr>
+                            <tr>
+                                <th>C. PDFリンク</th>
+                                <td>PDFビューアー内</td>
+                                <td>クリック &rarr; ブラウザ遷移</td>
+                            </tr>
+                            <tr>
+                                <th>D. 再生ボタン</th>
+                                <td>ニュースレター</td>
+                                <td>&#x25B6; &rarr; 自動デコード &rarr; 即再生</td>
+                            </tr>
+                            <tr>
+                                <th>E. 手動スキャン</th>
+                                <td>紙面・メインQR</td>
+                                <td>1枚ずつスキャン（オフライン可）</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <div style="margin-top:0.35rem;">
+                        <table class="redundancy-matrix" style="margin:0;">
+                            <thead>
+                                <tr>
+                                    <th style="width:30%;">保管層</th>
+                                    <th>媒体</th>
+                                    <th style="width:18%;">耐久性</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr><th style="color:var(--layer-physical);">物理層</th><td>石英ガラス / UVラミネート</td><td class="ok">1,000年+</td></tr>
+                                <tr><th style="color:var(--layer-national);">公共層</th><td>NDL納本（ニュースレターPDF）</td><td class="ok">法定永久</td></tr>
+                                <tr><th style="color:var(--layer-private);">私的層</th><td>GitHub + PWAオフライン</td><td class="ok">即時可用</td></tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="slide-footer">
+        <span>TokiStorage &mdash; 技術アーキテクチャ</span>
+        <span>Confidential</span>
+        <span class="pg">5</span>
+    </div>
+</section>
+
+<!-- ━━━ SLIDE 06: MIGRATION ROADMAP ━━━ -->
 <section class="slide">
     <div class="action-bar">
         <h2>すべてのコンポーネントにトリガーと移行先を事前設計——危機が来る前に動く</h2>
@@ -1185,7 +1275,7 @@
     <div class="slide-footer">
         <span>TokiStorage &mdash; 技術アーキテクチャ</span>
         <span>Confidential</span>
-        <span class="pg">5</span>
+        <span class="pg">6</span>
     </div>
 </section>
 
