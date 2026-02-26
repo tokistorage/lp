@@ -45,33 +45,35 @@ function handleMonitorFeedback(ss, data) {
     + '日時: ' + new Date().toLocaleString('ja-JP', { timeZone: 'Asia/Tokyo' })
   );
 
-  return jsonResponse({ success: true });
-}
-
-// ── モニターの声（公開一覧）──
-
-function handleMonitorVoices(ss) {
-  var sheet = ss.getSheetByName('モニターフィードバック');
-  if (!sheet || sheet.getLastRow() < 2) {
-    return jsonResponse({ success: true, voices: [] });
-  }
-
-  var data = sheet.getRange(2, 1, sheet.getLastRow() - 1, 3).getValues(); // 日時, Wisetag, コメント
-  var voices = [];
-  for (var i = 0; i < data.length; i++) {
-    var comment = (data[i][2] || '').toString().trim();
-    if (!comment) continue;
-    var d = data[i][0];
-    var dateStr = d instanceof Date
-      ? d.getFullYear() + '-' + ('0' + (d.getMonth() + 1)).slice(-2) + '-' + ('0' + d.getDate()).slice(-2)
-      : '';
-    voices.push({
-      wisetag: (data[i][1] || '').toString(),
+  // voices.json に追記して qr リポジトリにコミット
+  try {
+    var now = new Date();
+    var dateStr = now.getFullYear() + '-'
+      + ('0' + (now.getMonth() + 1)).slice(-2) + '-'
+      + ('0' + now.getDate()).slice(-2);
+    var newVoice = {
+      wisetag: (data.wisetag || '').toString(),
       date: dateStr,
-      comment: comment
-    });
+      comment: (data.comment || '').toString().trim()
+    };
+
+    var existing = readFileFromGitHub('monitor/voices.json', GITHUB_REPO_QR);
+    var voices = [];
+    if (existing) {
+      try { voices = JSON.parse(existing); } catch (e) { voices = []; }
+    }
+    voices.unshift(newVoice);
+
+    pushFileToGitHub(
+      'monitor/voices.json',
+      JSON.stringify(voices, null, 2) + '\n',
+      'Add monitor voice: ' + (data.wisetag || ''),
+      GITHUB_REPO_QR
+    );
+  } catch (ghErr) {
+    // GitHub commit failure should not block the response
+    Logger.log('voices.json commit failed: ' + ghErr.toString());
   }
 
-  // 新しい順（シートがinsertRowAfterで上に追加されるのでそのまま）
-  return jsonResponse({ success: true, voices: voices });
+  return jsonResponse({ success: true });
 }

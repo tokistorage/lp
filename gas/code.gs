@@ -31,6 +31,7 @@ var DEV_VIDS = ['40a15079-bc04-4d56-8b39-1fca77e0a100'];
 
 var GITHUB_TOKEN = 'REPLACE_WITH_GITHUB_PAT';
 var GITHUB_REPO = 'tokistorage/lp';
+var GITHUB_REPO_QR = 'tokistorage/qr';
 var GITHUB_API = 'https://api.github.com';
 var CURRENT_NEWSLETTER_ISSUE = '2026-04';
 
@@ -90,7 +91,6 @@ function doPost(e) {
     if (data.type === 'ndl_submit') return handleNdlSubmit(ss, data);
     if (data.type === 'monitor_apply') return handleMonitorApply(ss, data);
     if (data.type === 'monitor_feedback') return handleMonitorFeedback(ss, data);
-    if (data.type === 'monitor_voices') return handleMonitorVoices(ss);
     if (data.type === 'order') return handleOrder(ss, data);
     return handleContact(ss, data);
 
