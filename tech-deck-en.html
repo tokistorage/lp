@@ -1114,7 +1114,97 @@
     </div>
 </section>
 
-<!-- ━━━ SLIDE 05: MIGRATION ROADMAP ━━━ -->
+<!-- ━━━ SLIDE 05: RESTORATION ARCHITECTURE ━━━ -->
+<section class="slide">
+    <div class="action-bar">
+        <h2>If 1 page out of 100 survives, the entire dataset is recoverable &mdash; five independent restoration paths</h2>
+    </div>
+    <div class="slide-body">
+        <div class="slide-content" style="display:flex;flex-direction:column;">
+            <p class="section-label">Multi-Layer Restoration Architecture</p>
+            <div style="display:grid;grid-template-columns:1fr 1fr;gap:0.5rem;flex:1;min-height:0;">
+                <!-- Left: A4 page diagram -->
+                <div style="display:flex;flex-direction:column;gap:0.35rem;">
+                    <div style="border:2px solid var(--border);border-radius:4px;padding:0.4rem 0.5rem;flex:1;display:flex;flex-direction:column;justify-content:space-between;background:var(--bg-alt);position:relative;">
+                        <div style="font-size:0.36rem;color:var(--text-light);text-align:center;letter-spacing:0.1em;">A4 Page Structure</div>
+                        <div style="text-align:center;flex:1;display:flex;align-items:center;justify-content:center;">
+                            <div style="border:2px solid var(--text);padding:0.5rem 1rem;font-size:0.48rem;font-weight:700;">&#x25A3; Main QR<br><span style="font-weight:400;font-size:0.38rem;">180mm &mdash; voice / image / text</span></div>
+                        </div>
+                        <div style="display:flex;justify-content:space-between;align-items:flex-end;">
+                            <div style="border:2px solid var(--accent);border-radius:3px;padding:0.15rem 0.3rem;font-size:0.36rem;font-weight:600;color:var(--accent);background:#EFF6FF;">&#x25A3; Play QR<br><span style="font-weight:400;font-size:0.32rem;">archive.html?pdf=...</span></div>
+                            <div style="border:2px solid var(--text-light);border-radius:3px;padding:0.15rem 0.3rem;font-size:0.36rem;font-weight:600;color:var(--text-mid);background:#F8FAFC;">&#x25A3; Restore QR<br><span style="font-weight:400;font-size:0.32rem;">Direct PDF link</span></div>
+                        </div>
+                    </div>
+                    <div class="callout" style="margin:0;padding:0.25rem 0.4rem;">
+                        <p style="font-size:0.38rem;">All paths use ISO / WHATWG standards only &mdash; zero proprietary dependencies. Under 100 lines of added code.</p>
+                    </div>
+                </div>
+                <!-- Right: 5 paths table -->
+                <div style="display:flex;flex-direction:column;">
+                    <table class="dk-table" style="font-size:0.42rem;margin:0;">
+                        <thead>
+                            <tr>
+                                <th style="width:22%;">Path</th>
+                                <th style="width:32%;">Entry Point</th>
+                                <th>Action</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <th style="color:var(--accent);">A. Play QR</th>
+                                <td>Page bottom-left (blue)</td>
+                                <td>Scan &rarr; auto-decode &rarr; instant play</td>
+                            </tr>
+                            <tr>
+                                <th>B. Restore QR</th>
+                                <td>Page bottom-right (grey)</td>
+                                <td>Scan &rarr; fetch PDF &rarr; save</td>
+                            </tr>
+                            <tr>
+                                <th>C. PDF Link</th>
+                                <td>Inside PDF viewer</td>
+                                <td>Click &rarr; browser navigation</td>
+                            </tr>
+                            <tr>
+                                <th>D. Play Button</th>
+                                <td>Newsletter</td>
+                                <td>&#x25B6; &rarr; auto-decode &rarr; instant play</td>
+                            </tr>
+                            <tr>
+                                <th>E. Manual Scan</th>
+                                <td>Page main QR</td>
+                                <td>Scan one by one (works offline)</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <div style="margin-top:0.35rem;">
+                        <table class="redundancy-matrix" style="margin:0;">
+                            <thead>
+                                <tr>
+                                    <th style="width:30%;">Storage Layer</th>
+                                    <th>Medium</th>
+                                    <th style="width:18%;">Durability</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr><th style="color:var(--layer-physical);">Physical</th><td>Quartz glass / UV laminate</td><td class="ok">1,000 yr+</td></tr>
+                                <tr><th style="color:var(--layer-national);">Public</th><td>NDL deposit (newsletter PDF)</td><td class="ok">Permanent</td></tr>
+                                <tr><th style="color:var(--layer-private);">Private</th><td>GitHub + PWA offline</td><td class="ok">Immediate</td></tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="slide-footer">
+        <span>TokiStorage &mdash; Technical Architecture</span>
+        <span>Confidential</span>
+        <span class="pg">5</span>
+    </div>
+</section>
+
+<!-- ━━━ SLIDE 06: MIGRATION ROADMAP ━━━ -->
 <section class="slide">
     <div class="action-bar">
         <h2>Every component has a pre-designed trigger and migration target &mdash; act before crisis arrives</h2>
@@ -1185,7 +1275,7 @@
     <div class="slide-footer">
         <span>TokiStorage &mdash; Technical Architecture</span>
         <span>Confidential</span>
-        <span class="pg">5</span>
+        <span class="pg">6</span>
     </div>
 </section>
 
