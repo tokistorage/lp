@@ -477,9 +477,37 @@
             .diff-table th, .diff-table td { padding: 0.5rem; }
         }
 
+        @page { size: A4; margin: 15mm 18mm; }
         @media print {
-            .pp-nav { display: none; }
-            .pp-hero { padding-top: 2rem; }
+            body { -webkit-print-color-adjust: exact; print-color-adjust: exact; font-size: 12px; line-height: 1.7; }
+            .pp-nav { display: none !important; }
+            .pp-footer { display: none !important; }
+            .pp-hero {
+                background: #fff !important;
+                color: var(--text-primary) !important;
+                padding: 1.5rem 2rem 1rem !important;
+            }
+            .pp-hero h1 { color: var(--text-primary) !important; font-size: 1.6rem; }
+            .pp-hero-sub { color: var(--text-secondary) !important; }
+            .pp-hero-sub strong { color: var(--toki-blue) !important; }
+            .pp-hero-label { color: var(--toki-blue) !important; }
+            .pp-cta {
+                background: #fff !important;
+                color: var(--text-primary) !important;
+                padding: 2rem !important;
+                border-top: 2px solid var(--toki-blue);
+            }
+            .pp-cta h2 { color: var(--text-primary) !important; }
+            .pp-cta p { color: var(--text-secondary) !important; }
+            .pp-cta strong { color: var(--text-primary) !important; }
+            .pp-cta span[style*="background:var(--toki-blue)"] { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+            .pp-cta-links a { color: var(--toki-blue) !important; border-color: var(--toki-blue) !important; }
+            .pp-section { padding: 1.5rem 0 !important; max-width: 100% !important; }
+            .problem-card, .bring-card, .model-card, .founder-section, .revenue-flow { page-break-inside: avoid; }
+            .diff-table { page-break-inside: avoid; }
+            .diff-table-wrap { overflow: visible !important; }
+            .bring-grid, .client-grid { gap: 0.8rem; }
+            a { text-decoration: none; }
         }
         .nav-brand::before {
             content: '';

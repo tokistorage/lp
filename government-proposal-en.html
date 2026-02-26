@@ -79,6 +79,35 @@
         .pp-footer { text-align: center; padding: 2rem; font-size: 0.75rem; color: var(--text-muted); border-top: 1px solid var(--border); }
         .pp-footer a { color: var(--text-muted); text-decoration: none; margin: 0 0.3rem; }
         .pp-footer a:hover { color: var(--toki-blue); }
+        @page { size: A4; margin: 15mm 18mm; }
+        @media print {
+            body { -webkit-print-color-adjust: exact; print-color-adjust: exact; font-size: 12px; line-height: 1.7; }
+            .pp-nav { display: none !important; }
+            .pp-footer { display: none !important; }
+            .gv-hero {
+                background: #fff !important;
+                color: var(--text-primary) !important;
+                padding: 1.5rem 2rem 1rem !important;
+            }
+            .gv-hero h1 { color: var(--text-primary) !important; font-size: 1.6rem; }
+            .gv-hero-sub { color: var(--text-secondary) !important; }
+            .gv-hero-sub strong { color: var(--toki-blue) !important; }
+            .gv-hero-label { color: var(--toki-blue) !important; }
+            .gv-cta {
+                background: #fff !important;
+                color: var(--text-primary) !important;
+                padding: 2rem !important;
+                border-top: 2px solid var(--toki-blue);
+            }
+            .gv-cta h2 { color: var(--text-primary) !important; }
+            .gv-cta p { color: var(--text-secondary) !important; }
+            .gv-cta strong { color: var(--text-primary) !important; }
+            .pp-cta-links a { color: var(--toki-blue) !important; border-color: transparent !important; border-bottom: 1px solid var(--toki-blue) !important; }
+            .pp-section { padding: 1.5rem 0 !important; max-width: 100% !important; }
+            .insight-card, .usecase-card, .common-doc-item, .note-box, .founder-section { page-break-inside: avoid; }
+            .common-docs-grid { gap: 0.8rem; }
+            a { text-decoration: none; }
+        }
         .nav-brand::before {
             content: '';
             display: inline-block;

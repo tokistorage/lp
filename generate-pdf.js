@@ -87,6 +87,18 @@ async function generatePDF(page, url, outDir, filename, opts) {
         marginTop: 0, marginBottom: 0, marginLeft: 0, marginRight: 0,
     });
 
+    // Client proposal — JA
+    await generatePDF(page, BASE + '/client-proposal.html', '.', 'tokistorage-client-deck.pdf', {
+        paperWidth: 8.27, paperHeight: 11.69,
+        marginTop: 0, marginBottom: 0, marginLeft: 0, marginRight: 0,
+    });
+
+    // Client proposal — EN
+    await generatePDF(page, BASE + '/client-proposal-en.html', '.', 'tokistorage-client-deck-en.pdf', {
+        paperWidth: 8.27, paperHeight: 11.69,
+        marginTop: 0, marginBottom: 0, marginLeft: 0, marginRight: 0,
+    });
+
     // Government proposal — JA
     await generatePDF(page, BASE + '/government-proposal.html', '.', 'government-proposal.pdf', {
         paperWidth: 8.27, paperHeight: 11.69,
@@ -132,5 +144,5 @@ async function generatePDF(page, url, outDir, filename, opts) {
     });
 
     await browser.close();
-    console.log('Done — 18 PDFs generated');
+    console.log('Done — 20 PDFs generated');
 })();
