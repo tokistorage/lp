@@ -178,7 +178,133 @@
 
         <p style="text-align: center; margin: 2rem 0;"><a href="newsletters.html" style="display: inline-block; color: var(--toki-gold-dark); border: 1.5px solid var(--toki-gold); border-radius: 6px; padding: 0.6rem 1.8rem; font-size: 0.9rem; text-decoration: none; transition: background 0.2s, color 0.2s;">See the navigation in action &rarr;</a></p>
 
-        <h2>5. Why this is not over-engineering</h2>
+        <h2>5. Quantitative scalability analysis</h2>
+
+        <p>Let us verify the effectiveness of the three-tier accordion quantitatively. The comparison targets are a flat list, pagination (20 items per page), and a search box.</p>
+
+        <h3>Reach cost comparison</h3>
+
+        <p>We define "reach cost" as the number of interactions required for a user to arrive at any given item, measured in clicks and scroll distance.</p>
+
+        <div style="overflow-x: auto; margin: 2rem 0;">
+        <table style="width: 100%; border-collapse: collapse; font-size: 0.85rem; line-height: 1.6;">
+            <thead>
+                <tr style="border-bottom: 2px solid var(--toki-gold); text-align: left;">
+                    <th style="padding: 0.5rem;">Pattern</th>
+                    <th style="padding: 0.5rem;">100 years<br>(200 issues)</th>
+                    <th style="padding: 0.5rem;">500 years<br>(1,000 issues)</th>
+                    <th style="padding: 0.5rem;">1,000 years<br>(2,000 issues)</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr style="border-bottom: 1px solid var(--border);">
+                    <td style="padding: 0.5rem;"><strong>Flat list</strong></td>
+                    <td style="padding: 0.5rem;">Up to 200 rows of scrolling</td>
+                    <td style="padding: 0.5rem;">Up to 1,000 rows</td>
+                    <td style="padding: 0.5rem;">Up to 2,000 rows</td>
+                </tr>
+                <tr style="border-bottom: 1px solid var(--border); background: var(--toki-gold-pale);">
+                    <td style="padding: 0.5rem;"><strong>Pagination</strong><br>(20/page)</td>
+                    <td style="padding: 0.5rem;">Up to 10 clicks<br>+ scrolling</td>
+                    <td style="padding: 0.5rem;">Up to 50 clicks<br>+ scrolling</td>
+                    <td style="padding: 0.5rem;">Up to 100 clicks<br>+ scrolling</td>
+                </tr>
+                <tr style="border-bottom: 1px solid var(--border);">
+                    <td style="padding: 0.5rem;"><strong>Search box</strong></td>
+                    <td style="padding: 0.5rem;">1 action (if known)<br>&infin; (if unknown)</td>
+                    <td style="padding: 0.5rem;">Same</td>
+                    <td style="padding: 0.5rem;">Same</td>
+                </tr>
+                <tr style="background: var(--toki-gold-pale);">
+                    <td style="padding: 0.5rem;"><strong>Three-tier accordion</strong></td>
+                    <td style="padding: 0.5rem;">Max 3 clicks<br>(century &rarr; vol &rarr; year)</td>
+                    <td style="padding: 0.5rem;">Max 3 clicks<br>(century &rarr; vol &rarr; year)</td>
+                    <td style="padding: 0.5rem;">Max 3 clicks<br>(century &rarr; vol &rarr; year)</td>
+                </tr>
+            </tbody>
+        </table>
+        </div>
+
+        <p>The reach cost of the three-tier accordion is <strong>O(1)</strong>. Whether there are 200 items or 2,000 or 20,000, the maximum number of clicks to reach any issue is three: open the century, open the volume, select the year. Compared to a flat list's O(n) or pagination's O(n/k), the accordion reaches any target in constant time regardless of scale.</p>
+
+        <h3>Visible line count in collapsed state</h3>
+
+        <p>The number of lines visible to the user when the navigation is collapsed:</p>
+
+        <ul>
+            <li><strong>100 years</strong> (1 century, 5 volumes): 1 century heading. Open the latest volume: +5 lines. Total: <strong>6 lines</strong></li>
+            <li><strong>500 years</strong> (5 centuries, 25 volumes): 5 century headings. Open the latest: +5 lines. Total: <strong>10 lines</strong></li>
+            <li><strong>1,000 years</strong> (10 centuries, 50 volumes): 10 century headings. Open the latest: +5 lines. Total: <strong>15 lines</strong></li>
+        </ul>
+
+        <p>Even after a millennium, the initial view is just 15 lines. Yet the DOM contains every link (2,000+), and crawlers can index them all. <strong>Visual conciseness and DOM completeness coexist</strong> &mdash; this is the essential strength of <code>&lt;details&gt;</code>.</p>
+
+        <h2>6. Degradation resistance and technology lifespan</h2>
+
+        <p>In a thousand-year design, the greatest risk is technological obsolescence. We must estimate how long today's technology choices will last.</p>
+
+        <h3>Average lifespan of web technologies</h3>
+
+        <div style="overflow-x: auto; margin: 2rem 0;">
+        <table style="width: 100%; border-collapse: collapse; font-size: 0.85rem; line-height: 1.6;">
+            <thead>
+                <tr style="border-bottom: 2px solid var(--toki-gold); text-align: left;">
+                    <th style="padding: 0.5rem;">Technology layer</th>
+                    <th style="padding: 0.5rem;">Examples</th>
+                    <th style="padding: 0.5rem;">Proven lifespan</th>
+                    <th style="padding: 0.5rem;">Estimated remaining</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr style="border-bottom: 1px solid var(--border);">
+                    <td style="padding: 0.5rem;">JS frameworks</td>
+                    <td style="padding: 0.5rem;">AngularJS &rarr; Angular, Backbone &rarr; gone</td>
+                    <td style="padding: 0.5rem;">3&ndash;7 years</td>
+                    <td style="padding: 0.5rem;">Until the next framework</td>
+                </tr>
+                <tr style="border-bottom: 1px solid var(--border); background: var(--toki-gold-pale);">
+                    <td style="padding: 0.5rem;">JS libraries</td>
+                    <td style="padding: 0.5rem;">jQuery (2006&ndash;present)</td>
+                    <td style="padding: 0.5rem;">20 years</td>
+                    <td style="padding: 0.5rem;">In decline</td>
+                </tr>
+                <tr style="border-bottom: 1px solid var(--border);">
+                    <td style="padding: 0.5rem;">Web standards (CSS)</td>
+                    <td style="padding: 0.5rem;">CSS2 (1998&ndash;present)</td>
+                    <td style="padding: 0.5rem;">28+ years</td>
+                    <td style="padding: 0.5rem;">Survives via backward compat</td>
+                </tr>
+                <tr style="background: var(--toki-gold-pale);">
+                    <td style="padding: 0.5rem;">Web standards (HTML)</td>
+                    <td style="padding: 0.5rem;"><code>&lt;table&gt;</code> (1995&ndash;), <code>&lt;details&gt;</code> (2011&ndash;)</td>
+                    <td style="padding: 0.5rem;">15&ndash;31+ years</td>
+                    <td style="padding: 0.5rem;">As long as browsers exist</td>
+                </tr>
+            </tbody>
+        </table>
+        </div>
+
+        <p>HTML elements are protected by browser backward compatibility. The <code>&lt;table&gt;</code> element defined in 1995 works in every browser in 2026. Meanwhile, AngularJS, dominant in the 2010s, reached end of support in 2021. <strong>Elements written into the standard specification last ten times longer than frameworks</strong>.</p>
+
+        <h3>Degradation scenario analysis</h3>
+
+        <p>How the three-tier accordion withstands each failure scenario:</p>
+
+        <ul>
+            <li><strong>JavaScript disabled</strong>: <code>&lt;details&gt;</code> is a native HTML element that functions fully without JS. Open/close is browser-native. Zero impact</li>
+            <li><strong>CSS disabled</strong>: Styling disappears, but <code>&lt;details&gt;</code> toggling is preserved. <code>&lt;summary&gt;</code> text serves as headings. Structure remains readable</li>
+            <li><strong>Text-only browser</strong> (Lynx, etc.): Browsers that don't support <code>&lt;details&gt;</code> display all content in expanded state. It falls back to a flat list. No information is lost</li>
+            <li><strong>Screen reader</strong>: <code>&lt;details&gt;</code> carries an implicit <code>role="group"</code>, and <code>&lt;summary&gt;</code> acts as <code>role="button"</code>. Expansion state is announced via <code>aria-expanded</code> automatically. Keyboard operable (Enter/Space). WCAG 2.1 AA compliant</li>
+            <li><strong>Search engine crawler</strong>: All links exist in the DOM regardless of <code>&lt;details&gt;</code> state. Google indexes content within standard HTML elements</li>
+        </ul>
+
+        <p>In every scenario, information loss is zero. The worst case (complete CSS/JS failure, non-supporting browser) simply displays all links in expanded state. This is decisively different from other patterns &mdash; SPAs show blank pages without JS, infinite scroll shows only page one.</p>
+
+        <blockquote>
+            <p>When the worst-case fallback is a flat list, the worst case still means "every piece of information remains accessible."</p>
+        </blockquote>
+
+        <h2>7. The cost of implementation: minimality of added code</h2>
 
         <p>The code added consists of a single function, <code>buildCenturyNav()</code>, and a few dozen lines of CSS. No external libraries are involved. <code>&lt;details&gt;</code> is defined in the HTML Living Standard and is supported by every modern browser as of 2026.</p>
 
@@ -192,7 +318,7 @@
 
         <p>If this isn't done now, someone a century from now will ask, "Why was this built with a flat list?" Retrofitting structure at that point is far harder than doing it today, because a hundred years of content already exists and a hundred years of URLs are already linked from the outside world.</p>
 
-        <h2>6. How the world's enduring institutions design their navigation</h2>
+        <h2>8. How the world's enduring institutions design their navigation</h2>
 
         <p>With this design philosophy in hand, examining the web navigation of organizations that should care most about longevity &mdash; national libraries, museums, religious sites, government archives &mdash; reveals a striking reality.</p>
 
@@ -222,6 +348,82 @@
 
         <p>The Internet Archive's Wayback Machine uses a year-to-month-to-day-to-capture drill-down, the most elegant temporal navigation pattern in existence. No matter how many years accumulate, the timeline bar simply extends. However, it is built on Web Components (Lit Element), and without JavaScript, nothing renders.</p>
 
+        <h3>Navigation pattern evaluation matrix</h3>
+
+        <div style="overflow-x: auto; margin: 2rem 0;">
+        <table style="width: 100%; border-collapse: collapse; font-size: 0.8rem; line-height: 1.5;">
+            <thead>
+                <tr style="border-bottom: 2px solid var(--toki-gold); text-align: center;">
+                    <th style="padding: 0.4rem; text-align: left;">Institution</th>
+                    <th style="padding: 0.4rem;">Pattern</th>
+                    <th style="padding: 0.4rem;">JS dep.</th>
+                    <th style="padding: 0.4rem;">Surveyability</th>
+                    <th style="padding: 0.4rem;">Reach cost</th>
+                    <th style="padding: 0.4rem;">Crawler</th>
+                    <th style="padding: 0.4rem;">1,000 yr</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr style="border-bottom: 1px solid var(--border);">
+                    <td style="padding: 0.4rem;">Library of Congress</td>
+                    <td style="padding: 0.4rem; text-align: center;">Search + facets</td>
+                    <td style="padding: 0.4rem; text-align: center;">Low</td>
+                    <td style="padding: 0.4rem; text-align: center;">&times;</td>
+                    <td style="padding: 0.4rem; text-align: center;">O(1)*</td>
+                    <td style="padding: 0.4rem; text-align: center;">○</td>
+                    <td style="padding: 0.4rem; text-align: center;">○</td>
+                </tr>
+                <tr style="border-bottom: 1px solid var(--border); background: var(--toki-gold-pale);">
+                    <td style="padding: 0.4rem;">NDL</td>
+                    <td style="padding: 0.4rem; text-align: center;">SPA search</td>
+                    <td style="padding: 0.4rem; text-align: center;">Full</td>
+                    <td style="padding: 0.4rem; text-align: center;">&times;</td>
+                    <td style="padding: 0.4rem; text-align: center;">O(1)*</td>
+                    <td style="padding: 0.4rem; text-align: center;">&times;</td>
+                    <td style="padding: 0.4rem; text-align: center;">&times;</td>
+                </tr>
+                <tr style="border-bottom: 1px solid var(--border);">
+                    <td style="padding: 0.4rem;">Vatican</td>
+                    <td style="padding: 0.4rem; text-align: center;">Flat table</td>
+                    <td style="padding: 0.4rem; text-align: center;">None</td>
+                    <td style="padding: 0.4rem; text-align: center;">○</td>
+                    <td style="padding: 0.4rem; text-align: center;">O(n)</td>
+                    <td style="padding: 0.4rem; text-align: center;">○</td>
+                    <td style="padding: 0.4rem; text-align: center;">△</td>
+                </tr>
+                <tr style="border-bottom: 1px solid var(--border); background: var(--toki-gold-pale);">
+                    <td style="padding: 0.4rem;">Ise Grand Shrine</td>
+                    <td style="padding: 0.4rem; text-align: center;">Narrative</td>
+                    <td style="padding: 0.4rem; text-align: center;">None</td>
+                    <td style="padding: 0.4rem; text-align: center;">&mdash;</td>
+                    <td style="padding: 0.4rem; text-align: center;">&mdash;</td>
+                    <td style="padding: 0.4rem; text-align: center;">○</td>
+                    <td style="padding: 0.4rem; text-align: center;">○</td>
+                </tr>
+                <tr style="border-bottom: 1px solid var(--border);">
+                    <td style="padding: 0.4rem;">Wayback Machine</td>
+                    <td style="padding: 0.4rem; text-align: center;">Temporal drill-down</td>
+                    <td style="padding: 0.4rem; text-align: center;">Full</td>
+                    <td style="padding: 0.4rem; text-align: center;">△</td>
+                    <td style="padding: 0.4rem; text-align: center;">O(1)</td>
+                    <td style="padding: 0.4rem; text-align: center;">&times;</td>
+                    <td style="padding: 0.4rem; text-align: center;">△</td>
+                </tr>
+                <tr style="background: var(--toki-gold-pale);">
+                    <td style="padding: 0.4rem;"><strong>TokiStorage</strong></td>
+                    <td style="padding: 0.4rem; text-align: center;"><strong>Three-tier accordion</strong></td>
+                    <td style="padding: 0.4rem; text-align: center;"><strong>None</strong></td>
+                    <td style="padding: 0.4rem; text-align: center;"><strong>○</strong></td>
+                    <td style="padding: 0.4rem; text-align: center;"><strong>O(1)</strong></td>
+                    <td style="padding: 0.4rem; text-align: center;"><strong>○</strong></td>
+                    <td style="padding: 0.4rem; text-align: center;"><strong>○</strong></td>
+                </tr>
+            </tbody>
+        </table>
+        </div>
+
+        <p style="font-size: 0.8rem; color: var(--text-muted);">* Search achieves O(1) only when the target is already known. It cannot support open-ended exploration. Surveyability: ○ = full structural overview at a glance. △ = partial. &times; = impossible. &mdash; = not applicable.</p>
+
         <h3>Two poles, and a third option</h3>
 
         <p>What emerges is a landscape defined by two poles. On one side, the <strong>search box</strong> &mdash; a tool for those who already know what they seek. On the other, <strong>narrative</strong> &mdash; a method that treats time not as data to navigate but as story to tell.</p>
@@ -248,7 +450,7 @@
 
         <p>Any one of these might exist elsewhere. But integrating all of them into a "navigation for a millennium" that is actually in production &mdash; that, as far as we know, exists nowhere else.</p>
 
-        <h2>7. The value of being able to survey</h2>
+        <h2>9. The value of being able to survey</h2>
 
         <p>The Ise Grand Shrine's Shikinen Sengu rebuilds the sanctuary every 20 years. But this is not destruction. It is succession. A ritual for passing technique and memory to the next generation.</p>
 
@@ -264,9 +466,13 @@
             <h2>References</h2>
             <ul>
                 <li>HTML Living Standard — <a href="https://html.spec.whatwg.org/multipage/interactive-elements.html#the-details-element" style="color: var(--toki-gold);">The details element</a></li>
+                <li>W3C WAI-ARIA Authoring Practices — <a href="https://www.w3.org/WAI/ARIA/apg/patterns/disclosure/" style="color: var(--toki-gold);">Disclosure (Show/Hide) Pattern</a></li>
                 <li>Rosenfeld, L., Morville, P., Arango, J. (2015). <em>Information Architecture: For the Web and Beyond</em>. O'Reilly Media.</li>
+                <li>Nielsen, J. (2000). <em>Designing Web Usability</em>. New Riders. — Theory of "information scent" and reach cost</li>
+                <li>Hearst, M. (2009). <em>Search User Interfaces</em>. Cambridge University Press. — Comparative analysis of faceted search and browsing</li>
                 <li>Jingu Shicho — <a href="https://www.isejingu.or.jp/about/sengu/" style="color: var(--toki-gold);">Shikinen Sengu (Ceremonial Renewal)</a></li>
                 <li>The Long Now Foundation — <a href="https://longnow.org/" style="color: var(--toki-gold);">longnow.org</a></li>
+                <li>Cerf, V. (2011). "Avoiding a Digital Dark Age." <em>American Scientist</em>, 99(2). — On the challenge of long-term digital preservation</li>
             </ul>
         </section>
 
