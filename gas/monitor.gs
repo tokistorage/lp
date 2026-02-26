@@ -47,3 +47,31 @@ function handleMonitorFeedback(ss, data) {
 
   return jsonResponse({ success: true });
 }
+
+// ── モニターの声（公開一覧）──
+
+function handleMonitorVoices(ss) {
+  var sheet = ss.getSheetByName('モニターフィードバック');
+  if (!sheet || sheet.getLastRow() < 2) {
+    return jsonResponse({ success: true, voices: [] });
+  }
+
+  var data = sheet.getRange(2, 1, sheet.getLastRow() - 1, 3).getValues(); // 日時, Wisetag, コメント
+  var voices = [];
+  for (var i = 0; i < data.length; i++) {
+    var comment = (data[i][2] || '').toString().trim();
+    if (!comment) continue;
+    var d = data[i][0];
+    var dateStr = d instanceof Date
+      ? d.getFullYear() + '-' + ('0' + (d.getMonth() + 1)).slice(-2) + '-' + ('0' + d.getDate()).slice(-2)
+      : '';
+    voices.push({
+      wisetag: (data[i][1] || '').toString(),
+      date: dateStr,
+      comment: comment
+    });
+  }
+
+  // 新しい順（シートがinsertRowAfterで上に追加されるのでそのまま）
+  return jsonResponse({ success: true, voices: voices });
+}
