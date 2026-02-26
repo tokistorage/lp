@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" type="image/png" sizes="32x32" href="asset/favicon-32.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="asset/apple-touch-icon.png">
+    <title>紹介リンクの開示 | トキストレージ</title>
+    <meta name="robots" content="index, follow">
+    <meta name="description" content="TokiStorageはAmazonアソシエイトとWise紹介プログラムを利用している。隠す理由がないから開示する——アフィリエイトリンクの意図と透明性について。">    <style>
+        :root {
+            --toki-blue: #2563EB;
+            --toki-blue-dark: #1E40AF;
+            --toki-blue-pale: #EFF6FF;
+            --accent-blue: #60A5FA;
+            --bg-white: #FFFFFF;
+            --text-primary: #1E293B;
+            --text-secondary: #475569;
+            --text-muted: #94A3B8;
+            --border: #E2E8F0;
+            --font-display: 'Hiragino Mincho ProN', 'Yu Mincho', serif;
+            --font-body: 'Hiragino Kaku Gothic ProN', 'Yu Gothic', 'Meiryo', sans-serif;
+        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        html { scroll-behavior: smooth; }
+        body { font-family: var(--font-body); font-weight: 400; background: var(--bg-white); color: var(--text-primary); line-height: 2; font-size: 16px; }
+
+        .article-nav { position: fixed; top: 0; left: 0; right: 0; z-index: 1000; background: rgba(255,255,255,0.95); backdrop-filter: blur(12px); border-bottom: 1px solid var(--border); padding: 0.6rem 1.2rem; display: flex; align-items: center; justify-content: space-between; gap: 1rem; }
+        .article-nav .nav-brand { font-family: var(--font-display); font-size: 0.9rem; font-weight: 600; color: var(--toki-blue); text-decoration: none; white-space: nowrap; }
+        .article-nav .nav-brand::before { content: ''; display: inline-block; width: 20px; height: 20px; background: url('asset/tokistorage-icon-512.png') no-repeat center / contain; vertical-align: -3px; margin-right: 5px; }
+        .article-nav .nav-right { display: flex; align-items: center; gap: 1rem; }
+        .article-nav .nav-label { font-size: 0.6rem; color: var(--text-muted); letter-spacing: 0.08em; }
+        .article-nav .lang-switch { font-size: 0.75rem; color: var(--toki-blue); text-decoration: none; padding: 0.3rem 0.6rem; border: 1px solid var(--toki-blue); border-radius: 4px; }
+        .article-nav .lang-switch:hover { background: var(--toki-blue); color: #fff; }
+
+        .article-container { max-width: 680px; margin: 0 auto; padding: 7rem 2rem 4rem; }
+        .article-header { margin-bottom: 3rem; padding-bottom: 2rem; border-bottom: 1px solid var(--border); }
+        .article-category { font-size: 0.7rem; color: var(--toki-blue); letter-spacing: 0.15em; margin-bottom: 1rem; }
+        .article-header h1 { font-family: var(--font-display); font-size: 1.8rem; font-weight: 700; line-height: 1.5; margin-bottom: 1.5rem; }
+        .article-subtitle { font-size: 0.95rem; color: var(--text-secondary); line-height: 1.9; }
+
+        .article-content h2 { font-family: var(--font-display); font-size: 1.3rem; font-weight: 600; margin: 3rem 0 1.5rem; padding-bottom: 0.5rem; border-bottom: 2px solid var(--toki-blue-pale); }
+        .article-content h3 { font-family: var(--font-display); font-size: 1.1rem; font-weight: 600; margin: 2rem 0 1rem; color: var(--toki-blue-dark); }
+        .article-content p { margin-bottom: 1.5rem; text-align: justify; }
+        .article-content blockquote { border-left: 3px solid var(--toki-blue); padding-left: 1.5rem; margin: 2rem 0; font-family: var(--font-display); color: var(--text-secondary); }
+        .article-content ul { margin: 1.5rem 0; padding-left: 1.5rem; }
+        .article-content li { margin-bottom: 0.75rem; }
+
+        .core-message { background: var(--toki-blue-pale); border-left: 4px solid var(--toki-blue); padding: 1.5rem; margin: 2rem 0; font-size: 0.95rem; line-height: 1.8; }
+        .key-point { background: linear-gradient(135deg, var(--toki-blue-pale) 0%, #fff 100%); border: 1px solid var(--accent-blue); border-radius: 8px; padding: 1.5rem; margin: 2rem 0; text-align: center; }
+        .key-point p { font-family: var(--font-display); font-size: 1.1rem; color: var(--toki-blue-dark); margin: 0; }
+
+        .article-footer { margin-top: 4rem; padding-top: 2rem; border-top: 1px solid var(--border); text-align: center; }
+        .article-footer p { font-size: 0.8rem; color: var(--text-muted); margin-bottom: 1rem; }
+        .article-footer a { color: var(--toki-blue); text-decoration: none; }
+        .article-footer a:hover { text-decoration: underline; }
+
+        @media (max-width: 768px) {
+            .article-container { padding: 6rem 1.2rem 3rem; }
+            .article-header h1 { font-size: 1.5rem; }
+            .article-nav .nav-label { display: none; }
+        }
+        @media print { .article-nav { display: none; } .article-container { padding-top: 2rem; } }
+    </style>
+    <link rel="stylesheet" href="contact-form.css">
+    <meta property="og:type" content="article">
+    <meta property="og:title" content="紹介リンクの開示 | トキストレージ">
+    <meta property="og:description" content="TokiStorageはAmazonアソシエイトとWise紹介プログラムを利用している。隠す理由がないから開示する——アフィリエイトリンクの意図と透明性について。">
+    <meta property="og:url" content="https://tokistorage.github.io/lp/affiliate-transparency.html">
+    <meta property="og:site_name" content="トキストレージ">
+    <meta name="twitter:card" content="summary">
+    <meta name="twitter:title" content="紹介リンクの開示 | トキストレージ">
+    <meta name="twitter:description" content="TokiStorageはAmazonアソシエイトとWise紹介プログラムを利用している。隠す理由がないから開示する——アフィリエイトリンクの意図と透明性について。">
+    <meta property="og:image" content="https://tokistorage.github.io/lp/asset/tokistorage-icon-512.png">
+    <meta property="og:image:width" content="512">
+    <meta property="og:image:height" content="512">
+    <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Article",
+  "headline": "紹介リンクの開示",
+  "author": {
+    "@type": "Person",
+    "name": "Takuya Sato",
+    "url": "https://tokistorage.github.io/lp/profile.html"
+  },
+  "publisher": {
+    "@type": "Organization",
+    "name": "TokiStorage",
+    "url": "https://tokistorage.github.io/lp",
+    "logo": {
+      "@type": "ImageObject",
+      "url": "https://tokistorage.github.io/lp/asset/tokistorage-icon-512.png"
+    }
+  },
+  "url": "https://tokistorage.github.io/lp/affiliate-transparency.html",
+  "inLanguage": "ja",
+  "mainEntityOfPage": "https://tokistorage.github.io/lp/affiliate-transparency.html",
+  "description": "TokiStorageはAmazonアソシエイトとWise紹介プログラムを利用している。隠す理由がないから開示する——アフィリエイトリンクの意図と透明性について。"
+}
+    </script>
+    <link rel="alternate" hreflang="ja" href="https://tokistorage.github.io/lp/affiliate-transparency.html">
+    <link rel="alternate" hreflang="en" href="https://tokistorage.github.io/lp/affiliate-transparency-en.html">
+    <link rel="alternate" hreflang="x-default" href="https://tokistorage.github.io/lp/affiliate-transparency.html">
+    <link rel="canonical" href="https://tokistorage.github.io/lp/affiliate-transparency.html">
+</head>
+<body>
+
+<nav class="article-nav">
+    <a href="index.html" class="nav-brand">トキストレージ</a>
+    <div class="nav-right">
+        <span class="nav-label">経済・財産 / Economy & Property</span>
+        <a href="affiliate-transparency-en.html" class="lang-switch">EN</a>
+    </div>
+</nav>
+
+<main class="article-container">
+
+    <header class="article-header">
+        <p class="article-category">ESSAY &mdash; 経済・財産</p>
+        <h1>紹介リンクの開示<br><span style="font-size:0.7em; font-weight:400;">隠す理由がないから開示する</span></h1>
+        <p class="article-subtitle">
+            &mdash;&mdash; TokiStorageのサイトにはAmazonアソシエイトプログラムとWise紹介プログラムのリンクが含まれている。これらのリンク経由で購入・登録があった場合、TokiStorageは紹介報酬を受け取る。ユーザーに追加費用は発生しない。隠す理由がないから、意図とともに開示する。
+        </p>
+    </header>
+
+    <article class="article-content">
+
+        <div class="core-message">
+            <strong>この記事で言いたいこと：</strong>TokiStorageはアフィリエイトリンクを使っている。Amazonの資材リンクにはアソシエイトタグが付き、Wiseのリンクには紹介タグが付いている。紹介報酬を受け取る可能性がある。ユーザーに追加費用はない。隠す必要がないから隠さない——それだけのことだ。
+        </div>
+
+        <h2>1. 何を使っているか</h2>
+
+        <p>TokiStorageのサイトには2種類のアフィリエイトリンクが存在する。</p>
+
+        <p><strong>Amazonアソシエイト。</strong>DIYセットアップガイド、機材選定ガイド、石鹸制作ガイドなどのページで、推奨機材や資材へのリンクにアソシエイトタグ（tokistorage-22）を付与している。ユーザーがこのリンク経由でAmazonで購入した場合、TokiStorageは売上の一定割合を紹介報酬として受け取る。</p>
+
+        <p><strong>Wise紹介プログラム。</strong>決済手段としてWiseを案内する際、紹介リンクを使用している。新規ユーザーがこのリンク経由でWiseアカウントを作成し、一定額の送金を行った場合、TokiStorageとユーザーの双方に特典が付与される。</p>
+
+        <p>いずれの場合も、ユーザーに追加費用は発生しない。リンクを経由しない場合と同じ価格で購入・登録できる。</p>
+
+        <h2>2. なぜ使うのか</h2>
+
+        <p>理由は単純だ。推奨する製品やサービスへのリンクを掲載するなら、紹介プログラムを通すことで運営コストの一部を回収できる。ユーザーの負担が増えない以上、使わない理由がない。</p>
+
+        <p>TokiStorageはサーバーを持たず、GitHub Pagesで運営されている。直接的なインフラコストはほぼゼロだ。しかしドメイン、開発ツール、検証機材、法務対応など、ゼロではない固定費がある。アフィリエイト収入はこうした運営コストの補填に充てられる。</p>
+
+        <p>重要なのは、アフィリエイトリンクの存在が推奨内容を歪めないことだ。TokiStorageが紹介する製品やサービスは、実際に使用し、プロダクトに不可欠だと判断したものに限られる。紹介報酬の有無で推奨を変えることはない。</p>
+
+        <h2>3. 隠さない理由</h2>
+
+        <p>アフィリエイトリンクを隠すサイトは多い。リンクをクリックした先がアフィリエイトであることを知らないまま購入するユーザーもいる。技術的には合法だが、透明性に欠ける。</p>
+
+        <p>TokiStorageの設計思想は「隠さない」ことに一貫している。コードはオープンソースで公開している。フィードバックはWisetagと紐づけてパブリックに残す。エッセイで設計判断の意図を言語化している。アフィリエイトリンクも同じだ。使っている事実と、その意図を開示する。</p>
+
+        <blockquote><p>隠す理由がないなら、開示する。それがデフォルトだ。</p></blockquote>
+
+        <h2>4. 具体的な開示</h2>
+
+        <p>以下のプログラムを利用している。</p>
+
+        <ul>
+            <li><strong>Amazonアソシエイト・プログラム</strong>（タグ: tokistorage-22）——DIYセットアップガイド、機材選定ガイド、石鹸制作ガイド等のページに掲載</li>
+            <li><strong>Wise紹介プログラム</strong>——決済手段案内ページ、モニタープログラムページ、パートナーガイド等に掲載</li>
+        </ul>
+
+        <p>特定商取引法に基づく表記ページにも同様の開示を記載している。</p>
+
+        <div class="key-point">
+            <p>紹介リンクを使っている。ユーザーの追加負担はない。<br>隠す理由がないから開示する。</p>
+        </div>
+
+        <p style="font-size: 0.85rem; color: var(--text-secondary);">決済手段としてのWiseについては「<a href="payment.html" style="color: var(--toki-blue);">決済手段</a>」で、運営コストの思想については「<a href="burn-rate-zero.html" style="color: var(--toki-blue);">バーンレート・ゼロ</a>」で、外部依存性の方針については「<a href="no-external-deps.html" style="color: var(--toki-blue);">外部依存性を増やさない</a>」で詳しく論じている。</p>
+
+    </article>
+
+    <footer class="article-footer">
+        <p id="essay-nav-links"></p>
+        <p style="margin-top: 2rem; font-size: 0.75rem; color: var(--text-muted); font-style: italic;">あなたが物語となり、世代の対話が重なり、未来の道となる。― トキストレージ</p>
+        <p style="font-size: 0.75rem; color: var(--text-muted);">&copy; 2026 TokiStorage. All rights reserved.</p>
+    </footer>
+
+</main>
+
+<script src="contact-form.js" defer></script>
+<script src="essay-tts.js?v=20260226"></script>
+<script src="essay-nav.js?v=20260226"></script>
+<script src="tracker.js" defer></script>
+</body>
+</html>
