@@ -8,43 +8,198 @@
 *{margin:0;padding:0;box-sizing:border-box}
 body{font-family:-apple-system,BlinkMacSystemFont,"Hiragino Kaku Gothic ProN",sans-serif;background:#f8fafc;color:#1e293b;padding:40px 20px}
 .container{max-width:640px;margin:0 auto}
-h1{font-size:1.5rem;margin-bottom:8px}
+.header{display:flex;align-items:baseline;justify-content:space-between;margin-bottom:8px}
+h1{font-size:1.5rem}
+.lang-switch{font-size:.75rem;color:var(--accent,#2563eb);text-decoration:none;padding:.25rem .5rem;border:1px solid var(--accent,#2563eb);border-radius:4px;cursor:pointer}
+.lang-switch:hover{background:var(--accent,#2563eb);color:#fff}
 .sub{color:#64748b;font-size:.875rem;margin-bottom:32px}
-.issue{display:flex;align-items:center;gap:12px;padding:16px;background:#fff;border:1px solid #e2e8f0;border-radius:8px;margin-bottom:12px;text-decoration:none;color:inherit;transition:box-shadow .15s}
-.issue:hover{box-shadow:0 2px 8px rgba(0,0,0,.08)}
-.issue-serial{font-weight:700;font-size:.875rem;min-width:80px;color:#2563eb}
-.issue-meta{color:#64748b;font-size:.875rem}
 .empty{color:#94a3b8;text-align:center;padding:40px}
 footer{margin-top:40px;text-align:center;color:#94a3b8;font-size:.75rem}
-footer a{color:#2563eb;text-decoration:none}
+footer a{color:var(--accent,#2563eb);text-decoration:none}
+
+.century{border:1px solid #e2e8f0;border-radius:10px;margin-bottom:.75rem;background:#fafbfc}
+.century summary{font-size:.95rem;font-weight:600;color:#1e293b;padding:.7rem 1rem;cursor:pointer;list-style:none;display:flex;align-items:center;gap:.5rem}
+.century summary::-webkit-details-marker{display:none}
+.century summary::before{content:'▸';font-size:.75rem;color:var(--accent,#C9A962);transition:transform .15s}
+.century[open] summary::before{transform:rotate(90deg)}
+.century-count{font-size:.75rem;font-weight:400;color:#94a3b8}
+.century-inner{padding:0 .5rem .5rem 1rem}
+
+.vol{border:1px solid #e8ecf0;border-radius:6px;margin-bottom:.4rem;background:#fff}
+.vol summary{font-size:.82rem;font-weight:600;color:#475569;padding:.45rem .8rem;cursor:pointer;list-style:none;display:flex;align-items:center;gap:.5rem}
+.vol summary::-webkit-details-marker{display:none}
+.vol summary::before{content:'▸';font-size:.6rem;color:#94a3b8;transition:transform .15s}
+.vol[open] summary::before{transform:rotate(90deg)}
+.vol-count{font-size:.72rem;font-weight:400;color:#94a3b8}
+.vol-issues{padding:.3rem .8rem .5rem 1.5rem}
+
+.issue{display:flex;align-items:center;gap:12px;padding:10px 12px;background:#fff;border:1px solid #e2e8f0;border-radius:6px;margin-bottom:8px;text-decoration:none;color:inherit;transition:box-shadow .15s,border-color .15s}
+.issue:hover{box-shadow:0 2px 8px rgba(0,0,0,.08);border-color:var(--accent,#C9A962)}
+.issue-serial{font-weight:700;font-size:.8rem;min-width:72px;color:var(--accent,#2563eb)}
+.issue-meta{color:#64748b;font-size:.8rem}
+
+.section-label{font-size:.75rem;font-weight:600;color:#94a3b8;letter-spacing:.08em;margin:24px 0 12px;padding-bottom:6px;border-bottom:1px solid #e2e8f0}
 </style>
 </head>
 <body>
 <div class="container">
-  <h1 id="title">Newsletter Archive</h1>
-  <p class="sub" id="sub">Published newsletters deposited with the National Diet Library of Japan.</p>
+  <div class="header">
+    <h1 id="title">Newsletter Archive</h1>
+    <span class="lang-switch" id="lang-btn">EN</span>
+  </div>
+  <p class="sub" id="sub"></p>
   <div id="list"><p class="empty">Loading...</p></div>
-  <footer>
-    Published by <a href="https://tokistorage.github.io/lp/">TokiStorage</a>
-    &middot; Deposited under NDL Law Article 25-4
-  </footer>
+  <footer id="footer"></footer>
 </div>
 <script>
-(async()=>{
-  const res=await fetch('schedule.json');
-  if(!res.ok){document.getElementById('list').innerHTML='<p class="empty">No schedule found.</p>';return}
-  const s=await res.json();
-  const published=s.issues.filter(i=>i.status==='published').reverse();
-  if(!published.length){document.getElementById('list').innerHTML='<p class="empty">No published issues yet.</p>';return}
+(async function(){
+  var L={
+    ja:{
+      sub:'国立国会図書館に納本されたニュースレター。',
+      latest:'最新',
+      backissues:'バックナンバー',
+      century:function(c,r){return'第'+c+'世紀（'+r+'）'},
+      vol:function(v,p){return'第'+v+'巻（'+p+'）'},
+      count:function(n){return n+'件'},
+      empty:'まだ発行されていません。',
+      noSchedule:'スケジュールが見つかりません。',
+      mission:'あなたが物語になり、世代の対話が重なり、未来の道になる。',
+      footer:'発行：<a href="https://tokistorage.github.io/lp/">TokiStorage</a> &middot; <a href="https://tokistorage.github.io/lp/newsletters.html">ニュースレター一覧</a> &middot; 国立国会図書館法 第25条の4に基づき納本',
+      toggle:'EN'
+    },
+    en:{
+      sub:'Published newsletters deposited with the National Diet Library of Japan.',
+      latest:'Latest',
+      backissues:'Back Issues',
+      century:function(c,r){return'Century '+c+' ('+r+')'},
+      vol:function(v,p){return'Vol. '+v+' ('+p+')'},
+      count:function(n){return n+(n===1?' issue':' issues')},
+      empty:'No published issues yet.',
+      noSchedule:'No schedule found.',
+      mission:'You become a story, generations connect in dialog, the path forward.',
+      footer:'Published by <a href="https://tokistorage.github.io/lp/">TokiStorage</a> &middot; <a href="https://tokistorage.github.io/lp/newsletters.html">All Newsletters</a> &middot; Deposited under NDL Law Article 25-4',
+      toggle:'JA'
+    }
+  };
+
+  var lang=(navigator.language||'ja').startsWith('en')?'en':'ja';
+  var configData=null;
+
+  var listEl=document.getElementById('list');
+  var res=await fetch('schedule.json');
+  if(!res.ok){listEl.innerHTML='<p class="empty">'+L[lang].noSchedule+'</p>';return}
+  var s=await res.json();
+  var published=s.issues.filter(function(i){return i.status==='published'});
+
+  var startYear=s.volume_start_year||2026;
+  var volYears=s.volume_duration_years||20;
+
   try{
-    const cr=await fetch('client-config.json');
-    if(cr.ok){const c=await cr.json();document.getElementById('title').textContent=c.branding.publicationNameJa||'Newsletter Archive'}
+    var cr=await fetch('client-config.json');
+    if(cr.ok){
+      configData=await cr.json();
+      if(configData.branding.accentColor){
+        var rgb=configData.branding.accentColor;
+        document.documentElement.style.setProperty('--accent','rgb('+rgb[0]+','+rgb[1]+','+rgb[2]+')');
+      }
+    }
   }catch(e){}
-  document.getElementById('list').innerHTML=published.map(i=>`
-    <a class="issue" href="output/${i.filename||('TQ-'+String(i.serial).padStart(5,'0')+'.pdf')}">
-      <span class="issue-serial">TQ-${String(i.serial).padStart(5,'0')}</span>
-      <span class="issue-meta">${i.date} — ${i.customerName||''}</span>
-    </a>`).join('');
+
+  function getVolume(y){return Math.floor((y-startYear)/volYears)+1}
+  function volPeriod(v){var sy=startYear+(v-1)*volYears;return sy+'–'+(sy+volYears-1)}
+  function getCentury(y){return Math.floor(y/100)+1}
+  function centuryRange(c){return((c-1)*100)+'–'+(c*100-1)}
+  function issueYear(i){return parseInt(i.date.split('-')[0],10)}
+  function issuePath(i){return'output/'+(i.filename||('TQ-'+String(i.serial).padStart(5,'0')+'.pdf'))}
+
+  function render(){
+    var t=L[lang];
+    document.documentElement.lang=lang;
+
+    if(configData){
+      var name=lang==='en'
+        ?(configData.branding.publicationNameEn||configData.branding.publicationNameJa||'Newsletter Archive')
+        :(configData.branding.publicationNameJa||'Newsletter Archive');
+      document.getElementById('title').textContent=name;
+    }
+    document.getElementById('sub').innerHTML=t.sub;
+    document.getElementById('footer').innerHTML='<p style="margin-bottom:8px;font-size:.7rem;color:#b0b8c4;font-style:italic">'+t.mission+'</p>'+t.footer;
+    document.getElementById('lang-btn').textContent=t.toggle;
+
+    if(!published.length){listEl.innerHTML='<p class="empty">'+t.empty+'</p>';return}
+
+    var volMap={};
+    published.forEach(function(i){
+      var v=getVolume(issueYear(i));
+      if(!volMap[v])volMap[v]=[];
+      volMap[v].push(i);
+    });
+
+    var vols=Object.keys(volMap).map(Number).sort();
+    var centuryMap={};
+    vols.forEach(function(v){
+      var sy=startYear+(v-1)*volYears;
+      var c=getCentury(sy);
+      if(!centuryMap[c])centuryMap[c]=[];
+      centuryMap[c].push(v);
+    });
+
+    var centuries=Object.keys(centuryMap).map(Number).sort();
+    var latestCentury=centuries[centuries.length-1];
+    var latestVol=vols[vols.length-1];
+
+    var LATEST_MAX=10;
+    var latest=published.slice().sort(function(a,b){return b.date.localeCompare(a.date)}).slice(0,LATEST_MAX);
+
+    var html='<p class="section-label">'+t.latest+'</p>';
+    latest.forEach(function(i){
+      html+='<a class="issue" href="'+issuePath(i)+'">'
+        +'<span class="issue-serial">TQ-'+String(i.serial).padStart(5,'0')+'</span>'
+        +'<span class="issue-meta">'+i.date+(i.title?' — '+i.title:'')+'</span>'
+        +'</a>';
+    });
+
+    html+='<p class="section-label">'+t.backissues+'</p>';
+    centuries.forEach(function(c){
+      var volsInC=centuryMap[c];
+      var countInC=0;
+      volsInC.forEach(function(v){countInC+=volMap[v].length});
+      var isLatestC=c===latestCentury;
+
+      html+='<details class="century"'+(isLatestC?' open':'')+'>'
+        +'<summary>'+t.century(c,centuryRange(c))
+        +'<span class="century-count">'+t.count(countInC)+'</span></summary>'
+        +'<div class="century-inner">';
+
+      volsInC.forEach(function(v){
+        var issues=volMap[v];
+        var isLatestV=v===latestVol;
+
+        html+='<details class="vol"'+(isLatestV?' open':'')+'>'
+          +'<summary>'+t.vol(v,volPeriod(v))
+          +'<span class="vol-count">'+t.count(issues.length)+'</span></summary>'
+          +'<div class="vol-issues">';
+        issues.forEach(function(i){
+          html+='<a class="issue" href="'+issuePath(i)+'">'
+            +'<span class="issue-serial">TQ-'+String(i.serial).padStart(5,'0')+'</span>'
+            +'<span class="issue-meta">'+i.date+(i.title?' — '+i.title:'')+'</span>'
+            +'</a>';
+        });
+        html+='</div></details>';
+      });
+
+      html+='</div></details>';
+    });
+
+    listEl.innerHTML=html;
+  }
+
+  document.getElementById('lang-btn').addEventListener('click',function(){
+    lang=lang==='ja'?'en':'ja';
+    render();
+  });
+
+  render();
 })();
 </script>
 </body>
