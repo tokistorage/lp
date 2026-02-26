@@ -192,13 +192,47 @@
 
         <p>If this isn't done now, someone a century from now will ask, "Why was this built with a flat list?" Retrofitting structure at that point is far harder than doing it today, because a hundred years of content already exists and a hundred years of URLs are already linked from the outside world.</p>
 
-        <h2>6. Why no precedent exists</h2>
+        <h2>6. How the world's enduring institutions design their navigation</h2>
 
-        <p>Almost no one talks about information architecture at the scale of a millennium.</p>
+        <p>With this design philosophy in hand, examining the web navigation of organizations that should care most about longevity &mdash; national libraries, museums, religious sites, government archives &mdash; reveals a striking reality.</p>
 
-        <p>Wikipedia's chronological categories and the Internet Archive's Wayback Machine both organize content along a time axis. But both rely fundamentally on flat lists and search boxes &mdash; not hierarchical folding navigation like century, volume, year. Search is a tool for people who already know what they're looking for. It is not a tool for surveying.</p>
+        <h3>Institutions that lean on the search box</h3>
 
-        <p>The Long Now Foundation champions long-term thinking with its 10,000-Year Clock project. But that is a philosophical project. It poses the question "let's think about 1,000 years from now" &mdash; it does not actually design web navigation for a millennium. Long-term thinking as philosophy, and long-term thinking as implementation, are entirely different things.</p>
+        <p>The Library of Congress presents 566 collections through faceted search and pagination. jQuery plus server-rendered HTML &mdash; a solid, conservative technology choice. The UK National Archives similarly offers keyword search with date-range filters across 37 million descriptions. The British Museum builds its data layer on RDF/SPARQL, a semantic web standard with excellent data longevity.</p>
+
+        <p>But all of these are fundamentally search-first. They serve people who already know what they're looking for. They are not tools for surveying the whole.</p>
+
+        <h3>The irony: Japan's National Diet Library</h3>
+
+        <p>The National Diet Library (NDL) &mdash; the very institution that archives TokiStorage's newsletter &mdash; built its digital collection portal on Nuxt.js, a Vue.js-based SPA. Without JavaScript, it renders nothing but a loading spinner. To a crawler, it's a blank page. The institution responsible for the nation's permanent records depends on the shortest-lived category of web technology: a JavaScript framework.</p>
+
+        <h3>History as narrative: Ise Grand Shrine</h3>
+
+        <p>The Ise Grand Shrine, with over 2,000 years of history, has no chronological navigation on its website whatsoever. History is told thematically under "About." Time is treated not as something to navigate, but as something to narrate. Simple HTML, no framework dependencies.</p>
+
+        <p>Keiunkan, believed to be the world's oldest hotel (founded 705 AD), follows the same pattern. Its 1,300-year history is told as story, never structured as navigable data.</p>
+
+        <h3>A flat table for 2,000 years: the Vatican</h3>
+
+        <p>The Vatican displays its 2,000-year list of 267 popes as a single flat HTML table. No pagination, no accordion. This works because the growth rate is extraordinarily low &mdash; roughly 13 entries per century. Server-rendered HTML with perfect crawlability. But this approach cannot work for TokiStorage, where issues arrive every six months and new series multiply with each adopting organization.</p>
+
+        <h3>The pioneer of temporal drill-down: the Wayback Machine</h3>
+
+        <p>The Internet Archive's Wayback Machine uses a year-to-month-to-day-to-capture drill-down, the most elegant temporal navigation pattern in existence. No matter how many years accumulate, the timeline bar simply extends. However, it is built on Web Components (Lit Element), and without JavaScript, nothing renders.</p>
+
+        <h3>Two poles, and a third option</h3>
+
+        <p>What emerges is a landscape defined by two poles. On one side, the <strong>search box</strong> &mdash; a tool for those who already know what they seek. On the other, <strong>narrative</strong> &mdash; a method that treats time not as data to navigate but as story to tell.</p>
+
+        <p>TokiStorage's three-tier accordion offers a third option: <strong>structured surveyability</strong>. Not searching. Not reading. Surveying &mdash; opening and closing folds to grasp the whole, then drilling down to any depth.</p>
+
+        <blockquote>
+            <p>Search is a tool for those who know. Narrative is a telling for those who listen. The accordion is a structure for those who survey.</p>
+        </blockquote>
+
+        <h3>Why no one has done this</h3>
+
+        <p>The Long Now Foundation champions long-term thinking with its 10,000-Year Clock project. But that is a philosophical project. It does not actually design web navigation for a millennium. Long-term thinking as philosophy, and long-term thinking as implementation, are entirely different things.</p>
 
         <p>TokiStorage's newsletter is deposited with the National Diet Library of Japan. This is not a thought experiment. It is content that is actually published, actually deposited, and physically exists as a permanent national record. Designing the navigation for that content to work across a millennium is nothing less than a practical answer for actually operating a thousand-year archive.</p>
 
