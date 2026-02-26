@@ -349,7 +349,7 @@
     'equipment-guide':         ['uv-laminate', 'diy-partner', 'backup-rule', 'try-and-revert', 'burn-rate-zero'],
     'hero-parallax':           ['corporate-site', 'no-external-deps', 'seo-aio', 'image-clarity', 'burn-rate-zero'],
     'offline-freedom':        ['device-dependency', 'pwa-not-appstore', 'no-external-deps', '30seconds', 'storage-strategy'],
-    'millennium-navigation':  ['storage-strategy', 'migration', 'legacy', 'offline-freedom', 'seo-aio'],
+    'millennium-navigation':  ['storage-strategy', 'openness', 'recital-record', 'legacy', 'offline-freedom'],
     // ── メタ視点 ──
     'mission-statement':      ['narrative-trust', 'preserving-words', 'why-essays', 'corporate-site', 'integrity'],
     'preserving-words':       ['why-essays', 'akashic-record', 'what-to-leave', 'narrative-trust', 'openness'],
