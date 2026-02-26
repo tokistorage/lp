@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" type="image/png" sizes="32x32" href="asset/favicon-32.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="asset/apple-touch-icon.png">
+    <title>13日間の開発記録 | トキストレージ</title>
+    <meta name="robots" content="index, follow">
+    <meta name="description" content="765コミット、376PR、13日間。TokiQRの開発沿革を、Gitログから振り返る。各フェーズで何を選び、何を捨てたか——意思決定の記録。">    <style>
+        :root {
+            --toki-blue: #2563EB;
+            --toki-blue-dark: #1E40AF;
+            --toki-blue-pale: #EFF6FF;
+            --accent-blue: #60A5FA;
+            --bg-white: #FFFFFF;
+            --text-primary: #1E293B;
+            --text-secondary: #475569;
+            --text-muted: #94A3B8;
+            --border: #E2E8F0;
+            --font-display: 'Hiragino Mincho ProN', 'Yu Mincho', serif;
+            --font-body: 'Hiragino Kaku Gothic ProN', 'Yu Gothic', 'Meiryo', sans-serif;
+        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        html { scroll-behavior: smooth; }
+        body { font-family: var(--font-body); font-weight: 400; background: var(--bg-white); color: var(--text-primary); line-height: 2; font-size: 16px; }
+
+        .article-nav { position: fixed; top: 0; left: 0; right: 0; z-index: 1000; background: rgba(255,255,255,0.95); backdrop-filter: blur(12px); border-bottom: 1px solid var(--border); padding: 0.6rem 1.2rem; display: flex; align-items: center; justify-content: space-between; gap: 1rem; }
+        .article-nav .nav-brand { font-family: var(--font-display); font-size: 0.9rem; font-weight: 600; color: var(--toki-blue); text-decoration: none; white-space: nowrap; }
+        .article-nav .nav-brand::before { content: ''; display: inline-block; width: 20px; height: 20px; background: url('asset/tokistorage-icon-512.png') no-repeat center / contain; vertical-align: -3px; margin-right: 5px; }
+        .article-nav .nav-right { display: flex; align-items: center; gap: 1rem; }
+        .article-nav .nav-label { font-size: 0.6rem; color: var(--text-muted); letter-spacing: 0.08em; }
+        .article-nav .lang-switch { font-size: 0.75rem; color: var(--toki-blue); text-decoration: none; padding: 0.3rem 0.6rem; border: 1px solid var(--toki-blue); border-radius: 4px; }
+        .article-nav .lang-switch:hover { background: var(--toki-blue); color: #fff; }
+
+        .article-container { max-width: 680px; margin: 0 auto; padding: 7rem 2rem 4rem; }
+        .article-header { margin-bottom: 3rem; padding-bottom: 2rem; border-bottom: 1px solid var(--border); }
+        .article-category { font-size: 0.7rem; color: var(--toki-blue); letter-spacing: 0.15em; margin-bottom: 1rem; }
+        .article-header h1 { font-family: var(--font-display); font-size: 1.8rem; font-weight: 700; line-height: 1.5; margin-bottom: 1.5rem; }
+        .article-subtitle { font-size: 0.95rem; color: var(--text-secondary); line-height: 1.9; }
+
+        .article-content h2 { font-family: var(--font-display); font-size: 1.3rem; font-weight: 600; margin: 3rem 0 1.5rem; padding-bottom: 0.5rem; border-bottom: 2px solid var(--toki-blue-pale); }
+        .article-content h3 { font-family: var(--font-display); font-size: 1.1rem; font-weight: 600; margin: 2rem 0 1rem; color: var(--toki-blue-dark); }
+        .article-content p { margin-bottom: 1.5rem; text-align: justify; }
+        .article-content blockquote { border-left: 3px solid var(--toki-blue); padding-left: 1.5rem; margin: 2rem 0; font-family: var(--font-display); color: var(--text-secondary); }
+        .article-content ul { margin: 1.5rem 0; padding-left: 1.5rem; }
+        .article-content li { margin-bottom: 0.75rem; }
+
+        .core-message { background: var(--toki-blue-pale); border-left: 4px solid var(--toki-blue); padding: 1.5rem; margin: 2rem 0; font-size: 0.95rem; line-height: 1.8; }
+        .key-point { background: linear-gradient(135deg, var(--toki-blue-pale) 0%, #fff 100%); border: 1px solid var(--accent-blue); border-radius: 8px; padding: 1.5rem; margin: 2rem 0; text-align: center; }
+        .key-point p { font-family: var(--font-display); font-size: 1.1rem; color: var(--toki-blue-dark); margin: 0; }
+
+        .article-footer { margin-top: 4rem; padding-top: 2rem; border-top: 1px solid var(--border); text-align: center; }
+        .article-footer p { font-size: 0.8rem; color: var(--text-muted); margin-bottom: 1rem; }
+        .article-footer a { color: var(--toki-blue); text-decoration: none; }
+        .article-footer a:hover { text-decoration: underline; }
+
+        @media (max-width: 768px) {
+            .article-container { padding: 6rem 1.2rem 3rem; }
+            .article-header h1 { font-size: 1.5rem; }
+            .article-nav .nav-label { display: none; }
+        }
+        @media print { .article-nav { display: none; } .article-container { padding-top: 2rem; } }
+    </style>
+    <link rel="stylesheet" href="contact-form.css">
+    <meta property="og:type" content="article">
+    <meta property="og:title" content="13日間の開発記録 | トキストレージ">
+    <meta property="og:description" content="765コミット、376PR、13日間。TokiQRの開発沿革を、Gitログから振り返る。各フェーズで何を選び、何を捨てたか——意思決定の記録。">
+    <meta property="og:url" content="https://tokistorage.github.io/lp/development-chronicle.html">
+    <meta property="og:site_name" content="トキストレージ">
+    <meta name="twitter:card" content="summary">
+    <meta name="twitter:title" content="13日間の開発記録 | トキストレージ">
+    <meta name="twitter:description" content="765コミット、376PR、13日間。TokiQRの開発沿革を、Gitログから振り返る。各フェーズで何を選び、何を捨てたか——意思決定の記録。">
+    <meta property="og:image" content="https://tokistorage.github.io/lp/asset/tokistorage-icon-512.png">
+    <meta property="og:image:width" content="512">
+    <meta property="og:image:height" content="512">
+    <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Article",
+  "headline": "13日間の開発記録",
+  "author": {
+    "@type": "Person",
+    "name": "Takuya Sato",
+    "url": "https://tokistorage.github.io/lp/profile.html"
+  },
+  "publisher": {
+    "@type": "Organization",
+    "name": "TokiStorage",
+    "url": "https://tokistorage.github.io/lp",
+    "logo": {
+      "@type": "ImageObject",
+      "url": "https://tokistorage.github.io/lp/asset/tokistorage-icon-512.png"
+    }
+  },
+  "url": "https://tokistorage.github.io/lp/development-chronicle.html",
+  "inLanguage": "ja",
+  "mainEntityOfPage": "https://tokistorage.github.io/lp/development-chronicle.html",
+  "description": "765コミット、376PR、13日間。TokiQRの開発沿革を、Gitログから振り返る。各フェーズで何を選び、何を捨てたか——意思決定の記録。"
+}
+    </script>
+    <link rel="alternate" hreflang="ja" href="https://tokistorage.github.io/lp/development-chronicle.html">
+    <link rel="alternate" hreflang="en" href="https://tokistorage.github.io/lp/development-chronicle-en.html">
+    <link rel="alternate" hreflang="x-default" href="https://tokistorage.github.io/lp/development-chronicle.html">
+    <link rel="canonical" href="https://tokistorage.github.io/lp/development-chronicle.html">
+</head>
+<body>
+
+<nav class="article-nav">
+    <a href="index.html" class="nav-brand">トキストレージ</a>
+    <div class="nav-right">
+        <span class="nav-label">技術・設計 / Technology & Design</span>
+        <a href="development-chronicle-en.html" class="lang-switch">EN</a>
+    </div>
+</nav>
+
+<main class="article-container">
+
+    <header class="article-header">
+        <p class="article-category">ESSAY &mdash; 技術・設計</p>
+        <h1>13日間の開発記録<br><span style="font-size:0.7em; font-weight:400;">765コミットが刻んだプロダクトの輪郭</span></h1>
+        <p class="article-subtitle">
+            &mdash;&mdash; 2026年2月14日、最初のコミット。そこから13日間で765コミット、376のプルリクエストを重ねた。外部依存ゼロの原則、Codec2への転換、Safari印刷の放棄、動画機能の全削除、特許の辞退——各フェーズで何を選び、何を捨てたか。Gitログが語る開発の沿革を記す。
+        </p>
+    </header>
+
+    <article class="article-content">
+
+        <div class="core-message">
+            <strong>この記事で言いたいこと：</strong>TokiQRは13日間で構想からプロダクト完成に至った。速度の秘密はAI協業（vibe coding）だが、本質は「何を捨てたか」の意思決定にある。外部依存の排除、Codec2への転換、Safari対応の放棄、動画機能の全削除、特許の辞退——捨てる決断の連続がプロダクトの輪郭を削り出した。
+        </div>
+
+        <h2>1. 初日の決断</h2>
+
+        <p>2026年2月14日、18時06分。最初のコミットが刻まれた。「Initial commit: Voice QR application」——音声をQRコードに埋め込むアプリケーション。ここからすべてが始まった。</p>
+
+        <p>最初の75分間で、プロジェクトの根幹となる原則が確定した。ffmpeg.wasmを導入して完全静的サイトに移行し、CDN依存を全排除し、Google Fontsを自前ホスティングに切り替え、最終的にWebフォント自体を廃止してシステムフォントに統一した。外部への依存を一つずつ剥がしていった。</p>
+
+        <p>この「外部に依存しない」という原則は、以降のすべてのアーキテクチャ判断を規定した。サーバーを持たない。データベースを使わない。認証基盤を外部に委ねない。初日に確定した原則が、13日間を通じて一度もブレることはなかった。</p>
+
+        <h2>2. Codec2への転換</h2>
+
+        <p>翌朝7時36分、最大の技術的転換が起きた。Opus/FFmpegを捨て、Codec2 WASMに移行した。</p>
+
+        <p>Opusは高品質な音声コーデックだが、低ビットレート（1-2kbps）ではDTX（不連続送信）サイレンスフレームを出力する。音声ではなく沈黙が記録される。4kbps以上ではエントロピーが高すぎて圧縮が効かず、QR1枚に2-3秒しか収まらない。2-4kbpsの間に急峻なDTX崖があり、使える中間地点が存在しなかった。</p>
+
+        <p>Codec2は軍用低ビットレート音声コーデックだ。450bpsモードでは75バイト/秒。ロボティックだが聞き取れる音声を、QR1枚（2,953バイト）に最大約29秒収められる。人間の声を29秒——自己紹介、短い挨拶、想いの断片。QRコード1枚に収まる限界を最大限に押し広げた。</p>
+
+        <p>同日中にi18n（日英二言語対応）、サービスワーカーによるオフライン対応、そして「Voice QR」から「TokiQR」へのリブランドまで完了した。2日目にしてプロダクトの骨格が出来上がっていた。</p>
+
+        <h2>3. 商取引の一日</h2>
+
+        <p>2月17日は、商取引基盤をまるごと構築した日だった。注文フォーム、特定商取引法に基づく表記ページ、Wise決済統合、パートナーガイド、クーポンシステム——朝から夜まで、商業インフラを一日で立ち上げた。</p>
+
+        <p>同日、三層保存という概念が生まれた。第一層はQR紙面そのもの。第二層はGitHubリポジトリ。第三層は国立国会図書館（NDL）への献本。物理・デジタル・公的アーカイブの三重構造で、データの永続性を担保する。この思想は後にプロダクトの核心的な価値提案となった。</p>
+
+        <p>Cloudflare Worker経由のAPIプロキシもこの日に導入された。Google Apps Scriptへの直接アクセスを避け、エンドポイントを一本化した。外部依存を増やさない原則の中で、最小限の仲介層だけを許容する判断だった。</p>
+
+        <h2>4. 捨てたもの</h2>
+
+        <p>開発の物語は、加えたものだけでは語れない。捨てたものが、プロダクトの輪郭を決定づけた。</p>
+
+        <p><strong>Safari印刷対応（2月20日）。</strong>この日だけで28以上のコミットを印刷レイアウトに費やした。iframe、image、canvas、PDF.js——あらゆるアプローチを試みた。Safariの印刷レンダリングは一貫性がなく、回避策を積み重ねるほど複雑さが増した。最終的にmacOS Chrome限定に絞り、Safari対応コードを全削除した。動くものを全ブラウザに届けようとする誘惑を断ち切った。</p>
+
+        <p><strong>動画機能（2月25日 02:34-04:25）。</strong>FFmpegパイプラインとTokiVideoバイナリフォーマットを2時間で構築した。タブUI、再生機能、メタデータルーティングまで実装した。しかしWASMのメモリ制限でOOMが頻発し、実用に耐えなかった。04:25に全削除。2時間の成果を躊躇なく消した。</p>
+
+        <p><strong>特許（2月21日）。</strong>弁理士に着手金を支払い、「特許は取れる」とお墨付きを得た。しかし出願前に辞退した。特許で守るよりも、オープンに公開し、速度で先行するほうがプロダクトの思想に合っていた。全ページから特許関連の記述を削除した。</p>
+
+        <blockquote><p>うまくいかないものを引きずらない。動いていても思想に合わなければ捨てる。この姿勢が13日間を通じて一貫していた。</p></blockquote>
+
+        <h2>5. バルクモードからクレジットへ</h2>
+
+        <p>2月24日から25日にかけて、プロダクトの商業的な柱が一気に立ち上がった。</p>
+
+        <p>まずPWA化とIndexedDBの導入。ブラウザにデータを永続化し、履歴ページとアーカイブページを追加した。ローカルファーストの基盤が整った。</p>
+
+        <p>続いてバルクモード。長時間の音声を複数のQRコードに分割し、PDF一冊にまとめる機能。1枚に収まらない記録を、複数枚で保存する——TokiQRの「マルチQR」体験の核心だ。</p>
+
+        <p>バルクモードの収益化としてクレジットシステムを導入した。HMAC-SHA256による改ざん検知、コードレス購入（個人情報不要）、1チャンク目は無料。Wiseの送金リンクを自動生成し、送金確認後にクレジットが有効化される。</p>
+
+        <p>この日、もう一つの転換があった。ZIPエクスポートをPDF（jsPDF）に全面移行したのだ。QRコードの集合体を「PDF」という汎用フォーマットで配布可能にした。さらに「特集権（Tokushu）」の概念が生まれ、NDLへの献本パイプラインが接続された。ユーザーの音声QRが国立国会図書館に収蔵される——プロダクトと公的アーカイブが直結した瞬間だった。</p>
+
+        <h2>6. モニタープログラムの設計</h2>
+
+        <p>2月26日、モニタープログラムが始動した。有料プロダクトを正規の購入フローで体験し、フィードバックを公開コメントとして残す仕組みだ。</p>
+
+        <p>モニターは通常の購入者と同じフローでクレジットを購入する。体験後、同額がWise経由で返金される。実質0円で有料体験ができる。この構造はギフトエコノミーに通じるものがある——金銭は循環し、実質的な交換は「体験」と「フィードバック」の間で成立する。</p>
+
+        <p>フィードバックはWisetag——Wiseの決済アカウント名——と紐づけて公開される。匿名レビューではない。「この人は実際に購入した」と第三者が確認できる、検証可能な信頼シグナルだ。ミステリーショッパーの「正規購入＋返金」、Amazon Vineの「公開レビュー」、キャッシュバックの「金銭還元」——既存モデルの要素を再構成しつつ、検証可能性と転換ステップの不在という独自の位置に着地した。</p>
+
+        <p>モニタープログラムの完成は、プロダクトとしての一つの区切りだ。作る段階から、使ってもらい、声を集める段階に移行した。</p>
+
+        <h2>7. 数字が語ること</h2>
+
+        <p>qrリポジトリ: 765コミット、376プルリクエスト、13日間。lpリポジトリ: 881コミット、130本以上のエッセイ、499ページ、15日間。合計1,600超のコミットが2週間に凝縮された。</p>
+
+        <p>1日あたり平均59コミット、29プルリクエスト。コンタクトフォームは44分間で12コミットの反復を経て完成した。印刷レイアウトは1日で28コミット。この速度はAIとの協業——いわゆるvibe coding——なしには実現しなかった。</p>
+
+        <p>しかし速度は手段であって本質ではない。速く作れるからこそ、速く捨てられる。2時間かけた動画機能を躊躇なく消せるのは、2時間で作り直せるからだ。速度が「捨てる決断」の心理的コストを下げ、プロダクトの純度を保った。</p>
+
+        <blockquote><p>13日間で何を作ったかより、13日間で何を捨てたかのほうが、プロダクトの本質をよく語る。</p></blockquote>
+
+        <div class="key-point">
+            <p>765コミット、13日間。<br>加えたものではなく、捨てたものがプロダクトの輪郭を決めた。</p>
+        </div>
+
+        <p style="font-size: 0.85rem; color: var(--text-secondary);">音声コーデックの技術的判断については「<a href="https://tokistorage.github.io/lp/30sec-audio.html" style="color: var(--toki-blue);">30秒音声の世界</a>」で、ストレージの永続設計については「<a href="storage-strategy.html" style="color: var(--toki-blue);">ストレージ戦略</a>」で、モニタープログラムの詳細な設計思想については「<a href="monitor-program.html" style="color: var(--toki-blue);">モニタープログラムの設計</a>」で、AI協業については「<a href="vibe-coding.html" style="color: var(--toki-blue);">バイブコーディング</a>」で詳しく論じている。</p>
+
+    </article>
+
+    <footer class="article-footer">
+        <p id="essay-nav-links"></p>
+        <p style="margin-top: 2rem; font-size: 0.75rem; color: var(--text-muted); font-style: italic;">あなたが物語となり、世代の対話が重なり、未来の道となる。― トキストレージ</p>
+        <p style="font-size: 0.75rem; color: var(--text-muted);">&copy; 2026 TokiStorage. All rights reserved.</p>
+    </footer>
+
+</main>
+
+<script src="contact-form.js" defer></script>
+<script src="essay-tts.js?v=20260226"></script>
+<script src="essay-nav.js?v=20260226"></script>
+<script src="tracker.js" defer></script>
+</body>
+</html>
