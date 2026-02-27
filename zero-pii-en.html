@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" type="image/png" sizes="32x32" href="asset/favicon-32.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="asset/apple-touch-icon.png">
+    <title>Abolishing Secrets | TokiStorage</title>
+    <meta name="robots" content="index, follow">
+    <meta name="description" content="We built TokiQR on a policy of holding zero personal data on our servers. Shipping was the one exception — until we realized it didn't have to be. Policy reshapes logistics.">
+    <style>
+        :root {
+            --toki-blue: #2563EB;
+            --toki-blue-dark: #1D4ED8;
+            --toki-blue-pale: #EFF6FF;
+            --accent-blue: #3B82F6;
+            --bg-white: #FFFFFF;
+            --text-primary: #1E293B;
+            --text-secondary: #475569;
+            --text-muted: #94A3B8;
+            --border: #E2E8F0;
+            --font-display: 'Hiragino Mincho ProN', 'Yu Mincho', serif;
+            --font-body: 'Hiragino Kaku Gothic ProN', 'Yu Gothic', 'Meiryo', sans-serif;
+        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        html { scroll-behavior: smooth; }
+        body { font-family: var(--font-body); font-weight: 400; background: var(--bg-white); color: var(--text-primary); line-height: 2; font-size: 16px; }
+
+        .article-nav { position: fixed; top: 0; left: 0; right: 0; z-index: 1000; background: rgba(255,255,255,0.95); backdrop-filter: blur(12px); border-bottom: 1px solid var(--border); padding: 0.6rem 1.2rem; display: flex; align-items: center; justify-content: space-between; gap: 1rem; }
+        .article-nav .nav-brand { font-family: var(--font-display); font-size: 0.9rem; font-weight: 600; color: var(--toki-blue); text-decoration: none; white-space: nowrap; }
+        .article-nav .nav-brand::before { content: ''; display: inline-block; width: 20px; height: 20px; background: url('asset/tokistorage-icon-512.png') no-repeat center / contain; vertical-align: -3px; margin-right: 5px; }
+        .article-nav .nav-right { display: flex; align-items: center; gap: 1rem; }
+        .article-nav .nav-label { font-size: 0.6rem; color: var(--text-muted); letter-spacing: 0.08em; }
+        .article-nav .lang-switch { font-size: 0.75rem; color: var(--toki-blue); text-decoration: none; padding: 0.3rem 0.6rem; border: 1px solid var(--toki-blue); border-radius: 4px; }
+        .article-nav .lang-switch:hover { background: var(--toki-blue); color: #fff; }
+
+        .article-container { max-width: 680px; margin: 0 auto; padding: 7rem 2rem 4rem; }
+        .article-header { margin-bottom: 3rem; padding-bottom: 2rem; border-bottom: 1px solid var(--border); }
+        .article-category { font-size: 0.7rem; color: var(--toki-blue); letter-spacing: 0.15em; margin-bottom: 1rem; }
+        .article-header h1 { font-family: var(--font-display); font-size: 1.8rem; font-weight: 700; line-height: 1.5; margin-bottom: 1.5rem; }
+        .article-subtitle { font-size: 0.95rem; color: var(--text-secondary); line-height: 1.9; }
+
+        .article-content h2 { font-family: var(--font-display); font-size: 1.3rem; font-weight: 600; margin: 3rem 0 1.5rem; padding-bottom: 0.5rem; border-bottom: 2px solid var(--toki-blue-pale); }
+        .article-content h3 { font-family: var(--font-display); font-size: 1.1rem; font-weight: 600; margin: 2rem 0 1rem; color: var(--toki-blue-dark); }
+        .article-content p { margin-bottom: 1.5rem; text-align: justify; }
+        .article-content blockquote { border-left: 3px solid var(--toki-blue); padding-left: 1.5rem; margin: 2rem 0; font-family: var(--font-display); color: var(--text-secondary); }
+        .article-content ul { margin: 1.5rem 0; padding-left: 1.5rem; }
+        .article-content li { margin-bottom: 0.75rem; }
+
+        .core-message { background: var(--toki-blue-pale); border-left: 4px solid var(--toki-blue); padding: 1.5rem; margin: 2rem 0; font-size: 0.95rem; line-height: 1.8; }
+        .key-point { background: linear-gradient(135deg, var(--toki-blue-pale) 0%, #fff 100%); border: 1px solid var(--accent-blue); border-radius: 8px; padding: 1.5rem; margin: 2rem 0; text-align: center; }
+        .key-point p { font-family: var(--font-display); font-size: 1.1rem; color: var(--toki-blue-dark); margin: 0; }
+
+        .article-footer { margin-top: 4rem; padding-top: 2rem; border-top: 1px solid var(--border); text-align: center; }
+        .article-footer p { font-size: 0.8rem; color: var(--text-muted); margin-bottom: 1rem; }
+        .article-footer a { color: var(--toki-blue); text-decoration: none; }
+        .article-footer a:hover { text-decoration: underline; }
+
+        @media (max-width: 768px) {
+            .article-container { padding: 6rem 1.2rem 3rem; }
+            .article-header h1 { font-size: 1.5rem; }
+            .article-nav .nav-label { display: none; }
+        }
+        @media print { .article-nav { display: none; } .article-container { padding-top: 2rem; } }
+    </style>
+    <link rel="stylesheet" href="contact-form.css">
+    <meta property="og:type" content="article">
+    <meta property="og:title" content="Abolishing Secrets | TokiStorage">
+    <meta property="og:description" content="We built TokiQR on a policy of holding zero personal data on our servers. Shipping was the one exception — until we realized it didn't have to be. Policy reshapes logistics.">
+    <meta property="og:url" content="https://tokistorage.github.io/lp/zero-pii-en.html">
+    <meta property="og:site_name" content="TokiStorage">
+    <meta name="twitter:card" content="summary">
+    <meta name="twitter:title" content="Abolishing Secrets | TokiStorage">
+    <meta name="twitter:description" content="We built TokiQR on a policy of holding zero personal data on our servers. Shipping was the one exception — until we realized it didn't have to be. Policy reshapes logistics.">
+    <meta property="og:image" content="https://tokistorage.github.io/lp/asset/tokistorage-icon-512.png">
+    <meta property="og:image:width" content="512">
+    <meta property="og:image:height" content="512">
+    <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Article",
+  "headline": "Abolishing Secrets",
+  "author": {
+    "@type": "Person",
+    "name": "Takuya Sato",
+    "url": "https://tokistorage.github.io/lp/profile.html"
+  },
+  "publisher": {
+    "@type": "Organization",
+    "name": "TokiStorage",
+    "url": "https://tokistorage.github.io/lp",
+    "logo": {
+      "@type": "ImageObject",
+      "url": "https://tokistorage.github.io/lp/asset/tokistorage-icon-512.png"
+    }
+  },
+  "url": "https://tokistorage.github.io/lp/zero-pii-en.html",
+  "inLanguage": "en",
+  "mainEntityOfPage": "https://tokistorage.github.io/lp/zero-pii-en.html",
+  "description": "We built TokiQR on a policy of holding zero personal data on our servers. Shipping was the one exception — until we realized it didn't have to be. Policy reshapes logistics."
+}
+    </script>
+    <link rel="alternate" hreflang="ja" href="https://tokistorage.github.io/lp/zero-pii.html">
+    <link rel="alternate" hreflang="en" href="https://tokistorage.github.io/lp/zero-pii-en.html">
+    <link rel="alternate" hreflang="x-default" href="https://tokistorage.github.io/lp/zero-pii.html">
+    <link rel="canonical" href="https://tokistorage.github.io/lp/zero-pii-en.html">
+</head>
+<body>
+
+<nav class="article-nav">
+    <a href="essays-en.html" class="nav-brand">TokiStorage</a>
+    <div class="nav-right">
+        <span class="nav-label">ESSAY</span>
+        <a href="zero-pii.html" class="lang-switch">JA</a>
+    </div>
+</nav>
+
+<main class="article-container">
+
+    <header class="article-header">
+        <p class="article-category">ESSAY &mdash; Meta Perspectives</p>
+        <h1>Abolishing Secrets<br><span style="font-size: 0.6em; font-weight: 400; color: var(--text-secondary);">&mdash;&mdash; When Policy Reshapes Logistics</span></h1>
+        <p class="article-subtitle">
+            Hold zero personal data on servers &mdash; that was the policy from day one.<br>
+            Shipping was the one exception. Until it wasn't.
+        </p>
+    </header>
+
+    <article class="article-content">
+
+        <div class="core-message">
+            <strong>The core argument:</strong> When we adopted the policy of holding zero personal data on our servers, we assumed shipping would be the exception. But after introducing bulk mode, editorial rights, and shifting from development to operations, we realized we could eliminate the exception entirely. By redesigning logistics, the system now holds no names, no addresses, no email addresses. Policy reshaped logistics.
+        </div>
+
+        <h2>1. The Principle &mdash; Nothing on the Server</h2>
+
+        <p>The TokiQR server is just 3 MB. Audio data is encoded within the URL on the QR code itself. There is no user database on the server. No accounts. No sessions, no cookies. Recording and playback happen entirely in the browser. The server only serves static files.</p>
+
+        <p>This wasn't accidental. It was the result of treating "hold no personal data on servers" as a design constraint. If there's no data, there's nothing to leak. If the server goes down, QR codes still work. This minimal dependency structure aligns with the mission of preserving voices for a thousand years.</p>
+
+        <h2>2. The Exception &mdash; "Shipping Is Different"</h2>
+
+        <p>But selling physical products changed the equation. Laminated QR sheets and quartz glass QR plaques are tangible objects. Tangible objects must be delivered. Delivery requires an address. An address requires a name and contact information.</p>
+
+        <p>"Shipping is special, so it can't be helped" &mdash; with that reasoning, we added address fields to the order form, a notes section, and shipping status management. We added currency selection. The policy had its first exception.</p>
+
+        <p>The exception seemed small. Just the information needed for shipping. But once you allow one exception, the next follows. Shipping management spawned status transitions. Delivery notifications demanded email addresses. Tracking unshipped orders complicated reports. The exception had quietly taken root.</p>
+
+        <h2>3. The Turning Point &mdash; Bulk Mode and Editorial Rights</h2>
+
+        <p>The shift began with the evolution of the payment flow.</p>
+
+        <p>We built a multi-QR credit code system. When a payment arrives via Wise, the webhook detects the order code (TOKI-XXXX-XXXX-XXXX) in the reference and automatically issues the code. The user simply enters the code on the frontend to activate it. There's nowhere in the process that asks for an address.</p>
+
+        <p>We extended the same flow to editorial rights for NDL (National Diet Library) publication. Pay via Wise Pay Link, receive a code, activate it. KYC is handled entirely on Wise's side. TokiStorage only sees amounts and codes.</p>
+
+        <p>That's when it clicked. Digital product payments were already running without any personal information. Only physical products remained as the exception.</p>
+
+        <h2>4. Reflection &mdash; The Operational Lens</h2>
+
+        <p>During development, you think "it's needed, so build it." But once you enter the operational phase, you have the space to ask "is it really needed?"</p>
+
+        <p>We had assumed shipping was a given. But when we looked at what was actually happening:</p>
+
+        <p>DIY &mdash; when customers print themselves, there is no shipping. Data travels as a QR URL. Lamination uses an off-the-shelf laminator. Nothing physical moves.</p>
+
+        <p>On-site production &mdash; when products are made at storage locations like Sado Island or Maui, they stay there. The "delivery destination" and the "storage location" are the same place. No logistics occur.</p>
+
+        <p>In other words, when the destination equals the storage site, the concept of shipping itself dissolves. The premise that shipping was necessary had never been correct.</p>
+
+        <h2>5. Abolition &mdash; Eliminating the Exception</h2>
+
+        <p>Once we saw it, all that remained was implementation.</p>
+
+        <ul>
+            <li>Removed shipping statuses (shipped, delivered) from the system</li>
+            <li>Removed address fields, notes, and currency selection from the order form</li>
+            <li>Made GitHub archival and National Diet Library deposit always active &mdash; not optional, but assumed</li>
+            <li>Unified identification to a single identifier: Wisetag (the Wise account name)</li>
+            <li>Payment follows a single path: Wise Pay Link &rarr; order code &rarr; activation</li>
+            <li>Partner commission is sent automatically via Wise API using the Wisetag</li>
+        </ul>
+
+        <p>Deleting the code was almost exhilarating. Address fields, notes textareas, USD price tables, shipping conditionals, unshipped counters &mdash; all gone. The system grew lighter. Without exceptions, both code and data flow became dramatically simpler.</p>
+
+        <h2>6. What Remained</h2>
+
+        <p>After the abolition, the personal information held by TokiStorage's system reached zero.</p>
+
+        <p>Wisetag serves as an identifier, but it's a public username on Wise's platform &mdash; not personal information managed by TokiStorage. Payment data is handled entirely by Wise. Addresses are unnecessary because there's no shipping. Email addresses are unnecessary because there's no notification channel that requires them.</p>
+
+        <p>When there is no data to leak, security incidents become structurally impossible. Encryption, access controls, data retention policies, legal reviews of privacy policies &mdash; most of them become unnecessary. When there's nothing to protect, you don't need the apparatus of protection.</p>
+
+        <h2>7. Policy Reshapes Logistics</h2>
+
+        <p>Normally, business design follows this sequence: define the business model, design the logistics, and the privacy policy follows along. Policy trails behind reality.</p>
+
+        <p>At TokiStorage, the order was reversed. The policy of "hold no personal data" came first, and it forced a redesign of logistics. We found a way to deliver products without the concept of delivery. The idea of shipping itself evaporated.</p>
+
+        <p>When you treat policy as "something to compromise in the face of practical constraints," exceptions multiply. One, then another. Eventually the policy becomes hollow &mdash; "it says this on paper, but in practice it's different."</p>
+
+        <p>But when you treat policy as a design constraint, the dynamic shifts. Constraints force you to question existing assumptions and seek alternative solutions. We were able to let go of the assumption that shipping was necessary precisely because the policy was functioning as a constraint.</p>
+
+        <p>It was the same structure when we walked away from patents. "Proliferation over monopoly" &mdash; that philosophy came first, and it reshaped our intellectual property strategy. Policy transforms how technology is handled, how logistics are shaped, and ultimately, how the entire business model evolves.</p>
+
+        <blockquote>
+            We thought shipping was special.<br>
+            What was special was the assumption that shipping was necessary.
+        </blockquote>
+
+        <div class="key-point">
+            <p>Zero personal information.<br>Not an ideal &mdash; a design constraint you can implement.<br>Policy reshaped logistics, and logistics reshaped the business model.</p>
+        </div>
+
+    </article>
+
+    <footer class="article-footer">
+        <p id="essay-nav-links"></p>
+        <p style="margin-top: 2rem; font-size: 0.75rem;">&copy; 2026 TokiStorage. All rights reserved.</p>
+    </footer>
+
+</main>
+
+<script src="contact-form.js" defer></script>
+<script src="essay-tts.js"></script>
+<script src="essay-nav.js"></script>
+<script src="tracker.js" defer></script>
+</body>
+</html>

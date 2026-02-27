@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" type="image/png" sizes="32x32" href="asset/favicon-32.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="asset/apple-touch-icon.png">
+    <title>機密情報の撤廃 | トキストレージ</title>
+    <meta name="robots" content="index, follow">
+    <meta name="description" content="個人情報をサーバーに持たない——そのポリシーは当初、配送だけを例外としていた。物流の見直しを経て、例外はなくなった。ポリシーはロジをも変容する。">
+    <style>
+        :root {
+            --toki-blue: #2563EB;
+            --toki-blue-dark: #1D4ED8;
+            --toki-blue-pale: #EFF6FF;
+            --accent-blue: #3B82F6;
+            --bg-white: #FFFFFF;
+            --text-primary: #1E293B;
+            --text-secondary: #475569;
+            --text-muted: #94A3B8;
+            --border: #E2E8F0;
+            --font-display: 'Hiragino Mincho ProN', 'Yu Mincho', serif;
+            --font-body: 'Hiragino Kaku Gothic ProN', 'Yu Gothic', 'Meiryo', sans-serif;
+        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        html { scroll-behavior: smooth; }
+        body { font-family: var(--font-body); font-weight: 400; background: var(--bg-white); color: var(--text-primary); line-height: 2; font-size: 16px; }
+
+        .article-nav { position: fixed; top: 0; left: 0; right: 0; z-index: 1000; background: rgba(255,255,255,0.95); backdrop-filter: blur(12px); border-bottom: 1px solid var(--border); padding: 0.6rem 1.2rem; display: flex; align-items: center; justify-content: space-between; gap: 1rem; }
+        .article-nav .nav-brand { font-family: var(--font-display); font-size: 0.9rem; font-weight: 600; color: var(--toki-blue); text-decoration: none; white-space: nowrap; }
+        .article-nav .nav-brand::before { content: ''; display: inline-block; width: 20px; height: 20px; background: url('asset/tokistorage-icon-512.png') no-repeat center / contain; vertical-align: -3px; margin-right: 5px; }
+        .article-nav .nav-right { display: flex; align-items: center; gap: 1rem; }
+        .article-nav .nav-label { font-size: 0.6rem; color: var(--text-muted); letter-spacing: 0.08em; }
+        .article-nav .lang-switch { font-size: 0.75rem; color: var(--toki-blue); text-decoration: none; padding: 0.3rem 0.6rem; border: 1px solid var(--toki-blue); border-radius: 4px; }
+        .article-nav .lang-switch:hover { background: var(--toki-blue); color: #fff; }
+
+        .article-container { max-width: 680px; margin: 0 auto; padding: 7rem 2rem 4rem; }
+        .article-header { margin-bottom: 3rem; padding-bottom: 2rem; border-bottom: 1px solid var(--border); }
+        .article-category { font-size: 0.7rem; color: var(--toki-blue); letter-spacing: 0.15em; margin-bottom: 1rem; }
+        .article-header h1 { font-family: var(--font-display); font-size: 1.8rem; font-weight: 700; line-height: 1.5; margin-bottom: 1.5rem; }
+        .article-subtitle { font-size: 0.95rem; color: var(--text-secondary); line-height: 1.9; }
+
+        .article-content h2 { font-family: var(--font-display); font-size: 1.3rem; font-weight: 600; margin: 3rem 0 1.5rem; padding-bottom: 0.5rem; border-bottom: 2px solid var(--toki-blue-pale); }
+        .article-content h3 { font-family: var(--font-display); font-size: 1.1rem; font-weight: 600; margin: 2rem 0 1rem; color: var(--toki-blue-dark); }
+        .article-content p { margin-bottom: 1.5rem; text-align: justify; }
+        .article-content blockquote { border-left: 3px solid var(--toki-blue); padding-left: 1.5rem; margin: 2rem 0; font-family: var(--font-display); color: var(--text-secondary); }
+        .article-content ul { margin: 1.5rem 0; padding-left: 1.5rem; }
+        .article-content li { margin-bottom: 0.75rem; }
+
+        .core-message { background: var(--toki-blue-pale); border-left: 4px solid var(--toki-blue); padding: 1.5rem; margin: 2rem 0; font-size: 0.95rem; line-height: 1.8; }
+        .key-point { background: linear-gradient(135deg, var(--toki-blue-pale) 0%, #fff 100%); border: 1px solid var(--accent-blue); border-radius: 8px; padding: 1.5rem; margin: 2rem 0; text-align: center; }
+        .key-point p { font-family: var(--font-display); font-size: 1.1rem; color: var(--toki-blue-dark); margin: 0; }
+
+        .article-footer { margin-top: 4rem; padding-top: 2rem; border-top: 1px solid var(--border); text-align: center; }
+        .article-footer p { font-size: 0.8rem; color: var(--text-muted); margin-bottom: 1rem; }
+        .article-footer a { color: var(--toki-blue); text-decoration: none; }
+        .article-footer a:hover { text-decoration: underline; }
+
+        @media (max-width: 768px) {
+            .article-container { padding: 6rem 1.2rem 3rem; }
+            .article-header h1 { font-size: 1.5rem; }
+            .article-nav .nav-label { display: none; }
+        }
+        @media print { .article-nav { display: none; } .article-container { padding-top: 2rem; } }
+    </style>
+    <link rel="stylesheet" href="contact-form.css">
+    <meta property="og:type" content="article">
+    <meta property="og:title" content="機密情報の撤廃 | トキストレージ">
+    <meta property="og:description" content="個人情報をサーバーに持たない——そのポリシーは当初、配送だけを例外としていた。物流の見直しを経て、例外はなくなった。ポリシーはロジをも変容する。">
+    <meta property="og:url" content="https://tokistorage.github.io/lp/zero-pii.html">
+    <meta property="og:site_name" content="トキストレージ">
+    <meta name="twitter:card" content="summary">
+    <meta name="twitter:title" content="機密情報の撤廃 | トキストレージ">
+    <meta name="twitter:description" content="個人情報をサーバーに持たない——そのポリシーは当初、配送だけを例外としていた。物流の見直しを経て、例外はなくなった。ポリシーはロジをも変容する。">
+    <meta property="og:image" content="https://tokistorage.github.io/lp/asset/tokistorage-icon-512.png">
+    <meta property="og:image:width" content="512">
+    <meta property="og:image:height" content="512">
+    <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Article",
+  "headline": "機密情報の撤廃",
+  "author": {
+    "@type": "Person",
+    "name": "Takuya Sato",
+    "url": "https://tokistorage.github.io/lp/profile.html"
+  },
+  "publisher": {
+    "@type": "Organization",
+    "name": "TokiStorage",
+    "url": "https://tokistorage.github.io/lp",
+    "logo": {
+      "@type": "ImageObject",
+      "url": "https://tokistorage.github.io/lp/asset/tokistorage-icon-512.png"
+    }
+  },
+  "url": "https://tokistorage.github.io/lp/zero-pii.html",
+  "inLanguage": "ja",
+  "mainEntityOfPage": "https://tokistorage.github.io/lp/zero-pii.html",
+  "description": "個人情報をサーバーに持たない——そのポリシーは当初、配送だけを例外としていた。物流の見直しを経て、例外はなくなった。ポリシーはロジをも変容する。"
+}
+    </script>
+    <link rel="alternate" hreflang="ja" href="https://tokistorage.github.io/lp/zero-pii.html">
+    <link rel="alternate" hreflang="en" href="https://tokistorage.github.io/lp/zero-pii-en.html">
+    <link rel="alternate" hreflang="x-default" href="https://tokistorage.github.io/lp/zero-pii.html">
+    <link rel="canonical" href="https://tokistorage.github.io/lp/zero-pii.html">
+</head>
+<body>
+
+<nav class="article-nav">
+    <a href="essays.html" class="nav-brand">トキストレージ</a>
+    <div class="nav-right">
+        <span class="nav-label">ESSAY</span>
+        <a href="zero-pii-en.html" class="lang-switch">EN</a>
+    </div>
+</nav>
+
+<main class="article-container">
+
+    <header class="article-header">
+        <p class="article-category">ESSAY &mdash; メタ視点</p>
+        <h1>機密情報の撤廃<br><span style="font-size: 0.6em; font-weight: 400; color: var(--text-secondary);">&mdash;&mdash; ポリシーはロジをも変容する</span></h1>
+        <p class="article-subtitle">
+            個人情報をサーバーに持たない——そのポリシーは当初、配送だけを例外としていた。<br>
+            物流の見直しを経て、例外はなくなった。
+        </p>
+    </header>
+
+    <article class="article-content">
+
+        <div class="core-message">
+            <strong>この記事で言いたいこと：</strong>個人情報をサーバーに持たないというポリシーを掲げたとき、配送は例外だと考えていた。しかしバルクモードの導入、特集権の整備、開発から運用への移行を経て、例外なしに一貫できることが見えた。物流の再設計により、システム上に氏名・住所・メールアドレスは一切存在しない。ポリシーが物流を変えた。
+        </div>
+
+        <h2>1. 原則——サーバーに何も持たない</h2>
+
+        <p>TokiQRのサーバーはわずか3MBだ。音声データはQRコード紙面のURL内に符号化されている。サーバーにユーザーデータベースはない。アカウントもない。セッションもcookieもない。録音も再生もすべてブラウザ上で完結し、サーバーは静的ファイルを配信するだけだ。</p>
+
+        <p>これは偶然ではない。「個人情報をサーバーに持たない」という原則を設計制約として置いた結果だ。データがなければ漏洩もない。サーバーが落ちてもQRコードは読み取れる。依存関係を極限まで削ぎ落とした構造が、1000年保存という使命と整合する。</p>
+
+        <h2>2. 例外——「配送は特別」という判断</h2>
+
+        <p>しかし、物理商品を売るとなると話が変わった。ラミネートQRシートやクォーツガラスQRは、形あるものだ。形あるものは届けなければならない。届けるには住所がいる。住所を聞くには名前と連絡先がいる。</p>
+
+        <p>「配送は特別だから仕方ない」——そう判断して、注文フォームに住所欄を設け、備考欄を用意し、配送ステータスの管理機能を実装した。通貨の選択肢も加えた。ポリシーに例外が生まれた瞬間だった。</p>
+
+        <p>例外は小さく見えた。配送に必要な情報だけだ。しかし例外は一度認めると、次の例外を呼ぶ。配送管理のためにステータス遷移が生まれ、発送通知のためにメールアドレスが求められ、未発送の追跡のためにレポートが複雑になる。例外は静かに根を張っていた。</p>
+
+        <h2>3. 転機——バルクモードと特集権</h2>
+
+        <p>変化は、決済フローの進化から始まった。</p>
+
+        <p>マルチQRクレジットコードの仕組みを作った。Wiseに入金すると、referenceに含まれた注文コード（TOKI-XXXX-XXXX-XXXX）がWebhookで自動検出され、コードが発行される。ユーザーはフロントエンドでコードを入力するだけでアクティベートできる。住所を聞く場面がどこにもない。</p>
+
+        <p>特集権（NDL納本権）も同じフローで購入できるようにした。Wise Pay Linkで支払い、コードを受け取り、アクティベートする。KYCはWise側で完結する。TokiStorage側は金額とコードだけを見ている。</p>
+
+        <p>ここで気づいた。デジタル商品の決済は、すでに個人情報なしで回っている。物理商品だけが例外として残っている。</p>
+
+        <h2>4. 振り返り——運用の視座から</h2>
+
+        <p>開発フェーズでは「必要だから作る」と考える。しかし運用フェーズに入ると「本当に必要か？」と問い直す余裕が生まれる。</p>
+
+        <p>配送という概念を前提にしていたが、実態を見つめ直した。</p>
+
+        <p>DIY——顧客が自分で印刷する場合、配送は存在しない。データはQR URLとして渡るだけだ。ラミネート加工も市販のラミネーターで完結する。</p>
+
+        <p>保管拠点製造——佐渡やMauiの保管拠点で製造する場合、製品はそのまま現地に保管される。「届ける先」と「保管する場所」が同じだ。物流は発生しない。</p>
+
+        <p>つまり、配送先と保管先が同一であるなら、物流という概念自体が消滅する。配送が必要だという前提が、そもそも正しくなかった。</p>
+
+        <h2>5. 撤廃——例外をなくす</h2>
+
+        <p>気づいてしまえば、あとは実装するだけだった。</p>
+
+        <ul>
+            <li>配送ステータス（発送済み・配送済み）をシステムから削除</li>
+            <li>注文フォームから住所欄・備考欄・通貨選択を削除</li>
+            <li>GitHub保管・国会図書館納本を常時有効に（オプションではなく前提）</li>
+            <li>唯一の識別子をWisetag（Wiseアカウント名）に統一</li>
+            <li>決済はWise Pay Link → 注文コード → アクティベーションの一本道</li>
+            <li>パートナーへの手数料送金はWisetagからWise APIで自動実行</li>
+        </ul>
+
+        <p>コードを削除していく過程は、快感に近かった。住所フィールド、備考テキストエリア、USD価格テーブル、配送条件分岐、未発送カウンター——すべて消えた。システムが軽くなっていく。例外がなくなることで、コードもデータフローも劇的にシンプルになった。</p>
+
+        <h2>6. 何が残ったか</h2>
+
+        <p>撤廃後、TokiStorageのシステムが保持する個人情報はゼロになった。</p>
+
+        <p>Wisetagは識別子として使っているが、これはWise側の公開ユーザー名であり、TokiStorageが管理する個人情報ではない。決済情報はWise側で完結する。住所は配送がないので不要。メールアドレスは通知経路が存在しないので不要。</p>
+
+        <p>漏洩するデータが存在しないということは、セキュリティインシデントが構造的に発生しないということだ。暗号化も、アクセス制御も、データ保持期限の設定も、プライバシーポリシーの法的レビューも、そのほとんどが不要になる。守るべきものがなければ、守る仕組みもいらない。</p>
+
+        <h2>7. ポリシーはロジを変容する</h2>
+
+        <p>通常、ビジネスの設計はこの順序で進む。ビジネスモデルを決め、物流を設計し、プライバシーポリシーがそれに追従する。ポリシーは現実の後追いだ。</p>
+
+        <p>TokiStorageでは順序が逆になった。「個人情報を持たない」というポリシーが先にあり、それが物流を再設計させた。配送を前提としない商品提供の形を見つけ、物流という概念自体を消滅させた。</p>
+
+        <p>ポリシーを「現実の制約に合わせて妥協するもの」と捉えると、例外が一つ、また一つと増えていく。やがてポリシーは形骸化し、「一応こう書いてあるが実態は違う」というものになる。</p>
+
+        <p>しかしポリシーを「設計制約」として扱えば、話は変わる。制約があるからこそ、従来の前提を疑い、別の解を探す。配送が必要だという思い込みを手放せたのは、ポリシーが制約として機能していたからだ。</p>
+
+        <p>特許を手放したときも同じ構造だった。「独占より普及を」という思想が先にあり、それが知財戦略を変えた。ポリシーが技術の扱いを変え、物流の形を変え、ビジネスモデル全体を変容させていく。</p>
+
+        <blockquote>
+            配送は特別だと思っていた。<br>
+            しかし特別だったのは、配送が必要だという思い込みだった。
+        </blockquote>
+
+        <div class="key-point">
+            <p>個人情報をゼロにする。<br>それは理想ではなく、設計制約として実装できる。<br>ポリシーが物流を変え、物流がビジネスモデルを変えた。</p>
+        </div>
+
+    </article>
+
+    <footer class="article-footer">
+        <p id="essay-nav-links"></p>
+        <p style="margin-top: 2rem; font-size: 0.75rem;">&copy; 2026 TokiStorage. All rights reserved.</p>
+    </footer>
+
+</main>
+
+<script src="contact-form.js" defer></script>
+<script src="essay-tts.js"></script>
+<script src="essay-nav.js"></script>
+<script src="tracker.js" defer></script>
+</body>
+</html>
