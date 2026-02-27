@@ -23,13 +23,16 @@
 var SPREADSHEET_ID = '1lxrf5hLebwaUqt6WxeIjvVYUEYZntV9Kj-TrVzfkl0A';
 var NOTIFY_EMAIL = 'tokistorage1000@gmail.com';
 var WISE_BUSINESS_ID = 'dsbdb3';
-var WISE_API_TOKEN = 'REPLACE_WITH_WISE_API_TOKEN';
 var PARTNER_SHARE = 0.10;
 var PARTNER_SHARE_DIY = 0.90;
-var WISE_PROFILE_ID = 'REPLACE_WITH_WISE_PROFILE_ID';
 var DEV_VIDS = ['40a15079-bc04-4d56-8b39-1fca77e0a100'];
 
-var GITHUB_TOKEN = 'REPLACE_WITH_GITHUB_PAT';
+// シークレットはScript Propertiesで管理（GASエディタ → プロジェクトの設定 → スクリプトプロパティ）
+// キー: WISE_API_TOKEN, WISE_PROFILE_ID, GITHUB_TOKEN
+var _props = PropertiesService.getScriptProperties();
+var WISE_API_TOKEN = _props.getProperty('WISE_API_TOKEN') || '';
+var WISE_PROFILE_ID = _props.getProperty('WISE_PROFILE_ID') || '';
+var GITHUB_TOKEN = _props.getProperty('GITHUB_TOKEN') || '';
 var GITHUB_REPO = 'tokistorage/lp';
 var GITHUB_REPO_QR = 'tokistorage/qr';
 var GITHUB_API = 'https://api.github.com';
