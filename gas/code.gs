@@ -48,8 +48,8 @@ function sendEmail(recipient, subject, body, options) {
   MailApp.sendEmail(recipient, subject, body, options || {});
 }
 
-function calculateTotal(product, currency, storageSado, storageMaui) {
-  var base = PRICES[product] ? (PRICES[product][currency] || PRICES[product]['JPY']) : 5000;
+function calculateTotal(product, storageSado, storageMaui) {
+  var base = PRICES[product] ? PRICES[product]['JPY'] : 5000;
   var copies = 1;
   if (storageSado) copies++;
   if (storageMaui) copies++;

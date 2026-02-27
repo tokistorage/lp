@@ -77,18 +77,17 @@ function createOrderFromActivation(ss, data, code) {
   var productName = data.product === 'quartz'
     ? 'クォーツガラスQR（¥50,000〜）'
     : 'ラミネートQRシート（¥5,000〜）';
-  var currency = data.currency || 'JPY';
-  var total = calculateTotal(data.product, currency, data.storageSado, data.storageMaui);
+  var total = calculateTotal(data.product, data.storageSado, data.storageMaui);
 
   try {
     sheet.appendRow([
       new Date(), orderId, '入金済み', productName,
       data.wisetag || '', '',
       '', '', '', '',
-      data.qrUrl || '', data.notes || '', data.ref || '',
+      data.qrUrl || '', '', data.ref || '',
       data.device || '', data.screen || '', data.ua || '', data.lang || '', data.timezone || '',
-      currency, total,
-      data.storageGithub ? 'Yes' : '', data.storageNdl ? 'Yes' : '',
+      'JPY', total,
+      'Yes', 'Yes',
       data.storageSado ? 'Yes' : '', data.storageMaui ? 'Yes' : '',
       '', '', data.diy ? 'Yes' : ''
     ]);
@@ -96,26 +95,22 @@ function createOrderFromActivation(ss, data, code) {
 
   // パートナー手数料自動送金
   if (data.ref) {
-    var basePrice = PRICES[data.product] ? (PRICES[data.product][currency] || PRICES[data.product]['JPY']) : 5000;
-    payPartnerCommission(ss, orderId, data.ref, basePrice, total, currency, data.diy);
+    var basePrice = PRICES[data.product] ? PRICES[data.product]['JPY'] : 5000;
+    payPartnerCommission(ss, orderId, data.ref, basePrice, total, 'JPY', data.diy);
   }
 
-  var symbol = currency === 'USD' ? '$' : '¥';
-  var priceDisplay = symbol + total.toLocaleString();
   var adminBody = '注文がアクティベートされました。\n\n'
     + '注文番号: ' + orderId + '\n'
     + '注文コード: ' + code + '\n'
     + '商品: ' + productName + '\n'
     + 'Wisetag: ' + (data.wisetag || '') + '\n'
-    + '金額: ' + priceDisplay + '（' + currency + '）\n'
+    + '金額: ¥' + total.toLocaleString() + '\n'
     + 'QR URL: ' + (data.qrUrl || '') + '\n'
     + 'パートナー: ' + (data.ref || 'なし') + '\n'
     + 'DIY: ' + (data.diy ? 'はい' : 'いいえ') + '\n\n'
-    + '保管オプション:\n'
-    + '  GitHub: ' + (data.storageGithub ? 'Yes' : 'No') + '\n'
-    + '  NDL: ' + (data.storageNdl ? 'Yes' : 'No') + '\n'
-    + '  佐渡: ' + (data.storageSado ? 'Yes' : 'No') + '\n'
-    + '  Maui: ' + (data.storageMaui ? 'Yes' : 'No');
+    + '保管: GitHub / NDL（常時）'
+    + (data.storageSado ? ' / 佐渡' : '')
+    + (data.storageMaui ? ' / Maui' : '');
   sendEmail(NOTIFY_EMAIL, '【TokiQR】注文アクティベート ' + orderId + ' — ' + productName, adminBody);
 }
 
