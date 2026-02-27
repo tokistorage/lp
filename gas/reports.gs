@@ -121,12 +121,10 @@ function sendDailyReport() {
     return Utilities.formatDate(new Date(o.date), 'Asia/Tokyo', 'yyyy-MM-dd') === todayStr;
   });
   var paid = orders.filter(function(o) { return o.status === '入金済み'; });
-  var shipped = orders.filter(function(o) { return o.status === '発送済み' || o.status === '配送済み'; });
 
   body += '\n── 注文 ──\n';
   body += '  本日新規: ' + todayOrders.length + '件\n';
-  body += '  入金済み（未発送）: ' + paid.length + '件\n';
-  body += '  発送済み: ' + shipped.length + '件\n';
+  body += '  入金済み: ' + paid.length + '件\n';
   body += '  累計: ' + orders.length + '件\n';
 
   if (todayOrders.length > 0) {
