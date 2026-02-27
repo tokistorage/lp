@@ -48,18 +48,19 @@
 
         .core-message { background: var(--toki-blue-pale); border-left: 4px solid var(--toki-blue); padding: 1.5rem; margin: 2rem 0; font-size: 0.95rem; line-height: 1.8; }
         .key-point { background: linear-gradient(135deg, var(--toki-blue-pale) 0%, #fff 100%); border: 1px solid var(--accent-blue); border-radius: 8px; padding: 1.5rem; margin: 2rem 0; text-align: center; }
+        .key-point p { font-family: var(--font-display); font-size: 1.1rem; color: var(--toki-blue-dark); margin: 0; }
 
-        .article-footer { margin-top: 4rem; padding-top: 2rem; border-top: 1px solid var(--border); }
-        .article-footer-nav { display: flex; flex-direction: column; gap: 0.5rem; }
-        .article-footer-nav a { color: var(--toki-blue); text-decoration: none; font-size: 0.9rem; }
-        .article-footer-nav a:hover { text-decoration: underline; }
-        .article-footer .copyright { margin-top: 2rem; font-size: 0.75rem; color: var(--text-muted); }
+        .article-footer { margin-top: 4rem; padding-top: 2rem; border-top: 1px solid var(--border); text-align: center; }
+        .article-footer p { font-size: 0.8rem; color: var(--text-muted); margin-bottom: 1rem; }
+        .article-footer a { color: var(--toki-blue); text-decoration: none; }
+        .article-footer a:hover { text-decoration: underline; }
 
-        .related-essays { margin-top: 2rem; }
-        .related-essays h3 { font-family: var(--font-display); font-size: 1rem; margin-bottom: 1rem; color: var(--text-secondary); }
-        .related-link { display: block; padding: 0.5rem 0; color: var(--toki-blue); text-decoration: none; font-size: 0.9rem; border-bottom: 1px solid var(--border); }
-        .related-link:hover { text-decoration: underline; }
-        .related-link:last-child { border-bottom: none; }
+        @media (max-width: 768px) {
+            .article-container { padding: 6rem 1.2rem 3rem; }
+            .article-header h1 { font-size: 1.5rem; }
+            .article-nav .nav-label { display: none; }
+        }
+        @media print { .article-nav { display: none; } .article-container { padding-top: 2rem; } }
     </style>
 </head>
 <body>
@@ -72,14 +73,14 @@
     </div>
 </nav>
 
-<article class="article-container">
+<main class="article-container">
     <header class="article-header">
         <div class="article-category">META PERSPECTIVES</div>
         <h1>The Operational Lens</h1>
         <p class="article-subtitle">When the development phase ends and operations begin, the nature of your ideas changes. The AI chatbot was proof that perspective had shifted from builder to user.</p>
     </header>
 
-    <div class="article-content">
+    <article class="article-content">
 
         <h2>What Changes When You Finish Building</h2>
 
@@ -135,13 +136,14 @@
             The real work begins after you finish building.
         </blockquote>
 
-    </div>
+    </article>
 
     <footer class="article-footer">
-        <div class="article-footer-nav" id="essayFooterNav"></div>
-        <p class="copyright">&copy; 2026 TokiStorage</p>
+        <p id="essay-nav-links"></p>
+        <p style="font-size: 0.75rem; color: var(--text-muted);">&copy; 2026 TokiStorage. All rights reserved.</p>
     </footer>
-</article>
+
+</main>
 
 <script src="essay-nav.js"></script>
 </body>
