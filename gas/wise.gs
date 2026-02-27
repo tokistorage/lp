@@ -72,12 +72,8 @@ function handleWiseWebhook(ss, data, raw) {
         if (transfer) {
           var ref = (transfer.details && transfer.details.reference) || transfer.reference || '';
           logSheet.getRange(2, 5).setValue(ref);
-          var orderMatch = ref.match(/TQ-\d{8}-\d{4}/);
-          if (orderMatch) {
-            confirmOrder(ss, orderMatch[0], transfer.targetValue || transfer.sourceValue, transfer.targetCurrency || transfer.sourceCurrency);
-          }
           var tokiMatch = ref.match(/TOKI-[A-Z0-9]{4}-[A-Z0-9]{4}-[A-Z0-9]{4}/);
-          if (!orderMatch && tokiMatch) {
+          if (tokiMatch) {
             processTokiCode(ss, tokiMatch, ref,
               transfer.targetValue || transfer.sourceValue,
               transfer.targetCurrency || transfer.sourceCurrency);
@@ -99,16 +95,11 @@ function handleWiseWebhook(ss, data, raw) {
       var ref = fetchRecentCreditReference(profileId, balanceId, d.currency, d.amount, d.occurred_at);
       logSheet.getRange(2, 5).setValue(ref || '(API照会済み・該当なし)');
       if (ref) {
-        var orderMatch = ref.match(/TQ-\d{8}-\d{4}/);
-        if (orderMatch) {
-          confirmOrder(ss, orderMatch[0], d.amount, d.currency);
+        var tokiMatch = ref.match(/TOKI-[A-Z0-9]{4}-[A-Z0-9]{4}-[A-Z0-9]{4}/);
+        if (tokiMatch) {
+          processTokiCode(ss, tokiMatch, ref, d.amount, d.currency);
         } else {
-          var tokiMatch = ref.match(/TOKI-[A-Z0-9]{4}-[A-Z0-9]{4}-[A-Z0-9]{4}/);
-          if (tokiMatch) {
-            processTokiCode(ss, tokiMatch, ref, d.amount, d.currency);
-          } else {
-            notifyPayment(d.amount, d.currency, ref);
-          }
+          notifyPayment(d.amount, d.currency, ref);
         }
       } else {
         notifyPayment(d.amount, d.currency, '');
@@ -156,41 +147,6 @@ function fetchRecentCreditReference(profileId, balanceId, currency, amount, occu
     }
     return null;
   } catch (e) { return null; }
-}
-
-function confirmOrder(ss, orderId, amount, currency) {
-  var sheet = ss.getSheetByName('注文');
-  if (!sheet || sheet.getLastRow() < 2) return;
-  var data = sheet.getRange(2, 1, sheet.getLastRow() - 1, 28).getValues();
-  for (var i = 0; i < data.length; i++) {
-    if (data[i][1] === orderId && data[i][2].indexOf('未払い') !== -1) {
-      sheet.getRange(i + 2, 3).setValue('入金済み');
-      var productName = data[i][3];
-      var wisetag = data[i][4];
-      var customerContact = data[i][5];
-
-      if (productName.indexOf('クレジット') !== -1) {
-        var creditCount = Math.floor(amount / PRICES.credit[currency]);
-        if (creditCount < 1) creditCount = 1;
-        var code = generateCreditCode(ss, creditCount, customerContact, orderId);
-        sendEmail(NOTIFY_EMAIL,
-          '【TokiQR】入金確認 ' + orderId + ' — クレジットコード発行済み',
-          '注文番号: ' + orderId + '\nWisetag: ' + wisetag + '\n入金額: ' + currency + ' ' + amount + '\nクレジット数: ' + creditCount + '\nコード: ' + code);
-        if (customerContact.indexOf('@') !== -1) {
-          sendEmail(NOTIFY_EMAIL,
-            '【TokiQR】クレジットコードのお届け（' + orderId + '）',
-            (wisetag || 'お客') + ' 様\n\nご入金ありがとうございます。\nコード: ' + code + '\nクレジット数: ' + creditCount + '\n\nhttps://tokistorage.github.io/qr/credits.html\n\n— TokiStorage',
-            { replyTo: NOTIFY_EMAIL, to: customerContact });
-        }
-        return;
-      }
-
-      sendEmail(NOTIFY_EMAIL,
-        '【TokiQR】入金確認 ' + orderId + ' — 自動更新済み',
-        '注文番号: ' + orderId + '\nWisetag: ' + wisetag + '\n入金額: ' + currency + ' ' + amount + '\n\nステータスを「入金済み」に自動更新しました。');
-      return;
-    }
-  }
 }
 
 function notifyPayment(amount, currency, reference) {

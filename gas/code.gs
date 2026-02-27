@@ -25,8 +25,6 @@ var NOTIFY_EMAIL = 'tokistorage1000@gmail.com';
 var WISE_BUSINESS_ID = 'dsbdb3';
 var WISE_API_TOKEN = 'REPLACE_WITH_WISE_API_TOKEN';
 var PARTNER_SHARE = 0.10;
-var REMINDER_DAYS = 7;
-var DELIVERY_NOTICE_DAYS = 30;
 var DEV_VIDS = ['40a15079-bc04-4d56-8b39-1fca77e0a100'];
 
 var GITHUB_TOKEN = 'REPLACE_WITH_GITHUB_PAT';
@@ -51,13 +49,6 @@ function calculateTotal(product, currency, storageSado, storageMaui) {
   if (storageSado) copies++;
   if (storageMaui) copies++;
   return base * copies;
-}
-
-function buildWiseLink(amount, currency, orderId) {
-  return 'https://wise.com/pay/business/' + WISE_BUSINESS_ID
-    + '?amount=' + amount
-    + '&currency=' + currency
-    + '&description=' + encodeURIComponent(orderId);
 }
 
 function getOrCreateSheet(ss, name, headers) {
@@ -92,7 +83,6 @@ function doPost(e) {
     if (data.type === 'ndl_submit') return handleNdlSubmit(ss, data);
     if (data.type === 'monitor_apply') return handleMonitorApply(ss, data);
     if (data.type === 'monitor_feedback') return handleMonitorFeedback(ss, data);
-    if (data.type === 'order') return handleOrder(ss, data);
     return handleContact(ss, data);
 
   } catch (err) {

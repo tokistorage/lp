@@ -97,7 +97,7 @@ function processStoragePipeline() {
     var opts = [];
     if (o.storageGithub === 'Yes') opts.push('GitHub');
     if (o.storageNdl === 'Yes') opts.push('NL/NDL');
-    body += o.orderId + ' | ' + (o.wisetag || o.name) + ' | ' + opts.join(', ') + '\n';
+    body += o.orderId + ' | ' + (o.wisetag || o.orderId) + ' | ' + opts.join(', ') + '\n';
   });
   sendEmail(NOTIFY_EMAIL, '【TokiQR】保管パイプライン ' + eligible.length + '件処理', body);
 }
