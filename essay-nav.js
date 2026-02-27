@@ -160,6 +160,7 @@
     { id: 'development-chronicle', ja: '13日間の開発記録', en: 'Thirteen Days of Building', date: '2026-02-27' },
     { id: 'vibe-coding-secrets', ja: 'バイブコーディングの秘訣', en: 'The Secrets of Vibe Coding', date: '2026-02-27' },
     { id: 'customer-journey-transformation', ja: 'カスタマージャーニーの変容', en: 'The Transformation of the Customer Journey', date: '2026-02-27' },
+    { id: 'polishing', ja: '研磨', en: 'Polishing', date: '2026-02-27' },
 
     // ── メタ視点 ──
     { id: 'mission-statement', ja: 'ミッション・ステートメントの設計思想', en: 'Designing a Mission Statement', date: '2026-02-23' },
@@ -175,6 +176,7 @@
   // LATEST_COUNT で表示件数を制御
   const LATEST_COUNT = 5;
   const latestEssayIds = [
+    'polishing',
     'customer-journey-transformation',
     'vibe-coding-secrets',
     'affiliate-transparency',
@@ -336,6 +338,7 @@
     'development-chronicle':  ['storage-strategy', 'vibe-coding', 'monitor-program', 'burn-rate-zero', 'rapid-prototyping'],
     'vibe-coding-secrets':    ['vibe-coding', 'rapid-prototyping', 'development-chronicle', 'try-and-revert', 'burn-rate-zero'],
     'customer-journey-transformation': ['monitor-program', 'sanpoyoshi', 'diy-partner', 'walking-partner', 'partner-boundary'],
+    'polishing': ['narrative-trust', 'brochure-essay', 'customer-journey-transformation', 'patent-departure', 'mission-statement'],
     // ── メタ視点 ──
     'mission-statement':      ['narrative-trust', 'preserving-words', 'why-essays', 'corporate-site', 'integrity'],
     'preserving-words':       ['why-essays', 'akashic-record', 'what-to-leave', 'narrative-trust', 'openness'],
