@@ -18,63 +18,6 @@ function _buildDigestSection(title, rows, colIndex, todayStr) {
   return section;
 }
 
-function countBusinessDays(startDate, endDate) {
-  var count = 0;
-  var d = new Date(startDate);
-  while (d <= endDate) {
-    var day = d.getDay();
-    if (day !== 0 && day !== 6) count++;
-    d.setDate(d.getDate() + 1);
-  }
-  return count;
-}
-
-function _processPaymentReminders(ss, orders, todayStr) {
-  var reminders = [];
-  orders.forEach(function(o) {
-    if (o.status.indexOf('未払い') === -1) return;
-    var orderDate = new Date(o.date);
-    var today = new Date(todayStr);
-    var diffDays = Math.floor((today - orderDate) / (1000 * 60 * 60 * 24));
-    if (diffDays >= REMINDER_DAYS) {
-      reminders.push(o);
-    }
-  });
-
-  if (reminders.length > 0) {
-    var body = '以下の注文が' + REMINDER_DAYS + '日以上未払いです:\n\n';
-    reminders.forEach(function(o) {
-      body += o.orderId + ' | ' + (o.wisetag || o.name) + '\n';
-    });
-    sendEmail(NOTIFY_EMAIL, '【TokiQR】未払いリマインダー（' + reminders.length + '件）', body);
-  }
-
-  return reminders;
-}
-
-function _processDeliveryDelayNotices(ss, orders, todayStr) {
-  var delayed = [];
-  orders.forEach(function(o) {
-    if (o.status !== '入金済み') return;
-    var orderDate = new Date(o.date);
-    var today = new Date(todayStr);
-    var diffDays = Math.floor((today - orderDate) / (1000 * 60 * 60 * 24));
-    if (diffDays >= DELIVERY_NOTICE_DAYS) {
-      delayed.push(o);
-    }
-  });
-
-  if (delayed.length > 0) {
-    var body = '以下の注文が入金済みから' + DELIVERY_NOTICE_DAYS + '日以上経過しています:\n\n';
-    delayed.forEach(function(o) {
-      body += o.orderId + ' | ' + (o.wisetag || o.name) + '\n';
-    });
-    sendEmail(NOTIFY_EMAIL, '【TokiQR】配送遅延通知（' + delayed.length + '件）', body);
-  }
-
-  return delayed;
-}
-
 function _buildAccessReportSection(ss, todayStr) {
   var sheet = ss.getSheetByName('アクセスログ');
   if (!sheet || sheet.getLastRow() < 2) return '\n── アクセス ──\n  データなし\n';
@@ -177,13 +120,11 @@ function sendDailyReport() {
   var todayOrders = orders.filter(function(o) {
     return Utilities.formatDate(new Date(o.date), 'Asia/Tokyo', 'yyyy-MM-dd') === todayStr;
   });
-  var unpaid = orders.filter(function(o) { return o.status.indexOf('未払い') !== -1; });
   var paid = orders.filter(function(o) { return o.status === '入金済み'; });
   var shipped = orders.filter(function(o) { return o.status === '発送済み' || o.status === '配送済み'; });
 
   body += '\n── 注文 ──\n';
   body += '  本日新規: ' + todayOrders.length + '件\n';
-  body += '  未払い: ' + unpaid.length + '件\n';
   body += '  入金済み（未発送）: ' + paid.length + '件\n';
   body += '  発送済み: ' + shipped.length + '件\n';
   body += '  累計: ' + orders.length + '件\n';
@@ -191,7 +132,7 @@ function sendDailyReport() {
   if (todayOrders.length > 0) {
     body += '\n  本日の注文:\n';
     todayOrders.forEach(function(o) {
-      body += '    ' + o.orderId + ' | ' + (o.wisetag || o.name) + ' | ' + o.product + '\n';
+      body += '    ' + o.orderId + ' | ' + (o.wisetag || o.orderId) + ' | ' + o.product + '\n';
     });
   }
 
@@ -224,24 +165,6 @@ function sendDailyReport() {
     body += '  本日有効化: ' + todayActivations.length + '件\n';
     body += '  未使用: ' + totalUnused + '件\n';
     body += '  使用済み: ' + totalUsed + '件\n';
-  }
-
-  // リマインダー処理
-  var reminders = _processPaymentReminders(ss, orders, todayStr);
-  if (reminders.length > 0) {
-    body += '\n── 未払いリマインダー（' + reminders.length + '件）──\n';
-    reminders.forEach(function(o) {
-      body += '  ' + o.orderId + ' | ' + (o.wisetag || o.name) + '\n';
-    });
-  }
-
-  // 配送遅延通知
-  var delayed = _processDeliveryDelayNotices(ss, orders, todayStr);
-  if (delayed.length > 0) {
-    body += '\n── 配送遅延（' + delayed.length + '件）──\n';
-    delayed.forEach(function(o) {
-      body += '  ' + o.orderId + ' | ' + (o.wisetag || o.name) + '\n';
-    });
   }
 
   body += '\n\n— TokiStorage GAS 自動レポート';

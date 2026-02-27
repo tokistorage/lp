@@ -564,7 +564,7 @@ function routeOrdersToSeries(forNewsletter) {
       volume: vn.volume,
       number: vn.number,
       seriesName: 'TokiStorage',
-      title: (o.name || '') + '様',
+      title: (o.wisetag || o.orderId) + '様',
       urls: o.urls || [o.qrUrl],
       metadata: o.metadata || {},
       date: today
@@ -585,15 +585,15 @@ function routeOrdersToSeries(forNewsletter) {
         volume: vn.volume,
         number: vn.number,
         status: 'building',
-        title: (o.name || '') + '様',
+        title: (o.wisetag || o.orderId) + '様',
         orderId: o.orderId,
-        customerName: o.name || ''
+        customerName: o.wisetag || o.orderId
       });
       commitFileOnBranch('schedule.json', JSON.stringify(schedule, null, 2),
         'Update schedule: TQ-' + serialStr, branch, defaultSeries.repo);
 
       createGitHubPR(
-        'TQ-' + serialStr + ': ' + (o.name || '') + '様',
+        'TQ-' + serialStr + ': ' + (o.wisetag || o.orderId) + '様',
         branch,
         'NDL serial publication #' + nextSerial + ' from order ' + o.orderId
         + '\n\nbuild-newsletter.yml will generate the PDF after merge.',
