@@ -12,13 +12,6 @@ function processTokiCode(ss, tokiMatch, ref, amt, cur) {
   // 注文コード（laminate/quartz含む）
   if (isOrderPayment(ref)) {
     registerOrderCode(ss, code, amt, cur);
-    sendEmail(NOTIFY_EMAIL,
-      '【TokiQR】注文入金 ' + cur + ' ' + amt + ' — 注文コード自動登録済み',
-      'Wiseに注文の入金がありました。\n\n'
-        + '金額: ' + cur + ' ' + amt + '\n'
-        + 'コード: ' + code + '\n'
-        + 'Reference: ' + ref + '\n\n'
-        + 'ユーザーがアクティベートすると注文が作成されます。');
     return;
   }
 
@@ -27,13 +20,6 @@ function processTokiCode(ss, tokiMatch, ref, amt, cur) {
     var count = Math.floor(amt / (PRICES_TOKUSHU[cur] || PRICES_TOKUSHU['JPY']));
     if (count < 1) count = 1;
     registerCreditCode(ss, code, count, 'tokushu');
-    sendEmail(NOTIFY_EMAIL,
-      '【TokiQR】特集権入金 ' + cur + ' ' + amt + ' — コード自動登録済み',
-      'Wiseに入金がありました。\n\n'
-        + '金額: ' + cur + ' ' + amt + '\n'
-        + 'コード: ' + code + '\n'
-        + '特集権数: ' + count + '\n\n'
-        + 'コードレス購入フローで自動登録しました。');
     return;
   }
 
@@ -41,13 +27,6 @@ function processTokiCode(ss, tokiMatch, ref, amt, cur) {
   var count = Math.floor(amt / (PRICES.credit[cur] || PRICES.credit['JPY']));
   if (count < 1) count = 1;
   registerCreditCode(ss, code, count, 'multiQR');
-  sendEmail(NOTIFY_EMAIL,
-    '【TokiQR】マルチQR入金 ' + cur + ' ' + amt + ' — コード自動登録済み',
-    'Wiseに入金がありました。\n\n'
-      + '金額: ' + cur + ' ' + amt + '\n'
-      + 'コード: ' + code + '\n'
-      + 'マルチQR数: ' + count + '\n\n'
-      + 'コードレス購入フローで自動登録しました。');
 }
 
 function handleWiseWebhook(ss, data, raw) {

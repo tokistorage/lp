@@ -11,14 +11,6 @@ function handleMonitorApply(ss, data) {
     (data.ua || '').substring(0, 500)
   ]]);
 
-  sendEmail(NOTIFY_EMAIL,
-    '【モニター申し込み】' + (data.wisetag || ''),
-    'Wisetag: ' + (data.wisetag || '') + '\n'
-    + 'デバイス: ' + (data.device || '') + '\n'
-    + '言語: ' + (data.lang || '') + '\n'
-    + '日時: ' + new Date().toLocaleString('ja-JP', { timeZone: 'Asia/Tokyo' })
-  );
-
   return jsonResponse({ success: true });
 }
 

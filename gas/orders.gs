@@ -99,19 +99,6 @@ function createOrderFromActivation(ss, data, code) {
     payPartnerCommission(ss, orderId, data.ref, basePrice, total, 'JPY', data.diy);
   }
 
-  var adminBody = '注文がアクティベートされました。\n\n'
-    + '注文番号: ' + orderId + '\n'
-    + '注文コード: ' + code + '\n'
-    + '商品: ' + productName + '\n'
-    + 'Wisetag: ' + (data.wisetag || '') + '\n'
-    + '金額: ¥' + total.toLocaleString() + '\n'
-    + 'QR URL: ' + (data.qrUrl || '') + '\n'
-    + 'パートナー: ' + (data.ref || 'なし') + '\n'
-    + 'DIY: ' + (data.diy ? 'はい' : 'いいえ') + '\n\n'
-    + '保管: GitHub / NDL（常時）'
-    + (data.storageSado ? ' / 佐渡' : '')
-    + (data.storageMaui ? ' / Maui' : '');
-  sendEmail(NOTIFY_EMAIL, '【TokiQR】注文アクティベート ' + orderId + ' — ' + productName, adminBody);
 }
 
 function getOrders() {
@@ -185,18 +172,6 @@ function payPartnerCommission(ss, orderId, ref, basePrice, total, currency, isDi
         '', ''
       ]]);
     } catch (logErr) {}
-
-    // 6. 管理者通知
-    sendEmail(NOTIFY_EMAIL,
-      '【TokiQR】パートナー送金完了 ' + orderId + ' → ' + ref,
-      'パートナーへの手数料を自動送金しました。\n\n'
-      + '注文番号: ' + orderId + '\n'
-      + 'パートナー: ' + ref + '\n'
-      + '注文金額: ' + currency + ' ' + total + '\n'
-      + '商品ベース: ' + currency + ' ' + basePrice + '\n'
-      + 'DIY: ' + (isDiy ? 'はい' : 'いいえ') + '\n'
-      + '手数料: ' + currency + ' ' + commission + (isDiy ? ' (商品90% + 保管10%)' : ' (10%)') + '\n'
-      + 'WiseTransferId: ' + transfer.id);
 
   } catch (e) {
     Logger.log('Partner payout failed for ' + orderId + ': ' + e.message);
