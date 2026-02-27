@@ -1004,8 +1004,26 @@
 
 <!-- Next Steps -->
 <section class="pp-cta">
-    <h2>ご検討のステップ</h2>
-    <div style="max-width: 560px; margin: 0 auto 2.5rem; text-align: left;">
+    <h2>始め方</h2>
+
+    <!-- Individual steps (default) -->
+    <div id="steps-individual" class="pp-steps-panel" style="max-width: 560px; margin: 0 auto 2.5rem; text-align: left;">
+        <div style="display: flex; align-items: flex-start; gap: 1rem; margin-bottom: 1.5rem;">
+            <span style="flex-shrink:0; width:2rem; height:2rem; border-radius:50%; background:var(--toki-blue); color:#fff; display:flex; align-items:center; justify-content:center; font-size:0.8rem; font-weight:700;">01</span>
+            <div><strong style="color:#fff;">セットアップ（5分）</strong><br><span style="color:var(--text-muted); font-size:0.85rem;">Wisetagを設定し、あなた専用のTokiQRページを作成</span></div>
+        </div>
+        <div style="display: flex; align-items: flex-start; gap: 1rem; margin-bottom: 1.5rem;">
+            <span style="flex-shrink:0; width:2rem; height:2rem; border-radius:50%; background:var(--toki-blue); color:#fff; display:flex; align-items:center; justify-content:center; font-size:0.8rem; font-weight:700;">02</span>
+            <div><strong style="color:#fff;">設置する</strong><br><span style="color:var(--text-muted); font-size:0.85rem;">QRコードをスマホに保存、紙に印刷、シールにして設置</span></div>
+        </div>
+        <div style="display: flex; align-items: flex-start; gap: 1rem; margin-bottom: 1.5rem;">
+            <span style="flex-shrink:0; width:2rem; height:2rem; border-radius:50%; background:var(--toki-blue); color:#fff; display:flex; align-items:center; justify-content:center; font-size:0.8rem; font-weight:700;">03</span>
+            <div><strong style="color:#fff;">収益が届く</strong><br><span style="color:var(--text-muted); font-size:0.85rem;">あなたのページ経由の注文に応じて、Wiseで自動還元</span></div>
+        </div>
+    </div>
+
+    <!-- Corporate steps -->
+    <div id="steps-corporate" class="pp-steps-panel" style="display:none; max-width: 560px; margin: 0 auto 2.5rem; text-align: left;">
         <div style="display: flex; align-items: flex-start; gap: 1rem; margin-bottom: 1.5rem;">
             <span style="flex-shrink:0; width:2rem; height:2rem; border-radius:50%; background:var(--toki-blue); color:#fff; display:flex; align-items:center; justify-content:center; font-size:0.8rem; font-weight:700;">01</span>
             <div><strong style="color:#fff;">初回ミーティング（30分）</strong><br><span style="color:var(--text-muted); font-size:0.85rem;">貴社クライアントの課題感・ポートフォリオを共有</span></div>
@@ -1023,6 +1041,7 @@
             <div><strong style="color:#fff;">パイロット実施</strong><br><span style="color:var(--text-muted); font-size:0.85rem;">1〜2件のクライアントで実証・フィードバック</span></div>
         </div>
     </div>
+
     <div style="margin-bottom: 2rem;">
         <a href="#contact" style="display:inline-flex; align-items:center; gap:0.5rem; padding:0.85rem 2.5rem; background:var(--toki-blue); color:#fff; border-radius:0.4rem; font-size:1rem; font-weight:500; text-decoration:none;">お問い合わせ</a>
     </div>
@@ -1073,12 +1092,16 @@
 (function() {
     var tabs = document.querySelectorAll('.pp-tab');
     var panels = document.querySelectorAll('.pp-tab-panel');
+    var stepsPanels = document.querySelectorAll('.pp-steps-panel');
     tabs.forEach(function(tab) {
         tab.addEventListener('click', function() {
             tabs.forEach(function(t) { t.classList.remove('active'); });
             panels.forEach(function(p) { p.classList.remove('active'); });
             tab.classList.add('active');
             document.getElementById('tab-' + tab.dataset.tab).classList.add('active');
+            stepsPanels.forEach(function(s) { s.style.display = 'none'; });
+            var steps = document.getElementById('steps-' + tab.dataset.tab);
+            if (steps) steps.style.display = '';
         });
     });
 })();
