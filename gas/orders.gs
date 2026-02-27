@@ -96,7 +96,8 @@ function createOrderFromActivation(ss, data, code) {
 
   // パートナー手数料自動送金
   if (data.ref) {
-    payPartnerCommission(ss, orderId, data.ref, total, currency, data.diy);
+    var basePrice = PRICES[data.product] ? (PRICES[data.product][currency] || PRICES[data.product]['JPY']) : 5000;
+    payPartnerCommission(ss, orderId, data.ref, basePrice, total, currency, data.diy);
   }
 
   var symbol = currency === 'USD' ? '$' : '¥';
@@ -136,10 +137,17 @@ function getOrders() {
   });
 }
 
-function payPartnerCommission(ss, orderId, ref, total, currency, isDiy) {
+function payPartnerCommission(ss, orderId, ref, basePrice, total, currency, isDiy) {
   try {
-    var share = isDiy ? PARTNER_SHARE_DIY : PARTNER_SHARE;
-    var commission = Math.floor(total * share);
+    // DIY: 商品ベース価格に90%、追加保管分に10%
+    // 非DIY: 全額に10%
+    var commission;
+    if (isDiy) {
+      var storageExtra = total - basePrice;
+      commission = Math.floor(basePrice * PARTNER_SHARE_DIY) + Math.floor(storageExtra * PARTNER_SHARE);
+    } else {
+      commission = Math.floor(total * PARTNER_SHARE);
+    }
     if (commission <= 0) return;
 
     // 1. Wise Contact APIでWisetag → contactId解決
@@ -178,7 +186,7 @@ function payPartnerCommission(ss, orderId, ref, total, currency, isDiy) {
       logSheet.insertRowAfter(1);
       logSheet.getRange(2, 1, 1, 5).setValues([[
         new Date(), 'partner_payout',
-        orderId + ' | ' + ref + ' | ' + currency + ' ' + commission + ' (' + (share * 100) + '%) | transfer:' + transfer.id,
+        orderId + ' | ' + ref + ' | ' + currency + ' ' + commission + (isDiy ? ' (DIY split)' : ' (' + (PARTNER_SHARE * 100) + '%)') + ' | transfer:' + transfer.id,
         '', ''
       ]]);
     } catch (logErr) {}
@@ -190,7 +198,9 @@ function payPartnerCommission(ss, orderId, ref, total, currency, isDiy) {
       + '注文番号: ' + orderId + '\n'
       + 'パートナー: ' + ref + '\n'
       + '注文金額: ' + currency + ' ' + total + '\n'
-      + '手数料(' + (share * 100) + '%): ' + currency + ' ' + commission + '\n'
+      + '商品ベース: ' + currency + ' ' + basePrice + '\n'
+      + 'DIY: ' + (isDiy ? 'はい' : 'いいえ') + '\n'
+      + '手数料: ' + currency + ' ' + commission + (isDiy ? ' (商品90% + 保管10%)' : ' (10%)') + '\n'
       + 'WiseTransferId: ' + transfer.id);
 
   } catch (e) {
