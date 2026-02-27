@@ -114,6 +114,16 @@
             <p>Feedback first, content second. Never reverse the order.</p>
         </div>
 
+        <h2>Why No Heatmaps, No Onboarding Tours</h2>
+
+        <p>Entering the operations phase typically means considering heatmap analytics, onboarding tours, A/B testing, push notifications, and CRM tools. TokiQR adopted none of them.</p>
+
+        <p>The reason is straightforward: all of these require server-side state. Heatmaps send user behavior to external servers. Onboarding tools record user progress in databases. Push notifications connect through delivery infrastructure via service workers. Every one of them conflicts with TokiQR's core design principle: no servers, no subscriptions.</p>
+
+        <p>The AI assistant was the singular exception. Requests to the Anthropic Claude API pass through a Cloudflare Worker that merely relays — it holds no data. The API key lives in the user's localStorage, and no state persists on any server. Once a stateless query completes, no trace remains anywhere.</p>
+
+        <p>In other words, the AI assistant was the only operational tool that could improve user experience without breaking the serverless principle. We didn't reject other tools — the constraints rejected them for us. We didn't narrow the choices; the architecture did.</p>
+
         <h2>What Phase Awareness Brings</h2>
 
         <p>When you can identify which phase you're in, decision criteria become clear.</p>
