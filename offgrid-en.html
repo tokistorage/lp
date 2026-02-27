@@ -1,0 +1,508 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" type="image/png" sizes="32x32" href="asset/favicon-32.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="asset/apple-touch-icon.png">
+    <title>Off-Grid Setup Consulting | TokiStorage</title>
+    <meta name="description" content="Off-Grid Setup Consulting — From solar panels and batteries to satellite internet and rainwater harvesting, we provide end-to-end support for building self-sufficient infrastructure at rural sites. Practical consulting grounded in hands-on construction and real-world validation.">    <link rel="stylesheet" href="index.css">
+    <link rel="stylesheet" href="contact-form.css">
+    <style>
+        .og-page { padding: 6rem 2rem 4rem; }
+        .og-inner { max-width: 700px; margin: 0 auto; }
+        .og-inner h1 {
+            font-family: var(--font-display);
+            font-size: 1.6rem;
+            font-weight: 600;
+            color: var(--text-primary);
+            margin-bottom: 0.3rem;
+            text-align: center;
+        }
+        .og-tagline {
+            text-align: center;
+            font-family: var(--font-display);
+            font-size: 0.92rem;
+            color: var(--text-secondary);
+            margin-bottom: 2.5rem;
+            line-height: 1.8;
+        }
+        .og-section {
+            margin-bottom: 2.5rem;
+        }
+        .og-section h2 {
+            font-family: var(--font-display);
+            font-size: 1.05rem;
+            font-weight: 600;
+            color: var(--text-primary);
+            margin-bottom: 0.8rem;
+            padding-bottom: 0.4rem;
+            border-bottom: 1px solid var(--border);
+        }
+        .og-section h3 {
+            font-family: var(--font-display);
+            font-size: 0.92rem;
+            font-weight: 600;
+            color: var(--text-primary);
+            margin-top: 1.2rem;
+            margin-bottom: 0.4rem;
+        }
+        .og-section p,
+        .og-section li {
+            font-size: 0.88rem;
+            color: var(--text-secondary);
+            line-height: 1.9;
+        }
+        .og-section ul {
+            padding-left: 1.5rem;
+            margin-bottom: 1rem;
+        }
+        .og-section li { margin-bottom: 0.3rem; }
+        .og-features {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1.2rem;
+            margin-top: 1rem;
+        }
+        .og-feature-card {
+            background: var(--bg-page);
+            border: 1px solid var(--border);
+            border-radius: 0.8rem;
+            padding: 1.2rem;
+            text-align: center;
+        }
+        .og-feature-card .feature-icon {
+            font-size: 1.6rem;
+            margin-bottom: 0.5rem;
+        }
+        .og-feature-card h3 {
+            font-family: var(--font-display);
+            font-size: 0.88rem;
+            font-weight: 600;
+            color: var(--text-primary);
+            margin-bottom: 0.3rem;
+        }
+        .og-feature-card p {
+            font-size: 0.78rem;
+            color: var(--text-muted);
+            line-height: 1.6;
+        }
+        .og-story {
+            background: var(--bg-page);
+            border: 1px solid var(--border);
+            border-radius: 1rem;
+            padding: 1.8rem;
+            margin: 2rem 0;
+        }
+        .og-story p {
+            font-size: 0.88rem;
+            color: var(--text-secondary);
+            line-height: 1.9;
+            margin-bottom: 0.8rem;
+        }
+        .og-story p:last-child { margin-bottom: 0; }
+        .og-personas {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 1rem;
+            margin-top: 1rem;
+        }
+        .og-persona-card {
+            background: var(--bg-page);
+            border: 1px solid var(--border);
+            border-radius: 0.8rem;
+            padding: 1.2rem 1.5rem;
+        }
+        .og-persona-card h3 {
+            font-family: var(--font-display);
+            font-size: 0.92rem;
+            font-weight: 600;
+            color: var(--text-primary);
+            margin-bottom: 0.4rem;
+        }
+        .og-persona-card p {
+            font-size: 0.82rem;
+            color: var(--text-muted);
+            line-height: 1.7;
+        }
+        .og-flow {
+            counter-reset: flow-step;
+            margin-top: 1rem;
+        }
+        .og-flow-step {
+            display: flex;
+            gap: 1rem;
+            align-items: flex-start;
+            margin-bottom: 1.2rem;
+        }
+        .og-flow-step::before {
+            counter-increment: flow-step;
+            content: counter(flow-step);
+            flex-shrink: 0;
+            width: 2rem;
+            height: 2rem;
+            background: var(--toki-blue);
+            color: #fff;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.82rem;
+            font-weight: 600;
+        }
+        .og-flow-step div h3 {
+            font-family: var(--font-display);
+            font-size: 0.88rem;
+            font-weight: 600;
+            color: var(--text-primary);
+            margin-bottom: 0.2rem;
+        }
+        .og-flow-step div p {
+            font-size: 0.82rem;
+            color: var(--text-muted);
+            line-height: 1.7;
+        }
+        .og-pricing {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 1.2rem;
+            margin-top: 1rem;
+        }
+        .og-pricing-card {
+            background: var(--bg-page);
+            border: 1px solid var(--border);
+            border-radius: 0.8rem;
+            padding: 1.5rem;
+        }
+        .og-pricing-card.recommended {
+            border-color: var(--toki-blue);
+            box-shadow: 0 0 0 1px var(--toki-blue);
+        }
+        .og-pricing-card h3 {
+            font-family: var(--font-display);
+            font-size: 0.95rem;
+            font-weight: 600;
+            color: var(--text-primary);
+            margin-bottom: 0.3rem;
+        }
+        .og-pricing-card .price {
+            font-family: var(--font-display);
+            font-size: 1.3rem;
+            font-weight: 700;
+            color: var(--toki-blue);
+            margin-bottom: 0.8rem;
+        }
+        .og-pricing-card .price span {
+            font-size: 0.75rem;
+            font-weight: 400;
+            color: var(--text-muted);
+        }
+        .og-pricing-card ul {
+            padding-left: 1.2rem;
+            margin: 0;
+        }
+        .og-pricing-card li {
+            font-size: 0.78rem;
+            color: var(--text-secondary);
+            line-height: 1.8;
+            margin-bottom: 0.2rem;
+        }
+        .og-badge {
+            display: inline-block;
+            background: var(--toki-blue);
+            color: #fff;
+            font-size: 0.7rem;
+            padding: 0.15rem 0.6rem;
+            border-radius: 1rem;
+            margin-bottom: 0.5rem;
+            font-weight: 500;
+        }
+        .og-cta {
+            text-align: center;
+            margin-top: 3rem;
+            padding: 2rem;
+            background: var(--toki-blue-pale);
+            border-radius: 1rem;
+        }
+        .og-cta p {
+            font-family: var(--font-display);
+            font-size: 0.92rem;
+            color: var(--text-secondary);
+            margin-bottom: 1rem;
+            line-height: 1.8;
+        }
+        .og-cta a {
+            display: inline-block;
+            background: var(--toki-blue);
+            color: #fff;
+            padding: 0.7rem 2rem;
+            border-radius: 0.5rem;
+            text-decoration: none;
+            font-size: 0.85rem;
+            font-weight: 500;
+            transition: background 0.3s ease;
+        }
+        .og-cta a:hover { background: var(--toki-blue-dark); }
+        .og-back {
+            text-align: center;
+            margin-top: 2.5rem;
+        }
+        .og-back a {
+            color: var(--toki-blue);
+            text-decoration: none;
+            font-size: 0.85rem;
+        }
+        .og-back a:hover { text-decoration: underline; }
+        .og-note {
+            font-size: 0.75rem !important;
+            color: var(--text-muted) !important;
+            margin-top: 0.5rem;
+        }
+        .og-story-photos {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 0.8rem;
+            margin: 1.2rem 0;
+        }
+        .og-story-photos figure {
+            margin: 0;
+        }
+        .og-story-photos img {
+            width: 100%;
+            border-radius: 0.5rem;
+            aspect-ratio: 4/3;
+            object-fit: cover;
+        }
+        .og-story-photos figcaption {
+            font-size: 0.7rem;
+            color: var(--text-muted);
+            margin-top: 0.3rem;
+            line-height: 1.4;
+        }
+        @media (max-width: 520px) {
+            .og-story-photos {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+    <meta property="og:type" content="article">
+    <meta property="og:title" content="Off-Grid Setup Consulting | TokiStorage">
+    <meta property="og:description" content="Off-Grid Setup Consulting — From solar panels and batteries to satellite internet and rainwater harvesting, we provide end-to-end support for building self-sufficient infrastructure at rural sites. Practical consulting grounded in hands-on construction and real-world validation.">
+    <meta property="og:url" content="https://tokistorage.github.io/lp/offgrid-en.html">
+    <meta property="og:site_name" content="TokiStorage">
+    <meta name="twitter:card" content="summary">
+    <meta name="twitter:title" content="Off-Grid Setup Consulting | TokiStorage">
+    <meta name="twitter:description" content="Off-Grid Setup Consulting — From solar panels and batteries to satellite internet and rainwater harvesting, we provide end-to-end support for building self-sufficient infrastructure at rural sites. Practical consulting grounded in hands-on construction and real-world validation.">
+    <meta property="og:image" content="https://tokistorage.github.io/lp/asset/tokistorage-icon-512.png">
+    <meta property="og:image:width" content="512">
+    <meta property="og:image:height" content="512">
+    <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "WebPage",
+  "name": "Off-Grid Setup Consulting | TokiStorage",
+  "url": "https://tokistorage.github.io/lp/offgrid-en.html",
+  "inLanguage": "en",
+  "publisher": {
+    "@type": "Organization",
+    "name": "TokiStorage",
+    "url": "https://tokistorage.github.io/lp"
+  },
+  "description": "Off-Grid Setup Consulting — From solar panels and batteries to satellite internet and rainwater harvesting, we provide end-to-end support for building self-sufficient infrastructure at rural sites. Practical consulting grounded in hands-on construction and real-world validation."
+}
+    </script>
+    <link rel="alternate" hreflang="ja" href="https://tokistorage.github.io/lp/offgrid.html">
+    <link rel="alternate" hreflang="en" href="https://tokistorage.github.io/lp/offgrid-en.html">
+    <link rel="alternate" hreflang="x-default" href="https://tokistorage.github.io/lp/offgrid.html">
+    <link rel="canonical" href="https://tokistorage.github.io/lp/offgrid-en.html">
+</head>
+<body>
+
+<nav class="toki-nav">
+    <span class="nav-logo"><a href="index-en.html">TokiStorage</a> / Off-Grid Setup Consulting</span>
+</nav>
+
+<main class="og-page">
+    <div class="og-inner">
+        <h1>Off-Grid Setup Consulting</h1>
+        <p class="og-tagline">
+            Electricity, water, connectivity — even where infrastructure doesn't reach,<br>
+            you can build a livable environment on your own.<br>
+            Based on setups we completed in three days, we help you build yours.
+        </p>
+
+        <div class="og-features">
+            <div class="og-feature-card">
+                <div class="feature-icon">&#x2600;</div>
+                <h3>Energy Independence</h3>
+                <p>Achieve stable power supply through a combination of solar panels, batteries, and generators.</p>
+            </div>
+            <div class="og-feature-card">
+                <div class="feature-icon">&#x1F4A7;</div>
+                <h3>Water Supply</h3>
+                <p>Build water infrastructure independent of municipal supply using rainwater harvesting and solar water heaters.</p>
+            </div>
+            <div class="og-feature-card">
+                <div class="feature-icon">&#x1F4E1;</div>
+                <h3>Connectivity</h3>
+                <p>Set up communication infrastructure that supports remote work — from satellite internet to local networks and guest WiFi.</p>
+            </div>
+        </div>
+
+        <div class="og-story">
+            <p>Founder Takuya Sato built a mini off-grid environment for a Silkie chicken coop at his home in Timeless Town, Urayasu, Chiba. He repeatedly tested solar-panel-and-battery-powered energy independence in his daily life. The coop also serves as a test site for outdoor weathering validation of TokiStorage's fused quartz engraved artifacts.</p>
+            <div class="og-story-photos">
+                <figure>
+                    <img src="asset/IMG_0852.jpeg" alt="Silkie chicken chicks in an incubator" loading="lazy">
+                    <figcaption>Silkie chicks hatched in an incubator</figcaption>
+                </figure>
+                <figure>
+                    <img src="asset/IMG_0858.jpeg" alt="Silkie chicken chicks growing in a cardboard brooder" loading="lazy">
+                    <figcaption>Early-stage rearing in a brooder box</figcaption>
+                </figure>
+                <figure>
+                    <img src="asset/Snapshoot_1756198826573.jpg" alt="Surveillance camera footage powered by solar energy" loading="lazy">
+                    <figcaption>Surveillance camera running on solar power</figcaption>
+                </figure>
+            </div>
+            <p>During gravestone field surveys for SoulCarrier (Resonance Society), Sato traveled extensively by car, self-generating electricity with portable power stations and solar panels during extended fieldwork. This built practical knowledge of maintaining off-grid environments while on the move.</p>
+            <p>In 2025, while staying across Maui from the eastern to western tip, he brought his own equipment and built off-grid environments at two locations — each completed within three days. He also assisted local Workaway hosts with their setups, validating that the systems function at a practical level.</p>
+            <div class="og-story-photos">
+                <figure>
+                    <img src="asset/IMG_2724-2.jpeg" alt="Solar panel installation work on Maui" loading="lazy">
+                    <figcaption>Solar panel installation on Maui</figcaption>
+                </figure>
+                <figure>
+                    <img src="asset/IMG_3348.jpeg" alt="Power system with portable battery and generator and refrigerator" loading="lazy">
+                    <figcaption>Complete power system (portable battery + generator)</figcaption>
+                </figure>
+                <figure>
+                    <img src="asset/IMG_3352.jpeg" alt="Starlink WiFi router installation" loading="lazy">
+                    <figcaption>Satellite internet and WiFi setup</figcaption>
+                </figure>
+            </div>
+            <p>Plans are underway to establish a base on Sado Island for a full-scale off-grid living foundation. The progression from experiment to car camping to field validation to full deployment — that accumulated experience is the foundation of this consulting service.</p>
+        </div>
+
+        <div class="og-section">
+            <h2>Scope of Services</h2>
+            <ul>
+                <li><strong>Power Generation</strong> — Solar panels, portable power stations, battery systems, generators</li>
+                <li><strong>Hot Water</strong> — Solar water heaters, efficient hot water system design</li>
+                <li><strong>Water</strong> — Rainwater collection, filtration, and storage systems</li>
+                <li><strong>Communications</strong> — Satellite internet (Starlink, etc.), local network setup, guest WiFi</li>
+                <li><strong>Integrated Design</strong> — Holistic infrastructure planning combining all of the above</li>
+            </ul>
+        </div>
+
+        <div class="og-section">
+            <h2>Common Concerns</h2>
+            <div class="og-personas">
+                <div class="og-persona-card">
+                    <h3>"Don't I need an electrician's license?"</h3>
+                    <p>The scope requiring professional certification is limited. Portable power stations, solar panels, and satellite internet can all be set up without one — and that alone creates a fully functional environment. When licensed work is needed, we can connect you with the right professionals.</p>
+                </div>
+                <div class="og-persona-card">
+                    <h3>"Isn't the upfront cost too high?"</h3>
+                    <p>You can start small. Begin with a single solar panel and a portable power station, then expand as needed. By investing incrementally, you can grow your setup while keeping risk low.</p>
+                </div>
+                <div class="og-persona-card">
+                    <h3>"What if something breaks and I can't fix it?"</h3>
+                    <p>That's exactly why we insist on simplicity. Fewer parts, off-the-shelf components, designs you can maintain yourself. The reason we could build complete setups on Maui within three days is because we don't over-complicate things.</p>
+                </div>
+                <div class="og-persona-card">
+                    <h3>"Isn't this just a hobby — not really practical?"</h3>
+                    <p>On Maui, we actually lived in these setups and worked remotely. The Silkie chicken coop runs on automated solar power management. Our benchmark is whether you can live comfortably day to day.</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="og-section">
+            <h2>Four Phases</h2>
+            <div class="og-flow">
+                <div class="og-flow-step">
+                    <div>
+                        <h3>Assessment — Site Survey & Consultation</h3>
+                        <p>Two free sessions. We review your site's location, climate, existing infrastructure, and goals. Together, we determine what's needed and what's not.</p>
+                    </div>
+                </div>
+                <div class="og-flow-step">
+                    <div>
+                        <h3>Design — System Planning (2 months)</h3>
+                        <p>We design the optimal combination of power, water, and communications. From equipment selection to layout planning and budgeting — keeping things simple, scalable, and free of over-investment.</p>
+                    </div>
+                </div>
+                <div class="og-flow-step">
+                    <div>
+                        <h3>Build — Construction Support (2 months)</h3>
+                        <p>Procurement assistance, installation guidance, and initial setup. The goal is for you to understand and be able to build it yourself.</p>
+                    </div>
+                </div>
+                <div class="og-flow-step">
+                    <div>
+                        <h3>Optimize — Fine-Tuning & Independence (2 months)</h3>
+                        <p>Adjustments based on real operating data. Balancing generation and consumption, adapting to seasonal changes, troubleshooting. We walk alongside you until you can maintain the system on your own.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="og-section">
+            <h2>Pricing</h2>
+            <div class="og-pricing">
+                <div class="og-pricing-card">
+                    <h3>Assessment</h3>
+                    <div class="price">Free</div>
+                    <ul>
+                        <li>Two free sessions</li>
+                        <li>On-site situation review</li>
+                        <li>Off-grid feasibility assessment</li>
+                        <li>Rough estimate & direction proposal</li>
+                    </ul>
+                </div>
+                <div class="og-pricing-card recommended">
+                    <span class="og-badge">Design + Build + Optimize</span>
+                    <h3>Per Phase</h3>
+                    <div class="price">88,000<span> JPY (tax incl.) / 6-month support period</span></div>
+                    <ul>
+                        <li>Infrastructure design & equipment selection</li>
+                        <li>Procurement support & installation guidance</li>
+                        <li>Initial setup</li>
+                        <li>Optimization based on operating data</li>
+                        <li>Email & chat support (6 months)</li>
+                        <li>Troubleshooting</li>
+                    </ul>
+                </div>
+            </div>
+            <p class="og-note">*Assessment is free. Let's talk first — if it's not a fit, you can walk away at that point.<br>*Prices are subject to change without notice. Custom plans for corporate clients are available upon request.<br>*Equipment costs, travel expenses, and accommodation (when on-site work is involved) are billed separately at actual cost.</p>
+        </div>
+
+        <div class="og-section">
+            <h2>Why We Do This</h2>
+            <p>TokiStorage's mission is "proof of existence" — delivering records a thousand years into the future. But if the places where those records are kept aren't themselves sustainable, it means nothing. Building sites that don't depend on external infrastructure is the foundation for connecting existence to the future.</p>
+            <h3>Integration with Workaway Support</h3>
+            <p>When starting as a Workaway host in a rural area, one of the biggest hurdles is infrastructure. Without connectivity, you can't communicate with guests. Without stable power, you can't offer a comfortable stay. Off-grid setup consulting is also a service that establishes the prerequisites for hosting through Workaway.</p>
+            <h3>Putting It into Practice on Sado Island</h3>
+            <p>We are establishing a base on Sado Island to build a full-scale off-grid living foundation. From experiments in Timeless Town, to field validation on Maui, and now the "real thing" on Sado — every step of that process feeds directly into the knowledge behind this consulting service.</p>
+        </div>
+
+        <div class="og-cta">
+            <p>Ready to build your off-grid environment together?<br>Start with a free consultation — no strings attached.</p>
+            <a href="https://line.me/R/oaMessage/@897glsbz/?%E3%82%AA%E3%83%95%E3%82%B0%E3%83%AA%E3%83%83%E3%83%89%E6%A7%8B%E7%AF%89%E3%81%AB%E3%81%A4%E3%81%84%E3%81%A6%E7%9B%B8%E8%AB%87%E3%81%97%E3%81%9F%E3%81%84%E3%81%A7%E3%81%99" target="_blank" rel="noopener">Contact Us on LINE</a>
+        </div>
+
+        <div class="og-back">
+            <a href="index-en.html">&larr; Back to TokiStorage Home</a>
+        </div>
+    </div>
+</main>
+
+<footer style="text-align: center; padding: 2rem 1.5rem; margin-top: 3rem; border-top: 1px solid #E2E8F0;">
+    <p style="font-family: Georgia, 'Times New Roman', serif; font-size: 0.8rem; color: #94A3B8; font-style: italic; margin-bottom: 0.8rem;">You become the story, generations of dialogue layer upon one another, and together they form the path ahead.</p>
+    <p style="font-size: 0.75rem; color: #94A3B8;">&copy; 2026 TokiStorage. All rights reserved.</p>
+</footer>
+
+<script src="contact-form.js" defer></script>
+<script src="tracker.js" defer></script>
+</body>
+</html>
