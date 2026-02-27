@@ -5,7 +5,7 @@
 function processStoragePipeline() {
   var orders = getOrders();
   var eligible = orders.filter(function(o) {
-    return (o.status === '発送済み' || o.status === '配送済み')
+    return o.status === '入金済み'
       && !o.storageProcessed
       && (o.storageGithub === 'Yes' || o.storageNdl === 'Yes');
   });

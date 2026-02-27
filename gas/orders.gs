@@ -94,6 +94,11 @@ function createOrderFromActivation(ss, data, code) {
     ]);
   } catch (sheetErr) {}
 
+  // パートナー手数料自動送金
+  if (data.ref) {
+    payPartnerCommission(ss, orderId, data.ref, total, currency, data.diy);
+  }
+
   var symbol = currency === 'USD' ? '$' : '¥';
   var priceDisplay = symbol + total.toLocaleString();
   var adminBody = '注文がアクティベートされました。\n\n'
@@ -129,5 +134,75 @@ function getOrders() {
       storageProcessed: r[25] || '', diy: r[26] || ''
     };
   });
+}
+
+function payPartnerCommission(ss, orderId, ref, total, currency, isDiy) {
+  try {
+    var share = isDiy ? PARTNER_SHARE_DIY : PARTNER_SHARE;
+    var commission = Math.floor(total * share);
+    if (commission <= 0) return;
+
+    // 1. Wise Contact APIでWisetag → contactId解決
+    var contact = resolveWiseContact(ref);
+    if (!contact || !contact.id) {
+      throw new Error('Contact解決失敗: ' + ref);
+    }
+
+    // 2. Quote作成（contactIdで自動recipient解決）
+    var quote = createWiseQuote(contact.id, commission, currency);
+    if (!quote || !quote.id) {
+      throw new Error('Quote作成失敗');
+    }
+    var targetAccount = quote.targetAccount;
+    if (!targetAccount) {
+      throw new Error('Quote内にtargetAccountなし');
+    }
+
+    // 3. Transfer作成
+    var transfer = createWiseTransfer(targetAccount, quote.id, 'TokiQR commission ' + orderId);
+    if (!transfer || !transfer.id) {
+      throw new Error('Transfer作成失敗');
+    }
+
+    // 4. Balance から送金実行
+    var funding = fundWiseTransfer(transfer.id);
+    if (!funding) {
+      throw new Error('Fund失敗 (transferId: ' + transfer.id + ')');
+    }
+
+    // 5. イベントログに記録
+    try {
+      var logSheet = getOrCreateSheet(ss, 'イベントログ', [
+        '日時', 'アクション', '詳細', 'デバイス', 'パス'
+      ]);
+      logSheet.insertRowAfter(1);
+      logSheet.getRange(2, 1, 1, 5).setValues([[
+        new Date(), 'partner_payout',
+        orderId + ' | ' + ref + ' | ' + currency + ' ' + commission + ' (' + (share * 100) + '%) | transfer:' + transfer.id,
+        '', ''
+      ]]);
+    } catch (logErr) {}
+
+    // 6. 管理者通知
+    sendEmail(NOTIFY_EMAIL,
+      '【TokiQR】パートナー送金完了 ' + orderId + ' → ' + ref,
+      'パートナーへの手数料を自動送金しました。\n\n'
+      + '注文番号: ' + orderId + '\n'
+      + 'パートナー: ' + ref + '\n'
+      + '注文金額: ' + currency + ' ' + total + '\n'
+      + '手数料(' + (share * 100) + '%): ' + currency + ' ' + commission + '\n'
+      + 'WiseTransferId: ' + transfer.id);
+
+  } catch (e) {
+    Logger.log('Partner payout failed for ' + orderId + ': ' + e.message);
+    sendEmail(NOTIFY_EMAIL,
+      '【TokiQR】パートナー送金失敗 ' + orderId,
+      'パートナーへの自動送金が失敗しました。手動で対応してください。\n\n'
+      + '注文番号: ' + orderId + '\n'
+      + 'パートナー: ' + ref + '\n'
+      + '注文金額: ' + currency + ' ' + total + '\n'
+      + 'DIY: ' + (isDiy ? 'はい' : 'いいえ') + '\n'
+      + 'エラー: ' + e.message);
+  }
 }
 

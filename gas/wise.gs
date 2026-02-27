@@ -154,3 +154,109 @@ function notifyPayment(amount, currency, reference) {
     '【TokiQR】入金検知 — ' + currency + ' ' + amount,
     'Wiseに入金がありました。\n\n金額: ' + currency + ' ' + amount + '\nReference: ' + (reference || '(なし)') + '\n\nスプレッドシートで確認してください。');
 }
+
+// ── Wise送金API（パートナー自動送金用）──
+
+function resolveWiseContact(identifier) {
+  if (!WISE_API_TOKEN || !WISE_PROFILE_ID) return null;
+  try {
+    var res = UrlFetchApp.fetch('https://api.wise.com/v1/profiles/' + WISE_PROFILE_ID + '/contacts', {
+      method: 'POST',
+      headers: {
+        'Authorization': 'Bearer ' + WISE_API_TOKEN,
+        'Content-Type': 'application/json'
+      },
+      payload: JSON.stringify({ identifier: identifier }),
+      muteHttpExceptions: true
+    });
+    if (res.getResponseCode() !== 200 && res.getResponseCode() !== 201) {
+      Logger.log('Wise contact error: ' + res.getResponseCode() + ' ' + res.getContentText());
+      return null;
+    }
+    return JSON.parse(res.getContentText());
+  } catch (e) {
+    Logger.log('Wise contact exception: ' + e.message);
+    return null;
+  }
+}
+
+function createWiseQuote(contactId, amount, currency) {
+  if (!WISE_API_TOKEN || !WISE_PROFILE_ID) return null;
+  try {
+    var res = UrlFetchApp.fetch('https://api.wise.com/v2/quotes', {
+      method: 'POST',
+      headers: {
+        'Authorization': 'Bearer ' + WISE_API_TOKEN,
+        'Content-Type': 'application/json'
+      },
+      payload: JSON.stringify({
+        sourceCurrency: currency,
+        targetCurrency: currency,
+        targetAmount: amount,
+        profile: WISE_PROFILE_ID,
+        contactId: contactId
+      }),
+      muteHttpExceptions: true
+    });
+    if (res.getResponseCode() !== 200) {
+      Logger.log('Wise quote error: ' + res.getResponseCode() + ' ' + res.getContentText());
+      return null;
+    }
+    return JSON.parse(res.getContentText());
+  } catch (e) {
+    Logger.log('Wise quote exception: ' + e.message);
+    return null;
+  }
+}
+
+function createWiseTransfer(targetAccount, quoteId, reference) {
+  if (!WISE_API_TOKEN) return null;
+  try {
+    var res = UrlFetchApp.fetch('https://api.wise.com/v1/transfers', {
+      method: 'POST',
+      headers: {
+        'Authorization': 'Bearer ' + WISE_API_TOKEN,
+        'Content-Type': 'application/json'
+      },
+      payload: JSON.stringify({
+        targetAccount: targetAccount,
+        quoteUuid: quoteId,
+        customerTransactionId: Utilities.getUuid(),
+        details: { reference: reference }
+      }),
+      muteHttpExceptions: true
+    });
+    if (res.getResponseCode() !== 200) {
+      Logger.log('Wise transfer error: ' + res.getResponseCode() + ' ' + res.getContentText());
+      return null;
+    }
+    return JSON.parse(res.getContentText());
+  } catch (e) {
+    Logger.log('Wise transfer exception: ' + e.message);
+    return null;
+  }
+}
+
+function fundWiseTransfer(transferId) {
+  if (!WISE_API_TOKEN || !WISE_PROFILE_ID) return null;
+  try {
+    var res = UrlFetchApp.fetch(
+      'https://api.wise.com/v3/profiles/' + WISE_PROFILE_ID + '/transfers/' + transferId + '/payments', {
+      method: 'POST',
+      headers: {
+        'Authorization': 'Bearer ' + WISE_API_TOKEN,
+        'Content-Type': 'application/json'
+      },
+      payload: JSON.stringify({ type: 'BALANCE' }),
+      muteHttpExceptions: true
+    });
+    if (res.getResponseCode() !== 200 && res.getResponseCode() !== 201) {
+      Logger.log('Wise fund error: ' + res.getResponseCode() + ' ' + res.getContentText());
+      return null;
+    }
+    return JSON.parse(res.getContentText());
+  } catch (e) {
+    Logger.log('Wise fund exception: ' + e.message);
+    return null;
+  }
+}
