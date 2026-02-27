@@ -87,6 +87,7 @@ function doPost(e) {
     if (data.type === 'pageview') return handlePageview(ss, data);
     if (data.type === 'event') return handleEvent(ss, data);
     if (data.type === 'credit_activate') return handleCreditActivation(ss, data);
+    if (data.type === 'order_activate') return handleOrderActivation(ss, data);
     if (data.type === 'series_open') return handleSeriesOpen(ss, data);
     if (data.type === 'ndl_submit') return handleNdlSubmit(ss, data);
     if (data.type === 'monitor_apply') return handleMonitorApply(ss, data);
