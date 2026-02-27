@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" type="image/png" sizes="32x32" href="asset/favicon-32.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="asset/apple-touch-icon.png">
+    <title>カスタマージャーニーの変容 | トキストレージ</title>
+    <meta name="robots" content="index, follow">
+    <meta name="description" content="モニターからパートナーへ。体験者が設置者になり、設置者が製造者になる。カスタマージャーニーが一方向の漏斗から循環する生態系に変わるまでの設計記録。">    <style>
+        :root {
+            --toki-blue: #2563EB;
+            --toki-blue-dark: #1E40AF;
+            --toki-blue-pale: #EFF6FF;
+            --accent-blue: #60A5FA;
+            --bg-white: #FFFFFF;
+            --text-primary: #1E293B;
+            --text-secondary: #475569;
+            --text-muted: #94A3B8;
+            --border: #E2E8F0;
+            --font-display: 'Hiragino Mincho ProN', 'Yu Mincho', serif;
+            --font-body: 'Hiragino Kaku Gothic ProN', 'Yu Gothic', 'Meiryo', sans-serif;
+        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        html { scroll-behavior: smooth; }
+        body { font-family: var(--font-body); font-weight: 400; background: var(--bg-white); color: var(--text-primary); line-height: 2; font-size: 16px; }
+
+        .article-nav { position: fixed; top: 0; left: 0; right: 0; z-index: 1000; background: rgba(255,255,255,0.95); backdrop-filter: blur(12px); border-bottom: 1px solid var(--border); padding: 0.6rem 1.2rem; display: flex; align-items: center; justify-content: space-between; gap: 1rem; }
+        .article-nav .nav-brand { font-family: var(--font-display); font-size: 0.9rem; font-weight: 600; color: var(--toki-blue); text-decoration: none; white-space: nowrap; }
+        .article-nav .nav-brand::before { content: ''; display: inline-block; width: 20px; height: 20px; background: url('asset/tokistorage-icon-512.png') no-repeat center / contain; vertical-align: -3px; margin-right: 5px; }
+        .article-nav .nav-right { display: flex; align-items: center; gap: 1rem; }
+        .article-nav .nav-label { font-size: 0.6rem; color: var(--text-muted); letter-spacing: 0.08em; }
+        .article-nav .lang-switch { font-size: 0.75rem; color: var(--toki-blue); text-decoration: none; padding: 0.3rem 0.6rem; border: 1px solid var(--toki-blue); border-radius: 4px; }
+        .article-nav .lang-switch:hover { background: var(--toki-blue); color: #fff; }
+
+        .article-container { max-width: 680px; margin: 0 auto; padding: 7rem 2rem 4rem; }
+        .article-header { margin-bottom: 3rem; padding-bottom: 2rem; border-bottom: 1px solid var(--border); }
+        .article-category { font-size: 0.7rem; color: var(--toki-blue); letter-spacing: 0.15em; margin-bottom: 1rem; }
+        .article-header h1 { font-family: var(--font-display); font-size: 1.8rem; font-weight: 700; line-height: 1.5; margin-bottom: 1.5rem; }
+        .article-subtitle { font-size: 0.95rem; color: var(--text-secondary); line-height: 1.9; }
+
+        .article-content h2 { font-family: var(--font-display); font-size: 1.3rem; font-weight: 600; margin: 3rem 0 1.5rem; padding-bottom: 0.5rem; border-bottom: 2px solid var(--toki-blue-pale); }
+        .article-content h3 { font-family: var(--font-display); font-size: 1.1rem; font-weight: 600; margin: 2rem 0 1rem; color: var(--toki-blue-dark); }
+        .article-content p { margin-bottom: 1.5rem; text-align: justify; }
+        .article-content blockquote { border-left: 3px solid var(--toki-blue); padding-left: 1.5rem; margin: 2rem 0; font-family: var(--font-display); color: var(--text-secondary); }
+        .article-content ul { margin: 1.5rem 0; padding-left: 1.5rem; }
+        .article-content li { margin-bottom: 0.75rem; }
+
+        .core-message { background: var(--toki-blue-pale); border-left: 4px solid var(--toki-blue); padding: 1.5rem; margin: 2rem 0; font-size: 0.95rem; line-height: 1.8; }
+        .key-point { background: linear-gradient(135deg, var(--toki-blue-pale) 0%, #fff 100%); border: 1px solid var(--accent-blue); border-radius: 8px; padding: 1.5rem; margin: 2rem 0; text-align: center; }
+        .key-point p { font-family: var(--font-display); font-size: 1.1rem; color: var(--toki-blue-dark); margin: 0; }
+
+        .article-footer { margin-top: 4rem; padding-top: 2rem; border-top: 1px solid var(--border); text-align: center; }
+        .article-footer p { font-size: 0.8rem; color: var(--text-muted); margin-bottom: 1rem; }
+        .article-footer a { color: var(--toki-blue); text-decoration: none; }
+        .article-footer a:hover { text-decoration: underline; }
+
+        @media (max-width: 768px) {
+            .article-container { padding: 6rem 1.2rem 3rem; }
+            .article-header h1 { font-size: 1.5rem; }
+            .article-nav .nav-label { display: none; }
+        }
+        @media print { .article-nav { display: none; } .article-container { padding-top: 2rem; } }
+    </style>
+    <link rel="stylesheet" href="contact-form.css">
+    <meta property="og:type" content="article">
+    <meta property="og:title" content="カスタマージャーニーの変容 | トキストレージ">
+    <meta property="og:description" content="モニターからパートナーへ。体験者が設置者になり、設置者が製造者になる。カスタマージャーニーが一方向の漏斗から循環する生態系に変わるまでの設計記録。">
+    <meta property="og:url" content="https://tokistorage.github.io/lp/customer-journey-transformation.html">
+    <meta property="og:site_name" content="トキストレージ">
+    <meta name="twitter:card" content="summary">
+    <meta name="twitter:title" content="カスタマージャーニーの変容 | トキストレージ">
+    <meta name="twitter:description" content="モニターからパートナーへ。体験者が設置者になり、設置者が製造者になる。カスタマージャーニーが一方向の漏斗から循環する生態系に変わるまでの設計記録。">
+    <meta property="og:image" content="https://tokistorage.github.io/lp/asset/tokistorage-icon-512.png">
+    <meta property="og:image:width" content="512">
+    <meta property="og:image:height" content="512">
+    <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Article",
+  "headline": "カスタマージャーニーの変容",
+  "author": {
+    "@type": "Person",
+    "name": "Takuya Sato",
+    "url": "https://tokistorage.github.io/lp/profile.html"
+  },
+  "publisher": {
+    "@type": "Organization",
+    "name": "TokiStorage",
+    "url": "https://tokistorage.github.io/lp",
+    "logo": {
+      "@type": "ImageObject",
+      "url": "https://tokistorage.github.io/lp/asset/tokistorage-icon-512.png"
+    }
+  },
+  "url": "https://tokistorage.github.io/lp/customer-journey-transformation.html",
+  "inLanguage": "ja",
+  "mainEntityOfPage": "https://tokistorage.github.io/lp/customer-journey-transformation.html",
+  "description": "モニターからパートナーへ。体験者が設置者になり、設置者が製造者になる。カスタマージャーニーが一方向の漏斗から循環する生態系に変わるまでの設計記録。"
+}
+    </script>
+    <link rel="alternate" hreflang="ja" href="https://tokistorage.github.io/lp/customer-journey-transformation.html">
+    <link rel="alternate" hreflang="en" href="https://tokistorage.github.io/lp/customer-journey-transformation-en.html">
+    <link rel="alternate" hreflang="x-default" href="https://tokistorage.github.io/lp/customer-journey-transformation.html">
+    <link rel="canonical" href="https://tokistorage.github.io/lp/customer-journey-transformation.html">
+</head>
+<body>
+
+<nav class="article-nav">
+    <a href="index.html" class="nav-brand">トキストレージ</a>
+    <div class="nav-right">
+        <span class="nav-label">技術・設計 / Technology & Design</span>
+        <a href="customer-journey-transformation-en.html" class="lang-switch">EN</a>
+    </div>
+</nav>
+
+<main class="article-container">
+
+    <header class="article-header">
+        <p class="article-category">ESSAY &mdash; 技術・設計</p>
+        <h1>カスタマージャーニーの変容<br><span style="font-size:0.7em; font-weight:400;">漏斗から生態系へ</span></h1>
+        <p class="article-subtitle">
+            &mdash;&mdash; 従来のカスタマージャーニーは漏斗（ファネル）だった。認知→検討→購入→離脱。TokiStorageでは、体験者がパートナーになり、パートナーが製造者になる。一方向の漏斗が、循環する生態系に変わった設計記録。
+        </p>
+    </header>
+
+    <div id="essay-nav-links"></div>
+
+    <article class="article-content">
+
+        <h2>漏斗の限界</h2>
+
+        <p>SaaSの世界では、カスタマージャーニーは漏斗として設計される。認知→興味→検討→購入→継続→解約。マーケティングは漏斗の上を広げ、カスタマーサクセスは下の穴を塞ぐ。ユーザーは常に「落ちる」対象であり、落ちないように「リテンション」する。</p>
+
+        <p>この構造には暗黙の前提がある。ユーザーは消費者であり、プロダクトの外にいる。どれだけロイヤルなユーザーでも、サービス提供者との関係は売り手と買い手のままだ。</p>
+
+        <h2>モニター：体験者という第一の変容</h2>
+
+        <p>TokiStorageのモニタープログラムは、無料トライアルではない。有料プロダクトを正規フローで購入し、全額返金される仕組みだ。なぜ有料にするのか。無料で得たものには本気のフィードバックが生まれないからだ。</p>
+
+        <p>モニターは消費者ではない。プロダクトの品質を一緒に検証するチームメンバーだ。公開Wisetagでフィードバックを残し、その記録はGitHubに静的JSONとして1000年保存される。体験の主体が、消費から参加に変わる。</p>
+
+        <div class="core-message">
+            漏斗の「購入」ステップが、「参加」に変わった瞬間。体験者は外部の評価者ではなく、プロダクトを共に育てる存在になる。
+        </div>
+
+        <h2>パートナー：設置者という第二の変容</h2>
+
+        <p>モニターとしてプロダクトを体験した人が、次にパートナーになる。Wisetagを設定した専用のTokiQRページを作成し、自分の場所に設置する。観光スポット、店舗、イベント会場、結婚式場。そこからの注文に応じて売上が還元される。</p>
+
+        <p>ここで重要なのは、パートナーが「営業」をしないことだ。パートナーは場を作る。QRコードを設置し、来た人が自分の意思で記録を残す。記念写真スポットと同じ構造——場の価値が、押し売りではなく、自然な導線を生む。</p>
+
+        <blockquote>パートナーは売る人ではなく、場を作る人だ。</blockquote>
+
+        <h2>DIY：製造者という第三の変容</h2>
+
+        <p>さらに一歩進むと、パートナーはDIYオプションで製造者になれる。プリンターとUVラミネーターを揃え、自分で商品を作り、渡す。還元率は本部製造の10%から90%に跳ね上がる。</p>
+
+        <p>これは「販売代理店」ではない。製造・お渡し・設置を自分で担い、その対価として売上の大半を受け取る独立した事業者だ。TokiStorageは技術とプラットフォームを提供し、製造と顧客接点はパートナーが持つ。</p>
+
+        <h2>漏斗から生態系へ</h2>
+
+        <p>整理すると、カスタマージャーニーは3段階で変容した。</p>
+
+        <ul>
+            <li><strong>体験者（モニター）</strong>：有料体験を経てプロダクトの品質を検証する</li>
+            <li><strong>設置者（パートナー）</strong>：Wisetagで専用ページを作り、場を提供する</li>
+            <li><strong>製造者（DIY）</strong>：自ら製造・お渡しを担い、事業として自立する</li>
+        </ul>
+
+        <p>各段階の間に強制的な移行はない。モニターのまま体験者でいてもいいし、パートナーのまま設置者でいてもいい。しかし道は繋がっている。体験が深まれば自然と次の段階が見える——それが漏斗と生態系の違いだ。</p>
+
+        <div class="key-point">
+            <p>漏斗は落とす設計。生態系は育てる設計。</p>
+        </div>
+
+        <h2>セットアップページという設計上の結節点</h2>
+
+        <p>この生態系の結節点が、TokiQRのセットアップページだ。Wisetagを入力するだけでQRコードが生成できる。他の項目はすべて任意。何度でも作り直せる。</p>
+
+        <p>この「Wisetagだけで始められる」というシンプルさは、偶然ではない。障壁を限界まで下げることで、モニター→パートナーの移行を自然にした。パートナーシップ契約も、審査も、最低ロットもない。ただWisetagを入力し、QRを印刷し、設置する。</p>
+
+        <h2>数字が変えるもの</h2>
+
+        <p>本部製造10%、セルフ製造90%。この数字の設計にも意図がある。</p>
+
+        <p>10%は「紹介料」として自然に受け取れる水準だ。パートナーは何もしなくても設置するだけで収益が入る。90%は「自分の事業」として成立する水準だ。プリンターとラミネーターへの2〜6万円の初期投資が、事業としてのコミットメントになる。</p>
+
+        <p>同じ人が同じプロダクトに関わりながら、自分の意思で関与の深さを選べる。それが還元率の非対称性が生む構造だ。</p>
+
+        <h2>終わらないジャーニー</h2>
+
+        <p>従来の漏斗には終わりがある。解約すれば関係が切れる。しかし生態系には終わりがない。モニターの体験記録は1000年残る。パートナーのQRコードはUVラミネートや石英ガラスとして物理的に存続する。DIYパートナーの事業は、彼ら自身の手で続く。</p>
+
+        <p>カスタマージャーニーの変容とは、顧客が離脱する漏斗から、参加者が深化する生態系への移行だ。そしてその生態系の中心にあるのは、テクノロジーでもマーケティングでもなく、一人ひとりが残す「声」と「記録」だ。</p>
+
+        <div class="key-point">
+            <p>ジャーニーは終わらない。深まるだけだ。</p>
+        </div>
+
+    </article>
+
+</main>
+
+<script src="essay-nav.js"></script>
+<script src="contact-form.js"></script>
+
+</body>
+</html>
