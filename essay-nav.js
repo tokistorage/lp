@@ -172,7 +172,8 @@
     { id: 'narrative-trust', ja: '物語が語る信頼', en: 'The Trust That Stories Tell', date: '2026-02-19' },
     { id: 'headhunter', ja: '海外ヘッドハンターとの対話', en: 'Dialogue with an Overseas Headhunter', date: '2026-02-19' },
     { id: 'dev-to-ops', ja: '運用という視座', en: 'The Operational Lens', date: '2026-02-28' },
-    { id: 'primitive-edge', ja: 'プリミティブの刃', en: 'The Primitive Edge', date: '2026-02-28' }
+    { id: 'primitive-edge', ja: 'プリミティブの刃', en: 'The Primitive Edge', date: '2026-02-28' },
+    { id: 'smartphone-complete', ja: 'スマホ一台で完結する', en: 'A Smartphone Is All You Need', date: '2026-02-28' }
   ];
 
   // ── Latest Articles (最新記事) ──
@@ -180,6 +181,7 @@
   // LATEST_COUNT で表示件数を制御
   const LATEST_COUNT = 5;
   const latestEssayIds = [
+    'smartphone-complete',
     'primitive-edge',
     'dev-to-ops',
     'ai-concierge',
@@ -357,7 +359,8 @@
     'narrative-trust':        ['brochure-essay', 'preserving-words', 'integrity', 'why-essays', 'headhunter'],
     'headhunter':             ['narrative-trust', 'burn-rate-zero', 'departure', 'adversity', 'global-niche'],
     'dev-to-ops':             ['primitive-edge', 'ai-concierge', 'why-essays', 'development-chronicle', 'vibe-coding-secrets'],
-    'primitive-edge':         ['dev-to-ops', 'no-external-deps', '30seconds', 'ai-concierge', 'departure']
+    'primitive-edge':         ['smartphone-complete', 'dev-to-ops', 'no-external-deps', '30seconds', 'ai-concierge'],
+    'smartphone-complete':    ['primitive-edge', 'dev-to-ops', 'burn-rate-zero', 'vibe-coding', 'ai-concierge']
   };
 
   const isEnglish = document.documentElement.lang === 'en';
