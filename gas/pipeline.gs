@@ -38,7 +38,7 @@ function processStoragePipeline() {
       }
       var archiveUrl = volumeInfo.pagesUrl + 'tokiqr/tokiqr-customer-' + o.orderId + '.pdf';
       ghManifest.entries.push({
-        orderId: o.orderId, displayName: o.name + '様',
+        orderId: o.orderId, displayName: o.wisetag || o.orderId,
         product: o.product.indexOf('クォーツ') !== -1 ? 'quartz' : 'laminate',
         qrUrl: o.qrUrl || '', tokiqrPdf: archiveUrl,
         newsletter: o.storageNdl === 'Yes', addedAt: new Date().toISOString()
@@ -63,7 +63,7 @@ function processStoragePipeline() {
     forNewsletter.forEach(function(o) {
       var archiveUrl = volumeInfo.pagesUrl + 'tokiqr/tokiqr-customer-' + o.orderId + '.pdf';
       nlManifest.materials.push({
-        orderId: o.orderId, displayName: o.name + '様',
+        orderId: o.orderId, displayName: o.wisetag || o.orderId,
         product: o.product.indexOf('クォーツ') !== -1 ? 'quartz' : 'laminate',
         qrUrl: o.qrUrl || '', tokiqrPdf: archiveUrl, addedAt: new Date().toISOString()
       });
@@ -97,7 +97,7 @@ function processStoragePipeline() {
     var opts = [];
     if (o.storageGithub === 'Yes') opts.push('GitHub');
     if (o.storageNdl === 'Yes') opts.push('NL/NDL');
-    body += o.orderId + ' | ' + o.name + ' | ' + opts.join(', ') + '\n';
+    body += o.orderId + ' | ' + (o.wisetag || o.name) + ' | ' + opts.join(', ') + '\n';
   });
   sendEmail(NOTIFY_EMAIL, '【TokiQR】保管パイプライン ' + eligible.length + '件処理', body);
 }
@@ -117,9 +117,9 @@ function generateTokiqrPdf(order) {
   title.setHeading(DocumentApp.ParagraphHeading.HEADING1);
   title.setAlignment(DocumentApp.HorizontalAlignment.CENTER);
 
-  var name = body.appendParagraph(order.name + '様');
-  name.setAlignment(DocumentApp.HorizontalAlignment.CENTER);
-  name.editAsText().setFontSize(14);
+  var label = body.appendParagraph(order.wisetag || order.orderId);
+  label.setAlignment(DocumentApp.HorizontalAlignment.CENTER);
+  label.editAsText().setFontSize(14);
 
   var meta = body.appendParagraph('注文番号: ' + order.orderId);
   meta.setAlignment(DocumentApp.HorizontalAlignment.CENTER);
@@ -140,15 +140,6 @@ function generateTokiqrPdf(order) {
   url.editAsText().setFontSize(6).setForegroundColor('#94A3B8');
 
   body.appendParagraph('');
-
-  if (order.includePersonal === 'Yes') {
-    body.appendParagraph('');
-    var personalInfo = body.appendParagraph(
-      order.name + '\n〒' + order.postal + '\n' + order.prefecture + order.city
-      + (order.building ? ' ' + order.building : ''));
-    personalInfo.setAlignment(DocumentApp.HorizontalAlignment.LEFT);
-    personalInfo.editAsText().setFontSize(8).setForegroundColor('#64748B');
-  }
 
   var footer = body.appendParagraph('© TokiStorage — tokistorage.github.io/lp/');
   footer.setAlignment(DocumentApp.HorizontalAlignment.CENTER);

@@ -44,7 +44,7 @@ function _processPaymentReminders(ss, orders, todayStr) {
   if (reminders.length > 0) {
     var body = '以下の注文が' + REMINDER_DAYS + '日以上未払いです:\n\n';
     reminders.forEach(function(o) {
-      body += o.orderId + ' | ' + o.name + ' | ' + o.contact + '\n';
+      body += o.orderId + ' | ' + (o.wisetag || o.name) + '\n';
     });
     sendEmail(NOTIFY_EMAIL, '【TokiQR】未払いリマインダー（' + reminders.length + '件）', body);
   }
@@ -67,7 +67,7 @@ function _processDeliveryDelayNotices(ss, orders, todayStr) {
   if (delayed.length > 0) {
     var body = '以下の注文が入金済みから' + DELIVERY_NOTICE_DAYS + '日以上経過しています:\n\n';
     delayed.forEach(function(o) {
-      body += o.orderId + ' | ' + o.name + ' | ' + o.contact + '\n';
+      body += o.orderId + ' | ' + (o.wisetag || o.name) + '\n';
     });
     sendEmail(NOTIFY_EMAIL, '【TokiQR】配送遅延通知（' + delayed.length + '件）', body);
   }
@@ -191,7 +191,7 @@ function sendDailyReport() {
   if (todayOrders.length > 0) {
     body += '\n  本日の注文:\n';
     todayOrders.forEach(function(o) {
-      body += '    ' + o.orderId + ' | ' + o.name + ' | ' + o.product + '\n';
+      body += '    ' + o.orderId + ' | ' + (o.wisetag || o.name) + ' | ' + o.product + '\n';
     });
   }
 
@@ -231,7 +231,7 @@ function sendDailyReport() {
   if (reminders.length > 0) {
     body += '\n── 未払いリマインダー（' + reminders.length + '件）──\n';
     reminders.forEach(function(o) {
-      body += '  ' + o.orderId + ' | ' + o.name + '\n';
+      body += '  ' + o.orderId + ' | ' + (o.wisetag || o.name) + '\n';
     });
   }
 
@@ -240,7 +240,7 @@ function sendDailyReport() {
   if (delayed.length > 0) {
     body += '\n── 配送遅延（' + delayed.length + '件）──\n';
     delayed.forEach(function(o) {
-      body += '  ' + o.orderId + ' | ' + o.name + '\n';
+      body += '  ' + o.orderId + ' | ' + (o.wisetag || o.name) + '\n';
     });
   }
 
