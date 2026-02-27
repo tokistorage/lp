@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" type="image/png" sizes="32x32" href="asset/favicon-32.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="asset/apple-touch-icon.png">
+    <title>研磨 | トキストレージ</title>
+    <meta name="robots" content="index, follow">
+    <meta name="description" content="プロダクトは完成していた。足りなかったのは「伝わること」。技術の誇りを黙らせ、受け手の言葉に翻訳する——Go-to-Marketの最後の工程。">    <style>
+        :root {
+            --toki-blue: #2563EB;
+            --toki-blue-dark: #1E40AF;
+            --toki-blue-pale: #EFF6FF;
+            --accent-blue: #60A5FA;
+            --bg-white: #FFFFFF;
+            --text-primary: #1E293B;
+            --text-secondary: #475569;
+            --text-muted: #94A3B8;
+            --border: #E2E8F0;
+            --font-display: 'Hiragino Mincho ProN', 'Yu Mincho', serif;
+            --font-body: 'Hiragino Kaku Gothic ProN', 'Yu Gothic', 'Meiryo', sans-serif;
+        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        html { scroll-behavior: smooth; }
+        body { font-family: var(--font-body); font-weight: 400; background: var(--bg-white); color: var(--text-primary); line-height: 2; font-size: 16px; }
+
+        .article-nav { position: fixed; top: 0; left: 0; right: 0; z-index: 1000; background: rgba(255,255,255,0.95); backdrop-filter: blur(12px); border-bottom: 1px solid var(--border); padding: 0.6rem 1.2rem; display: flex; align-items: center; justify-content: space-between; gap: 1rem; }
+        .article-nav .nav-brand { font-family: var(--font-display); font-size: 0.9rem; font-weight: 600; color: var(--toki-blue); text-decoration: none; white-space: nowrap; }
+        .article-nav .nav-brand::before { content: ''; display: inline-block; width: 20px; height: 20px; background: url('asset/tokistorage-icon-512.png') no-repeat center / contain; vertical-align: -3px; margin-right: 5px; }
+        .article-nav .nav-right { display: flex; align-items: center; gap: 1rem; }
+        .article-nav .nav-label { font-size: 0.6rem; color: var(--text-muted); letter-spacing: 0.08em; }
+        .article-nav .lang-switch { font-size: 0.75rem; color: var(--toki-blue); text-decoration: none; padding: 0.3rem 0.6rem; border: 1px solid var(--toki-blue); border-radius: 4px; }
+        .article-nav .lang-switch:hover { background: var(--toki-blue); color: #fff; }
+
+        .article-container { max-width: 680px; margin: 0 auto; padding: 7rem 2rem 4rem; }
+        .article-header { margin-bottom: 3rem; padding-bottom: 2rem; border-bottom: 1px solid var(--border); }
+        .article-category { font-size: 0.7rem; color: var(--toki-blue); letter-spacing: 0.15em; margin-bottom: 1rem; }
+        .article-header h1 { font-family: var(--font-display); font-size: 1.8rem; font-weight: 700; line-height: 1.5; margin-bottom: 1.5rem; }
+        .article-subtitle { font-size: 0.95rem; color: var(--text-secondary); line-height: 1.9; }
+
+        .article-content h2 { font-family: var(--font-display); font-size: 1.3rem; font-weight: 600; margin: 3rem 0 1.5rem; padding-bottom: 0.5rem; border-bottom: 2px solid var(--toki-blue-pale); }
+        .article-content h3 { font-family: var(--font-display); font-size: 1.1rem; font-weight: 600; margin: 2rem 0 1rem; color: var(--toki-blue-dark); }
+        .article-content p { margin-bottom: 1.5rem; text-align: justify; }
+        .article-content blockquote { border-left: 3px solid var(--toki-blue); padding-left: 1.5rem; margin: 2rem 0; font-family: var(--font-display); color: var(--text-secondary); }
+        .article-content ul { margin: 1.5rem 0; padding-left: 1.5rem; }
+        .article-content li { margin-bottom: 0.75rem; }
+
+        .core-message { background: var(--toki-blue-pale); border-left: 4px solid var(--toki-blue); padding: 1.5rem; margin: 2rem 0; font-size: 0.95rem; line-height: 1.8; }
+        .key-point { background: linear-gradient(135deg, var(--toki-blue-pale) 0%, #fff 100%); border: 1px solid var(--accent-blue); border-radius: 8px; padding: 1.5rem; margin: 2rem 0; text-align: center; }
+        .key-point p { font-family: var(--font-display); font-size: 1.1rem; color: var(--toki-blue-dark); margin: 0; }
+
+        .article-footer { margin-top: 4rem; padding-top: 2rem; border-top: 1px solid var(--border); text-align: center; }
+        .article-footer p { font-size: 0.8rem; color: var(--text-muted); margin-bottom: 1rem; }
+        .article-footer a { color: var(--toki-blue); text-decoration: none; }
+        .article-footer a:hover { text-decoration: underline; }
+
+        @media (max-width: 768px) {
+            .article-container { padding: 6rem 1.2rem 3rem; }
+            .article-header h1 { font-size: 1.5rem; }
+            .article-nav .nav-label { display: none; }
+        }
+        @media print { .article-nav { display: none; } .article-container { padding-top: 2rem; } }
+    </style>
+    <link rel="stylesheet" href="contact-form.css">
+    <meta property="og:type" content="article">
+    <meta property="og:title" content="研磨 | トキストレージ">
+    <meta property="og:description" content="プロダクトは完成していた。足りなかったのは「伝わること」。技術の誇りを黙らせ、受け手の言葉に翻訳する——Go-to-Marketの最後の工程。">
+    <meta property="og:url" content="https://tokistorage.github.io/lp/polishing.html">
+    <meta property="og:site_name" content="トキストレージ">
+    <meta name="twitter:card" content="summary">
+    <meta name="twitter:title" content="研磨 | トキストレージ">
+    <meta name="twitter:description" content="プロダクトは完成していた。足りなかったのは「伝わること」。技術の誇りを黙らせ、受け手の言葉に翻訳する——Go-to-Marketの最後の工程。">
+    <meta property="og:image" content="https://tokistorage.github.io/lp/asset/tokistorage-icon-512.png">
+    <meta property="og:image:width" content="512">
+    <meta property="og:image:height" content="512">
+    <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Article",
+  "headline": "研磨",
+  "author": {
+    "@type": "Person",
+    "name": "Takuya Sato",
+    "url": "https://tokistorage.github.io/lp/profile.html"
+  },
+  "publisher": {
+    "@type": "Organization",
+    "name": "TokiStorage",
+    "url": "https://tokistorage.github.io/lp",
+    "logo": {
+      "@type": "ImageObject",
+      "url": "https://tokistorage.github.io/lp/asset/tokistorage-icon-512.png"
+    }
+  },
+  "url": "https://tokistorage.github.io/lp/polishing.html",
+  "inLanguage": "ja",
+  "mainEntityOfPage": "https://tokistorage.github.io/lp/polishing.html",
+  "description": "プロダクトは完成していた。足りなかったのは「伝わること」。技術の誇りを黙らせ、受け手の言葉に翻訳する——Go-to-Marketの最後の工程。"
+}
+    </script>
+    <link rel="alternate" hreflang="ja" href="https://tokistorage.github.io/lp/polishing.html">
+    <link rel="alternate" hreflang="en" href="https://tokistorage.github.io/lp/polishing-en.html">
+    <link rel="alternate" hreflang="x-default" href="https://tokistorage.github.io/lp/polishing.html">
+    <link rel="canonical" href="https://tokistorage.github.io/lp/polishing.html">
+</head>
+<body>
+
+<nav class="article-nav">
+    <a href="index.html" class="nav-brand">トキストレージ</a>
+    <div class="nav-right">
+        <span class="nav-label">技術・設計 / Technology & Design</span>
+        <a href="polishing-en.html" class="lang-switch">EN</a>
+    </div>
+</nav>
+
+<main class="article-container">
+
+    <header class="article-header">
+        <p class="article-category">ESSAY &mdash; 技術・設計</p>
+        <h1>研磨<br><span style="font-size:0.7em; font-weight:400;">プロダクトを市場に届けるために削ったもの</span></h1>
+        <p class="article-subtitle">
+            &mdash;&mdash; プロダクトは完成していた。アーキテクチャは動き、音声は再生され、記録は残った。だが「伝わらない」という一点で、市場には届かなかった。完成したプロダクトを市場に届けるために、何を削り、何を翻訳したのか。
+        </p>
+    </header>
+
+    <article class="article-content">
+
+        <h2>完成と不在</h2>
+
+        <p>プロダクトは完成していた。TokiQRは動き、記録は保存され、音声は再生された。アーキテクチャは設計通りに機能し、三層の分散保管は稼働していた。</p>
+
+        <p>しかし、ランディングページを開いた人の反応は、設計者が期待したものと違った。</p>
+
+        <p>「石英ガラスに記録される」と書かれても、何がどう良いのかわからない。「存在証明」と言われても、自分の何が証明されるのかがわからない。「Arctic Code Vault」と並べられても、それが自分にどう関係するのかわからない。「クラウドは消える」と脅されても、何をすべきかわからない。</p>
+
+        <p>作ったものに欠陥はなかった。足りなかったのは「伝わること」だった。</p>
+
+        <h2>削ったもの</h2>
+
+        <p>具体的に何を削ったか。</p>
+
+        <h3>「存在証明」→「記録」</h3>
+
+        <p>存在証明という概念はプロダクトの哲学的核心だが、初めて訪れた人にとっては抽象的すぎる。「あなたの声を、あなたの写真を、あなたの言葉を記録として残す」——受け手が知りたいのは概念ではなく、自分の体験がどうなるかだ。</p>
+
+        <h3>「石英ガラス」→「高耐久性素材」</h3>
+
+        <p>石英ガラスはM-DISCの基盤技術であり、技術者にとっては核心的な差別化要素だ。だが受け手にとっては素材名より「どのくらい持つのか」が重要だった。技術の名前を消し、機能の結果を残した。</p>
+
+        <h3>「Arctic Code Vault」→ 削除</h3>
+
+        <p>GitHubのArctic Code Vaultは、TokiStorageの技術的信頼性を示す好例だった。しかし、一般消費者にとっては無関係な情報だ。技術者同士の会話では輝く文脈が、市場向けの訴求では重荷になる。</p>
+
+        <h3>「クラウドは消える」→ 削除</h3>
+
+        <p>恐怖を動機にした訴求は信頼設計の原則に反する。クラウドサービスの終了リスクは事実だが、それを前面に出すことは恐怖喚起マーケティングになる。恐怖ではなく安心を語ることに切り替えた。</p>
+
+        <h3>「千年」「1000年」→ 文脈を限定</h3>
+
+        <p>1000年保存はTokiStorageの設計思想の根幹だ。しかしマーケティング文脈で繰り返すと、過大な約束に聞こえる。エッセイや哲学文脈では残し、プロダクトページからは抑えた。</p>
+
+        <div class="core-message">
+            削ったのは機能ではない。受け手に届かなかった言葉だ。技術の実体はそのまま残り、その語り方だけが変わった。
+        </div>
+
+        <h2>なぜ削ったか</h2>
+
+        <p>技術者は仕組みを語りたい。それが正直だと信じているからだ。石英ガラスの耐久性、Codec2の圧縮効率、GitHubの分散アーキテクチャ——これらはすべて事実であり、誇るべき設計だ。</p>
+
+        <p>だが受け手が知りたいのは「私にとって何が起きるか」だ。</p>
+
+        <p>子どもの声を残したい親は、Codec2が何であるかに興味がない。結婚式で手紙を残したい花嫁は、M-DISCの構造を知る必要がない。彼らが知りたいのは「この声が、いつまで、どう残るのか」だけだ。</p>
+
+        <p>仕組みの説明は信頼を生まない。結果の約束が信頼を生む。「あなたの声は、お子さんが大人になっても、そのまま聴ける」——これが受け手の言語だ。</p>
+
+        <blockquote>技術者は仕組みを語りたい。受け手は結果を知りたい。</blockquote>
+
+        <h2>マニフェストの改定</h2>
+
+        <p>プロダクトページだけではなかった。マニフェスト——TokiStorageの哲学を宣言する文書——にも同じ原則を適用した。</p>
+
+        <p>第二条「デジタル遺産を千年先へ届ける」から、技術仕様への言及を削った。第七条から「恐怖を売らない」の原則を明文化した。第九条のArctic Code Vaultへの言及を削除した。</p>
+
+        <p>哲学文書であっても、読み手がいる。読み手が受け取れない言葉は、存在しないのと同じだ。</p>
+
+        <p>マニフェストの改定は、哲学を捨てたのではない。哲学を、受け取れる形に変えた。</p>
+
+        <h2>フッターの統一</h2>
+
+        <p>研磨は文言だけではなかった。全ページのフッターを点検し、ミッションステートメントを統一した。</p>
+
+        <blockquote>あなたが物語となり、世代の対話が重なり、未来の道となる。</blockquote>
+
+        <p>この一文を、インフォグラフィック、ブローシャ、法務ページ、ニュースレター、すべてのページに入れた。エッセイページにはJavaScriptで動的に注入される仕組みがすでにあった。残りの非エッセイページに手作業で追加した。</p>
+
+        <p>ブランドの一貫性とは、デザインの統一ではない。「この会社は何をしようとしているのか」が、どのページを開いても同じ温度で伝わることだ。</p>
+
+        <h2>研磨の定義</h2>
+
+        <p>研磨とは、機能を削ることではない。見え方を削ることだ。</p>
+
+        <p>TokiQRの音声再生機能は何も変わっていない。三層分散保管のアーキテクチャも変わっていない。Codec2の圧縮効率も、M-DISCの耐久性も、GitHubの可用性も、一切変わっていない。</p>
+
+        <p>変わったのは、それらをどう語るかだ。</p>
+
+        <p>技術の実体を残したまま、技術の言語を消す。プロダクトの実質は一切損なわずに、受け手の視界に入る言葉だけを入れ替える。これが研磨だ。</p>
+
+        <p>宝石の研磨と同じだ。原石の成分は変わらない。カットと磨きによって、光の入り方が変わる。光が入れば、見る人に届く。</p>
+
+        <div class="key-point">
+            <p>研磨とは、光の当て方を変えること。原石は何も変わらない。</p>
+        </div>
+
+        <h2>結び</h2>
+
+        <p>Go-to-Marketとは、自分の言葉を相手の言葉に翻訳する最後の工程だ。</p>
+
+        <p>多くのスタートアップは、プロダクトが完成した時点でGo-to-Marketを終えたと思う。だがプロダクトの完成は、市場に届くことの半分でしかない。残り半分は、受け手の言語に翻訳する作業だ。</p>
+
+        <p>技術者の誇りを黙らせるのは、誇りを捨てることではない。誇りを、受け手が受け取れる形に変えることだ。削ったものは何も失われていない。ただ、光の当て方が変わっただけだ。</p>
+
+    </article>
+
+    <footer class="article-footer">
+        <p id="essay-nav-links"></p>
+        <p style="font-size: 0.75rem; color: var(--text-muted);">&copy; 2026 TokiStorage. All rights reserved.</p>
+    </footer>
+
+</main>
+
+<script src="essay-nav.js"></script>
+<script src="contact-form.js"></script>
+
+</body>
+</html>

@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" type="image/png" sizes="32x32" href="asset/favicon-32.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="asset/apple-touch-icon.png">
+    <title>Polishing | TokiStorage</title>
+    <meta name="robots" content="index, follow">
+    <meta name="description" content="The product was finished. What was missing was communication. Silencing the engineer's pride and translating into the recipient's language — the final step of go-to-market.">    <style>
+        :root {
+            --toki-blue: #2563EB;
+            --toki-blue-dark: #1E40AF;
+            --toki-blue-pale: #EFF6FF;
+            --accent-blue: #60A5FA;
+            --bg-white: #FFFFFF;
+            --text-primary: #1E293B;
+            --text-secondary: #475569;
+            --text-muted: #94A3B8;
+            --border: #E2E8F0;
+            --font-display: Georgia, 'Times New Roman', 'Hiragino Mincho ProN', 'Yu Mincho', serif;
+            --font-body: 'Hiragino Kaku Gothic ProN', 'Yu Gothic', 'Meiryo', sans-serif;
+        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        html { scroll-behavior: smooth; }
+        body { font-family: var(--font-body); font-weight: 400; background: var(--bg-white); color: var(--text-primary); line-height: 2; font-size: 16px; }
+
+        .article-nav { position: fixed; top: 0; left: 0; right: 0; z-index: 1000; background: rgba(255,255,255,0.95); backdrop-filter: blur(12px); border-bottom: 1px solid var(--border); padding: 0.6rem 1.2rem; display: flex; align-items: center; justify-content: space-between; gap: 1rem; }
+        .article-nav .nav-brand { font-family: var(--font-display); font-size: 0.9rem; font-weight: 600; color: var(--toki-blue); text-decoration: none; white-space: nowrap; }
+        .article-nav .nav-brand::before { content: ''; display: inline-block; width: 20px; height: 20px; background: url('asset/tokistorage-icon-512.png') no-repeat center / contain; vertical-align: -3px; margin-right: 5px; }
+        .article-nav .nav-right { display: flex; align-items: center; gap: 1rem; }
+        .article-nav .nav-label { font-size: 0.6rem; color: var(--text-muted); letter-spacing: 0.08em; }
+        .article-nav .lang-switch { font-size: 0.75rem; color: var(--toki-blue); text-decoration: none; padding: 0.3rem 0.6rem; border: 1px solid var(--toki-blue); border-radius: 4px; }
+        .article-nav .lang-switch:hover { background: var(--toki-blue); color: #fff; }
+
+        .article-container { max-width: 680px; margin: 0 auto; padding: 7rem 2rem 4rem; }
+        .article-header { margin-bottom: 3rem; padding-bottom: 2rem; border-bottom: 1px solid var(--border); }
+        .article-category { font-size: 0.7rem; color: var(--toki-blue); letter-spacing: 0.15em; margin-bottom: 1rem; }
+        .article-header h1 { font-family: var(--font-display); font-size: 1.8rem; font-weight: 700; line-height: 1.5; margin-bottom: 1.5rem; }
+        .article-subtitle { font-size: 0.95rem; color: var(--text-secondary); line-height: 1.9; }
+
+        .article-content h2 { font-family: var(--font-display); font-size: 1.3rem; font-weight: 600; margin: 3rem 0 1.5rem; padding-bottom: 0.5rem; border-bottom: 2px solid var(--toki-blue-pale); }
+        .article-content h3 { font-family: var(--font-display); font-size: 1.1rem; font-weight: 600; margin: 2rem 0 1rem; color: var(--toki-blue-dark); }
+        .article-content p { margin-bottom: 1.5rem; text-align: justify; }
+        .article-content blockquote { border-left: 3px solid var(--toki-blue); padding-left: 1.5rem; margin: 2rem 0; font-family: var(--font-display); color: var(--text-secondary); }
+        .article-content ul { margin: 1.5rem 0; padding-left: 1.5rem; }
+        .article-content li { margin-bottom: 0.75rem; }
+
+        .core-message { background: var(--toki-blue-pale); border-left: 4px solid var(--toki-blue); padding: 1.5rem; margin: 2rem 0; font-size: 0.95rem; line-height: 1.8; }
+        .key-point { background: linear-gradient(135deg, var(--toki-blue-pale) 0%, #fff 100%); border: 1px solid var(--accent-blue); border-radius: 8px; padding: 1.5rem; margin: 2rem 0; text-align: center; }
+        .key-point p { font-family: var(--font-display); font-size: 1.1rem; color: var(--toki-blue-dark); margin: 0; }
+
+        .article-footer { margin-top: 4rem; padding-top: 2rem; border-top: 1px solid var(--border); text-align: center; }
+        .article-footer p { font-size: 0.8rem; color: var(--text-muted); margin-bottom: 1rem; }
+        .article-footer a { color: var(--toki-blue); text-decoration: none; }
+        .article-footer a:hover { text-decoration: underline; }
+
+        @media (max-width: 768px) {
+            .article-container { padding: 6rem 1.2rem 3rem; }
+            .article-header h1 { font-size: 1.5rem; }
+            .article-nav .nav-label { display: none; }
+        }
+        @media print { .article-nav { display: none; } .article-container { padding-top: 2rem; } }
+    </style>
+    <link rel="stylesheet" href="contact-form.css">
+    <meta property="og:type" content="article">
+    <meta property="og:title" content="Polishing | TokiStorage">
+    <meta property="og:description" content="The product was finished. What was missing was communication. Silencing the engineer's pride and translating into the recipient's language — the final step of go-to-market.">
+    <meta property="og:url" content="https://tokistorage.github.io/lp/polishing-en.html">
+    <meta property="og:site_name" content="TokiStorage">
+    <meta name="twitter:card" content="summary">
+    <meta name="twitter:title" content="Polishing | TokiStorage">
+    <meta name="twitter:description" content="The product was finished. What was missing was communication. Silencing the engineer's pride and translating into the recipient's language — the final step of go-to-market.">
+    <meta property="og:image" content="https://tokistorage.github.io/lp/asset/tokistorage-icon-512.png">
+    <meta property="og:image:width" content="512">
+    <meta property="og:image:height" content="512">
+    <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Article",
+  "headline": "Polishing",
+  "author": {
+    "@type": "Person",
+    "name": "Takuya Sato",
+    "url": "https://tokistorage.github.io/lp/profile.html"
+  },
+  "publisher": {
+    "@type": "Organization",
+    "name": "TokiStorage",
+    "url": "https://tokistorage.github.io/lp",
+    "logo": {
+      "@type": "ImageObject",
+      "url": "https://tokistorage.github.io/lp/asset/tokistorage-icon-512.png"
+    }
+  },
+  "url": "https://tokistorage.github.io/lp/polishing-en.html",
+  "inLanguage": "en",
+  "mainEntityOfPage": "https://tokistorage.github.io/lp/polishing-en.html",
+  "description": "The product was finished. What was missing was communication. Silencing the engineer's pride and translating into the recipient's language — the final step of go-to-market."
+}
+    </script>
+    <link rel="alternate" hreflang="ja" href="https://tokistorage.github.io/lp/polishing.html">
+    <link rel="alternate" hreflang="en" href="https://tokistorage.github.io/lp/polishing-en.html">
+    <link rel="alternate" hreflang="x-default" href="https://tokistorage.github.io/lp/polishing.html">
+    <link rel="canonical" href="https://tokistorage.github.io/lp/polishing-en.html">
+</head>
+<body>
+
+<nav class="article-nav">
+    <a href="index-en.html" class="nav-brand">TokiStorage</a>
+    <div class="nav-right">
+        <span class="nav-label">Technology & Design</span>
+        <a href="polishing.html" class="lang-switch">JA</a>
+    </div>
+</nav>
+
+<main class="article-container">
+
+    <header class="article-header">
+        <p class="article-category">ESSAY &mdash; Technology & Design</p>
+        <h1>Polishing<br><span style="font-size:0.7em; font-weight:400;">What We Removed to Reach the Market</span></h1>
+        <p class="article-subtitle">
+            &mdash;&mdash; The product was finished. The architecture worked, voices played back, records were preserved. Yet it failed to reach the market on one count: it did not communicate. What we removed and what we translated to carry a finished product to market.
+        </p>
+    </header>
+
+    <article class="article-content">
+
+        <h2>Completion and Absence</h2>
+
+        <p>The product was finished. TokiQR worked, records were stored, and voices played back. The architecture functioned as designed, and three-layer distributed storage was operational.</p>
+
+        <p>But visitors who opened the landing page did not react the way the designers expected.</p>
+
+        <p>"Recorded on fused quartz" meant nothing to them. "Proof of existence" left them wondering what exactly would be proven about them. "Arctic Code Vault" told them nothing about their own lives. "The cloud will disappear" frightened without telling them what to do.</p>
+
+        <p>Nothing was wrong with what we built. What was missing was communication.</p>
+
+        <h2>What We Removed</h2>
+
+        <p>Here is what we specifically removed.</p>
+
+        <h3>"Proof of existence" &rarr; "record"</h3>
+
+        <p>Proof of existence is the philosophical core of the product, but for a first-time visitor it is too abstract. "Your voice, your photo, your words &mdash; preserved as a record." What the recipient wants to know is not a concept but what happens to their own experience.</p>
+
+        <h3>"Fused quartz" &rarr; "high-durability material"</h3>
+
+        <p>Fused quartz is the foundational technology of M-DISC and a key differentiator for engineers. But for the recipient, "how long will it last" mattered more than the material's name. We removed the name of the technology and kept the result of its function.</p>
+
+        <h3>"Arctic Code Vault" &rarr; removed</h3>
+
+        <p>GitHub's Arctic Code Vault was a compelling example of TokiStorage's technical credibility. But for the average consumer, it was irrelevant. Context that shines in conversations between engineers becomes dead weight in market-facing messaging.</p>
+
+        <h3>"The cloud will disappear" &rarr; removed</h3>
+
+        <p>Fear-based messaging violates trust-design principles. The risk of cloud service discontinuation is real, but leading with that risk amounts to fear-based marketing. We chose to speak of assurance rather than fear.</p>
+
+        <h3>"Thousand years" / "1000 years" &rarr; context-limited</h3>
+
+        <p>One-thousand-year preservation is the foundational design philosophy of TokiStorage. But repeated in marketing context, it sounds like an over-promise. We kept it in essays and philosophical contexts, and toned it down on product pages.</p>
+
+        <div class="core-message">
+            What we removed was not functionality. It was words that never reached the recipient. The substance of the technology remains intact; only the way we talk about it has changed.
+        </div>
+
+        <h2>Why We Removed It</h2>
+
+        <p>Engineers want to talk about mechanisms. They believe this is honest. The durability of fused quartz, the compression efficiency of Codec2, the distributed architecture of GitHub &mdash; these are all facts, and they are admirable design achievements.</p>
+
+        <p>But what the recipient wants to know is: "What happens for me?"</p>
+
+        <p>A parent who wants to preserve a child's voice has no interest in what Codec2 is. A bride who wants to leave a letter at her wedding does not need to understand M-DISC's structure. All they want to know is: "How long will this voice last, and how will it be preserved?"</p>
+
+        <p>Explaining mechanisms does not build trust. Promising outcomes does. "Your child will be able to hear your voice, exactly as it sounds today, even as an adult" &mdash; that is the recipient's language.</p>
+
+        <blockquote>Engineers want to talk about mechanisms. Recipients want to know outcomes.</blockquote>
+
+        <h2>Revising the Manifesto</h2>
+
+        <p>It was not just product pages. The manifesto &mdash; the document declaring TokiStorage's philosophy &mdash; received the same treatment.</p>
+
+        <p>From Article 2, "Delivering digital heritage a thousand years into the future," we removed references to technical specifications. In Article 7, we codified the principle of not selling fear. From Article 9, we removed the reference to the Arctic Code Vault.</p>
+
+        <p>Even a philosophical document has readers. Words that readers cannot receive might as well not exist.</p>
+
+        <p>Revising the manifesto was not abandoning the philosophy. It was reshaping the philosophy into a form that could be received.</p>
+
+        <h2>Unifying the Footer</h2>
+
+        <blockquote>You become a story, generations connect in dialogue, the path forward.</blockquote>
+
+        <p>This single line was placed on every page &mdash; infographics, brochures, legal pages, newsletters. Essay pages already had a JavaScript mechanism that injected it dynamically. The remaining non-essay pages were updated by hand.</p>
+
+        <p>Brand consistency is not design uniformity. It means that "what this company is trying to do" comes through at the same temperature no matter which page you open.</p>
+
+        <h2>The Definition of Polishing</h2>
+
+        <p>Polishing is not removing features. It is removing how things look.</p>
+
+        <p>TokiQR's voice playback has not changed. The three-layer distributed storage architecture has not changed. Codec2's compression efficiency, M-DISC's durability, GitHub's availability &mdash; none of it has changed.</p>
+
+        <p>What changed is how we talk about them.</p>
+
+        <p>Keeping the substance of the technology while erasing the language of the technology. Replacing only the words that enter the recipient's field of vision, without diminishing the product's substance in the slightest. That is polishing.</p>
+
+        <p>It is the same as polishing a gemstone. The composition of the rough stone does not change. The cut and the polish change how light enters. When light enters, it reaches the viewer.</p>
+
+        <div class="key-point">
+            <p>Polishing is changing the angle of light. The rough stone remains unchanged.</p>
+        </div>
+
+        <h2>Conclusion</h2>
+
+        <p>Go-to-market is the final step of translating your own words into the other person's words.</p>
+
+        <p>Many startups believe go-to-market is finished once the product is built. But completing the product is only half of reaching the market. The other half is the work of translating into the recipient's language.</p>
+
+        <p>Silencing the engineer's pride does not mean abandoning pride. It means reshaping pride into a form the recipient can receive. Nothing we removed has been lost. Only the angle of light has changed.</p>
+
+    </article>
+
+    <footer class="article-footer">
+        <p id="essay-nav-links"></p>
+        <p style="font-size: 0.75rem; color: var(--text-muted);">&copy; 2026 TokiStorage. All rights reserved.</p>
+    </footer>
+
+</main>
+
+<script src="essay-nav.js"></script>
+<script src="contact-form.js"></script>
+
+</body>
+</html>
