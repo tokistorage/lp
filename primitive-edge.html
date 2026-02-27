@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" type="image/png" sizes="32x32" href="asset/favicon-32.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="asset/apple-touch-icon.png">
+    <title>プリミティブの刃 | トキストレージ</title>
+    <meta name="robots" content="index, follow">
+    <meta name="description" content="要素技術はすべてプリミティブなのに、組み合わせの設計だけで先端プロダクトになった。フレームワークの不在が、制約との対話を可能にした。">    <style>
+        :root {
+            --toki-blue: #2563EB;
+            --toki-blue-dark: #1E40AF;
+            --toki-blue-pale: #EFF6FF;
+            --accent-blue: #60A5FA;
+            --bg-white: #FFFFFF;
+            --text-primary: #1E293B;
+            --text-secondary: #475569;
+            --text-muted: #94A3B8;
+            --border: #E2E8F0;
+            --font-display: 'Hiragino Mincho ProN', 'Yu Mincho', serif;
+            --font-body: 'Hiragino Kaku Gothic ProN', 'Yu Gothic', 'Meiryo', sans-serif;
+        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        html { scroll-behavior: smooth; }
+        body { font-family: var(--font-body); font-weight: 400; background: var(--bg-white); color: var(--text-primary); line-height: 2; font-size: 16px; }
+
+        .article-nav { position: fixed; top: 0; left: 0; right: 0; z-index: 1000; background: rgba(255,255,255,0.95); backdrop-filter: blur(12px); border-bottom: 1px solid var(--border); padding: 0.6rem 1.2rem; display: flex; align-items: center; justify-content: space-between; gap: 1rem; }
+        .article-nav .nav-brand { font-family: var(--font-display); font-size: 0.9rem; font-weight: 600; color: var(--toki-blue); text-decoration: none; white-space: nowrap; }
+        .article-nav .nav-brand::before { content: ''; display: inline-block; width: 20px; height: 20px; background: url('asset/tokistorage-icon-512.png') no-repeat center / contain; vertical-align: -3px; margin-right: 5px; }
+        .article-nav .nav-right { display: flex; align-items: center; gap: 1rem; }
+        .article-nav .nav-label { font-size: 0.6rem; color: var(--text-muted); letter-spacing: 0.08em; }
+        .article-nav .lang-switch { font-size: 0.75rem; color: var(--toki-blue); text-decoration: none; padding: 0.3rem 0.6rem; border: 1px solid var(--toki-blue); border-radius: 4px; }
+        .article-nav .lang-switch:hover { background: var(--toki-blue); color: #fff; }
+
+        .article-container { max-width: 680px; margin: 0 auto; padding: 7rem 2rem 4rem; }
+        .article-header { margin-bottom: 3rem; padding-bottom: 2rem; border-bottom: 1px solid var(--border); }
+        .article-category { font-size: 0.7rem; color: var(--toki-blue); letter-spacing: 0.15em; margin-bottom: 1rem; }
+        .article-header h1 { font-family: var(--font-display); font-size: 1.8rem; font-weight: 700; line-height: 1.5; margin-bottom: 1.5rem; }
+        .article-subtitle { font-size: 0.95rem; color: var(--text-secondary); line-height: 1.9; }
+
+        .article-content h2 { font-family: var(--font-display); font-size: 1.3rem; font-weight: 600; margin: 3rem 0 1.5rem; padding-bottom: 0.5rem; border-bottom: 2px solid var(--toki-blue-pale); }
+        .article-content h3 { font-family: var(--font-display); font-size: 1.1rem; font-weight: 600; margin: 2rem 0 1rem; color: var(--toki-blue-dark); }
+        .article-content p { margin-bottom: 1.5rem; text-align: justify; }
+        .article-content blockquote { border-left: 3px solid var(--toki-blue); padding-left: 1.5rem; margin: 2rem 0; font-family: var(--font-display); color: var(--text-secondary); }
+        .article-content ul { margin: 1.5rem 0; padding-left: 1.5rem; }
+        .article-content li { margin-bottom: 0.75rem; }
+
+        .core-message { background: var(--toki-blue-pale); border-left: 4px solid var(--toki-blue); padding: 1.5rem; margin: 2rem 0; font-size: 0.95rem; line-height: 1.8; }
+        .key-point { background: linear-gradient(135deg, var(--toki-blue-pale) 0%, #fff 100%); border: 1px solid var(--accent-blue); border-radius: 8px; padding: 1.5rem; margin: 2rem 0; text-align: center; }
+        .key-point p { font-family: var(--font-display); font-size: 1.1rem; color: var(--toki-blue-dark); margin: 0; }
+
+        .article-footer { margin-top: 4rem; padding-top: 2rem; border-top: 1px solid var(--border); text-align: center; }
+        .article-footer p { font-size: 0.8rem; color: var(--text-muted); margin-bottom: 1rem; }
+        .article-footer a { color: var(--toki-blue); text-decoration: none; }
+        .article-footer a:hover { text-decoration: underline; }
+
+        @media (max-width: 768px) {
+            .article-container { padding: 6rem 1.2rem 3rem; }
+            .article-header h1 { font-size: 1.5rem; }
+            .article-nav .nav-label { display: none; }
+        }
+        @media print { .article-nav { display: none; } .article-container { padding-top: 2rem; } }
+    </style>
+</head>
+<body>
+
+<nav class="article-nav">
+    <a href="essays.html" class="nav-brand">トキストレージ</a>
+    <div class="nav-right">
+        <span class="nav-label">ESSAY</span>
+        <a href="primitive-edge-en.html" class="lang-switch">EN</a>
+    </div>
+</nav>
+
+<main class="article-container">
+    <header class="article-header">
+        <div class="article-category">メタ視点</div>
+        <h1>プリミティブの刃</h1>
+        <p class="article-subtitle">要素技術はすべてプリミティブなのに、組み合わせの設計だけで先端プロダクトになった。フレームワークの不在が、制約との対話を可能にした。</p>
+    </header>
+
+    <article class="article-content">
+
+        <h2>部品表を見れば、驚くほど普通だ</h2>
+
+        <p>TokiQRの要素技術を分解すると、どれも枯れた技術か公開仕様そのものだ。</p>
+
+        <ul>
+            <li>QRコード（1994年発明）</li>
+            <li>Base64エンコーディング</li>
+            <li>Codec2（オープンソース音声コーデック）</li>
+            <li>localStorage</li>
+            <li>Service Worker</li>
+            <li>Claude API（唯一の外部依存）</li>
+        </ul>
+
+        <p>独自プロトコルはない。サーバーもない。個々の部品は誰でも手に入る。</p>
+
+        <p>しかし「QR1枚に音声30秒」「AIアシスタント完備」「サーバーレスで永続保管」と並べると、先端プロダクトにしか見えない。実際にはプリミティブな技術の組み合わせの設計が独自性のすべてであり、部品そのものに秘密はない。</p>
+
+        <div class="core-message">
+            先端感の正体は、個々の技術の新しさではなく、組み合わせの的確さにある。
+        </div>
+
+        <h2>特性を知らなければ、ここには至らない</h2>
+
+        <p>「音声をQRに入れる」というゴールに対して、普通はOpusやAACを試す。そして「QRには入らない」で終わる。</p>
+
+        <p>Opusで2〜4kbpsを試すと、DTXが沈黙フレームを吐き出す。エントロピーが7.7に達し、DEFLATEが効かない。この特性に実際にぶつかり、限界を体感したからこそ、軍用通信向けのCodec2という選択肢が見えた。450bpsで75バイト/秒。ロボティックだが明瞭。QR Version 40の2953バイトに最大約29秒が収まる。</p>
+
+        <p>Claude APIも同じだ。「チャットボットを入れたい」だけなら選択肢は無数にある。しかしサーバーレス原則との両立を考えたとき、ステートレスなAPI呼び出し＋Cloudflare Workerの中継＋localStorageへのキー保存という構成が成立すると判断できたのは、それぞれの技術の境界条件を知っていたからだ。</p>
+
+        <div class="key-point">
+            <p>プリミティブな技術ほど特性がむき出しで、組み合わせの可否が特性理解に直結する。</p>
+        </div>
+
+        <h2>フレームワークが奪うもの</h2>
+
+        <p>フレームワークは「考えなくていい」ことを増やしてくれる。同時に「考えられない」ことも増やす。</p>
+
+        <p>TokiQRにはReactもなければビルドツールもない。生のHTML/CSS/JavaScriptとWASMだけだ。だからすべてのバイトがどこに行くか見える。QRの2953バイト上限に対して、どのエンコーディングで何バイト使うか、1バイト単位で設計できたのはそのおかげだ。</p>
+
+        <p>フレームワーク経由だと「なぜ動くか」は見えても「なぜ動かないか」の原因が抽象化の層に埋もれる。Codec2の450bpsが75バイト/秒になる計算も、Base64urlのオーバーヘッドも、すべて自分で触れるからこそ限界まで詰められた。</p>
+
+        <p>逆に言えば、フレームワークに乗っていたらQRに音声を入れるという発想自体が出なかった可能性がある。抽象化は便利だが、物理的な制約と向き合う機会を奪う。制約と向き合えなければ、制約の中での創造もできない。</p>
+
+        <h2>制約が設計を洗練させる</h2>
+
+        <p>サーバーレス原則の副産物がここにある。複雑な基盤を持てないからこそプリミティブな技術しか使えず、結果としてプリミティブな技術だけで先端感が出る組み合わせを見つけざるを得なかった。</p>
+
+        <p>ヒートマップもオンボーディングツアーもCRMも導入しなかったのは、サーバーサイドの状態保持を前提とするからだ。AIアシスタントだけが例外的に成立したのは、ステートレスな呼び出しで完結するからだ。選択肢を絞ったのではなく、制約が選択肢を絞った。</p>
+
+        <p>高レベルなフレームワークだと抽象化の裏に隠れて見えないものが、低レベルだと全部自分で判断しないといけない。それは負担であると同時に、参入障壁でもある。同じ部品は誰でも手に入るが、同じ組み合わせには誰もが至れるわけではない。</p>
+
+        <blockquote>
+            プリミティブであることは、弱さではない。刃は、単純であるほど鋭い。
+        </blockquote>
+
+    </article>
+
+    <footer class="article-footer">
+        <p id="essay-nav-links"></p>
+        <p style="font-size: 0.75rem; color: var(--text-muted);">&copy; 2026 TokiStorage. All rights reserved.</p>
+    </footer>
+
+</main>
+
+<script src="essay-nav.js"></script>
+</body>
+</html>
