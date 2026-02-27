@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" type="image/png" sizes="32x32" href="asset/favicon-32.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="asset/apple-touch-icon.png">
+    <title>The Operational Lens | TokiStorage</title>
+    <meta name="robots" content="index, follow">
+    <meta name="description" content="When the development phase ends and operations begin, the nature of your ideas changes. The AI chatbot was proof that perspective had shifted from builder to user.">    <style>
+        :root {
+            --toki-blue: #2563EB;
+            --toki-blue-dark: #1E40AF;
+            --toki-blue-pale: #EFF6FF;
+            --accent-blue: #60A5FA;
+            --bg-white: #FFFFFF;
+            --text-primary: #1E293B;
+            --text-secondary: #475569;
+            --text-muted: #94A3B8;
+            --border: #E2E8F0;
+            --font-display: 'Georgia', 'Times New Roman', serif;
+            --font-body: -apple-system, 'Segoe UI', Helvetica, Arial, sans-serif;
+        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        html { scroll-behavior: smooth; }
+        body { font-family: var(--font-body); font-weight: 400; background: var(--bg-white); color: var(--text-primary); line-height: 2; font-size: 16px; }
+
+        .article-nav { position: fixed; top: 0; left: 0; right: 0; z-index: 1000; background: rgba(255,255,255,0.95); backdrop-filter: blur(12px); border-bottom: 1px solid var(--border); padding: 0.6rem 1.2rem; display: flex; align-items: center; justify-content: space-between; gap: 1rem; }
+        .article-nav .nav-brand { font-family: var(--font-display); font-size: 0.9rem; font-weight: 600; color: var(--toki-blue); text-decoration: none; white-space: nowrap; }
+        .article-nav .nav-brand::before { content: ''; display: inline-block; width: 20px; height: 20px; background: url('asset/tokistorage-icon-512.png') no-repeat center / contain; vertical-align: -3px; margin-right: 5px; }
+        .article-nav .nav-right { display: flex; align-items: center; gap: 1rem; }
+        .article-nav .nav-label { font-size: 0.6rem; color: var(--text-muted); letter-spacing: 0.08em; }
+        .article-nav .lang-switch { font-size: 0.75rem; color: var(--toki-blue); text-decoration: none; padding: 0.3rem 0.6rem; border: 1px solid var(--toki-blue); border-radius: 4px; }
+        .article-nav .lang-switch:hover { background: var(--toki-blue); color: #fff; }
+
+        .article-container { max-width: 680px; margin: 0 auto; padding: 7rem 2rem 4rem; }
+        .article-header { margin-bottom: 3rem; padding-bottom: 2rem; border-bottom: 1px solid var(--border); }
+        .article-category { font-size: 0.7rem; color: var(--toki-blue); letter-spacing: 0.15em; margin-bottom: 1rem; }
+        .article-header h1 { font-family: var(--font-display); font-size: 1.8rem; font-weight: 700; line-height: 1.5; margin-bottom: 1.5rem; }
+        .article-subtitle { font-size: 0.95rem; color: var(--text-secondary); line-height: 1.9; }
+
+        .article-content h2 { font-family: var(--font-display); font-size: 1.3rem; font-weight: 600; margin: 3rem 0 1.5rem; padding-bottom: 0.5rem; border-bottom: 2px solid var(--toki-blue-pale); }
+        .article-content h3 { font-family: var(--font-display); font-size: 1.1rem; font-weight: 600; margin: 2rem 0 1rem; color: var(--toki-blue-dark); }
+        .article-content p { margin-bottom: 1.5rem; text-align: justify; }
+        .article-content blockquote { border-left: 3px solid var(--toki-blue); padding-left: 1.5rem; margin: 2rem 0; font-family: var(--font-display); color: var(--text-secondary); }
+        .article-content ul { margin: 1.5rem 0; padding-left: 1.5rem; }
+        .article-content li { margin-bottom: 0.75rem; }
+
+        .core-message { background: var(--toki-blue-pale); border-left: 4px solid var(--toki-blue); padding: 1.5rem; margin: 2rem 0; font-size: 0.95rem; line-height: 1.8; }
+        .key-point { background: linear-gradient(135deg, var(--toki-blue-pale) 0%, #fff 100%); border: 1px solid var(--accent-blue); border-radius: 8px; padding: 1.5rem; margin: 2rem 0; text-align: center; }
+
+        .article-footer { margin-top: 4rem; padding-top: 2rem; border-top: 1px solid var(--border); }
+        .article-footer-nav { display: flex; flex-direction: column; gap: 0.5rem; }
+        .article-footer-nav a { color: var(--toki-blue); text-decoration: none; font-size: 0.9rem; }
+        .article-footer-nav a:hover { text-decoration: underline; }
+        .article-footer .copyright { margin-top: 2rem; font-size: 0.75rem; color: var(--text-muted); }
+
+        .related-essays { margin-top: 2rem; }
+        .related-essays h3 { font-family: var(--font-display); font-size: 1rem; margin-bottom: 1rem; color: var(--text-secondary); }
+        .related-link { display: block; padding: 0.5rem 0; color: var(--toki-blue); text-decoration: none; font-size: 0.9rem; border-bottom: 1px solid var(--border); }
+        .related-link:hover { text-decoration: underline; }
+        .related-link:last-child { border-bottom: none; }
+    </style>
+</head>
+<body>
+
+<nav class="article-nav">
+    <a href="essays-en.html" class="nav-brand">TokiStorage</a>
+    <div class="nav-right">
+        <span class="nav-label">ESSAY</span>
+        <a href="dev-to-ops.html" class="lang-switch">JA</a>
+    </div>
+</nav>
+
+<article class="article-container">
+    <header class="article-header">
+        <div class="article-category">META PERSPECTIVES</div>
+        <h1>The Operational Lens</h1>
+        <p class="article-subtitle">When the development phase ends and operations begin, the nature of your ideas changes. The AI chatbot was proof that perspective had shifted from builder to user.</p>
+    </header>
+
+    <div class="article-content">
+
+        <h2>What Changes When You Finish Building</h2>
+
+        <p>While building a product, your gaze turns inward. Codec selection, QR capacity calculations, storage strategy, build pipelines. Every answer responds to a single question: "How do I implement this?"</p>
+
+        <p>Then, at some point, the question itself changes. "Where will users get stuck?" "Will someone opening this for the first time know what to do?" The audience you're answering to shifts from the compiler to the person.</p>
+
+        <p>When I first thought about adding an AI chatbot to TokiQR, it felt like a casual idea — "this would be interesting, let's try it." In retrospect, the mere emergence of that thought was signaling the end of the development phase.</p>
+
+        <h2>The Builder's View, The User's View</h2>
+
+        <p>In the development phase, you ask "what to build." In the operations phase, you ask "how to deliver." Same product, entirely different landscape.</p>
+
+        <p>The chatbot implementation itself was roughly 200 lines of JavaScript, nearly zero cost. Technically unremarkable. Yet "having a place to ask before reading the FAQ" transforms the user experience. This is not an idea that emerges from the developer's perspective.</p>
+
+        <div class="core-message">
+            During development, you think "features are missing." In operations, you think "explanations are missing."
+        </div>
+
+        <p>Writing over 120 essays was, in hindsight, an operational act. The features stay the same, but the volume of explanation about why things are the way they are keeps growing. Essays provide context, not functionality.</p>
+
+        <h2>What the Chatbot Reveals</h2>
+
+        <p>After deploying the chatbot across all pages, I realized this tool has the potential to make knowledge gaps visible. The questions users ask the assistant hint at areas that existing FAQs and essays haven't covered.</p>
+
+        <p>Initially, I considered building a system to capture common question patterns from logs and turn them into essays. But that was premature optimization.</p>
+
+        <p>Users are venue managers, not developers. Their questions are unpredictable. And because they're unpredictable, they're valuable. Writing essays in advance to anticipate them would be shooting in the dark. When an inquiry arrives and no essay addresses it, write one then. That's enough.</p>
+
+        <div class="key-point">
+            <p>Feedback first, content second. Never reverse the order.</p>
+        </div>
+
+        <h2>What Phase Awareness Brings</h2>
+
+        <p>When you can identify which phase you're in, decision criteria become clear.</p>
+
+        <ul>
+            <li>Development phase: Reduce technical debt, solidify features</li>
+            <li>Operations phase: Polish user experience, enrich explanations</li>
+            <li>Growth phase: Expand partnerships, multiply use cases</li>
+        </ul>
+
+        <p>TokiQR now sits at the boundary between operations and growth. The codebase is stable, the three-layer preservation of voice, image, and text works as designed. That stability created the room to turn attention toward users — and the confidence to write "AI assistant included" on a brochure.</p>
+
+        <h2>Why Keep Writing Essays</h2>
+
+        <p>During the development phase, essays documented design decisions. In the operations phase, they explain why things are the way they are. And essays like this one serve as waypoints — marking where the project stands at a given moment.</p>
+
+        <p>Building something and delivering what you've built are different skills. Development capability alone isn't enough. Gaining the operational lens — that is both a sign of product maturity and a gateway to the next phase.</p>
+
+        <blockquote>
+            The real work begins after you finish building.
+        </blockquote>
+
+    </div>
+
+    <footer class="article-footer">
+        <div class="article-footer-nav" id="essayFooterNav"></div>
+        <p class="copyright">&copy; 2026 TokiStorage</p>
+    </footer>
+</article>
+
+<script src="essay-nav.js"></script>
+</body>
+</html>

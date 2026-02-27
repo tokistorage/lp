@@ -170,7 +170,8 @@
     { id: 'why-essays', ja: 'エッセイを刻む意義', en: 'The Significance of Inscribing Essays', date: '2026-02-18' },
     { id: 'erasure', ja: '残さない選択', en: 'Choosing Not to Leave Behind', date: '2026-02-13' },
     { id: 'narrative-trust', ja: '物語が語る信頼', en: 'The Trust That Stories Tell', date: '2026-02-19' },
-    { id: 'headhunter', ja: '海外ヘッドハンターとの対話', en: 'Dialogue with an Overseas Headhunter', date: '2026-02-19' }
+    { id: 'headhunter', ja: '海外ヘッドハンターとの対話', en: 'Dialogue with an Overseas Headhunter', date: '2026-02-19' },
+    { id: 'dev-to-ops', ja: '運用という視座', en: 'The Operational Lens', date: '2026-02-28' }
   ];
 
   // ── Latest Articles (最新記事) ──
@@ -178,6 +179,7 @@
   // LATEST_COUNT で表示件数を制御
   const LATEST_COUNT = 5;
   const latestEssayIds = [
+    'dev-to-ops',
     'ai-concierge',
     'soap-pitch',
     'polishing',
@@ -351,7 +353,8 @@
     'why-essays':             ['preserving-words', 'brochure-essay', 'narrative-trust', 'openness', 'erasure'],
     'erasure':                ['preserving-words', 'why-essays', 'shiseikan', 'what-to-leave', 'openness'],
     'narrative-trust':        ['brochure-essay', 'preserving-words', 'integrity', 'why-essays', 'headhunter'],
-    'headhunter':             ['narrative-trust', 'burn-rate-zero', 'departure', 'adversity', 'global-niche']
+    'headhunter':             ['narrative-trust', 'burn-rate-zero', 'departure', 'adversity', 'global-niche'],
+    'dev-to-ops':             ['ai-concierge', 'why-essays', 'development-chronicle', 'vibe-coding-secrets', 'mission-statement']
   };
 
   const isEnglish = document.documentElement.lang === 'en';

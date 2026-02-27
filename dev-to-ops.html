@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" type="image/png" sizes="32x32" href="asset/favicon-32.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="asset/apple-touch-icon.png">
+    <title>運用という視座 | トキストレージ</title>
+    <meta name="robots" content="index, follow">
+    <meta name="description" content="開発フェーズが終わり、運用フェーズに入ったとき、発想の質が変わる。AIチャットボットという着想は、使う側の視点に立てた証拠だった。">    <style>
+        :root {
+            --toki-blue: #2563EB;
+            --toki-blue-dark: #1E40AF;
+            --toki-blue-pale: #EFF6FF;
+            --accent-blue: #60A5FA;
+            --bg-white: #FFFFFF;
+            --text-primary: #1E293B;
+            --text-secondary: #475569;
+            --text-muted: #94A3B8;
+            --border: #E2E8F0;
+            --font-display: 'Hiragino Mincho ProN', 'Yu Mincho', serif;
+            --font-body: 'Hiragino Kaku Gothic ProN', 'Yu Gothic', 'Meiryo', sans-serif;
+        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        html { scroll-behavior: smooth; }
+        body { font-family: var(--font-body); font-weight: 400; background: var(--bg-white); color: var(--text-primary); line-height: 2; font-size: 16px; }
+
+        .article-nav { position: fixed; top: 0; left: 0; right: 0; z-index: 1000; background: rgba(255,255,255,0.95); backdrop-filter: blur(12px); border-bottom: 1px solid var(--border); padding: 0.6rem 1.2rem; display: flex; align-items: center; justify-content: space-between; gap: 1rem; }
+        .article-nav .nav-brand { font-family: var(--font-display); font-size: 0.9rem; font-weight: 600; color: var(--toki-blue); text-decoration: none; white-space: nowrap; }
+        .article-nav .nav-brand::before { content: ''; display: inline-block; width: 20px; height: 20px; background: url('asset/tokistorage-icon-512.png') no-repeat center / contain; vertical-align: -3px; margin-right: 5px; }
+        .article-nav .nav-right { display: flex; align-items: center; gap: 1rem; }
+        .article-nav .nav-label { font-size: 0.6rem; color: var(--text-muted); letter-spacing: 0.08em; }
+        .article-nav .lang-switch { font-size: 0.75rem; color: var(--toki-blue); text-decoration: none; padding: 0.3rem 0.6rem; border: 1px solid var(--toki-blue); border-radius: 4px; }
+        .article-nav .lang-switch:hover { background: var(--toki-blue); color: #fff; }
+
+        .article-container { max-width: 680px; margin: 0 auto; padding: 7rem 2rem 4rem; }
+        .article-header { margin-bottom: 3rem; padding-bottom: 2rem; border-bottom: 1px solid var(--border); }
+        .article-category { font-size: 0.7rem; color: var(--toki-blue); letter-spacing: 0.15em; margin-bottom: 1rem; }
+        .article-header h1 { font-family: var(--font-display); font-size: 1.8rem; font-weight: 700; line-height: 1.5; margin-bottom: 1.5rem; }
+        .article-subtitle { font-size: 0.95rem; color: var(--text-secondary); line-height: 1.9; }
+
+        .article-content h2 { font-family: var(--font-display); font-size: 1.3rem; font-weight: 600; margin: 3rem 0 1.5rem; padding-bottom: 0.5rem; border-bottom: 2px solid var(--toki-blue-pale); }
+        .article-content h3 { font-family: var(--font-display); font-size: 1.1rem; font-weight: 600; margin: 2rem 0 1rem; color: var(--toki-blue-dark); }
+        .article-content p { margin-bottom: 1.5rem; text-align: justify; }
+        .article-content blockquote { border-left: 3px solid var(--toki-blue); padding-left: 1.5rem; margin: 2rem 0; font-family: var(--font-display); color: var(--text-secondary); }
+        .article-content ul { margin: 1.5rem 0; padding-left: 1.5rem; }
+        .article-content li { margin-bottom: 0.75rem; }
+
+        .core-message { background: var(--toki-blue-pale); border-left: 4px solid var(--toki-blue); padding: 1.5rem; margin: 2rem 0; font-size: 0.95rem; line-height: 1.8; }
+        .key-point { background: linear-gradient(135deg, var(--toki-blue-pale) 0%, #fff 100%); border: 1px solid var(--accent-blue); border-radius: 8px; padding: 1.5rem; margin: 2rem 0; text-align: center; }
+
+        .article-footer { margin-top: 4rem; padding-top: 2rem; border-top: 1px solid var(--border); }
+        .article-footer-nav { display: flex; flex-direction: column; gap: 0.5rem; }
+        .article-footer-nav a { color: var(--toki-blue); text-decoration: none; font-size: 0.9rem; }
+        .article-footer-nav a:hover { text-decoration: underline; }
+        .article-footer .copyright { margin-top: 2rem; font-size: 0.75rem; color: var(--text-muted); }
+
+        .related-essays { margin-top: 2rem; }
+        .related-essays h3 { font-family: var(--font-display); font-size: 1rem; margin-bottom: 1rem; color: var(--text-secondary); }
+        .related-link { display: block; padding: 0.5rem 0; color: var(--toki-blue); text-decoration: none; font-size: 0.9rem; border-bottom: 1px solid var(--border); }
+        .related-link:hover { text-decoration: underline; }
+        .related-link:last-child { border-bottom: none; }
+    </style>
+</head>
+<body>
+
+<nav class="article-nav">
+    <a href="essays.html" class="nav-brand">トキストレージ</a>
+    <div class="nav-right">
+        <span class="nav-label">ESSAY</span>
+        <a href="dev-to-ops-en.html" class="lang-switch">EN</a>
+    </div>
+</nav>
+
+<article class="article-container">
+    <header class="article-header">
+        <div class="article-category">メタ視点</div>
+        <h1>運用という視座</h1>
+        <p class="article-subtitle">開発フェーズが終わり、運用フェーズに入ったとき、発想の質が変わる。AIチャットボットという着想は、つくる側から使う側へ視点が移った証拠だった。</p>
+    </header>
+
+    <div class="article-content">
+
+        <h2>つくり終えたとき、何が変わるか</h2>
+
+        <p>プロダクトをつくっている最中は、視線が内側を向いている。コーデックの選定、QRの容量計算、ストレージ戦略、ビルドパイプライン。どれも「どう実装するか」という問いに対する答えだ。</p>
+
+        <p>ところが、ある時点を境に問いの質が変わる。「これ、使う人はどこでつまずくだろう？」「初めて開いた人は何をすればいいかわかるだろうか？」。答えるべき相手が、コンパイラからユーザーに変わる。</p>
+
+        <p>TokiQRにAIチャットボットを入れようと思ったとき、最初は「面白いからやろう」くらいの気持ちだった。しかし振り返ると、この発想が出てきたこと自体が、開発フェーズの終わりを告げていた。</p>
+
+        <h2>開発者の視点、利用者の視点</h2>
+
+        <p>開発フェーズでは「何をつくるか」を考える。運用フェーズでは「どう届けるか」を考える。同じプロダクトなのに、見える風景がまったく違う。</p>
+
+        <p>チャットボットの実装自体はchatbot.js 200行程度、コストはほぼゼロだった。技術的には大したことがない。しかし「FAQを読む前に聞ける場所がある」というだけで、利用者の体験は一変する。これは開発者の視点からは出てこない発想だ。</p>
+
+        <div class="core-message">
+            開発中は「機能が足りない」と考えるが、運用に入ると「説明が足りない」と考えるようになる。
+        </div>
+
+        <p>120本超のエッセイを書いてきたのも、振り返れば運用的な行為だった。機能は同じでも、なぜそうなっているかを説明する量が増えていく。エッセイは機能ではなく文脈を提供する。</p>
+
+        <h2>チャットボットが教えてくれること</h2>
+
+        <p>チャットボットを全ページに配置して気づいたのは、このツールがナレッジの穴を可視化する可能性を持っていることだ。ユーザーがアシスタントに質問する内容は、既存のFAQやエッセイではカバーしきれていない領域を示唆する。</p>
+
+        <p>当初は「よくある質問パターンをログから拾い、それをエッセイ化する」という仕組みを考えた。しかし、それは早すぎる最適化だった。</p>
+
+        <p>利用者は式場の担当者であり、開発者ではない。彼らの質問は予測できない。そして予測できないからこそ価値がある。先回りしてエッセイを書いても空振りになるだけだ。問い合わせが来たとき、そこに答えるエッセイがなければ書く。それだけでいい。</p>
+
+        <div class="key-point">
+            <p>フィードバックが先、コンテンツが後。順序を逆にしないこと。</p>
+        </div>
+
+        <h2>フェーズの自覚がもたらすもの</h2>
+
+        <p>「今、自分はどのフェーズにいるか」を自覚できると、判断基準が明確になる。</p>
+
+        <ul>
+            <li>開発フェーズ: 技術的負債を減らし、機能を固める</li>
+            <li>運用フェーズ: ユーザー体験を磨き、説明を充実させる</li>
+            <li>成長フェーズ: パートナーシップを広げ、ユースケースを増やす</li>
+        </ul>
+
+        <p>TokiQRは今、運用と成長の境界にいる。コードベースは安定し、音声・画像・テキストの三層保管は設計どおりに動いている。だからこそ視線をユーザーに向ける余裕が生まれ、「AIアシスタント完備」というブローシャの一行が書けるようになった。</p>
+
+        <h2>エッセイを書き続ける理由</h2>
+
+        <p>開発フェーズのエッセイは設計判断の記録だった。運用フェーズのエッセイは、なぜそうなっているかの説明になる。そしてこのエッセイのように、プロジェクトが今どこにいるかの定点観測にもなる。</p>
+
+        <p>つくることと、つくったものを届けることは、別の技術だ。開発力だけでは足りない。運用の視座を持つこと——それは、プロダクトが成熟した証であると同時に、次のフェーズへの入り口でもある。</p>
+
+        <blockquote>
+            つくり終えてから、本当の仕事が始まる。
+        </blockquote>
+
+    </div>
+
+    <footer class="article-footer">
+        <div class="article-footer-nav" id="essayFooterNav"></div>
+        <p class="copyright">&copy; 2026 TokiStorage</p>
+    </footer>
+</article>
+
+<script src="essay-nav.js"></script>
+</body>
+</html>
