@@ -505,7 +505,10 @@
   document.addEventListener('DOMContentLoaded', function() {
     const container = document.getElementById('essay-nav-links');
     if (container) {
-      container.innerHTML = buildLatestSection(currentFile) + buildRelatedSection(currentFile) + essaysListLink;
+      var missionStatement = isEnglish
+        ? '<p style="margin-top:2rem;font-family:var(--font-display,Georgia,serif);font-size:0.8rem;color:var(--text-muted,#94A3B8);font-style:italic;">You become a story, generations connect in dialogue, the path forward.</p>'
+        : '<p style="margin-top:2rem;font-family:var(--font-display,Georgia,serif);font-size:0.8rem;color:var(--text-muted,#94A3B8);font-style:italic;">あなたが物語となり、世代の対話が重なり、未来の道となる。</p>';
+      container.innerHTML = buildLatestSection(currentFile) + buildRelatedSection(currentFile) + essaysListLink + missionStatement;
     }
 
     // Inject publication date into article header
