@@ -84,6 +84,7 @@
     { id: 'copyright-jasrac', ja: '著作権とJASRAC', en: 'Copyright and JASRAC', date: '2026-02-24' },
     { id: 'self-print-economy', ja: 'セルフプリント経済圏', en: 'The Self-Print Economy', date: '2026-02-25' },
     { id: 'affiliate-transparency', ja: '紹介リンクの開示', en: 'Disclosure of Referral Links', date: '2026-02-27' },
+    { id: 'soap-pitch', ja: '石鹸がエレベーターピッチを超えた日', en: 'The Day Soap Beat the Elevator Pitch', date: '2026-02-27' },
 
     // ── 文化・社会活動 ──
     { id: 'education', ja: '教育', en: 'Education', date: '2026-02-13' },
@@ -176,6 +177,7 @@
   // LATEST_COUNT で表示件数を制御
   const LATEST_COUNT = 5;
   const latestEssayIds = [
+    'soap-pitch',
     'polishing',
     'customer-journey-transformation',
     'vibe-coding-secrets',
@@ -265,6 +267,7 @@
     'copyright-jasrac':       ['music', 'ownership', 'platform', 'disintermediation', 'ecosystem'],
     'self-print-economy':     ['free-strategy', 'uniform-pricing', 'payment', 'diy-partner', '30seconds'],
     'affiliate-transparency': ['burn-rate-zero', 'payment', 'openness', 'free-strategy', 'no-external-deps'],
+    'soap-pitch': ['novelty-soap', 'gift-economy', 'monitor-program', 'customer-journey-transformation', 'narrative-trust'],
     // ── 文化・社会活動 ──
     'education':              ['early-education', 'history', 'media', 'psychology', 'lifestyle'],
     'early-education':        ['education', 'recital-record', 'music', 'psychology', 'entertainment'],
