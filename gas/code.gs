@@ -86,6 +86,7 @@ function doPost(e) {
     if (data.type === 'order_activate') return handleOrderActivation(ss, data);
     if (data.type === 'series_open') return handleSeriesOpen(ss, data);
     if (data.type === 'ndl_submit') return handleNdlSubmit(ss, data);
+    if (data.type === 'series_rename') return handleSeriesRename(ss, data);
     if (data.type === 'monitor_apply') return handleMonitorApply(ss, data);
     if (data.type === 'monitor_feedback') return handleMonitorFeedback(ss, data);
     return handleContact(ss, data);
