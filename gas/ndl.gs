@@ -5,7 +5,7 @@
  *   - 同期的な series.json 読み書き → キューベース非同期化
  *   - ndl_submit: queue/{id}.json + queue/{id}.zip を main に直接コミット → 即応答
  *   - routeOrdersToSeries: 同上、キューに書くだけ
- *   - processQueue: 毎時タイマーでキュー一括処理 → 採番 → zips/ 移動 → 1PR
+ *   - processQueue: 5分間隔タイマーでキュー一括処理 → 採番 → zips/ 移動 → 1PR
  *
  * フロー:
  *   series_open: newsletter-master/series.json にエントリ追加（変更なし）
@@ -13,7 +13,7 @@
  *   processQueue: queue/ 一括読取 → 採番 → zips/ 移動 → series.json 更新 → PR
  *
  * タイマートリガー設定:
- *   - processQueue() → 毎時0分（キュー処理）
+ *   - processQueue() → 5分間隔（キュー処理）
  *   - sendMonthlySeriesReport() → 毎月1日 9:00（アクティビティレポート）
  */
 
@@ -264,7 +264,7 @@ function hasOpenQueuePR() {
 }
 
 /**
- * キュー処理（毎時タイマートリガー）
+ * キュー処理（5分間隔タイマートリガー）
  *
  * 処理フロー:
  *   1. オープン中のキューPRがあれば skip（冪等性）
