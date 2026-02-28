@@ -1,23 +1,24 @@
 /**
- * NDL特集シリーズ — series_open / ndl_submit (ndl.gs)
+ * NDL特集シリーズ — series_open / ndl_submit / processQueue (ndl.gs)
  *
- * v5 変更点 (v4からの移行):
- *   - per-series リポジトリ → newsletter-master 集約
- *   - provisionClientRepo() 削除 → series.json エントリ追加のみ
- *   - materials JSON → ZIP+PNG (クライアントが生成、base64で受信)
- *   - series-registry.json (lp/) → series.json (newsletter-master)
+ * v6 変更点 (v5からの移行):
+ *   - 同期的な series.json 読み書き → キューベース非同期化
+ *   - ndl_submit: queue/{id}.json + queue/{id}.zip を main に直接コミット → 即応答
+ *   - routeOrdersToSeries: 同上、キューに書くだけ
+ *   - processQueue: 毎時タイマーでキュー一括処理 → 採番 → zips/ 移動 → 1PR
  *
  * フロー:
- *   series_open: newsletter-master/series.json にエントリ追加
- *   ndl_submit: ZIP を newsletter-master/zips/{seriesId}/{serial}.zip にコミット
- *              + series.json の currentSerial 更新
+ *   series_open: newsletter-master/series.json にエントリ追加（変更なし）
+ *   ndl_submit: queue/{id}.json + queue/{id}.zip を main に直接コミット
+ *   processQueue: queue/ 一括読取 → 採番 → zips/ 移動 → series.json 更新 → PR
  *
  * タイマートリガー設定:
+ *   - processQueue() → 毎時0分（キュー処理）
  *   - sendMonthlySeriesReport() → 毎月1日 9:00（アクティビティレポート）
  */
 
 // =====================================================
-// NDL Newsletter Publishing — Master Repository (v5)
+// NDL Newsletter Publishing — Master Repository (v6)
 // =====================================================
 
 var NEWSLETTER_MASTER = 'tokistorage/newsletter-master';
@@ -160,7 +161,7 @@ function handleSeriesOpen(ss, data) {
 // ── エンドポイント: ndl_submit ──
 
 /**
- * NDL献本提出
+ * NDL献本提出（キューライター）
  *
  * リクエスト:
  *   {
@@ -174,15 +175,12 @@ function handleSeriesOpen(ss, data) {
  *   }
  *
  * レスポンス:
- *   { success: true, serial: 1, seriesId: 'ts-abc123-202603010000' }
+ *   { success: true, queued: true, queueId: '...' }
  *
  * 処理:
- *   1. シリーズ検索（seriesId → seriesName フォールバック）
- *   2. series.json → currentSerial インクリメント
- *   3. ZIP を zips/{seriesId}/{serial}.zip にコミット
- *   4. series.json 更新・コミット
- *   5. PR作成（auto-merge）
- *   6. 管理者通知
+ *   1. バリデーション（シリーズ存在確認）
+ *   2. queue/{id}.json + queue/{id}.zip を main に直接コミット
+ *   3. 即応答（採番は processQueue が行う）
  */
 function handleNdlSubmit(ss, data) {
   var seriesId = (data.seriesId || '').trim();
@@ -202,95 +200,260 @@ function handleNdlSubmit(ss, data) {
     return jsonResponse({ success: false, error: 'no_data' });
   }
 
-  // series.json 読み込み（最新の currentSerial を取得）
-  var seriesJson = readFileFromGitHub('series.json', NEWSLETTER_MASTER);
-  if (!seriesJson) {
-    return jsonResponse({ success: false, error: 'series_json_not_found' });
-  }
-  var registry = JSON.parse(seriesJson);
-
-  // シリーズエントリを特定
-  var seriesEntry = null;
-  for (var i = 0; i < registry.series.length; i++) {
-    if (registry.series[i].seriesId === series.seriesId) {
-      seriesEntry = registry.series[i];
-      break;
-    }
-  }
-  if (!seriesEntry) {
-    return jsonResponse({ success: false, error: 'series_entry_not_found' });
-  }
-
-  var nextSerial = (seriesEntry.currentSerial || 0) + 1;
-  var startYear = seriesEntry.startYear || 2026;
-  var duration = seriesEntry.volumeDurationYears || 20;
-  var vn = calcVolumeNumber(nextSerial, startYear, duration);
-
-  var serialStr = String(nextSerial).padStart(5, '0');
+  // キューID生成: {yyyyMMddHHmmssSSS}-{random6}
+  var now = new Date();
+  var ts = Utilities.formatDate(now, 'Asia/Tokyo', 'yyyyMMddHHmmss');
+  var ms = String(now.getMilliseconds()).padStart(3, '0');
+  var rand = Math.random().toString(36).substring(2, 8);
+  var queueId = ts + ms + '-' + rand;
 
   try {
-    var branch = 'tq-' + series.seriesId.substring(0, 20) + '-' + serialStr;
-    createGitHubBranch(branch, NEWSLETTER_MASTER);
+    var queueMeta = {
+      seriesId: series.seriesId,
+      seriesName: series.seriesName,
+      title: data.title || '',
+      urls: urls,
+      hasZip: !!zipBase64,
+      metadata: data.metadata || {},
+      queuedAt: Utilities.formatDate(now, 'Asia/Tokyo', "yyyy-MM-dd'T'HH:mm:ss.SSS")
+    };
 
-    // ZIP をコミット
+    // queue/{id}.json をコミット（batchCommitFilesは text only なので個別コミット）
     if (zipBase64) {
-      var zipPath = 'zips/' + series.seriesId + '/' + serialStr + '.zip';
-      commitBinaryFileOnBranch(zipPath, zipBase64,
-        'Add ZIP ' + serialStr + ' for ' + series.seriesName, branch, NEWSLETTER_MASTER);
+      // ZIP + JSON を main に直接コミット（各ファイルがユニークパスなので衝突なし）
+      commitFileOnBranch('queue/' + queueId + '.json', JSON.stringify(queueMeta, null, 2),
+        'Queue NDL submit: ' + queueId, 'main', NEWSLETTER_MASTER);
+      commitBinaryFileOnBranch('queue/' + queueId + '.zip', zipBase64,
+        'Queue NDL ZIP: ' + queueId, 'main', NEWSLETTER_MASTER);
     } else {
-      // フォールバック: URL のみの場合は materials JSON を保存
-      var today = Utilities.formatDate(new Date(), 'Asia/Tokyo', "yyyy-MM-dd'T'HH:mm:ss");
-      var materials = {
-        serial: nextSerial,
-        volume: vn.volume,
-        number: vn.number,
-        seriesName: series.seriesName,
-        title: data.title || '',
-        urls: urls,
-        metadata: data.metadata || {},
-        date: today
-      };
-      var materialsPath = 'zips/' + series.seriesId + '/' + serialStr + '.json';
-      commitFileOnBranch(materialsPath, JSON.stringify(materials, null, 2),
-        'Add materials ' + serialStr + ' for ' + series.seriesName, branch, NEWSLETTER_MASTER);
+      commitFileOnBranch('queue/' + queueId + '.json', JSON.stringify(queueMeta, null, 2),
+        'Queue NDL submit: ' + queueId, 'main', NEWSLETTER_MASTER);
     }
-
-    // series.json の currentSerial を更新
-    seriesEntry.currentSerial = nextSerial;
-    commitFileOnBranch('series.json', JSON.stringify(registry, null, 2),
-      'Update serial: TQ-' + serialStr, branch, NEWSLETTER_MASTER);
-
-    createGitHubPR(
-      'TQ-' + serialStr + ': ' + (data.title || series.seriesName),
-      branch,
-      'NDL serial publication #' + nextSerial + '\n'
-      + 'Series: ' + series.seriesName + '\n'
-      + 'Title: ' + (data.title || '') + '\n'
-      + (zipBase64 ? 'Format: ZIP+PNG' : 'Format: materials JSON (URLs: ' + urls.length + ')'),
-      NEWSLETTER_MASTER
-    );
-
-    // 管理者通知
-    sendEmail(NOTIFY_EMAIL,
-      '【NDL】TQ-' + serialStr + ' 投入: ' + (data.title || series.seriesName),
-      'シリーズ: ' + series.seriesName + '\n'
-      + 'タイトル: ' + (data.title || '') + '\n'
-      + '通巻: 第' + nextSerial + '号（第' + vn.volume + '巻 第' + vn.number + '号）\n'
-      + 'フォーマット: ' + (zipBase64 ? 'ZIP+PNG' : 'materials JSON') + '\n');
 
     return jsonResponse({
       success: true,
-      serial: nextSerial,
-      seriesId: series.seriesId
+      queued: true,
+      queueId: queueId
     });
   } catch (e) {
     sendEmail(NOTIFY_EMAIL,
-      '【NDL】投入エラー: ' + series.seriesName,
+      '【NDL】キュー投入エラー: ' + series.seriesName,
       'シリーズ: ' + series.seriesName + '\n'
       + 'エラー: ' + e.message + '\n'
       + 'スタック: ' + e.stack);
-    return jsonResponse({ success: false, error: 'submit_failed', message: e.message });
+    return jsonResponse({ success: false, error: 'queue_failed', message: e.message });
   }
+}
+
+// ── キュー処理（バッチプロセッサ）──
+
+/**
+ * オープン中のキューPRが存在するか確認（冪等性ガード）
+ */
+function hasOpenQueuePR() {
+  try {
+    var prs = fetchGitHubApi('/repos/' + NEWSLETTER_MASTER + '/pulls?state=open&head=tokistorage:queue-', 'GET');
+    // head パラメータは前方一致ではないので手動フィルタ
+    for (var i = 0; i < prs.length; i++) {
+      if (prs[i].head && prs[i].head.ref && prs[i].head.ref.indexOf('queue-') === 0) {
+        return true;
+      }
+    }
+    return false;
+  } catch (e) { return false; }
+}
+
+/**
+ * キュー処理（毎時タイマートリガー）
+ *
+ * 処理フロー:
+ *   1. オープン中のキューPRがあれば skip（冪等性）
+ *   2. queue/ 一覧取得 → 空なら return
+ *   3. .json ファイルを全件読み取り、queuedAt でソート
+ *   4. series.json を1回だけ読み取り
+ *   5. ブランチ作成
+ *   6. 各エントリ: 採番 → zips/ にコミット → 削除リストに追加
+ *   7. series.json コミット
+ *   8. キューファイル削除
+ *   9. PR作成 → auto-merge → build-pdf
+ *  10. 管理者メール通知
+ */
+function processQueue() {
+  // 1. 冪等性チェック
+  if (hasOpenQueuePR()) return;
+
+  // 2. キュー一覧取得
+  var entries = listQueueEntries();
+  if (entries.length === 0) return;
+
+  // 3. .json ファイルを全件読み取り、queuedAt でソート
+  var queueItems = [];
+  var jsonEntries = entries.filter(function(e) { return e.name.endsWith('.json'); });
+
+  for (var i = 0; i < jsonEntries.length; i++) {
+    try {
+      var content = readFileFromGitHub('queue/' + jsonEntries[i].name, NEWSLETTER_MASTER);
+      if (content) {
+        var meta = JSON.parse(content);
+        meta._fileName = jsonEntries[i].name;
+        meta._queueId = jsonEntries[i].name.replace('.json', '');
+        queueItems.push(meta);
+      }
+    } catch (e) {
+      // 読み取り失敗は次回リトライ
+    }
+  }
+
+  if (queueItems.length === 0) return;
+
+  // queuedAt でソート（採番順序の決定性）
+  queueItems.sort(function(a, b) {
+    return (a.queuedAt || '').localeCompare(b.queuedAt || '');
+  });
+
+  // 4. series.json を1回だけ読み取り
+  var seriesJson = readFileFromGitHub('series.json', NEWSLETTER_MASTER);
+  if (!seriesJson) {
+    sendEmail(NOTIFY_EMAIL, '【NDL】キュー処理エラー', 'series.json の読み取りに失敗しました');
+    return;
+  }
+  var registry = JSON.parse(seriesJson);
+
+  // 5. ブランチ作成
+  var branchTs = Utilities.formatDate(new Date(), 'Asia/Tokyo', 'yyyyMMddHHmmss');
+  var branch = 'queue-' + branchTs;
+  createGitHubBranch(branch, NEWSLETTER_MASTER);
+
+  var processed = [];
+  var errors = [];
+  var deleteList = []; // 削除対象キューファイルパス
+
+  // 6. 各エントリを処理
+  for (var j = 0; j < queueItems.length; j++) {
+    var item = queueItems[j];
+    try {
+      // シリーズエントリを特定
+      var seriesEntry = null;
+      for (var k = 0; k < registry.series.length; k++) {
+        if (registry.series[k].seriesId === item.seriesId) {
+          seriesEntry = registry.series[k];
+          break;
+        }
+      }
+      if (!seriesEntry) {
+        errors.push({ queueId: item._queueId, error: 'series_not_found: ' + item.seriesId });
+        continue;
+      }
+
+      // 採番（インメモリ）
+      var nextSerial = (seriesEntry.currentSerial || 0) + 1;
+      var serialStr = String(nextSerial).padStart(5, '0');
+      var vn = calcVolumeNumber(nextSerial, seriesEntry.startYear || 2026,
+        seriesEntry.volumeDurationYears || 20);
+
+      if (item.hasZip) {
+        // ZIP を読み取り → zips/ にコミット
+        var zipBase64 = readBinaryFromGitHub('queue/' + item._queueId + '.zip', NEWSLETTER_MASTER);
+        if (!zipBase64) {
+          errors.push({ queueId: item._queueId, error: 'zip_not_found' });
+          continue;
+        }
+        var zipPath = 'zips/' + item.seriesId + '/' + serialStr + '.zip';
+        commitBinaryFileOnBranch(zipPath, zipBase64,
+          'Add ZIP ' + serialStr + ' for ' + item.seriesName, branch, NEWSLETTER_MASTER);
+        deleteList.push('queue/' + item._queueId + '.zip');
+      } else {
+        // materials JSON を保存
+        var materials = {
+          serial: nextSerial,
+          volume: vn.volume,
+          number: vn.number,
+          seriesName: item.seriesName,
+          title: item.title || '',
+          urls: item.urls || [],
+          metadata: item.metadata || {},
+          date: item.queuedAt
+        };
+        var materialsPath = 'zips/' + item.seriesId + '/' + serialStr + '.json';
+        commitFileOnBranch(materialsPath, JSON.stringify(materials, null, 2),
+          'Add materials ' + serialStr + ' for ' + item.seriesName, branch, NEWSLETTER_MASTER);
+      }
+
+      // currentSerial 更新（インメモリ）
+      seriesEntry.currentSerial = nextSerial;
+      deleteList.push('queue/' + item._fileName);
+
+      processed.push({
+        queueId: item._queueId,
+        seriesName: item.seriesName,
+        serial: nextSerial,
+        title: item.title || ''
+      });
+    } catch (e) {
+      errors.push({ queueId: item._queueId, error: e.message });
+      // 失敗したエントリのキューファイルは削除しない → 次回リトライ
+    }
+  }
+
+  // 処理済みエントリがなければ PR 作成しない
+  if (processed.length === 0) {
+    if (errors.length > 0) {
+      sendEmail(NOTIFY_EMAIL, '【NDL】キュー処理: 全件エラー',
+        errors.map(function(e) { return e.queueId + ': ' + e.error; }).join('\n'));
+    }
+    return;
+  }
+
+  // 7. series.json コミット（全シリアル反映済み）
+  commitFileOnBranch('series.json', JSON.stringify(registry, null, 2),
+    'Update serials: ' + processed.map(function(p) {
+      return 'TQ-' + String(p.serial).padStart(5, '0');
+    }).join(', '), branch, NEWSLETTER_MASTER);
+
+  // 8. キューファイル削除
+  for (var d = 0; d < deleteList.length; d++) {
+    try {
+      deleteFileOnBranch(deleteList[d], branch, NEWSLETTER_MASTER);
+    } catch (e) {
+      // 削除失敗は致命的ではない（次回 processQueue で再検出されるが、
+      // series.json の currentSerial は更新済みなので重複採番はない）
+    }
+  }
+
+  // 9. PR作成
+  var titles = processed.map(function(p) {
+    return 'TQ-' + String(p.serial).padStart(5, '0');
+  });
+  createGitHubPR(
+    'Queue batch: ' + titles.join(', '),
+    branch,
+    'NDL queue batch processing\n\n'
+    + '## Processed (' + processed.length + ')\n'
+    + processed.map(function(p) {
+      return '- TQ-' + String(p.serial).padStart(5, '0') + ': '
+        + p.seriesName + ' — ' + (p.title || '(no title)');
+    }).join('\n')
+    + (errors.length > 0
+      ? '\n\n## Errors (' + errors.length + ')\n'
+        + errors.map(function(e) { return '- ' + e.queueId + ': ' + e.error; }).join('\n')
+      : ''),
+    NEWSLETTER_MASTER
+  );
+
+  // 10. 管理者メール通知
+  var body = '【NDL キュー処理完了】\n\n'
+    + '処理件数: ' + processed.length + '件\n\n';
+  processed.forEach(function(p) {
+    body += 'TQ-' + String(p.serial).padStart(5, '0') + ': '
+      + p.seriesName + ' — ' + (p.title || '(no title)') + '\n';
+  });
+  if (errors.length > 0) {
+    body += '\nエラー: ' + errors.length + '件\n';
+    errors.forEach(function(e) {
+      body += e.queueId + ': ' + e.error + '\n';
+    });
+  }
+  sendEmail(NOTIFY_EMAIL, '【NDL】キュー処理: ' + processed.length + '件発行', body);
 }
 
 // ── 月次レポート ──
@@ -320,8 +483,8 @@ function sendMonthlySeriesReport() {
 // ── processStoragePipeline() 連携（物理注文からのルーティング）──
 
 /**
- * NDL納本対象の物理注文を newsletter-master にルーティング
- * 全注文を1ブランチ・1PRにまとめて series.json 競合を回避
+ * NDL納本対象の物理注文をキューに投入
+ * processQueue が一括でバッチ処理する
  *
  * ※ 物理注文（ラミネート/クォーツ）でstorageNdl='Yes'の場合に使用
  * ※ 物理注文はデフォルトシリーズ 'TokiStorage' にルーティング
@@ -332,83 +495,44 @@ function routeOrdersToSeries(forNewsletter) {
   var defaultSeries = findSeries('TokiStorage');
   if (!defaultSeries) return;
 
-  var seriesJson = readFileFromGitHub('series.json', NEWSLETTER_MASTER);
-  if (!seriesJson) return;
-  var registry = JSON.parse(seriesJson);
-
-  var seriesEntry = null;
-  for (var i = 0; i < registry.series.length; i++) {
-    if (registry.series[i].seriesId === defaultSeries.seriesId) {
-      seriesEntry = registry.series[i];
-      break;
-    }
-  }
-  if (!seriesEntry) return;
-
-  // 全注文を1ブランチにまとめる
-  var branch = 'route-' + Utilities.formatDate(new Date(), 'Asia/Tokyo', 'yyyyMMddHHmmss');
-  createGitHubBranch(branch, NEWSLETTER_MASTER);
-
   var routed = [];
 
   forNewsletter.forEach(function(o) {
     if (!o.qrUrl) return;
 
-    var nextSerial = (seriesEntry.currentSerial || 0) + 1;
-    var startYear = seriesEntry.startYear || 2026;
-    var duration = seriesEntry.volumeDurationYears || 20;
-    var vn = calcVolumeNumber(nextSerial, startYear, duration);
+    var now = new Date();
+    var ts = Utilities.formatDate(now, 'Asia/Tokyo', 'yyyyMMddHHmmss');
+    var ms = String(now.getMilliseconds()).padStart(3, '0');
+    var rand = Math.random().toString(36).substring(2, 8);
+    var queueId = 'route-' + ts + ms + '-' + rand;
 
-    var serialStr = String(nextSerial).padStart(5, '0');
-    var today = Utilities.formatDate(new Date(), 'Asia/Tokyo', "yyyy-MM-dd'T'HH:mm:ss");
-
-    var materials = {
-      serial: nextSerial,
-      volume: vn.volume,
-      number: vn.number,
+    var queueMeta = {
+      seriesId: defaultSeries.seriesId,
       seriesName: 'TokiStorage',
       title: (o.wisetag || o.orderId) + '様',
       urls: o.urls || [o.qrUrl],
+      hasZip: false,
       metadata: o.metadata || {},
-      date: today
+      queuedAt: Utilities.formatDate(now, 'Asia/Tokyo', "yyyy-MM-dd'T'HH:mm:ss.SSS")
     };
-    var materialsPath = 'zips/' + defaultSeries.seriesId + '/' + serialStr + '.json';
 
     try {
-      commitFileOnBranch(materialsPath, JSON.stringify(materials, null, 2),
-        'Add materials ' + serialStr, branch, NEWSLETTER_MASTER);
-      seriesEntry.currentSerial = nextSerial;
-      routed.push({ orderId: o.orderId, serial: nextSerial, status: 'OK' });
+      commitFileOnBranch('queue/' + queueId + '.json', JSON.stringify(queueMeta, null, 2),
+        'Queue route order: ' + (o.orderId || queueId), 'main', NEWSLETTER_MASTER);
+      routed.push({ orderId: o.orderId, queueId: queueId, status: 'queued' });
     } catch (e) {
       routed.push({ orderId: o.orderId, status: 'ERROR: ' + e.message });
     }
   });
 
   if (routed.length > 0) {
-    // series.json を最終状態でコミット
-    commitFileOnBranch('series.json', JSON.stringify(registry, null, 2),
-      'Route ' + routed.length + ' orders', branch, NEWSLETTER_MASTER);
-
-    var titles = routed.filter(function(r) { return r.serial; })
-      .map(function(r) { return 'TQ-' + String(r.serial).padStart(5, '0'); });
-    createGitHubPR(
-      'Route ' + routed.length + ' orders: ' + titles.join(', '),
-      branch,
-      'NDL serial publications from physical orders\n\n'
-      + routed.map(function(r) {
-        return r.orderId + (r.serial ? ' (TQ-' + String(r.serial).padStart(5, '0') + ')' : '')
-          + ': ' + r.status;
-      }).join('\n'),
-      NEWSLETTER_MASTER
-    );
-
-    var body = '【NDL パイプライン】' + routed.length + '件発行\n\n';
+    var body = '【NDL パイプライン】' + routed.length + '件キュー投入\n\n';
     routed.forEach(function(r) {
-      body += r.orderId;
-      if (r.serial) body += ' (TQ-' + String(r.serial).padStart(5, '0') + ')';
-      body += ': ' + r.status + '\n';
+      body += r.orderId + ': ' + r.status;
+      if (r.queueId) body += ' (' + r.queueId + ')';
+      body += '\n';
     });
-    sendEmail(NOTIFY_EMAIL, '【NDL】' + routed.length + '件発行', body);
+    sendEmail(NOTIFY_EMAIL, '【NDL】' + routed.length + '件キュー投入', body);
   }
 }
 
