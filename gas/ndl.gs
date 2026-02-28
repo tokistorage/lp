@@ -103,6 +103,42 @@ function updateSeriesIssueCount(ss, repo, count) {
   }
 }
 
+/**
+ * GitHub Pages を有効化（リトライ付き）
+ * コミット直後はGitHub側が処理中で失敗しやすいため、最大3回リトライする
+ */
+function enablePagesWithRetry(repo) {
+  var delays = [5000, 10000, 15000]; // 5s, 10s, 15s
+  for (var attempt = 0; attempt < delays.length; attempt++) {
+    // まず現在の状態を確認
+    try {
+      fetchGitHubApi('/repos/' + repo + '/pages', 'GET');
+      Logger.log('Pages already enabled for ' + repo);
+      return; // 既に有効
+    } catch (e) {
+      // 404 = まだ無効 → 有効化を試みる
+    }
+
+    Utilities.sleep(delays[attempt]);
+
+    try {
+      fetchGitHubApi('/repos/' + repo + '/pages', 'POST', {
+        build_type: 'legacy',
+        source: { branch: 'main', path: '/' }
+      });
+      Logger.log('Pages enabled for ' + repo + ' (attempt ' + (attempt + 1) + ')');
+      return;
+    } catch (e) {
+      Logger.log('Pages enablement attempt ' + (attempt + 1) + ' failed: ' + e.message);
+    }
+  }
+  // 全リトライ失敗 → 管理者通知
+  sendEmail(NOTIFY_EMAIL,
+    '【NDL】Pages有効化失敗: ' + repo,
+    'リポジトリ: https://github.com/' + repo + '\n'
+    + '手動で Settings → Pages → Source: main を設定してください。');
+}
+
 // ── 通巻番号計算 ──
 
 /**
@@ -448,16 +484,8 @@ function provisionClientRepo(clientId, clientName, config) {
       'Add build-newsletter workflow', 'main', repo);
   }
 
-  // 3. GitHub Pages 有効化（build_type: legacy 必須）
-  try {
-    fetchGitHubApi('/repos/' + repo + '/pages', 'POST', {
-      build_type: 'legacy',
-      source: { branch: 'main', path: '/' }
-    });
-  } catch (e) {
-    // Pages が既に有効の場合は無視
-    Logger.log('Pages enablement: ' + e.message);
-  }
+  // 3. GitHub Pages 有効化（リトライ付き）
+  enablePagesWithRetry(repo);
 
   // 4. Actions ワークフロー権限（write + PR作成許可）
   try {
