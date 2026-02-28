@@ -102,8 +102,8 @@ def build_newsletter(materials_path, config_path, output_dir, zip_url=""):
 
     # URLs for dual QR codes (Play + Recovery)
     pages_url = config.get("pagesUrl", "")
-    pdf_url = ""
-    if pages_url:
+    pdf_url = config.get("pdfUrl", "")
+    if not pdf_url and pages_url:
         pdf_url = pages_url.rstrip("/") + f"/output/{filename}"
     # Play QR uses ZIP URL (primary) or falls back to PDF URL (legacy)
     play_qr_url = zip_url or pdf_url
