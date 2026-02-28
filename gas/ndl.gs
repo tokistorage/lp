@@ -313,6 +313,13 @@ function handleNdlSubmit(ss, data) {
     // シリーズシートの発行数を更新
     updateSeriesIssueCount(ss, seriesName, nextSerial);
 
+    // series-registry.json の issueCount を同期
+    try {
+      updateRegistryIssueCount(seriesName, nextSerial);
+    } catch (e) {
+      Logger.log('Registry issueCount update failed: ' + e.message);
+    }
+
     // 管理者通知
     var repoName = series.repo.split('/')[1] || series.repo;
     sendEmail(NOTIFY_EMAIL,
@@ -480,6 +487,31 @@ function updateSeriesRegistry(entry) {
     'Update series registry: ' + entry.seriesName);
 }
 
+/**
+ * series-registry.json の issueCount だけを更新
+ * ndl_submit 時に newsletters.html の表示を同期させる
+ */
+function updateRegistryIssueCount(seriesName, issueCount) {
+  var registryPath = 'newsletter/series-registry.json';
+  var registryJson = readFileFromGitHub(registryPath);
+  if (!registryJson) return;
+  var registry = JSON.parse(registryJson);
+
+  var updated = false;
+  for (var i = 0; i < registry.series.length; i++) {
+    if (registry.series[i].seriesName === seriesName) {
+      registry.series[i].issueCount = issueCount;
+      updated = true;
+      break;
+    }
+  }
+  if (!updated) return;
+
+  pushFileToGitHub(registryPath,
+    JSON.stringify(registry, null, 2),
+    'Update issueCount for ' + seriesName + ': ' + issueCount);
+}
+
 // ── 月次レポート ──
 
 /**
@@ -612,6 +644,11 @@ function routeOrdersToSeries(forNewsletter) {
     if (lastSerial.length > 0) {
       var maxSerial = Math.max.apply(null, lastSerial.map(function(r) { return r.serial; }));
       updateSeriesIssueCount(ss, 'TokiStorage', maxSerial);
+      try {
+        updateRegistryIssueCount('TokiStorage', maxSerial);
+      } catch (e) {
+        Logger.log('Registry issueCount update failed: ' + e.message);
+      }
     }
 
     var body = '【NDL パイプライン】' + routed.length + '件発行\n\n';
