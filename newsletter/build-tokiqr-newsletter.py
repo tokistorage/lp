@@ -6,7 +6,7 @@ Generates A4 portrait PDFs for NDL deposit:
   - QR pages: one QR code per URL, centered with URL text below
 
 Usage:
-  python3 build-tokiqr-newsletter.py <materials.json> <client-config.json> <output_dir>
+  python3 build-tokiqr-newsletter.py <materials.json> <client-config.json> <output_dir> [zip_url]
 """
 
 import json
@@ -57,7 +57,7 @@ CONTENT_W = PAGE_W - MARGIN * 2
 QR_BASE_URL = "https://tokistorage.github.io/qr/"
 
 
-def build_newsletter(materials_path, config_path, output_dir):
+def build_newsletter(materials_path, config_path, output_dir, zip_url=""):
     """Main entry: load materials + config, generate PDF."""
     with open(materials_path, encoding="utf-8") as f:
         mat = json.load(f)
@@ -100,11 +100,13 @@ def build_newsletter(materials_path, config_path, output_dir):
             date_ja = date_str
             date_formal = date_str
 
-    # PDF URL for dual QR codes (Play + Recovery)
+    # URLs for dual QR codes (Play + Recovery)
     pages_url = config.get("pagesUrl", "")
     pdf_url = ""
     if pages_url:
         pdf_url = pages_url.rstrip("/") + f"/output/{filename}"
+    # Play QR uses ZIP URL (primary) or falls back to PDF URL (legacy)
+    play_qr_url = zip_url or pdf_url
 
     # ── Build PDF ──
     pdf = FPDF(orientation="P", format="A4")
@@ -224,11 +226,17 @@ def build_newsletter(materials_path, config_path, output_dir):
         # Generate Play QR (blue) and Recovery QR (gray) if pagesUrl is available
         play_qr_path = None
         recovery_qr_path = None
-        if pdf_url:
-            play_url = (
-                "https://tokistorage.github.io/qr/archive.html?pdf="
-                + urllib.parse.quote(pdf_url, safe="")
-            )
+        if play_qr_url:
+            if zip_url:
+                play_url = (
+                    "https://tokistorage.github.io/qr/play.html?zip="
+                    + urllib.parse.quote(play_qr_url, safe="")
+                )
+            else:
+                play_url = (
+                    "https://tokistorage.github.io/qr/archive.html?pdf="
+                    + urllib.parse.quote(play_qr_url, safe="")
+                )
             # Play QR — blue
             pqr = qrcode.QRCode(
                 error_correction=qrcode.constants.ERROR_CORRECT_M,
@@ -296,10 +304,16 @@ def build_newsletter(materials_path, config_path, output_dir):
             # Play QR — bottom-left (blue) — clickable link
             if play_qr_path:
                 sq = 18
-                play_link = (
-                    "https://tokistorage.github.io/qr/archive.html?pdf="
-                    + urllib.parse.quote(pdf_url, safe="")
-                )
+                if zip_url:
+                    play_link = (
+                        "https://tokistorage.github.io/qr/play.html?zip="
+                        + urllib.parse.quote(play_qr_url, safe="")
+                    )
+                else:
+                    play_link = (
+                        "https://tokistorage.github.io/qr/archive.html?pdf="
+                        + urllib.parse.quote(play_qr_url, safe="")
+                    )
                 pdf.image(play_qr_path, x=MARGIN, y=248, w=sq, h=sq)
                 pdf.link(MARGIN, 248, sq, sq, play_link)
                 pdf.set_font("JP", "", 4)
@@ -338,7 +352,8 @@ def build_newsletter(materials_path, config_path, output_dir):
 
 
 if __name__ == "__main__":
-    if len(sys.argv) != 4:
-        print("Usage: build-tokiqr-newsletter.py <materials.json> <config.json> <output_dir>")
+    if len(sys.argv) < 4:
+        print("Usage: build-tokiqr-newsletter.py <materials.json> <config.json> <output_dir> [zip_url]")
         sys.exit(1)
-    build_newsletter(sys.argv[1], sys.argv[2], sys.argv[3])
+    zip_url_arg = sys.argv[4] if len(sys.argv) > 4 else ""
+    build_newsletter(sys.argv[1], sys.argv[2], sys.argv[3], zip_url_arg)
