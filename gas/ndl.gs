@@ -665,7 +665,7 @@ function routeOrdersToSeries(forNewsletter) {
 // ── シリーズリネーム ──
 
 /**
- * シリーズ名を変更（series-registry.json）
+ * シリーズ名を変更（series-registry.json + クライアントリポジトリ client-config.json）
  *
  * リクエスト:
  *   { type: 'series_rename', repo: 'tokistorage/newsletter-client-xxx', newName: '新しい名前' }
@@ -675,6 +675,7 @@ function handleSeriesRename(ss, data) {
   var newName = (data.newName || '').trim();
   if (!repo || !newName) return jsonResponse({ success: false, error: 'missing_params' });
 
+  // 1. series-registry.json 更新
   var registryPath = 'newsletter/series-registry.json';
   var registryJson = readFileFromGitHub(registryPath);
   if (!registryJson) return jsonResponse({ success: false, error: 'registry_not_found' });
@@ -691,5 +692,26 @@ function handleSeriesRename(ss, data) {
   if (!found) return jsonResponse({ success: false, error: 'series_not_found' });
 
   pushFileToGitHub(registryPath, JSON.stringify(registry, null, 2), 'Rename series: ' + newName);
+
+  // 2. クライアントリポジトリの client-config.json 更新
+  try {
+    var configJson = readFileFromGitHub('client-config.json', repo);
+    if (configJson) {
+      var config = JSON.parse(configJson);
+      config.clientName = newName;
+      if (config.branding) {
+        config.branding.publicationNameJa = newName + ' 特集';
+        config.branding.tagline = '── ' + newName + ' ──';
+      }
+      if (config.colophon) {
+        config.colophon.contentOriginator = newName;
+      }
+      commitFileOnBranch('client-config.json', JSON.stringify(config, null, 2),
+        'Rename series: ' + newName, 'main', repo);
+    }
+  } catch (e) {
+    Logger.log('Client config rename failed: ' + e.message);
+  }
+
   return jsonResponse({ success: true });
 }
