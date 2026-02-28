@@ -434,13 +434,15 @@ function provisionClientRepo(clientId, clientName, config) {
       'Add build-newsletter workflow', 'main', repo);
   }
 
-  // 3. GitHub Pages 有効化
+  // 3. GitHub Pages 有効化（build_type: legacy 必須）
   try {
     fetchGitHubApi('/repos/' + repo + '/pages', 'POST', {
+      build_type: 'legacy',
       source: { branch: 'main', path: '/' }
     });
   } catch (e) {
     // Pages が既に有効の場合は無視
+    Logger.log('Pages enablement: ' + e.message);
   }
 
   // 4. Actions ワークフロー権限（write + PR作成許可）
