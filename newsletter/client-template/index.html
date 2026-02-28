@@ -188,7 +188,7 @@ footer a{color:var(--accent,#2563eb);text-decoration:none}
     var latestVol=vols[vols.length-1];
 
     var LATEST_MAX=10;
-    var latest=published.slice().sort(function(a,b){return b.date.localeCompare(a.date)}).slice(0,LATEST_MAX);
+    var latest=published.slice().sort(function(a,b){return b.date.localeCompare(a.date)||b.serial-a.serial}).slice(0,LATEST_MAX);
 
     var html='<p class="section-label">'+t.latest+'</p>';
     latest.forEach(function(i){
