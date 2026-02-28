@@ -262,6 +262,38 @@
             margin-top: 1.5rem;
         }
 
+        /* ---- Time Accordion ---- */
+        .time-group { margin-bottom: 0.5rem; }
+        .time-heading {
+            display: flex; align-items: center; gap: 0.5rem;
+            width: 100%; background: none; border: none;
+            padding: 0.5rem 0; cursor: pointer;
+            font-family: 'Hiragino Mincho ProN', 'Yu Mincho', serif;
+            font-size: 1rem;
+            color: #1e293b; text-align: left;
+        }
+        .time-heading::before {
+            content: '\25b6'; font-size: 0.65rem; color: #94a3b8;
+            transition: transform 0.2s;
+        }
+        .time-group.open > .time-heading::before { transform: rotate(90deg); }
+        .time-body { display: none; padding-left: 1rem; }
+        .time-group.open > .time-body { display: block; }
+        .time-count { font-size: 0.75rem; color: #94a3b8; font-weight: normal; }
+        [data-level="century"] > .time-heading { font-size: 1.1rem; }
+        [data-level="volume"] > .time-heading { font-size: 1rem; }
+        [data-level="year"] > .time-heading { font-size: 0.95rem; }
+        [data-level="month"] > .time-heading { font-size: 0.9rem; }
+        .section-heading {
+            font-family: 'Hiragino Mincho ProN', 'Yu Mincho', serif;
+            font-size: 1.1rem;
+            color: #1e293b;
+            margin: 0 0 1rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 2px solid #2563EB;
+        }
+        .section-divider { margin-top: 2rem; }
+
         .newsletter-status {
             display: inline-block;
             font-size: 0.72rem;
@@ -379,12 +411,13 @@
         </div>
     </section>
 
-    <!-- Back-Number Grid -->
+    <!-- Back-Number -->
     <section class="newsletters-section">
         <h2>バックナンバー</h2>
-        <div id="backnumber-nav"></div>
-        <div class="series-view-label" id="backnumber-view-label"></div>
-        <div class="newsletter-grid" id="backnumber-list"></div>
+        <h3 class="section-heading" id="recent-heading"></h3>
+        <div class="newsletter-grid" id="recent-list"></div>
+        <h3 class="section-heading section-divider" id="all-heading"></h3>
+        <div id="all-accordion"></div>
     </section>
 
     <!-- Special Feature Series -->
@@ -407,80 +440,6 @@
 </div>
 
 <script>
-// Shared constants
-var VOLUME_YEARS = 20;
-var START_YEAR = 2026;
-function getVolume(year) { return Math.floor((year - START_YEAR) / VOLUME_YEARS) + 1; }
-function volPeriod(vol) { var s = START_YEAR + (vol - 1) * VOLUME_YEARS; return s + '–' + (s + VOLUME_YEARS - 1); }
-function getCentury(year) { return Math.floor(year / 100) + 1; }
-function centuryRange(c) { return ((c - 1) * 100) + '–' + (c * 100 - 1); }
-
-function buildCenturyNav(items, getItemYear, navEl, opts) {
-  var yearSet = {};
-  items.forEach(function(s) { yearSet[getItemYear(s)] = true; });
-  var years = Object.keys(yearSet).map(Number).sort();
-
-  var volMap = {};
-  years.forEach(function(y) {
-    var v = getVolume(y);
-    if (!volMap[v]) volMap[v] = [];
-    volMap[v].push(y);
-  });
-
-  var vols = Object.keys(volMap).map(Number).sort();
-  var centuryMap = {};
-  vols.forEach(function(v) {
-    var startY = START_YEAR + (v - 1) * VOLUME_YEARS;
-    var c = getCentury(startY);
-    if (!centuryMap[c]) centuryMap[c] = [];
-    centuryMap[c].push(v);
-  });
-
-  var centuries = Object.keys(centuryMap).map(Number).sort();
-  var latestCentury = centuries[centuries.length - 1];
-  var latestVol = vols[vols.length - 1];
-
-  var navHtml = '<div class="series-nav-default">'
-    + '<span class="series-nav-link active" data-id="default">' + (opts.defaultLabel || '最新') + '</span></div>';
-
-  centuries.forEach(function(c) {
-    var volsInC = centuryMap[c];
-    var countInC = items.filter(function(s) {
-      return volsInC.some(function(v) { return volMap[v].indexOf(getItemYear(s)) >= 0; });
-    }).length;
-    var isLatestC = c === latestCentury;
-
-    navHtml += '<details class="series-nav-century"' + (isLatestC ? ' open' : '') + '>'
-      + '<summary>第' + c + '世紀（' + centuryRange(c) + '）'
-      + '<span class="series-nav-century-count">' + countInC + '件</span></summary>'
-      + '<div class="series-nav-century-inner">';
-
-    volsInC.forEach(function(v) {
-      var seriesInVol = items.filter(function(s) {
-        return volMap[v].indexOf(getItemYear(s)) >= 0;
-      }).length;
-      var isLatestV = v === latestVol;
-
-      navHtml += '<details class="series-nav-vol"' + (isLatestV ? ' open' : '') + '>'
-        + '<summary>第' + v + '巻（' + volPeriod(v) + '）'
-        + '<span class="series-nav-vol-count">' + seriesInVol + '件</span></summary>'
-        + '<div class="series-nav-years">';
-      volMap[v].forEach(function(y) {
-        var countInYear = items.filter(function(s) { return getItemYear(s) === y; }).length;
-        navHtml += '<span class="series-nav-link" data-id="y-' + y + '">'
-          + y + '（' + countInYear + '）</span>';
-      });
-      navHtml += '</div></details>';
-    });
-
-    navHtml += '</div></details>';
-  });
-
-  navEl.innerHTML = navHtml;
-  return { volMap: volMap, centuryMap: centuryMap };
-}
-
-// ── Back-Numbers ──
 (async function() {
   try {
     var res = await fetch('newsletter/schedule.json');
@@ -491,79 +450,98 @@ function buildCenturyNav(items, getItemYear, navEl, opts) {
 
     issues.sort(function(a, b) { return b.date.localeCompare(a.date); });
 
-    var currentYear = new Date().getFullYear();
-    function issueYear(i) { return parseInt(i.date.slice(0, 4)); }
-
+    var VOLUME_YEARS = 20, START_YEAR = 2026;
     var statusLabel = { published: '発行済み', drafting: '推敲中' };
     var statusClass = { published: 'published', drafting: 'drafting' };
+    var months = ['1月','2月','3月','4月','5月','6月','7月','8月','9月','10月','11月','12月'];
 
-    var navEl = document.getElementById('backnumber-nav');
-    var labelEl = document.getElementById('backnumber-view-label');
-    var listEl = document.getElementById('backnumber-list');
-
-    function renderIssues(list) {
-      if (list.length === 0) {
-        listEl.innerHTML = '<p class="series-empty">該当する号はありません。</p>';
-        return;
+    function renderCard(i) {
+      var serial5 = String(i.serial).padStart(5, '0');
+      var href = i.page_url || '#';
+      var html = '<a href="' + href + '" class="newsletter-card">'
+        + '<div class="card-vol">VOL.' + i.volume + ' NO.' + i.number + ' — SERIAL #' + serial5 + '</div>'
+        + '<span class="newsletter-status ' + (statusClass[i.status] || '') + '">' + (statusLabel[i.status] || i.status) + '</span>'
+        + '<div class="card-date">' + i.date.replace('-', '年') + '月</div>'
+        + '<h3>' + (i.title_ja || '第' + i.serial + '号') + '</h3>'
+        + '<div class="card-actions"><span class="card-read">詳しく読む</span>';
+      if (i.status === 'published' && i.pdf_url) {
+        html += '<span class="card-pdf" onclick="event.preventDefault();event.stopPropagation();window.location.href=\'' + i.pdf_url + '\';">PDF</span>';
       }
-      listEl.innerHTML = list.map(function(i) {
-        var serial5 = String(i.serial).padStart(5, '0');
-        var href = i.page_url || '#';
-        var html = '<a href="' + href + '" class="newsletter-card">'
-          + '<div class="card-vol">VOL.' + i.volume + ' NO.' + i.number + ' — SERIAL #' + serial5 + '</div>'
-          + '<span class="newsletter-status ' + (statusClass[i.status] || '') + '">' + (statusLabel[i.status] || i.status) + '</span>'
-          + '<div class="card-date">' + i.date.replace('-', '年') + '月</div>'
-          + '<h3>' + (i.title_ja || '第' + i.serial + '号') + '</h3>'
-          + '<div class="card-actions"><span class="card-read">詳しく読む</span>';
-        if (i.status === 'published' && i.pdf_url) {
-          html += '<span class="card-pdf" onclick="event.preventDefault();event.stopPropagation();window.location.href=\'' + i.pdf_url + '\';">PDF</span>';
-        }
-        html += '</div></a>';
-        return html;
-      }).join('');
+      html += '</div></a>';
+      return html;
     }
 
-    function showDefault() {
-      var latest = issues.slice(0, 10);
-      var thisYear = issues.filter(function(i) { return issueYear(i) === currentYear; });
-      var seen = {};
-      var merged = [];
-      latest.concat(thisYear).forEach(function(i) {
-        if (!seen[i.serial]) { seen[i.serial] = true; merged.push(i); }
+    // Recent section
+    var recent = issues.slice(0, 10);
+    document.getElementById('recent-heading').textContent = '最新のバックナンバー';
+    document.getElementById('recent-list').innerHTML = recent.map(renderCard).join('');
+
+    // Build time hierarchy: century > volume > year > month
+    function buildAccordion(items) {
+      var tree = {};
+      items.forEach(function(i) {
+        var y = parseInt(i.date.slice(0, 4));
+        var m = parseInt(i.date.slice(5, 7));
+        var c = Math.floor((y - 1) / 100) + 1;
+        var v = Math.floor((y - START_YEAR) / VOLUME_YEARS) + 1;
+        if (!tree[c]) tree[c] = {};
+        if (!tree[c][v]) tree[c][v] = {};
+        if (!tree[c][v][y]) tree[c][v][y] = {};
+        if (!tree[c][v][y][m]) tree[c][v][y][m] = [];
+        tree[c][v][y][m].push(i);
       });
-      merged.sort(function(a, b) { return b.date.localeCompare(a.date); });
-      labelEl.textContent = '最新（' + merged.length + '件）';
-      renderIssues(merged);
-      setActive('default');
-    }
 
-    function showYear(year) {
-      var filtered = issues.filter(function(i) { return issueYear(i) === year; });
-      labelEl.textContent = year + '年（' + filtered.length + '件）';
-      renderIssues(filtered);
-      setActive('y-' + year);
-    }
+      function countLeaves(node) {
+        if (Array.isArray(node)) return node.length;
+        var n = 0; Object.keys(node).forEach(function(k) { n += countLeaves(node[k]); }); return n;
+      }
 
-    function setActive(id) {
-      navEl.querySelectorAll('.series-nav-link').forEach(function(el) {
-        el.classList.toggle('active', el.getAttribute('data-id') === id);
+      var html = '';
+      var centuries = Object.keys(tree).map(Number).sort(function(a,b){return b-a;});
+      centuries.forEach(function(c) {
+        var cCount = countLeaves(tree[c]);
+        html += '<div class="time-group" data-level="century"><button class="time-heading">'
+          + c + '世紀 <span class="time-count">' + cCount + '件</span></button><div class="time-body">';
+        var vols = Object.keys(tree[c]).map(Number).sort(function(a,b){return b-a;});
+        vols.forEach(function(v) {
+          var vCount = countLeaves(tree[c][v]);
+          var vs = START_YEAR + (v - 1) * VOLUME_YEARS;
+          var ve = vs + VOLUME_YEARS - 1;
+          html += '<div class="time-group" data-level="volume"><button class="time-heading">'
+            + '第' + v + '巻（' + vs + '–' + ve + '） <span class="time-count">' + vCount + '件</span></button><div class="time-body">';
+          var years = Object.keys(tree[c][v]).map(Number).sort(function(a,b){return b-a;});
+          years.forEach(function(y) {
+            var yCount = countLeaves(tree[c][v][y]);
+            html += '<div class="time-group" data-level="year"><button class="time-heading">'
+              + y + '年 <span class="time-count">' + yCount + '件</span></button><div class="time-body">';
+            var ms = Object.keys(tree[c][v][y]).map(Number).sort(function(a,b){return b-a;});
+            ms.forEach(function(m) {
+              var mItems = tree[c][v][y][m];
+              html += '<div class="time-group" data-level="month"><button class="time-heading">'
+                + months[m - 1] + ' <span class="time-count">' + mItems.length + '件</span></button><div class="time-body">'
+                + '<div class="newsletter-grid">' + mItems.map(renderCard).join('') + '</div>'
+                + '</div></div>';
+            });
+            html += '</div></div>';
+          });
+          html += '</div></div>';
+        });
+        html += '</div></div>';
       });
+      return html;
     }
 
-    buildCenturyNav(issues, issueYear, navEl, { defaultLabel: '最新' });
+    document.getElementById('all-heading').textContent = 'すべてのバックナンバー';
+    document.getElementById('all-accordion').innerHTML = buildAccordion(issues);
 
-    navEl.addEventListener('click', function(e) {
-      var link = e.target.closest('.series-nav-link');
-      if (!link) return;
-      var id = link.getAttribute('data-id');
-      if (id === 'default') showDefault();
-      else if (id.startsWith('y-')) showYear(parseInt(id.slice(2)));
+    // Accordion toggle
+    document.querySelectorAll('.time-heading').forEach(function(btn) {
+      btn.addEventListener('click', function() {
+        this.parentElement.classList.toggle('open');
+      });
     });
-
-    showDefault();
   } catch (e) {}
 })();
-
 </script>
 <script src="index.js" defer></script>
 <script src="contact-form.js" defer></script>
