@@ -146,6 +146,7 @@ footer a{color:var(--accent,#2563eb);text-decoration:none}
   function getCentury(y){return Math.floor(y/100)+1}
   function centuryRange(c){return((c-1)*100)+'–'+(c*100-1)}
   function issueYear(i){return parseInt(i.date.split('-')[0],10)}
+  function formatDate(d){if(d.length>10){return d.slice(0,10)+' '+d.slice(11,19)}return d}
   function issuePath(i){return'output/'+(i.filename||('TQ-'+String(i.serial).padStart(5,'0')+'.pdf'))}
   function issueFullUrl(i){return window.location.href.replace(/[^/]*$/,'')+issuePath(i)}
   function tokiqrPlayUrl(i){return'https://tokistorage.github.io/qr/archive.html?pdf='+encodeURIComponent(issueFullUrl(i))}
@@ -194,7 +195,7 @@ footer a{color:var(--accent,#2563eb);text-decoration:none}
       html+='<div class="issue-row">'
         +'<a class="issue" href="'+issuePath(i)+'">'
         +'<span class="issue-serial">TQ-'+String(i.serial).padStart(5,'0')+'</span>'
-        +'<span class="issue-meta">'+i.date+(i.title?' — '+i.title:'')+'</span>'
+        +'<span class="issue-meta">'+formatDate(i.date)+(i.title?' — '+i.title:'')+'</span>'
         +'</a>'
         +'<a class="play-btn" href="'+tokiqrPlayUrl(i)+'" target="_blank" title="'+t.play+'">\u25B6</a>'
         +'</div>';
@@ -207,7 +208,7 @@ footer a{color:var(--accent,#2563eb);text-decoration:none}
       volsInC.forEach(function(v){countInC+=volMap[v].length});
       var isLatestC=c===latestCentury;
 
-      html+='<details class="century"'+(isLatestC?' open':'')+'>'
+      html+='<details class="century">'
         +'<summary>'+t.century(c,centuryRange(c))
         +'<span class="century-count">'+t.count(countInC)+'</span></summary>'
         +'<div class="century-inner">';
@@ -216,7 +217,7 @@ footer a{color:var(--accent,#2563eb);text-decoration:none}
         var issues=volMap[v];
         var isLatestV=v===latestVol;
 
-        html+='<details class="vol"'+(isLatestV?' open':'')+'>'
+        html+='<details class="vol">'
           +'<summary>'+t.vol(v,volPeriod(v))
           +'<span class="vol-count">'+t.count(issues.length)+'</span></summary>'
           +'<div class="vol-issues">';
@@ -224,7 +225,7 @@ footer a{color:var(--accent,#2563eb);text-decoration:none}
           html+='<div class="issue-row">'
             +'<a class="issue" href="'+issuePath(i)+'">'
             +'<span class="issue-serial">TQ-'+String(i.serial).padStart(5,'0')+'</span>'
-            +'<span class="issue-meta">'+i.date+(i.title?' — '+i.title:'')+'</span>'
+            +'<span class="issue-meta">'+formatDate(i.date)+(i.title?' — '+i.title:'')+'</span>'
             +'</a>'
             +'<a class="play-btn" href="'+tokiqrPlayUrl(i)+'" target="_blank" title="'+t.play+'">\u25B6</a>'
             +'</div>';

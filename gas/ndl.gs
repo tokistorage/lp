@@ -275,7 +275,7 @@ function handleNdlSubmit(ss, data) {
   var vn = calcVolumeNumber(nextSerial, startYear, duration);
 
   var serialStr = String(nextSerial).padStart(5, '0');
-  var today = Utilities.formatDate(new Date(), 'Asia/Tokyo', 'yyyy-MM-dd');
+  var today = Utilities.formatDate(new Date(), 'Asia/Tokyo', "yyyy-MM-dd'T'HH:mm:ss");
 
   // materials JSON を組み立て
   var materials = {
@@ -591,7 +591,7 @@ function routeOrdersToSeries(forNewsletter) {
     var vn = calcVolumeNumber(nextSerial, startYear, duration);
 
     var serialStr = String(nextSerial).padStart(5, '0');
-    var today = Utilities.formatDate(new Date(), 'Asia/Tokyo', 'yyyy-MM-dd');
+    var today = Utilities.formatDate(new Date(), 'Asia/Tokyo', "yyyy-MM-dd'T'HH:mm:ss");
 
     // materials JSON を組み立て
     var materials = {
