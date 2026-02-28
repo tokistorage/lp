@@ -129,7 +129,7 @@ footer a{color:var(--accent,#2563eb);text-decoration:none}
   var volYears=s.volume_duration_years||20;
 
   try{
-    var cr=await fetch('client-config.json');
+    var cr=await fetch('client-config.json?t='+Date.now());
     if(cr.ok){
       configData=await cr.json();
       if(configData.branding.accentColor){
