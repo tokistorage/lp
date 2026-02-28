@@ -406,12 +406,13 @@ function provisionClientRepo(clientId, clientName, config) {
 
   Utilities.sleep(3000);
 
-  // 2. テンプレートファイルをコミット
+  // 2. テンプレートファイルを一括コミット（Git Trees API）
+  //    commitFileOnBranch 9連続 → batchCommitFiles 1回で帯域制限回避
+
+  var files = [];
 
   // 2a. client-config.json
-  var configJson = JSON.stringify(config, null, 2);
-  commitFileOnBranch('client-config.json', configJson,
-    'Add client configuration for ' + clientName, 'main', repo);
+  files.push({ path: 'client-config.json', content: JSON.stringify(config, null, 2) });
 
   // 2b. schedule.json
   var schedule = {
@@ -421,28 +422,24 @@ function provisionClientRepo(clientId, clientName, config) {
     current_serial: 0,
     issues: []
   };
-  commitFileOnBranch('schedule.json', JSON.stringify(schedule, null, 2),
-    'Add publication schedule', 'main', repo);
+  files.push({ path: 'schedule.json', content: JSON.stringify(schedule, null, 2) });
 
   // 2c. index.html (GitHub Pages archive listing)
   var templateIndex = readFileFromGitHub('newsletter/client-template/index.html');
   if (templateIndex) {
-    commitFileOnBranch('index.html', templateIndex,
-      'Add archive index page', 'main', repo);
+    files.push({ path: 'index.html', content: templateIndex });
   }
 
   // 2d. manifest.json (PWA)
   var templateManifest = readFileFromGitHub('newsletter/client-template/manifest.json');
   if (templateManifest) {
-    commitFileOnBranch('manifest.json', templateManifest,
-      'Add PWA manifest', 'main', repo);
+    files.push({ path: 'manifest.json', content: templateManifest });
   }
 
   // 2e. service-worker.js (PWA offline)
   var templateSw = readFileFromGitHub('newsletter/client-template/service-worker.js');
   if (templateSw) {
-    commitFileOnBranch('service-worker.js', templateSw,
-      'Add service worker', 'main', repo);
+    files.push({ path: 'service-worker.js', content: templateSw });
   }
 
   // 2f. auto-merge workflow
@@ -461,24 +458,22 @@ function provisionClientRepo(clientId, clientName, config) {
     + '        env:\n'
     + '          GH_TOKEN: ${{ github.token }}\n'
     + '          GH_REPO: ${{ github.repository }}\n';
-  commitFileOnBranch('.github/workflows/auto-merge.yml', autoMerge,
-    'Add auto-merge workflow', 'main', repo);
+  files.push({ path: '.github/workflows/auto-merge.yml', content: autoMerge });
 
-  // 2g. materials/.gitkeep (materials JSONの配置先)
-  commitFileOnBranch('materials/.gitkeep', '',
-    'Add materials directory', 'main', repo);
+  // 2g. materials/.gitkeep
+  files.push({ path: 'materials/.gitkeep', content: '' });
 
-  // 2h. output/.gitkeep (PDFの配置先)
-  commitFileOnBranch('output/.gitkeep', '',
-    'Add output directory', 'main', repo);
+  // 2h. output/.gitkeep
+  files.push({ path: 'output/.gitkeep', content: '' });
 
   // 2i. build-newsletter workflow
   var buildWorkflow = readFileFromGitHub(
     'newsletter/client-template/.github/workflows/build-newsletter.yml');
   if (buildWorkflow) {
-    commitFileOnBranch('.github/workflows/build-newsletter.yml', buildWorkflow,
-      'Add build-newsletter workflow', 'main', repo);
+    files.push({ path: '.github/workflows/build-newsletter.yml', content: buildWorkflow });
   }
+
+  batchCommitFiles(files, 'Initialize ' + clientName + ' newsletter repository', 'main', repo);
 
   // 3. GitHub Pages 有効化（リトライ付き）
   enablePagesWithRetry(repo);
