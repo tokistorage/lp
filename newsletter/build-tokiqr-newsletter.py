@@ -13,6 +13,7 @@ import json
 import os
 import sys
 import tempfile
+import urllib.parse
 from datetime import datetime
 
 from fpdf import FPDF
@@ -40,6 +41,7 @@ def find_font(candidates):
 
 # ── Colors (TokiStorage brand) ────────────────────────────────────────
 TOKI_BLUE = (37, 99, 235)
+SLATE = (71, 85, 105)
 DARK = (30, 41, 59)
 SECONDARY = (71, 85, 105)
 MUTED = (148, 163, 184)
@@ -84,14 +86,25 @@ def build_newsletter(materials_path, config_path, output_dir):
     serial_str = f"{serial:05d}"
     filename = f"TQ-{serial_str}.pdf"
 
-    # Parse date
+    # Parse date (supports yyyy-MM-dd and yyyy-MM-ddTHH:mm:ss)
     try:
-        dt = datetime.strptime(date_str, "%Y-%m-%d")
+        dt = datetime.strptime(date_str, "%Y-%m-%dT%H:%M:%S")
         date_ja = f"{dt.year}年{dt.month}月{dt.day}日"
         date_formal = date_ja
     except ValueError:
-        date_ja = date_str
-        date_formal = date_str
+        try:
+            dt = datetime.strptime(date_str, "%Y-%m-%d")
+            date_ja = f"{dt.year}年{dt.month}月{dt.day}日"
+            date_formal = date_ja
+        except ValueError:
+            date_ja = date_str
+            date_formal = date_str
+
+    # PDF URL for dual QR codes (Play + Recovery)
+    pages_url = config.get("pagesUrl", "")
+    pdf_url = ""
+    if pages_url:
+        pdf_url = pages_url.rstrip("/") + f"/output/{filename}"
 
     # ── Build PDF ──
     pdf = FPDF(orientation="P", format="A4")
@@ -208,6 +221,36 @@ def build_newsletter(materials_path, config_path, output_dir):
 
     # ── QR pages ──
     with tempfile.TemporaryDirectory() as tmp_dir:
+        # Generate Play QR (blue) and Recovery QR (gray) if pagesUrl is available
+        play_qr_path = None
+        recovery_qr_path = None
+        if pdf_url:
+            play_url = (
+                "https://tokistorage.github.io/qr/archive.html?pdf="
+                + urllib.parse.quote(pdf_url, safe="")
+            )
+            # Play QR — blue
+            pqr = qrcode.QRCode(
+                error_correction=qrcode.constants.ERROR_CORRECT_M,
+                box_size=8, border=1,
+            )
+            pqr.add_data(play_url)
+            pqr.make(fit=True)
+            pqr_img = pqr.make_image(fill_color=TOKI_BLUE, back_color="white")
+            play_qr_path = os.path.join(tmp_dir, "play_qr.png")
+            pqr_img.save(play_qr_path)
+
+            # Recovery QR — gray
+            rqr = qrcode.QRCode(
+                error_correction=qrcode.constants.ERROR_CORRECT_M,
+                box_size=8, border=1,
+            )
+            rqr.add_data(pdf_url)
+            rqr.make(fit=True)
+            rqr_img = rqr.make_image(fill_color=SLATE, back_color="white")
+            recovery_qr_path = os.path.join(tmp_dir, "recovery_qr.png")
+            rqr_img.save(recovery_qr_path)
+
         for idx, url in enumerate(urls):
             full_url = url if url.startswith("http") else QR_BASE_URL + url
 
@@ -254,6 +297,26 @@ def build_newsletter(materials_path, config_path, output_dir):
             pdf.set_text_color(*SECONDARY)
             pdf.cell(0, 6, "スマートフォンでスキャンすると再生できます",
                      align="C", new_x="LMARGIN", new_y="NEXT")
+
+            # Play QR — bottom-left (blue)
+            if play_qr_path:
+                sq = 18
+                pdf.image(play_qr_path, x=MARGIN, y=248, w=sq, h=sq)
+                pdf.set_font("JP", "", 4)
+                pdf.set_text_color(*TOKI_BLUE)
+                pdf.set_xy(MARGIN, 267)
+                pdf.cell(sq, 3, "Scan to play", align="C")
+
+            # Recovery QR — bottom-right (gray)
+            if recovery_qr_path:
+                sq = 18
+                rx = PAGE_W - MARGIN - sq
+                pdf.image(recovery_qr_path, x=rx, y=248, w=sq, h=sq)
+                pdf.set_font("JP", "", 3.5)
+                pdf.set_text_color(*MUTED)
+                display_url = pdf_url.replace("https://", "")
+                pdf.set_xy(rx - 5, 267)
+                pdf.cell(sq + 10, 3, display_url, align="C")
 
             # Footer
             pdf.set_y(-20)
