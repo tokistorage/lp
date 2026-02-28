@@ -279,17 +279,18 @@ def build_newsletter(materials_path, config_path, output_dir):
             pdf.cell(0, 8, f"QR {idx + 1} / {len(urls)}", align="C",
                      new_x="LMARGIN", new_y="NEXT")
 
-            # QR image centered (100mm × 100mm)
+            # QR image centered (100mm × 100mm) — clickable link
             qr_size = 100
             qr_x = (PAGE_W - qr_size) / 2
             pdf.image(qr_path, x=qr_x, y=35, w=qr_size, h=qr_size)
+            pdf.link(qr_x, 35, qr_size, qr_size, full_url)
 
-            # URL text below QR
+            # URL text below QR — clickable link
             pdf.set_y(140)
             pdf.set_font("JP", "", 5.5)
             pdf.set_text_color(*MUTED)
             pdf.set_x(MARGIN)
-            pdf.multi_cell(CONTENT_W, 3.5, full_url, align="C")
+            pdf.multi_cell(CONTENT_W, 3.5, full_url, align="C", link=full_url)
 
             # Scan instruction
             pdf.ln(6)
@@ -298,25 +299,30 @@ def build_newsletter(materials_path, config_path, output_dir):
             pdf.cell(0, 6, "スマートフォンでスキャンすると再生できます",
                      align="C", new_x="LMARGIN", new_y="NEXT")
 
-            # Play QR — bottom-left (blue)
+            # Play QR — bottom-left (blue) — clickable link
             if play_qr_path:
                 sq = 18
+                play_link = (
+                    "https://tokistorage.github.io/qr/archive.html?pdf="
+                    + urllib.parse.quote(pdf_url, safe="")
+                )
                 pdf.image(play_qr_path, x=MARGIN, y=248, w=sq, h=sq)
+                pdf.link(MARGIN, 248, sq, sq, play_link)
                 pdf.set_font("JP", "", 4)
                 pdf.set_text_color(*TOKI_BLUE)
                 pdf.set_xy(MARGIN, 267)
-                pdf.cell(sq, 3, "Scan to play", align="C")
+                pdf.cell(sq, 3, "Scan to play", align="C", link=play_link)
 
-            # Recovery QR — bottom-right (gray)
+            # Recovery QR — bottom-right (gray) — clickable link
             if recovery_qr_path:
                 sq = 18
                 rx = PAGE_W - MARGIN - sq
                 pdf.image(recovery_qr_path, x=rx, y=248, w=sq, h=sq)
-                pdf.set_font("JP", "", 3.5)
+                pdf.link(rx, 248, sq, sq, pdf_url)
+                pdf.set_font("JP", "", 4)
                 pdf.set_text_color(*MUTED)
-                display_url = pdf_url.replace("https://", "")
-                pdf.set_xy(rx - 5, 267)
-                pdf.cell(sq + 10, 3, display_url, align="C")
+                pdf.set_xy(rx, 267)
+                pdf.cell(sq, 3, f"TQ-{serial_str}.pdf", align="C", link=pdf_url)
 
             # Footer
             pdf.set_y(-20)
