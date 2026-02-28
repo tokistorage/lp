@@ -18,34 +18,17 @@
 // NDL Newsletter Publishing — Actions Pipeline (v4)
 // =====================================================
 
-var SERIES_SHEET_NAME = '特集シリーズ';
-var SERIES_SHEET_HEADERS = [
-  '日時', 'シリーズ名', 'クライアントID', 'リポジトリ', 'ステータス',
-  '発行数', '作成日', '備考'
-];
-
 // ── シリーズ管理 ──
 
 /**
- * 特集シリーズ一覧を取得
+ * 特集シリーズ一覧を取得（newsletter/series-registry.json が唯一のソース）
  */
 function getSeriesList() {
-  var ss = SpreadsheetApp.openById(SPREADSHEET_ID);
-  var sheet = ss.getSheetByName(SERIES_SHEET_NAME);
-  if (!sheet || sheet.getLastRow() < 2) return [];
-  var data = sheet.getRange(2, 1, sheet.getLastRow() - 1, 8).getValues();
-  return data.filter(function(r) { return r[1]; }).map(function(r) {
-    return {
-      date: r[0],
-      seriesName: r[1],
-      clientId: r[2],
-      repo: r[3],
-      status: r[4],
-      issueCount: r[5],
-      createdAt: r[6],
-      note: r[7]
-    };
-  });
+  var json = readFileFromGitHub('newsletter/series-registry.json');
+  if (!json) return [];
+  try {
+    return JSON.parse(json).series || [];
+  } catch (e) { return []; }
 }
 
 /**
@@ -86,21 +69,6 @@ function generateClientId(seriesName) {
   }
   var ts = Utilities.formatDate(new Date(), 'Asia/Tokyo', 'yyyyMMddHHmm');
   return 'ts-' + Math.abs(hash).toString(36) + '-' + ts;
-}
-
-/**
- * シリーズの発行数を更新
- */
-function updateSeriesIssueCount(ss, repo, count) {
-  var sheet = ss.getSheetByName(SERIES_SHEET_NAME);
-  if (!sheet || sheet.getLastRow() < 2) return;
-  var rows = sheet.getRange(2, 4, sheet.getLastRow() - 1, 1).getValues();
-  for (var i = 0; i < rows.length; i++) {
-    if (rows[i][0] === repo) {
-      sheet.getRange(i + 2, 6).setValue(count); // 発行数列
-      return;
-    }
-  }
 }
 
 /**
@@ -167,7 +135,7 @@ function calcVolumeNumber(serial, startYear, durationYears) {
  *   1. 同名シリーズが存在すれば既存情報を返す
  *   2. なければ client-config.json を組み立て
  *   3. provisionClientRepo() でリポジトリ作成
- *   4. シリーズシートに記録
+ *   4. series-registry.json に記録
  *   5. 管理者通知
  */
 function handleSeriesOpen(ss, data) {
@@ -217,13 +185,7 @@ function handleSeriesOpen(ss, data) {
   var repo = provisionClientRepo(clientId, seriesName, config);
   var repoName = repo.split('/')[1];
 
-  // シリーズシートに記録
-  var sheet = getOrCreateSheet(ss, SERIES_SHEET_NAME, SERIES_SHEET_HEADERS);
-  sheet.appendRow([
-    new Date(), seriesName, clientId, repo, 'active', 0, new Date(), ''
-  ]);
-
-  // LP newsletter/series-registry.json に追加
+  // series-registry.json に追加
   try {
     updateSeriesRegistry({
       seriesName: seriesName,
@@ -279,7 +241,7 @@ function handleSeriesOpen(ss, data) {
  *   3. materials/{serial:05d}.json をブランチにコミット
  *   4. schedule.json を更新・コミット（status: 'building'）
  *   5. PR作成（auto-merge → build-newsletter.yml がPDF生成）
- *   6. シリーズシートの発行数を更新
+ *   6. series-registry.json の発行数を更新
  *   7. 管理者通知
  */
 function handleNdlSubmit(ss, data) {
@@ -359,10 +321,7 @@ function handleNdlSubmit(ss, data) {
       series.repo
     );
 
-    // シリーズシートの発行数を更新
-    updateSeriesIssueCount(ss, series.repo, nextSerial);
-
-    // series-registry.json の issueCount を同期
+    // series-registry.json の issueCount を更新
     try {
       updateRegistryIssueCount(series.repo, nextSerial);
     } catch (e) {
@@ -683,11 +642,9 @@ function routeOrdersToSeries(forNewsletter) {
   });
 
   if (routed.length > 0) {
-    var ss = SpreadsheetApp.openById(SPREADSHEET_ID);
     var lastSerial = routed.filter(function(r) { return r.serial; });
     if (lastSerial.length > 0) {
       var maxSerial = Math.max.apply(null, lastSerial.map(function(r) { return r.serial; }));
-      updateSeriesIssueCount(ss, defaultSeries.repo, maxSerial);
       try {
         updateRegistryIssueCount(defaultSeries.repo, maxSerial);
       } catch (e) {
@@ -708,7 +665,7 @@ function routeOrdersToSeries(forNewsletter) {
 // ── シリーズリネーム ──
 
 /**
- * シリーズ名を変更（GASシート + series-registry.json）
+ * シリーズ名を変更（series-registry.json）
  *
  * リクエスト:
  *   { type: 'series_rename', repo: 'tokistorage/newsletter-client-xxx', newName: '新しい名前' }
@@ -718,28 +675,21 @@ function handleSeriesRename(ss, data) {
   var newName = (data.newName || '').trim();
   if (!repo || !newName) return jsonResponse({ success: false, error: 'missing_params' });
 
-  // GASシート col D=repo で検索、col B=seriesName を更新
-  var sheet = ss.getSheetByName(SERIES_SHEET_NAME);
-  if (!sheet || sheet.getLastRow() < 2) return jsonResponse({ success: false, error: 'sheet_not_found' });
-  var rows = sheet.getRange(2, 4, sheet.getLastRow() - 1, 1).getValues();
+  var registryPath = 'newsletter/series-registry.json';
+  var registryJson = readFileFromGitHub(registryPath);
+  if (!registryJson) return jsonResponse({ success: false, error: 'registry_not_found' });
+
+  var registry = JSON.parse(registryJson);
   var found = false;
-  for (var i = 0; i < rows.length; i++) {
-    if (rows[i][0] === repo) { sheet.getRange(i + 2, 2).setValue(newName); found = true; break; }
+  for (var i = 0; i < registry.series.length; i++) {
+    if (registry.series[i].repo === repo) {
+      registry.series[i].seriesName = newName;
+      found = true;
+      break;
+    }
   }
   if (!found) return jsonResponse({ success: false, error: 'series_not_found' });
 
-  // series-registry.json 更新
-  try {
-    var registryPath = 'newsletter/series-registry.json';
-    var registryJson = readFileFromGitHub(registryPath);
-    if (registryJson) {
-      var registry = JSON.parse(registryJson);
-      for (var j = 0; j < registry.series.length; j++) {
-        if (registry.series[j].repo === repo) { registry.series[j].seriesName = newName; break; }
-      }
-      pushFileToGitHub(registryPath, JSON.stringify(registry, null, 2), 'Rename series: ' + newName);
-    }
-  } catch (e) { Logger.log('Registry rename failed: ' + e.message); }
-
+  pushFileToGitHub(registryPath, JSON.stringify(registry, null, 2), 'Rename series: ' + newName);
   return jsonResponse({ success: true });
 }
