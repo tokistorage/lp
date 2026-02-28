@@ -279,19 +279,18 @@ def build_newsletter(materials_path, config_path, output_dir):
             pdf.cell(0, 8, f"QR {idx + 1} / {len(urls)}", align="C",
                      new_x="LMARGIN", new_y="NEXT")
 
-            # QR image centered (100mm × 100mm)
-            # Note: no clickable link — content URLs contain base64 audio data
-            # (thousands of chars) which gets truncated in PDF link annotations
+            # QR image centered (100mm × 100mm) — clickable link
             qr_size = 100
             qr_x = (PAGE_W - qr_size) / 2
             pdf.image(qr_path, x=qr_x, y=35, w=qr_size, h=qr_size)
+            pdf.link(qr_x, 35, qr_size, qr_size, full_url)
 
-            # URL text below QR (display only — too long for PDF link)
+            # URL text below QR — clickable link
             pdf.set_y(140)
             pdf.set_font("JP", "", 5.5)
             pdf.set_text_color(*MUTED)
             pdf.set_x(MARGIN)
-            pdf.multi_cell(CONTENT_W, 3.5, full_url, align="C")
+            pdf.multi_cell(CONTENT_W, 3.5, full_url, align="C", link=full_url)
 
             # Scan instruction
             pdf.ln(6)
