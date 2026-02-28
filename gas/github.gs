@@ -129,6 +129,41 @@ function batchCommitFiles(files, message, branch, repo) {
   });
 }
 
+/**
+ * バイナリファイルの base64 コンテンツを取得（デコードせず返す）
+ */
+function readBinaryFromGitHub(path, repo) {
+  repo = repo || GITHUB_REPO;
+  try {
+    var result = fetchGitHubApi('/repos/' + repo + '/contents/' + path, 'GET');
+    return result.content ? result.content.replace(/\n/g, '') : null;
+  } catch (e) { return null; }
+}
+
+/**
+ * ブランチ上のファイルを削除（Contents API DELETE）
+ */
+function deleteFileOnBranch(path, branch, repo) {
+  repo = repo || GITHUB_REPO;
+  var existing = fetchGitHubApi('/repos/' + repo + '/contents/' + path + '?ref=' + branch, 'GET');
+  fetchGitHubApi('/repos/' + repo + '/contents/' + path, 'DELETE', {
+    message: 'Remove processed queue file: ' + path + '\n\nCo-Authored-By: TokiStorage GAS <noreply@tokistorage.com>',
+    sha: existing.sha,
+    branch: branch
+  });
+}
+
+/**
+ * queue/ ディレクトリのファイル一覧取得（Contents API GET on directory）
+ */
+function listQueueEntries() {
+  try {
+    var result = fetchGitHubApi('/repos/' + NEWSLETTER_MASTER + '/contents/queue', 'GET');
+    if (!Array.isArray(result)) return [];
+    return result.filter(function(f) { return f.name !== '.gitkeep'; });
+  } catch (e) { return []; }
+}
+
 function pushFileToGitHub(path, content, commitMessage, repo) {
   repo = repo || GITHUB_REPO;
   var mainRef = fetchGitHubApi('/repos/' + repo + '/git/ref/heads/main', 'GET');
