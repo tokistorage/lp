@@ -257,6 +257,16 @@
             box-shadow: 0 4px 20px rgba(201, 169, 98, 0.1);
         }
 
+        .series-card.preparing {
+            opacity: 0.6;
+            cursor: default;
+        }
+
+        .series-card.preparing:hover {
+            border-color: #e2e8f0;
+            box-shadow: none;
+        }
+
         .series-card h3 {
             font-family: 'Hiragino Mincho ProN', 'Yu Mincho', serif;
             font-size: 1.05rem;
@@ -477,12 +487,19 @@
     if (list.length === 0) return;
     var container = document.getElementById('series-list');
     container.innerHTML = list.map(function(s) {
-      return '<a href="' + s.pagesUrl + '" class="series-card" target="_blank" rel="noopener">'
+      if (s.issueCount) {
+        return '<a href="' + s.pagesUrl + '" class="series-card" target="_blank" rel="noopener">'
+          + '<h3>' + s.seriesName + ' Special Feature</h3>'
+          + '<span class="series-meta">'
+          + s.issueCount + ' issues'
+          + (s.createdAt ? ' / Est. ' + s.createdAt : '')
+          + '</span></a>';
+      }
+      return '<div class="series-card preparing">'
         + '<h3>' + s.seriesName + ' Special Feature</h3>'
-        + '<span class="series-meta">'
-        + (s.issueCount ? s.issueCount + ' issues' : 'Preparing')
+        + '<span class="series-meta">Preparing'
         + (s.createdAt ? ' / Est. ' + s.createdAt : '')
-        + '</span></a>';
+        + '</span></div>';
     }).join('');
   } catch (e) {}
 })();

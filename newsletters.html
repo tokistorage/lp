@@ -262,6 +262,16 @@
             box-shadow: 0 4px 20px rgba(201, 169, 98, 0.1);
         }
 
+        .series-card.preparing {
+            opacity: 0.6;
+            cursor: default;
+        }
+
+        .series-card.preparing:hover {
+            border-color: #e2e8f0;
+            box-shadow: none;
+        }
+
         .series-card h3 {
             font-family: 'Hiragino Mincho ProN', 'Yu Mincho', serif;
             font-size: 1.05rem;
@@ -759,12 +769,19 @@ function buildCenturyNav(items, getItemYear, navEl, opts) {
         return;
       }
       container.innerHTML = list.map(function(s) {
-        return '<a href="' + s.pagesUrl + '" class="series-card" target="_blank" rel="noopener">'
+        if (s.issueCount) {
+          return '<a href="' + s.pagesUrl + '" class="series-card" target="_blank" rel="noopener">'
+            + '<h3>' + s.seriesName + ' 特集</h3>'
+            + '<span class="series-meta">'
+            + s.issueCount + '号発行'
+            + (s.createdAt ? ' / 開設 ' + s.createdAt : '')
+            + '</span></a>';
+        }
+        return '<div class="series-card preparing">'
           + '<h3>' + s.seriesName + ' 特集</h3>'
-          + '<span class="series-meta">'
-          + (s.issueCount ? s.issueCount + '号発行' : '準備中')
+          + '<span class="series-meta">準備中'
           + (s.createdAt ? ' / 開設 ' + s.createdAt : '')
-          + '</span></a>';
+          + '</span></div>';
       }).join('');
     }
 
