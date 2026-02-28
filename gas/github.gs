@@ -131,12 +131,21 @@ function batchCommitFiles(files, message, branch, repo) {
 
 /**
  * バイナリファイルの base64 コンテンツを取得（デコードせず返す）
+ * 1MB超のファイルは Contents API が content を返さないため Blobs API にフォールバック
  */
 function readBinaryFromGitHub(path, repo) {
   repo = repo || GITHUB_REPO;
   try {
     var result = fetchGitHubApi('/repos/' + repo + '/contents/' + path, 'GET');
-    return result.content ? result.content.replace(/\n/g, '') : null;
+    if (result.content) {
+      return result.content.replace(/\n/g, '');
+    }
+    // 1MB超: Blobs API 経由で取得
+    if (result.sha) {
+      var blob = fetchGitHubApi('/repos/' + repo + '/git/blobs/' + result.sha, 'GET');
+      return blob.content ? blob.content.replace(/\n/g, '') : null;
+    }
+    return null;
   } catch (e) { return null; }
 }
 
