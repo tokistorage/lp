@@ -234,60 +234,6 @@
             line-height: 1.7;
         }
 
-        .series-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-            gap: 1.5rem;
-        }
-
-        .series-card {
-            background: #fff;
-            border: 1px solid #e2e8f0;
-            border-radius: 12px;
-            padding: 1.5rem;
-            text-decoration: none;
-            color: inherit;
-            transition: all 0.2s ease;
-            display: flex;
-            flex-direction: column;
-        }
-
-        .series-card:hover {
-            border-color: #C9A962;
-            box-shadow: 0 4px 20px rgba(201, 169, 98, 0.1);
-        }
-
-        .series-card.preparing {
-            opacity: 0.6;
-            cursor: default;
-        }
-
-        .series-card.preparing:hover {
-            border-color: #e2e8f0;
-            box-shadow: none;
-        }
-
-        .series-card h3 {
-            font-family: 'Hiragino Mincho ProN', 'Yu Mincho', serif;
-            font-size: 1.05rem;
-            color: #1e293b;
-            margin-bottom: 0.5rem;
-        }
-
-        .series-card .series-meta {
-            font-size: 0.8rem;
-            color: #94a3b8;
-            margin-top: auto;
-            padding-top: 0.75rem;
-        }
-
-        .series-empty {
-            color: #94a3b8;
-            font-size: 0.9rem;
-            text-align: center;
-            padding: 2rem;
-        }
-
         .newsletters-footer {
             text-align: center;
             padding: 3rem 0;
@@ -465,9 +411,9 @@
             Dedicated newsletter series created for each TokiQR Series Rights holder.<br>
             Each series is deposited as an independent serial publication with the National Diet Library.
         </p>
-        <div class="series-grid" id="series-list">
-            <p class="series-empty">No special feature series have been opened yet.</p>
-        </div>
+        <p style="text-align: center; margin: 2rem 0;">
+            <a href="https://tokistorage.github.io/newsletter-master/" style="display: inline-block; padding: 0.75rem 2rem; background: #C9A962; color: #fff; border-radius: 8px; text-decoration: none; font-size: 0.95rem; font-weight: 500; transition: opacity 0.15s;" onmouseover="this.style.opacity='0.85'" onmouseout="this.style.opacity='1'">View All Series</a>
+        </p>
     </section>
 
     <footer class="newsletters-footer">
@@ -477,33 +423,6 @@
 
 </div>
 
-<script>
-(async function() {
-  try {
-    var res = await fetch('newsletter/series-registry.json');
-    if (!res.ok) return;
-    var data = await res.json();
-    var list = (data.series || []).filter(function(s) { return s.status !== 'inactive'; });
-    if (list.length === 0) return;
-    var container = document.getElementById('series-list');
-    container.innerHTML = list.map(function(s) {
-      if (s.issueCount) {
-        return '<a href="' + s.pagesUrl + '" class="series-card" target="_blank" rel="noopener">'
-          + '<h3>' + s.seriesName + ' Special Feature</h3>'
-          + '<span class="series-meta">'
-          + s.issueCount + ' issues'
-          + (s.createdAt ? ' / Est. ' + s.createdAt : '')
-          + '</span></a>';
-      }
-      return '<div class="series-card preparing">'
-        + '<h3>' + s.seriesName + ' Special Feature</h3>'
-        + '<span class="series-meta">Preparing'
-        + (s.createdAt ? ' / Est. ' + s.createdAt : '')
-        + '</span></div>';
-    }).join('');
-  } catch (e) {}
-})();
-</script>
 <script src="index.js" defer></script>
 <script src="contact-form.js" defer></script>
 <script src="tracker.js" defer></script>
