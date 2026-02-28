@@ -279,21 +279,15 @@ def build_newsletter(materials_path, config_path, output_dir):
             pdf.cell(0, 8, f"QR {idx + 1} / {len(urls)}", align="C",
                      new_x="LMARGIN", new_y="NEXT")
 
-            # QR image centered (100mm × 100mm) — clickable link
-            qr_size = 100
-            qr_x = (PAGE_W - qr_size) / 2
-            pdf.image(qr_path, x=qr_x, y=35, w=qr_size, h=qr_size)
-            pdf.link(qr_x, 35, qr_size, qr_size, full_url)
+            # QR image full-width — clickable link
+            qr_size = CONTENT_W
+            qr_x = MARGIN
+            qr_y = 30
+            pdf.image(qr_path, x=qr_x, y=qr_y, w=qr_size, h=qr_size)
+            pdf.link(qr_x, qr_y, qr_size, qr_size, full_url)
 
-            # URL text below QR — clickable link
-            pdf.set_y(140)
-            pdf.set_font("JP", "", 5.5)
-            pdf.set_text_color(*MUTED)
-            pdf.set_x(MARGIN)
-            pdf.multi_cell(CONTENT_W, 3.5, full_url, align="C", link=full_url)
-
-            # Scan instruction
-            pdf.ln(6)
+            # Scan instruction below QR
+            pdf.set_y(qr_y + qr_size + 4)
             pdf.set_font("JP", "", 9)
             pdf.set_text_color(*SECONDARY)
             pdf.cell(0, 6, "スマートフォンでスキャンすると再生できます",
