@@ -197,7 +197,7 @@
 
         <h2>3. Design Decisions: Play QR vs. Recovery QR</h2>
 
-        <p>The bottom-left play QR (blue) encodes a URL of the form <code>archive.html?pdf=&lt;url&gt;</code>. When scanned with a smartphone, TokiQR's archive page opens, automatically fetches the PDF, decodes the QR codes, and navigates directly to the playback screen. The user's only action is to scan.</p>
+        <p>The bottom-left play QR (blue) encodes a URL of the form <code>play.html?zip=&lt;url&gt;</code>. When scanned with a smartphone, TokiQR's playback page opens, automatically fetches the ZIP, reads the manifest, and navigates directly to the playback screen. The user's only action is to scan.</p>
 
         <p>The bottom-right recovery QR (gray) encodes a direct link to the PDF file. A GitHub Pages or NDL (National Diet Library) URL. Scanning opens the PDF itself. It does not play instantly, but the PDF can be saved locally. Even in a future environment where the play QR no longer functions, manual import remains possible as long as the PDF can be obtained.</p>
 
@@ -207,7 +207,7 @@
 
         <h3>Why They Don't Interfere with the Main QR</h3>
 
-        <p>When a PDF is imported into TokiQR, all QR codes on every page are scanned. The play QR and recovery QR are detected as well. However, TokiQR's decoder has a URL filter. It extracts only URLs containing <code>play.html</code> or <code>m=</code>, and ignores everything else. The play QR (<code>archive.html?pdf=...</code>) and recovery QR (<code>.../output/TQ-00001.pdf</code>) are automatically excluded by this filter.</p>
+        <p>When a PDF is imported into TokiQR, all QR codes on every page are scanned. The play QR and recovery QR are detected as well. However, TokiQR's decoder has a URL filter. It extracts only URLs containing <code>play.html</code> or <code>m=</code>, and ignores everything else. The recovery QR (<code>.../output/TQ-00001.pdf</code>) is automatically excluded by this filter. The play QR (<code>play.html?zip=...</code>) passes the filter but contains no data chunks, so it is not treated as a playback target.</p>
 
         <p>Adding two small QR codes to each page causes zero interference with main QR decoding. This was not achieved by writing additional filter rules&mdash;the existing filter was correctly designed from the start.</p>
 
