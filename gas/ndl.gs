@@ -159,9 +159,11 @@ function handleSeriesOpen(ss, data) {
   var clientId = generateClientId(seriesName);
   var startYear = parseInt(Utilities.formatDate(new Date(), 'Asia/Tokyo', 'yyyy'));
 
+  var repoName = 'newsletter-client-' + clientId;
   var config = {
     clientId: clientId,
     clientName: seriesName,
+    pagesUrl: 'https://tokistorage.github.io/' + repoName + '/',
     branding: {
       accentColor: [37, 99, 235],
       publicationNameJa: seriesName + ' 特集',
@@ -183,7 +185,6 @@ function handleSeriesOpen(ss, data) {
 
   // リポジトリ作成
   var repo = provisionClientRepo(clientId, seriesName, config);
-  var repoName = repo.split('/')[1];
 
   // series-registry.json に追加
   try {
