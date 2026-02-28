@@ -187,6 +187,7 @@ function handleSeriesOpen(ss, data) {
   var repo = provisionClientRepo(clientId, seriesName, config);
 
   // series-registry.json に追加
+  var registryOk = false;
   try {
     updateSeriesRegistry({
       seriesName: seriesName,
@@ -196,8 +197,12 @@ function handleSeriesOpen(ss, data) {
       issueCount: 0,
       status: 'active'
     });
+    registryOk = true;
   } catch (e) {
     Logger.log('Registry update failed: ' + e.message);
+    sendEmail(NOTIFY_EMAIL,
+      '【NDL】レジストリ更新失敗: ' + seriesName,
+      'リポジトリ: ' + repo + '\nエラー: ' + e.message);
   }
 
   // 管理者通知
@@ -252,7 +257,24 @@ function handleNdlSubmit(ss, data) {
     return jsonResponse({ success: false, error: 'missing_series_identifier' });
   }
 
-  var series = repo ? findSeriesByRepo(repo) : findSeries(seriesName);
+  var series = (repo && findSeriesByRepo(repo)) || findSeries(seriesName);
+  if (!series && repo) {
+    // レジストリ未登録だがリポジトリは存在する場合 — 自動登録して再試行
+    try {
+      var repoName = repo.split('/')[1] || repo;
+      updateSeriesRegistry({
+        seriesName: seriesName || repoName,
+        repo: repo,
+        pagesUrl: 'https://tokistorage.github.io/' + repoName + '/',
+        createdAt: Utilities.formatDate(new Date(), 'Asia/Tokyo', 'yyyy-MM-dd'),
+        issueCount: 0,
+        status: 'active'
+      });
+      series = findSeriesByRepo(repo);
+    } catch (e) {
+      Logger.log('Auto-register series failed: ' + e.message);
+    }
+  }
   if (!series) {
     return jsonResponse({ success: false, error: 'series_not_found' });
   }
