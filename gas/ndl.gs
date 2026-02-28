@@ -408,7 +408,21 @@ function provisionClientRepo(clientId, clientName, config) {
       'Add archive index page', 'main', repo);
   }
 
-  // 2d. auto-merge workflow
+  // 2d. manifest.json (PWA)
+  var templateManifest = readFileFromGitHub('newsletter/client-template/manifest.json');
+  if (templateManifest) {
+    commitFileOnBranch('manifest.json', templateManifest,
+      'Add PWA manifest', 'main', repo);
+  }
+
+  // 2e. service-worker.js (PWA offline)
+  var templateSw = readFileFromGitHub('newsletter/client-template/service-worker.js');
+  if (templateSw) {
+    commitFileOnBranch('service-worker.js', templateSw,
+      'Add service worker', 'main', repo);
+  }
+
+  // 2f. auto-merge workflow
   var autoMerge = 'name: Auto Merge\n\n'
     + 'on:\n'
     + '  pull_request:\n'
@@ -427,15 +441,15 @@ function provisionClientRepo(clientId, clientName, config) {
   commitFileOnBranch('.github/workflows/auto-merge.yml', autoMerge,
     'Add auto-merge workflow', 'main', repo);
 
-  // 2e. materials/.gitkeep (materials JSONの配置先)
+  // 2g. materials/.gitkeep (materials JSONの配置先)
   commitFileOnBranch('materials/.gitkeep', '',
     'Add materials directory', 'main', repo);
 
-  // 2f. output/.gitkeep (PDFの配置先)
+  // 2h. output/.gitkeep (PDFの配置先)
   commitFileOnBranch('output/.gitkeep', '',
     'Add output directory', 'main', repo);
 
-  // 2g. build-newsletter workflow
+  // 2i. build-newsletter workflow
   var buildWorkflow = readFileFromGitHub(
     'newsletter/client-template/.github/workflows/build-newsletter.yml');
   if (buildWorkflow) {
