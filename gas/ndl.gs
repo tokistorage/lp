@@ -1,30 +1,34 @@
 /**
  * NDL特集シリーズ — series_open / ndl_submit (ndl.gs)
  *
- * v4 変更点 (v3からの移行):
- *   - GAS内PDF生成 → materials JSONコミット + GitHub Actions PDF生成
- *   - generateTokiqrNewsletter() 削除 → build-newsletter.yml に移行
- *   - schedule.json status: 'published' → 'building'（Actionsが'published'に更新）
+ * v5 変更点 (v4からの移行):
+ *   - per-series リポジトリ → newsletter-master 集約
+ *   - provisionClientRepo() 削除 → series.json エントリ追加のみ
+ *   - materials JSON → ZIP+PNG (クライアントが生成、base64で受信)
+ *   - series-registry.json (lp/) → series.json (newsletter-master)
  *
  * フロー:
- *   GAS → materials/{serial}.json コミット → auto-merge
- *   → build-newsletter.yml → PDF生成 → PR → auto-merge → Pages公開
+ *   series_open: newsletter-master/series.json にエントリ追加
+ *   ndl_submit: ZIP を newsletter-master/zips/{seriesId}/{serial}.zip にコミット
+ *              + series.json の currentSerial 更新
  *
  * タイマートリガー設定:
  *   - sendMonthlySeriesReport() → 毎月1日 9:00（アクティビティレポート）
  */
 
 // =====================================================
-// NDL Newsletter Publishing — Actions Pipeline (v4)
+// NDL Newsletter Publishing — Master Repository (v5)
 // =====================================================
+
+var NEWSLETTER_MASTER = 'tokistorage/newsletter-master';
 
 // ── シリーズ管理 ──
 
 /**
- * 特集シリーズ一覧を取得（newsletter/series-registry.json が唯一のソース）
+ * 特集シリーズ一覧を取得（newsletter-master/series.json が唯一のソース）
  */
 function getSeriesList() {
-  var json = readFileFromGitHub('newsletter/series-registry.json');
+  var json = readFileFromGitHub('series.json', NEWSLETTER_MASTER);
   if (!json) return [];
   try {
     return JSON.parse(json).series || [];
@@ -46,22 +50,22 @@ function findSeries(seriesName) {
 }
 
 /**
- * リポジトリ名からアクティブなシリーズを検索
+ * シリーズIDからアクティブなシリーズを検索
  */
-function findSeriesByRepo(repo) {
-  if (!repo) return null;
+function findSeriesById(seriesId) {
+  if (!seriesId) return null;
   var list = getSeriesList();
   for (var i = 0; i < list.length; i++) {
-    if (list[i].repo === repo && list[i].status === 'active') return list[i];
+    if (list[i].seriesId === seriesId && list[i].status === 'active') return list[i];
   }
   return null;
 }
 
 /**
- * シリーズ名からクライアントIDを生成
+ * シリーズ名からシリーズIDを生成
  * ハッシュ + タイムスタンプで一意性を確保
  */
-function generateClientId(seriesName) {
+function generateSeriesId(seriesName) {
   var hash = 0;
   for (var i = 0; i < seriesName.length; i++) {
     hash = ((hash << 5) - hash) + seriesName.charCodeAt(i);
@@ -69,42 +73,6 @@ function generateClientId(seriesName) {
   }
   var ts = Utilities.formatDate(new Date(), 'Asia/Tokyo', 'yyyyMMddHHmm');
   return 'ts-' + Math.abs(hash).toString(36) + '-' + ts;
-}
-
-/**
- * GitHub Pages を有効化（リトライ付き）
- * コミット直後はGitHub側が処理中で失敗しやすいため、最大3回リトライする
- */
-function enablePagesWithRetry(repo) {
-  var delays = [5000, 10000, 15000]; // 5s, 10s, 15s
-  for (var attempt = 0; attempt < delays.length; attempt++) {
-    // まず現在の状態を確認
-    try {
-      fetchGitHubApi('/repos/' + repo + '/pages', 'GET');
-      Logger.log('Pages already enabled for ' + repo);
-      return; // 既に有効
-    } catch (e) {
-      // 404 = まだ無効 → 有効化を試みる
-    }
-
-    Utilities.sleep(delays[attempt]);
-
-    try {
-      fetchGitHubApi('/repos/' + repo + '/pages', 'POST', {
-        build_type: 'legacy',
-        source: { branch: 'main', path: '/' }
-      });
-      Logger.log('Pages enabled for ' + repo + ' (attempt ' + (attempt + 1) + ')');
-      return;
-    } catch (e) {
-      Logger.log('Pages enablement attempt ' + (attempt + 1) + ' failed: ' + e.message);
-    }
-  }
-  // 全リトライ失敗 → 管理者通知
-  sendEmail(NOTIFY_EMAIL,
-    '【NDL】Pages有効化失敗: ' + repo,
-    'リポジトリ: https://github.com/' + repo + '\n'
-    + '手動で Settings → Pages → Source: main を設定してください。');
 }
 
 // ── 通巻番号計算 ──
@@ -128,15 +96,13 @@ function calcVolumeNumber(serial, startYear, durationYears) {
  *   { type: 'series_open', seriesName: '佐藤家族' }
  *
  * レスポンス:
- *   { success: true, repo: 'tokistorage/newsletter-client-ts-xxx',
- *     pagesUrl: 'https://tokistorage.github.io/newsletter-client-ts-xxx/' }
+ *   { success: true, seriesId: 'ts-abc123-202603010000' }
  *
  * 処理:
  *   1. 同名シリーズが存在すれば既存情報を返す
- *   2. なければ client-config.json を組み立て
- *   3. provisionClientRepo() でリポジトリ作成
- *   4. series-registry.json に記録
- *   5. 管理者通知
+ *   2. なければ seriesId を生成
+ *   3. newsletter-master/series.json にエントリ追加
+ *   4. 管理者通知
  */
 function handleSeriesOpen(ss, data) {
   var seriesName = (data.seriesName || '').trim();
@@ -147,75 +113,47 @@ function handleSeriesOpen(ss, data) {
   // 既存シリーズチェック（冪等性: 同名で再呼び出しされても安全）
   var existing = findSeries(seriesName);
   if (existing) {
-    var existingRepoName = existing.repo.split('/')[1] || existing.repo;
     return jsonResponse({
       success: true,
-      repo: existing.repo,
-      pagesUrl: 'https://tokistorage.github.io/' + existingRepoName + '/',
+      seriesId: existing.seriesId,
       note: 'already_exists'
     });
   }
 
-  var clientId = generateClientId(seriesName);
+  var seriesId = generateSeriesId(seriesName);
   var startYear = parseInt(Utilities.formatDate(new Date(), 'Asia/Tokyo', 'yyyy'));
 
-  var repoName = 'newsletter-client-' + clientId;
-  var config = {
-    clientId: clientId,
-    clientName: seriesName,
-    pagesUrl: 'https://tokistorage.github.io/' + repoName + '/',
-    branding: {
-      accentColor: [37, 99, 235],
-      publicationNameJa: seriesName + ' 特集',
-      tagline: '── ' + seriesName + ' ──'
-    },
-    colophon: {
-      publisher: 'TokiStorage（佐藤卓也）',
-      publisherAddress: '〒279-0014 千葉県浦安市明海2-11-13',
-      contentOriginator: seriesName,
-      legalBasis: '国立国会図書館法 第25条・第25条の4',
-      note: '本誌は TokiStorage が発行者として納本する逐次刊行物です。'
-    },
-    schedule: {
-      volumeDurationYears: 20,
-      startYear: startYear
-    },
+  // newsletter-master/series.json にエントリ追加
+  var seriesJson = readFileFromGitHub('series.json', NEWSLETTER_MASTER);
+  var registry = seriesJson ? JSON.parse(seriesJson) : { series: [] };
+
+  registry.series.push({
+    seriesId: seriesId,
+    seriesName: seriesName,
+    startYear: startYear,
+    volumeDurationYears: 20,
+    currentSerial: 0,
+    createdAt: Utilities.formatDate(new Date(), 'Asia/Tokyo', 'yyyy-MM-dd'),
     status: 'active'
-  };
+  });
 
-  // リポジトリ作成
-  var repo = provisionClientRepo(clientId, seriesName, config);
-
-  // series-registry.json に追加
-  var registryOk = false;
-  try {
-    updateSeriesRegistry({
-      seriesName: seriesName,
-      repo: repo,
-      pagesUrl: 'https://tokistorage.github.io/' + repoName + '/',
-      createdAt: Utilities.formatDate(new Date(), 'Asia/Tokyo', 'yyyy-MM-dd'),
-      issueCount: 0,
-      status: 'active'
-    });
-    registryOk = true;
-  } catch (e) {
-    Logger.log('Registry update failed: ' + e.message);
-    sendEmail(NOTIFY_EMAIL,
-      '【NDL】レジストリ更新失敗: ' + seriesName,
-      'リポジトリ: ' + repo + '\nエラー: ' + e.message);
-  }
+  // ブランチ + PR で series.json 更新（auto-merge）
+  var branch = 'series-' + seriesId;
+  createGitHubBranch(branch, NEWSLETTER_MASTER);
+  commitFileOnBranch('series.json', JSON.stringify(registry, null, 2),
+    'Add series: ' + seriesName, branch, NEWSLETTER_MASTER);
+  createGitHubPR('New series: ' + seriesName, branch,
+    'Series: ' + seriesName + '\nID: ' + seriesId, NEWSLETTER_MASTER);
 
   // 管理者通知
   sendEmail(NOTIFY_EMAIL,
     '【NDL】新シリーズ開設: ' + seriesName,
     'シリーズ: ' + seriesName + '\n'
-    + 'リポジトリ: https://github.com/' + repo + '\n'
-    + 'Pages: https://tokistorage.github.io/' + repoName + '/\n');
+    + 'ID: ' + seriesId + '\n');
 
   return jsonResponse({
     success: true,
-    repo: repo,
-    pagesUrl: 'https://tokistorage.github.io/' + repoName + '/'
+    seriesId: seriesId
   });
 }
 
@@ -227,145 +165,123 @@ function handleSeriesOpen(ss, data) {
  * リクエスト:
  *   {
  *     type: 'ndl_submit',
+ *     seriesId: 'ts-abc123-202603010000',
  *     seriesName: '佐藤家族',
  *     title: '結婚式メッセージ',
- *     urls: ['play.html?m=7&c2=...', 'play.html?m=7&c2=...'],
- *     metadata: {
- *       ts: '2026-02-25T10:00:00',
- *       tz: 'Asia/Tokyo',
- *       type: 'audio',
- *       chunkCount: 3
- *     }
+ *     zipBase64: '...base64 encoded ZIP...',
+ *     urls: ['play.html?m=7&c2=...'],
+ *     metadata: { ts, tz, type, chunkCount }
  *   }
  *
  * レスポンス:
- *   { success: true, serial: 1 }
+ *   { success: true, serial: 1, seriesId: 'ts-abc123-202603010000' }
  *
  * 処理:
- *   1. シリーズ検索 → クライアントリポジトリ特定
- *   2. schedule.json → 通巻番号インクリメント
- *   3. materials/{serial:05d}.json をブランチにコミット
- *   4. schedule.json を更新・コミット（status: 'building'）
- *   5. PR作成（auto-merge → build-newsletter.yml がPDF生成）
- *   6. series-registry.json の発行数を更新
- *   7. 管理者通知
+ *   1. シリーズ検索（seriesId → seriesName フォールバック）
+ *   2. series.json → currentSerial インクリメント
+ *   3. ZIP を zips/{seriesId}/{serial}.zip にコミット
+ *   4. series.json 更新・コミット
+ *   5. PR作成（auto-merge）
+ *   6. 管理者通知
  */
 function handleNdlSubmit(ss, data) {
-  var repo = (data.repo || '').trim();
+  var seriesId = (data.seriesId || '').trim();
   var seriesName = (data.seriesName || '').trim();
-  if (!repo && !seriesName) {
+  if (!seriesId && !seriesName) {
     return jsonResponse({ success: false, error: 'missing_series_identifier' });
   }
 
-  var series = (repo && findSeriesByRepo(repo)) || findSeries(seriesName);
-  if (!series && repo) {
-    // レジストリ未登録だがリポジトリは存在する場合 — 自動登録して再試行
-    try {
-      var repoName = repo.split('/')[1] || repo;
-      updateSeriesRegistry({
-        seriesName: seriesName || repoName,
-        repo: repo,
-        pagesUrl: 'https://tokistorage.github.io/' + repoName + '/',
-        createdAt: Utilities.formatDate(new Date(), 'Asia/Tokyo', 'yyyy-MM-dd'),
-        issueCount: 0,
-        status: 'active'
-      });
-      series = findSeriesByRepo(repo);
-    } catch (e) {
-      Logger.log('Auto-register series failed: ' + e.message);
-    }
-  }
+  var series = (seriesId && findSeriesById(seriesId)) || findSeries(seriesName);
   if (!series) {
     return jsonResponse({ success: false, error: 'series_not_found' });
   }
 
+  var zipBase64 = data.zipBase64 || '';
   var urls = data.urls || [];
-  if (urls.length === 0) {
-    return jsonResponse({ success: false, error: 'no_urls' });
+  if (!zipBase64 && urls.length === 0) {
+    return jsonResponse({ success: false, error: 'no_data' });
   }
 
-  // schedule.json 読み込み
-  var scheduleJson = readFileFromGitHub('schedule.json', series.repo);
-  if (!scheduleJson) {
-    return jsonResponse({ success: false, error: 'schedule_not_found' });
+  // series.json 読み込み（最新の currentSerial を取得）
+  var seriesJson = readFileFromGitHub('series.json', NEWSLETTER_MASTER);
+  if (!seriesJson) {
+    return jsonResponse({ success: false, error: 'series_json_not_found' });
   }
-  var schedule = JSON.parse(scheduleJson);
+  var registry = JSON.parse(seriesJson);
 
-  // 通巻番号インクリメント
-  var nextSerial = (schedule.current_serial || 0) + 1;
-  var startYear = schedule.volume_start_year || 2026;
-  var duration = schedule.volume_duration_years || 20;
+  // シリーズエントリを特定
+  var seriesEntry = null;
+  for (var i = 0; i < registry.series.length; i++) {
+    if (registry.series[i].seriesId === series.seriesId) {
+      seriesEntry = registry.series[i];
+      break;
+    }
+  }
+  if (!seriesEntry) {
+    return jsonResponse({ success: false, error: 'series_entry_not_found' });
+  }
+
+  var nextSerial = (seriesEntry.currentSerial || 0) + 1;
+  var startYear = seriesEntry.startYear || 2026;
+  var duration = seriesEntry.volumeDurationYears || 20;
   var vn = calcVolumeNumber(nextSerial, startYear, duration);
 
   var serialStr = String(nextSerial).padStart(5, '0');
-  var today = Utilities.formatDate(new Date(), 'Asia/Tokyo', "yyyy-MM-dd'T'HH:mm:ss");
-
-  // materials JSON を組み立て
-  var materials = {
-    serial: nextSerial,
-    volume: vn.volume,
-    number: vn.number,
-    seriesName: series.seriesName,
-    title: data.title || '',
-    urls: urls,
-    metadata: data.metadata || {},
-    date: today
-  };
-  var materialsPath = 'materials/' + serialStr + '.json';
 
   try {
-    // ブランチ作成 → materials JSON + schedule.json コミット → PR
-    var branch = 'tq-' + serialStr;
-    createGitHubBranch(branch, series.repo);
+    var branch = 'tq-' + series.seriesId.substring(0, 20) + '-' + serialStr;
+    createGitHubBranch(branch, NEWSLETTER_MASTER);
 
-    commitFileOnBranch(materialsPath, JSON.stringify(materials, null, 2),
-      'Add materials ' + serialStr, branch, series.repo);
-
-    schedule.current_serial = nextSerial;
-    schedule.issues.push({
-      date: today,
-      serial: nextSerial,
-      volume: vn.volume,
-      number: vn.number,
-      status: 'building',
-      title: data.title || '',
-      urlCount: urls.length
-    });
-    commitFileOnBranch('schedule.json', JSON.stringify(schedule, null, 2),
-      'Update schedule: TQ-' + serialStr, branch, series.repo);
-
-    createGitHubPR(
-      'TQ-' + serialStr + ': ' + (data.title || seriesName),
-      branch,
-      'NDL serial publication #' + nextSerial + '\n'
-      + 'URLs: ' + urls.length + '\n'
-      + 'Title: ' + (data.title || '') + '\n\n'
-      + 'build-newsletter.yml will generate the PDF after merge.',
-      series.repo
-    );
-
-    // series-registry.json の issueCount を更新
-    try {
-      updateRegistryIssueCount(series.repo, nextSerial);
-    } catch (e) {
-      Logger.log('Registry issueCount update failed: ' + e.message);
+    // ZIP をコミット
+    if (zipBase64) {
+      var zipPath = 'zips/' + series.seriesId + '/' + serialStr + '.zip';
+      commitBinaryFileOnBranch(zipPath, zipBase64,
+        'Add ZIP ' + serialStr + ' for ' + series.seriesName, branch, NEWSLETTER_MASTER);
+    } else {
+      // フォールバック: URL のみの場合は materials JSON を保存
+      var today = Utilities.formatDate(new Date(), 'Asia/Tokyo', "yyyy-MM-dd'T'HH:mm:ss");
+      var materials = {
+        serial: nextSerial,
+        volume: vn.volume,
+        number: vn.number,
+        seriesName: series.seriesName,
+        title: data.title || '',
+        urls: urls,
+        metadata: data.metadata || {},
+        date: today
+      };
+      var materialsPath = 'zips/' + series.seriesId + '/' + serialStr + '.json';
+      commitFileOnBranch(materialsPath, JSON.stringify(materials, null, 2),
+        'Add materials ' + serialStr + ' for ' + series.seriesName, branch, NEWSLETTER_MASTER);
     }
 
+    // series.json の currentSerial を更新
+    seriesEntry.currentSerial = nextSerial;
+    commitFileOnBranch('series.json', JSON.stringify(registry, null, 2),
+      'Update serial: TQ-' + serialStr, branch, NEWSLETTER_MASTER);
+
+    createGitHubPR(
+      'TQ-' + serialStr + ': ' + (data.title || series.seriesName),
+      branch,
+      'NDL serial publication #' + nextSerial + '\n'
+      + 'Series: ' + series.seriesName + '\n'
+      + 'Title: ' + (data.title || '') + '\n'
+      + (zipBase64 ? 'Format: ZIP+PNG' : 'Format: materials JSON (URLs: ' + urls.length + ')'),
+      NEWSLETTER_MASTER
+    );
+
     // 管理者通知
-    var repoName = series.repo.split('/')[1] || series.repo;
     sendEmail(NOTIFY_EMAIL,
       '【NDL】TQ-' + serialStr + ' 投入: ' + (data.title || series.seriesName),
       'シリーズ: ' + series.seriesName + '\n'
       + 'タイトル: ' + (data.title || '') + '\n'
       + '通巻: 第' + nextSerial + '号（第' + vn.volume + '巻 第' + vn.number + '号）\n'
-      + 'URL数: ' + urls.length + '\n'
-      + 'リポジトリ: https://github.com/' + series.repo + '\n'
-      + 'ステータス: building（Actions がPDF生成予定）');
+      + 'フォーマット: ' + (zipBase64 ? 'ZIP+PNG' : 'materials JSON') + '\n');
 
     return jsonResponse({
       success: true,
       serial: nextSerial,
-      repo: series.repo
+      seriesId: series.seriesId
     });
   } catch (e) {
     sendEmail(NOTIFY_EMAIL,
@@ -375,176 +291,6 @@ function handleNdlSubmit(ss, data) {
       + 'スタック: ' + e.stack);
     return jsonResponse({ success: false, error: 'submit_failed', message: e.message });
   }
-}
-
-// ── リポジトリプロビジョニング ──
-
-/**
- * クライアントリポジトリを作成
- * newsletter/client-template/ をベースに GitHub リポジトリを自動構築
- *
- * @param {string} clientId - クライアントID (e.g., "ts-abc123-202602251000")
- * @param {string} clientName - 表示名 (e.g., "佐藤家族")
- * @param {object} config - client-config.json の内容
- * @returns {string} リポジトリフルネーム (e.g., "tokistorage/newsletter-client-ts-abc123-202602251000")
- */
-function provisionClientRepo(clientId, clientName, config) {
-  var repoName = 'newsletter-client-' + clientId;
-  var repo = 'tokistorage/' + repoName;
-
-  // 1. リポジトリ作成
-  fetchGitHubApi('/user/repos', 'POST', {
-    name: repoName,
-    description: clientName + ' NDL Newsletter — Published by TokiStorage',
-    homepage: 'https://tokistorage.github.io/' + repoName + '/',
-    'private': false,
-    has_issues: false,
-    has_projects: false,
-    has_wiki: false,
-    auto_init: true
-  });
-
-  Utilities.sleep(3000);
-
-  // 2. テンプレートファイルを一括コミット（Git Trees API）
-  //    commitFileOnBranch 9連続 → batchCommitFiles 1回で帯域制限回避
-
-  var files = [];
-
-  // 2a. client-config.json
-  files.push({ path: 'client-config.json', content: JSON.stringify(config, null, 2) });
-
-  // 2b. schedule.json
-  var schedule = {
-    cadence_months: null,
-    volume_start_year: config.schedule ? config.schedule.startYear : 2026,
-    volume_duration_years: config.schedule ? config.schedule.volumeDurationYears : 20,
-    current_serial: 0,
-    issues: []
-  };
-  files.push({ path: 'schedule.json', content: JSON.stringify(schedule, null, 2) });
-
-  // 2c. index.html (GitHub Pages archive listing)
-  var templateIndex = readFileFromGitHub('newsletter/client-template/index.html');
-  if (templateIndex) {
-    files.push({ path: 'index.html', content: templateIndex });
-  }
-
-  // 2d. manifest.json (PWA)
-  var templateManifest = readFileFromGitHub('newsletter/client-template/manifest.json');
-  if (templateManifest) {
-    files.push({ path: 'manifest.json', content: templateManifest });
-  }
-
-  // 2e. service-worker.js (PWA offline)
-  var templateSw = readFileFromGitHub('newsletter/client-template/service-worker.js');
-  if (templateSw) {
-    files.push({ path: 'service-worker.js', content: templateSw });
-  }
-
-  // 2f. auto-merge workflow
-  var autoMerge = 'name: Auto Merge\n\n'
-    + 'on:\n'
-    + '  pull_request:\n'
-    + '    types: [opened]\n\n'
-    + 'permissions:\n'
-    + '  contents: write\n'
-    + '  pull-requests: write\n\n'
-    + 'jobs:\n'
-    + '  auto-merge:\n'
-    + '    runs-on: ubuntu-latest\n'
-    + '    steps:\n'
-    + '      - run: gh pr merge ${{ github.event.pull_request.number }} --merge --delete-branch\n'
-    + '        env:\n'
-    + '          GH_TOKEN: ${{ github.token }}\n'
-    + '          GH_REPO: ${{ github.repository }}\n';
-  files.push({ path: '.github/workflows/auto-merge.yml', content: autoMerge });
-
-  // 2g. materials/.gitkeep
-  files.push({ path: 'materials/.gitkeep', content: '' });
-
-  // 2h. output/.gitkeep
-  files.push({ path: 'output/.gitkeep', content: '' });
-
-  // 2i. build-newsletter workflow
-  var buildWorkflow = readFileFromGitHub(
-    'newsletter/client-template/.github/workflows/build-newsletter.yml');
-  if (buildWorkflow) {
-    files.push({ path: '.github/workflows/build-newsletter.yml', content: buildWorkflow });
-  }
-
-  batchCommitFiles(files, 'Initialize ' + clientName + ' newsletter repository', 'main', repo);
-
-  // 3. GitHub Pages 有効化（リトライ付き）
-  enablePagesWithRetry(repo);
-
-  // 4. Actions ワークフロー権限（write + PR作成許可）
-  try {
-    fetchGitHubApi('/repos/' + repo + '/actions/permissions/workflow', 'PUT', {
-      default_workflow_permissions: 'write',
-      can_approve_pull_request_reviews: true
-    });
-  } catch (e) {
-    Logger.log('Actions permissions update failed: ' + e.message);
-  }
-
-  return repo;
-}
-
-// ── シリーズレジストリ更新（LP newsletters.html 用） ──
-
-/**
- * newsletter/series-registry.json を更新
- * LP の newsletters.html が別冊特集セクションを動的表示するためのデータソース
- *
- * @param {Object} entry - { seriesName, repo, pagesUrl, serviceType, createdAt, issueCount, status }
- */
-function updateSeriesRegistry(entry) {
-  var registryPath = 'newsletter/series-registry.json';
-  var registryJson = readFileFromGitHub(registryPath);
-  var registry = registryJson ? JSON.parse(registryJson) : { series: [] };
-
-  // 同一リポジトリが既にあれば更新、なければ追加
-  var found = false;
-  for (var i = 0; i < registry.series.length; i++) {
-    if (registry.series[i].repo === entry.repo) {
-      registry.series[i] = entry;
-      found = true;
-      break;
-    }
-  }
-  if (!found) {
-    registry.series.push(entry);
-  }
-
-  pushFileToGitHub(registryPath,
-    JSON.stringify(registry, null, 2),
-    'Update series registry: ' + entry.seriesName);
-}
-
-/**
- * series-registry.json の issueCount だけを更新
- * ndl_submit 時に newsletters.html の表示を同期させる
- */
-function updateRegistryIssueCount(repo, issueCount) {
-  var registryPath = 'newsletter/series-registry.json';
-  var registryJson = readFileFromGitHub(registryPath);
-  if (!registryJson) return;
-  var registry = JSON.parse(registryJson);
-
-  var updated = false;
-  for (var i = 0; i < registry.series.length; i++) {
-    if (registry.series[i].repo === repo) {
-      registry.series[i].issueCount = issueCount;
-      updated = true;
-      break;
-    }
-  }
-  if (!updated) return;
-
-  pushFileToGitHub(registryPath,
-    JSON.stringify(registry, null, 2),
-    'Update issueCount for ' + repo + ': ' + issueCount);
 }
 
 // ── 月次レポート ──
@@ -564,19 +310,8 @@ function sendMonthlySeriesReport() {
 
   series.forEach(function(s) {
     if (s.status !== 'active') return;
-
-    var scheduleJson = readFileFromGitHub('schedule.json', s.repo);
-    if (!scheduleJson) return;
-    var schedule = JSON.parse(scheduleJson);
-
-    var lastMonthStr = Utilities.formatDate(lastMonth, 'Asia/Tokyo', 'yyyy-MM');
-    var monthIssues = schedule.issues.filter(function(i) {
-      return i.date && i.date.substring(0, 7) === lastMonthStr && i.status === 'published';
-    });
-
     body += '━━━ ' + s.seriesName + ' ━━━\n'
-      + '  発行数: ' + monthIssues.length + '号\n'
-      + '  累計: ' + schedule.current_serial + '号\n\n';
+      + '  累計: ' + (s.currentSerial || 0) + '号\n\n';
   });
 
   sendEmail(NOTIFY_EMAIL, '【NDL】月次レポート ' + monthLabel, body);
@@ -585,18 +320,8 @@ function sendMonthlySeriesReport() {
 // ── processStoragePipeline() 連携（物理注文からのルーティング）──
 
 /**
- * processStoragePipeline() の拡張:
- * NDL納本対象の物理注文をシリーズリポジトリにルーティング
- *
- * processStoragePipeline() 内で以下のように呼び出す:
- *
- *   if (forNewsletter.length > 0) {
- *     try {
- *       routeOrdersToSeries(forNewsletter);
- *     } catch (e) {
- *       sendEmail(NOTIFY_EMAIL, '【NDL】ルーティングエラー', e.message);
- *     }
- *   }
+ * NDL納本対象の物理注文を newsletter-master にルーティング
+ * 全注文を1ブランチ・1PRにまとめて series.json 競合を回避
  *
  * ※ 物理注文（ラミネート/クォーツ）でstorageNdl='Yes'の場合に使用
  * ※ 物理注文はデフォルトシリーズ 'TokiStorage' にルーティング
@@ -604,28 +329,39 @@ function sendMonthlySeriesReport() {
 function routeOrdersToSeries(forNewsletter) {
   if (!forNewsletter || forNewsletter.length === 0) return;
 
-  // デフォルトシリーズ（TokiStorage自身の特集）
   var defaultSeries = findSeries('TokiStorage');
   if (!defaultSeries) return;
+
+  var seriesJson = readFileFromGitHub('series.json', NEWSLETTER_MASTER);
+  if (!seriesJson) return;
+  var registry = JSON.parse(seriesJson);
+
+  var seriesEntry = null;
+  for (var i = 0; i < registry.series.length; i++) {
+    if (registry.series[i].seriesId === defaultSeries.seriesId) {
+      seriesEntry = registry.series[i];
+      break;
+    }
+  }
+  if (!seriesEntry) return;
+
+  // 全注文を1ブランチにまとめる
+  var branch = 'route-' + Utilities.formatDate(new Date(), 'Asia/Tokyo', 'yyyyMMddHHmmss');
+  createGitHubBranch(branch, NEWSLETTER_MASTER);
 
   var routed = [];
 
   forNewsletter.forEach(function(o) {
     if (!o.qrUrl) return;
 
-    var scheduleJson = readFileFromGitHub('schedule.json', defaultSeries.repo);
-    if (!scheduleJson) return;
-    var schedule = JSON.parse(scheduleJson);
-
-    var nextSerial = (schedule.current_serial || 0) + 1;
-    var startYear = schedule.volume_start_year || 2026;
-    var duration = schedule.volume_duration_years || 20;
+    var nextSerial = (seriesEntry.currentSerial || 0) + 1;
+    var startYear = seriesEntry.startYear || 2026;
+    var duration = seriesEntry.volumeDurationYears || 20;
     var vn = calcVolumeNumber(nextSerial, startYear, duration);
 
     var serialStr = String(nextSerial).padStart(5, '0');
     var today = Utilities.formatDate(new Date(), 'Asia/Tokyo', "yyyy-MM-dd'T'HH:mm:ss");
 
-    // materials JSON を組み立て
     var materials = {
       serial: nextSerial,
       volume: vn.volume,
@@ -636,37 +372,12 @@ function routeOrdersToSeries(forNewsletter) {
       metadata: o.metadata || {},
       date: today
     };
-    var materialsPath = 'materials/' + serialStr + '.json';
+    var materialsPath = 'zips/' + defaultSeries.seriesId + '/' + serialStr + '.json';
 
     try {
-      var branch = 'tq-' + serialStr;
-      createGitHubBranch(branch, defaultSeries.repo);
-
       commitFileOnBranch(materialsPath, JSON.stringify(materials, null, 2),
-        'Add materials ' + serialStr, branch, defaultSeries.repo);
-
-      schedule.current_serial = nextSerial;
-      schedule.issues.push({
-        date: today,
-        serial: nextSerial,
-        volume: vn.volume,
-        number: vn.number,
-        status: 'building',
-        title: (o.wisetag || o.orderId) + '様',
-        orderId: o.orderId,
-        customerName: o.wisetag || o.orderId
-      });
-      commitFileOnBranch('schedule.json', JSON.stringify(schedule, null, 2),
-        'Update schedule: TQ-' + serialStr, branch, defaultSeries.repo);
-
-      createGitHubPR(
-        'TQ-' + serialStr + ': ' + (o.wisetag || o.orderId) + '様',
-        branch,
-        'NDL serial publication #' + nextSerial + ' from order ' + o.orderId
-        + '\n\nbuild-newsletter.yml will generate the PDF after merge.',
-        defaultSeries.repo
-      );
-
+        'Add materials ' + serialStr, branch, NEWSLETTER_MASTER);
+      seriesEntry.currentSerial = nextSerial;
       routed.push({ orderId: o.orderId, serial: nextSerial, status: 'OK' });
     } catch (e) {
       routed.push({ orderId: o.orderId, status: 'ERROR: ' + e.message });
@@ -674,15 +385,22 @@ function routeOrdersToSeries(forNewsletter) {
   });
 
   if (routed.length > 0) {
-    var lastSerial = routed.filter(function(r) { return r.serial; });
-    if (lastSerial.length > 0) {
-      var maxSerial = Math.max.apply(null, lastSerial.map(function(r) { return r.serial; }));
-      try {
-        updateRegistryIssueCount(defaultSeries.repo, maxSerial);
-      } catch (e) {
-        Logger.log('Registry issueCount update failed: ' + e.message);
-      }
-    }
+    // series.json を最終状態でコミット
+    commitFileOnBranch('series.json', JSON.stringify(registry, null, 2),
+      'Route ' + routed.length + ' orders', branch, NEWSLETTER_MASTER);
+
+    var titles = routed.filter(function(r) { return r.serial; })
+      .map(function(r) { return 'TQ-' + String(r.serial).padStart(5, '0'); });
+    createGitHubPR(
+      'Route ' + routed.length + ' orders: ' + titles.join(', '),
+      branch,
+      'NDL serial publications from physical orders\n\n'
+      + routed.map(function(r) {
+        return r.orderId + (r.serial ? ' (TQ-' + String(r.serial).padStart(5, '0') + ')' : '')
+          + ': ' + r.status;
+      }).join('\n'),
+      NEWSLETTER_MASTER
+    );
 
     var body = '【NDL パイプライン】' + routed.length + '件発行\n\n';
     routed.forEach(function(r) {
@@ -697,25 +415,23 @@ function routeOrdersToSeries(forNewsletter) {
 // ── シリーズリネーム ──
 
 /**
- * シリーズ名を変更（series-registry.json + クライアントリポジトリ client-config.json）
+ * シリーズ名を変更（newsletter-master/series.json を更新）
  *
  * リクエスト:
- *   { type: 'series_rename', repo: 'tokistorage/newsletter-client-xxx', newName: '新しい名前' }
+ *   { type: 'series_rename', seriesId: 'ts-abc123-202603010000', newName: '新しい名前' }
  */
 function handleSeriesRename(ss, data) {
-  var repo = (data.repo || '').trim();
+  var seriesId = (data.seriesId || '').trim();
   var newName = (data.newName || '').trim();
-  if (!repo || !newName) return jsonResponse({ success: false, error: 'missing_params' });
+  if (!seriesId || !newName) return jsonResponse({ success: false, error: 'missing_params' });
 
-  // 1. series-registry.json 更新
-  var registryPath = 'newsletter/series-registry.json';
-  var registryJson = readFileFromGitHub(registryPath);
-  if (!registryJson) return jsonResponse({ success: false, error: 'registry_not_found' });
+  var seriesJson = readFileFromGitHub('series.json', NEWSLETTER_MASTER);
+  if (!seriesJson) return jsonResponse({ success: false, error: 'series_not_found' });
 
-  var registry = JSON.parse(registryJson);
+  var registry = JSON.parse(seriesJson);
   var found = false;
   for (var i = 0; i < registry.series.length; i++) {
-    if (registry.series[i].repo === repo) {
+    if (registry.series[i].seriesId === seriesId) {
       registry.series[i].seriesName = newName;
       found = true;
       break;
@@ -723,27 +439,12 @@ function handleSeriesRename(ss, data) {
   }
   if (!found) return jsonResponse({ success: false, error: 'series_not_found' });
 
-  pushFileToGitHub(registryPath, JSON.stringify(registry, null, 2), 'Rename series: ' + newName);
-
-  // 2. クライアントリポジトリの client-config.json 更新
-  try {
-    var configJson = readFileFromGitHub('client-config.json', repo);
-    if (configJson) {
-      var config = JSON.parse(configJson);
-      config.clientName = newName;
-      if (config.branding) {
-        config.branding.publicationNameJa = newName + ' 特集';
-        config.branding.tagline = '── ' + newName + ' ──';
-      }
-      if (config.colophon) {
-        config.colophon.contentOriginator = newName;
-      }
-      commitFileOnBranch('client-config.json', JSON.stringify(config, null, 2),
-        'Rename series: ' + newName, 'main', repo);
-    }
-  } catch (e) {
-    Logger.log('Client config rename failed: ' + e.message);
-  }
+  var branch = 'rename-' + Utilities.formatDate(new Date(), 'Asia/Tokyo', 'yyyyMMddHHmmss');
+  createGitHubBranch(branch, NEWSLETTER_MASTER);
+  commitFileOnBranch('series.json', JSON.stringify(registry, null, 2),
+    'Rename series: ' + newName, branch, NEWSLETTER_MASTER);
+  createGitHubPR('Rename series: ' + newName, branch,
+    'Series ID: ' + seriesId + '\nNew name: ' + newName, NEWSLETTER_MASTER);
 
   return jsonResponse({ success: true });
 }
