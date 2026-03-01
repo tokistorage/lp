@@ -71,14 +71,16 @@ function handleWiseWebhook(ss, data, raw) {
     var profileId = d.resource && d.resource.profile_id;
     var balanceId = d.resource && d.resource.id;
     if (profileId && balanceId) {
-      var ref = fetchRecentCreditReference(profileId, balanceId, d.currency, d.amount, d.occurred_at);
+      var info = fetchRecentCreditInfo(profileId, balanceId, d.currency, d.amount, d.occurred_at);
+      var ref = info ? info.reference : '';
+      var senderName = info ? info.senderName : '';
       logSheet.getRange(2, 5).setValue(ref || '(API照会済み・該当なし)');
       if (ref) {
         var tokiMatch = ref.match(/TOKI-[A-Z0-9]{4}-[A-Z0-9]{4}-[A-Z0-9]{4}/);
         if (tokiMatch) {
           processTokiCode(ss, tokiMatch, ref, d.amount, d.currency);
         } else if (/^TimelessAdvisor-/i.test(ref)) {
-          recordAdvisorPayment(ss, d.amount, d.currency, ref, d.occurred_at);
+          recordAdvisorPayment(ss, d.amount, d.currency, ref, senderName, d.occurred_at);
         } else {
           notifyPayment(d.amount, d.currency, ref);
         }
@@ -103,7 +105,7 @@ function fetchWiseTransfer(transferId) {
   } catch (e) { return null; }
 }
 
-function fetchRecentCreditReference(profileId, balanceId, currency, amount, occurredAt) {
+function fetchRecentCreditInfo(profileId, balanceId, currency, amount, occurredAt) {
   if (!WISE_API_TOKEN) return null;
   try {
     var dt = new Date(occurredAt);
@@ -123,25 +125,29 @@ function fetchRecentCreditReference(profileId, balanceId, currency, amount, occu
     for (var i = 0; i < transactions.length; i++) {
       var t = transactions[i];
       if (t.amount && t.amount.value === amount && t.type === 'CREDIT') {
-        return (t.details && t.details.description) || (t.details && t.details.reference) || '';
+        var details = t.details || {};
+        return {
+          reference: details.description || details.reference || '',
+          senderName: details.senderName || details.originator || ''
+        };
       }
     }
     return null;
   } catch (e) { return null; }
 }
 
-function recordAdvisorPayment(ss, amount, currency, reference, occurredAt) {
+function recordAdvisorPayment(ss, amount, currency, reference, senderName, occurredAt) {
   var sheet = getOrCreateSheet(ss, 'アドバイザー', [
-    '日時', '金額', '通貨', 'タイプ', 'ステータス'
+    '日時', '金額', '通貨', 'タイプ', '送金元', 'ステータス'
   ]);
   var type = reference.replace(/^TimelessAdvisor-/i, '');
   sheet.appendRow([
     occurredAt ? new Date(occurredAt) : new Date(),
-    amount, currency, type, '入金確認済み'
+    amount, currency, type, senderName, '入金確認済み'
   ]);
   sendEmail(NOTIFY_EMAIL,
     '【TimelessAdvisor】入金確認 — ' + currency + ' ' + amount,
-    'タイムレスアドバイザーの入金がありました。\n\nタイプ: ' + type + '\n金額: ' + currency + ' ' + amount + '\n\nスプレッドシートに記録済みです。');
+    'タイムレスアドバイザーの入金がありました。\n\nタイプ: ' + type + '\n金額: ' + currency + ' ' + amount + '\n送金元: ' + (senderName || '(不明)') + '\n\nスプレッドシートに記録済みです。');
 }
 
 function notifyPayment(amount, currency, reference) {
