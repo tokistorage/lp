@@ -180,3 +180,163 @@ function handleAdvisorComplete(ss, data) {
 
   return jsonResponse({ success: false, error: 'not_found' });
 }
+
+// ── スプレッドシート カスタムメニュー ──
+
+function onOpen() {
+  SpreadsheetApp.getUi().createMenu('アドバイザー管理')
+    .addItem('セッション開始', 'showStartSessionDialog')
+    .addItem('完了 / 権利終了', 'showCompleteDialog')
+    .addToUi();
+}
+
+function showStartSessionDialog() {
+  var html = HtmlService.createHtmlOutput(
+    '<style>'
+    + 'body{font-family:sans-serif;padding:16px}'
+    + 'input{width:100%;padding:8px;font-size:14px;margin:8px 0;box-sizing:border-box}'
+    + 'button{padding:8px 20px;font-size:14px;cursor:pointer;background:#2563EB;color:#fff;border:none;border-radius:4px}'
+    + 'button:hover{background:#1D4ED8}'
+    + '#result{margin-top:12px;padding:8px;font-size:13px}'
+    + '.ok{color:#065F46;background:#D1FAE5;border-radius:4px}'
+    + '.err{color:#991B1B;background:#FEE2E2;border-radius:4px}'
+    + '</style>'
+    + '<p>トークンコードを入力してセッションを開始します。<br>'
+    + 'スポット → 即「実施済」<br>顧問契約 → 「セッション中」+ 6ヶ月期間設定</p>'
+    + '<input id="code" placeholder="TOKI-XXXX-XXXX-XXXX">'
+    + '<button onclick="run()">セッション開始</button>'
+    + '<div id="result"></div>'
+    + '<script>'
+    + 'function run(){'
+    + '  var code=document.getElementById("code").value.trim().toUpperCase();'
+    + '  if(!code){return}'
+    + '  document.getElementById("result").className="";'
+    + '  document.getElementById("result").textContent="処理中...";'
+    + '  google.script.run'
+    + '    .withSuccessHandler(function(r){'
+    + '      document.getElementById("result").className="ok";'
+    + '      document.getElementById("result").textContent=r;'
+    + '    })'
+    + '    .withFailureHandler(function(e){'
+    + '      document.getElementById("result").className="err";'
+    + '      document.getElementById("result").textContent=e.message;'
+    + '    })'
+    + '    .menuStartSession(code);'
+    + '}'
+    + '</script>'
+  ).setWidth(400).setHeight(280).setTitle('セッション開始');
+  SpreadsheetApp.getUi().showModalDialog(html, 'セッション開始');
+}
+
+function showCompleteDialog() {
+  var html = HtmlService.createHtmlOutput(
+    '<style>'
+    + 'body{font-family:sans-serif;padding:16px}'
+    + 'input{width:100%;padding:8px;font-size:14px;margin:8px 0;box-sizing:border-box}'
+    + 'button{padding:8px 20px;font-size:14px;cursor:pointer;background:#DC2626;color:#fff;border:none;border-radius:4px}'
+    + 'button:hover{background:#B91C1C}'
+    + '#result{margin-top:12px;padding:8px;font-size:13px}'
+    + '.ok{color:#065F46;background:#D1FAE5;border-radius:4px}'
+    + '.err{color:#991B1B;background:#FEE2E2;border-radius:4px}'
+    + '</style>'
+    + '<p>トークンコードを入力して完了処理を行います。<br>'
+    + 'スポット → 「実施済」<br>顧問契約 → 「権利終了」</p>'
+    + '<input id="code" placeholder="TOKI-XXXX-XXXX-XXXX">'
+    + '<button onclick="run()">完了 / 権利終了</button>'
+    + '<div id="result"></div>'
+    + '<script>'
+    + 'function run(){'
+    + '  var code=document.getElementById("code").value.trim().toUpperCase();'
+    + '  if(!code){return}'
+    + '  document.getElementById("result").className="";'
+    + '  document.getElementById("result").textContent="処理中...";'
+    + '  google.script.run'
+    + '    .withSuccessHandler(function(r){'
+    + '      document.getElementById("result").className="ok";'
+    + '      document.getElementById("result").textContent=r;'
+    + '    })'
+    + '    .withFailureHandler(function(e){'
+    + '      document.getElementById("result").className="err";'
+    + '      document.getElementById("result").textContent=e.message;'
+    + '    })'
+    + '    .menuCompleteSession(code);'
+    + '}'
+    + '</script>'
+  ).setWidth(400).setHeight(260).setTitle('完了 / 権利終了');
+  SpreadsheetApp.getUi().showModalDialog(html, '完了 / 権利終了');
+}
+
+function menuStartSession(code) {
+  var ss = SpreadsheetApp.openById(SPREADSHEET_ID);
+  var sheet = getOrCreateSheet(ss, ADVISOR_SHEET_NAME, ADVISOR_HEADERS);
+  if (sheet.getLastRow() < 2) throw new Error('該当コードが見つかりません');
+
+  code = code.trim().toUpperCase();
+  if (!/^TOKI-[A-Z0-9]{4}-[A-Z0-9]{4}-[A-Z0-9]{4}$/.test(code)) {
+    throw new Error('コード形式が不正です');
+  }
+
+  var rows = sheet.getRange(2, 1, sheet.getLastRow() - 1, 8).getValues();
+  for (var i = 0; i < rows.length; i++) {
+    if (rows[i][1] !== code) continue;
+
+    var currentStatus = rows[i][5] || '';
+    if (currentStatus !== '入金確認済み') {
+      throw new Error('ステータスが「入金確認済み」ではありません（現在: ' + currentStatus + '）');
+    }
+
+    var now = new Date();
+    var sheetType = rows[i][4] || '';
+    var rowIdx = i + 2;
+
+    sheet.getRange(rowIdx, 6).setValue('セッション中');
+    sheet.getRange(rowIdx, 7).setValue(now);
+
+    if (sheetType === 'Retainer-6mo') {
+      var endDate = new Date(now);
+      endDate.setMonth(endDate.getMonth() + 6);
+      sheet.getRange(rowIdx, 8).setValue(endDate);
+    }
+
+    if (sheetType === 'SpotConsultation') {
+      sheet.getRange(rowIdx, 6).setValue('実施済');
+      return 'スポット「' + code + '」→ 実施済（' + now.toLocaleDateString('ja-JP') + '）';
+    }
+
+    return '顧問契約「' + code + '」→ セッション中（' + now.toLocaleDateString('ja-JP') + ' 〜 6ヶ月間）';
+  }
+
+  throw new Error('コード「' + code + '」が見つかりません');
+}
+
+function menuCompleteSession(code) {
+  var ss = SpreadsheetApp.openById(SPREADSHEET_ID);
+  var sheet = getOrCreateSheet(ss, ADVISOR_SHEET_NAME, ADVISOR_HEADERS);
+  if (sheet.getLastRow() < 2) throw new Error('該当コードが見つかりません');
+
+  code = code.trim().toUpperCase();
+  if (!/^TOKI-[A-Z0-9]{4}-[A-Z0-9]{4}-[A-Z0-9]{4}$/.test(code)) {
+    throw new Error('コード形式が不正です');
+  }
+
+  var rows = sheet.getRange(2, 1, sheet.getLastRow() - 1, 8).getValues();
+  for (var i = 0; i < rows.length; i++) {
+    if (rows[i][1] !== code) continue;
+
+    var sheetType = rows[i][4] || '';
+    var rowIdx = i + 2;
+
+    if (sheetType === 'SpotConsultation') {
+      sheet.getRange(rowIdx, 6).setValue('実施済');
+      return 'スポット「' + code + '」→ 実施済';
+    } else {
+      sheet.getRange(rowIdx, 6).setValue('権利終了');
+      if (!rows[i][7]) {
+        sheet.getRange(rowIdx, 8).setValue(new Date());
+      }
+      return '顧問契約「' + code + '」→ 権利終了';
+    }
+  }
+
+  throw new Error('コード「' + code + '」が見つかりません');
+}
