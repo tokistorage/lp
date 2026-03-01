@@ -176,6 +176,22 @@
             Generation alone is not enough. Verifying that what was generated can be read, and ensuring you are notified when it cannot — that is what closes the pipeline circuit.
         </div>
 
+        <h2>How to Isolate Problems in the Operations Phase</h2>
+
+        <p>Looking back at this renovation, a repeating pattern emerges in how problems were found and fixed.</p>
+
+        <p>First, question what appears to be working. It worked when one person submitted one item at a time. But what happens when a hundred do it simultaneously? The PDF was generated, but can the QR codes actually be read? When a build stops, will anyone notice? Doubting the working state is the starting point.</p>
+
+        <p>Next, locate the constraint. Where exactly is the problem? Is it the GitHub API rate limit, the QR resolution, or the absence of notification? Do not stop at "it's not working" — isolate which joint in the pipeline is clogged.</p>
+
+        <p>Then, redesign the pipeline around the constraint. Replace real-time processing with a queue. Swap client-side PDF parsing for server-side automated verification. Remove success notifications and keep only failure alerts. The goal is not to eliminate constraints but to find routes where they do not apply.</p>
+
+        <p>Finally, embed the improvement into the system. Not a manual check someone must remember, but automated verification that runs as part of the pipeline. Only when improvement works without human memory does it become permanent.</p>
+
+        <div class="core-message">
+            Question → locate the constraint → redesign → embed in the system. Running this cycle became the method for continuous improvement in operations.
+        </div>
+
         <blockquote>
             What constraints taught me was not what to give up, but where the flow could pass through.
         </blockquote>
