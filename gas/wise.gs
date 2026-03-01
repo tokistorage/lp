@@ -24,7 +24,7 @@ function processTokiCode(ss, tokiMatch, ref, amt, cur) {
   }
 
   // サービス（アドバイザー / Workaway / オフグリッド）
-  if (/TA-SPOT|TA-RETN|WA|OG|AMB|SC-REG|SC-LIFE|SC-SUP/i.test(ref)) {
+  if (/TA-SPOT|TA-RETN|WA|OG|AMB|SC\b/i.test(ref)) {
     recordAdvisorPayment(ss, code, amt, cur, ref);
     return;
   }
