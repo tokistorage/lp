@@ -130,7 +130,7 @@
 
         <h3>Queue-based Asynchronous Processing</h3>
 
-        <p>NDL submissions were working. As long as one person submitted one item at a time. But the moment I asked "what happens when a hundred people do this simultaneously?" the constraints surfaced. Cloudflare Workers have concurrency limits. GitHub's API has rate limits. A design that performs PDF generation and git push in real time with every submission would choke the moment usage scaled. Something that works is not the same as something that scales.</p>
+        <p>NDL submissions were working. As long as one person submitted one item at a time. But the moment I asked "what happens when a hundred people do this simultaneously?" the constraints surfaced. A design that hits the GitHub API for PDF generation and git push with every submission in real time would run into rate limits (5,000 requests per hour, authenticated). The moment usage scaled, it would choke. Something that works is not the same as something that scales.</p>
 
         <p>I switched to placing ZIPs in a queue/ directory and processing them on a five-minute timer. Failed submissions are retried automatically. Users can move on to their next task without waiting for results. By letting go of real-time processing, the concurrency constraint dissolved.</p>
 
