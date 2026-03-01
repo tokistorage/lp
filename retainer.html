@@ -573,7 +573,7 @@
                 <div id="spotCodeBox" style="display:none;text-align:center;padding:0.8rem;background:#FFFBEB;border:1px solid #FDE68A;border-radius:8px;margin-top:0.8rem;">
                     <div style="font-size:0.7rem;color:#92400E;">確認コード</div>
                     <div id="spotCodeValue" style="font-family:monospace;font-size:1rem;font-weight:600;letter-spacing:0.05em;color:#1A1A1A;margin:0.3rem 0;"></div>
-                    <div style="font-size:0.65rem;color:#92400E;">このコードを控えておいてください</div>
+                    <div style="font-size:0.65rem;color:#92400E;">TokiQRチケットページで確認できます</div>
                 </div>
                 <a href="#" id="spotWiseBtn" onclick="return openAdvisorWise('spot')" style="display:inline-block;margin-top:0.8rem;padding:0.5rem 1.2rem;background:#9FE870;color:#1A1A1A;border-radius:6px;font-size:0.8rem;font-weight:600;text-decoration:none;">Wiseで支払う（&#165;55,000）</a>
             </div>
@@ -586,7 +586,7 @@
                 <div id="annualCodeBox" style="display:none;text-align:center;padding:0.8rem;background:#FFFBEB;border:1px solid #FDE68A;border-radius:8px;margin-top:0.8rem;">
                     <div style="font-size:0.7rem;color:#92400E;">確認コード</div>
                     <div id="annualCodeValue" style="font-family:monospace;font-size:1rem;font-weight:600;letter-spacing:0.05em;color:#1A1A1A;margin:0.3rem 0;"></div>
-                    <div style="font-size:0.65rem;color:#92400E;">このコードを控えておいてください</div>
+                    <div style="font-size:0.65rem;color:#92400E;">TokiQRチケットページで確認できます</div>
                 </div>
                 <a href="#" id="annualWiseBtn" onclick="return openAdvisorWise('annual')" style="display:inline-block;margin-top:0.8rem;padding:0.5rem 1.2rem;background:#9FE870;color:#1A1A1A;border-radius:6px;font-size:0.8rem;font-weight:600;text-decoration:none;">Wiseで支払う（&#165;6,660,000）</a>
             </div>
@@ -640,6 +640,11 @@ function openAdvisorWise(type) {
     var c = cfg[type], code = generateCode();
     document.getElementById(c.val).textContent = code;
     document.getElementById(c.box).style.display = '';
+    try {
+        var hist = JSON.parse(localStorage.getItem('toki-advisor-history') || '[]');
+        hist.push({ code: code, type: type, amount: c.amount, date: new Date().toISOString() });
+        localStorage.setItem('toki-advisor-history', JSON.stringify(hist));
+    } catch(e) {}
     window.open('https://wise.com/pay/business/dsbdb3?amount=' + c.amount + '&currency=JPY&description=' + encodeURIComponent(code + ' ' + c.desc), '_blank');
     return false;
 }
