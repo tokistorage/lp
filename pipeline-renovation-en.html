@@ -100,9 +100,9 @@
 
         <p>PDFs are binaries. Git's diff management is useless against them, and each update adds its full size to the repository. Roughly 130KB per issue. 13MB for a hundred. 130MB for a thousand. Against GitHub's recommended 1GB limit, the per-customer repository model had an expiration date.</p>
 
-        <h3>The Weight of jsPDF</h3>
+        <h3>Bloated PDFs from jsPDF</h3>
 
-        <p>The jsPDF library and its font files, used for client-side PDF generation, totaled 2.7MB. TokiQR's design principle is to run serverless. Carrying 2.7MB of dependency on the client side did not contradict that principle outright, but it felt wrong.</p>
+        <p>The jsPDF library, used for client-side PDF generation, produced PDFs that were far too large. Font embedding and Canvas rendering conversions inflated each issue's PDF to the 130KB mentioned above. Server-side generation could produce equivalent content at a fraction of the size, but the original client-only design would not allow it.</p>
 
         <h3>Auto-merge Race Conditions</h3>
 
@@ -120,10 +120,10 @@
 
         <p>I stopped using PDF as the intermediate format and pivoted to ZIP. Audio data, manifest.json, and metadata are bundled into a single ZIP that becomes the pipeline's primary source. PDFs are generated server-side as derivatives of the ZIP.</p>
 
-        <p>Three things happened simultaneously with this shift. The jsPDF library and font files (2.7MB) were removed from the client. ZIPs serve directly as playback data sources, so adding a <code>?zip=</code> parameter to play.html was all it took to enable newsletter playback. And since ZIPs are smaller than PDFs, repository bloat was reduced as well.</p>
+        <p>Three things happened simultaneously with this shift. Moving PDF generation server-side allowed jsPDF and its font files (2.7MB) to be removed from the client, and the generated PDFs shrank dramatically. ZIPs serve directly as playback data sources, so adding a <code>?zip=</code> parameter to play.html was all it took to enable newsletter playback. And with ZIPs as the primary source, repository bloat was reduced as well.</p>
 
         <div class="core-message">
-            Removing a dependency added functionality. Deleting 2.7MB opened three pathways: playback, download, and archive.
+            Fewer client dependencies, smaller output, more functionality. Three pathways — playback, download, and archive — opened from a single ZIP.
         </div>
 
         <h3>Queue-based Asynchronous Processing</h3>
