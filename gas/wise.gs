@@ -23,6 +23,12 @@ function processTokiCode(ss, tokiMatch, ref, amt, cur) {
     return;
   }
 
+  // タイムレスアドバイザー
+  if (/TimelessAdvisor/i.test(ref)) {
+    recordAdvisorPayment(ss, code, amt, cur, ref);
+    return;
+  }
+
   // マルチQRクレジットコード
   var count = Math.floor(amt / (PRICES.credit[cur] || PRICES.credit['JPY']));
   if (count < 1) count = 1;
@@ -71,16 +77,12 @@ function handleWiseWebhook(ss, data, raw) {
     var profileId = d.resource && d.resource.profile_id;
     var balanceId = d.resource && d.resource.id;
     if (profileId && balanceId) {
-      var info = fetchRecentCreditInfo(profileId, balanceId, d.currency, d.amount, d.occurred_at);
-      var ref = info ? info.reference : '';
-      var senderName = info ? info.senderName : '';
+      var ref = fetchRecentCreditReference(profileId, balanceId, d.currency, d.amount, d.occurred_at) || '';
       logSheet.getRange(2, 5).setValue(ref || '(API照会済み・該当なし)');
       if (ref) {
         var tokiMatch = ref.match(/TOKI-[A-Z0-9]{4}-[A-Z0-9]{4}-[A-Z0-9]{4}/);
         if (tokiMatch) {
           processTokiCode(ss, tokiMatch, ref, d.amount, d.currency);
-        } else if (/^TimelessAdvisor-/i.test(ref)) {
-          recordAdvisorPayment(ss, d.amount, d.currency, ref, senderName, d.occurred_at);
         } else {
           notifyPayment(d.amount, d.currency, ref);
         }
@@ -105,7 +107,7 @@ function fetchWiseTransfer(transferId) {
   } catch (e) { return null; }
 }
 
-function fetchRecentCreditInfo(profileId, balanceId, currency, amount, occurredAt) {
+function fetchRecentCreditReference(profileId, balanceId, currency, amount, occurredAt) {
   if (!WISE_API_TOKEN) return null;
   try {
     var dt = new Date(occurredAt);
@@ -126,34 +128,75 @@ function fetchRecentCreditInfo(profileId, balanceId, currency, amount, occurredA
       var t = transactions[i];
       if (t.amount && t.amount.value === amount && t.type === 'CREDIT') {
         var details = t.details || {};
-        return {
-          reference: details.description || details.reference || '',
-          senderName: details.senderName || details.originator || ''
-        };
+        return details.description || details.reference || '';
       }
     }
     return null;
   } catch (e) { return null; }
 }
 
-function recordAdvisorPayment(ss, amount, currency, reference, senderName, occurredAt) {
+function recordAdvisorPayment(ss, code, amount, currency, ref) {
   var sheet = getOrCreateSheet(ss, 'アドバイザー', [
-    '日時', '金額', '通貨', 'タイプ', '送金元', 'ステータス'
+    '日時', 'コード', '金額', '通貨', 'タイプ', 'ステータス'
   ]);
-  var type = reference.replace(/^TimelessAdvisor-/i, '');
+  var type = ref.replace(/.*TimelessAdvisor-/i, '').replace(/\s.*$/, '');
   sheet.appendRow([
-    occurredAt ? new Date(occurredAt) : new Date(),
-    amount, currency, type, senderName, '入金確認済み'
+    new Date(), code, amount, currency, type, '入金確認済み'
   ]);
   sendEmail(NOTIFY_EMAIL,
     '【TimelessAdvisor】入金確認 — ' + currency + ' ' + amount,
-    'タイムレスアドバイザーの入金がありました。\n\nタイプ: ' + type + '\n金額: ' + currency + ' ' + amount + '\n送金元: ' + (senderName || '(不明)') + '\n\nスプレッドシートに記録済みです。');
+    'タイムレスアドバイザーの入金がありました。\n\nコード: ' + code + '\nタイプ: ' + type + '\n金額: ' + currency + ' ' + amount + '\n\nスプレッドシートに記録済みです。');
 }
 
 function notifyPayment(amount, currency, reference) {
   sendEmail(NOTIFY_EMAIL,
     '【TokiQR】入金検知 — ' + currency + ' ' + amount,
     'Wiseに入金がありました。\n\n金額: ' + currency + ' ' + amount + '\nReference: ' + (reference || '(なし)') + '\n\nスプレッドシートで確認してください。');
+}
+
+// ── デバッグ: トランザクション詳細確認 ──
+
+function inspectRecentTransactions() {
+  if (!WISE_API_TOKEN || !WISE_PROFILE_ID) {
+    Logger.log('WISE_API_TOKEN or WISE_PROFILE_ID not set');
+    return;
+  }
+  // まずbalance一覧を取得
+  var balRes = UrlFetchApp.fetch('https://api.wise.com/v4/profiles/' + WISE_PROFILE_ID + '/balances?types=STANDARD', {
+    headers: { 'Authorization': 'Bearer ' + WISE_API_TOKEN },
+    muteHttpExceptions: true
+  });
+  if (balRes.getResponseCode() !== 200) {
+    Logger.log('Balance fetch failed: ' + balRes.getResponseCode());
+    return;
+  }
+  var balances = JSON.parse(balRes.getContentText());
+  // 各通貨のbalanceから直近7日のステートメントを取得
+  var end = new Date().toISOString();
+  var start = new Date(Date.now() - 7 * 86400000).toISOString();
+  for (var b = 0; b < balances.length; b++) {
+    var bal = balances[b];
+    Logger.log('=== Balance: ' + bal.currency + ' (id: ' + bal.id + ') ===');
+    var url = 'https://api.wise.com/v4/profiles/' + WISE_PROFILE_ID
+      + '/balances/' + bal.id + '/statements'
+      + '?intervalStart=' + start + '&intervalEnd=' + end
+      + '&currency=' + bal.currency + '&type=COMPACT';
+    var res = UrlFetchApp.fetch(url, {
+      headers: { 'Authorization': 'Bearer ' + WISE_API_TOKEN },
+      muteHttpExceptions: true
+    });
+    if (res.getResponseCode() !== 200) continue;
+    var result = JSON.parse(res.getContentText());
+    var txns = result.transactions || [];
+    Logger.log('Transactions found: ' + txns.length);
+    for (var i = 0; i < txns.length; i++) {
+      Logger.log('--- Transaction ' + (i + 1) + ' ---');
+      Logger.log('type: ' + txns[i].type);
+      Logger.log('amount: ' + JSON.stringify(txns[i].amount));
+      Logger.log('details (FULL): ' + JSON.stringify(txns[i].details));
+      Logger.log('referenceNumber: ' + txns[i].referenceNumber);
+    }
+  }
 }
 
 // ── Wise送金API（パートナー自動送金用）──

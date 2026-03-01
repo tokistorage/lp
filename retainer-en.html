@@ -555,7 +555,12 @@
             <div class="investment-body">
                 <h4>Spot consultation (60 min) &mdash; &#165;55,000 ($360)</h4>
                 <p>Question design and framework application for a specific challenge.</p>
-                <a href="https://wise.com/pay/business/dsbdb3?amount=55000&currency=JPY&description=TimelessAdvisor-SpotConsultation" target="_blank" rel="noopener" style="display:inline-block;margin-top:0.8rem;padding:0.5rem 1.2rem;background:#9FE870;color:#1A1A1A;border-radius:6px;font-size:0.8rem;font-weight:600;text-decoration:none;">Pay with Wise (&#165;55,000)</a>
+                <div id="spotCodeBox" style="display:none;text-align:center;padding:0.8rem;background:#FFFBEB;border:1px solid #FDE68A;border-radius:8px;margin-top:0.8rem;">
+                    <div style="font-size:0.7rem;color:#92400E;">Confirmation code</div>
+                    <div id="spotCodeValue" style="font-family:monospace;font-size:1rem;font-weight:600;letter-spacing:0.05em;color:#1A1A1A;margin:0.3rem 0;"></div>
+                    <div style="font-size:0.65rem;color:#92400E;">Please keep this code for your records</div>
+                </div>
+                <a href="#" id="spotWiseBtn" onclick="return openAdvisorWise('spot')" style="display:inline-block;margin-top:0.8rem;padding:0.5rem 1.2rem;background:#9FE870;color:#1A1A1A;border-radius:6px;font-size:0.8rem;font-weight:600;text-decoration:none;">Pay with Wise (&#165;55,000)</a>
             </div>
         </div>
         <div class="investment-item" style="border-color: var(--toki-gold);">
@@ -563,7 +568,12 @@
             <div class="investment-body">
                 <h4>Retainer engagement (2&times;60 min/mo) &mdash; &#165;555,000/mo ($3,650 &mdash; annual contract)</h4>
                 <p>Two 60-minute sessions per month for continuous assurance of question quality. Billed annually (&#165;6,660,000 / $43,800).</p>
-                <a href="https://wise.com/pay/business/dsbdb3?amount=6660000&currency=JPY&description=TimelessAdvisor-AnnualRetainer" target="_blank" rel="noopener" style="display:inline-block;margin-top:0.8rem;padding:0.5rem 1.2rem;background:#9FE870;color:#1A1A1A;border-radius:6px;font-size:0.8rem;font-weight:600;text-decoration:none;">Pay with Wise (&#165;6,660,000)</a>
+                <div id="annualCodeBox" style="display:none;text-align:center;padding:0.8rem;background:#FFFBEB;border:1px solid #FDE68A;border-radius:8px;margin-top:0.8rem;">
+                    <div style="font-size:0.7rem;color:#92400E;">Confirmation code</div>
+                    <div id="annualCodeValue" style="font-family:monospace;font-size:1rem;font-weight:600;letter-spacing:0.05em;color:#1A1A1A;margin:0.3rem 0;"></div>
+                    <div style="font-size:0.65rem;color:#92400E;">Please keep this code for your records</div>
+                </div>
+                <a href="#" id="annualWiseBtn" onclick="return openAdvisorWise('annual')" style="display:inline-block;margin-top:0.8rem;padding:0.5rem 1.2rem;background:#9FE870;color:#1A1A1A;border-radius:6px;font-size:0.8rem;font-weight:600;text-decoration:none;">Pay with Wise (&#165;6,660,000)</a>
             </div>
         </div>
     </div>
@@ -601,6 +611,24 @@
     <p style="font-size: 0.75rem; color: #94A3B8;">&copy; 2026 TokiStorage. All rights reserved.</p>
 </footer>
 
+<script>
+function generateCode() {
+    var c = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
+    function r4() { var s = ''; for (var i = 0; i < 4; i++) s += c.charAt(Math.floor(Math.random() * c.length)); return s; }
+    return 'TOKI-' + r4() + '-' + r4() + '-' + r4();
+}
+function openAdvisorWise(type) {
+    var cfg = {
+        spot:   { amount: 55000,   desc: 'TimelessAdvisor-SpotConsultation', box: 'spotCodeBox',   val: 'spotCodeValue' },
+        annual: { amount: 6660000, desc: 'TimelessAdvisor-AnnualRetainer',   box: 'annualCodeBox', val: 'annualCodeValue' }
+    };
+    var c = cfg[type], code = generateCode();
+    document.getElementById(c.val).textContent = code;
+    document.getElementById(c.box).style.display = '';
+    window.open('https://wise.com/pay/business/dsbdb3?amount=' + c.amount + '&currency=JPY&description=' + encodeURIComponent(code + ' ' + c.desc), '_blank');
+    return false;
+}
+</script>
 <script src="contact-form.js" defer></script>
 <script src="tracker.js" defer></script>
 </body>
