@@ -124,6 +124,10 @@
 
         <p>Furthermore, a "Monitor" link appears only for users who haven't registered as monitors. What the UI shows changes based on the context of the person beyond the screen. <code>localStorage.getItem('toki-wisetag')</code>&#x2014;a single value determines the shape of the interface.</p>
 
+        <p>But merely "showing" it was not the end. Setting <code>display: none</code> in CSS and then assigning <code>style.display = ""</code> in JavaScript does not make the element appear&#x2014;the CSS rule remains in effect. Only <code>display = "inline"</code> explicitly overrides it. "Hiding" and "showing" turned out not to be symmetrical operations.</p>
+
+        <p>Even once visible, placement was the next problem. When the monitor link appeared, the hamburger menu was pushed to the center. In a flexbox that follows source order, adding an element disturbs the entire layout. The solution was the CSS <code>order</code> property. Assign <code>order: 2</code> to the monitor link, <code>order: 3</code> to the hamburger, and use <code>margin-left: auto</code> to push them right. No HTML changes&#x2014;CSS alone controls the placement. And with 0.5rem of margin between them, the two elements finally settled into where they belonged.</p>
+
         <p>Responsive design is not just about adapting to screen width. It is about adapting to user context.</p>
 
         <h2>6. The Word "Wobbling"</h2>
