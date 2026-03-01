@@ -137,11 +137,11 @@ function fetchRecentCreditReference(profileId, balanceId, currency, amount, occu
 
 function recordAdvisorPayment(ss, code, amount, currency, ref) {
   var sheet = getOrCreateSheet(ss, 'アドバイザー', [
-    '日時', 'コード', '金額', '通貨', 'タイプ', 'ステータス'
+    '日時', 'コード', '金額', '通貨', 'タイプ', 'ステータス', '開始日', '終了日'
   ]);
   var type = ref.replace(/.*TimelessAdvisor-/i, '').replace(/\s.*$/, '');
   sheet.appendRow([
-    new Date(), code, amount, currency, type, '入金確認済み'
+    new Date(), code, amount, currency, type, '入金確認済み', '', ''
   ]);
   sendEmail(NOTIFY_EMAIL,
     '【TimelessAdvisor】入金確認 — ' + currency + ' ' + amount,
