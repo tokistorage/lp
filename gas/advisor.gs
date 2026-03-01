@@ -48,14 +48,23 @@ function handleAdvisorStatus(ss, data) {
   var codeSet = {};
   for (var i = 0; i < codes.length; i++) codeSet[codes[i]] = true;
 
+  var now = new Date();
   var tokens = {};
   for (var i = 0; i < rows.length; i++) {
     var code = rows[i][1];
     if (!codeSet[code]) continue;
 
     var sheetStatus = rows[i][5] || '';
-    var apiStatus = STATUS_MAP[sheetStatus] || 'activated';
     var sheetType = rows[i][4] || '';
+    var endDate = rows[i][7] ? new Date(rows[i][7]) : null;
+
+    // 顧問契約: 終了日超過 → 自動的に権利終了
+    if (sheetStatus === 'セッション中' && sheetType === 'Retainer-6mo' && endDate && now > endDate) {
+      sheet.getRange(i + 2, 6).setValue('権利終了');
+      sheetStatus = '権利終了';
+    }
+
+    var apiStatus = STATUS_MAP[sheetStatus] || 'activated';
     var apiType = TYPE_MAP[sheetType] || 'spot';
     var startDate = rows[i][6] ? new Date(rows[i][6]).toISOString() : null;
 
@@ -339,4 +348,35 @@ function menuCompleteSession(code) {
   }
 
   throw new Error('コード「' + code + '」が見つかりません');
+}
+
+// ── 日次トリガー: 顧問契約の自動期限切れ ──
+
+function checkExpiredAdvisors() {
+  var ss = SpreadsheetApp.openById(SPREADSHEET_ID);
+  var sheet = getOrCreateSheet(ss, ADVISOR_SHEET_NAME, ADVISOR_HEADERS);
+  if (sheet.getLastRow() < 2) return;
+
+  var rows = sheet.getRange(2, 1, sheet.getLastRow() - 1, 8).getValues();
+  var now = new Date();
+  var expired = [];
+
+  for (var i = 0; i < rows.length; i++) {
+    var status = rows[i][5] || '';
+    var type = rows[i][4] || '';
+    var endDate = rows[i][7] ? new Date(rows[i][7]) : null;
+
+    if (status === 'セッション中' && type === 'Retainer-6mo' && endDate && now > endDate) {
+      sheet.getRange(i + 2, 6).setValue('権利終了');
+      expired.push(rows[i][1]);
+    }
+  }
+
+  if (expired.length > 0) {
+    sendEmail(NOTIFY_EMAIL,
+      '【TimelessAdvisor】顧問契約の権利終了（自動）',
+      '以下の顧問契約が期間満了により権利終了になりました。\n\n'
+      + expired.join('\n') + '\n\n'
+      + 'スプレッドシートで確認してください。');
+  }
 }

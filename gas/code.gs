@@ -19,6 +19,7 @@
  *   - processStoragePipeline()   → 毎日 9:00 JST
  *   - advanceNewsletterIssue()   → 毎日 9:00 JST
  *   - sendMonthlySeriesReport()  → 毎月1日 9:00 JST
+ *   - checkExpiredAdvisors()     → 毎日 9:00 JST
  */
 
 var SPREADSHEET_ID = '1lxrf5hLebwaUqt6WxeIjvVYUEYZntV9Kj-TrVzfkl0A';
