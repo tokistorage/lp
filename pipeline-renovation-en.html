@@ -192,6 +192,20 @@
             Question → locate the constraint → redesign → embed in the system. Running this cycle became the method for continuous improvement in operations.
         </div>
 
+        <h3>Established Frameworks as Guide Lines</h3>
+
+        <p>Running this cycle on your own is not hard. But knowing established frameworks reduces blind spots at each stage. Here are several concepts adjacent to this renovation.</p>
+
+        <p><strong>DFD (Data Flow Diagrams)</strong> helps with the "locate the constraint" stage. Drawing the flow — ZIP → PDF generation → QR verification → deployment — makes it visually clear which joint is clogged. In this case, the junction with the GitHub API was the bottleneck. The basic act of diagramming data flows accelerates constraint isolation.</p>
+
+        <p><strong>TOC (Theory of Constraints)</strong> is effective at the "redesign" stage. Goldratt's theory teaches that the throughput of an entire system is determined by its slowest process. Instead of optimizing everything, identify the single bottleneck and address only that. By routing around the API rate limit with a queue, the entire pipeline started flowing.</p>
+
+        <p><strong>Pipes and Filters</strong> is the architectural pattern that describes this design itself. Each stage is an independent processing unit that receives input, transforms it, and passes it on. The reason verify-qr.py could be inserted after PDF generation was that the pipeline was loosely coupled.</p>
+
+        <p><strong>PDCA (Plan-Do-Check-Act)</strong> overlaps with the "embed in the system" stage. But the lesson here was that Check should be done by the pipeline, not by people. Without automating verification, the cycle eventually stops.</p>
+
+        <p>Frameworks do not produce answers on their own. But they draw guide lines for "what to think about next." When facing a constraint, the more concepts you have at hand, the faster you see candidate routes.</p>
+
         <blockquote>
             What constraints taught me was not what to give up, but where the flow could pass through.
         </blockquote>
