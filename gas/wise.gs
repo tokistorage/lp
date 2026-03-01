@@ -23,8 +23,8 @@ function processTokiCode(ss, tokiMatch, ref, amt, cur) {
     return;
   }
 
-  // タイムレスアドバイザー
-  if (/TimelessAdvisor/i.test(ref)) {
+  // サービス（アドバイザー / Workaway / オフグリッド）
+  if (/TimelessAdvisor|Workaway-Consulting|OffGrid-Consulting/i.test(ref)) {
     recordAdvisorPayment(ss, code, amt, cur, ref);
     return;
   }
@@ -139,13 +139,15 @@ function recordAdvisorPayment(ss, code, amount, currency, ref) {
   var sheet = getOrCreateSheet(ss, 'アドバイザー', [
     '日時', 'コード', '金額', '通貨', 'タイプ', 'ステータス', '開始日', '終了日'
   ]);
-  var type = ref.replace(/.*TimelessAdvisor-/i, '').replace(/\s.*$/, '');
+  // ref例: "TOKI-XXXX-XXXX-XXXX TimelessAdvisor-Retainer-6mo"
+  //        "TOKI-XXXX-XXXX-XXXX Workaway-Consulting-6mo"
+  var type = ref.replace(/^.*TOKI-[A-Z0-9]{4}-[A-Z0-9]{4}-[A-Z0-9]{4}\s*/i, '').replace(/^TimelessAdvisor-/i, '');
   sheet.appendRow([
     new Date(), code, amount, currency, type, '入金確認済み', '', ''
   ]);
   sendEmail(NOTIFY_EMAIL,
-    '【TimelessAdvisor】入金確認 — ' + currency + ' ' + amount,
-    'タイムレスアドバイザーの入金がありました。\n\nコード: ' + code + '\nタイプ: ' + type + '\n金額: ' + currency + ' ' + amount + '\n\nスプレッドシートに記録済みです。');
+    '【TokiStorage】入金確認 — ' + currency + ' ' + amount,
+    'サービスの入金がありました。\n\nコード: ' + code + '\nタイプ: ' + type + '\n金額: ' + currency + ' ' + amount + '\n\nスプレッドシートに記録済みです。');
 }
 
 function notifyPayment(amount, currency, reference) {

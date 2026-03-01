@@ -1,5 +1,5 @@
 /**
- * タイムレスアドバイザー — トークンライフサイクル (advisor.gs)
+ * サービス — トークンライフサイクル (advisor.gs)
  *
  * シートヘッダー:
  *   '日時', 'コード', '金額', '通貨', 'タイプ', 'ステータス', '開始日', '終了日'
@@ -8,8 +8,10 @@
  *   入金確認済み (activated) → セッション中 (active) → 実施済 (completed) / 権利終了 (expired)
  *
  * タイプ:
- *   SpotConsultation → spot
- *   Retainer-6mo    → annual
+ *   SpotConsultation       → spot      (即完了)
+ *   Retainer-6mo           → annual    (6ヶ月)
+ *   Workaway-Consulting-6mo → workaway (6ヶ月)
+ *   OffGrid-Consulting-6mo  → offgrid  (6ヶ月)
  */
 
 var ADVISOR_SHEET_NAME = 'アドバイザー';
@@ -24,8 +26,13 @@ var STATUS_MAP = {
 
 var TYPE_MAP = {
   'SpotConsultation': 'spot',
-  'Retainer-6mo': 'annual'
+  'Retainer-6mo': 'annual',
+  'Workaway-Consulting-6mo': 'workaway',
+  'OffGrid-Consulting-6mo': 'offgrid'
 };
+
+// 6ヶ月契約タイプ（期間管理・自動期限切れ対象）
+var SIX_MONTH_TYPES = { 'Retainer-6mo': true, 'Workaway-Consulting-6mo': true, 'OffGrid-Consulting-6mo': true };
 
 /**
  * advisor_status — トークン状態一括取得（クライアント用）
@@ -58,8 +65,8 @@ function handleAdvisorStatus(ss, data) {
     var sheetType = rows[i][4] || '';
     var endDate = rows[i][7] ? new Date(rows[i][7]) : null;
 
-    // 顧問契約: 終了日超過 → 自動的に権利終了
-    if (sheetStatus === 'セッション中' && sheetType === 'Retainer-6mo' && endDate && now > endDate) {
+    // 6ヶ月契約: 終了日超過 → 自動的に権利終了
+    if (sheetStatus === 'セッション中' && SIX_MONTH_TYPES[sheetType] && endDate && now > endDate) {
       sheet.getRange(i + 2, 6).setValue('権利終了');
       sheetStatus = '権利終了';
     }
@@ -118,8 +125,8 @@ function handleAdvisorStartSession(ss, data) {
     // 開始日
     sheet.getRange(rowIdx, 7).setValue(now);
 
-    // 顧問契約: 終了日 = 開始日 + 6ヶ月
-    if (sheetType === 'Retainer-6mo') {
+    // 6ヶ月契約: 終了日 = 開始日 + 6ヶ月
+    if (SIX_MONTH_TYPES[sheetType]) {
       var endDate = new Date(now);
       endDate.setMonth(endDate.getMonth() + 6);
       sheet.getRange(rowIdx, 8).setValue(endDate);
@@ -132,8 +139,8 @@ function handleAdvisorStartSession(ss, data) {
 
     // メール通知
     sendEmail(NOTIFY_EMAIL,
-      '【TimelessAdvisor】セッション開始 — ' + code,
-      'タイムレスアドバイザーのセッションが開始されました。\n\n'
+      '【TokiStorage】セッション開始 — ' + code,
+      'サービスのセッションが開始されました。\n\n'
       + 'コード: ' + code + '\n'
       + 'タイプ: ' + sheetType + '\n'
       + '開始日: ' + now.toISOString() + '\n');
@@ -177,7 +184,7 @@ function handleAdvisorComplete(ss, data) {
     if (sheetType === 'SpotConsultation') {
       sheet.getRange(rowIdx, 6).setValue('実施済');
     } else {
-      // 顧問契約: 権利終了
+      // 6ヶ月契約: 権利終了
       sheet.getRange(rowIdx, 6).setValue('権利終了');
       if (!rows[i][7]) {
         sheet.getRange(rowIdx, 8).setValue(new Date());
@@ -301,7 +308,7 @@ function menuStartSession(code) {
     sheet.getRange(rowIdx, 6).setValue('セッション中');
     sheet.getRange(rowIdx, 7).setValue(now);
 
-    if (sheetType === 'Retainer-6mo') {
+    if (SIX_MONTH_TYPES[sheetType]) {
       var endDate = new Date(now);
       endDate.setMonth(endDate.getMonth() + 6);
       sheet.getRange(rowIdx, 8).setValue(endDate);
@@ -312,7 +319,8 @@ function menuStartSession(code) {
       return 'スポット「' + code + '」→ 実施済（' + now.toLocaleDateString('ja-JP') + '）';
     }
 
-    return '顧問契約「' + code + '」→ セッション中（' + now.toLocaleDateString('ja-JP') + ' 〜 6ヶ月間）';
+    var typeName = TYPE_MAP[sheetType] || sheetType;
+    return typeName + '「' + code + '」→ セッション中（' + now.toLocaleDateString('ja-JP') + ' 〜 6ヶ月間）';
   }
 
   throw new Error('コード「' + code + '」が見つかりません');
@@ -343,7 +351,8 @@ function menuCompleteSession(code) {
       if (!rows[i][7]) {
         sheet.getRange(rowIdx, 8).setValue(new Date());
       }
-      return '顧問契約「' + code + '」→ 権利終了';
+      var typeName = TYPE_MAP[sheetType] || sheetType;
+      return typeName + '「' + code + '」→ 権利終了';
     }
   }
 
@@ -366,7 +375,7 @@ function checkExpiredAdvisors() {
     var type = rows[i][4] || '';
     var endDate = rows[i][7] ? new Date(rows[i][7]) : null;
 
-    if (status === 'セッション中' && type === 'Retainer-6mo' && endDate && now > endDate) {
+    if (status === 'セッション中' && SIX_MONTH_TYPES[type] && endDate && now > endDate) {
       sheet.getRange(i + 2, 6).setValue('権利終了');
       expired.push(rows[i][1]);
     }
@@ -374,8 +383,8 @@ function checkExpiredAdvisors() {
 
   if (expired.length > 0) {
     sendEmail(NOTIFY_EMAIL,
-      '【TimelessAdvisor】顧問契約の権利終了（自動）',
-      '以下の顧問契約が期間満了により権利終了になりました。\n\n'
+      '【TokiStorage】サービスの権利終了（自動）',
+      '以下のサービスが期間満了により権利終了になりました。\n\n'
       + expired.join('\n') + '\n\n'
       + 'スプレッドシートで確認してください。');
   }
