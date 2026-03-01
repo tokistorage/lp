@@ -8,10 +8,14 @@
  *   入金確認済み (activated) → セッション中 (active) → 実施済 (completed) / 権利終了 (expired)
  *
  * タイプ:
- *   SpotConsultation       → spot      (即完了)
- *   Retainer-6mo           → annual    (6ヶ月)
- *   Workaway-Consulting-6mo → workaway (6ヶ月)
- *   OffGrid-Consulting-6mo  → offgrid  (6ヶ月)
+ *   SpotConsultation        → spot         (即完了)
+ *   Retainer-6mo            → annual       (6ヶ月)
+ *   Workaway-Consulting-6mo → workaway     (6ヶ月)
+ *   OffGrid-Consulting-6mo  → offgrid      (6ヶ月)
+ *   PearlSoap-Ambassador    → ambassador   (無期限)
+ *   SoulCarrier-Regular     → sc-regular   (1年)
+ *   SoulCarrier-Lifetime    → sc-lifetime  (無期限)
+ *   SoulCarrier-Supporter   → sc-supporter (即完了)
  */
 
 var ADVISOR_SHEET_NAME = 'アドバイザー';
@@ -28,11 +32,21 @@ var TYPE_MAP = {
   'SpotConsultation': 'spot',
   'Retainer-6mo': 'annual',
   'Workaway-Consulting-6mo': 'workaway',
-  'OffGrid-Consulting-6mo': 'offgrid'
+  'OffGrid-Consulting-6mo': 'offgrid',
+  'PearlSoap-Ambassador': 'ambassador',
+  'SoulCarrier-Regular': 'sc-regular',
+  'SoulCarrier-Lifetime': 'sc-lifetime',
+  'SoulCarrier-Supporter': 'sc-supporter'
 };
 
 // 6ヶ月契約タイプ（期間管理・自動期限切れ対象）
 var SIX_MONTH_TYPES = { 'Retainer-6mo': true, 'Workaway-Consulting-6mo': true, 'OffGrid-Consulting-6mo': true };
+
+// 1年契約タイプ（期間管理・自動期限切れ対象）
+var ONE_YEAR_TYPES = { 'SoulCarrier-Regular': true };
+
+// 即完了タイプ（セッション開始 = 実施済）
+var IMMEDIATE_COMPLETE_TYPES = { 'SpotConsultation': true, 'SoulCarrier-Supporter': true };
 
 /**
  * advisor_status — トークン状態一括取得（クライアント用）
@@ -65,8 +79,8 @@ function handleAdvisorStatus(ss, data) {
     var sheetType = rows[i][4] || '';
     var endDate = rows[i][7] ? new Date(rows[i][7]) : null;
 
-    // 6ヶ月契約: 終了日超過 → 自動的に権利終了
-    if (sheetStatus === 'セッション中' && SIX_MONTH_TYPES[sheetType] && endDate && now > endDate) {
+    // 6ヶ月契約 / 1年契約: 終了日超過 → 自動的に権利終了
+    if (sheetStatus === 'セッション中' && (SIX_MONTH_TYPES[sheetType] || ONE_YEAR_TYPES[sheetType]) && endDate && now > endDate) {
       sheet.getRange(i + 2, 6).setValue('権利終了');
       sheetStatus = '権利終了';
     }
@@ -132,8 +146,15 @@ function handleAdvisorStartSession(ss, data) {
       sheet.getRange(rowIdx, 8).setValue(endDate);
     }
 
-    // スポット: セッション開始 = 実施済
-    if (sheetType === 'SpotConsultation') {
+    // 1年契約: 終了日 = 開始日 + 1年
+    if (ONE_YEAR_TYPES[sheetType]) {
+      var endDate = new Date(now);
+      endDate.setFullYear(endDate.getFullYear() + 1);
+      sheet.getRange(rowIdx, 8).setValue(endDate);
+    }
+
+    // 即完了タイプ: セッション開始 = 実施済
+    if (IMMEDIATE_COMPLETE_TYPES[sheetType]) {
       sheet.getRange(rowIdx, 6).setValue('実施済');
     }
 
@@ -181,10 +202,10 @@ function handleAdvisorComplete(ss, data) {
     var sheetType = rows[i][4] || '';
     var rowIdx = i + 2;
 
-    if (sheetType === 'SpotConsultation') {
+    if (IMMEDIATE_COMPLETE_TYPES[sheetType]) {
       sheet.getRange(rowIdx, 6).setValue('実施済');
     } else {
-      // 6ヶ月契約: 権利終了
+      // 期間契約: 権利終了
       sheet.getRange(rowIdx, 6).setValue('権利終了');
       if (!rows[i][7]) {
         sheet.getRange(rowIdx, 8).setValue(new Date());
@@ -314,13 +335,20 @@ function menuStartSession(code) {
       sheet.getRange(rowIdx, 8).setValue(endDate);
     }
 
-    if (sheetType === 'SpotConsultation') {
+    if (ONE_YEAR_TYPES[sheetType]) {
+      var endDate = new Date(now);
+      endDate.setFullYear(endDate.getFullYear() + 1);
+      sheet.getRange(rowIdx, 8).setValue(endDate);
+    }
+
+    if (IMMEDIATE_COMPLETE_TYPES[sheetType]) {
       sheet.getRange(rowIdx, 6).setValue('実施済');
-      return 'スポット「' + code + '」→ 実施済（' + now.toLocaleDateString('ja-JP') + '）';
+      return '即完了「' + code + '」→ 実施済（' + now.toLocaleDateString('ja-JP') + '）';
     }
 
     var typeName = TYPE_MAP[sheetType] || sheetType;
-    return typeName + '「' + code + '」→ セッション中（' + now.toLocaleDateString('ja-JP') + ' 〜 6ヶ月間）';
+    var periodLabel = ONE_YEAR_TYPES[sheetType] ? '1年間' : '6ヶ月間';
+    return typeName + '「' + code + '」→ セッション中（' + now.toLocaleDateString('ja-JP') + ' 〜 ' + periodLabel + '）';
   }
 
   throw new Error('コード「' + code + '」が見つかりません');
@@ -343,9 +371,9 @@ function menuCompleteSession(code) {
     var sheetType = rows[i][4] || '';
     var rowIdx = i + 2;
 
-    if (sheetType === 'SpotConsultation') {
+    if (IMMEDIATE_COMPLETE_TYPES[sheetType]) {
       sheet.getRange(rowIdx, 6).setValue('実施済');
-      return 'スポット「' + code + '」→ 実施済';
+      return '即完了「' + code + '」→ 実施済';
     } else {
       sheet.getRange(rowIdx, 6).setValue('権利終了');
       if (!rows[i][7]) {
@@ -375,7 +403,7 @@ function checkExpiredAdvisors() {
     var type = rows[i][4] || '';
     var endDate = rows[i][7] ? new Date(rows[i][7]) : null;
 
-    if (status === 'セッション中' && SIX_MONTH_TYPES[type] && endDate && now > endDate) {
+    if (status === 'セッション中' && (SIX_MONTH_TYPES[type] || ONE_YEAR_TYPES[type]) && endDate && now > endDate) {
       sheet.getRange(i + 2, 6).setValue('権利終了');
       expired.push(rows[i][1]);
     }

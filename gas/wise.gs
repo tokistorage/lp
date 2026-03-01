@@ -24,7 +24,7 @@ function processTokiCode(ss, tokiMatch, ref, amt, cur) {
   }
 
   // サービス（アドバイザー / Workaway / オフグリッド）
-  if (/TimelessAdvisor|Workaway-Consulting|OffGrid-Consulting/i.test(ref)) {
+  if (/TimelessAdvisor|Workaway-Consulting|OffGrid-Consulting|PearlSoap-Ambassador|SoulCarrier/i.test(ref)) {
     recordAdvisorPayment(ss, code, amt, cur, ref);
     return;
   }
