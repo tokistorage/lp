@@ -3,7 +3,7 @@
  */
 
 function isOrderPayment(ref) {
-  return /laminate|quartz/i.test(ref);
+  return /laminate|quartz|PearlSoap-Ambassador/i.test(ref);
 }
 
 function processTokiCode(ss, tokiMatch, ref, amt, cur) {
