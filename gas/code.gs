@@ -10,6 +10,7 @@
  *   newsletter.gs — ニュースレター自動更新
  *   ndl.gs        — NDL特集シリーズ（series_open / ndl_submit）
  *   monitor.gs    — モニタープログラム（申し込み / フィードバック）
+ *   advisor.gs    — タイムレスアドバイザー（トークンライフサイクル）
  *   reports.gs    — デイリー / 月次レポート
  *
  * タイマートリガー（GASエディタで設定）:
@@ -89,6 +90,9 @@ function doPost(e) {
     if (data.type === 'series_rename') return handleSeriesRename(ss, data);
     if (data.type === 'monitor_apply') return handleMonitorApply(ss, data);
     if (data.type === 'monitor_feedback') return handleMonitorFeedback(ss, data);
+    if (data.type === 'advisor_status') return handleAdvisorStatus(ss, data);
+    if (data.type === 'advisor_start_session') return handleAdvisorStartSession(ss, data);
+    if (data.type === 'advisor_complete') return handleAdvisorComplete(ss, data);
     return handleContact(ss, data);
 
   } catch (err) {
