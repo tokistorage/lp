@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" type="image/png" sizes="32x32" href="asset/favicon-32.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="asset/apple-touch-icon.png">
+    <title>Writing Terms of Service on Trust | TokiStorage</title>
+    <meta name="robots" content="index, follow">
+    <meta name="description" content="Conventional terms of service are written around controlling users. When a service cannot access user data, what foundation does it write its terms on? Trust design in practice for serverless services.">    <style>
+        :root {
+            --toki-blue: #2563EB;
+            --toki-blue-dark: #1E40AF;
+            --toki-blue-pale: #EFF6FF;
+            --accent-blue: #60A5FA;
+            --bg-white: #FFFFFF;
+            --text-primary: #1E293B;
+            --text-secondary: #475569;
+            --text-muted: #94A3B8;
+            --border: #E2E8F0;
+            --font-display: 'Georgia', 'Times New Roman', serif;
+            --font-body: -apple-system, 'Segoe UI', Helvetica, Arial, sans-serif;
+        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        html { scroll-behavior: smooth; }
+        body { font-family: var(--font-body); font-weight: 400; background: var(--bg-white); color: var(--text-primary); line-height: 2; font-size: 16px; }
+
+        .article-nav { position: fixed; top: 0; left: 0; right: 0; z-index: 1000; background: rgba(255,255,255,0.95); backdrop-filter: blur(12px); border-bottom: 1px solid var(--border); padding: 0.6rem 1.2rem; display: flex; align-items: center; justify-content: space-between; gap: 1rem; }
+        .article-nav .nav-brand { font-family: var(--font-display); font-size: 0.9rem; font-weight: 600; color: var(--toki-blue); text-decoration: none; white-space: nowrap; }
+        .article-nav .nav-brand::before { content: ''; display: inline-block; width: 20px; height: 20px; background: url('asset/tokistorage-icon-512.png') no-repeat center / contain; vertical-align: -3px; margin-right: 5px; }
+        .article-nav .nav-right { display: flex; align-items: center; gap: 1rem; }
+        .article-nav .nav-label { font-size: 0.6rem; color: var(--text-muted); letter-spacing: 0.08em; }
+        .article-nav .lang-switch { font-size: 0.75rem; color: var(--toki-blue); text-decoration: none; padding: 0.3rem 0.6rem; border: 1px solid var(--toki-blue); border-radius: 4px; }
+        .article-nav .lang-switch:hover { background: var(--toki-blue); color: #fff; }
+
+        .article-container { max-width: 680px; margin: 0 auto; padding: 7rem 2rem 4rem; }
+        .article-header { margin-bottom: 3rem; padding-bottom: 2rem; border-bottom: 1px solid var(--border); }
+        .article-category { font-size: 0.7rem; color: var(--toki-blue); letter-spacing: 0.15em; margin-bottom: 1rem; }
+        .article-header h1 { font-family: var(--font-display); font-size: 1.8rem; font-weight: 700; line-height: 1.5; margin-bottom: 1.5rem; }
+        .article-subtitle { font-size: 0.95rem; color: var(--text-secondary); line-height: 1.9; }
+
+        .article-content h2 { font-family: var(--font-display); font-size: 1.3rem; font-weight: 600; margin: 3rem 0 1.5rem; padding-bottom: 0.5rem; border-bottom: 2px solid var(--toki-blue-pale); }
+        .article-content h3 { font-family: var(--font-display); font-size: 1.1rem; font-weight: 600; margin: 2rem 0 1rem; color: var(--toki-blue-dark); }
+        .article-content p { margin-bottom: 1.5rem; text-align: justify; }
+        .article-content blockquote { border-left: 3px solid var(--toki-blue); padding-left: 1.5rem; margin: 2rem 0; font-family: var(--font-display); color: var(--text-secondary); }
+        .article-content ul { margin: 1.5rem 0; padding-left: 1.5rem; }
+        .article-content li { margin-bottom: 0.75rem; }
+
+        .core-message { background: var(--toki-blue-pale); border-left: 4px solid var(--toki-blue); padding: 1.5rem; margin: 2rem 0; font-size: 0.95rem; line-height: 1.8; }
+        .key-point { background: linear-gradient(135deg, var(--toki-blue-pale) 0%, #fff 100%); border: 1px solid var(--accent-blue); border-radius: 8px; padding: 1.5rem; margin: 2rem 0; text-align: center; }
+        .key-point p { font-family: var(--font-display); font-size: 1.1rem; color: var(--toki-blue-dark); margin: 0; }
+
+        .article-footer { margin-top: 4rem; padding-top: 2rem; border-top: 1px solid var(--border); text-align: center; }
+        .article-footer p { font-size: 0.8rem; color: var(--text-muted); margin-bottom: 1rem; }
+        .article-footer a { color: var(--toki-blue); text-decoration: none; }
+        .article-footer a:hover { text-decoration: underline; }
+
+        @media (max-width: 768px) {
+            .article-container { padding: 6rem 1.2rem 3rem; }
+            .article-header h1 { font-size: 1.5rem; }
+            .article-nav .nav-label { display: none; }
+        }
+        @media print { .article-nav { display: none; } .article-container { padding-top: 2rem; } }
+    </style>
+</head>
+<body>
+
+<nav class="article-nav">
+    <a href="essays-en.html" class="nav-brand">TokiStorage</a>
+    <div class="nav-right">
+        <span class="nav-label">ESSAY</span>
+        <a href="trust-guidelines.html" class="lang-switch">JA</a>
+    </div>
+</nav>
+
+<main class="article-container">
+    <header class="article-header">
+        <div class="article-category">TECHNOLOGY &amp; DESIGN</div>
+        <h1>Writing Terms of Service on Trust</h1>
+        <p class="article-subtitle">Conventional terms of service are written around controlling users. When a service cannot access user data, what foundation does it write its terms on? Trust design in practice for serverless services.</p>
+    </header>
+
+    <article class="article-content">
+
+        <h2>The Inverted Premise</h2>
+
+        <p>Read the terms of service of any typical web service, and you will notice a foundational assumption: "We can access your data, therefore you must follow our rules." Data is collected, behavior is monitored, violations are detected, accounts are suspended. Disclaimers and prohibited uses are built on top of this power structure.</p>
+
+        <p>TokiStorage's usage guidelines do not share this premise. All processing happens within the user's browser. Audio, images, and text are never sent to a server. Even credit balances are stored in the browser's localStorage. TokiStorage has no means of accessing user data.</p>
+
+        <div class="core-message">When a service that cannot monitor writes terms of service, what takes the place of "control"? The answer was "trust."</div>
+
+        <h2>The Design Intent Behind Eight Sections</h2>
+
+        <p>TokiQR's usage guidelines consist of eight sections. Each serves a role that differs fundamentally from conventional terms.</p>
+
+        <h3>Section 1: User Responsibility for Content</h3>
+
+        <p>Conventional terms say "if we discover violating content, we will remove it." TokiQR has no such capability. Data lives inside QR codes, not on TokiStorage's servers. So the guidelines state clearly from the start: responsibility for rights lies with the user. This is not blame-shifting. It is a statement of technical fact.</p>
+
+        <h3>Section 2: TokiStorage Disclaimer</h3>
+
+        <p>Disclaimer clauses typically serve as legal shields for the service provider. But this section's basis for disclaimer is structurally different. It states a factual reality: "We cannot access your data, therefore we cannot assume responsibility for it." TokiQR operates offline; data never traverses a network. The confession that monitoring and tracking are impossible becomes the very foundation of the disclaimer.</p>
+
+        <h3>Section 3: Prohibited Uses</h3>
+
+        <p>This is where the sharpest divergence from conventional terms occurs. Typical prohibited-use clauses carry an implicit warning: "Do this and we will ban you." TokiStorage has neither the means to detect violations nor the means to ban anyone. The section therefore opens with: "As stated in Section 2, TokiStorage has no means of accessing user data. Compliance with the following prohibited uses therefore rests entirely on the conscience and judgment of each user." This also serves as a bridge to Section 8, "Designed on Trust." Writing prohibited uses while entrusting their compliance to trust is not a contradiction. It is a design.</p>
+
+        <h3>Section 4: What "Permanent" Means</h3>
+
+        <p>No typical service terms contain a warning that says "this cannot be deleted." Deletion functionality is assumed. But data embedded in a QR code becomes independent of servers the moment it is printed. Data inscribed on quartz glass cannot be physically deleted. Data deposited with the National Diet Library is nearly impossible to retract. Precisely because permanence is the service's value, there is a responsibility to honestly communicate the risk of permanence.</p>
+
+        <h3>Section 5: Technical Characteristics of TokiQR</h3>
+
+        <p>This section appears aimed at engineers, but it is legally significant as well. The statements "data is processed entirely in the browser" and "nothing is transmitted to external servers" also underpin the privacy policy. Do you need a privacy policy for data you never collect? The answer lives here. By documenting technical characteristics within the terms, privacy guarantees are shown to be enforced at the architecture level.</p>
+
+        <h3>Section 6: Prepaid Credits</h3>
+
+        <p>Storing credit balances in the browser is a design choice. A server-side balance would enable cross-device sync and reduce the risk of manipulation. But it would also mean storing user data on a server. TokiStorage chose not to. Instead, the terms state explicitly: "TokiStorage is not responsible for balance loss due to browser data deletion or device changes." There is no device transfer feature either. QR code data lives within the QR codes themselves; deposited data lives on GitHub and at the National Diet Library. Because the design is device-independent, the choice not to implement device transfer holds together.</p>
+
+        <h3>Section 7: Cancellation &amp; Refunds</h3>
+
+        <p>"There is no cancellation functionality." This is not a policy. It is a technical fact. The feature does not exist. Payments are designed as one-way transactions. When a refund is warranted, the equivalent amount is sent as a separate transaction. Writing "no cancellation functionality exists" rather than "refunds are not accepted." Writing "equivalent amount sent as a separate transaction" rather than "we refuse refunds." The expression changes, and so does the alignment with consumer protection law.</p>
+
+        <h3>Section 8: Designed on Trust</h3>
+
+        <p>Browser developer tools can modify credit balances. This is not a vulnerability to hide but a consequence of the design. Without server-side authentication, client-side data is inherently mutable. TokiStorage does not hide this fact. It writes it into the terms. And then adds: "A trust built to last a thousand years. Before you act, pause." Confessing a security opening and asking for trust. This is a structure that does not exist in conventional terms of service.</p>
+
+        <div class="key-point"><p>It is not that we trust because we cannot monitor. We chose not to monitor, and therefore we ask for trust.</p></div>
+
+        <h2>Three Perspectives</h2>
+
+        <h3>The Engineer's Perspective</h3>
+
+        <p>Architecture determines terms of service. A serverless, offline-first service cannot collect, monitor, or delete data. When translating these technical constraints into the language of terms, conventional templates fail. "Service suspension," "account freezing," "content removal" &mdash; terms that cannot prescribe any of these measures require a different design principle. That principle is trust.</p>
+
+        <h3>The Legal Perspective</h3>
+
+        <p>From the standpoint of consumer protection law, "refunds not accepted" and "refund functionality does not exist" carry different legal weight. The former is a provider's refusal; the latter is a technical characteristic of the system. Similarly, "compliance with prohibited uses is entrusted to each user's conscience" is not an abdication of responsibility but a legal expression of the technical fact that monitoring is impossible. As privacy-first services proliferate, this kind of terms-writing becomes a new form of legal literacy.</p>
+
+        <h3>The Executive's Perspective</h3>
+
+        <p>Trust-based terms of service are also brand design. When a service whose technical architecture "does not collect data" writes that it "asks for trust," the document is simultaneously a legal instrument and a brand statement. A service built to last a thousand years writes "a trust built to last a thousand years" in its terms. This coherence transforms the choice of privacy-first into a marketing asset.</p>
+
+        <h2>A Contrast with Convention</h2>
+
+        <p>Mapping the domains conventional terms cover against TokiStorage's guidelines makes the structural difference vivid.</p>
+
+        <ul>
+            <li><strong>Data management</strong> &mdash; Conventional: "We manage your data." TokiStorage: "Your data lives in your browser."</li>
+            <li><strong>Violation detection</strong> &mdash; Conventional: "We will take action if we detect violations." TokiStorage: "We have no means of detecting violations."</li>
+            <li><strong>Account suspension</strong> &mdash; Conventional: "Accounts may be suspended for violations." TokiStorage: Accounts do not exist.</li>
+            <li><strong>Deletion authority</strong> &mdash; Conventional: "Inappropriate content will be removed." TokiStorage: "Once inscribed, data cannot be erased."</li>
+            <li><strong>Refunds</strong> &mdash; Conventional: "Handled per our refund policy." TokiStorage: "No cancellation functionality. Equivalent amount sent as a separate transaction."</li>
+            <li><strong>Basis of trust</strong> &mdash; Conventional: Server-side authentication and verification. TokiStorage: A thousand-year relationship of trust.</li>
+        </ul>
+
+        <h2>As a New Pattern</h2>
+
+        <p>TokiStorage's usage guidelines may look like a special case. But as more services adopt privacy-first architectures, demand for this "pattern" will inevitably emerge. End-to-end encryption, zero-knowledge proofs, local-first applications &mdash; all designs where servers cannot access user data. When these services write terms, conventional templates will not work as-is.</p>
+
+        <p>What is needed is a methodology for writing terms that starts from "we cannot control." Honestly document the constraints of the architecture. Clarify the division of responsibility as a consequence of those constraints. Then ask for trust. If TokiStorage's usage guidelines present one such pattern, it is not because they were intentionally designed that way. It is the result of honestly confronting technical facts.</p>
+
+        <blockquote>Terms of service are not a document for legal defense. They are the design philosophy of a service, articulated as a contract with users.</blockquote>
+
+    </article>
+
+    <footer class="article-footer">
+        <p id="essay-nav-links"></p>
+        <p style="font-size: 0.75rem; color: var(--text-muted);">&copy; 2026 TokiStorage. All rights reserved.</p>
+    </footer>
+
+</main>
+
+<script src="essay-nav.js"></script>
+<script src="essay-tts.js"></script>
+</body>
+</html>

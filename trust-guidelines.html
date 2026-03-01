@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" type="image/png" sizes="32x32" href="asset/favicon-32.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="asset/apple-touch-icon.png">
+    <title>信頼で書く利用規約 | トキストレージ</title>
+    <meta name="robots" content="index, follow">
+    <meta name="description" content="従来の利用規約は「いかにユーザーを管理するか」で書かれている。データにアクセスできないサービスは、何を根拠に規約を書くのか。サーバーレスサービスにおける信頼設計の実践。">    <style>
+        :root {
+            --toki-blue: #2563EB;
+            --toki-blue-dark: #1E40AF;
+            --toki-blue-pale: #EFF6FF;
+            --accent-blue: #60A5FA;
+            --bg-white: #FFFFFF;
+            --text-primary: #1E293B;
+            --text-secondary: #475569;
+            --text-muted: #94A3B8;
+            --border: #E2E8F0;
+            --font-display: 'Hiragino Mincho ProN', 'Yu Mincho', serif;
+            --font-body: 'Hiragino Kaku Gothic ProN', 'Yu Gothic', 'Meiryo', sans-serif;
+        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        html { scroll-behavior: smooth; }
+        body { font-family: var(--font-body); font-weight: 400; background: var(--bg-white); color: var(--text-primary); line-height: 2; font-size: 16px; }
+
+        .article-nav { position: fixed; top: 0; left: 0; right: 0; z-index: 1000; background: rgba(255,255,255,0.95); backdrop-filter: blur(12px); border-bottom: 1px solid var(--border); padding: 0.6rem 1.2rem; display: flex; align-items: center; justify-content: space-between; gap: 1rem; }
+        .article-nav .nav-brand { font-family: var(--font-display); font-size: 0.9rem; font-weight: 600; color: var(--toki-blue); text-decoration: none; white-space: nowrap; }
+        .article-nav .nav-brand::before { content: ''; display: inline-block; width: 20px; height: 20px; background: url('asset/tokistorage-icon-512.png') no-repeat center / contain; vertical-align: -3px; margin-right: 5px; }
+        .article-nav .nav-right { display: flex; align-items: center; gap: 1rem; }
+        .article-nav .nav-label { font-size: 0.6rem; color: var(--text-muted); letter-spacing: 0.08em; }
+        .article-nav .lang-switch { font-size: 0.75rem; color: var(--toki-blue); text-decoration: none; padding: 0.3rem 0.6rem; border: 1px solid var(--toki-blue); border-radius: 4px; }
+        .article-nav .lang-switch:hover { background: var(--toki-blue); color: #fff; }
+
+        .article-container { max-width: 680px; margin: 0 auto; padding: 7rem 2rem 4rem; }
+        .article-header { margin-bottom: 3rem; padding-bottom: 2rem; border-bottom: 1px solid var(--border); }
+        .article-category { font-size: 0.7rem; color: var(--toki-blue); letter-spacing: 0.15em; margin-bottom: 1rem; }
+        .article-header h1 { font-family: var(--font-display); font-size: 1.8rem; font-weight: 700; line-height: 1.5; margin-bottom: 1.5rem; }
+        .article-subtitle { font-size: 0.95rem; color: var(--text-secondary); line-height: 1.9; }
+
+        .article-content h2 { font-family: var(--font-display); font-size: 1.3rem; font-weight: 600; margin: 3rem 0 1.5rem; padding-bottom: 0.5rem; border-bottom: 2px solid var(--toki-blue-pale); }
+        .article-content h3 { font-family: var(--font-display); font-size: 1.1rem; font-weight: 600; margin: 2rem 0 1rem; color: var(--toki-blue-dark); }
+        .article-content p { margin-bottom: 1.5rem; text-align: justify; }
+        .article-content blockquote { border-left: 3px solid var(--toki-blue); padding-left: 1.5rem; margin: 2rem 0; font-family: var(--font-display); color: var(--text-secondary); }
+        .article-content ul { margin: 1.5rem 0; padding-left: 1.5rem; }
+        .article-content li { margin-bottom: 0.75rem; }
+
+        .core-message { background: var(--toki-blue-pale); border-left: 4px solid var(--toki-blue); padding: 1.5rem; margin: 2rem 0; font-size: 0.95rem; line-height: 1.8; }
+        .key-point { background: linear-gradient(135deg, var(--toki-blue-pale) 0%, #fff 100%); border: 1px solid var(--accent-blue); border-radius: 8px; padding: 1.5rem; margin: 2rem 0; text-align: center; }
+        .key-point p { font-family: var(--font-display); font-size: 1.1rem; color: var(--toki-blue-dark); margin: 0; }
+
+        .article-footer { margin-top: 4rem; padding-top: 2rem; border-top: 1px solid var(--border); text-align: center; }
+        .article-footer p { font-size: 0.8rem; color: var(--text-muted); margin-bottom: 1rem; }
+        .article-footer a { color: var(--toki-blue); text-decoration: none; }
+        .article-footer a:hover { text-decoration: underline; }
+
+        @media (max-width: 768px) {
+            .article-container { padding: 6rem 1.2rem 3rem; }
+            .article-header h1 { font-size: 1.5rem; }
+            .article-nav .nav-label { display: none; }
+        }
+        @media print { .article-nav { display: none; } .article-container { padding-top: 2rem; } }
+    </style>
+</head>
+<body>
+
+<nav class="article-nav">
+    <a href="essays.html" class="nav-brand">トキストレージ</a>
+    <div class="nav-right">
+        <span class="nav-label">ESSAY</span>
+        <a href="trust-guidelines-en.html" class="lang-switch">EN</a>
+    </div>
+</nav>
+
+<main class="article-container">
+    <header class="article-header">
+        <div class="article-category">技術・設計</div>
+        <h1>信頼で書く利用規約</h1>
+        <p class="article-subtitle">従来の利用規約は「いかにユーザーを管理するか」で書かれている。データにアクセスできないサービスは、何を根拠に規約を書くのか。サーバーレスサービスにおける信頼設計の実践。</p>
+    </header>
+
+    <article class="article-content">
+
+        <h2>前提の転倒</h2>
+
+        <p>一般的なWebサービスの利用規約を読むと、ある前提に気づく。「私たちはあなたのデータにアクセスできる。だから、ルールに従ってもらう」という構造だ。データを収集し、行動を監視し、違反を検出し、アカウントを停止する。免責事項と禁止事項は、この権力構造の上に成り立っている。</p>
+
+        <p>TokiStorageの利用ガイドラインは、この前提を持たない。すべての処理はユーザーのブラウザ内で完結する。音声も画像もテキストも、サーバーに送信されない。クレジット残高すらブラウザのlocalStorageに保存される。TokiStorageはユーザーのデータにアクセスする手段を持たない。</p>
+
+        <div class="core-message">監視できないサービスが利用規約を書くとき、「管理」の代わりに何を置くのか。その答えが「信頼」だった。</div>
+
+        <h2>8つのセクションの設計意図</h2>
+
+        <p>TokiQRの利用ガイドラインは8つのセクションで構成されている。それぞれが従来型の規約とは異なる役割を担っている。</p>
+
+        <h3>セクション1：コンテンツに関するユーザーの責任</h3>
+
+        <p>従来の規約では「違反コンテンツを発見した場合は削除します」と書く。TokiQRにはその能力がない。データはQRコードの中にあり、TokiStorageのサーバーにはない。だから、最初から明確にする。権利の責任はユーザーにある。これは責任転嫁ではなく、技術的事実の記述だ。</p>
+
+        <h3>セクション2：TokiStorageの免責</h3>
+
+        <p>免責条項は通常、サービス提供者を法的リスクから守るための防御文書だ。だがこのセクションは、免責の根拠そのものが異なる。「データにアクセスできないから責任を負えない」という構造的な事実を述べている。TokiQRはオフラインで動作し、データがネットワークを経由しない。監視・追跡する手段がないという告白が、そのまま免責の根拠になる。</p>
+
+        <h3>セクション3：禁止事項</h3>
+
+        <p>ここが従来型との最大の分岐点だ。普通の禁止事項は「これをやったらBANします」という警告だ。しかしTokiStorageには検出する手段もBANする手段もない。だから冒頭にこう書いた。「セクション2に記載のとおり、TokiStorageはユーザーのデータにアクセスする手段を持ちません。そのため、以下の禁止事項の遵守はユーザー自身の良心と判断に委ねられています」。これはセクション8「信頼に基づく設計」への橋渡しでもある。禁止事項を書きながら、その遵守を信頼に委ねるという構造は、矛盾ではなく設計だ。</p>
+
+        <h3>セクション4：「消せない」ことへの注意</h3>
+
+        <p>一般的なサービスの規約に「消せない」という注意書きは存在しない。削除機能があるのが前提だからだ。しかしQRコードに埋め込まれたデータは、印刷された時点でサーバーから独立する。石英ガラスに刻まれたデータは物理的に削除できない。国立国会図書館に納品されたデータは撤回が極めて困難だ。永続性がサービスの価値であるからこそ、「消せないことのリスク」を利用者に正直に伝える責任がある。</p>
+
+        <h3>セクション5：TokiQRの技術的特性</h3>
+
+        <p>このセクションは技術者向けのように見えるが、実は法的にも重要だ。「データはブラウザ内で完結する」「サーバーへの送信は行わない」という記述は、プライバシーポリシーの裏付けでもある。収集しないデータについてプライバシーポリシーを書く必要があるのか、という問いへの答えがここにある。技術的特性を利用規約に明記することで、プライバシーの保証がアーキテクチャレベルで担保されていることを示している。</p>
+
+        <h3>セクション6：プリペイドクレジットについて</h3>
+
+        <p>クレジット残高がブラウザに保存されているという事実は、設計上の選択だ。サーバーに残高を持たせればデバイス間同期もできるし、不正操作のリスクも下がる。だがそれは、ユーザーのデータをサーバーに預けることを意味する。TokiStorageはその選択をしなかった。代わりに、「ブラウザデータの消去やデバイスの変更により残高が失われた場合、TokiStorageは復旧の責任を負いません」と明記した。デバイス移行機能もない。QRコードのデータはQRコード自体に、納本対象のデータはGitHubと国立国会図書館にある。デバイスに依存しない設計だからこそ、デバイス移行を実装しないという選択が成り立つ。</p>
+
+        <h3>セクション7：取り消し・返金について</h3>
+
+        <p>「取り消し・キャンセルの機能はありません」。これは原則ではなく、技術的事実だ。実装していない。決済は一方向の処理として設計されている。返金が必要な場合は、別トランザクションとして同額を送金する。「返金不可」と書くのではなく「取り消し機能が存在しない」と書くこと。「返金を拒否する」のではなく「同額の送金で対応する」と書くこと。表現が変わるだけで、特定商取引法との整合性も変わる。</p>
+
+        <h3>セクション8：信頼に基づく設計</h3>
+
+        <p>ブラウザの開発者ツールを使えばクレジット残高を改変できる。これは隠すべき脆弱性ではなく、設計上の帰結だ。サーバーに認証を置かない以上、クライアントサイドのデータは改変可能になる。TokiStorageはこの事実を隠さず、利用規約に明記した。そのうえで「千年の信頼関係を見据えて、不正や悪意ある操作を実行する前に立ち止まってください」と書いた。セキュリティの穴を告白して信頼を求める。これは従来の利用規約にはない構造だ。</p>
+
+        <div class="key-point"><p>監視できないから信頼する、ではない。監視しないことを選んだから、信頼を求める。</p></div>
+
+        <h2>三つの視点から読む</h2>
+
+        <h3>技術者の視点</h3>
+
+        <p>アーキテクチャが利用規約を決める。サーバーレスでオフライン動作するサービスは、データの収集・監視・削除ができない。この技術的制約を利用規約の言語に翻訳するとき、従来のテンプレートは機能しない。「利用停止」「アカウント凍結」「コンテンツ削除」——これらの措置を規定できないサービスの利用規約は、別の設計原則が必要になる。その原則が「信頼」だ。</p>
+
+        <h3>法務の視点</h3>
+
+        <p>特定商取引法や消費者保護法の観点から見ると、「返金不可」と「返金機能が存在しない」は異なる意味を持つ。前者はサービス提供者の拒否、後者はシステムの技術的特性だ。同様に、「禁止事項の遵守をユーザーの良心に委ねる」という記述は、責任放棄ではなく「監視手段を持たない」という技術的事実の法的表現だ。プライバシーファーストのサービスが増える中で、この種の利用規約の書き方は法務の新しいリテラシーになる。</p>
+
+        <h3>経営者の視点</h3>
+
+        <p>信頼に基づく利用規約は、ブランドの設計でもある。「データを取らない」ことを技術的特性として持つサービスが「信頼を求める」と書くとき、それは法的文書であると同時にブランドステートメントでもある。千年残すサービスが「千年の信頼関係を見据えて」と利用規約に書く。この一貫性が、プライバシーファーストという選択をマーケティング資産に変える。</p>
+
+        <h2>従来型との対照表</h2>
+
+        <p>従来の利用規約がカバーする領域と、TokiStorageのガイドラインを対比すると、構造の違いが鮮明になる。</p>
+
+        <ul>
+            <li><strong>データ管理</strong>——従来型：「弊社がデータを管理します」。TokiStorage：「データはあなたのブラウザにあります」。</li>
+            <li><strong>違反検出</strong>——従来型：「違反を検出した場合、措置を講じます」。TokiStorage：「違反を検出する手段を持ちません」。</li>
+            <li><strong>アカウント停止</strong>——従来型：「規約違反の場合、アカウントを停止します」。TokiStorage：アカウントが存在しない。</li>
+            <li><strong>削除権限</strong>——従来型：「不適切なコンテンツは削除します」。TokiStorage：「一度刻まれたデータは消せません」。</li>
+            <li><strong>返金</strong>——従来型：「返金ポリシーに基づき対応します」。TokiStorage：「取り消し機能がありません。同額を別トランザクションで送金します」。</li>
+            <li><strong>信頼の根拠</strong>——従来型：サーバーサイドの認証と検証。TokiStorage：千年の信頼関係。</li>
+        </ul>
+
+        <h2>新しい型として</h2>
+
+        <p>TokiStorageの利用ガイドラインは、特殊な事例に見えるかもしれない。しかしプライバシーファーストのアーキテクチャを採用するサービスが増えるにつれ、この「型」の需要は確実に生まれる。エンドツーエンド暗号化、ゼロナレッジ証明、ローカルファーストなアプリケーション。いずれもサーバーがユーザーデータにアクセスできない設計だ。これらのサービスが利用規約を書くとき、従来のテンプレートはそのまま使えない。</p>
+
+        <p>必要なのは、「管理できない」ことを出発点にした利用規約の設計方法論だ。アーキテクチャの制約を正直に記述し、制約の帰結としての責任分界を明確にし、そのうえで信頼を求める。TokiStorageの利用ガイドラインがその一つの型を提示できているとすれば、それは意図してそう書いたのではなく、技術的事実に正直に向き合った結果だ。</p>
+
+        <blockquote>利用規約は法的防御のための文書ではない。サービスの設計思想を、利用者との契約として言語化したものだ。</blockquote>
+
+    </article>
+
+    <footer class="article-footer">
+        <p id="essay-nav-links"></p>
+        <p style="font-size: 0.75rem; color: var(--text-muted);">&copy; 2026 TokiStorage. All rights reserved.</p>
+    </footer>
+
+</main>
+
+<script src="essay-nav.js"></script>
+<script src="essay-tts.js"></script>
+</body>
+</html>

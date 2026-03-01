@@ -164,6 +164,7 @@
     { id: 'polishing', ja: '研磨', en: 'Polishing', date: '2026-02-27' },
     { id: 'ai-concierge', ja: 'AIコンシェルジュという静かな堀', en: 'The AI Concierge as a Quiet Moat', date: '2026-02-28' },
     { id: 'pipeline-renovation', ja: 'パイプライン改修記', en: 'Pipeline Renovation Notes', date: '2026-03-01' },
+    { id: 'trust-guidelines', ja: '信頼で書く利用規約', en: 'Writing Terms of Service on Trust', date: '2026-03-01' },
 
     // ── メタ視点 ──
     { id: 'mission-statement', ja: 'ミッション・ステートメントの設計思想', en: 'Designing a Mission Statement', date: '2026-02-23' },
@@ -183,6 +184,7 @@
   // LATEST_COUNT で表示件数を制御
   const LATEST_COUNT = 5;
   const latestEssayIds = [
+    'trust-guidelines',
     'pipeline-renovation',
     'zero-personal-data',
     'smartphone-complete',
@@ -356,6 +358,7 @@
     'polishing': ['narrative-trust', 'brochure-essay', 'customer-journey-transformation', 'patent-departure', 'mission-statement'],
     'ai-concierge': ['future', 'cloudflare-gas', 'vibe-coding-secrets', 'api-transformation', 'why-not-consulting'],
     'pipeline-renovation': ['dev-to-ops', 'development-chronicle', 'storage-strategy', 'migration', 'restoration-architecture'],
+    'trust-guidelines': ['zero-personal-data', 'offline-freedom', 'openness', 'narrative-trust', 'ssdlc'],
     // ── メタ視点 ──
     'mission-statement':      ['narrative-trust', 'preserving-words', 'why-essays', 'corporate-site', 'integrity'],
     'preserving-words':       ['why-essays', 'akashic-record', 'what-to-leave', 'narrative-trust', 'openness'],
