@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" type="image/png" sizes="32x32" href="asset/favicon-32.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="asset/apple-touch-icon.png">
+    <title>Product Codes as a Design Language | TokiStorage</title>
+    <meta name="robots" content="index, follow">
+    <meta name="description" content="A name that wouldn't fit in Wise's description field gave birth to an entire product taxonomy. The design philosophy condensed into eight codes.">    <style>
+        :root {
+            --toki-blue: #2563EB;
+            --toki-blue-dark: #1E40AF;
+            --toki-blue-pale: #EFF6FF;
+            --accent-blue: #60A5FA;
+            --bg-white: #FFFFFF;
+            --text-primary: #1E293B;
+            --text-secondary: #475569;
+            --text-muted: #94A3B8;
+            --border: #E2E8F0;
+            --font-display: 'Georgia', 'Times New Roman', serif;
+            --font-body: -apple-system, 'Segoe UI', Helvetica, Arial, sans-serif;
+        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        html { scroll-behavior: smooth; }
+        body { font-family: var(--font-body); font-weight: 400; background: var(--bg-white); color: var(--text-primary); line-height: 2; font-size: 16px; }
+
+        .article-nav { position: fixed; top: 0; left: 0; right: 0; z-index: 1000; background: rgba(255,255,255,0.95); backdrop-filter: blur(12px); border-bottom: 1px solid var(--border); padding: 0.6rem 1.2rem; display: flex; align-items: center; justify-content: space-between; gap: 1rem; }
+        .article-nav .nav-brand { font-family: var(--font-display); font-size: 0.9rem; font-weight: 600; color: var(--toki-blue); text-decoration: none; white-space: nowrap; }
+        .article-nav .nav-brand::before { content: ''; display: inline-block; width: 20px; height: 20px; background: url('asset/tokistorage-icon-512.png') no-repeat center / contain; vertical-align: -3px; margin-right: 5px; }
+        .article-nav .nav-right { display: flex; align-items: center; gap: 1rem; }
+        .article-nav .nav-label { font-size: 0.6rem; color: var(--text-muted); letter-spacing: 0.08em; }
+        .article-nav .lang-switch { font-size: 0.75rem; color: var(--toki-blue); text-decoration: none; padding: 0.3rem 0.6rem; border: 1px solid var(--toki-blue); border-radius: 4px; }
+        .article-nav .lang-switch:hover { background: var(--toki-blue); color: #fff; }
+
+        .article-container { max-width: 680px; margin: 0 auto; padding: 7rem 2rem 4rem; }
+        .article-header { margin-bottom: 3rem; padding-bottom: 2rem; border-bottom: 1px solid var(--border); }
+        .article-category { font-size: 0.7rem; color: var(--toki-blue); letter-spacing: 0.15em; margin-bottom: 1rem; }
+        .article-header h1 { font-family: var(--font-display); font-size: 1.8rem; font-weight: 700; line-height: 1.5; margin-bottom: 1.5rem; }
+        .article-subtitle { font-size: 0.95rem; color: var(--text-secondary); line-height: 1.9; }
+
+        .article-content h2 { font-family: var(--font-display); font-size: 1.3rem; font-weight: 600; margin: 3rem 0 1.5rem; padding-bottom: 0.5rem; border-bottom: 2px solid var(--toki-blue-pale); }
+        .article-content h3 { font-family: var(--font-display); font-size: 1.1rem; font-weight: 600; margin: 2rem 0 1rem; color: var(--toki-blue-dark); }
+        .article-content p { margin-bottom: 1.5rem; text-align: justify; }
+        .article-content blockquote { border-left: 3px solid var(--toki-blue); padding-left: 1.5rem; margin: 2rem 0; font-family: var(--font-display); color: var(--text-secondary); }
+        .article-content ul { margin: 1.5rem 0; padding-left: 1.5rem; }
+        .article-content li { margin-bottom: 0.75rem; }
+
+        .core-message { background: var(--toki-blue-pale); border-left: 4px solid var(--toki-blue); padding: 1.5rem; margin: 2rem 0; font-size: 0.95rem; line-height: 1.8; }
+        .key-point { background: linear-gradient(135deg, var(--toki-blue-pale) 0%, #fff 100%); border: 1px solid var(--accent-blue); border-radius: 8px; padding: 1.5rem; margin: 2rem 0; text-align: center; }
+        .key-point p { font-family: var(--font-display); font-size: 1.1rem; color: var(--toki-blue-dark); margin: 0; }
+
+        .article-footer { margin-top: 4rem; padding-top: 2rem; border-top: 1px solid var(--border); text-align: center; }
+        .article-footer p { font-size: 0.8rem; color: var(--text-muted); margin-bottom: 1rem; }
+        .article-footer a { color: var(--toki-blue); text-decoration: none; }
+        .article-footer a:hover { text-decoration: underline; }
+
+        .code-table { width: 100%; border-collapse: collapse; margin: 1.5rem 0 2rem; font-size: 0.9rem; line-height: 1.6; }
+        .code-table th { background: var(--toki-blue-pale); color: var(--toki-blue-dark); font-weight: 600; text-align: left; padding: 0.6rem 0.8rem; border-bottom: 2px solid var(--toki-blue); font-size: 0.8rem; letter-spacing: 0.05em; }
+        .code-table td { padding: 0.5rem 0.8rem; border-bottom: 1px solid var(--border); }
+        .code-table td:first-child { font-family: 'SF Mono', 'Consolas', monospace; font-weight: 600; white-space: nowrap; color: var(--toki-blue-dark); }
+        .code-table tr:last-child td { border-bottom: none; }
+
+        .layer-diagram { background: #F8FAFC; border: 1px solid var(--border); border-radius: 8px; padding: 1.5rem; margin: 2rem 0; font-family: 'SF Mono', 'Consolas', monospace; font-size: 0.85rem; line-height: 2; text-align: center; color: var(--text-secondary); }
+
+        @media (max-width: 768px) {
+            .article-container { padding: 6rem 1.2rem 3rem; }
+            .article-header h1 { font-size: 1.5rem; }
+            .article-nav .nav-label { display: none; }
+            .code-table { font-size: 0.8rem; }
+            .code-table td, .code-table th { padding: 0.4rem 0.5rem; }
+        }
+        @media print { .article-nav { display: none; } .article-container { padding-top: 2rem; } }
+    </style>
+</head>
+<body>
+
+<nav class="article-nav">
+    <a href="essays-en.html" class="nav-brand">TokiStorage</a>
+    <div class="nav-right">
+        <span class="nav-label">ESSAY</span>
+        <a href="product-codes.html" class="lang-switch">JA</a>
+    </div>
+</nav>
+
+<main class="article-container">
+    <header class="article-header">
+        <div class="article-category">ESSAY &mdash; Meta Perspective</div>
+        <h1>Product Codes as a Design Language</h1>
+        <p class="article-subtitle">A name that wouldn't fit in Wise's input field gave birth to an entire taxonomy.</p>
+    </header>
+
+    <article class="article-content">
+
+        <p>When sending international payments through Wise, I used to type <code>TOKI-XXXX-XXXX-XXXX TimelessAdvisor-SpotConsultation</code> into the description field. The transaction's unique identifier followed by the service's full name, crammed into a single line.</p>
+
+        <p>One day I realized the string might be too long. Wise's description field has a character limit. "TimelessAdvisor-SpotConsultation" had to be shortened.</p>
+
+        <p>Shortening a name meant re-examining the essence of the service. What to keep, what to cut. That judgment is the definition of the service itself.</p>
+
+        <h2>The Code Table</h2>
+
+        <p>After the exercise, every product and service received a two-to-four-character code.</p>
+
+        <table class="code-table">
+            <thead>
+                <tr><th>Code</th><th>Full Name</th><th>Description</th></tr>
+            </thead>
+            <tbody>
+                <tr><td>MQxN</td><td>Multi-QR (N-pack)</td><td>QR generation credits</td></tr>
+                <tr><td>TKxN</td><td>Tokushu (N-pack)</td><td>NDL special feature rights</td></tr>
+                <tr><td>TA-SPOT</td><td>Timeless Advisor Spot</td><td>Spot consultation</td></tr>
+                <tr><td>TA-RETN</td><td>Timeless Advisor Retainer</td><td>Retainer agreement</td></tr>
+                <tr><td>WA</td><td>Workaway</td><td>International talent introduction</td></tr>
+                <tr><td>OG</td><td>Off-Grid</td><td>Infrastructure independence support</td></tr>
+                <tr><td>AMB</td><td>Ambassador</td><td>Pearl Soap ambassador</td></tr>
+                <tr><td>SC</td><td>SoulCarrier</td><td>Resonance circle (pay what you wish)</td></tr>
+            </tbody>
+        </table>
+
+        <p><code>TOKI-XXXX-XXXX-XXXX</code> is the unique transaction identifier. The product code tells you "what," while the TOKI code tells you "whose." Writing <code>TOKI-SPOT-2603-0001 TA-SPOT</code> in a payment description captures the entire transaction at a glance.</p>
+
+        <h2>Why These Eight</h2>
+
+        <p><strong>TokiQR (MQ / TK)</strong>&mdash;The product that democratizes proof of existence. The starting point of everything. Its core is proprietary audio encoding technology that inscribes up to 30 seconds of voice into a single QR code. NDL special feature rights create a bridge to Japan's National Diet Library. This is the revenue pillar that supports every other service.</p>
+
+        <p><strong>Timeless Advisor (TA)</strong>&mdash;The quality of the question determines the quality of the design. A sounding board for leaders' thinking, offered in two forms: spot consultation and retainer. Not just "building" a product, but a space to keep asking "why build it."</p>
+
+        <p><strong>Workaway (WA)</strong>&mdash;Opening communities through international volunteering. Infrastructure that moves people. When perspectives from abroad enter a region, the community rediscovers its own value.</p>
+
+        <p><strong>Off-Grid (OG)</strong>&mdash;Independence in power and connectivity. A foundation for activity that doesn't depend on location. The design philosophy of network independence is a direct extension of TokiQR's offline playback.</p>
+
+        <p><strong>Ambassador (AMB)</strong>&mdash;Taking root in communities through Pearl Soap. Building connections through physical goods. A bar of soap&mdash;an everyday item&mdash;becomes a touchpoint with people that digital channels cannot reach.</p>
+
+        <p><strong>SoulCarrier (SC)</strong>&mdash;Connecting people to their roots. What every other service ultimately supports. Structured as a resonance circle with pay-what-you-wish participation rather than fixed membership fees.</p>
+
+        <h2>What the Codes Reveal About Design Philosophy</h2>
+
+        <p>I started with a hypothesis: any service that cannot be expressed in two characters does not yet exist as a service. The brevity of a code equals the sharpness of a service's focus. If you cannot compress a name into two characters, the service hasn't found its center.</p>
+
+        <p>SoulCarrier's consolidation into a single type illustrates this perfectly. Originally, there were three membership tiers: regular, lifetime, and supporting. But applying tiers to "resonance" was a contradiction. What distinguishes a regular member from a supporting one? Does resonance have a hierarchy?</p>
+
+        <p>We eliminated the tiers and unified everything into a single pay-what-you-wish model. The moment it shifted from "payment for a service" to "resonance with an endeavor," the code converged to a single <code>SC</code>. The name didn't shrink. The philosophy sharpened, and the code became shorter as a natural consequence.</p>
+
+        <blockquote>
+            The brevity of a code equals the sharpness of a service's focus.
+        </blockquote>
+
+        <h2>The Layer Structure</h2>
+
+        <div class="layer-diagram">
+            [SoulCarrier &mdash; Mission]<br>
+            &uarr; supports<br>
+            [WA / OG / AMB &mdash; Activity Infrastructure]<br>
+            &uarr; supports<br>
+            [TA &mdash; Design Sounding Board]<br>
+            &uarr; supports<br>
+            [TokiQR (MQ/TK) &mdash; Product Foundation]
+        </div>
+
+        <p>From bottom to top, concrete to abstract.</p>
+
+        <p>TokiQR (MQ / TK) generates revenue as the product foundation. Timeless Advisor (TA) ensures design quality. Workaway, Off-Grid, and Ambassador (WA / OG / AMB) create touchpoints with society. SoulCarrier (SC) embodies the mission.</p>
+
+        <p>Earn through products, give back through services, fulfill the mission through SoulCarrier. This three-layer structure is the backbone of the eight codes.</p>
+
+        <h2>What Wise's Constraint Taught Us</h2>
+
+        <p>A technical constraint triggered an essential reorganization. In the journey from "TimelessAdvisor-SpotConsultation" to "TA-SPOT," we discovered that what remains after stripping away is the essence.</p>
+
+        <p>GAS (Google Apps Script), Cloudflare Workers, credits.html, localStorage&mdash;TokiStorage's system spans multiple layers. The common language threading through every layer is the product code. Backend payment processing, frontend credit display, and payment descriptions all speak the same code.</p>
+
+        <p>A system is healthy when the front and back speak the same language. Organizations where internal codes diverge from customer-facing names eventually stumble over the gap. At TokiStorage, the code the customer sees is the same code running inside the system. Nothing to hide, so nothing is hidden.</p>
+
+        <blockquote>
+            A system is healthy when the front and back speak the same language.
+        </blockquote>
+
+        <h2>The 25-Million-Yen Commitment</h2>
+
+        <p>In 2025, we spent four months on Maui. Including R&amp;D costs in Japan, the annual investment exceeded 25 million yen. All from personal funds and borrowing.</p>
+
+        <p>Why go that far? Behind each of the eight product codes lies the inevitability of that service's existence. TokiQR was born from the impulse to "preserve an ordinary person's voice for 1,000 years." Timeless Advisor grew from the desire to "provide the sounding board I once wished I'd had." SoulCarrier emerged from the conviction that "we need a structure for people to resonate with the work of connecting people to their roots."</p>
+
+        <p>In ten years, generations will shift. A five-year-old today will be fifteen; a seventy-year-old parent will be eighty. There are things that can only be done now. With the technology to preserve a voice already in hand, not delivering it to society was never an option.</p>
+
+        <p>This is not a business plan. Not a blueprint. Not merely a taxonomy. It is a record of the way of life our family chose.</p>
+
+        <div class="key-point">
+            <p>Everything we are fits inside eight codes.</p>
+        </div>
+
+    </article>
+
+    <footer class="article-footer">
+        <p id="essay-nav-links"></p>
+        <p style="font-size: 0.75rem; color: var(--text-muted);">&copy; 2026 TokiStorage. All rights reserved.</p>
+    </footer>
+
+</main>
+
+<script src="essay-nav.js"></script>
+<script src="essay-tts.js"></script>
+</body>
+</html>

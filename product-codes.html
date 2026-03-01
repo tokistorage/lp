@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" type="image/png" sizes="32x32" href="asset/favicon-32.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="asset/apple-touch-icon.png">
+    <title>プロダクトコードという設計言語 | トキストレージ</title>
+    <meta name="robots" content="index, follow">
+    <meta name="description" content="Wiseのdescription欄に収まらなかった名前が、トキストレージのプロダクトサービス全体の体系を生んだ。8つのコードに凝縮された設計思想の記録。">    <style>
+        :root {
+            --toki-blue: #2563EB;
+            --toki-blue-dark: #1E40AF;
+            --toki-blue-pale: #EFF6FF;
+            --accent-blue: #60A5FA;
+            --bg-white: #FFFFFF;
+            --text-primary: #1E293B;
+            --text-secondary: #475569;
+            --text-muted: #94A3B8;
+            --border: #E2E8F0;
+            --font-display: 'Hiragino Mincho ProN', 'Yu Mincho', serif;
+            --font-body: 'Hiragino Kaku Gothic ProN', 'Yu Gothic', 'Meiryo', sans-serif;
+        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        html { scroll-behavior: smooth; }
+        body { font-family: var(--font-body); font-weight: 400; background: var(--bg-white); color: var(--text-primary); line-height: 2; font-size: 16px; }
+
+        .article-nav { position: fixed; top: 0; left: 0; right: 0; z-index: 1000; background: rgba(255,255,255,0.95); backdrop-filter: blur(12px); border-bottom: 1px solid var(--border); padding: 0.6rem 1.2rem; display: flex; align-items: center; justify-content: space-between; gap: 1rem; }
+        .article-nav .nav-brand { font-family: var(--font-display); font-size: 0.9rem; font-weight: 600; color: var(--toki-blue); text-decoration: none; white-space: nowrap; }
+        .article-nav .nav-brand::before { content: ''; display: inline-block; width: 20px; height: 20px; background: url('asset/tokistorage-icon-512.png') no-repeat center / contain; vertical-align: -3px; margin-right: 5px; }
+        .article-nav .nav-right { display: flex; align-items: center; gap: 1rem; }
+        .article-nav .nav-label { font-size: 0.6rem; color: var(--text-muted); letter-spacing: 0.08em; }
+        .article-nav .lang-switch { font-size: 0.75rem; color: var(--toki-blue); text-decoration: none; padding: 0.3rem 0.6rem; border: 1px solid var(--toki-blue); border-radius: 4px; }
+        .article-nav .lang-switch:hover { background: var(--toki-blue); color: #fff; }
+
+        .article-container { max-width: 680px; margin: 0 auto; padding: 7rem 2rem 4rem; }
+        .article-header { margin-bottom: 3rem; padding-bottom: 2rem; border-bottom: 1px solid var(--border); }
+        .article-category { font-size: 0.7rem; color: var(--toki-blue); letter-spacing: 0.15em; margin-bottom: 1rem; }
+        .article-header h1 { font-family: var(--font-display); font-size: 1.8rem; font-weight: 700; line-height: 1.5; margin-bottom: 1.5rem; }
+        .article-subtitle { font-size: 0.95rem; color: var(--text-secondary); line-height: 1.9; }
+
+        .article-content h2 { font-family: var(--font-display); font-size: 1.3rem; font-weight: 600; margin: 3rem 0 1.5rem; padding-bottom: 0.5rem; border-bottom: 2px solid var(--toki-blue-pale); }
+        .article-content h3 { font-family: var(--font-display); font-size: 1.1rem; font-weight: 600; margin: 2rem 0 1rem; color: var(--toki-blue-dark); }
+        .article-content p { margin-bottom: 1.5rem; text-align: justify; }
+        .article-content blockquote { border-left: 3px solid var(--toki-blue); padding-left: 1.5rem; margin: 2rem 0; font-family: var(--font-display); color: var(--text-secondary); }
+        .article-content ul { margin: 1.5rem 0; padding-left: 1.5rem; }
+        .article-content li { margin-bottom: 0.75rem; }
+
+        .core-message { background: var(--toki-blue-pale); border-left: 4px solid var(--toki-blue); padding: 1.5rem; margin: 2rem 0; font-size: 0.95rem; line-height: 1.8; }
+        .key-point { background: linear-gradient(135deg, var(--toki-blue-pale) 0%, #fff 100%); border: 1px solid var(--accent-blue); border-radius: 8px; padding: 1.5rem; margin: 2rem 0; text-align: center; }
+        .key-point p { font-family: var(--font-display); font-size: 1.1rem; color: var(--toki-blue-dark); margin: 0; }
+
+        .article-footer { margin-top: 4rem; padding-top: 2rem; border-top: 1px solid var(--border); text-align: center; }
+        .article-footer p { font-size: 0.8rem; color: var(--text-muted); margin-bottom: 1rem; }
+        .article-footer a { color: var(--toki-blue); text-decoration: none; }
+        .article-footer a:hover { text-decoration: underline; }
+
+        .code-table { width: 100%; border-collapse: collapse; margin: 1.5rem 0 2rem; font-size: 0.9rem; line-height: 1.6; }
+        .code-table th { background: var(--toki-blue-pale); color: var(--toki-blue-dark); font-weight: 600; text-align: left; padding: 0.6rem 0.8rem; border-bottom: 2px solid var(--toki-blue); font-size: 0.8rem; letter-spacing: 0.05em; }
+        .code-table td { padding: 0.5rem 0.8rem; border-bottom: 1px solid var(--border); }
+        .code-table td:first-child { font-family: 'SF Mono', 'Consolas', monospace; font-weight: 600; white-space: nowrap; color: var(--toki-blue-dark); }
+        .code-table tr:last-child td { border-bottom: none; }
+
+        .layer-diagram { background: #F8FAFC; border: 1px solid var(--border); border-radius: 8px; padding: 1.5rem; margin: 2rem 0; font-family: 'SF Mono', 'Consolas', monospace; font-size: 0.85rem; line-height: 2; text-align: center; color: var(--text-secondary); }
+
+        @media (max-width: 768px) {
+            .article-container { padding: 6rem 1.2rem 3rem; }
+            .article-header h1 { font-size: 1.5rem; }
+            .article-nav .nav-label { display: none; }
+            .code-table { font-size: 0.8rem; }
+            .code-table td, .code-table th { padding: 0.4rem 0.5rem; }
+        }
+        @media print { .article-nav { display: none; } .article-container { padding-top: 2rem; } }
+    </style>
+</head>
+<body>
+
+<nav class="article-nav">
+    <a href="essays.html" class="nav-brand">トキストレージ</a>
+    <div class="nav-right">
+        <span class="nav-label">ESSAY</span>
+        <a href="product-codes-en.html" class="lang-switch">EN</a>
+    </div>
+</nav>
+
+<main class="article-container">
+    <header class="article-header">
+        <div class="article-category">ESSAY &mdash; メタ視点</div>
+        <h1>プロダクトコードという設計言語</h1>
+        <p class="article-subtitle">Wiseの入力欄に収まらなかった名前が、体系を生んだ。</p>
+    </header>
+
+    <article class="article-content">
+
+        <p>Wiseで海外送金するとき、descriptionフィールドに <code>TOKI-XXXX-XXXX-XXXX TimelessAdvisor-SpotConsultation</code> と入力していた。トランザクションの固有識別子と、サービスの正式名称を一行に詰め込んだ形だ。</p>
+
+        <p>ある日、その文字列が長すぎて受け付けない可能性に気づいた。Wiseのdescriptionフィールドには文字数制限がある。「TimelessAdvisor-SpotConsultation」を縮めなければならない。</p>
+
+        <p>名前を縮めることは、サービスの本質を問い直すことだった。何を残し、何を削るか。その判断は、サービスが何であるかという定義そのものだ。</p>
+
+        <h2>コード一覧</h2>
+
+        <p>整理の結果、すべてのプロダクトサービスに2〜4文字のコードを割り当てた。</p>
+
+        <table class="code-table">
+            <thead>
+                <tr><th>Code</th><th>Full Name</th><th>意味</th></tr>
+            </thead>
+            <tbody>
+                <tr><td>MQxN</td><td>Multi-QR (N-pack)</td><td>QR生成クレジット</td></tr>
+                <tr><td>TKxN</td><td>Tokushu (N-pack)</td><td>NDL特集権</td></tr>
+                <tr><td>TA-SPOT</td><td>Timeless Advisor Spot</td><td>スポット相談</td></tr>
+                <tr><td>TA-RETN</td><td>Timeless Advisor Retainer</td><td>顧問契約</td></tr>
+                <tr><td>WA</td><td>Workaway</td><td>国際人材導入支援</td></tr>
+                <tr><td>OG</td><td>Off-Grid</td><td>インフラ自立化支援</td></tr>
+                <tr><td>AMB</td><td>Ambassador</td><td>Pearl Soapアンバサダー</td></tr>
+                <tr><td>SC</td><td>SoulCarrier</td><td>共鳴の会（任意金額）</td></tr>
+            </tbody>
+        </table>
+
+        <p><code>TOKI-XXXX-XXXX-XXXX</code> がトランザクションの固有識別子。プロダクトコードが「何を」、TOKIコードが「誰の」を示す。送金のdescriptionに <code>TOKI-SPOT-2603-0001 TA-SPOT</code> と書けば、それだけでトランザクションの全貌が分かる。</p>
+
+        <h2>なぜこの8つなのか</h2>
+
+        <p><strong>TokiQR（MQ / TK）</strong>——存在証明を民主化するプロダクト。すべての起点。QR1枚に最大30秒の音声を刻む独自音声符号化技術がコアであり、NDL特集権は国立国会図書館との接点を作る。収益の柱であり、他のすべてのサービスを支える基盤。</p>
+
+        <p><strong>Timeless Advisor（TA）</strong>——問いの質が設計の質を決める。経営者の思考の壁打ち相手として、スポット相談と顧問契約の二種を用意した。プロダクトを「作る」だけでなく、「なぜ作るのか」を問い続ける場所。</p>
+
+        <p><strong>Workaway（WA）</strong>——国際ボランティアの仕組みで地域を開く。人を動かすインフラ。海外からの視点が入ることで、地域が自らの価値を再発見する。</p>
+
+        <p><strong>Off-Grid（OG）</strong>——電力・通信の自立。場所を選ばない活動基盤。ネットワークに依存しない設計思想は、TokiQRのオフライン再生と同じ思想の延長線上にある。</p>
+
+        <p><strong>Ambassador（AMB）</strong>——Pearl Soapを通じて地域に根を張る。モノを介したコミュニティの構築。石鹸という日用品が、デジタルでは届かない層への接点になる。</p>
+
+        <p><strong>SoulCarrier（SC）</strong>——故郷と人を繋ぐ。すべてのサービスが最終的に支えるもの。共鳴の会として、固定金額ではなく任意金額で参加できる仕組みにした。</p>
+
+        <h2>コードが語る設計思想</h2>
+
+        <p>2文字で表現できないサービスは存在しない——という仮説を立てた。コードの短さは、サービスの焦点の鋭さと等しい。名前を2文字に圧縮できないなら、そのサービスはまだ焦点が定まっていない。</p>
+
+        <p>SoulCarrierが最後に1タイプに統合された経緯がそれを象徴する。当初は正会員・終身会員・賛助会員という3区分を設けていた。しかし、「共鳴」に会員種別を設けること自体が矛盾していた。正会員と賛助会員の違いは何か。共鳴に序列があるのか。</p>
+
+        <p>区分を撤廃し、任意金額の一本にした。「サービスの対価」から「活動への共鳴」に変わった瞬間、コードも <code>SC</code> の1つに収束した。名前が縮まったのではない。思想が研ぎ澄まされた結果、コードが短くなったのだ。</p>
+
+        <blockquote>
+            コードの短さは、サービスの焦点の鋭さと等しい。
+        </blockquote>
+
+        <h2>レイヤー構造</h2>
+
+        <div class="layer-diagram">
+            [SoulCarrier &mdash; 使命]<br>
+            &uarr; 支える<br>
+            [WA / OG / AMB &mdash; 活動基盤]<br>
+            &uarr; 支える<br>
+            [TA &mdash; 設計の壁打ち]<br>
+            &uarr; 支える<br>
+            [TokiQR (MQ/TK) &mdash; プロダクト基盤]
+        </div>
+
+        <p>下から上に向かって、具体から抽象へ。</p>
+
+        <p>TokiQR（MQ / TK）がプロダクト基盤として収益を生み、Timeless Advisor（TA）が設計の質を担保し、Workaway・Off-Grid・Ambassador（WA / OG / AMB）が社会との接点を作り、SoulCarrier（SC）が使命を体現する。</p>
+
+        <p>プロダクトで稼ぎ、サービスで社会に還元し、SoulCarrierで使命を果たす。この三層構造が、8つのコードの背骨だ。</p>
+
+        <h2>Wiseという制約が教えてくれたこと</h2>
+
+        <p>技術的制約が本質的な整理を促した。「TimelessAdvisor-SpotConsultation」が「TA-SPOT」になるまでの過程で、削ぎ落とした先に残るものが本質だと気づいた。</p>
+
+        <p>GAS（Google Apps Script）、Cloudflare Worker、credits.html、localStorage——トキストレージのシステムは複数のレイヤーで構成されている。そのすべてのレイヤーを貫く共通言語がプロダクトコードだ。バックエンドの決済処理も、フロントエンドのクレジット表示も、送金のdescriptionも、同じコードで語れる。</p>
+
+        <p>表も裏も同じ言語で語れる状態が、システムの健全さだ。内部用コードと顧客向け名称が乖離している組織は、いずれその乖離に足を取られる。トキストレージでは、顧客に見えるコードとシステム内部のコードが同一だ。隠す必要がないから、隠さない。</p>
+
+        <blockquote>
+            表も裏も同じ言語で語れる状態が、システムの健全さだ。
+        </blockquote>
+
+        <h2>2,500万円の覚悟</h2>
+
+        <p>2025年、マウイ島に4ヶ月滞在した。日本での研究開発費を含め、年間2,500万円を超える投資。すべて私財と借入で賄っている。</p>
+
+        <p>なぜそこまでするのか。8つのプロダクトコードの背後には、それぞれのサービスが生まれた必然がある。TokiQRは「普通の人の声を1000年残す」という衝動から、Timeless Advisorは「自分が受けたかった壁打ちを提供する」という欲求から、SoulCarrierは「故郷と人を繋ぐ活動に共鳴する仕組みが必要だ」という確信から生まれた。</p>
+
+        <p>10年後には世代が変わる。いま5歳の子どもが15歳になり、いま70歳の親が80歳になる。今しかできないことがある。声を残せる技術が手元にあるいま、それを社会に届けないという選択肢はなかった。</p>
+
+        <p>これは事業計画ではない。設計図でもない。ただの体系でもない。家族で選んだ生き方の記録だ。</p>
+
+        <div class="key-point">
+            <p>8つのコードに、私たちのすべてが入っている。</p>
+        </div>
+
+    </article>
+
+    <footer class="article-footer">
+        <p id="essay-nav-links"></p>
+        <p style="font-size: 0.75rem; color: var(--text-muted);">&copy; 2026 TokiStorage. All rights reserved.</p>
+    </footer>
+
+</main>
+
+<script src="essay-nav.js"></script>
+<script src="essay-tts.js"></script>
+</body>
+</html>
