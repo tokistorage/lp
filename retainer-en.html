@@ -1,0 +1,620 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" type="image/png" sizes="32x32" href="asset/favicon-32.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="asset/apple-touch-icon.png">
+    <title>Timeless Advisor | The questions AI cannot ask — designed through dialogue</title>
+    <meta name="robots" content="index, follow">
+    <meta name="description" content="AI amplifies the power to solve. But &quot;what to ask&quot; cannot be amplified. From individual development to enterprise — the quality of the questions determines the quality of the design.">    <style>
+        :root {
+            --toki-blue: #2563EB;
+            --toki-blue-light: #3B82F6;
+            --toki-blue-dark: #1D4ED8;
+            --toki-blue-pale: #EFF6FF;
+            --toki-blue-glow: rgba(37, 99, 235, 0.12);
+            --toki-gold: #C9A962;
+            --toki-gold-pale: #FDF8E8;
+            --emerald: #16A34A;
+            --emerald-pale: #F0FDF4;
+            --bg-white: #FFFFFF;
+            --bg-page: #F8FAFC;
+            --bg-section: #F1F5F9;
+            --bg-card: #FFFFFF;
+            --text-primary: #1E293B;
+            --text-secondary: #475569;
+            --text-muted: #94A3B8;
+            --text-dim: #CBD5E1;
+            --border: #E2E8F0;
+            --border-light: #F1F5F9;
+            --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.05);
+            --shadow-md: 0 4px 16px rgba(0, 0, 0, 0.06);
+            --font-display: 'Hiragino Mincho ProN', 'Yu Mincho', serif;
+            --font-body: 'Hiragino Kaku Gothic ProN', 'Yu Gothic', 'Meiryo', sans-serif;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        html { scroll-behavior: smooth; }
+
+        body {
+            font-family: var(--font-body);
+            font-weight: 400;
+            background: var(--bg-white);
+            color: var(--text-primary);
+            line-height: 1.9;
+            font-size: 16px;
+        }
+
+        .pp-nav {
+            position: fixed;
+            top: 0; left: 0; right: 0;
+            z-index: 1000;
+            background: rgba(255,255,255,0.95);
+            backdrop-filter: blur(12px);
+            border-bottom: 1px solid var(--border);
+            padding: 0.6rem 1.2rem;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+        .pp-nav .nav-brand {
+            font-family: var(--font-display);
+            font-size: 0.9rem;
+            font-weight: 600;
+            color: var(--toki-blue);
+            text-decoration: none;
+        }
+        .pp-nav .nav-right {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+        .pp-nav .nav-label {
+            font-size: 0.6rem;
+            color: var(--text-muted);
+            letter-spacing: 0.08em;
+        }
+        .pp-nav .lang-switch {
+            font-size: 0.75rem;
+            color: var(--toki-blue);
+            text-decoration: none;
+            padding: 0.3rem 0.6rem;
+            border: 1px solid var(--toki-blue);
+            border-radius: 4px;
+        }
+        .pp-nav .lang-switch:hover {
+            background: var(--toki-blue);
+            color: #fff;
+        }
+
+        .cp-hero {
+            padding: 8rem 2rem 5rem;
+            text-align: center;
+            background: linear-gradient(180deg, var(--text-primary) 0%, #1a2744 60%, #0f172a 100%);
+            color: #fff;
+        }
+        .cp-hero-label {
+            font-size: 0.7rem;
+            letter-spacing: 0.25em;
+            color: var(--toki-gold);
+            margin-bottom: 2rem;
+        }
+        .cp-hero h1 {
+            font-family: var(--font-display);
+            font-size: 2.2rem;
+            font-weight: 700;
+            line-height: 1.6;
+            margin-bottom: 1.5rem;
+        }
+        .cp-hero-sub {
+            font-size: 1rem;
+            color: var(--text-muted);
+            max-width: 560px;
+            margin: 0 auto;
+            line-height: 2;
+        }
+        .cp-hero-sub strong {
+            color: var(--toki-gold);
+        }
+
+        .pp-section {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 4rem 2rem;
+        }
+        .pp-section-title {
+            font-family: var(--font-display);
+            font-size: 1.4rem;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+            color: var(--text-primary);
+        }
+        .pp-section-sub {
+            font-size: 0.9rem;
+            color: var(--text-secondary);
+            margin-bottom: 2.5rem;
+        }
+        .pp-section-border { border-top: 1px solid var(--border); }
+
+        .insight-card {
+            background: var(--bg-section);
+            border-radius: 12px;
+            padding: 2rem;
+            margin-bottom: 1.5rem;
+        }
+        .insight-card h3 {
+            font-family: var(--font-display);
+            font-size: 1.05rem;
+            font-weight: 600;
+            color: var(--text-primary);
+            margin-bottom: 0.75rem;
+        }
+        .insight-card p {
+            font-size: 0.9rem;
+            color: var(--text-secondary);
+        }
+
+        .offer-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+        }
+        .offer-card {
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 1.5rem;
+        }
+        .offer-num {
+            font-family: var(--font-display);
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: var(--toki-blue);
+            opacity: 0.25;
+            margin-bottom: 0.3rem;
+        }
+        .offer-card h4 {
+            font-family: var(--font-display);
+            font-size: 0.95rem;
+            font-weight: 600;
+            color: var(--text-primary);
+            margin-bottom: 0.5rem;
+        }
+        .offer-card p {
+            font-size: 0.85rem;
+            color: var(--text-secondary);
+            line-height: 1.7;
+        }
+
+        .process-list {
+            display: flex;
+            flex-direction: column;
+            gap: 1.5rem;
+        }
+        .process-item {
+            display: flex;
+            align-items: flex-start;
+            gap: 1.5rem;
+        }
+        .process-num {
+            flex-shrink: 0;
+            width: 3rem;
+            height: 3rem;
+            border-radius: 50%;
+            background: var(--toki-blue);
+            color: #fff;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-family: var(--font-display);
+            font-size: 0.9rem;
+            font-weight: 700;
+        }
+        .process-body h4 {
+            font-family: var(--font-display);
+            font-size: 1rem;
+            font-weight: 600;
+            color: var(--text-primary);
+            margin-bottom: 0.3rem;
+        }
+        .process-body p {
+            font-size: 0.85rem;
+            color: var(--text-secondary);
+            line-height: 1.7;
+        }
+
+        .audience-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 1rem;
+        }
+        .audience-card {
+            background: var(--bg-section);
+            border-radius: 10px;
+            padding: 1.2rem;
+            text-align: center;
+        }
+        .audience-icon { font-size: 1.5rem; margin-bottom: 0.5rem; }
+        .audience-card h4 {
+            font-family: var(--font-display);
+            font-size: 0.85rem;
+            font-weight: 600;
+            color: var(--text-primary);
+            margin-bottom: 0.3rem;
+        }
+        .audience-card p {
+            font-size: 0.75rem;
+            color: var(--text-secondary);
+            line-height: 1.6;
+        }
+
+        .investment-list {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+        }
+        .investment-item {
+            display: flex;
+            align-items: flex-start;
+            gap: 1rem;
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 1.2rem 1.5rem;
+        }
+        .investment-icon {
+            flex-shrink: 0;
+            width: 2.5rem;
+            height: 2.5rem;
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.2rem;
+        }
+        .investment-icon.blue { background: var(--toki-blue-pale); }
+        .investment-icon.gold { background: var(--toki-gold-pale); }
+        .investment-body h4 {
+            font-family: var(--font-display);
+            font-size: 0.95rem;
+            font-weight: 600;
+            color: var(--text-primary);
+            margin-bottom: 0.2rem;
+        }
+        .investment-body p {
+            font-size: 0.85rem;
+            color: var(--text-secondary);
+            line-height: 1.7;
+        }
+
+        .pp-cta {
+            background: var(--text-primary);
+            color: #fff;
+            text-align: center;
+            padding: 4rem 2rem;
+        }
+        .pp-cta h2 {
+            font-family: var(--font-display);
+            font-size: 1.5rem;
+            font-weight: 600;
+            margin-bottom: 1rem;
+        }
+        .pp-cta p {
+            font-size: 0.9rem;
+            color: var(--text-muted);
+            max-width: 500px;
+            margin: 0 auto 2rem;
+            line-height: 1.8;
+        }
+        .pp-cta-links {
+            display: flex;
+            justify-content: center;
+            gap: 1.5rem;
+            flex-wrap: wrap;
+        }
+        .pp-cta-links a {
+            color: var(--toki-gold);
+            text-decoration: none;
+            font-size: 0.85rem;
+            padding: 0.5rem 1.2rem;
+            border: 1px solid var(--toki-gold);
+            border-radius: 6px;
+            transition: background 0.2s;
+        }
+        .pp-cta-links a:hover {
+            background: var(--toki-gold);
+            color: var(--text-primary);
+        }
+
+        .pp-footer {
+            text-align: center;
+            padding: 2rem;
+            border-top: 1px solid var(--border);
+        }
+        .pp-footer p {
+            font-size: 0.75rem;
+            color: var(--text-muted);
+        }
+        .pp-footer a {
+            color: var(--toki-blue);
+            text-decoration: none;
+        }
+
+        @media (max-width: 768px) {
+            .cp-hero { padding: 6rem 1.2rem 3rem; }
+            .cp-hero h1 { font-size: 1.5rem; }
+            .pp-section { padding: 3rem 1.2rem; }
+            .offer-grid { grid-template-columns: 1fr; }
+            .audience-grid { grid-template-columns: 1fr; }
+            .process-item { flex-direction: column; gap: 1rem; }
+            .process-num { width: auto; height: auto; padding: 0.5rem 1rem; border-radius: 6px; }
+            .pp-nav .nav-label { display: none; }
+        }
+
+        @page { size: A4; margin: 15mm 18mm; }
+        @media print {
+            body { -webkit-print-color-adjust: exact; print-color-adjust: exact; font-size: 12px; line-height: 1.7; }
+            .pp-nav { display: none !important; }
+            .pp-footer { display: none !important; }
+            .cp-hero {
+                background: #fff !important;
+                color: var(--text-primary) !important;
+                padding: 1.5rem 2rem 1rem !important;
+            }
+            .cp-hero h1 { color: var(--text-primary) !important; font-size: 1.6rem; }
+            .cp-hero-sub { color: var(--text-secondary) !important; }
+            .cp-hero-sub strong { color: var(--toki-blue) !important; }
+            .cp-hero-label { color: var(--toki-gold) !important; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+            .pp-cta {
+                background: #fff !important;
+                color: var(--text-primary) !important;
+                padding: 2rem !important;
+                border-top: 2px solid var(--toki-blue);
+            }
+            .pp-cta h2 { color: var(--text-primary) !important; }
+            .pp-cta p { color: var(--text-secondary) !important; }
+            .pp-cta strong { color: var(--text-primary) !important; }
+            .pp-cta-links a { color: var(--toki-blue) !important; border-color: var(--toki-blue) !important; }
+            .pp-section { padding: 1.5rem 0 !important; max-width: 100% !important; }
+            .insight-card, .offer-card, .process-item, .audience-card, .investment-item { page-break-inside: avoid; }
+            .offer-grid, .audience-grid { gap: 0.8rem; }
+            a { text-decoration: none; }
+        }
+        .nav-brand::before {
+            content: '';
+            display: inline-block;
+            width: 20px;
+            height: 20px;
+            background: url('asset/tokistorage-icon-512.png') no-repeat center / contain;
+            vertical-align: -3px;
+            margin-right: 5px;
+        }
+    </style>
+    <link rel="stylesheet" href="contact-form.css">
+    <meta property="og:type" content="article">
+    <meta property="og:title" content="Timeless Advisor | The questions AI cannot ask — designed through dialogue">
+    <meta property="og:description" content="AI amplifies the power to solve. But &quot;what to ask&quot; cannot be amplified. From individual development to enterprise — the quality of the questions determines the quality of the design.">
+    <meta property="og:url" content="https://tokistorage.github.io/lp/retainer-en.html">
+    <meta property="og:site_name" content="TokiStorage">
+    <meta name="twitter:card" content="summary">
+    <meta name="twitter:title" content="Timeless Advisor | The questions AI cannot ask — designed through dialogue">
+    <meta name="twitter:description" content="AI amplifies the power to solve. But &quot;what to ask&quot; cannot be amplified. From individual development to enterprise — the quality of the questions determines the quality of the design.">
+    <meta property="og:image" content="https://tokistorage.github.io/lp/asset/tokistorage-icon-512.png">
+    <meta property="og:image:width" content="512">
+    <meta property="og:image:height" content="512">
+    <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "WebPage",
+  "name": "Timeless Advisor | The questions AI cannot ask — designed through dialogue",
+  "url": "https://tokistorage.github.io/lp/retainer-en.html",
+  "inLanguage": "en",
+  "publisher": {
+    "@type": "Organization",
+    "name": "TokiStorage",
+    "url": "https://tokistorage.github.io/lp"
+  },
+  "description": "AI amplifies the power to solve. But \"what to ask\" cannot be amplified. From individual development to enterprise — the quality of the questions determines the quality of the design."
+}
+    </script>
+    <link rel="alternate" hreflang="ja" href="https://tokistorage.github.io/lp/retainer.html">
+    <link rel="alternate" hreflang="en" href="https://tokistorage.github.io/lp/retainer-en.html">
+    <link rel="alternate" hreflang="x-default" href="https://tokistorage.github.io/lp/retainer.html">
+    <link rel="canonical" href="https://tokistorage.github.io/lp/retainer-en.html">
+</head>
+<body>
+
+<nav class="pp-nav">
+    <a href="index-en.html" class="nav-brand">TokiStorage</a>
+    <div class="nav-right">
+        <span class="nav-label">TIMELESS ADVISOR</span>
+        <a href="retainer.html" class="lang-switch">JP</a>
+    </div>
+</nav>
+
+<!-- Hero -->
+<header class="cp-hero">
+    <p class="cp-hero-label">TIMELESS ADVISOR</p>
+    <h1>The questions AI cannot ask &mdash;<br>designed through dialogue.</h1>
+    <p class="cp-hero-sub">
+        AI amplifies the power to solve. But <strong>&ldquo;what to ask&rdquo;</strong> cannot be amplified.<br>
+        From individual development to enterprise &mdash; the quality of the questions determines the quality of the design.
+    </p>
+</header>
+
+<!-- Why Now -->
+<section class="pp-section">
+    <h2 class="pp-section-title">Why the power to question matters now</h2>
+    <p class="pp-section-sub">In an AI-accelerated era, the absence of the right questions creates risk</p>
+
+    <div class="insight-card">
+        <h3>AI generates efficient solutions. But it does not question alignment with design philosophy.</h3>
+        <p>Store it in Google Drive for easier processing. Manage it in a spreadsheet for simpler coding &mdash; AI proposes efficient solutions to the problem at hand. But it does not ask whether those solutions align with the design philosophy at the heart of the product. Accepting proposals that increase external dependencies without scrutiny undermines the very architecture meant to endure.</p>
+    </div>
+    <div class="insight-card">
+        <h3>Uncritical adoption of AI-generated code creates security risks that scale with size.</h3>
+        <p>AI-generated code integrated without architectural deliberation is producing security vulnerabilities at an increasing rate. A solution that looks correct in isolation becomes a hole when the broader context goes unquestioned. And the larger the organization, the more devastating the consequences &mdash; personal data breaches and cyberattacks become exponentially more damaging.</p>
+    </div>
+    <div class="insight-card">
+        <h3>Being able to build fast and being able to ask the right questions are different capabilities.</h3>
+        <p>No matter how far AI evolves, the power to solve can be amplified endlessly &mdash; but &ldquo;what to ask&rdquo; is not subject to amplification. The quality of the questions that surface constraints determines the quality of the solutions. The value of knowing frameworks lies in becoming able to hand AI the right questions.</p>
+    </div>
+</section>
+
+<!-- What is Timeless Advisor -->
+<section class="pp-section pp-section-border">
+    <h2 class="pp-section-title">What is Timeless Advisor</h2>
+    <p class="pp-section-sub">Retainer-based advisory where question quality drives design quality</p>
+
+    <div class="offer-grid">
+        <div class="offer-card">
+            <div class="offer-num">01</div>
+            <h4>Question design</h4>
+            <p>Structuring &ldquo;what to ask&rdquo; using frameworks &mdash; DFD, TOC, Pipes &amp; Filters, PDCA. Drawing data flows, locating bottlenecks, and raising the precision of your questions.</p>
+        </div>
+        <div class="offer-card">
+            <div class="offer-num">02</div>
+            <h4>Systems &amp; operations design</h4>
+            <p>Data flow visualization, bottleneck identification, pipeline redesign. Evaluating AI proposals against your design philosophy to ensure decisions align with the broader context.</p>
+        </div>
+        <div class="offer-card">
+            <div class="offer-num">03</div>
+            <h4>Security &amp; permanence</h4>
+            <p>Architectural review of AI-generated code, scrutiny of external dependencies, risk assessment scaled to your organization. Identifying vulnerabilities from a whole-system perspective, not just local optimization.</p>
+        </div>
+        <div class="offer-card">
+            <div class="offer-num">04</div>
+            <h4>Ongoing partnership</h4>
+            <p>Not one-off consulting, but a retainer relationship that maintains and elevates question quality over the medium to long term. Building a relationship where design decisions can be re-evaluated as constraints change.</p>
+        </div>
+    </div>
+</section>
+
+<!-- Process -->
+<section class="pp-section pp-section-border">
+    <h2 class="pp-section-title">How it works</h2>
+    <p class="pp-section-sub">From dialogue to ongoing partnership</p>
+
+    <div class="process-list">
+        <div class="process-item">
+            <span class="process-num">01</span>
+            <div class="process-body">
+                <h4>Initial dialogue (90 min, complimentary)</h4>
+                <p>We listen to your challenges and explore &ldquo;what should be asked&rdquo; together. The first 90 minutes to understand data flows, locate constraints, and assess the current state of your design philosophy.</p>
+            </div>
+        </div>
+        <div class="process-item">
+            <span class="process-num">02</span>
+            <div class="process-body">
+                <h4>Design &amp; proposal</h4>
+                <p>We visualize data flows, constraints, and architecture, making the reasoning behind each design decision explicit. By articulating &ldquo;why this was chosen,&rdquo; we enable future re-evaluation.</p>
+            </div>
+        </div>
+        <div class="process-item">
+            <span class="process-num">03</span>
+            <div class="process-body">
+                <h4>Retainer engagement</h4>
+                <p>Monthly reviews, on-demand consultation, continuous assurance of question quality. Constraints change. A relationship that keeps updating the questions is what sustains design quality.</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Who This Is For -->
+<section class="pp-section pp-section-border">
+    <h2 class="pp-section-title">Who this is for</h2>
+    <p class="pp-section-sub">Regardless of scale, the quality of the questions determines the quality of the design</p>
+
+    <div class="audience-grid">
+        <div class="audience-card">
+            <div class="audience-icon">&#x1F4BB;</div>
+            <h4>CTOs / Tech leads</h4>
+            <p>Design deliberation not keeping pace with AI-accelerated development</p>
+        </div>
+        <div class="audience-card">
+            <div class="audience-icon">&#x1F680;</div>
+            <h4>Startup founders</h4>
+            <p>After MVP, unclear what to ask when establishing systems and operations</p>
+        </div>
+        <div class="audience-card">
+            <div class="audience-icon">&#x1F527;</div>
+            <h4>Individual developers</h4>
+            <p>In an era where one person can build anything, whole-system design gets overlooked</p>
+        </div>
+        <div class="audience-card">
+            <div class="audience-icon">&#x1F3E2;</div>
+            <h4>Enterprise leadership</h4>
+            <p>Service outages and data breach risks from adopting proposals without grounded expertise</p>
+        </div>
+        <div class="audience-card">
+            <div class="audience-icon">&#x1F91D;</div>
+            <h4>Partnership collaborations</h4>
+            <p>Establishing system design and operational foundations for joint ventures</p>
+        </div>
+        <div class="audience-card">
+            <div class="audience-icon">&#x1F3DB;</div>
+            <h4>Permanence-focused organizations</h4>
+            <p>Minimizing external dependencies for designs that endure long-term operations</p>
+        </div>
+    </div>
+</section>
+
+<!-- Investment Guide -->
+<section class="pp-section pp-section-border">
+    <h2 class="pp-section-title">Investment guide</h2>
+    <p class="pp-section-sub">Custom quotes based on scale and requirements</p>
+
+    <div class="investment-list">
+        <div class="investment-item">
+            <div class="investment-icon blue">&#x1F4AC;</div>
+            <div class="investment-body">
+                <h4>Spot consultation (single session)</h4>
+                <p>Custom quote. Question design and framework application for a specific challenge.</p>
+            </div>
+        </div>
+        <div class="investment-item" style="border-color: var(--toki-gold);">
+            <div class="investment-icon gold">&#x1F451;</div>
+            <div class="investment-body">
+                <h4>Retainer engagement (monthly)</h4>
+                <p>Custom quote. Monthly reviews, on-demand consultation, and continuous assurance of question quality.</p>
+            </div>
+        </div>
+    </div>
+    <p style="font-size: 0.8rem; color: var(--text-muted); margin-top: 1.5rem;">The initial 90-minute dialogue is complimentary. Feel free to reach out.</p>
+</section>
+
+<!-- Disclaimer -->
+<section class="pp-section pp-section-border" style="padding-bottom: 2rem;">
+    <h3 style="font-size: 0.85rem; color: var(--text-muted); font-weight: 600; margin-bottom: 1rem;">Note</h3>
+    <p style="font-size: 0.8rem; color: var(--text-secondary); line-height: 1.8; margin-bottom: 1rem;">
+        This is not a dismissal of the strengths that enterprises bring. Large organizations have depth of resources, redundancy, and accumulated governance that individuals cannot replicate. The point is that leveraging those strengths requires knowing what to ask. I work independently at times, and at other times collaborate with enterprises through partnerships. Regardless of scale, the structure remains the same: the quality of the questions determines the quality of the design.
+    </p>
+    <p style="font-size: 0.75rem; color: var(--text-muted); line-height: 1.8;">
+        This document has been prepared by TokiStorage (Takuya Sato) for the purpose of introducing our advisory services. The information contained herein reflects current views and plans and does not constitute a guarantee of accuracy, completeness, or future outcomes. This document is provided for informational purposes only and does not constitute legal, investment, or other professional advice.
+    </p>
+</section>
+
+<!-- CTA / Next Steps -->
+<section class="pp-cta">
+    <h2>Let&rsquo;s start with the right questions.</h2>
+    <p>The initial 90-minute dialogue is complimentary.<br>We listen to your challenges and explore what should be asked together.</p>
+    <div style="margin-bottom: 2rem;">
+        <a href="#contact" style="display:inline-flex; align-items:center; gap:0.5rem; padding:0.85rem 2.5rem; background:var(--toki-blue); color:#fff; border-radius:0.4rem; font-size:1rem; font-weight:500; text-decoration:none;">Contact Us</a>
+    </div>
+    <div class="pp-cta-links">
+        <a href="pipeline-renovation-en.html">Pipeline Renovation Notes</a>
+        <a href="client-proposal-en.html">Personal Preservation (Timeless Consulting)</a>
+        <a href="index-en.html">About TokiStorage</a>
+    </div>
+</section>
+
+<!-- Footer -->
+<footer style="text-align: center; padding: 2rem 1.5rem; margin-top: 3rem; border-top: 1px solid #E2E8F0;">
+    <p style="font-family: Georgia, 'Times New Roman', serif; font-size: 0.8rem; color: #94A3B8; font-style: italic; margin-bottom: 0.8rem;">The quality of the questions determines the quality of the design.</p>
+    <p style="font-size: 0.75rem; color: #94A3B8;">&copy; 2026 TokiStorage. All rights reserved.</p>
+</footer>
+
+<script src="contact-form.js" defer></script>
+<script src="tracker.js" defer></script>
+</body>
+</html>
