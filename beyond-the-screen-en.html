@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" type="image/png" sizes="32x32" href="asset/favicon-32.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="asset/apple-touch-icon.png">
+    <title>Beyond the Screen | TokiStorage</title>
+    <meta name="robots" content="index, follow">
+    <meta name="description" content="A UI that doesn't fit on a 390px screen might as well not exist. Responsive design turned out to be a matter of imagination, not technology.">    <style>
+        :root {
+            --toki-blue: #2563EB;
+            --toki-blue-dark: #1E40AF;
+            --toki-blue-pale: #EFF6FF;
+            --accent-blue: #60A5FA;
+            --bg-white: #FFFFFF;
+            --text-primary: #1E293B;
+            --text-secondary: #475569;
+            --text-muted: #94A3B8;
+            --border: #E2E8F0;
+            --font-display: 'Georgia', 'Times New Roman', serif;
+            --font-body: -apple-system, 'Segoe UI', Helvetica, Arial, sans-serif;
+        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        html { scroll-behavior: smooth; }
+        body { font-family: var(--font-body); font-weight: 400; background: var(--bg-white); color: var(--text-primary); line-height: 2; font-size: 16px; }
+
+        .article-nav { position: fixed; top: 0; left: 0; right: 0; z-index: 1000; background: rgba(255,255,255,0.95); backdrop-filter: blur(12px); border-bottom: 1px solid var(--border); padding: 0.6rem 1.2rem; display: flex; align-items: center; justify-content: space-between; gap: 1rem; }
+        .article-nav .nav-brand { font-family: var(--font-display); font-size: 0.9rem; font-weight: 600; color: var(--toki-blue); text-decoration: none; white-space: nowrap; }
+        .article-nav .nav-brand::before { content: ''; display: inline-block; width: 20px; height: 20px; background: url('asset/tokistorage-icon-512.png') no-repeat center / contain; vertical-align: -3px; margin-right: 5px; }
+        .article-nav .nav-right { display: flex; align-items: center; gap: 1rem; }
+        .article-nav .nav-label { font-size: 0.6rem; color: var(--text-muted); letter-spacing: 0.08em; }
+        .article-nav .lang-switch { font-size: 0.75rem; color: var(--toki-blue); text-decoration: none; padding: 0.3rem 0.6rem; border: 1px solid var(--toki-blue); border-radius: 4px; }
+        .article-nav .lang-switch:hover { background: var(--toki-blue); color: #fff; }
+
+        .article-container { max-width: 680px; margin: 0 auto; padding: 7rem 2rem 4rem; }
+        .article-header { margin-bottom: 3rem; padding-bottom: 2rem; border-bottom: 1px solid var(--border); }
+        .article-category { font-size: 0.7rem; color: var(--toki-blue); letter-spacing: 0.15em; margin-bottom: 1rem; }
+        .article-header h1 { font-family: var(--font-display); font-size: 1.8rem; font-weight: 700; line-height: 1.5; margin-bottom: 1.5rem; }
+        .article-subtitle { font-size: 0.95rem; color: var(--text-secondary); line-height: 1.9; }
+
+        .article-content h2 { font-family: var(--font-display); font-size: 1.3rem; font-weight: 600; margin: 3rem 0 1.5rem; padding-bottom: 0.5rem; border-bottom: 2px solid var(--toki-blue-pale); }
+        .article-content h3 { font-family: var(--font-display); font-size: 1.1rem; font-weight: 600; margin: 2rem 0 1rem; color: var(--toki-blue-dark); }
+        .article-content p { margin-bottom: 1.5rem; text-align: justify; }
+        .article-content blockquote { border-left: 3px solid var(--toki-blue); padding-left: 1.5rem; margin: 2rem 0; font-family: var(--font-display); color: var(--text-secondary); }
+        .article-content ul { margin: 1.5rem 0; padding-left: 1.5rem; }
+        .article-content li { margin-bottom: 0.75rem; }
+
+        .core-message { background: var(--toki-blue-pale); border-left: 4px solid var(--toki-blue); padding: 1.5rem; margin: 2rem 0; font-size: 0.95rem; line-height: 1.8; }
+        .key-point { background: linear-gradient(135deg, var(--toki-blue-pale) 0%, #fff 100%); border: 1px solid var(--accent-blue); border-radius: 8px; padding: 1.5rem; margin: 2rem 0; text-align: center; }
+        .key-point p { font-family: var(--font-display); font-size: 1.1rem; color: var(--toki-blue-dark); margin: 0; }
+
+        .article-footer { margin-top: 4rem; padding-top: 2rem; border-top: 1px solid var(--border); text-align: center; }
+        .article-footer p { font-size: 0.8rem; color: var(--text-muted); margin-bottom: 1rem; }
+        .article-footer a { color: var(--toki-blue); text-decoration: none; }
+        .article-footer a:hover { text-decoration: underline; }
+
+        @media (max-width: 768px) {
+            .article-container { padding: 6rem 1.2rem 3rem; }
+            .article-header h1 { font-size: 1.5rem; }
+            .article-nav .nav-label { display: none; }
+        }
+        @media print { .article-nav { display: none; } .article-container { padding-top: 2rem; } }
+    </style>
+</head>
+<body>
+
+<nav class="article-nav">
+    <a href="essays-en.html" class="nav-brand">TokiStorage</a>
+    <div class="nav-right">
+        <span class="nav-label">ESSAY</span>
+        <a href="beyond-the-screen.html" class="lang-switch">JA</a>
+    </div>
+</nav>
+
+<main class="article-container">
+    <header class="article-header">
+        <div class="article-category">TECHNOLOGY &amp; DESIGN</div>
+        <h1>Beyond the Screen</h1>
+        <p class="article-subtitle">Responsive design turned out to be a matter of imagination, not technology.</p>
+    </header>
+
+    <article class="article-content">
+
+        <div class="core-message">A UI that doesn't fit on a 390px screen might as well not exist. Yet this constraint was not the limit of design&#x2014;it was the beginning.</div>
+
+        <h2>1. The Reality of 390px</h2>
+
+        <p>The viewport width of an iPhone 13 is 390 pixels. It is one of the most widely used smartphones in the world.</p>
+
+        <p>A layout that looks perfect on a PC breaks at 390px. Navigation labels like "Voice," "Image," and "Text" wrap mid-word. The line break splits icons from their labels, fracturing the meaning of the UI.</p>
+
+        <p>Adding <code>white-space: nowrap</code> doesn't solve it. Reducing font-size from 0.85rem to 0.78rem finally keeps everything on one line. A difference of 0.07rem&#x2014;roughly a single pixel&#x2014;marks the boundary of user experience.</p>
+
+        <p>This boundary doesn't appear on spec sheets. It only becomes visible when you move your finger across a 390px screen.</p>
+
+        <h2>2. overflow-x: hidden Is Not a Fix</h2>
+
+        <p>The monitor page was "wobbling" horizontally on mobile. <code>overflow-x: hidden</code> was already set on html and body.</p>
+
+        <p>But hiding an overflow doesn't change the fact that something is overflowing. iOS Safari honestly reveals it through elastic scrolling. Every time your finger touches the edge, the hidden element's presence ripples through as a wobble.</p>
+
+        <p>The real fix is to eliminate the overflow at its source. <code>width: 100%</code> and <code>overflow-wrap: break-word</code> address the root cause. Hiding symptoms versus removing causes&#x2014;this is a question of design posture that extends far beyond responsive layouts.</p>
+
+        <h2>3. When Tables Break the Screen</h2>
+
+        <p>The specified commercial transactions page. On PC, a clean two-column table. On mobile, a "price" cell containing over 100 characters of text pushes the entire table beyond the screen edge.</p>
+
+        <p>The solution: convert th/td to <code>display: block</code> on mobile. Disassemble the "container" of the table and stack it vertically. The structure of information remains the same, but its presentation adapts to the device.</p>
+
+        <p>"Change the container without changing the content"&#x2014;this is the essence of responsive design. What you communicate stays the same; how you deliver it adapts to the receiver.</p>
+
+        <h2>4. Making Cache Responsive</h2>
+
+        <p>Updating the Service Worker cache didn't change anything on mobile. CSS had been fixed, but the old styles persisted.</p>
+
+        <p>The cause was a double-cache problem. When the Service Worker used <code>cache.addAll()</code> to pre-cache files, the browser's HTTP cache served stale versions. This was invisible on PC but pronounced on mobile Safari, where HTTP caches linger longer.</p>
+
+        <p><code>fetch(f, { cache: 'reload' })</code>&#x2014;fetch directly from the server. This single line seals the double-cache pitfall. Responsiveness is not just about screen size. Network behavior, too, varies by device.</p>
+
+        <h2>5. The Hamburger Menu as Translation</h2>
+
+        <p>On PC, five navigation links sit side by side. On mobile, they collapse into a three-line icon. The same information, conveyed in a different grammar. It has the same structure as translating between languages.</p>
+
+        <p>Furthermore, a "Monitor" link appears only for users who haven't registered as monitors. What the UI shows changes based on the context of the person beyond the screen. <code>localStorage.getItem('toki-wisetag')</code>&#x2014;a single value determines the shape of the interface.</p>
+
+        <p>Responsive design is not just about adapting to screen width. It is about adapting to user context.</p>
+
+        <h2>6. The Word "Wobbling"</h2>
+
+        <p>The user said the page was "wobbling side to side." Not a developer term&#x2014;a word that captures the raw, physical sensation.</p>
+
+        <p>DevTools couldn't reproduce it. Only by touching an iPhone's Safari with an actual finger did the issue reveal itself. Some problems are invisible when you merely simulate on a PC screen. The last pixel of responsive design can only be found on a real device.</p>
+
+        <p>The person beyond the screen does not live inside an emulator. There is a world that appears only when a real finger touches a real screen.</p>
+
+        <h2>7. Responsive Design for 1000 Years</h2>
+
+        <p>TokiQR is a product built to "last 1000 years." But no one can imagine what devices will look like a millennium from now.</p>
+
+        <p>A QR code at Version 40 holds a maximum of 2,953 bytes. This constraint will not change in 1000 years&#x2014;because it is a physical specification. The dot pattern printed on paper exists independently of digital evolution.</p>
+
+        <p>HTML and CSS will keep changing. But the philosophy of responsive design&#x2014;"change your form to match the receiver"&#x2014;will not. When someone scans a QR code printed on paper 1000 years from now, no one knows what size their screen will be. So we design to work on any screen.</p>
+
+        <p>That is responsive design for 1000 years.</p>
+
+        <blockquote>
+            <p>Beyond the screen is not a specification&#x2014;it is a person. Responsive design is the search for a form that reaches them.</p>
+        </blockquote>
+
+        <div class="key-point"><p>A small screen teaches the essence of design.</p></div>
+
+    </article>
+
+    <footer class="article-footer">
+        <p id="essay-nav-links"></p>
+        <p style="font-size: 0.75rem; color: var(--text-muted);">&copy; 2026 TokiStorage. All rights reserved.</p>
+    </footer>
+
+</main>
+
+<script src="essay-nav.js"></script>
+<script src="essay-tts.js"></script>
+</body>
+</html>

@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" type="image/png" sizes="32x32" href="asset/favicon-32.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="asset/apple-touch-icon.png">
+    <title>画面の向こう側 | トキストレージ</title>
+    <meta name="robots" content="index, follow">
+    <meta name="description" content="390pxの画面に収まらないUIは、存在しないのと同じだ。レスポンシブ対応の本質は、技術ではなく想像力の問題だった。">    <style>
+        :root {
+            --toki-blue: #2563EB;
+            --toki-blue-dark: #1E40AF;
+            --toki-blue-pale: #EFF6FF;
+            --accent-blue: #60A5FA;
+            --bg-white: #FFFFFF;
+            --text-primary: #1E293B;
+            --text-secondary: #475569;
+            --text-muted: #94A3B8;
+            --border: #E2E8F0;
+            --font-display: 'Hiragino Mincho ProN', 'Yu Mincho', serif;
+            --font-body: 'Hiragino Kaku Gothic ProN', 'Yu Gothic', 'Meiryo', sans-serif;
+        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        html { scroll-behavior: smooth; }
+        body { font-family: var(--font-body); font-weight: 400; background: var(--bg-white); color: var(--text-primary); line-height: 2; font-size: 16px; }
+
+        .article-nav { position: fixed; top: 0; left: 0; right: 0; z-index: 1000; background: rgba(255,255,255,0.95); backdrop-filter: blur(12px); border-bottom: 1px solid var(--border); padding: 0.6rem 1.2rem; display: flex; align-items: center; justify-content: space-between; gap: 1rem; }
+        .article-nav .nav-brand { font-family: var(--font-display); font-size: 0.9rem; font-weight: 600; color: var(--toki-blue); text-decoration: none; white-space: nowrap; }
+        .article-nav .nav-brand::before { content: ''; display: inline-block; width: 20px; height: 20px; background: url('asset/tokistorage-icon-512.png') no-repeat center / contain; vertical-align: -3px; margin-right: 5px; }
+        .article-nav .nav-right { display: flex; align-items: center; gap: 1rem; }
+        .article-nav .nav-label { font-size: 0.6rem; color: var(--text-muted); letter-spacing: 0.08em; }
+        .article-nav .lang-switch { font-size: 0.75rem; color: var(--toki-blue); text-decoration: none; padding: 0.3rem 0.6rem; border: 1px solid var(--toki-blue); border-radius: 4px; }
+        .article-nav .lang-switch:hover { background: var(--toki-blue); color: #fff; }
+
+        .article-container { max-width: 680px; margin: 0 auto; padding: 7rem 2rem 4rem; }
+        .article-header { margin-bottom: 3rem; padding-bottom: 2rem; border-bottom: 1px solid var(--border); }
+        .article-category { font-size: 0.7rem; color: var(--toki-blue); letter-spacing: 0.15em; margin-bottom: 1rem; }
+        .article-header h1 { font-family: var(--font-display); font-size: 1.8rem; font-weight: 700; line-height: 1.5; margin-bottom: 1.5rem; }
+        .article-subtitle { font-size: 0.95rem; color: var(--text-secondary); line-height: 1.9; }
+
+        .article-content h2 { font-family: var(--font-display); font-size: 1.3rem; font-weight: 600; margin: 3rem 0 1.5rem; padding-bottom: 0.5rem; border-bottom: 2px solid var(--toki-blue-pale); }
+        .article-content h3 { font-family: var(--font-display); font-size: 1.1rem; font-weight: 600; margin: 2rem 0 1rem; color: var(--toki-blue-dark); }
+        .article-content p { margin-bottom: 1.5rem; text-align: justify; }
+        .article-content blockquote { border-left: 3px solid var(--toki-blue); padding-left: 1.5rem; margin: 2rem 0; font-family: var(--font-display); color: var(--text-secondary); }
+        .article-content ul { margin: 1.5rem 0; padding-left: 1.5rem; }
+        .article-content li { margin-bottom: 0.75rem; }
+
+        .core-message { background: var(--toki-blue-pale); border-left: 4px solid var(--toki-blue); padding: 1.5rem; margin: 2rem 0; font-size: 0.95rem; line-height: 1.8; }
+        .key-point { background: linear-gradient(135deg, var(--toki-blue-pale) 0%, #fff 100%); border: 1px solid var(--accent-blue); border-radius: 8px; padding: 1.5rem; margin: 2rem 0; text-align: center; }
+        .key-point p { font-family: var(--font-display); font-size: 1.1rem; color: var(--toki-blue-dark); margin: 0; }
+
+        .article-footer { margin-top: 4rem; padding-top: 2rem; border-top: 1px solid var(--border); text-align: center; }
+        .article-footer p { font-size: 0.8rem; color: var(--text-muted); margin-bottom: 1rem; }
+        .article-footer a { color: var(--toki-blue); text-decoration: none; }
+        .article-footer a:hover { text-decoration: underline; }
+
+        @media (max-width: 768px) {
+            .article-container { padding: 6rem 1.2rem 3rem; }
+            .article-header h1 { font-size: 1.5rem; }
+            .article-nav .nav-label { display: none; }
+        }
+        @media print { .article-nav { display: none; } .article-container { padding-top: 2rem; } }
+    </style>
+</head>
+<body>
+
+<nav class="article-nav">
+    <a href="essays.html" class="nav-brand">トキストレージ</a>
+    <div class="nav-right">
+        <span class="nav-label">ESSAY</span>
+        <a href="beyond-the-screen-en.html" class="lang-switch">EN</a>
+    </div>
+</nav>
+
+<main class="article-container">
+    <header class="article-header">
+        <div class="article-category">技術・設計</div>
+        <h1>画面の向こう側</h1>
+        <p class="article-subtitle">レスポンシブ対応は、技術ではなく想像力の問題だった。</p>
+    </header>
+
+    <article class="article-content">
+
+        <div class="core-message">390pxの画面に収まらないUIは、存在しないのと同じだ。だがこの制約は、設計の限界ではなく、設計の始まりだった。</div>
+
+        <h2>1. 390pxという現実</h2>
+
+        <p>iPhone 13のビューポート幅は390px。世界で最も普及しているスマートフォンの一つだ。</p>
+
+        <p>PCで見れば完璧なレイアウトが、390pxでは崩れる。たとえばナビゲーションに並ぶ「音声」「画像」「テキスト」のラベルが、テキストの途中で改行される。アイコンとラベルの間で折り返しが起き、UIの意味が分断される。</p>
+
+        <p><code>white-space: nowrap</code>を入れても収まらない。font-sizeを0.85remから0.78remに落としてようやく1行に収まる。0.07remの差——わずか1ピクセル程度の違いに、ユーザーの体験の境界がある。</p>
+
+        <p>この境界は、スペックシートには載らない。390pxの画面で指を動かして初めて見える。</p>
+
+        <h2>2. overflow-x: hidden は解決ではない</h2>
+
+        <p>モニターページがモバイルで横方向に「うねうね」する。<code>overflow-x: hidden</code>はhtml/bodyに設定済みだった。</p>
+
+        <p>だが、隠しているだけで、はみ出している事実は変わらない。iOS Safariはそれを弾性スクロールで正直に教えてくれる。画面の端に指が触れるたびに、隠された要素の存在が揺れとして伝わる。</p>
+
+        <p>本当の修正は、はみ出す要素をなくすことだ。<code>width: 100%</code>と<code>overflow-wrap: break-word</code>で根本から対処する。原因を隠す設計と、原因を取り除く設計。レスポンシブ対応に限らず、あらゆる設計の姿勢が問われる場面だ。</p>
+
+        <h2>3. テーブルが画面を突き破る</h2>
+
+        <p>特定商取引法に基づく表記ページ。PCでは端正な2カラムテーブルが、モバイルでは「販売価格」セルに100文字超のテキストが入り、テーブルごと画面外にはみ出す。</p>
+
+        <p>解決策は、モバイルではth/tdを<code>display: block</code>に変換すること。テーブルという「器」を解体して、縦に積み直す。情報の構造は一つだが、見せ方はデバイスに応じて変わる。</p>
+
+        <p>「情報を変えずに器を変える」——これがレスポンシブの本質だ。伝える内容は同じでも、届け方は受け手に合わせる。</p>
+
+        <h2>4. キャッシュもレスポンシブに</h2>
+
+        <p>Service Workerのキャッシュを更新しても、モバイルで見た目が変わらない。CSSを修正したはずなのに、古いスタイルが表示され続ける。</p>
+
+        <p>原因は二重キャッシュだった。Service Workerが<code>cache.addAll()</code>でファイルをプリキャッシュするとき、ブラウザのHTTPキャッシュから古いバージョンを取得していた。PCでは問題なくても、モバイルSafariではHTTPキャッシュが長く残る。</p>
+
+        <p><code>fetch(f, { cache: 'reload' })</code>——サーバーから直接取りに行く。この一行が、二重キャッシュの落とし穴を塞ぐ。レスポンシブは画面サイズだけの話ではない。ネットワーク挙動も、デバイスによって異なる。</p>
+
+        <h2>5. ハンバーガーメニューという翻訳</h2>
+
+        <p>PCでは5つのナビリンクが横に並ぶ。モバイルでは三本線のアイコンに折りたたむ。同じ情報を、異なる文法で伝える。言語の翻訳と同じ構造だ。</p>
+
+        <p>さらに、モニター未登録のユーザーにだけ「モニター」リンクを表示する。画面の向こう側にいる人の状況に応じて、見せるものが変わる。<code>localStorage.getItem('toki-wisetag')</code>——一つの値が、UIの姿を決める。</p>
+
+        <p>レスポンシブとは、画面幅への対応だけではない。ユーザーの文脈への対応でもある。</p>
+
+        <h2>6. 「うねうね」という声</h2>
+
+        <p>ユーザーは「横方向にうねうねする」と言った。開発者用語ではない、体感そのままの言葉だ。</p>
+
+        <p>DevToolsでは再現しない。iPhoneのSafariで、指で触って初めてわかる現象だった。PCの画面でシミュレーションするだけでは見えない問題がある。レスポンシブ対応の最後の1ピクセルは、実機でしか見つけられない。</p>
+
+        <p>画面の向こう側は、エミュレータの中にはいない。実際の指が、実際の画面に触れたときにだけ現れる世界がある。</p>
+
+        <h2>7. 1000年のレスポンシブ</h2>
+
+        <p>TokiQRは「1000年残す」プロダクトだ。だが1000年後のデバイスは想像すらできない。</p>
+
+        <p>QRコードはVersion 40で最大2953バイト。この制約は1000年変わらない——物理的な規格だから。紙に印刷されたドットの配列は、デジタルの進化とは無関係に存在し続ける。</p>
+
+        <p>HTMLとCSSは変わり続ける。だがレスポンシブの思想——「受け手に合わせて姿を変える」——は変わらない。紙に印刷されたQRコードを1000年後の誰かがスキャンするとき、その画面が何インチかは誰にもわからない。だから、どんな画面でも動くように設計する。</p>
+
+        <p>それが、1000年のレスポンシブだ。</p>
+
+        <blockquote>
+            <p>画面の向こう側にいるのは、スペックではなく人だ。レスポンシブ対応とは、その人に届く形を探すことだ。</p>
+        </blockquote>
+
+        <div class="key-point"><p>小さな画面が、設計の本質を教えてくれる。</p></div>
+
+    </article>
+
+    <footer class="article-footer">
+        <p id="essay-nav-links"></p>
+        <p style="font-size: 0.75rem; color: var(--text-muted);">&copy; 2026 TokiStorage. All rights reserved.</p>
+    </footer>
+
+</main>
+
+<script src="essay-nav.js"></script>
+<script src="essay-tts.js"></script>
+</body>
+</html>
