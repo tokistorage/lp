@@ -160,6 +160,20 @@
 
         <p>This separation was not planned. Constraints pushed it into existence naturally. Bandwidth limits demanded repository consolidation. Binary bloat demanded a format change. Dependency weight demanded client-server separation. The constraints did the designing.</p>
 
+        <h2>Closing the Circuit with Verification</h2>
+
+        <p>The pipeline was working. ZIPs in, PDFs out, deployed to GitHub Pages. But one piece was missing. There was no mechanism to verify that the QR codes in the generated PDFs could actually be read back from the page.</p>
+
+        <p>TokiQR's thousand-year preservation is meaningless if QR codes cannot be scanned. Trusting that the generation side "embedded them correctly" is not enough. The PDFs need to be rendered, QR codes scanned, and the results compared against the original URLs.</p>
+
+        <p>I added verify-qr.py. Each PDF page is rendered at 300 dpi, QR codes are detected with pyzbar, and the results are cross-checked against the URL list in the ZIP's manifest.json. If even one URL is missing, the build fails and deployment is blocked. I ran it against all six existing PDFs — all passed.</p>
+
+        <p>There was one more gap. When verification failed and deployment was halted, there was no way to notice. Success notifications become noise as volume grows. Only failures need to be reported. I added a step that automatically creates a GitHub Issue when a build fails. Silent on success, alert on failure.</p>
+
+        <div class="core-message">
+            Generation alone is not enough. Verifying that what was generated can be read, and ensuring you are notified when it cannot — that is what closes the pipeline circuit.
+        </div>
+
         <blockquote>
             What constraints taught me was not what to give up, but where the flow could pass through.
         </blockquote>
