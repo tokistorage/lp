@@ -104,7 +104,7 @@
 
         <p>We tested method by method. Detection rates were measured at 800px, 1200px, and 1500px. OpenCV was tried as well — it failed on Version 40 entirely. jsQR stabilized at 1500px, where each module reached about 5.1 pixels. We also discovered that PDF link annotations could extract URLs directly without scanning QR codes at all, achieving 100% accuracy.</p>
 
-        <p>At the time, the approach was a two-tier strategy: annotation extraction as the primary method, jsQR at 1500px as fallback. This approach eventually became obsolete with the shift from PDF to ZIP. It was replaced by server-side PDF generation with pyzbar verification — there was no longer a need for clients to parse PDFs for data recovery. But the next constraint was already waiting — in bulk mode, the URLs packed into QR codes exceeded Version 40's capacity. Every time one constraint was resolved, the next one appeared.</p>
+        <p>At the time, the approach was a two-tier strategy: annotation extraction as the primary method, jsQR at 1500px as fallback. The approach itself became obsolete with the shift from PDF to ZIP, but the lesson remained: QR generation and readability must be guaranteed by design, not by assumption. This later led to building automated verification into the server-side pipeline — scanning the generated PDFs' QR codes and cross-checking them against the source data. But the next constraint was already waiting — in bulk mode, the URLs packed into QR codes exceeded Version 40's capacity. Every time one constraint was resolved, the next one appeared.</p>
 
         <h3>Auto-merge Race Conditions</h3>
 
