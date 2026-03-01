@@ -176,7 +176,8 @@
     { id: 'dev-to-ops', ja: '運用という視座', en: 'The Operational Lens', date: '2026-02-28' },
     { id: 'primitive-edge', ja: 'プリミティブの刃', en: 'The Primitive Edge', date: '2026-02-28' },
     { id: 'smartphone-complete', ja: 'スマホ一台で完結する', en: 'A Smartphone Is All You Need', date: '2026-02-28' },
-    { id: 'zero-personal-data', ja: '機密情報の撤廃', en: 'Abolishing Secrets', date: '2026-02-28' }
+    { id: 'zero-personal-data', ja: '機密情報の撤廃', en: 'Abolishing Secrets', date: '2026-02-28' },
+    { id: 'product-codes', ja: 'プロダクトコードという設計言語', en: 'Product Codes as a Design Language', date: '2026-03-01' }
   ];
 
   // ── Latest Articles (最新記事) ──
@@ -184,6 +185,7 @@
   // LATEST_COUNT で表示件数を制御
   const LATEST_COUNT = 5;
   const latestEssayIds = [
+    'product-codes',
     'trust-guidelines',
     'pipeline-renovation',
     'zero-personal-data',
@@ -262,7 +264,7 @@
     'platform':               ['no-competition', 'ecosystem', 'disintermediation', 'api-transformation', 'global-niche'],
     'global-niche':           ['no-competition', 'platform', 'global', 'global-honbinos', 'headhunter'],
     'global-honbinos':        ['global-niche', 'global', 'sanpoyoshi', 'ecology', 'turtle'],
-    'ecosystem':              ['platform', 'sanpoyoshi', 'no-competition', 'disintermediation', 'industry'],
+    'ecosystem':              ['platform', 'sanpoyoshi', 'no-competition', 'disintermediation', 'product-codes'],
     'free-strategy':          ['burn-rate-zero', 'sanpoyoshi', 'no-competition', 'gift-economy', 'advertising'],
     'brochure-essay':         ['advertising', 'free-strategy', 'novelty-soap', 'why-essays', 'choosing-not-to-choose'],
     'choosing-not-to-choose': ['brochure-essay', 'free-strategy', 'narrative-trust', 'openness', 'headhunter'],
@@ -275,7 +277,7 @@
     'sanpoyoshi':             ['walking-partner', 'partner-boundary', 'ecosystem', 'free-strategy', 'gift-economy'],
     'burn-rate-zero':         ['vibe-coding', 'rapid-prototyping', 'migration', 'free-strategy', 'headhunter'],
     'uniform-pricing':        ['price-acceptance', 'free-strategy', 'storage-strategy', 'sanpoyoshi', 'openness'],
-    'framework':              ['burn-rate-zero', 'no-competition', 'enterprise-architecture', 'price-acceptance', 'global-niche'],
+    'framework':              ['burn-rate-zero', 'no-competition', 'enterprise-architecture', 'price-acceptance', 'product-codes'],
     'prime-location':         ['realestate', 'post-nomad', 'utilization-productivity', 'urayasu', 'site-geology'],
     'diy-partner':            ['equipment-guide', 'wedding-partnership', 'uniform-pricing', 'community-benefit', 'sanpoyoshi'],
     'copyright-jasrac':       ['music', 'ownership', 'platform', 'disintermediation', 'ecosystem'],
@@ -369,7 +371,8 @@
     'dev-to-ops':             ['primitive-edge', 'ai-concierge', 'why-essays', 'development-chronicle', 'vibe-coding-secrets'],
     'primitive-edge':         ['smartphone-complete', 'dev-to-ops', 'no-external-deps', '30seconds', 'ai-concierge'],
     'smartphone-complete':    ['primitive-edge', 'dev-to-ops', 'burn-rate-zero', 'vibe-coding', 'ai-concierge'],
-    'zero-personal-data':               ['patent-departure', 'dev-to-ops', 'burn-rate-zero', 'primitive-edge', 'customer-journey-transformation']
+    'zero-personal-data':               ['patent-departure', 'dev-to-ops', 'burn-rate-zero', 'primitive-edge', 'customer-journey-transformation'],
+    'product-codes':                    ['ecosystem', 'framework', 'self-print-economy', 'customer-journey-transformation', 'corporate-site']
   };
 
   const isEnglish = document.documentElement.lang === 'en';
