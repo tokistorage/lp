@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" type="image/png" sizes="32x32" href="asset/favicon-32.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="asset/apple-touch-icon.png">
+    <title>Pipeline Renovation Notes | TokiStorage</title>
+    <meta name="robots" content="index, follow">
+    <meta name="description" content="Sixty pull requests in two days. A record of the constraints encountered and design decisions made while renovating the NDL deposit pipeline.">    <style>
+        :root {
+            --toki-blue: #2563EB;
+            --toki-blue-dark: #1E40AF;
+            --toki-blue-pale: #EFF6FF;
+            --accent-blue: #60A5FA;
+            --bg-white: #FFFFFF;
+            --text-primary: #1E293B;
+            --text-secondary: #475569;
+            --text-muted: #94A3B8;
+            --border: #E2E8F0;
+            --font-display: 'Georgia', 'Times New Roman', serif;
+            --font-body: -apple-system, 'Segoe UI', Helvetica, Arial, sans-serif;
+        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        html { scroll-behavior: smooth; }
+        body { font-family: var(--font-body); font-weight: 400; background: var(--bg-white); color: var(--text-primary); line-height: 2; font-size: 16px; }
+
+        .article-nav { position: fixed; top: 0; left: 0; right: 0; z-index: 1000; background: rgba(255,255,255,0.95); backdrop-filter: blur(12px); border-bottom: 1px solid var(--border); padding: 0.6rem 1.2rem; display: flex; align-items: center; justify-content: space-between; gap: 1rem; }
+        .article-nav .nav-brand { font-family: var(--font-display); font-size: 0.9rem; font-weight: 600; color: var(--toki-blue); text-decoration: none; white-space: nowrap; }
+        .article-nav .nav-brand::before { content: ''; display: inline-block; width: 20px; height: 20px; background: url('asset/tokistorage-icon-512.png') no-repeat center / contain; vertical-align: -3px; margin-right: 5px; }
+        .article-nav .nav-right { display: flex; align-items: center; gap: 1rem; }
+        .article-nav .nav-label { font-size: 0.6rem; color: var(--text-muted); letter-spacing: 0.08em; }
+        .article-nav .lang-switch { font-size: 0.75rem; color: var(--toki-blue); text-decoration: none; padding: 0.3rem 0.6rem; border: 1px solid var(--toki-blue); border-radius: 4px; }
+        .article-nav .lang-switch:hover { background: var(--toki-blue); color: #fff; }
+
+        .article-container { max-width: 680px; margin: 0 auto; padding: 7rem 2rem 4rem; }
+        .article-header { margin-bottom: 3rem; padding-bottom: 2rem; border-bottom: 1px solid var(--border); }
+        .article-category { font-size: 0.7rem; color: var(--toki-blue); letter-spacing: 0.15em; margin-bottom: 1rem; }
+        .article-header h1 { font-family: var(--font-display); font-size: 1.8rem; font-weight: 700; line-height: 1.5; margin-bottom: 1.5rem; }
+        .article-subtitle { font-size: 0.95rem; color: var(--text-secondary); line-height: 1.9; }
+
+        .article-content h2 { font-family: var(--font-display); font-size: 1.3rem; font-weight: 600; margin: 3rem 0 1.5rem; padding-bottom: 0.5rem; border-bottom: 2px solid var(--toki-blue-pale); }
+        .article-content h3 { font-family: var(--font-display); font-size: 1.1rem; font-weight: 600; margin: 2rem 0 1rem; color: var(--toki-blue-dark); }
+        .article-content p { margin-bottom: 1.5rem; text-align: justify; }
+        .article-content blockquote { border-left: 3px solid var(--toki-blue); padding-left: 1.5rem; margin: 2rem 0; font-family: var(--font-display); color: var(--text-secondary); }
+        .article-content ul { margin: 1.5rem 0; padding-left: 1.5rem; }
+        .article-content li { margin-bottom: 0.75rem; }
+
+        .core-message { background: var(--toki-blue-pale); border-left: 4px solid var(--toki-blue); padding: 1.5rem; margin: 2rem 0; font-size: 0.95rem; line-height: 1.8; }
+        .key-point { background: linear-gradient(135deg, var(--toki-blue-pale) 0%, #fff 100%); border: 1px solid var(--accent-blue); border-radius: 8px; padding: 1.5rem; margin: 2rem 0; text-align: center; }
+        .key-point p { font-family: var(--font-display); font-size: 1.1rem; color: var(--toki-blue-dark); margin: 0; }
+
+        .article-footer { margin-top: 4rem; padding-top: 2rem; border-top: 1px solid var(--border); text-align: center; }
+        .article-footer p { font-size: 0.8rem; color: var(--text-muted); margin-bottom: 1rem; }
+        .article-footer a { color: var(--toki-blue); text-decoration: none; }
+        .article-footer a:hover { text-decoration: underline; }
+
+        @media (max-width: 768px) {
+            .article-container { padding: 6rem 1.2rem 3rem; }
+            .article-header h1 { font-size: 1.5rem; }
+            .article-nav .nav-label { display: none; }
+        }
+        @media print { .article-nav { display: none; } .article-container { padding-top: 2rem; } }
+    </style>
+</head>
+<body>
+
+<nav class="article-nav">
+    <a href="essays-en.html" class="nav-brand">TokiStorage</a>
+    <div class="nav-right">
+        <span class="nav-label">ESSAY</span>
+        <a href="pipeline-renovation.html" class="lang-switch">JA</a>
+    </div>
+</nav>
+
+<main class="article-container">
+    <header class="article-header">
+        <div class="article-category">TECHNOLOGY & DESIGN</div>
+        <h1>Pipeline Renovation Notes</h1>
+        <p class="article-subtitle">Sixty pull requests in two days. A record of the constraints encountered and design decisions made while renovating the NDL deposit pipeline.</p>
+    </header>
+
+    <article class="article-content">
+
+        <h2>The Trigger</h2>
+
+        <p>TokiQR's voice QR codes were working. Record, encode, convert to QR, play back. The entire flow was stable. What was needed next was a pipeline to deposit these recordings with the National Diet Library (NDL).</p>
+
+        <p>We had been making deposits before. But as operations continued, constraints that the original design could not handle began surfacing one after another. A separate repository for each customer, PDFs stored as binaries in git, client-side builds. Every decision that seemed rational during development became a liability in the operations phase.</p>
+
+        <p>Over two days, I pushed roughly sixty pull requests across three repositories. This is a record of what happened.</p>
+
+        <h2>Constraints, in the Order They Appeared</h2>
+
+        <h3>GitHub Bandwidth Limits</h3>
+
+        <p>The first wall was GitHub's API bandwidth limit. The design called for creating a newsletter repository per customer and storing PDFs there, but files over 1MB hit rate limits. One or two deposits were fine, but submitting multiple newsletters in succession quickly exhausted the quota.</p>
+
+        <h3>PDF Binary Bloat</h3>
+
+        <p>PDFs are binaries. Git's diff management is useless against them, and each update adds its full size to the repository. Roughly 130KB per issue. 13MB for a hundred. 130MB for a thousand. Against GitHub's recommended 1GB limit, the per-customer repository model had an expiration date.</p>
+
+        <h3>The Weight of jsPDF</h3>
+
+        <p>The jsPDF library and its font files, used for client-side PDF generation, totaled 2.7MB. TokiQR's design principle is to run serverless. Carrying 2.7MB of dependency on the client side did not contradict that principle outright, but it felt wrong.</p>
+
+        <h3>Auto-merge Race Conditions</h3>
+
+        <p>TokiQR's repositories have auto-merge workflows: once CI passes, the PR merges immediately. Convenient, but when pushing additional commits to an existing branch, the merge sometimes completed before the push arrived. Changes were left stranded.</p>
+
+        <h2>Breakthroughs</h2>
+
+        <h3>Consolidation into newsletter-master</h3>
+
+        <p>I abandoned the per-customer repository approach. All series' ZIPs and PDFs were consolidated into a single repository called newsletter-master. GitHub Actions handles the build; GitHub Pages handles delivery. Series listing pages and individual pages are auto-generated by a Python script.</p>
+
+        <p>This eliminated the bandwidth problem. Push a ZIP file, and the workflow generates PDFs, updates the index pages, and deploys to GitHub Pages. The entire process completes server-side.</p>
+
+        <h3>The Shift from PDF to ZIP</h3>
+
+        <p>I stopped using PDF as the intermediate format and pivoted to ZIP. Audio data, manifest.json, and metadata are bundled into a single ZIP that becomes the pipeline's primary source. PDFs are generated server-side as derivatives of the ZIP.</p>
+
+        <p>Three things happened simultaneously with this shift. The jsPDF library and font files (2.7MB) were removed from the client. ZIPs serve directly as playback data sources, so adding a <code>?zip=</code> parameter to play.html was all it took to enable newsletter playback. And since ZIPs are smaller than PDFs, repository bloat was reduced as well.</p>
+
+        <div class="core-message">
+            Removing a dependency added functionality. Deleting 2.7MB opened three pathways: playback, download, and archive.
+        </div>
+
+        <h3>Queue-based Asynchronous Processing</h3>
+
+        <p>NDL submissions do not need to happen in real time. I switched to placing ZIPs in a queue/ directory and processing them on a five-minute timer. Failed submissions are retried automatically. Users can move on to their next task without waiting for results.</p>
+
+        <h3>The One-Branch-One-Commit Discipline</h3>
+
+        <p>The auto-merge race condition was solved with an operational rule. Each branch gets exactly one commit. Additional changes are made on a new branch only after confirming the previous PR has merged. It may look like more steps, but the risk of stranded changes drops to zero.</p>
+
+        <h2>What Sixty PRs Taught Me</h2>
+
+        <p>Looking at the breakdown of the roughly sixty pull requests from those two days, a pattern emerges.</p>
+
+        <ul>
+            <li>qr (20 PRs): NDL pipeline integration, ZIP infrastructure, bulk QR fixes, UI improvements</li>
+            <li>newsletter-master (25 PRs): Repository creation from scratch through UI construction and workflow setup</li>
+            <li>lp (18 PRs): Pipeline migration, queue-based async processing, newsletter page overhaul</li>
+        </ul>
+
+        <p>Few of these qualify as new features. Most were re-plumbing of existing systems. Rerouting data flows, bypassing bottlenecks, splitting thick pipes into thinner ones. The change visible to users was minimal, but the flow underneath was entirely different.</p>
+
+        <div class="key-point">
+            <p>Constraints were not enemies of design — they were inputs to it.</p>
+        </div>
+
+        <h2>What Happens at the Border of Development and Operations</h2>
+
+        <p>In the development phase, the goal is to build something that works. In the operations phase, the goal is to keep it working. This difference manifests not in how code is written, but in how pipelines are designed.</p>
+
+        <p>What fit in a single repository during development splits into three in operations. The client (qr), server-side builds (newsletter-master), and business logic (lp). Each can be deployed independently and changes at its own pace.</p>
+
+        <p>This separation was not planned. Constraints pushed it into existence naturally. Bandwidth limits demanded repository consolidation. Binary bloat demanded a format change. Dependency weight demanded client-server separation. The constraints did the designing.</p>
+
+        <blockquote>
+            What constraints taught me was not what to give up, but where the flow could pass through.
+        </blockquote>
+
+    </article>
+
+    <footer class="article-footer">
+        <p id="essay-nav-links"></p>
+        <p style="font-size: 0.75rem; color: var(--text-muted);">&copy; 2026 TokiStorage. All rights reserved.</p>
+    </footer>
+
+</main>
+
+<script src="essay-nav.js"></script>
+<script src="essay-tts.js"></script>
+</body>
+</html>
