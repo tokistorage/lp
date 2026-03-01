@@ -598,6 +598,17 @@
             <div class="ambassador-note">
                 月額費用やロイヤリティはありません。開催による売上はすべてアンバサダーのものです。材料費を参加費に含めるか、別途いただくかは自由に設定できます。機材キットの追加購入もアンバサダー価格で可能です。
             </div>
+
+            <div id="ambassadorPurchase" style="text-align:center;margin-top:2rem;padding:1.5rem;background:var(--bg-page);border:1px solid var(--border);border-radius:1rem;">
+                <button id="ambassadorGenBtn" style="background:var(--toki-gold);color:#fff;border:none;padding:0.8rem 2rem;border-radius:0.5rem;font-size:0.9rem;font-weight:600;cursor:pointer;transition:background 0.2s;">Wiseでお申し込み</button>
+                <div id="ambassadorCodeBox" style="display:none;margin-top:1.2rem;padding:1rem;background:#FFFBEB;border:1px solid #FDE68A;border-radius:0.5rem;">
+                    <div style="font-size:0.8rem;color:var(--text-secondary);margin-bottom:0.3rem;">あなたのコード</div>
+                    <div id="ambassadorCodeValue" style="font-family:monospace;font-size:1.3rem;font-weight:700;letter-spacing:0.1em;user-select:all;margin-bottom:0.3rem;"></div>
+                    <div style="font-size:0.75rem;color:var(--text-secondary);">送金時の明細に自動で含まれます</div>
+                </div>
+                <a href="#" id="ambassadorWiseBtn" style="display:none;margin-top:1rem;background:#9FE870;color:#1A1A1A;padding:0.8rem 2rem;border-radius:0.5rem;font-size:0.9rem;font-weight:600;text-decoration:none;display:none;inline-size:fit-content;margin-inline:auto;" target="_blank" rel="noopener">Wiseで送金する（¥55,000）</a>
+                <p style="margin-top:0.8rem;font-size:0.75rem;color:var(--text-muted);">個人情報の入力は不要です。Wiseアカウントから送金いただくと、入金確認後に機材セットを発送します。</p>
+            </div>
         </section>
 
         <!-- 開催までの流れ -->
@@ -710,6 +721,36 @@
     <p style="font-size: 0.75rem; color: #94A3B8;">&copy; 2026 TokiStorage. All rights reserved.</p>
 </footer>
 
+<script>
+(function() {
+    var WISE_BUSINESS_ID = 'dsbdb3';
+    var AMOUNT = 55000;
+    var DESC_SUFFIX = 'PearlSoap-Ambassador-Kit';
+
+    function generateCode() {
+        var chars = 'ABCDEFGHJKLMNPQRSTUVWXYZ23456789';
+        var seg = function() { var s = ''; for (var i = 0; i < 4; i++) s += chars[Math.floor(Math.random() * chars.length)]; return s; };
+        return 'TOKI-' + seg() + '-' + seg() + '-' + seg();
+    }
+
+    var btn = document.getElementById('ambassadorGenBtn');
+    var codeBox = document.getElementById('ambassadorCodeBox');
+    var codeVal = document.getElementById('ambassadorCodeValue');
+    var wiseBtn = document.getElementById('ambassadorWiseBtn');
+
+    btn.addEventListener('click', function() {
+        var code = generateCode();
+        codeVal.textContent = code;
+        codeBox.style.display = '';
+        var desc = code + ' ' + DESC_SUFFIX;
+        wiseBtn.href = 'https://wise.com/pay/business/' + WISE_BUSINESS_ID
+            + '?amount=' + AMOUNT + '&currency=JPY'
+            + '&description=' + encodeURIComponent(desc);
+        wiseBtn.style.display = 'inline-block';
+        btn.style.display = 'none';
+    });
+})();
+</script>
 <script src="contact-form.js" defer></script>
 <script src="tracker.js" defer></script>
 </body>
