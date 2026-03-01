@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" type="image/png" sizes="32x32" href="asset/favicon-32.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="asset/apple-touch-icon.png">
+    <title>パイプライン改修記 | トキストレージ</title>
+    <meta name="robots" content="index, follow">
+    <meta name="description" content="2日間で60本のプルリクエスト。NDL納本パイプラインの改修で見えた制約と、制約が導いた設計判断の記録。">    <style>
+        :root {
+            --toki-blue: #2563EB;
+            --toki-blue-dark: #1E40AF;
+            --toki-blue-pale: #EFF6FF;
+            --accent-blue: #60A5FA;
+            --bg-white: #FFFFFF;
+            --text-primary: #1E293B;
+            --text-secondary: #475569;
+            --text-muted: #94A3B8;
+            --border: #E2E8F0;
+            --font-display: 'Hiragino Mincho ProN', 'Yu Mincho', serif;
+            --font-body: 'Hiragino Kaku Gothic ProN', 'Yu Gothic', 'Meiryo', sans-serif;
+        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        html { scroll-behavior: smooth; }
+        body { font-family: var(--font-body); font-weight: 400; background: var(--bg-white); color: var(--text-primary); line-height: 2; font-size: 16px; }
+
+        .article-nav { position: fixed; top: 0; left: 0; right: 0; z-index: 1000; background: rgba(255,255,255,0.95); backdrop-filter: blur(12px); border-bottom: 1px solid var(--border); padding: 0.6rem 1.2rem; display: flex; align-items: center; justify-content: space-between; gap: 1rem; }
+        .article-nav .nav-brand { font-family: var(--font-display); font-size: 0.9rem; font-weight: 600; color: var(--toki-blue); text-decoration: none; white-space: nowrap; }
+        .article-nav .nav-brand::before { content: ''; display: inline-block; width: 20px; height: 20px; background: url('asset/tokistorage-icon-512.png') no-repeat center / contain; vertical-align: -3px; margin-right: 5px; }
+        .article-nav .nav-right { display: flex; align-items: center; gap: 1rem; }
+        .article-nav .nav-label { font-size: 0.6rem; color: var(--text-muted); letter-spacing: 0.08em; }
+        .article-nav .lang-switch { font-size: 0.75rem; color: var(--toki-blue); text-decoration: none; padding: 0.3rem 0.6rem; border: 1px solid var(--toki-blue); border-radius: 4px; }
+        .article-nav .lang-switch:hover { background: var(--toki-blue); color: #fff; }
+
+        .article-container { max-width: 680px; margin: 0 auto; padding: 7rem 2rem 4rem; }
+        .article-header { margin-bottom: 3rem; padding-bottom: 2rem; border-bottom: 1px solid var(--border); }
+        .article-category { font-size: 0.7rem; color: var(--toki-blue); letter-spacing: 0.15em; margin-bottom: 1rem; }
+        .article-header h1 { font-family: var(--font-display); font-size: 1.8rem; font-weight: 700; line-height: 1.5; margin-bottom: 1.5rem; }
+        .article-subtitle { font-size: 0.95rem; color: var(--text-secondary); line-height: 1.9; }
+
+        .article-content h2 { font-family: var(--font-display); font-size: 1.3rem; font-weight: 600; margin: 3rem 0 1.5rem; padding-bottom: 0.5rem; border-bottom: 2px solid var(--toki-blue-pale); }
+        .article-content h3 { font-family: var(--font-display); font-size: 1.1rem; font-weight: 600; margin: 2rem 0 1rem; color: var(--toki-blue-dark); }
+        .article-content p { margin-bottom: 1.5rem; text-align: justify; }
+        .article-content blockquote { border-left: 3px solid var(--toki-blue); padding-left: 1.5rem; margin: 2rem 0; font-family: var(--font-display); color: var(--text-secondary); }
+        .article-content ul { margin: 1.5rem 0; padding-left: 1.5rem; }
+        .article-content li { margin-bottom: 0.75rem; }
+
+        .core-message { background: var(--toki-blue-pale); border-left: 4px solid var(--toki-blue); padding: 1.5rem; margin: 2rem 0; font-size: 0.95rem; line-height: 1.8; }
+        .key-point { background: linear-gradient(135deg, var(--toki-blue-pale) 0%, #fff 100%); border: 1px solid var(--accent-blue); border-radius: 8px; padding: 1.5rem; margin: 2rem 0; text-align: center; }
+        .key-point p { font-family: var(--font-display); font-size: 1.1rem; color: var(--toki-blue-dark); margin: 0; }
+
+        .article-footer { margin-top: 4rem; padding-top: 2rem; border-top: 1px solid var(--border); text-align: center; }
+        .article-footer p { font-size: 0.8rem; color: var(--text-muted); margin-bottom: 1rem; }
+        .article-footer a { color: var(--toki-blue); text-decoration: none; }
+        .article-footer a:hover { text-decoration: underline; }
+
+        @media (max-width: 768px) {
+            .article-container { padding: 6rem 1.2rem 3rem; }
+            .article-header h1 { font-size: 1.5rem; }
+            .article-nav .nav-label { display: none; }
+        }
+        @media print { .article-nav { display: none; } .article-container { padding-top: 2rem; } }
+    </style>
+</head>
+<body>
+
+<nav class="article-nav">
+    <a href="essays.html" class="nav-brand">トキストレージ</a>
+    <div class="nav-right">
+        <span class="nav-label">ESSAY</span>
+        <a href="pipeline-renovation-en.html" class="lang-switch">EN</a>
+    </div>
+</nav>
+
+<main class="article-container">
+    <header class="article-header">
+        <div class="article-category">技術・設計</div>
+        <h1>パイプライン改修記</h1>
+        <p class="article-subtitle">2日間で60本のプルリクエスト。NDL納本パイプラインの改修で見えた制約と、制約が導いた設計判断の記録。</p>
+    </header>
+
+    <article class="article-content">
+
+        <h2>発端</h2>
+
+        <p>TokiQRの音声QRコードは動いていた。録音して、エンコードして、QRコードに変換して、再生する。一連の流れは安定していた。次に必要だったのは、それを国立国会図書館（NDL）に納本するパイプラインだった。</p>
+
+        <p>納本自体は以前から行っていた。しかし運用を続けるうちに、当初の設計では対処できない制約が次々と顔を出し始めた。顧客ごとにリポジトリを切る方式、PDFをバイナリのままgitに入れる構造、クライアント側で完結するビルド。どれも開発時には合理的だった判断が、運用フェーズでは足かせになった。</p>
+
+        <p>2日間で3つのリポジトリにまたがる約60本のプルリクエストを出した。やったことの記録を残す。</p>
+
+        <h2>制約が見えた順番</h2>
+
+        <h3>GitHubの帯域制限</h3>
+
+        <p>最初にぶつかったのは、GitHub APIの帯域制限だった。顧客ごとにニュースレター用のリポジトリを作成し、そこにPDFを格納する設計だったが、ファイルサイズが1MBを超えるとAPIのレート制限に引っかかる。1件2件なら問題ないが、複数のニュースレターを連続で納本するとすぐに枯渇する。</p>
+
+        <h3>PDFバイナリの肥大化</h3>
+
+        <p>PDFはバイナリだ。gitの差分管理は効かず、更新のたびにリポジトリの容量がそのまま積み上がる。1件あたり約130KB。100件で13MB。1000件で130MB。GitHub推奨の1GBリミットを考えると、顧客ごとにリポジトリを持つ方式では遠からず限界が来る。</p>
+
+        <h3>jsPDFの重さ</h3>
+
+        <p>クライアント側でPDFを生成するために使っていたjsPDFとフォントファイルは合計2.7MBあった。TokiQRはサーバーレスで動くことを設計原則にしている。クライアントに2.7MBの依存を持たせるのは、その原則との矛盾ではないにせよ、違和感があった。</p>
+
+        <h3>Auto-mergeの競合</h3>
+
+        <p>TokiQRのリポジトリにはauto-mergeワークフローを設定してある。CIが通ればすぐにマージされる。これは便利だが、1つのブランチに追加のコミットをpushしようとすると、pushが届く前にマージが完了してしまうことがあった。変更が宙に浮く。</p>
+
+        <h2>突破口</h2>
+
+        <h3>newsletter-masterへの集約</h3>
+
+        <p>顧客ごとにリポジトリを作る方式をやめた。newsletter-masterという単一のリポジトリに、全シリーズのZIPとPDFを集約する構造に移行した。GitHub Actionsでビルドし、GitHub Pagesで配信する。シリーズ一覧ページと個別ページはPythonスクリプトで自動生成される。</p>
+
+        <p>これによりAPIの帯域問題は解消された。ZIPファイルをpushするだけでワークフローがPDFを生成し、インデックスページを更新し、GitHub Pagesにデプロイする。一連のプロセスがサーバー側で完結する。</p>
+
+        <h3>PDFからZIPへの転換</h3>
+
+        <p>PDFを中間フォーマットとして使うのをやめ、ZIPを軸にした。音声データ、manifest.json、メタデータを1つのZIPに固めて、それがパイプラインの一次ソースになる。PDFはZIPからの派生物としてサーバー側で生成する。</p>
+
+        <p>この転換で3つのことが同時に起きた。jsPDFとフォントファイル（2.7MB）をクライアントから除去できた。ZIPはそのまま再生用のデータソースになるため、play.htmlに<code>?zip=</code>パラメータを追加するだけでニュースレターの再生が可能になった。そしてZIPのほうがPDFよりサイズが小さいため、gitリポジトリの肥大化も緩和された。</p>
+
+        <div class="core-message">
+            依存を減らした結果、機能が増えた。2.7MBを削除して、再生・ダウンロード・アーカイブの三経路が通った。
+        </div>
+
+        <h3>キューによる非同期化</h3>
+
+        <p>NDLへの提出はリアルタイムである必要がない。ZIPをqueue/ディレクトリに置き、5分間隔のタイマーで処理する方式に変えた。提出が失敗しても再試行される。利用者は結果を待たずに次の操作に移れる。</p>
+
+        <h3>1ブランチ1コミットの規律</h3>
+
+        <p>Auto-mergeの競合問題は、運用ルールで解決した。1つのブランチには1つのコミットだけを入れる。追加の変更は前のPRがマージされたことを確認してから、新しいブランチで行う。手順が増えたように見えるが、変更が宙に浮くリスクがゼロになった。</p>
+
+        <h2>60本のPRが教えてくれたこと</h2>
+
+        <p>2日間で出した約60本のプルリクエストの内訳を振り返ると、パターンが見える。</p>
+
+        <ul>
+            <li>qr（20本）：NDLパイプライン連携、ZIP基盤構築、バルクQR修正、UI改善</li>
+            <li>newsletter-master（25本）：リポジトリの新規立ち上げからUI構築、ワークフロー整備まで</li>
+            <li>lp（18本）：パイプライン移行、キュー非同期化、ニュースレターページ刷新</li>
+        </ul>
+
+        <p>この中で新機能と呼べるものは少ない。ほとんどは既存の仕組みの「配管の引き直し」だった。データの流れる経路を変え、詰まりやすい箇所を迂回し、太いパイプを細いパイプに分けた。利用者から見える変化はわずかだが、裏側の水流はまったく変わった。</p>
+
+        <div class="key-point">
+            <p>制約は設計の敵ではなく、設計の入力だった。</p>
+        </div>
+
+        <h2>開発と運用の境界で起きること</h2>
+
+        <p>開発フェーズでは「動くものをつくる」ことが目的になる。運用フェーズでは「動き続けるようにする」ことが目的になる。この違いは、コードの書き方ではなくパイプラインの設計に現れる。</p>
+
+        <p>開発中は1本のリポジトリで済んでいたものが、運用に入ると3つに分かれる。クライアント（qr）、サーバーサイドのビルド（newsletter-master）、ビジネスロジック（lp）。それぞれが独立してデプロイ可能で、それぞれが独自のペースで変更される。</p>
+
+        <p>この分離は計画してやったものではない。制約に押されて自然にそうなった。帯域制限がリポジトリの集約を求め、バイナリ肥大がフォーマットの転換を求め、依存の重さがクライアント・サーバー分離を求めた。制約が設計をした。</p>
+
+        <blockquote>
+            制約が教えてくれたのは「何を諦めるか」ではなく「どこに通せば流れるか」だった。
+        </blockquote>
+
+    </article>
+
+    <footer class="article-footer">
+        <p id="essay-nav-links"></p>
+        <p style="font-size: 0.75rem; color: var(--text-muted);">&copy; 2026 TokiStorage. All rights reserved.</p>
+    </footer>
+
+</main>
+
+<script src="essay-nav.js"></script>
+<script src="essay-tts.js"></script>
+</body>
+</html>

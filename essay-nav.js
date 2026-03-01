@@ -163,6 +163,7 @@
     { id: 'customer-journey-transformation', ja: 'カスタマージャーニーの変容', en: 'The Transformation of the Customer Journey', date: '2026-02-27' },
     { id: 'polishing', ja: '研磨', en: 'Polishing', date: '2026-02-27' },
     { id: 'ai-concierge', ja: 'AIコンシェルジュという静かな堀', en: 'The AI Concierge as a Quiet Moat', date: '2026-02-28' },
+    { id: 'pipeline-renovation', ja: 'パイプライン改修記', en: 'Pipeline Renovation Notes', date: '2026-03-01' },
 
     // ── メタ視点 ──
     { id: 'mission-statement', ja: 'ミッション・ステートメントの設計思想', en: 'Designing a Mission Statement', date: '2026-02-23' },
@@ -182,6 +183,7 @@
   // LATEST_COUNT で表示件数を制御
   const LATEST_COUNT = 5;
   const latestEssayIds = [
+    'pipeline-renovation',
     'zero-personal-data',
     'smartphone-complete',
     'primitive-edge',
@@ -353,6 +355,7 @@
     'customer-journey-transformation': ['monitor-program', 'sanpoyoshi', 'diy-partner', 'walking-partner', 'partner-boundary'],
     'polishing': ['narrative-trust', 'brochure-essay', 'customer-journey-transformation', 'patent-departure', 'mission-statement'],
     'ai-concierge': ['future', 'cloudflare-gas', 'vibe-coding-secrets', 'api-transformation', 'why-not-consulting'],
+    'pipeline-renovation': ['dev-to-ops', 'development-chronicle', 'storage-strategy', 'migration', 'restoration-architecture'],
     // ── メタ視点 ──
     'mission-statement':      ['narrative-trust', 'preserving-words', 'why-essays', 'corporate-site', 'integrity'],
     'preserving-words':       ['why-essays', 'akashic-record', 'what-to-leave', 'narrative-trust', 'openness'],
