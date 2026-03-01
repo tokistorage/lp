@@ -39,8 +39,8 @@ function handleAdvisorStatus(ss, data) {
     return jsonResponse({ success: true, tokens: {} });
   }
 
-  var sheet = ss.getSheetByName(ADVISOR_SHEET_NAME);
-  if (!sheet || sheet.getLastRow() < 2) {
+  var sheet = getOrCreateSheet(ss, ADVISOR_SHEET_NAME, ADVISOR_HEADERS);
+  if (sheet.getLastRow() < 2) {
     return jsonResponse({ success: true, tokens: {} });
   }
 
@@ -86,8 +86,8 @@ function handleAdvisorStartSession(ss, data) {
     return jsonResponse({ success: false, error: 'invalid_code' });
   }
 
-  var sheet = ss.getSheetByName(ADVISOR_SHEET_NAME);
-  if (!sheet || sheet.getLastRow() < 2) {
+  var sheet = getOrCreateSheet(ss, ADVISOR_SHEET_NAME, ADVISOR_HEADERS);
+  if (sheet.getLastRow() < 2) {
     return jsonResponse({ success: false, error: 'not_found' });
   }
 
@@ -152,8 +152,8 @@ function handleAdvisorComplete(ss, data) {
     return jsonResponse({ success: false, error: 'invalid_code' });
   }
 
-  var sheet = ss.getSheetByName(ADVISOR_SHEET_NAME);
-  if (!sheet || sheet.getLastRow() < 2) {
+  var sheet = getOrCreateSheet(ss, ADVISOR_SHEET_NAME, ADVISOR_HEADERS);
+  if (sheet.getLastRow() < 2) {
     return jsonResponse({ success: false, error: 'not_found' });
   }
 
