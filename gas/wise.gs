@@ -77,6 +77,8 @@ function handleWiseWebhook(ss, data, raw) {
         var tokiMatch = ref.match(/TOKI-[A-Z0-9]{4}-[A-Z0-9]{4}-[A-Z0-9]{4}/);
         if (tokiMatch) {
           processTokiCode(ss, tokiMatch, ref, d.amount, d.currency);
+        } else if (/^TimelessAdvisor-/i.test(ref)) {
+          recordAdvisorPayment(ss, d.amount, d.currency, ref, d.occurred_at);
         } else {
           notifyPayment(d.amount, d.currency, ref);
         }
@@ -126,6 +128,20 @@ function fetchRecentCreditReference(profileId, balanceId, currency, amount, occu
     }
     return null;
   } catch (e) { return null; }
+}
+
+function recordAdvisorPayment(ss, amount, currency, reference, occurredAt) {
+  var sheet = getOrCreateSheet(ss, 'アドバイザー', [
+    '日時', '金額', '通貨', 'タイプ', 'ステータス'
+  ]);
+  var type = reference.replace(/^TimelessAdvisor-/i, '');
+  sheet.appendRow([
+    occurredAt ? new Date(occurredAt) : new Date(),
+    amount, currency, type, '入金確認済み'
+  ]);
+  sendEmail(NOTIFY_EMAIL,
+    '【TimelessAdvisor】入金確認 — ' + currency + ' ' + amount,
+    'タイムレスアドバイザーの入金がありました。\n\nタイプ: ' + type + '\n金額: ' + currency + ' ' + amount + '\n\nスプレッドシートに記録済みです。');
 }
 
 function notifyPayment(amount, currency, reference) {
