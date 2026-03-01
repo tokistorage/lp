@@ -1,0 +1,521 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" type="image/png" sizes="32x32" href="asset/favicon-32.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="asset/apple-touch-icon.png">
+    <title>SoulCarrier Resonance Circle | TokiStorage</title>
+    <meta name="description" content="SoulCarrier Resonance Circle — Reconnecting diaspora families with their ancestral roots. Registry research, family crest identification, cemetery surveys, and ash repatriation. Full support by a bilingual family between Hawaii and Japan.">
+    <link rel="stylesheet" href="index.css">
+    <link rel="stylesheet" href="contact-form.css">
+    <style>
+        .sc-page { padding: 6rem 2rem 4rem; }
+        .sc-inner { max-width: 700px; margin: 0 auto; }
+        .sc-inner h1 {
+            font-family: var(--font-display);
+            font-size: 1.6rem;
+            font-weight: 600;
+            color: var(--text-primary);
+            margin-bottom: 0.3rem;
+            text-align: center;
+        }
+        .sc-tagline {
+            text-align: center;
+            font-family: var(--font-display);
+            font-size: 0.92rem;
+            color: var(--text-secondary);
+            margin-bottom: 2.5rem;
+            line-height: 1.8;
+        }
+        .sc-section {
+            margin-bottom: 2.5rem;
+        }
+        .sc-section h2 {
+            font-family: var(--font-display);
+            font-size: 1.05rem;
+            font-weight: 600;
+            color: var(--text-primary);
+            margin-bottom: 0.8rem;
+            padding-bottom: 0.4rem;
+            border-bottom: 1px solid var(--border);
+        }
+        .sc-section p,
+        .sc-section li {
+            font-size: 0.88rem;
+            color: var(--text-secondary);
+            line-height: 1.9;
+        }
+        .sc-section ul {
+            padding-left: 1.5rem;
+            margin-bottom: 1rem;
+        }
+        .sc-section li { margin-bottom: 0.3rem; }
+        .sc-features {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1.2rem;
+            margin-top: 1rem;
+        }
+        .sc-feature-card {
+            background: var(--bg-page);
+            border: 1px solid var(--border);
+            border-radius: 0.8rem;
+            padding: 1.2rem;
+            text-align: center;
+        }
+        .sc-feature-card .feature-icon {
+            font-size: 1.6rem;
+            margin-bottom: 0.5rem;
+        }
+        .sc-feature-card h3 {
+            font-family: var(--font-display);
+            font-size: 0.88rem;
+            font-weight: 600;
+            color: var(--text-primary);
+            margin-bottom: 0.3rem;
+        }
+        .sc-feature-card p {
+            font-size: 0.78rem;
+            color: var(--text-muted);
+            line-height: 1.6;
+        }
+        .sc-story {
+            background: var(--bg-page);
+            border: 1px solid var(--border);
+            border-radius: 1rem;
+            padding: 1.8rem;
+            margin: 2rem 0;
+        }
+        .sc-story h3 {
+            font-family: var(--font-display);
+            font-size: 0.95rem;
+            font-weight: 600;
+            color: var(--text-primary);
+            margin-bottom: 0.8rem;
+        }
+        .sc-story p {
+            font-size: 0.88rem;
+            color: var(--text-secondary);
+            line-height: 1.9;
+            margin-bottom: 0.8rem;
+        }
+        .sc-story p:last-child { margin-bottom: 0; }
+        .sc-personas {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 1rem;
+            margin-top: 1rem;
+        }
+        .sc-persona-card {
+            background: var(--bg-page);
+            border: 1px solid var(--border);
+            border-radius: 0.8rem;
+            padding: 1.2rem 1.5rem;
+        }
+        .sc-persona-card h3 {
+            font-family: var(--font-display);
+            font-size: 0.92rem;
+            font-weight: 600;
+            color: var(--text-primary);
+            margin-bottom: 0.4rem;
+        }
+        .sc-persona-card p {
+            font-size: 0.82rem;
+            color: var(--text-muted);
+            line-height: 1.7;
+        }
+        .sc-flow {
+            counter-reset: flow-step;
+            margin-top: 1rem;
+        }
+        .sc-flow-step {
+            display: flex;
+            gap: 1rem;
+            align-items: flex-start;
+            margin-bottom: 1.2rem;
+        }
+        .sc-flow-step::before {
+            counter-increment: flow-step;
+            content: counter(flow-step);
+            flex-shrink: 0;
+            width: 2rem;
+            height: 2rem;
+            background: var(--toki-blue);
+            color: #fff;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.82rem;
+            font-weight: 600;
+        }
+        .sc-flow-step div h3 {
+            font-family: var(--font-display);
+            font-size: 0.88rem;
+            font-weight: 600;
+            color: var(--text-primary);
+            margin-bottom: 0.2rem;
+        }
+        .sc-flow-step div p {
+            font-size: 0.82rem;
+            color: var(--text-muted);
+            line-height: 1.7;
+        }
+        .sc-pricing {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 1.2rem;
+            margin-top: 1rem;
+        }
+        .sc-pricing-card {
+            background: var(--bg-page);
+            border: 1px solid var(--border);
+            border-radius: 0.8rem;
+            padding: 1.5rem;
+        }
+        .sc-pricing-card h3 {
+            font-family: var(--font-display);
+            font-size: 0.95rem;
+            font-weight: 600;
+            color: var(--text-primary);
+            margin-bottom: 0.3rem;
+        }
+        .sc-pricing-card .price {
+            font-family: var(--font-display);
+            font-size: 1.3rem;
+            font-weight: 700;
+            color: var(--toki-blue);
+            margin-bottom: 0.8rem;
+        }
+        .sc-pricing-card .price span {
+            font-size: 0.75rem;
+            font-weight: 400;
+            color: var(--text-muted);
+        }
+        .sc-pricing-card ul {
+            padding-left: 1.2rem;
+            margin: 0;
+        }
+        .sc-pricing-card li {
+            font-size: 0.78rem;
+            color: var(--text-secondary);
+            line-height: 1.8;
+            margin-bottom: 0.2rem;
+        }
+        .sc-membership {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+            gap: 1.2rem;
+            margin-top: 1rem;
+        }
+        .sc-membership-card {
+            background: var(--bg-page);
+            border: 1px solid var(--border);
+            border-radius: 0.8rem;
+            padding: 1.2rem;
+            text-align: center;
+        }
+        .sc-membership-card h3 {
+            font-family: var(--font-display);
+            font-size: 0.88rem;
+            font-weight: 600;
+            color: var(--text-primary);
+            margin-bottom: 0.3rem;
+        }
+        .sc-membership-card .price {
+            font-family: var(--font-display);
+            font-size: 1.1rem;
+            font-weight: 700;
+            color: var(--toki-blue);
+            margin-bottom: 0.3rem;
+        }
+        .sc-membership-card .price span {
+            font-size: 0.7rem;
+            font-weight: 400;
+            color: var(--text-muted);
+        }
+        .sc-membership-card p {
+            font-size: 0.75rem;
+            color: var(--text-muted);
+            line-height: 1.6;
+        }
+        .sc-cta {
+            text-align: center;
+            margin-top: 3rem;
+            padding: 2rem;
+            background: var(--toki-blue-pale);
+            border-radius: 1rem;
+        }
+        .sc-cta p {
+            font-family: var(--font-display);
+            font-size: 0.92rem;
+            color: var(--text-secondary);
+            margin-bottom: 1rem;
+            line-height: 1.8;
+        }
+        .sc-cta a.btn {
+            display: inline-block;
+            background: var(--toki-blue);
+            color: #fff;
+            padding: 0.7rem 2rem;
+            border-radius: 0.5rem;
+            text-decoration: none;
+            font-size: 0.85rem;
+            font-weight: 500;
+            transition: background 0.3s ease;
+            margin: 0.3rem;
+        }
+        .sc-cta a.btn:hover { background: var(--toki-blue-dark); }
+        .sc-back {
+            text-align: center;
+            margin-top: 2.5rem;
+        }
+        .sc-back a {
+            color: var(--toki-blue);
+            text-decoration: none;
+            font-size: 0.85rem;
+        }
+        .sc-back a:hover { text-decoration: underline; }
+        .sc-note {
+            font-size: 0.75rem !important;
+            color: var(--text-muted) !important;
+            margin-top: 0.5rem;
+        }
+        .sc-enroll-link {
+            text-align: center;
+            margin-top: 1rem;
+        }
+        .sc-enroll-link a {
+            color: var(--toki-blue);
+            text-decoration: none;
+            font-size: 0.85rem;
+            font-weight: 500;
+        }
+        .sc-enroll-link a:hover { text-decoration: underline; }
+    </style>
+    <meta property="og:type" content="article">
+    <meta property="og:title" content="SoulCarrier Resonance Circle | TokiStorage">
+    <meta property="og:description" content="SoulCarrier Resonance Circle — Reconnecting diaspora families with their ancestral roots. Registry research, family crest identification, cemetery surveys, and ash repatriation.">
+    <meta property="og:url" content="https://tokistorage.github.io/lp/soulcarrier-en.html">
+    <meta property="og:site_name" content="TokiStorage">
+    <meta name="twitter:card" content="summary">
+    <meta name="twitter:title" content="SoulCarrier Resonance Circle | TokiStorage">
+    <meta name="twitter:description" content="SoulCarrier Resonance Circle — Reconnecting diaspora families with their ancestral roots. Registry research, family crest identification, cemetery surveys, and ash repatriation.">
+    <meta property="og:image" content="https://tokistorage.github.io/lp/asset/tokistorage-icon-512.png">
+    <meta property="og:image:width" content="512">
+    <meta property="og:image:height" content="512">
+    <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "WebPage",
+  "name": "SoulCarrier Resonance Circle | TokiStorage",
+  "url": "https://tokistorage.github.io/lp/soulcarrier-en.html",
+  "inLanguage": "en",
+  "publisher": {
+    "@type": "Organization",
+    "name": "TokiStorage",
+    "url": "https://tokistorage.github.io/lp"
+  },
+  "description": "SoulCarrier Resonance Circle — Reconnecting diaspora families with their ancestral roots. Registry research, family crest identification, cemetery surveys, and ash repatriation."
+}
+    </script>
+    <link rel="alternate" hreflang="ja" href="https://tokistorage.github.io/lp/soulcarrier.html">
+    <link rel="alternate" hreflang="en" href="https://tokistorage.github.io/lp/soulcarrier-en.html">
+    <link rel="alternate" hreflang="x-default" href="https://tokistorage.github.io/lp/soulcarrier.html">
+    <link rel="canonical" href="https://tokistorage.github.io/lp/soulcarrier-en.html">
+</head>
+<body>
+
+<nav class="toki-nav">
+    <span class="nav-logo"><a href="index-en.html">TokiStorage</a> / SoulCarrier Resonance Circle</span>
+</nav>
+
+<main class="sc-page">
+    <div class="sc-inner">
+        <h1>SoulCarrier Resonance Circle</h1>
+        <p class="sc-tagline">
+            Some crossed the ocean. Some lost touch with home.<br>
+            We carry ashes, memories, and stories back to where they belong.
+        </p>
+
+        <div class="sc-features">
+            <div class="sc-feature-card">
+                <div class="feature-icon">&#x1F3E0;</div>
+                <h3>Deliver</h3>
+                <p>Bring ashes and families back to their roots. From registry research to accompaniment, we support the full journey home.</p>
+            </div>
+            <div class="sc-feature-card">
+                <div class="feature-icon">&#x1F50D;</div>
+                <h3>Research</h3>
+                <p>Registry investigation, family crest identification, and cemetery surveys. Bilingual reports delivered.</p>
+            </div>
+            <div class="sc-feature-card">
+                <div class="feature-icon">&#x1F91D;</div>
+                <h3>Connect</h3>
+                <p>Expand resonance through community. Share stories of loss and renewal, and carry them to the next generation.</p>
+            </div>
+        </div>
+
+        <div class="sc-story">
+            <h3>Pearl&#x2019;s Story (2007&#x2013;2025)</h3>
+            <p>Pearl was our family dog for 18 years. In her final years, she lost her voice. We preserved her throat bone with our daughter&#x2019;s four-leaf clover and flower petals in resin, nestled inside a clamshell&#x2014;a portable grave. This experience led to voice-encoded QR technology, and ultimately to SoulCarrier.</p>
+            <p>Moving between Maui and Japan, we met people standing at boundaries&#x2014;outside systems, disconnected from their roots, carrying burdens alone for years. &#x201C;Cross boundaries through resonance&#x201D;&#x2014;the principle Pearl taught us became SoulCarrier&#x2019;s mission.</p>
+        </div>
+
+        <div class="sc-section">
+            <h2>Why existing services fall short</h2>
+            <div class="sc-personas">
+                <div class="sc-persona-card">
+                    <h3>Language barrier</h3>
+                    <p>Government offices and temples have limited English support. Obtaining family registries, negotiating with head priests, contacting cemetery managers&#x2014;everything requires Japanese.</p>
+                </div>
+                <div class="sc-persona-card">
+                    <h3>Institutional barrier</h3>
+                    <p>Without a registered address in Japan, procedures become extremely difficult. Registry requests and reburial permits assume you&#x2019;re a resident.</p>
+                </div>
+                <div class="sc-persona-card">
+                    <h3>Time barrier</h3>
+                    <p>No one handles everything from research to accompaniment. Hiring a legal scrivener, interpreter, and travel agent separately costs time and money.</p>
+                </div>
+                <div class="sc-persona-card">
+                    <h3>Emotional barrier</h3>
+                    <p>No one approaches this as &#x201C;completing a family story&#x201D; rather than &#x201C;processing paperwork.&#x201D; Gathering documents and delivering a family&#x2019;s narrative are different things.</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="sc-section">
+            <h2>Why us</h2>
+            <ul>
+                <li>A Japanese family living between Hawaii and Japan&#x2014;grounded in both places</li>
+                <li>Fluent in both languages, understanding both systems and cultures</li>
+                <li>Based in Japan with on-the-ground access to government offices, temples, and cemeteries</li>
+                <li>Hands-on experience navigating Japan&#x2019;s registry, temple, and cemetery systems</li>
+                <li>We approach this as completing a story, not processing paperwork</li>
+            </ul>
+        </div>
+
+        <div class="sc-section">
+            <h2>How it works</h2>
+            <div class="sc-flow">
+                <div class="sc-flow-step">
+                    <div>
+                        <h3>Initial consultation (30 min, free)</h3>
+                        <p>Tell us your story. We&#x2019;ll understand your situation and explore what we can do together.</p>
+                    </div>
+                </div>
+                <div class="sc-flow-step">
+                    <div>
+                        <h3>Registry research &amp; information gathering</h3>
+                        <p>Tracing your ancestral roots. Obtaining family registries, researching lineage, and collecting relevant information.</p>
+                    </div>
+                </div>
+                <div class="sc-flow-step">
+                    <div>
+                        <h3>Family crest identification &amp; cemetery survey</h3>
+                        <p>Identifying your family crest with a bilingual report. Locating and surveying the cemetery on-site.</p>
+                    </div>
+                </div>
+                <div class="sc-flow-step">
+                    <div>
+                        <h3>Accompaniment or proxy (delivering home)</h3>
+                        <p>We accompany you on your journey home, or deliver on your behalf. Helping complete the story.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="sc-section">
+            <h2>Voices of trust</h2>
+            <div class="sc-personas">
+                <div class="sc-persona-card">
+                    <h3>Martin (Lahaina, Maui)</h3>
+                    <p>&#x201C;When I met Takuya at church, his daughter had a fever. I saw how much he cherishes family. For three years I carried this burden alone&#x2014;he was the first person who truly understood.&#x201D;</p>
+                </div>
+                <div class="sc-persona-card">
+                    <h3>Melanie (Hana, Maui)</h3>
+                    <p>&#x201C;No coincidence exists. Your family has given me the opportunity to further my work and validate my mission to provide sanctuary for young people.&#x201D;</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="sc-section">
+            <h2>Pricing</h2>
+            <div class="sc-pricing">
+                <div class="sc-pricing-card">
+                    <h3>Initial consultation</h3>
+                    <div class="price">Free<span> (30 min)</span></div>
+                    <ul>
+                        <li>Situation assessment</li>
+                        <li>Scope confirmation</li>
+                        <li>Estimate &amp; proposal</li>
+                    </ul>
+                </div>
+                <div class="sc-pricing-card">
+                    <h3>Registry research</h3>
+                    <div class="price">$200<span>+</span></div>
+                    <ul>
+                        <li>Family registry procurement</li>
+                        <li>Lineage research</li>
+                        <li>Research report</li>
+                    </ul>
+                </div>
+                <div class="sc-pricing-card">
+                    <h3>Family crest report</h3>
+                    <div class="price">$350<span>+</span></div>
+                    <ul>
+                        <li>Crest identification &amp; research</li>
+                        <li>Bilingual report</li>
+                        <li>High-resolution crest data</li>
+                    </ul>
+                </div>
+            </div>
+            <p class="sc-note">*Accompaniment support quoted separately. Fees vary by situation.<br>*Start with a free consultation&#x2014;let us hear your story first.</p>
+        </div>
+
+        <div class="sc-section">
+            <h2>SoulCarrier Resonance Circle — Membership</h2>
+            <div class="sc-membership">
+                <div class="sc-membership-card">
+                    <h3>Regular</h3>
+                    <div class="price">$20<span>/year</span></div>
+                    <p>Annual renewal. Community access &amp; service discounts.</p>
+                </div>
+                <div class="sc-membership-card">
+                    <h3>Lifetime</h3>
+                    <div class="price">$600</div>
+                    <p>One-time payment for permanent membership.</p>
+                </div>
+                <div class="sc-membership-card">
+                    <h3>Supporter</h3>
+                    <div class="price">$100</div>
+                    <p>One-time contribution to support the mission.</p>
+                </div>
+            </div>
+            <div class="sc-enroll-link">
+                <a href="https://tokistorage.github.io/qr/credits.html?lang=en">Enroll here &rarr;</a>
+            </div>
+        </div>
+
+        <div class="sc-cta">
+            <p>Tell us your story.<br>Start with a free consultation.</p>
+            <a href="https://line.me/R/oaMessage/@897glsbz/?SoulCarrier%20consultation" class="btn" target="_blank" rel="noopener">Chat on LINE</a>
+            <a href="https://calendly.com/pearlmemorial/pearlmemorialsession" class="btn" target="_blank" rel="noopener">Book a Free 30-min Session</a>
+        </div>
+
+        <div class="sc-back">
+            <a href="index-en.html">&larr; Back to TokiStorage</a>
+        </div>
+    </div>
+</main>
+
+<footer style="text-align: center; padding: 2rem 1.5rem; margin-top: 3rem; border-top: 1px solid #E2E8F0;">
+    <p style="font-family: Georgia, 'Times New Roman', serif; font-size: 0.8rem; color: #94A3B8; font-style: italic; margin-bottom: 0.8rem;">You become the story, generations converse, and the path ahead unfolds.</p>
+    <p style="font-size: 0.75rem; color: #94A3B8;">&copy; 2026 TokiStorage. All rights reserved.</p>
+</footer>
+
+<script src="contact-form.js" defer></script>
+<script src="tracker.js" defer></script>
+</body>
+</html>
