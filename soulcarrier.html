@@ -1,0 +1,521 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" type="image/png" sizes="32x32" href="asset/favicon-32.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="asset/apple-touch-icon.png">
+    <title>SoulCarrier 共鳴の会 | トキストレージ</title>
+    <meta name="description" content="SoulCarrier 共鳴の会 — 海を渡った家族のルーツを繋ぐ。戸籍調査・家紋特定・墓地調査・遺灰帰還まで、ハワイと日本を行き来する家族が一貫サポート。">
+    <link rel="stylesheet" href="index.css">
+    <link rel="stylesheet" href="contact-form.css">
+    <style>
+        .sc-page { padding: 6rem 2rem 4rem; }
+        .sc-inner { max-width: 700px; margin: 0 auto; }
+        .sc-inner h1 {
+            font-family: var(--font-display);
+            font-size: 1.6rem;
+            font-weight: 600;
+            color: var(--text-primary);
+            margin-bottom: 0.3rem;
+            text-align: center;
+        }
+        .sc-tagline {
+            text-align: center;
+            font-family: var(--font-display);
+            font-size: 0.92rem;
+            color: var(--text-secondary);
+            margin-bottom: 2.5rem;
+            line-height: 1.8;
+        }
+        .sc-section {
+            margin-bottom: 2.5rem;
+        }
+        .sc-section h2 {
+            font-family: var(--font-display);
+            font-size: 1.05rem;
+            font-weight: 600;
+            color: var(--text-primary);
+            margin-bottom: 0.8rem;
+            padding-bottom: 0.4rem;
+            border-bottom: 1px solid var(--border);
+        }
+        .sc-section p,
+        .sc-section li {
+            font-size: 0.88rem;
+            color: var(--text-secondary);
+            line-height: 1.9;
+        }
+        .sc-section ul {
+            padding-left: 1.5rem;
+            margin-bottom: 1rem;
+        }
+        .sc-section li { margin-bottom: 0.3rem; }
+        .sc-features {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1.2rem;
+            margin-top: 1rem;
+        }
+        .sc-feature-card {
+            background: var(--bg-page);
+            border: 1px solid var(--border);
+            border-radius: 0.8rem;
+            padding: 1.2rem;
+            text-align: center;
+        }
+        .sc-feature-card .feature-icon {
+            font-size: 1.6rem;
+            margin-bottom: 0.5rem;
+        }
+        .sc-feature-card h3 {
+            font-family: var(--font-display);
+            font-size: 0.88rem;
+            font-weight: 600;
+            color: var(--text-primary);
+            margin-bottom: 0.3rem;
+        }
+        .sc-feature-card p {
+            font-size: 0.78rem;
+            color: var(--text-muted);
+            line-height: 1.6;
+        }
+        .sc-story {
+            background: var(--bg-page);
+            border: 1px solid var(--border);
+            border-radius: 1rem;
+            padding: 1.8rem;
+            margin: 2rem 0;
+        }
+        .sc-story h3 {
+            font-family: var(--font-display);
+            font-size: 0.95rem;
+            font-weight: 600;
+            color: var(--text-primary);
+            margin-bottom: 0.8rem;
+        }
+        .sc-story p {
+            font-size: 0.88rem;
+            color: var(--text-secondary);
+            line-height: 1.9;
+            margin-bottom: 0.8rem;
+        }
+        .sc-story p:last-child { margin-bottom: 0; }
+        .sc-personas {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 1rem;
+            margin-top: 1rem;
+        }
+        .sc-persona-card {
+            background: var(--bg-page);
+            border: 1px solid var(--border);
+            border-radius: 0.8rem;
+            padding: 1.2rem 1.5rem;
+        }
+        .sc-persona-card h3 {
+            font-family: var(--font-display);
+            font-size: 0.92rem;
+            font-weight: 600;
+            color: var(--text-primary);
+            margin-bottom: 0.4rem;
+        }
+        .sc-persona-card p {
+            font-size: 0.82rem;
+            color: var(--text-muted);
+            line-height: 1.7;
+        }
+        .sc-flow {
+            counter-reset: flow-step;
+            margin-top: 1rem;
+        }
+        .sc-flow-step {
+            display: flex;
+            gap: 1rem;
+            align-items: flex-start;
+            margin-bottom: 1.2rem;
+        }
+        .sc-flow-step::before {
+            counter-increment: flow-step;
+            content: counter(flow-step);
+            flex-shrink: 0;
+            width: 2rem;
+            height: 2rem;
+            background: var(--toki-blue);
+            color: #fff;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.82rem;
+            font-weight: 600;
+        }
+        .sc-flow-step div h3 {
+            font-family: var(--font-display);
+            font-size: 0.88rem;
+            font-weight: 600;
+            color: var(--text-primary);
+            margin-bottom: 0.2rem;
+        }
+        .sc-flow-step div p {
+            font-size: 0.82rem;
+            color: var(--text-muted);
+            line-height: 1.7;
+        }
+        .sc-pricing {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 1.2rem;
+            margin-top: 1rem;
+        }
+        .sc-pricing-card {
+            background: var(--bg-page);
+            border: 1px solid var(--border);
+            border-radius: 0.8rem;
+            padding: 1.5rem;
+        }
+        .sc-pricing-card h3 {
+            font-family: var(--font-display);
+            font-size: 0.95rem;
+            font-weight: 600;
+            color: var(--text-primary);
+            margin-bottom: 0.3rem;
+        }
+        .sc-pricing-card .price {
+            font-family: var(--font-display);
+            font-size: 1.3rem;
+            font-weight: 700;
+            color: var(--toki-blue);
+            margin-bottom: 0.8rem;
+        }
+        .sc-pricing-card .price span {
+            font-size: 0.75rem;
+            font-weight: 400;
+            color: var(--text-muted);
+        }
+        .sc-pricing-card ul {
+            padding-left: 1.2rem;
+            margin: 0;
+        }
+        .sc-pricing-card li {
+            font-size: 0.78rem;
+            color: var(--text-secondary);
+            line-height: 1.8;
+            margin-bottom: 0.2rem;
+        }
+        .sc-membership {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+            gap: 1.2rem;
+            margin-top: 1rem;
+        }
+        .sc-membership-card {
+            background: var(--bg-page);
+            border: 1px solid var(--border);
+            border-radius: 0.8rem;
+            padding: 1.2rem;
+            text-align: center;
+        }
+        .sc-membership-card h3 {
+            font-family: var(--font-display);
+            font-size: 0.88rem;
+            font-weight: 600;
+            color: var(--text-primary);
+            margin-bottom: 0.3rem;
+        }
+        .sc-membership-card .price {
+            font-family: var(--font-display);
+            font-size: 1.1rem;
+            font-weight: 700;
+            color: var(--toki-blue);
+            margin-bottom: 0.3rem;
+        }
+        .sc-membership-card .price span {
+            font-size: 0.7rem;
+            font-weight: 400;
+            color: var(--text-muted);
+        }
+        .sc-membership-card p {
+            font-size: 0.75rem;
+            color: var(--text-muted);
+            line-height: 1.6;
+        }
+        .sc-cta {
+            text-align: center;
+            margin-top: 3rem;
+            padding: 2rem;
+            background: var(--toki-blue-pale);
+            border-radius: 1rem;
+        }
+        .sc-cta p {
+            font-family: var(--font-display);
+            font-size: 0.92rem;
+            color: var(--text-secondary);
+            margin-bottom: 1rem;
+            line-height: 1.8;
+        }
+        .sc-cta a.btn {
+            display: inline-block;
+            background: var(--toki-blue);
+            color: #fff;
+            padding: 0.7rem 2rem;
+            border-radius: 0.5rem;
+            text-decoration: none;
+            font-size: 0.85rem;
+            font-weight: 500;
+            transition: background 0.3s ease;
+            margin: 0.3rem;
+        }
+        .sc-cta a.btn:hover { background: var(--toki-blue-dark); }
+        .sc-back {
+            text-align: center;
+            margin-top: 2.5rem;
+        }
+        .sc-back a {
+            color: var(--toki-blue);
+            text-decoration: none;
+            font-size: 0.85rem;
+        }
+        .sc-back a:hover { text-decoration: underline; }
+        .sc-note {
+            font-size: 0.75rem !important;
+            color: var(--text-muted) !important;
+            margin-top: 0.5rem;
+        }
+        .sc-enroll-link {
+            text-align: center;
+            margin-top: 1rem;
+        }
+        .sc-enroll-link a {
+            color: var(--toki-blue);
+            text-decoration: none;
+            font-size: 0.85rem;
+            font-weight: 500;
+        }
+        .sc-enroll-link a:hover { text-decoration: underline; }
+    </style>
+    <meta property="og:type" content="article">
+    <meta property="og:title" content="SoulCarrier 共鳴の会 | トキストレージ">
+    <meta property="og:description" content="SoulCarrier 共鳴の会 — 海を渡った家族のルーツを繋ぐ。戸籍調査・家紋特定・墓地調査・遺灰帰還まで、ハワイと日本を行き来する家族が一貫サポート。">
+    <meta property="og:url" content="https://tokistorage.github.io/lp/soulcarrier.html">
+    <meta property="og:site_name" content="トキストレージ">
+    <meta name="twitter:card" content="summary">
+    <meta name="twitter:title" content="SoulCarrier 共鳴の会 | トキストレージ">
+    <meta name="twitter:description" content="SoulCarrier 共鳴の会 — 海を渡った家族のルーツを繋ぐ。戸籍調査・家紋特定・墓地調査・遺灰帰還まで、ハワイと日本を行き来する家族が一貫サポート。">
+    <meta property="og:image" content="https://tokistorage.github.io/lp/asset/tokistorage-icon-512.png">
+    <meta property="og:image:width" content="512">
+    <meta property="og:image:height" content="512">
+    <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "WebPage",
+  "name": "SoulCarrier 共鳴の会 | トキストレージ",
+  "url": "https://tokistorage.github.io/lp/soulcarrier.html",
+  "inLanguage": "ja",
+  "publisher": {
+    "@type": "Organization",
+    "name": "TokiStorage",
+    "url": "https://tokistorage.github.io/lp"
+  },
+  "description": "SoulCarrier 共鳴の会 — 海を渡った家族のルーツを繋ぐ。戸籍調査・家紋特定・墓地調査・遺灰帰還まで、ハワイと日本を行き来する家族が一貫サポート。"
+}
+    </script>
+    <link rel="alternate" hreflang="ja" href="https://tokistorage.github.io/lp/soulcarrier.html">
+    <link rel="alternate" hreflang="en" href="https://tokistorage.github.io/lp/soulcarrier-en.html">
+    <link rel="alternate" hreflang="x-default" href="https://tokistorage.github.io/lp/soulcarrier.html">
+    <link rel="canonical" href="https://tokistorage.github.io/lp/soulcarrier.html">
+</head>
+<body>
+
+<nav class="toki-nav">
+    <span class="nav-logo"><a href="index.html">トキストレージ</a> / SoulCarrier 共鳴の会</span>
+</nav>
+
+<main class="sc-page">
+    <div class="sc-inner">
+        <h1>SoulCarrier 共鳴の会</h1>
+        <p class="sc-tagline">
+            海を渡った人たちがいます。故郷との繋がりが薄れた人たちがいます。<br>
+            遺灰を、記憶を、物語を——故郷へ届けます。
+        </p>
+
+        <div class="sc-features">
+            <div class="sc-feature-card">
+                <div class="feature-icon">&#x1F3E0;</div>
+                <h3>届ける</h3>
+                <p>遺灰・家族をルーツへ。戸籍調査から同行まで、故郷への帰還を一貫サポートします。</p>
+            </div>
+            <div class="sc-feature-card">
+                <div class="feature-icon">&#x1F50D;</div>
+                <h3>調べる</h3>
+                <p>戸籍調査・家紋特定・墓地調査。バイリンガルレポートで結果をお届けします。</p>
+            </div>
+            <div class="sc-feature-card">
+                <div class="feature-icon">&#x1F91D;</div>
+                <h3>繋ぐ</h3>
+                <p>コミュニティで共鳴を広げる。喪失と再生の物語を共有し、次世代へ届けます。</p>
+            </div>
+        </div>
+
+        <div class="sc-story">
+            <h3>Pearlの物語（2007&#x2013;2025）</h3>
+            <p>18年間家族だった愛犬Pearl。晩年は声が出なくなり、喉仏を四葉のクローバーと花びらと一緒にレジンで保存しました。貝殻の中に収めた、持ち運べるお墓。この経験が、声をQRコードに刻む技術へ、そしてSoulCarrierへと繋がりました。</p>
+            <p>マウイと日本を行き来する中で、境界に立つ人々と出会いました。制度の外にいる人、故郷との繋がりを失った人、3年間ひとりで抱え続けた人。「共鳴で境界を越える」——Pearlが教えてくれたこの原理が、SoulCarrierの使命になりました。</p>
+        </div>
+
+        <div class="sc-section">
+            <h2>なぜ既存のサービスでは難しいのか</h2>
+            <div class="sc-personas">
+                <div class="sc-persona-card">
+                    <h3>言葉の壁</h3>
+                    <p>役所も寺院も英語対応は限定的。戸籍謄本の取得、住職との交渉、墓地管理者との連絡——すべて日本語で行う必要があります。</p>
+                </div>
+                <div class="sc-persona-card">
+                    <h3>制度の壁</h3>
+                    <p>日本に住所がないと手続きが困難。戸籍の附票請求、改葬許可申請など、住民登録を前提とした制度が立ちはだかります。</p>
+                </div>
+                <div class="sc-persona-card">
+                    <h3>時間の壁</h3>
+                    <p>調査から同行まで一貫対応する人がいない。行政書士、通訳、旅行会社——それぞれに依頼すると時間もコストも膨れ上がります。</p>
+                </div>
+                <div class="sc-persona-card">
+                    <h3>心の壁</h3>
+                    <p>「事務処理」ではなく「物語の完結」として寄り添う人がいない。書類を揃えることと、家族の物語を届けることは違います。</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="sc-section">
+            <h2>なぜ私たちなのか</h2>
+            <ul>
+                <li>ハワイと日本を行き来する日本人家族——両方の土地に生活基盤がある</li>
+                <li>日本語と英語の両方で、制度と文化を理解している</li>
+                <li>日本に拠点があり、役所・寺院・墓地の現地対応ができる</li>
+                <li>戸籍・寺院・墓地——日本のシステムを動かせる実務経験がある</li>
+                <li>「事務代行」ではなく「物語の完結」として向き合う</li>
+            </ul>
+        </div>
+
+        <div class="sc-section">
+            <h2>サービスの流れ</h2>
+            <div class="sc-flow">
+                <div class="sc-flow-step">
+                    <div>
+                        <h3>初回相談（30分・無料）</h3>
+                        <p>お話を聞かせてください。状況を理解し、何ができるかを一緒に考えます。</p>
+                    </div>
+                </div>
+                <div class="sc-flow-step">
+                    <div>
+                        <h3>戸籍調査・情報収集</h3>
+                        <p>ご先祖のルーツを辿ります。戸籍謄本の取得、家系の調査、関連情報の収集。</p>
+                    </div>
+                </div>
+                <div class="sc-flow-step">
+                    <div>
+                        <h3>家紋特定・墓地調査</h3>
+                        <p>家紋の特定とバイリンガルレポートの作成。墓地の所在確認と現地調査。</p>
+                    </div>
+                </div>
+                <div class="sc-flow-step">
+                    <div>
+                        <h3>同行 or 代行（故郷へ届ける）</h3>
+                        <p>ご本人の帰郷に同行、または代理で故郷へ届けます。物語の完結をお手伝いします。</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="sc-section">
+            <h2>信頼の声</h2>
+            <div class="sc-personas">
+                <div class="sc-persona-card">
+                    <h3>マーティン（ラハイナ、マウイ）</h3>
+                    <p>「教会で卓也に会ったとき、娘さんが熱を出していた。家族をあれほど大切にする姿を見て、この人なら信頼できると思った。3年間ひとりで抱えてきたものを、初めて理解してくれた人だった。」</p>
+                </div>
+                <div class="sc-persona-card">
+                    <h3>メラニー（ハナ、マウイ）</h3>
+                    <p>「偶然なんてない。あなたの家族は、私の活動を前に進め、若い人たちに居場所を提供するという使命を証明してくれた。」</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="sc-section">
+            <h2>料金</h2>
+            <div class="sc-pricing">
+                <div class="sc-pricing-card">
+                    <h3>初回相談</h3>
+                    <div class="price">0<span>円（30分）</span></div>
+                    <ul>
+                        <li>状況ヒアリング</li>
+                        <li>対応可能範囲の確認</li>
+                        <li>お見積もり・方針提案</li>
+                    </ul>
+                </div>
+                <div class="sc-pricing-card">
+                    <h3>戸籍調査</h3>
+                    <div class="price">30,000<span>円〜</span></div>
+                    <ul>
+                        <li>戸籍謄本の取得代行</li>
+                        <li>家系調査</li>
+                        <li>調査レポート作成</li>
+                    </ul>
+                </div>
+                <div class="sc-pricing-card">
+                    <h3>家紋レポート</h3>
+                    <div class="price">50,000<span>円〜</span></div>
+                    <ul>
+                        <li>家紋の特定・調査</li>
+                        <li>バイリンガルレポート</li>
+                        <li>高解像度家紋データ</li>
+                    </ul>
+                </div>
+            </div>
+            <p class="sc-note">※同行サポートは別途ご相談ください。状況により料金が異なります。<br>※まずは無料相談でお話を聞かせてください。</p>
+        </div>
+
+        <div class="sc-section">
+            <h2>SoulCarrier 共鳴の会 — 会員制度</h2>
+            <div class="sc-membership">
+                <div class="sc-membership-card">
+                    <h3>正会員</h3>
+                    <div class="price">&#165;3,000<span>/年</span></div>
+                    <p>年額更新。コミュニティ参加・サービス割引。</p>
+                </div>
+                <div class="sc-membership-card">
+                    <h3>終身会員</h3>
+                    <div class="price">&#165;90,000</div>
+                    <p>一括払いで永続的な参加権。</p>
+                </div>
+                <div class="sc-membership-card">
+                    <h3>賛助</h3>
+                    <div class="price">&#165;15,000</div>
+                    <p>スポット支援。活動を応援。</p>
+                </div>
+            </div>
+            <div class="sc-enroll-link">
+                <a href="https://tokistorage.github.io/qr/credits.html">入会手続きはこちら &rarr;</a>
+            </div>
+        </div>
+
+        <div class="sc-cta">
+            <p>あなたの話を聞かせてください。<br>まずは無料相談からお気軽にどうぞ。</p>
+            <a href="https://line.me/R/oaMessage/@897glsbz/?SoulCarrier%E3%81%AB%E3%81%A4%E3%81%84%E3%81%A6%E7%9B%B8%E8%AB%87%E3%81%97%E3%81%9F%E3%81%84%E3%81%A7%E3%81%99" class="btn" target="_blank" rel="noopener">LINEで相談する</a>
+            <a href="https://calendly.com/pearlmemorial/pearlmemorialsession" class="btn" target="_blank" rel="noopener">30分無料相談予約</a>
+        </div>
+
+        <div class="sc-back">
+            <a href="index.html">&larr; トキストレージ トップへ戻る</a>
+        </div>
+    </div>
+</main>
+
+<footer style="text-align: center; padding: 2rem 1.5rem; margin-top: 3rem; border-top: 1px solid #E2E8F0;">
+    <p style="font-family: Georgia, 'Times New Roman', serif; font-size: 0.8rem; color: #94A3B8; font-style: italic; margin-bottom: 0.8rem;">あなたが物語となり、世代の対話が重なり、未来の道となる。</p>
+    <p style="font-size: 0.75rem; color: #94A3B8;">&copy; 2026 TokiStorage. All rights reserved.</p>
+</footer>
+
+<script src="contact-form.js" defer></script>
+<script src="tracker.js" defer></script>
+</body>
+</html>
