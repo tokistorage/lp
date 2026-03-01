@@ -206,6 +206,22 @@
 
         <p>Frameworks do not produce answers on their own. But they draw guide lines for "what to think about next." When facing a constraint, the more concepts you have at hand, the faster you see candidate routes.</p>
 
+        <h3>Alternatives at Each Layer</h3>
+
+        <p>Once frameworks draw the guide lines, the next step is to lay out alternatives at each layer. Here are the options actually considered during this renovation, and why each was chosen.</p>
+
+        <p><strong>Data format layer</strong> — PDF alone / ZIP+PDF / ZIP alone. PDFs cannot be diffed as binaries in git, bloating the repository. ZIP+PDF makes PDFs a derivative of ZIPs, cutting client dependencies and reducing file sizes. ZIP was adopted as the primary source, with PDFs generated server-side.</p>
+
+        <p><strong>Repository structure layer</strong> — Per-customer repository / consolidated single repository. The per-customer model was vulnerable to API rate limits, and linear growth in repository count became an operational burden. Consolidation into newsletter-master made API costs constant.</p>
+
+        <p><strong>Submission timing layer</strong> — Real-time synchronous / batch queue / event-driven. Real-time choked on API rate limits. Event-driven required additional infrastructure such as Cloudflare's durable queues. A file-based queue with a five-minute timer required zero additional dependencies and ran entirely on GitHub Actions cron.</p>
+
+        <p><strong>QR verification layer</strong> — Client-side jsQR / server-side OpenCV / server-side pyzbar. jsQR runs in the browser but is highly resolution-dependent. OpenCV failed on Version 40. pyzbar, a C-based ZBar wrapper, achieved stable detection rates when combined with 300 dpi rendering.</p>
+
+        <p><strong>Notification layer</strong> — Notify on both success and failure / failure only / no notification. As volume grows, success notifications become noise. Failure-only notification via automatic GitHub Issue creation was chosen, with direct links to logs for immediate investigation.</p>
+
+        <p>The act of laying out alternatives is itself an exercise in articulating design decisions. When you can state explicitly "why this was chosen," your future self — or anyone else — can re-evaluate the choice when constraints change.</p>
+
         <blockquote>
             What constraints taught me was not what to give up, but where the flow could pass through.
         </blockquote>
