@@ -136,7 +136,7 @@
 
         <h3>The One-Branch-One-Commit Discipline</h3>
 
-        <p>The auto-merge race condition was solved with an operational rule. Each branch gets exactly one commit. Additional changes are made on a new branch only after confirming the previous PR has merged. It may look like more steps, but the risk of stranded changes drops to zero.</p>
+        <p>The auto-merge race condition was caught by a discipline established from the start of development. Each branch gets exactly one commit. Additional changes are made on a new branch only after confirming the previous PR has merged. The problem of pushes arriving after auto-merge completes was encountered from the very first days of writing code. It may look like more steps, but the risk of stranded changes drops to zero.</p>
 
         <h2>What Sixty PRs Taught Me</h2>
 
@@ -158,9 +158,9 @@
 
         <p>In the development phase, the goal is to build something that works. In the operations phase, the goal is to keep it working. This difference manifests not in how code is written, but in how pipelines are designed.</p>
 
-        <p>What fit in a single repository during development splits into three in operations. The client (qr), server-side builds (newsletter-master), and business logic (lp). Each can be deployed independently and changes at its own pace.</p>
+        <p>The repositories were split into three from the development stage. The client (qr), business logic (lp), and server-side builds (newsletter-master). The structure was the same, but in operations the role of each repository became sharply defined. Each is deployed independently and changes at its own pace. What was merely "kept separate" during development became "needs to be separate" in operations.</p>
 
-        <p>This separation was not planned. Constraints pushed it into existence naturally. Bandwidth limits demanded repository consolidation. Binary bloat demanded a format change. Dependency weight demanded client-server separation. The constraints did the designing.</p>
+        <p>Bandwidth limits demanded repository consolidation. Binary bloat demanded a format change. Dependency weight demanded client-server separation. The separation made during development was not a coincidence — the constraints confirmed it after the fact.</p>
 
         <h2>Closing the Circuit with Verification</h2>
 
