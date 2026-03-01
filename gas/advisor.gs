@@ -13,9 +13,7 @@
  *   WA       → workaway     (6ヶ月)
  *   OG       → offgrid      (6ヶ月)
  *   AMB      → ambassador   (無期限)
- *   SC-REG   → sc-regular   (1年)
- *   SC-LIFE  → sc-lifetime  (無期限)
- *   SC-SUP   → sc-supporter (即完了)
+ *   SC       → soulcarrier  (即完了・任意金額)
  */
 
 var ADVISOR_SHEET_NAME = 'アドバイザー';
@@ -34,19 +32,14 @@ var TYPE_MAP = {
   'WA': 'workaway',
   'OG': 'offgrid',
   'AMB': 'ambassador',
-  'SC-REG': 'sc-regular',
-  'SC-LIFE': 'sc-lifetime',
-  'SC-SUP': 'sc-supporter'
+  'SC': 'soulcarrier'
 };
 
 // 6ヶ月契約タイプ（期間管理・自動期限切れ対象）
 var SIX_MONTH_TYPES = { 'TA-RETN': true, 'WA': true, 'OG': true };
 
-// 1年契約タイプ（期間管理・自動期限切れ対象）
-var ONE_YEAR_TYPES = { 'SC-REG': true };
-
 // 即完了タイプ（セッション開始 = 実施済）
-var IMMEDIATE_COMPLETE_TYPES = { 'TA-SPOT': true, 'SC-SUP': true };
+var IMMEDIATE_COMPLETE_TYPES = { 'TA-SPOT': true, 'SC': true };
 
 /**
  * advisor_status — トークン状態一括取得（クライアント用）
@@ -79,8 +72,8 @@ function handleAdvisorStatus(ss, data) {
     var sheetType = rows[i][4] || '';
     var endDate = rows[i][7] ? new Date(rows[i][7]) : null;
 
-    // 6ヶ月契約 / 1年契約: 終了日超過 → 自動的に権利終了
-    if (sheetStatus === 'セッション中' && (SIX_MONTH_TYPES[sheetType] || ONE_YEAR_TYPES[sheetType]) && endDate && now > endDate) {
+    // 6ヶ月契約: 終了日超過 → 自動的に権利終了
+    if (sheetStatus === 'セッション中' && SIX_MONTH_TYPES[sheetType] && endDate && now > endDate) {
       sheet.getRange(i + 2, 6).setValue('権利終了');
       sheetStatus = '権利終了';
     }
@@ -143,13 +136,6 @@ function handleAdvisorStartSession(ss, data) {
     if (SIX_MONTH_TYPES[sheetType]) {
       var endDate = new Date(now);
       endDate.setMonth(endDate.getMonth() + 6);
-      sheet.getRange(rowIdx, 8).setValue(endDate);
-    }
-
-    // 1年契約: 終了日 = 開始日 + 1年
-    if (ONE_YEAR_TYPES[sheetType]) {
-      var endDate = new Date(now);
-      endDate.setFullYear(endDate.getFullYear() + 1);
       sheet.getRange(rowIdx, 8).setValue(endDate);
     }
 
@@ -335,20 +321,13 @@ function menuStartSession(code) {
       sheet.getRange(rowIdx, 8).setValue(endDate);
     }
 
-    if (ONE_YEAR_TYPES[sheetType]) {
-      var endDate = new Date(now);
-      endDate.setFullYear(endDate.getFullYear() + 1);
-      sheet.getRange(rowIdx, 8).setValue(endDate);
-    }
-
     if (IMMEDIATE_COMPLETE_TYPES[sheetType]) {
       sheet.getRange(rowIdx, 6).setValue('実施済');
       return '即完了「' + code + '」→ 実施済（' + now.toLocaleDateString('ja-JP') + '）';
     }
 
     var typeName = TYPE_MAP[sheetType] || sheetType;
-    var periodLabel = ONE_YEAR_TYPES[sheetType] ? '1年間' : '6ヶ月間';
-    return typeName + '「' + code + '」→ セッション中（' + now.toLocaleDateString('ja-JP') + ' 〜 ' + periodLabel + '）';
+    return typeName + '「' + code + '」→ セッション中（' + now.toLocaleDateString('ja-JP') + ' 〜 6ヶ月間）';
   }
 
   throw new Error('コード「' + code + '」が見つかりません');
@@ -403,7 +382,7 @@ function checkExpiredAdvisors() {
     var type = rows[i][4] || '';
     var endDate = rows[i][7] ? new Date(rows[i][7]) : null;
 
-    if (status === 'セッション中' && (SIX_MONTH_TYPES[type] || ONE_YEAR_TYPES[type]) && endDate && now > endDate) {
+    if (status === 'セッション中' && SIX_MONTH_TYPES[type] && endDate && now > endDate) {
       sheet.getRange(i + 2, 6).setValue('権利終了');
       expired.push(rows[i][1]);
     }
