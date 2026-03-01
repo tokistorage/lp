@@ -3,7 +3,7 @@
  */
 
 function isOrderPayment(ref) {
-  return /laminate|quartz|PearlSoap-Ambassador/i.test(ref);
+  return /laminate|quartz|AMB/i.test(ref);
 }
 
 function processTokiCode(ss, tokiMatch, ref, amt, cur) {
@@ -16,7 +16,7 @@ function processTokiCode(ss, tokiMatch, ref, amt, cur) {
   }
 
   // 特集権コード
-  if (/Tokushu/i.test(ref)) {
+  if (/TKx/i.test(ref)) {
     var count = Math.floor(amt / (PRICES_TOKUSHU[cur] || PRICES_TOKUSHU['JPY']));
     if (count < 1) count = 1;
     registerCreditCode(ss, code, count, 'tokushu');
@@ -24,7 +24,7 @@ function processTokiCode(ss, tokiMatch, ref, amt, cur) {
   }
 
   // サービス（アドバイザー / Workaway / オフグリッド）
-  if (/TimelessAdvisor|Workaway-Consulting|OffGrid-Consulting|PearlSoap-Ambassador|SoulCarrier/i.test(ref)) {
+  if (/TA-SPOT|TA-RETN|WA|OG|AMB|SC-REG|SC-LIFE|SC-SUP/i.test(ref)) {
     recordAdvisorPayment(ss, code, amt, cur, ref);
     return;
   }
@@ -139,9 +139,8 @@ function recordAdvisorPayment(ss, code, amount, currency, ref) {
   var sheet = getOrCreateSheet(ss, 'アドバイザー', [
     '日時', 'コード', '金額', '通貨', 'タイプ', 'ステータス', '開始日', '終了日'
   ]);
-  // ref例: "TOKI-XXXX-XXXX-XXXX TimelessAdvisor-Retainer-6mo"
-  //        "TOKI-XXXX-XXXX-XXXX Workaway-Consulting-6mo"
-  var type = ref.replace(/^.*TOKI-[A-Z0-9]{4}-[A-Z0-9]{4}-[A-Z0-9]{4}\s*/i, '').replace(/^TimelessAdvisor-/i, '');
+  // ref例: "TOKI-XXXX-XXXX-XXXX TA-SPOT"
+  var type = ref.replace(/^.*TOKI-[A-Z0-9]{4}-[A-Z0-9]{4}-[A-Z0-9]{4}\s*/i, '');
   sheet.appendRow([
     new Date(), code, amount, currency, type, '入金確認済み', '', ''
   ]);

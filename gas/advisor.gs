@@ -7,15 +7,15 @@
  * ステータス遷移:
  *   入金確認済み (activated) → セッション中 (active) → 実施済 (completed) / 権利終了 (expired)
  *
- * タイプ:
- *   SpotConsultation        → spot         (即完了)
- *   Retainer-6mo            → annual       (6ヶ月)
- *   Workaway-Consulting-6mo → workaway     (6ヶ月)
- *   OffGrid-Consulting-6mo  → offgrid      (6ヶ月)
- *   PearlSoap-Ambassador    → ambassador   (無期限)
- *   SoulCarrier-Regular     → sc-regular   (1年)
- *   SoulCarrier-Lifetime    → sc-lifetime  (無期限)
- *   SoulCarrier-Supporter   → sc-supporter (即完了)
+ * タイプ（プロダクトコード）:
+ *   TA-SPOT  → spot         (即完了)
+ *   TA-RETN  → annual       (6ヶ月)
+ *   WA       → workaway     (6ヶ月)
+ *   OG       → offgrid      (6ヶ月)
+ *   AMB      → ambassador   (無期限)
+ *   SC-REG   → sc-regular   (1年)
+ *   SC-LIFE  → sc-lifetime  (無期限)
+ *   SC-SUP   → sc-supporter (即完了)
  */
 
 var ADVISOR_SHEET_NAME = 'アドバイザー';
@@ -29,24 +29,24 @@ var STATUS_MAP = {
 };
 
 var TYPE_MAP = {
-  'SpotConsultation': 'spot',
-  'Retainer-6mo': 'annual',
-  'Workaway-Consulting-6mo': 'workaway',
-  'OffGrid-Consulting-6mo': 'offgrid',
-  'PearlSoap-Ambassador': 'ambassador',
-  'SoulCarrier-Regular': 'sc-regular',
-  'SoulCarrier-Lifetime': 'sc-lifetime',
-  'SoulCarrier-Supporter': 'sc-supporter'
+  'TA-SPOT': 'spot',
+  'TA-RETN': 'annual',
+  'WA': 'workaway',
+  'OG': 'offgrid',
+  'AMB': 'ambassador',
+  'SC-REG': 'sc-regular',
+  'SC-LIFE': 'sc-lifetime',
+  'SC-SUP': 'sc-supporter'
 };
 
 // 6ヶ月契約タイプ（期間管理・自動期限切れ対象）
-var SIX_MONTH_TYPES = { 'Retainer-6mo': true, 'Workaway-Consulting-6mo': true, 'OffGrid-Consulting-6mo': true };
+var SIX_MONTH_TYPES = { 'TA-RETN': true, 'WA': true, 'OG': true };
 
 // 1年契約タイプ（期間管理・自動期限切れ対象）
-var ONE_YEAR_TYPES = { 'SoulCarrier-Regular': true };
+var ONE_YEAR_TYPES = { 'SC-REG': true };
 
 // 即完了タイプ（セッション開始 = 実施済）
-var IMMEDIATE_COMPLETE_TYPES = { 'SpotConsultation': true, 'SoulCarrier-Supporter': true };
+var IMMEDIATE_COMPLETE_TYPES = { 'TA-SPOT': true, 'SC-SUP': true };
 
 /**
  * advisor_status — トークン状態一括取得（クライアント用）
