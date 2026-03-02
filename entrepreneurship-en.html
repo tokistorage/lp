@@ -265,6 +265,55 @@
         @media print {
             .article-nav { display: none; }
             .article-container { padding: 2rem; }
+            .persona-selector { display: none; }
+        }
+
+        /* Persona Selector */
+        .persona-selector {
+            text-align: center;
+            margin: 0 0 1.5rem;
+            padding: 1.2rem 1.5rem;
+            background: var(--toki-copper-pale);
+            border-radius: 8px;
+        }
+        .persona-label {
+            font-size: 0.7rem;
+            color: var(--text-muted);
+            letter-spacing: 0.12em;
+            margin-bottom: 0.7rem;
+        }
+        .persona-buttons {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.4rem;
+            justify-content: center;
+        }
+        .persona-btn {
+            padding: 0.45rem 0.9rem;
+            border: 1px solid var(--border);
+            border-radius: 20px;
+            background: #fff;
+            font-family: var(--font-body);
+            font-size: 0.8rem;
+            color: var(--text-secondary);
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+        .persona-btn:hover {
+            border-color: var(--toki-copper);
+            color: var(--toki-copper);
+        }
+        .persona-btn.active {
+            background: var(--toki-copper);
+            color: #fff;
+            border-color: var(--toki-copper);
+        }
+        .persona-count {
+            font-size: 0.75rem;
+            color: var(--text-muted);
+            text-align: center;
+            margin: 0 0 1.5rem;
+            min-height: 1.2em;
         }
         .nav-brand::before {
             content: '';
@@ -342,11 +391,20 @@
 
     <div class="article-content">
 
-        <div class="core-message">
+        <div class="core-message" data-persona-msg="full">
             <strong>Core argument:</strong> The essence of employment is the acquisition of obedience, location fixation, and task fixation. Traditional entrepreneurship wraps these core desires in a shell of freedom. Toki Storage chose to relinquish these core desires entirely, creating inverse opportunities for every stakeholder.
         </div>
+        <div class="core-message" data-persona-msg="entrepreneur" style="display:none;">
+            <strong>Reading as an entrepreneur:</strong> When you think about hiring someone, the root of that desire is obedience, location fixation, and task fixation. When these three desires are recognized and released, how does business design change? This essay explores that question through the example of Toki Storage.
+        </div>
+        <div class="core-message" data-persona-msg="layoff" style="display:none;">
+            <strong>Reading as preparation:</strong> A layoff denies economic function, not existence itself. But that distinction becomes invisible after the denial occurs. This essay examines the inevitability of structural transformation driven by AGI, and Toki Storage as a means of anchoring existence before the denial arrives.
+        </div>
+        <div class="core-message" data-persona-msg="ceremony" style="display:none;">
+            <strong>Reading from ceremonies:</strong> When a deceased person's voice plays from a printed QR code at a funeral, the bodies of those listening respond beyond argument. Turning felt experience into physical evidence — this essay traces what happens when this concept accompanies the threshold moments of life ceremonies.
+        </div>
 
-        <p style="font-size: 0.9rem; color: var(--text-secondary); line-height: 1.8; margin-bottom: 1.5rem;">This essay takes this structural analysis as its starting point and ultimately arrives at a single core concept: <strong>turning felt experience into physical evidence</strong>. When technology exists to capture transformative experiences not as faith but as bodily response — and to preserve them physically — the very meaning of entrepreneurship changes. Keep this concept in mind as you read.</p>
+        <p data-persona="full" style="font-size: 0.9rem; color: var(--text-secondary); line-height: 1.8; margin-bottom: 1.5rem;">This essay takes this structural analysis as its starting point and ultimately arrives at a single core concept: <strong>turning felt experience into physical evidence</strong>. When technology exists to capture transformative experiences not as faith but as bodily response — and to preserve them physically — the very meaning of entrepreneurship changes. Keep this concept in mind as you read.</p>
 
         <p class="disclaimer">Note: This essay is an academic exploration. It does not criticize any specific company or employment model.</p>
 
@@ -756,7 +814,7 @@
 
         <p>Not hiring is not disregarding people. Rather, it's the recognition that "this person's time should not be consumed for my vision." Not fixing location is not abandoning efficiency. It's the belief that "people should be where they want to be." Not fixing tasks is not chaos. It's the trust that "people can decide their own roles."</p>
 
-        <p style="font-size: 0.85rem; color: var(--text-muted); line-height: 1.8; margin: 2rem 0;">What follows traces the reach of this redefinition from multiple angles: the invalidation of ecosystems, the dissolution of boundaries, ceremonies of passage, critique of the spiritual community, quartz glass, gift economy, international money transfer, and independence of life infrastructure. Each theme warrants its own dedicated essay, explored in depth elsewhere in this series. Here, we trace the single thread running through all of them — the convergence toward the concept introduced at the outset: turning felt experience into physical evidence.</p>
+        <p data-persona="full" style="font-size: 0.85rem; color: var(--text-muted); line-height: 1.8; margin: 2rem 0;">What follows traces the reach of this redefinition from multiple angles: the invalidation of ecosystems, the dissolution of boundaries, ceremonies of passage, critique of the spiritual community, quartz glass, gift economy, international money transfer, and independence of life infrastructure. Each theme warrants its own dedicated essay, explored in depth elsewhere in this series. Here, we trace the single thread running through all of them — the convergence toward the concept introduced at the outset: turning felt experience into physical evidence.</p>
 
         <h3>A World Where Ecosystems Are Invalidated</h3>
 
@@ -1416,6 +1474,7 @@
 <script src="contact-form.js" defer></script>
 <script src="essay-tts.js?v=20260220"></script>
 <script src="essay-nav.js?v=20260220"></script>
+<script src="persona-reader.js?v=20260302"></script>
 <script src="tracker.js" defer></script>
 </body>
 </html>
