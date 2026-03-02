@@ -88,6 +88,7 @@
     { id: 'soap-pitch', ja: '石鹸がエレベーターピッチを超えた日', en: 'The Day Soap Beat the Elevator Pitch', date: '2026-02-27' },
     { id: 'testimonial-persistence', ja: 'テスティモニアルの永続化', en: 'The Persistence of Testimonials', date: '2026-03-02' },
     { id: 'group-event', ja: '10分で始まるグループイベント', en: 'The 10-Minute Group Event', date: '2026-03-02' },
+    { id: 'wise-guide', ja: 'Wiseの始め方', en: 'Getting Started with Wise', date: '2026-03-03' },
 
     // ── 文化・社会活動 ──
     { id: 'education', ja: '教育', en: 'Education', date: '2026-02-13' },
@@ -191,6 +192,7 @@
   // LATEST_COUNT で表示件数を制御
   const LATEST_COUNT = 5;
   const latestEssayIds = [
+    'wise-guide',
     'pwa-implementation-guide',
     'rural-workaway',
     'group-event',
@@ -299,6 +301,7 @@
     'soap-pitch': ['novelty-soap', 'gift-economy', 'monitor-program', 'customer-journey-transformation', 'narrative-trust'],
     'testimonial-persistence': ['narrative-trust', 'what-to-leave', 'customer-journey-transformation', 'monitor-program', 'ceremony'],
     'group-event': ['soap-pitch', 'monitor-program', 'gift-economy', 'customer-journey-transformation', 'novelty-soap'],
+    'wise-guide': ['payment', 'affiliate-transparency', 'burn-rate-zero', 'monitor-program', 'partner-boundary'],
     // ── 文化・社会活動 ──
     'education':              ['early-education', 'history', 'media', 'psychology', 'lifestyle'],
     'early-education':        ['education', 'recital-record', 'music', 'psychology', 'entertainment'],

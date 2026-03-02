@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" type="image/png" sizes="32x32" href="asset/favicon-32.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="asset/apple-touch-icon.png">
+    <title>Getting Started with Wise | TokiStorage</title>
+    <meta name="robots" content="index, follow">
+    <meta name="description" content="All payments and rewards at TokiStorage are handled through Wise. A step-by-step guide for first-time users: from account creation to Wisetag setup, sending, and receiving.">    <style>
+        :root {
+            --toki-blue: #2563EB;
+            --toki-blue-dark: #1E40AF;
+            --toki-blue-pale: #EFF6FF;
+            --accent-blue: #60A5FA;
+            --bg-white: #FFFFFF;
+            --text-primary: #1E293B;
+            --text-secondary: #475569;
+            --text-muted: #94A3B8;
+            --border: #E2E8F0;
+            --font-display: 'Georgia', 'Times New Roman', serif;
+            --font-body: -apple-system, 'Segoe UI', Helvetica, Arial, sans-serif;
+        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        html { scroll-behavior: smooth; }
+        body { font-family: var(--font-body); font-weight: 400; background: var(--bg-white); color: var(--text-primary); line-height: 2; font-size: 16px; }
+
+        .article-nav { position: fixed; top: 0; left: 0; right: 0; z-index: 1000; background: rgba(255,255,255,0.95); backdrop-filter: blur(12px); border-bottom: 1px solid var(--border); padding: 0.6rem 1.2rem; display: flex; align-items: center; justify-content: space-between; gap: 1rem; }
+        .article-nav .nav-brand { font-family: var(--font-display); font-size: 0.9rem; font-weight: 600; color: var(--toki-blue); text-decoration: none; white-space: nowrap; }
+        .article-nav .nav-brand::before { content: ''; display: inline-block; width: 20px; height: 20px; background: url('asset/tokistorage-icon-512.png') no-repeat center / contain; vertical-align: -3px; margin-right: 5px; }
+        .article-nav .nav-right { display: flex; align-items: center; gap: 1rem; }
+        .article-nav .nav-label { font-size: 0.6rem; color: var(--text-muted); letter-spacing: 0.08em; }
+        .article-nav .lang-switch { font-size: 0.75rem; color: var(--toki-blue); text-decoration: none; padding: 0.3rem 0.6rem; border: 1px solid var(--toki-blue); border-radius: 4px; }
+        .article-nav .lang-switch:hover { background: var(--toki-blue); color: #fff; }
+
+        .article-container { max-width: 680px; margin: 0 auto; padding: 7rem 2rem 4rem; }
+        .article-header { margin-bottom: 3rem; padding-bottom: 2rem; border-bottom: 1px solid var(--border); }
+        .article-category { font-size: 0.7rem; color: var(--toki-blue); letter-spacing: 0.15em; margin-bottom: 1rem; }
+        .article-header h1 { font-family: var(--font-display); font-size: 1.8rem; font-weight: 700; line-height: 1.5; margin-bottom: 1.5rem; }
+        .article-subtitle { font-size: 0.95rem; color: var(--text-secondary); line-height: 1.9; }
+
+        .article-content h2 { font-family: var(--font-display); font-size: 1.3rem; font-weight: 600; margin: 3rem 0 1.5rem; padding-bottom: 0.5rem; border-bottom: 2px solid var(--toki-blue-pale); }
+        .article-content h3 { font-family: var(--font-display); font-size: 1.1rem; font-weight: 600; margin: 2rem 0 1rem; color: var(--toki-blue-dark); }
+        .article-content p { margin-bottom: 1.5rem; text-align: justify; }
+        .article-content blockquote { border-left: 3px solid var(--toki-blue); padding-left: 1.5rem; margin: 2rem 0; font-family: var(--font-display); color: var(--text-secondary); }
+        .article-content ul { margin: 1.5rem 0; padding-left: 1.5rem; }
+        .article-content li { margin-bottom: 0.75rem; }
+
+        .core-message { background: var(--toki-blue-pale); border-left: 4px solid var(--toki-blue); padding: 1.5rem; margin: 2rem 0; font-size: 0.95rem; line-height: 1.8; }
+        .key-point { background: linear-gradient(135deg, var(--toki-blue-pale) 0%, #fff 100%); border: 1px solid var(--accent-blue); border-radius: 8px; padding: 1.5rem; margin: 2rem 0; text-align: center; }
+        .key-point p { font-family: var(--font-display); font-size: 1.1rem; color: var(--toki-blue-dark); margin: 0; }
+
+        .article-footer { margin-top: 4rem; padding-top: 2rem; border-top: 1px solid var(--border); text-align: center; }
+        .article-footer p { font-size: 0.8rem; color: var(--text-muted); margin-bottom: 1rem; }
+        .article-footer a { color: var(--toki-blue); text-decoration: none; }
+        .article-footer a:hover { text-decoration: underline; }
+
+        @media (max-width: 768px) {
+            .article-container { padding: 6rem 1.2rem 3rem; }
+            .article-header h1 { font-size: 1.5rem; }
+            .article-nav .nav-label { display: none; }
+        }
+        @media print { .article-nav { display: none; } .article-container { padding-top: 2rem; } }
+    </style>
+</head>
+<body>
+
+<nav class="article-nav">
+    <a href="essays-en.html" class="nav-brand">TokiStorage</a>
+    <div class="nav-right">
+        <span class="nav-label">ESSAY</span>
+        <a href="wise-guide.html" class="lang-switch">JA</a>
+    </div>
+</nav>
+
+<main class="article-container">
+    <header class="article-header">
+        <div class="article-category">ECONOMY & PROPERTY</div>
+        <h1>Getting Started with Wise</h1>
+        <p class="article-subtitle">All payments and rewards at TokiStorage run through Wise. The shortest path for first-time users.</p>
+    </header>
+
+    <article class="article-content">
+
+        <div class="core-message">No bank account. No credit card. Wise alone handles both purchases and payouts. Here is how it works, from zero.</div>
+
+        <h2>1. What Is Wise?</h2>
+
+        <p>Wise began as an international money transfer service, but today it is everyday payment infrastructure. It holds balances like a bank, lets you pay with a debit card, and enables instant person-to-person transfers. It supports over 70 currencies, and exchange fees are a fraction of what banks charge.</p>
+
+        <p>TokiStorage chose Wise for a simple reason. Bank transfers take time to confirm. Credit card payments carry 3&#x2013;4% processing fees and chargeback risk. With Wise, transfer fees are just a few dozen yen, funds arrive instantly, and the recipient pays nothing.</p>
+
+        <p>Above all, there is Wisetag&#x2014;a mechanism that lets you send and receive money using only a short, public string. No email address or account number needs to be shared.</p>
+
+        <h2>2. Create an Account</h2>
+
+        <p>Create an account at the <a href="https://wise.com/invite/irtc/satot67" target="_blank" rel="noopener">Wise website</a>. All you need is an email address and an identity document (My Number card or driver&#x2019;s license in Japan; passport elsewhere).</p>
+
+        <p>Identity verification usually completes within minutes to one business day. You photograph your document with your smartphone camera and take a selfie. Compared to opening a bank account, it is overwhelmingly fast.</p>
+
+        <p>Note: the link above is an affiliate (referral) link. When someone who registers through this referral sends the equivalent of 30,000 yen or more, the referrer receives a 2,200-yen reward. Monitor program purchases are under 30,000 yen, so participating in the monitor program alone does not trigger the affiliate reward. For details, see &#x201C;<a href="https://tokistorage.github.io/lp/affiliate-transparency-en.html">Disclosure of Referral Links</a>.&#x201D;</p>
+
+        <h2>3. Check Your Wisetag</h2>
+
+        <p>After creating your account, check your Wisetag. This becomes your ID within the TokiStorage ecosystem.</p>
+
+        <p>In the Wise app or on the web, go to &#x201C;Account&#x201D; &#x2192; &#x201C;Wisetag.&#x201D; It is a short string like <code>@yourname</code>. Share this tag with the other party, and you can receive money. No account number or email address required.</p>
+
+        <p>You enter this Wisetag when applying for the monitor program. Rewards are also sent to this tag.</p>
+
+        <h2>4. Add Funds</h2>
+
+        <p>There are several ways to add funds to your Wise account.</p>
+
+        <ul>
+            <li><strong>Bank transfer</strong> &#x2014; Transfer to the local bank account Wise provides. This has the lowest fees.</li>
+            <li><strong>Debit card</strong> &#x2014; Reflected instantly, though your card issuer may charge a fee.</li>
+        </ul>
+
+        <p>Payments to TokiStorage are same-currency (JPY &#x2192; JPY), so no exchange fee applies. Only a transfer fee of a few dozen yen.</p>
+
+        <h2>5. Send a Payment</h2>
+
+        <p>To pay TokiStorage, use the &#x201C;Send&#x201D; function in Wise.</p>
+
+        <ul>
+            <li>Tap &#x201C;Send&#x201D; &#x2192; Enter TokiStorage&#x2019;s Wisetag as the recipient</li>
+            <li>Enter the amount (the specified amount for the monitor program)</li>
+            <li>Add a note describing your order in the &#x201C;Reference&#x201D; field</li>
+            <li>Confirm the transfer</li>
+        </ul>
+
+        <p>The transfer arrives instantly. No waiting until the next business day, as with bank transfers.</p>
+
+        <h2>6. Receive Your Reward</h2>
+
+        <p>Monitor program rewards are sent to your Wisetag via Wise. When you receive a notification, the funds are already in your Wise balance.</p>
+
+        <p>You can spend the balance directly using Wise&#x2019;s digital debit card (compatible with Apple Pay and Google Pay). At convenience stores, online shops&#x2014;anywhere. You can also withdraw to a bank account.</p>
+
+        <p>There is no fee to receive rewards.</p>
+
+        <h2>7. Why Wise, Not a Bank?</h2>
+
+        <p>Bank transfers are the norm in Japan, but they are poorly suited for small person-to-person payments. Transfer fees run several hundred yen, confirmation takes time, and you must share your account number with the other party.</p>
+
+        <p>With Wise, fees are a few dozen yen, funds arrive instantly, and a Wisetag is all you need. Moreover, it handles cross-border transfers seamlessly. Because TokiStorage&#x2019;s services are designed to scale globally, it was essential to have a single payment mechanism that works for domestic and international users alike.</p>
+
+        <p>&#x201C;Standardize on a single payment method&#x201D;&#x2014;this design decision does impose the initial burden of creating a new account. But once created, that one account covers every TokiStorage service.</p>
+
+        <blockquote>
+            <p>One tool is enough&#x2014;if it works in every situation.</p>
+        </blockquote>
+
+        <div class="key-point"><p>One Wise account covers purchases, rewards, domestic, and international&#x2014;everything.</p></div>
+
+    </article>
+
+    <footer class="article-footer">
+        <p id="essay-nav-links"></p>
+        <p style="font-size: 0.75rem; color: var(--text-muted);">&copy; 2026 TokiStorage. All rights reserved.</p>
+    </footer>
+
+</main>
+
+<script src="essay-nav.js"></script>
+<script src="essay-tts.js"></script>
+</body>
+</html>

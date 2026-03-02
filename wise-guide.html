@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" type="image/png" sizes="32x32" href="asset/favicon-32.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="asset/apple-touch-icon.png">
+    <title>Wiseの始め方 | トキストレージ</title>
+    <meta name="robots" content="index, follow">
+    <meta name="description" content="TokiStorageの決済・謝礼はすべてWiseで完結します。初めての方向けに、アカウント作成からWisetagの確認、送金・受け取りまでの流れを解説します。">    <style>
+        :root {
+            --toki-blue: #2563EB;
+            --toki-blue-dark: #1E40AF;
+            --toki-blue-pale: #EFF6FF;
+            --accent-blue: #60A5FA;
+            --bg-white: #FFFFFF;
+            --text-primary: #1E293B;
+            --text-secondary: #475569;
+            --text-muted: #94A3B8;
+            --border: #E2E8F0;
+            --font-display: 'Hiragino Mincho ProN', 'Yu Mincho', serif;
+            --font-body: 'Hiragino Kaku Gothic ProN', 'Yu Gothic', 'Meiryo', sans-serif;
+        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        html { scroll-behavior: smooth; }
+        body { font-family: var(--font-body); font-weight: 400; background: var(--bg-white); color: var(--text-primary); line-height: 2; font-size: 16px; }
+
+        .article-nav { position: fixed; top: 0; left: 0; right: 0; z-index: 1000; background: rgba(255,255,255,0.95); backdrop-filter: blur(12px); border-bottom: 1px solid var(--border); padding: 0.6rem 1.2rem; display: flex; align-items: center; justify-content: space-between; gap: 1rem; }
+        .article-nav .nav-brand { font-family: var(--font-display); font-size: 0.9rem; font-weight: 600; color: var(--toki-blue); text-decoration: none; white-space: nowrap; }
+        .article-nav .nav-brand::before { content: ''; display: inline-block; width: 20px; height: 20px; background: url('asset/tokistorage-icon-512.png') no-repeat center / contain; vertical-align: -3px; margin-right: 5px; }
+        .article-nav .nav-right { display: flex; align-items: center; gap: 1rem; }
+        .article-nav .nav-label { font-size: 0.6rem; color: var(--text-muted); letter-spacing: 0.08em; }
+        .article-nav .lang-switch { font-size: 0.75rem; color: var(--toki-blue); text-decoration: none; padding: 0.3rem 0.6rem; border: 1px solid var(--toki-blue); border-radius: 4px; }
+        .article-nav .lang-switch:hover { background: var(--toki-blue); color: #fff; }
+
+        .article-container { max-width: 680px; margin: 0 auto; padding: 7rem 2rem 4rem; }
+        .article-header { margin-bottom: 3rem; padding-bottom: 2rem; border-bottom: 1px solid var(--border); }
+        .article-category { font-size: 0.7rem; color: var(--toki-blue); letter-spacing: 0.15em; margin-bottom: 1rem; }
+        .article-header h1 { font-family: var(--font-display); font-size: 1.8rem; font-weight: 700; line-height: 1.5; margin-bottom: 1.5rem; }
+        .article-subtitle { font-size: 0.95rem; color: var(--text-secondary); line-height: 1.9; }
+
+        .article-content h2 { font-family: var(--font-display); font-size: 1.3rem; font-weight: 600; margin: 3rem 0 1.5rem; padding-bottom: 0.5rem; border-bottom: 2px solid var(--toki-blue-pale); }
+        .article-content h3 { font-family: var(--font-display); font-size: 1.1rem; font-weight: 600; margin: 2rem 0 1rem; color: var(--toki-blue-dark); }
+        .article-content p { margin-bottom: 1.5rem; text-align: justify; }
+        .article-content blockquote { border-left: 3px solid var(--toki-blue); padding-left: 1.5rem; margin: 2rem 0; font-family: var(--font-display); color: var(--text-secondary); }
+        .article-content ul { margin: 1.5rem 0; padding-left: 1.5rem; }
+        .article-content li { margin-bottom: 0.75rem; }
+
+        .core-message { background: var(--toki-blue-pale); border-left: 4px solid var(--toki-blue); padding: 1.5rem; margin: 2rem 0; font-size: 0.95rem; line-height: 1.8; }
+        .key-point { background: linear-gradient(135deg, var(--toki-blue-pale) 0%, #fff 100%); border: 1px solid var(--accent-blue); border-radius: 8px; padding: 1.5rem; margin: 2rem 0; text-align: center; }
+        .key-point p { font-family: var(--font-display); font-size: 1.1rem; color: var(--toki-blue-dark); margin: 0; }
+
+        .article-footer { margin-top: 4rem; padding-top: 2rem; border-top: 1px solid var(--border); text-align: center; }
+        .article-footer p { font-size: 0.8rem; color: var(--text-muted); margin-bottom: 1rem; }
+        .article-footer a { color: var(--toki-blue); text-decoration: none; }
+        .article-footer a:hover { text-decoration: underline; }
+
+        @media (max-width: 768px) {
+            .article-container { padding: 6rem 1.2rem 3rem; }
+            .article-header h1 { font-size: 1.5rem; }
+            .article-nav .nav-label { display: none; }
+        }
+        @media print { .article-nav { display: none; } .article-container { padding-top: 2rem; } }
+    </style>
+</head>
+<body>
+
+<nav class="article-nav">
+    <a href="essays.html" class="nav-brand">トキストレージ</a>
+    <div class="nav-right">
+        <span class="nav-label">ESSAY</span>
+        <a href="wise-guide-en.html" class="lang-switch">EN</a>
+    </div>
+</nav>
+
+<main class="article-container">
+    <header class="article-header">
+        <div class="article-category">経済・財産</div>
+        <h1>Wiseの始め方</h1>
+        <p class="article-subtitle">TokiStorageの決済と謝礼はすべてWiseで完結する。初めての人のための、最短ルート。</p>
+    </header>
+
+    <article class="article-content">
+
+        <div class="core-message">銀行口座もクレジットカードも使わない。Wiseだけで、購入も受け取りも完結する。その仕組みを、ゼロから説明する。</div>
+
+        <h2>1. Wiseとは何か</h2>
+
+        <p>Wiseは国際送金サービスとして始まったが、今では日常的な決済インフラだ。銀行のように口座を持ち、デビットカードで支払い、個人間で即時に送金できる。70以上の通貨に対応し、為替手数料は銀行の数分の一。</p>
+
+        <p>TokiStorageがWiseを採用した理由は単純だ。銀行振込は着金確認に時間がかかる。クレジットカード決済は手数料が3〜4%かかり、チャージバックリスクもある。Wiseなら送金手数料は数十円、着金は即時、受け取り側の手数料はゼロ。</p>
+
+        <p>そして何より、Wisetagという仕組みがある。メールアドレスや口座番号を晒さずに、公開可能な短い文字列だけで送受金できる。</p>
+
+        <h2>2. アカウントを作る</h2>
+
+        <p><a href="https://wise.com/invite/irtc/satot67" target="_blank" rel="noopener">Wise公式サイト</a>でアカウントを作成する。メールアドレスと本人確認書類（マイナンバーカードまたは運転免許証）があれば完了する。</p>
+
+        <p>本人確認は通常数分〜1営業日で完了する。スマートフォンのカメラで書類を撮影し、顔写真を撮るだけだ。銀行口座の開設と比べれば、圧倒的に速い。</p>
+
+        <p>なお、上記リンクはアフィリエイト（紹介）リンクです。紹介経由で登録された方が30,000円相当以上を送金すると、紹介者に2,200円の報酬が入ります。モニタープログラムの決済は30,000円未満のため、モニター参加だけではアフィリエイト報酬は発生しません。詳しくは「<a href="https://tokistorage.github.io/lp/affiliate-transparency.html">紹介リンクの開示</a>」をご覧ください。</p>
+
+        <h2>3. Wisetagを確認する</h2>
+
+        <p>アカウント作成後、Wisetagを確認する。これがTokiStorageにおけるあなたのIDになる。</p>
+
+        <p>Wiseアプリまたはウェブで「アカウント」→「Wisetag」で確認できる。<code>@yourname</code>のような短い文字列だ。このタグを相手に伝えるだけで、送金を受け取れる。口座番号もメールアドレスも不要。</p>
+
+        <p>モニタープログラムの申込時にこのWisetagを入力する。謝礼もこのタグ宛に送金される。</p>
+
+        <h2>4. 日本円を入金する</h2>
+
+        <p>Wiseアカウントに日本円を入金する方法は複数ある。</p>
+
+        <ul>
+            <li><strong>銀行振込</strong> — Wiseが指定する日本の銀行口座に振り込む。最も手数料が低い。</li>
+            <li><strong>デビットカード</strong> — 即時反映だが、カード側の手数料がかかる場合がある。</li>
+        </ul>
+
+        <p>TokiStorageへの送金は日本円同士（JPY → JPY）なので、為替手数料は発生しない。送金手数料のみで、数十円程度だ。</p>
+
+        <h2>5. 送金する</h2>
+
+        <p>TokiStorageへの支払いは、Wiseの「送金」機能を使う。</p>
+
+        <ul>
+            <li>「送金」→ 宛先にTokiStorageのWisetagを入力</li>
+            <li>金額を入力（モニタープログラムの場合は指定金額）</li>
+            <li>「備考」に注文内容を記載</li>
+            <li>送金を確定</li>
+        </ul>
+
+        <p>送金は即時に届く。銀行振込のように「翌営業日」を待つ必要はない。</p>
+
+        <h2>6. 謝礼を受け取る</h2>
+
+        <p>モニタープログラムの謝礼は、あなたのWisetag宛にWiseで送金される。通知が届いたら、Wiseの残高に反映されている。</p>
+
+        <p>受け取った残高は、Wiseのデジタルデビットカード（Apple Pay / Google Pay対応）でそのまま使える。コンビニでも、オンラインショッピングでも。銀行口座に出金することもできる。</p>
+
+        <p>謝礼の受け取りに手数料はかからない。</p>
+
+        <h2>7. なぜ銀行ではなくWiseなのか</h2>
+
+        <p>銀行振込は日本では当たり前だが、個人間の小額送金には向いていない。振込手数料は数百円、着金確認に時間がかかり、相手に口座番号を伝える必要がある。</p>
+
+        <p>Wiseなら手数料は数十円、即時着金、Wisetagだけで完結。さらに、国境を超えた送金にも対応する。TokiStorageのサービスはグローバルに展開するため、日本国内だけでなく海外のユーザーとも同じ仕組みで決済できることが重要だった。</p>
+
+        <p>「決済手段を一つに絞る」という設計判断は、ユーザーにとっては新しいアカウントを作る負担がある。だが一度作れば、TokiStorageのすべてのサービスがこの一つのアカウントで完結する。</p>
+
+        <blockquote>
+            <p>道具は一つでいい。それがあらゆる場面で機能するなら。</p>
+        </blockquote>
+
+        <div class="key-point"><p>Wiseアカウント一つで、購入も謝礼も、日本でも海外でも完結する。</p></div>
+
+    </article>
+
+    <footer class="article-footer">
+        <p id="essay-nav-links"></p>
+        <p style="font-size: 0.75rem; color: var(--text-muted);">&copy; 2026 TokiStorage. All rights reserved.</p>
+    </footer>
+
+</main>
+
+<script src="essay-nav.js"></script>
+<script src="essay-tts.js"></script>
+</body>
+</html>
