@@ -112,6 +112,7 @@
     { id: 'urayasu', ja: '浦安という地の利', en: 'Urayasu', date: '2026-02-14' },
     { id: 'hyoutanjima', ja: 'ひょうたん島の蓋然性', en: 'The Probability of Gourd Island', date: '2026-02-13' },
     { id: 'space', ja: '宇宙', en: 'Space', date: '2026-02-13' },
+    { id: 'rural-workaway', ja: '里山再生とWorkaway', en: 'Satoyama Regeneration & Workaway', date: '2026-03-02' },
 
     // ── 技術・設計 ──
     { id: 'coach', ja: 'タイムレスコーチ', en: 'Timeless Coach', date: '2026-02-14' },
@@ -189,6 +190,7 @@
   // LATEST_COUNT で表示件数を制御
   const LATEST_COUNT = 5;
   const latestEssayIds = [
+    'rural-workaway',
     'group-event',
     'custom-soap-guide',
     'testimonial-persistence',
@@ -302,7 +304,7 @@
     'entertainment':          ['media', 'music', 'art', 'sports', 'tourism'],
     'art':                    ['music', 'hands', 'entertainment', 'preserving-words', 'history'],
     'music':                  ['copyright-jasrac', 'art', 'entertainment', '30seconds', 'recital-record'],
-    'community-benefit':      ['sanpoyoshi', 'hyoutanjima', 'walking-partner', 'ecology', 'global-honbinos'],
+    'community-benefit':      ['sanpoyoshi', 'hyoutanjima', 'walking-partner', 'ecology', 'rural-workaway'],
     'tourism':                ['commemorative-photo', 'urayasu', 'hyoutanjima', 'sports', 'entertainment'],
     'commemorative-photo':    ['recital-record', 'tourism', 'image-clarity', 'what-to-leave', 'hands'],
     'sports':                 ['entertainment', 'tourism', 'education', 'adversity', 'lifestyle'],
@@ -310,13 +312,14 @@
     'wedding-partnership':    ['ceremony', 'commemorative-photo', 'community-benefit', 'what-to-leave', 'partner-boundary'],
     // ── 自然・宇宙 ──
     'animal-welfare':         ['ecology', 'esg', 'turtle', 'peace', 'sdgs'],
-    'ecology':                ['animal-welfare', 'sdgs', 'esg', 'geology', 'turtle'],
+    'ecology':                ['animal-welfare', 'sdgs', 'esg', 'geology', 'rural-workaway'],
     'geology':                ['site-geology', 'ecology', 'turtle', 'urayasu', 'history'],
     'site-geology':           ['geology', 'hyoutanjima', 'community-benefit', 'tech-roadmap', 'backup-rule'],
     'turtle':                 ['geology', 'ecology', 'legacy', 'what-to-leave', 'history'],
     'urayasu':                ['hyoutanjima', 'realestate', 'geology', 'tourism', 'ecology'],
     'hyoutanjima':            ['urayasu', 'dimension', 'geology', 'space', 'ecology'],
     'space':                  ['dimension', 'geology', 'hyoutanjima', 'akashic-record', 'future'],
+    'rural-workaway':         ['ecology', 'community-benefit', 'independence', 'sdgs', 'post-nomad'],
     // ── 技術・設計 ──
     'coach':                  ['chief-timeless', 'perspective', 'future', 'backcasting', 'departure'],
     'future':                 ['vibe-coding', 'coach', 'api-transformation', 'perspective', 'chief-timeless'],
