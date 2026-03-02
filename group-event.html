@@ -1,0 +1,286 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" type="image/png" sizes="32x32" href="asset/favicon-32.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="asset/apple-touch-icon.png">
+    <title>10分で始まるグループイベント | トキストレージ</title>
+    <meta name="robots" content="index, follow">
+    <meta name="description" content="Pearl Soapを配り、想いを語り、モニター協力をご案内する。10分で完結するグループイベントの設計思想。負担のない関与が、未来の記録インフラを作る。">    <style>
+        :root {
+            --toki-blue: #2563EB;
+            --toki-blue-dark: #1E40AF;
+            --toki-blue-pale: #EFF6FF;
+            --accent-blue: #60A5FA;
+            --toki-gold: #C9A962;
+            --toki-gold-pale: #FDF8EE;
+            --bg-white: #FFFFFF;
+            --text-primary: #1E293B;
+            --text-secondary: #475569;
+            --text-muted: #94A3B8;
+            --border: #E2E8F0;
+            --font-display: 'Hiragino Mincho ProN', 'Yu Mincho', serif;
+            --font-body: 'Hiragino Kaku Gothic ProN', 'Yu Gothic', 'Meiryo', sans-serif;
+        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        html { scroll-behavior: smooth; }
+        body { font-family: var(--font-body); font-weight: 400; background: var(--bg-white); color: var(--text-primary); line-height: 2; font-size: 16px; }
+
+        .article-nav { position: fixed; top: 0; left: 0; right: 0; z-index: 1000; background: rgba(255,255,255,0.95); backdrop-filter: blur(12px); border-bottom: 1px solid var(--border); padding: 0.6rem 1.2rem; display: flex; align-items: center; justify-content: space-between; gap: 1rem; }
+        .article-nav .nav-brand { font-family: var(--font-display); font-size: 0.9rem; font-weight: 600; color: var(--toki-blue); text-decoration: none; white-space: nowrap; }
+        .article-nav .nav-brand::before { content: ''; display: inline-block; width: 20px; height: 20px; background: url('asset/tokistorage-icon-512.png') no-repeat center / contain; vertical-align: -3px; margin-right: 5px; }
+        .article-nav .nav-right { display: flex; align-items: center; gap: 1rem; }
+        .article-nav .nav-label { font-size: 0.6rem; color: var(--text-muted); letter-spacing: 0.08em; }
+        .article-nav .lang-switch { font-size: 0.75rem; color: var(--toki-blue); text-decoration: none; padding: 0.3rem 0.6rem; border: 1px solid var(--toki-blue); border-radius: 4px; }
+        .article-nav .lang-switch:hover { background: var(--toki-blue); color: #fff; }
+
+        .article-container { max-width: 680px; margin: 0 auto; padding: 7rem 2rem 4rem; }
+        .article-header { margin-bottom: 3rem; padding-bottom: 2rem; border-bottom: 1px solid var(--border); }
+        .article-category { font-size: 0.7rem; color: var(--toki-blue); letter-spacing: 0.15em; margin-bottom: 1rem; }
+        .article-header h1 { font-family: var(--font-display); font-size: 1.8rem; font-weight: 700; line-height: 1.5; margin-bottom: 1.5rem; }
+        .article-subtitle { font-size: 0.95rem; color: var(--text-secondary); line-height: 1.9; }
+
+        .article-content h2 { font-family: var(--font-display); font-size: 1.3rem; font-weight: 600; margin: 3rem 0 1.5rem; padding-bottom: 0.5rem; border-bottom: 2px solid var(--toki-blue-pale); }
+        .article-content h3 { font-family: var(--font-display); font-size: 1.1rem; font-weight: 600; margin: 2rem 0 1rem; color: var(--toki-blue-dark); }
+        .article-content p { margin-bottom: 1.5rem; text-align: justify; }
+        .article-content blockquote { border-left: 3px solid var(--toki-blue); padding-left: 1.5rem; margin: 2rem 0; font-family: var(--font-display); color: var(--text-secondary); }
+        .article-content ul { margin: 1.5rem 0; padding-left: 1.5rem; }
+        .article-content li { margin-bottom: 0.75rem; }
+
+        .core-message { background: var(--toki-blue-pale); border-left: 4px solid var(--toki-blue); padding: 1.5rem; margin: 2rem 0; font-size: 0.95rem; line-height: 1.8; }
+        .key-point { background: linear-gradient(135deg, var(--toki-blue-pale) 0%, #fff 100%); border: 1px solid var(--accent-blue); border-radius: 8px; padding: 1.5rem; margin: 2rem 0; text-align: center; }
+        .key-point p { font-family: var(--font-display); font-size: 1.1rem; color: var(--toki-blue-dark); margin: 0; }
+
+        /* タイムライン */
+        .flow-timeline { position: relative; padding-left: 2rem; margin: 1.5rem 0; }
+        .flow-timeline::before { content: ""; position: absolute; left: 0.7rem; top: 0.5rem; bottom: 0.5rem; width: 2px; background: linear-gradient(to bottom, var(--toki-gold), var(--toki-blue)); border-radius: 1px; }
+        .flow-item { position: relative; margin-bottom: 1.5rem; padding: 1rem 1.2rem; background: var(--bg-white); border: 1px solid var(--border); border-radius: 0.6rem; }
+        .flow-item:last-child { margin-bottom: 0; }
+        .flow-item::before { content: ""; position: absolute; left: -1.55rem; top: 1.2rem; width: 0.7rem; height: 0.7rem; background: var(--toki-gold); border-radius: 50%; border: 2px solid #fff; box-shadow: 0 0 0 2px var(--toki-gold); }
+        .flow-item .flow-time { font-size: 0.75rem; color: var(--toki-gold); font-weight: 600; margin-bottom: 0.3rem; }
+        .flow-item h4 { font-family: var(--font-display); font-size: 0.92rem; font-weight: 600; color: var(--text-primary); margin-bottom: 0.3rem; }
+        .flow-item p { font-size: 0.85rem; color: var(--text-secondary); line-height: 1.8; margin: 0; }
+
+        .article-footer { margin-top: 4rem; padding-top: 2rem; border-top: 1px solid var(--border); text-align: center; }
+        .article-footer p { font-size: 0.8rem; color: var(--text-muted); margin-bottom: 1rem; }
+        .article-footer a { color: var(--toki-blue); text-decoration: none; }
+        .article-footer a:hover { text-decoration: underline; }
+
+        @media (max-width: 768px) {
+            .article-container { padding: 6rem 1.2rem 3rem; }
+            .article-header h1 { font-size: 1.5rem; }
+            .article-nav .nav-label { display: none; }
+        }
+        @media print { .article-nav { display: none; } .article-container { padding-top: 2rem; } }
+    </style>
+    <link rel="stylesheet" href="contact-form.css">
+    <meta property="og:type" content="article">
+    <meta property="og:title" content="10分で始まるグループイベント | トキストレージ">
+    <meta property="og:description" content="Pearl Soapを配り、想いを語り、モニター協力をご案内する。10分で完結するグループイベントの設計思想。負担のない関与が、未来の記録インフラを作る。">
+    <meta property="og:url" content="https://tokistorage.github.io/lp/group-event.html">
+    <meta property="og:site_name" content="トキストレージ">
+    <meta name="twitter:card" content="summary">
+    <meta name="twitter:title" content="10分で始まるグループイベント | トキストレージ">
+    <meta name="twitter:description" content="Pearl Soapを配り、想いを語り、モニター協力をご案内する。10分で完結するグループイベントの設計思想。負担のない関与が、未来の記録インフラを作る。">
+    <meta property="og:image" content="https://tokistorage.github.io/lp/asset/tokistorage-icon-512.png">
+    <meta property="og:image:width" content="512">
+    <meta property="og:image:height" content="512">
+    <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Article",
+  "headline": "10分で始まるグループイベント",
+  "author": {
+    "@type": "Person",
+    "name": "Takuya Sato",
+    "url": "https://tokistorage.github.io/lp/profile.html"
+  },
+  "publisher": {
+    "@type": "Organization",
+    "name": "TokiStorage",
+    "url": "https://tokistorage.github.io/lp",
+    "logo": {
+      "@type": "ImageObject",
+      "url": "https://tokistorage.github.io/lp/asset/tokistorage-icon-512.png"
+    }
+  },
+  "url": "https://tokistorage.github.io/lp/group-event.html",
+  "inLanguage": "ja",
+  "mainEntityOfPage": "https://tokistorage.github.io/lp/group-event.html",
+  "description": "Pearl Soapを配り、想いを語り、モニター協力をご案内する。10分で完結するグループイベントの設計思想。負担のない関与が、未来の記録インフラを作る。"
+}
+    </script>
+    <link rel="alternate" hreflang="ja" href="https://tokistorage.github.io/lp/group-event.html">
+    <link rel="alternate" hreflang="en" href="https://tokistorage.github.io/lp/group-event-en.html">
+    <link rel="alternate" hreflang="x-default" href="https://tokistorage.github.io/lp/group-event.html">
+    <link rel="canonical" href="https://tokistorage.github.io/lp/group-event.html">
+</head>
+<body>
+
+<nav class="article-nav">
+    <a href="index.html" class="nav-brand">TokiStorage</a>
+    <div class="nav-right">
+        <span class="nav-label">実践・イベント</span>
+        <a href="group-event-en.html" class="lang-switch">EN</a>
+    </div>
+</nav>
+
+<main class="article-container">
+
+    <header class="article-header">
+        <p class="article-category">ESSAY &mdash; 実践・イベント</p>
+        <h1>10分で始まるグループイベント<br><span style="font-size:0.7em; font-weight:400;">石鹸を配り、想いを語り、未来のインフラを一緒に作る</span></h1>
+        <p class="article-subtitle">
+            &mdash;&mdash; 大規模な準備も、特別な会場も要らない。Pearl Soapを手渡し、プロダクトの想いを3分で語り、モニター協力の機会をご案内する。たったそれだけで、千年残る記録インフラの最初の一歩が始まる。
+        </p>
+    </header>
+
+    <article class="article-content">
+
+        <div class="core-message">
+            <strong>この記事で伝えたいこと：</strong>グループイベントとは、壇上からプレゼンすることではない。石鹸を配り、なぜこれを作ったのかを話し、共鳴した人に「手伝えることがあります」と伝える。それだけで十分だ。負担のない関与こそが、持続する仕組みを生む。
+        </div>
+
+        <h2>なぜ10分なのか</h2>
+
+        <p>イベントと聞くと、会場を借り、プレゼン資料を作り、集客し、当日を迎えるまでに膨大な準備を想像する。それは正しいイベントの形だが、トキストレージのグループイベントには当てはまらない。</p>
+
+        <p>必要なのは、集まりの中の10分間だけだ。</p>
+
+        <p>すでに予定されている食事会、勉強会、サークル活動、保護者会、同窓会——人が集まる場は日常にいくらでもある。その中で10分をもらう。それがこのイベントの全体像だ。</p>
+
+        <p>新しい場を作るのではなく、すでにある場を借りる。だから準備のハードルがほぼゼロになる。</p>
+
+        <h2>10分間の構成</h2>
+
+        <p>やることは三つしかない。配る、語る、案内する。</p>
+
+        <div class="flow-timeline">
+            <div class="flow-item">
+                <div class="flow-time">0:00 &ndash; 0:02</div>
+                <h4>Pearl Soapを配る</h4>
+                <p>参加者一人ひとりにPearl Soapを手渡す。肉球の形をしたココナッツの香りの石鹸。受け取った瞬間、「これは何？」という自然な問いが生まれる。名刺でもチラシでもなく、石鹸が渡される意外性が、会話の入り口を開く。</p>
+            </div>
+            <div class="flow-item">
+                <div class="flow-time">0:02 &ndash; 0:06</div>
+                <h4>プロダクトとサービスの想いを語る</h4>
+                <p>愛犬Pearlの話をする。18年間一緒に暮らし、静かに旅立った犬の名前を石鹸に刻んだこと。「いてくれてありがとう」という言葉を形にしたかったこと。そして、その「残したい」という気持ちをサービスにしたこと——声を石英ガラスに刻み、国会図書館に納本し、千年先まで届ける仕組みを作っていること。技術の説明ではなく、なぜ始めたのかを話す。</p>
+            </div>
+            <div class="flow-item">
+                <div class="flow-time">0:06 &ndash; 0:08</div>
+                <h4>モニター協力の機会をご案内する</h4>
+                <p>「もし共感してくださったら、モニターとしてお手伝いいただけませんか」と伝える。石鹸のQRコードをスキャンすると、サンクスページに辿り着く。そこから「モニターを手伝う」ボタンを押すだけ。金銭負担はゼロ。名前と連絡先を入力するだけで完了する。売り込みではなく、お誘いとして。</p>
+            </div>
+            <div class="flow-item">
+                <div class="flow-time">0:08 &ndash; 0:10</div>
+                <h4>お礼と余韻</h4>
+                <p>「お時間をいただきありがとうございます。石鹸は使ってなくなりますが、一緒に過ごしたこの時間は残ります」で締める。あとは自然な会話に戻る。質問が出れば答える。出なければ、それでいい。石鹸が手元に残っている限り、思い出す機会は何度でも来る。</p>
+            </div>
+        </div>
+
+        <h2>パールソープを配る</h2>
+
+        <p>なぜ最初に石鹸を配るのか。</p>
+
+        <p>チラシを配ると、受け取った瞬間に「営業だ」と判断される。名刺を渡すと、「仕事の話だ」と身構えられる。しかし石鹸を渡すと、「え、なにこれ？」と笑顔になる。</p>
+
+        <p>Pearl Soapは犬猫の肉球の形をしている。手に取ると、ココナッツの甘い香りがする。大人も子供も、男性も女性も、「かわいい」と言う。この反応は、セールスの文脈では絶対に生まれない。</p>
+
+        <p>石鹸という実用品であること。消費されればなくなること。高価すぎず、安価すぎないこと。この三条件が「もらって困らない贈りもの」を成立させている。受け取る側に心理的な負担がない。だから笑顔で受け取ってもらえる。</p>
+
+        <blockquote>最初に「あげる」から、次の言葉が届く。<br>石鹸は会話のための余白を作る。</blockquote>
+
+        <h2>プロダクトサービスの想いを語る</h2>
+
+        <p>石鹸を受け取った人は、自然に「なんで石鹸なの？」と聞いてくる。あるいは聞かなくても、手元の石鹸を見ながら耳を傾ける準備ができている。</p>
+
+        <p>ここで大事なのは、機能の説明をしないことだ。</p>
+
+        <p>「石英ガラスに音声を記録します」「国会図書館に納本します」「GitHub上にバックアップします」——正確だが、伝わらない。技術は手段であって、目的ではない。</p>
+
+        <p>語るべきは、なぜこれを始めたのか。</p>
+
+        <p>Pearlという犬と18年間過ごしたこと。晩年は吠えることもなく、静かに旅立ったこと。声が残っていたらと思ったこと。「いてくれてありがとう」という言葉を、時間が消せない形にしたかったこと。</p>
+
+        <p>そしてふと気づいたこと——千年先まで記録が届くのは、歴史上、権力者だけだった。普通の人の声は消えていく。その制約を外したい。すべての人に「存在証明」を届けたい。</p>
+
+        <p>この話に3分もかからない。でも聞いた人の中に、何かが残る。自分の親の声、祖父母の声、子供の声——「残したい」と思ったことがある人は、必ずいる。</p>
+
+        <div class="core-message">
+            機能を説明するのではなく、想いを語る。共鳴は機能ではなく、物語に対して起きる。
+        </div>
+
+        <h2>モニター協力機会をご案内する</h2>
+
+        <p>想いを語ったあと、唐突に「買ってください」とは言わない。その代わりに、こう伝える。</p>
+
+        <p>「もし興味を持ってくださったら、モニターとして協力いただけると嬉しいです。」</p>
+
+        <p>モニターとは何か。トキストレージのサービスを実際に体験し、フィードバックをいただくこと。費用負担はない。声を録音してQRコードにする無料ツール「TokiQR」を使ってみる。使用感を教えてもらう。それだけだ。</p>
+
+        <p>石鹸についているQRコードをスキャンすると、サンクスページに飛ぶ。そこには「モニターを手伝う」というボタンがある。名前とメールアドレスを入力するだけで登録が完了する。</p>
+
+        <p>ここで重要なのは、「お願い」ではなく「ご案内」であること。やるかやらないかは完全に相手の自由だ。石鹸を受け取った返報性の気持ちと、物語への共鳴が重なったとき、自然に行動が生まれる。押し売りの必要は一切ない。</p>
+
+        <blockquote>売り込みゼロで動く人が現れる。<br>それは、先に石鹸を「あげた」からだ。</blockquote>
+
+        <h2>負担のない関与が未来を作る</h2>
+
+        <p>「モニターに協力する」と聞くと、「面倒なことを頼まれるのでは」と思うかもしれない。だからこそ、負担がないことを設計の中心に置いている。</p>
+
+        <p>モニターに求めることは最小限だ。TokiQRを試す。使ってみた感想を送る。必要であれば、追加のフィードバックに答える。それだけ。時間にして数分。金銭負担はゼロ。</p>
+
+        <p>しかし、この「数分の関与」が持つ意味は大きい。</p>
+
+        <p>トキストレージは、まだ多くの人に知られていないサービスだ。石英ガラスに声を刻む。国会図書館に納本する。千年先まで届く記録インフラを作る。——これらの言葉を初めて聞いた人が「面白そう」と思い、TokiQRを試し、「使えた」と報告してくれる。その一人ひとりの体験が、サービスの改善につながり、次の人を呼び、やがてインフラとして定着していく。</p>
+
+        <p>一人の関与は小さい。でも仕組みとして回り始めたとき、それは未来を作る力になる。</p>
+
+        <div class="core-message">
+            負担のない関与が積み重なると、それはインフラになる。<br>
+            一人ひとりの「ちょっと試してみた」が、千年先まで届く仕組みの土台を作る。
+        </div>
+
+        <h2>このイベントで起きていること</h2>
+
+        <p>10分間のグループイベントを分解すると、実は精密な設計がある。</p>
+
+        <ul>
+            <li><strong>信頼の構築</strong>——石鹸を先に渡すことで、「この人は何かをくれた」という信頼が生まれる</li>
+            <li><strong>共鳴の喚起</strong>——想いを語ることで、聞いた人の中に眠っていた「残したい」という気持ちが動く</li>
+            <li><strong>行動の導線</strong>——QRコードからサンクスページ、モニター登録への自然な流れがある</li>
+            <li><strong>心理的安全性</strong>——金銭負担ゼロ、強制ゼロ。やるかやらないかは完全に自由</li>
+        </ul>
+
+        <p>これらは、従来のマーケティングファネルとは構造が違う。認知→興味→検討→購入という直線ではない。共鳴→関与→体験→共有という循環だ。購入がゴールではなく、関与そのものが価値を生む仕組みになっている。</p>
+
+        <h2>誰でもできる</h2>
+
+        <p>このグループイベントに、特別なスキルは必要ない。</p>
+
+        <p>プレゼンの才能は要らない。自分の言葉で「なぜこれが面白いと思ったか」を話せればいい。Pearl Soapを配り、Pearlの話をし、「よかったらモニターを」と伝える。台本は3分で覚えられる。</p>
+
+        <p>会場も要らない。すでに人が集まっている場所で、10分もらうだけだ。友人の食事会、趣味のサークル、地域の集まり——日常の延長に機会がある。</p>
+
+        <p>大きな声も要らない。5人でも3人でもいい。むしろ少人数のほうが、一人ひとりと目を合わせて石鹸を手渡せる。一人ひとりに物語が届く。</p>
+
+        <div class="key-point">
+            <p>10分と石鹸があれば、誰でも始められる。<br>負担のない関与が、未来を作る。</p>
+        </div>
+
+    </article>
+
+    <footer class="article-footer">
+        <p id="essay-nav-links"></p>
+        <p style="margin-top: 2rem; font-size: 0.75rem;">&copy; 2026 TokiStorage. All rights reserved.</p>
+    </footer>
+
+</main>
+
+<script src="essay-tts.js"></script>
+<script src="essay-nav.js"></script>
+<script src="contact-form.js" defer></script>
+<script src="tracker.js" defer></script>
+</body>
+</html>
