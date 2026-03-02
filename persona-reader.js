@@ -141,40 +141,32 @@
             msgs[m].style.display = msgs[m].getAttribute('data-persona-msg') === persona ? '' : 'none';
         }
 
-        /* elements with explicit data-persona restrictions */
-        var restricted = document.querySelectorAll('[data-persona]');
-        for (var r = 0; r < restricted.length; r++) {
-            var allowed = restricted[r].getAttribute('data-persona').split(' ');
-            restricted[r].style.display = allowed.indexOf(persona) !== -1 ? '' : 'none';
-        }
-
         /* section visibility */
         if (persona === 'full') {
             sectionGroups.forEach(function (g) {
                 g.elements.forEach(function (el) { el.style.display = ''; });
             });
             countEl.textContent = '';
-            return;
+        } else {
+            var sectionKeys = config.sections[persona];
+            var shown = 0;
+            sectionGroups.forEach(function (group) {
+                var match = sectionKeys.some(function (key) { return group.text.indexOf(key) !== -1; });
+                group.elements.forEach(function (el) { el.style.display = match ? '' : 'none'; });
+                if (match) shown++;
+            });
+            countEl.textContent = config.count(shown, sectionGroups.length);
         }
 
-        var sectionKeys = config.sections[persona];
-        var shown = 0;
-        sectionGroups.forEach(function (group) {
-            var match = sectionKeys.some(function (key) { return group.text.indexOf(key) !== -1; });
-            group.elements.forEach(function (el) { el.style.display = match ? '' : 'none'; });
-            if (match) shown++;
-        });
-
-        /* re-apply data-persona after section toggle (overrides section display) */
-        for (var r2 = 0; r2 < restricted.length; r2++) {
-            var a = restricted[r2].getAttribute('data-persona').split(' ');
-            restricted[r2].style.display = a.indexOf(persona) !== -1 ? '' : 'none';
+        /* data-persona overrides (always runs last so it wins over section toggle) */
+        var restricted = document.querySelectorAll('[data-persona]');
+        for (var r = 0; r < restricted.length; r++) {
+            var allowed = restricted[r].getAttribute('data-persona').split(' ');
+            restricted[r].style.display = allowed.indexOf(persona) !== -1 ? '' : 'none';
         }
-
-        countEl.textContent = config.count(shown, sectionGroups.length);
 
         /* scroll to top */
-        if (header) window.scrollTo({ top: header.offsetTop - 60, behavior: 'smooth' });
+        if (persona !== 'full' && header) window.scrollTo({ top: header.offsetTop - 60, behavior: 'smooth' });
     }
 
     /* ── Events ── */
