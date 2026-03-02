@@ -1,0 +1,577 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" type="image/png" sizes="32x32" href="asset/favicon-32.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="asset/apple-touch-icon.png">
+    <title>The Transformation of Entrepreneurship — From "Hiring" to "Setting Free" | Toki Storage</title>
+    <meta name="robots" content="index, follow">
+    <meta name="description" content="What do entrepreneurs truly desire when hiring employees? Obedience, location fixation, and task fixation. When these core desires are recognized and inverted, business design transforms at its foundation.">    <style>
+        :root {
+            --toki-copper: #92400E;
+            --toki-copper-dark: #78350F;
+            --toki-copper-pale: #FFFBEB;
+            --accent-amber: #D97706;
+            --bg-white: #FFFFFF;
+            --bg-section: #FEF3C7;
+            --text-primary: #1E293B;
+            --text-secondary: #475569;
+            --text-muted: #94A3B8;
+            --border: #E2E8F0;
+            --font-display: 'Cormorant Garamond', serif;
+            --font-body: 'Inter', sans-serif;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        html { scroll-behavior: smooth; }
+
+        body {
+            font-family: var(--font-body);
+            font-weight: 400;
+            background: var(--bg-white);
+            color: var(--text-primary);
+            line-height: 1.9;
+            font-size: 16px;
+        }
+
+        /* Navigation */
+        .article-nav {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 1000;
+            background: rgba(255,255,255,0.95);
+            backdrop-filter: blur(12px);
+            border-bottom: 1px solid var(--border);
+            padding: 0.6rem 1.2rem;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 1rem;
+        }
+        .article-nav .nav-brand {
+            font-family: var(--font-display);
+            font-size: 0.9rem;
+            font-weight: 600;
+            color: var(--toki-copper);
+            text-decoration: none;
+            white-space: nowrap;
+        }
+        .article-nav .nav-right {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+        .article-nav .nav-label {
+            font-size: 0.6rem;
+            color: var(--text-muted);
+            letter-spacing: 0.08em;
+        }
+        .article-nav .lang-switch {
+            font-size: 0.75rem;
+            color: var(--toki-copper);
+            text-decoration: none;
+            padding: 0.3rem 0.6rem;
+            border: 1px solid var(--toki-copper);
+            border-radius: 4px;
+        }
+        .article-nav .lang-switch:hover {
+            background: var(--toki-copper);
+            color: #fff;
+        }
+
+        /* Article Container */
+        .article-container {
+            max-width: 680px;
+            margin: 0 auto;
+            padding: 7rem 2rem 4rem;
+        }
+
+        /* Article Header */
+        .article-header {
+            margin-bottom: 3rem;
+            padding-bottom: 2rem;
+            border-bottom: 1px solid var(--border);
+        }
+        .article-category {
+            font-size: 0.7rem;
+            color: var(--toki-copper);
+            letter-spacing: 0.15em;
+            margin-bottom: 1rem;
+        }
+        .article-header h1 {
+            font-family: var(--font-display);
+            font-size: 1.8rem;
+            font-weight: 600;
+            line-height: 1.4;
+            margin-bottom: 1rem;
+        }
+        .article-subtitle {
+            font-size: 0.95rem;
+            color: var(--text-secondary);
+            line-height: 1.7;
+        }
+
+        /* Article Content */
+        .article-content h2 {
+            font-family: var(--font-display);
+            font-size: 1.25rem;
+            font-weight: 600;
+            margin: 3rem 0 1.5rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 1px solid var(--border);
+        }
+        .article-content h3 {
+            font-family: var(--font-display);
+            font-size: 1.1rem;
+            font-weight: 500;
+            margin: 2rem 0 1rem;
+            color: var(--text-primary);
+        }
+        .article-content p {
+            margin-bottom: 1.5rem;
+            text-align: justify;
+        }
+        .article-content blockquote {
+            margin: 2rem 0;
+            padding: 1.5rem 2rem;
+            background: var(--bg-section);
+            border-left: 3px solid var(--toki-copper);
+            font-style: italic;
+        }
+        .article-content blockquote p {
+            margin-bottom: 0.5rem;
+        }
+        .article-content blockquote cite {
+            display: block;
+            font-size: 0.85rem;
+            color: var(--text-muted);
+            font-style: normal;
+            margin-top: 0.5rem;
+        }
+        .article-content ul, .article-content ol {
+            margin: 1.5rem 0;
+            padding-left: 1.5rem;
+        }
+        .article-content li {
+            margin-bottom: 0.75rem;
+        }
+
+        /* Key Point Box */
+        .key-point {
+            background: var(--toki-copper-pale);
+            padding: 1.5rem 2rem;
+            border-radius: 8px;
+            margin: 2rem 0;
+        }
+        .key-point p {
+            margin-bottom: 0;
+            font-size: 0.95rem;
+        }
+
+        /* Core Message */
+        .core-message {
+            background: linear-gradient(135deg, var(--toki-copper-pale) 0%, #FEF3C7 100%);
+            border-left: 4px solid var(--toki-copper);
+            padding: 1.2rem 1.5rem;
+            margin: 0 0 1.5rem 0;
+            border-radius: 0 8px 8px 0;
+            font-size: 0.95rem;
+            line-height: 1.8;
+        }
+        .disclaimer {
+            font-size: 0.8rem;
+            color: var(--text-muted);
+            margin-bottom: 2rem;
+            padding-bottom: 1rem;
+            border-bottom: 1px solid var(--border);
+        }
+
+        /* Comparison Table */
+        .comparison-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 2rem 0;
+            font-size: 0.9rem;
+        }
+        .comparison-table th,
+        .comparison-table td {
+            padding: 1rem;
+            text-align: left;
+            border-bottom: 1px solid var(--border);
+        }
+        .comparison-table th {
+            background: var(--bg-section);
+            font-weight: 500;
+        }
+        .comparison-table td {
+            vertical-align: top;
+        }
+
+        /* References */
+        .references {
+            margin-top: 4rem;
+            padding-top: 2rem;
+            border-top: 1px solid var(--border);
+        }
+        .references h2 {
+            font-size: 1rem;
+            margin-bottom: 1.5rem;
+        }
+        .references ul {
+            list-style: none;
+            padding: 0;
+        }
+        .references li {
+            font-size: 0.85rem;
+            color: var(--text-secondary);
+            margin-bottom: 0.75rem;
+            padding-left: 1.5rem;
+            text-indent: -1.5rem;
+        }
+
+        /* Footer */
+        .article-footer {
+            margin-top: 4rem;
+            padding-top: 2rem;
+            border-top: 1px solid var(--border);
+            text-align: center;
+        }
+        .article-footer p {
+            font-size: 0.8rem;
+            color: var(--text-muted);
+            margin-bottom: 1rem;
+        }
+        .article-footer a {
+            color: var(--toki-copper);
+            text-decoration: none;
+        }
+        .article-footer a:hover {
+            text-decoration: underline;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .article-container { padding: 6rem 1.2rem 3rem; }
+            .article-header h1 { font-size: 1.5rem; }
+            .article-nav .nav-label { display: none; }
+            .comparison-table { font-size: 0.8rem; }
+            .comparison-table th,
+            .comparison-table td { padding: 0.75rem; }
+        }
+
+        @media print {
+            .article-nav { display: none; }
+            .article-container { padding: 2rem; }
+        }
+        .nav-brand::before {
+            content: '';
+            display: inline-block;
+            width: 20px;
+            height: 20px;
+            background: url('asset/tokistorage-icon-512.png') no-repeat center / contain;
+            vertical-align: -3px;
+            margin-right: 5px;
+        }
+    </style>
+<link rel="stylesheet" href="contact-form.css">
+    <meta property="og:type" content="article">
+    <meta property="og:title" content="The Transformation of Entrepreneurship — From 'Hiring' to 'Setting Free' | Toki Storage">
+    <meta property="og:description" content="What do entrepreneurs truly desire when hiring employees? Obedience, location fixation, and task fixation. When these core desires are recognized and inverted, business design transforms at its foundation.">
+    <meta property="og:url" content="https://tokistorage.github.io/lp/entrepreneurship-en.html">
+    <meta property="og:site_name" content="Toki Storage">
+    <meta name="twitter:card" content="summary">
+    <meta name="twitter:title" content="The Transformation of Entrepreneurship — From 'Hiring' to 'Setting Free' | Toki Storage">
+    <meta name="twitter:description" content="What do entrepreneurs truly desire when hiring employees? Obedience, location fixation, and task fixation. When these core desires are recognized and inverted, business design transforms at its foundation.">
+    <meta property="og:image" content="https://tokistorage.github.io/lp/asset/tokistorage-icon-512.png">
+    <meta property="og:image:width" content="512">
+    <meta property="og:image:height" content="512">
+    <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Article",
+  "headline": "The Transformation of Entrepreneurship — From 'Hiring' to 'Setting Free'",
+  "author": {
+    "@type": "Person",
+    "name": "Takuya Sato",
+    "url": "https://tokistorage.github.io/lp/profile.html"
+  },
+  "publisher": {
+    "@type": "Organization",
+    "name": "TokiStorage",
+    "url": "https://tokistorage.github.io/lp",
+    "logo": {
+      "@type": "ImageObject",
+      "url": "https://tokistorage.github.io/lp/asset/tokistorage-icon-512.png"
+    }
+  },
+  "url": "https://tokistorage.github.io/lp/entrepreneurship-en.html",
+  "inLanguage": "en",
+  "mainEntityOfPage": "https://tokistorage.github.io/lp/entrepreneurship-en.html",
+  "description": "What do entrepreneurs truly desire when hiring employees? Obedience, location fixation, and task fixation. When these core desires are recognized and inverted, business design transforms at its foundation."
+}
+    </script>
+    <link rel="alternate" hreflang="ja" href="https://tokistorage.github.io/lp/entrepreneurship.html">
+    <link rel="alternate" hreflang="en" href="https://tokistorage.github.io/lp/entrepreneurship-en.html">
+    <link rel="alternate" hreflang="x-default" href="https://tokistorage.github.io/lp/entrepreneurship.html">
+    <link rel="canonical" href="https://tokistorage.github.io/lp/entrepreneurship-en.html">
+</head>
+<body>
+
+<nav class="article-nav">
+    <a href="index-en.html" class="nav-brand">Toki Storage</a>
+    <div class="nav-right">
+        <span class="nav-label">ENTREPRENEURSHIP</span>
+        <a href="entrepreneurship.html" class="lang-switch">JA</a>
+    </div>
+</nav>
+
+<article class="article-container">
+
+    <header class="article-header">
+        <p class="article-category">ESSAY — ECONOMY &amp; ENTREPRENEURSHIP</p>
+        <h1>The Transformation of Entrepreneurship<br>— From "Hiring" to "Setting Free"</h1>
+        <p class="article-subtitle">
+            What do entrepreneurs truly desire when they hire employees?<br>
+            When the core desires of obedience, location fixation, and task fixation are laid bare,<br>
+            business design can change at its foundation.
+        </p>
+    </header>
+
+    <div class="article-content">
+
+        <div class="core-message">
+            <strong>Core argument:</strong> The essence of employment is the acquisition of obedience, location fixation, and task fixation. Traditional entrepreneurship wraps these core desires in a shell of freedom. Toki Storage chose to relinquish these core desires entirely, creating inverse opportunities for every stakeholder.
+        </div>
+
+        <p class="disclaimer">Note: This essay is an academic exploration. It does not criticize any specific company or employment model.</p>
+
+        <h2>1. The Essence of Employment — Three Fixation Desires</h2>
+
+        <p>When an entrepreneur thinks "I want to hire someone," that motivation can be decomposed into three core desires.</p>
+
+        <p><strong>The acquisition of obedience.</strong> The desire for someone who follows instructions and executes your vision. The feeling that you need hands and feet to faithfully materialize the blueprint in the founder's mind. This isn't a lust for domination — it's an earnest desire to increase the probability of realizing a vision.</p>
+
+        <p><strong>Location fixation.</strong> Someone who comes to the same office every morning. Someone within reach whenever you need them. The sense of security that physical proximity provides, and the possibility of instant communication. Even in the age of remote work, the desire for "at least be in the same space during core hours" persists.</p>
+
+        <p><strong>Task fixation.</strong> This person handles marketing, that person handles development, the other one handles accounting. Fixing roles, running the organization in a predictable manner. The desire to reduce uncertainty and advance the business according to plan.</p>
+
+        <blockquote>
+            <p>"The first thing a business owner seeks is to buy back their own time. But the means they choose is to buy someone else's time."</p>
+        </blockquote>
+
+        <p>These three desires are natural for entrepreneurs, and they are not inherently wrong. The problem arises when these desires become the unconscious premises of business design.</p>
+
+        <h2>2. Designing Freedom — A Shell Wrapping Core Desires</h2>
+
+        <p>The modern "good manager" doesn't expose these core desires openly. Instead, they design a shell of freedom that wraps around the core desires.</p>
+
+        <ul>
+            <li><strong>Obedience</strong> → "We respect autonomy." "We share goals through OKRs and leave the methods up to you."</li>
+            <li><strong>Location fixation</strong> → "Remote work available." "Flex-time." "Workation program."</li>
+            <li><strong>Task fixation</strong> → "Job rotation." "20% rule." "Side projects allowed."</li>
+        </ul>
+
+        <p>On the surface, this looks like progressive management. But when you examine the structure closely, you notice that the core desires remain intact.</p>
+
+        <p>"We respect autonomy" — yet final decision-making authority stays with the manager. "Remote work available" — yet three days of office attendance per week are mandatory. "Side projects allowed" — yet only if they don't interfere with the main job.</p>
+
+        <p>In other words, freedom is merely <strong>discretion permitted within a range that doesn't threaten the core desires</strong>. The axes of obedience, location, and task fixation remain unchanged, with "authorized freedoms" arranged around their perimeter.</p>
+
+        <div class="key-point">
+            <p>Designing freedom is the act of covering core desires with a shell. The freedom given to employees is always bounded within a range that doesn't erode the manager's core desires. There is no inherent good or evil in this structure, but there is a cost to remaining unconscious of it.</p>
+        </div>
+
+        <h2>3. The Entrepreneur's Unconscious — Between Dominance and Creation</h2>
+
+        <p>Why can this structure become problematic? Because entrepreneurs themselves are often unaware of these core desires.</p>
+
+        <p>A founder who genuinely believes "we have a flat organization" may unconsciously pursue all three fixations. The desire to "take care of employees" may be genuine, yet the content of "taking care" might amount to "generously treating those who remain obedient" — and they don't notice.</p>
+
+        <h3>The Gap with Daniel Pink's Motivation Theory</h3>
+
+        <p>In <em>Drive</em>, Daniel Pink identified three elements that motivate people: autonomy, mastery, and purpose (Pink, 2009). This theory is widely endorsed, yet it's rarely discussed how these three elements structurally collide with the core desires in actual employment relationships.</p>
+
+        <ul>
+            <li><strong>Autonomy</strong> clashes head-on with the desire for obedience</li>
+            <li><strong>Mastery</strong> can only be pursued within domains limited by task fixation</li>
+            <li><strong>Purpose</strong> implicitly requires identification with the founder's purpose</li>
+        </ul>
+
+        <p>Managers wish to "respect autonomy" while simultaneously wishing employees would "act according to my vision." When they try to reconcile this contradiction without resolving it, the compromise of "freedom design" is born.</p>
+
+        <h3>Insights from Effectuation Theory</h3>
+
+        <p>Saras Sarasvathy's effectuation theory studies how expert entrepreneurs think (Sarasvathy, 2001). According to this theory, skilled entrepreneurs start from "what they have at hand" and shape an unpredictable future within a "controllable range."</p>
+
+        <p>The key concept here is "controllable range." Traditional entrepreneurs try to expand this range through hiring. They hire people, give instructions, and fix roles to reduce uncertainty.</p>
+
+        <p>But there is another path to expanding the controllable range. Instead of hiring people and placing them under control, one can relinquish control itself.</p>
+
+        <h2>4. The Structure of Inversion — The Path Toki Storage Chose</h2>
+
+        <p>Toki Storage chose not to "wrap" the three core desires, but to "let them go."</p>
+
+        <table class="comparison-table">
+            <tr>
+                <th>Traditional Entrepreneurship</th>
+                <th>Toki Storage's Design</th>
+            </tr>
+            <tr>
+                <td>Hire obedient executors</td>
+                <td>Hire no employees</td>
+            </tr>
+            <tr>
+                <td>Gather people in a fixed office</td>
+                <td>Maintain no physical premises</td>
+            </tr>
+            <tr>
+                <td>Assign and fix roles</td>
+                <td>Roles themselves don't exist</td>
+            </tr>
+            <tr>
+                <td>Wrap core desires in freedom</td>
+                <td>Eliminate the core desires themselves</td>
+            </tr>
+        </table>
+
+        <p>This is not an improvement of "let's treat employees better." It is the removal of the employment structure itself from the design. Zero burn rate. Zero fixed costs. Zero personnel expenses. These are not the result of frugality — they are the structure that naturally emerges when core desires are relinquished.</p>
+
+        <p>If you don't seek obedience, you don't need to hire. If you don't fix location, you don't need an office. If you don't fix tasks, you don't need an org chart.</p>
+
+        <div class="key-point">
+            <p>Zero burn rate is not a cost-cutting technique. It is the state structurally reached when the entrepreneur's core desires for obedience, location fixation, and task fixation are released.</p>
+        </div>
+
+        <h2>5. Multifaceted Inversion — Inverse Opportunities for Stakeholders</h2>
+
+        <p>The release of core desires ripples outward from the founder to every stakeholder. And intriguingly, this ripple manifests as "inverse opportunities."</p>
+
+        <h3>Inversion for Customers</h3>
+
+        <p>Traditional storage services generate revenue by creating customer dependency. Once data is entrusted, migration costs become a wall preventing departure. Vendor lock-in is nothing other than fixating the customer's location.</p>
+
+        <p>Toki Storage is the reverse. Zero personal data design. Anonymous usage. No account required. Customers can leave at any time, and that very fact becomes the foundation of the service's trustworthiness. As an inversion of "can't leave," we designed "can always leave."</p>
+
+        <h3>Inversion for Partners</h3>
+
+        <p>Traditional business partnerships presuppose contractual binding. Exclusive distribution agreements, non-compete clauses, minimum transaction guarantees — these are mechanisms for securing "partner obedience."</p>
+
+        <p>Toki Storage's partnerships have no binding. Partners can set their own prices for their own customers, provide the service under their own brand, and dissolve the relationship at any time. As an inversion of "being bound," we designed "always free."</p>
+
+        <h3>Inversion for Society</h3>
+
+        <p>Traditional companies seek to expand their influence on society by growing. More employees, more revenue, more market share. This advances society's "task fixation" — the fixation of economic structures dependent on specific companies.</p>
+
+        <p>Toki Storage does not create dependency structures even as it grows. Open source, self-print, offline-complete. Even if Toki Storage were to vanish, users' records would remain unaffected. As an inversion of "creating dependency," we designed "not being depended upon."</p>
+
+        <h3>Inversion for the Founder</h3>
+
+        <p>Perhaps the most fundamental inversion occurs for the founder. Traditional entrepreneurs become more constrained as their business grows. They shoulder the livelihoods of employees, pay office rent, and bear the responsibility of maintaining the organization.</p>
+
+        <p>A founder who has released the core desires is not constrained even as the business grows. No employees means no agony of layoffs. No office means no decision to vacate. No fixed costs means the business can continue even if revenue drops to zero.</p>
+
+        <p>This is not "sacrificing the business for freedom." It is a structural transformation where "being free becomes the business's competitive advantage."</p>
+
+        <table class="comparison-table">
+            <tr>
+                <th>Stakeholder</th>
+                <th>Traditional Structure</th>
+                <th>Inverted Structure</th>
+            </tr>
+            <tr>
+                <td><strong>Customers</strong></td>
+                <td>Lock-in (can't leave)</td>
+                <td>Can leave anytime</td>
+            </tr>
+            <tr>
+                <td><strong>Partners</strong></td>
+                <td>Contractual binding</td>
+                <td>Equal, no binding</td>
+            </tr>
+            <tr>
+                <td><strong>Society</strong></td>
+                <td>Expanding dependency</td>
+                <td>Not depended upon</td>
+            </tr>
+            <tr>
+                <td><strong>Founder</strong></td>
+                <td>Growth = more constraints</td>
+                <td>Free even with growth</td>
+            </tr>
+        </table>
+
+        <h2>6. Is Releasing Desires Possible? — Conditions for Practice</h2>
+
+        <p>A natural question arises from this discussion: "Is it truly possible to release core desires?"</p>
+
+        <p>Honestly, I don't think it's possible for every business. Manufacturing requires factories as physical locations. Healthcare requires hiring licensed professionals. Restaurants require people working in kitchens. The business domains where all three fixation desires can be released are limited.</p>
+
+        <p>However, Toki Storage's ability to adopt this structure is not coincidental. Several conditions are aligned.</p>
+
+        <ul>
+            <li><strong>Digital foundation</strong>: A business model that can minimize physical movement of goods. Manufacturing is performed by users themselves (self-print).</li>
+            <li><strong>1,000-year time horizon</strong>: Freed from short-term growth pressure. No need to rush scale.</li>
+            <li><strong>Commoditization of technology</strong>: Infrastructure available for free or at low cost through services like Cloudflare and GitHub.</li>
+            <li><strong>Founder's self-awareness</strong>: The conscious examination of the three core desires and the deliberate choice to release them.</li>
+        </ul>
+
+        <p>The last condition is the most important. Core desires are powerful precisely because they are unconscious. Exposing them to the light of awareness and asking "is this desire truly necessary for the business?" — that question becomes the starting point of inversion.</p>
+
+        <h2>7. Redefining Entrepreneurship</h2>
+
+        <p>Traditional entrepreneurship, put simply, has been "the endeavor of taking risks, starting a business, hiring people, and growing an organization." From Schumpeter's "creative destruction" to Peter Thiel's "Zero to One," the narrative of entrepreneurship has always been a story of expansion and dominance.</p>
+
+        <p>But entrepreneurship with released core desires tells a different story.</p>
+
+        <p>It is a story not of "expansion" but of "persistence." Not of "dominance" but of "coexistence." Not of "acquiring obedience" but of "permitting autonomy." And not of "fixation" but of "liberation."</p>
+
+        <p>Not hiring is not disregarding people. Rather, it's the recognition that "this person's time should not be consumed for my vision." Not fixing location is not abandoning efficiency. It's the belief that "people should be where they want to be." Not fixing tasks is not chaos. It's the trust that "people can decide their own roles."</p>
+
+        <div class="key-point">
+            <p>The transformation of entrepreneurship is a shift from "how many people can I hire and how large an organization can I build" to "how can I create enduring value without hiring anyone." This is not downsizing — it is a fundamental inversion of design philosophy.</p>
+        </div>
+
+        <h2>Conclusion — The Choice to Set Free</h2>
+
+        <p>For entrepreneurs, hiring employees has long been considered a mark of success. "How many do you employ" has been the metric of business scale, and "how many jobs have you created" has been the measure of social contribution.</p>
+
+        <p>But that yardstick is not universal.</p>
+
+        <p>Creating value and persisting without seeking obedience, without binding location, without fixing tasks. Toki Storage is attempting to demonstrate, as one example, that such a form of business is possible.</p>
+
+        <p>It is a design that "sets free" every stakeholder. Customers from lock-in. Partners from binding. Society from dependency. And the founder themselves from the desire to control.</p>
+
+        <blockquote>
+            <p>"If hiring is the proof of entrepreneurship, what is not hiring the proof of? Perhaps it is the quiet conviction that value can emerge without dominance."</p>
+        </blockquote>
+
+    </div>
+
+    <section class="references">
+        <h2>References</h2>
+        <ul>
+            <li>Pink, D. H. (2009). <em>Drive: The Surprising Truth About What Motivates Us</em>. Riverhead Books.</li>
+            <li>Sarasvathy, S. D. (2001). "Causation and Effectuation: Toward a Theoretical Shift from Economic Inevitability to Entrepreneurial Contingency." <em>Academy of Management Review</em>, 26(2), 243-263.</li>
+            <li>Schumpeter, J. A. (1942). <em>Capitalism, Socialism and Democracy</em>. Harper & Brothers.</li>
+            <li>Thiel, P. (2014). <em>Zero to One: Notes on Startups, or How to Build the Future</em>. Crown Business.</li>
+            <li>Ries, E. (2011). <em>The Lean Startup</em>. Crown Business.</li>
+        </ul>
+    </section>
+
+    <footer class="article-footer">
+        <p>Toki Storage Essay Series</p>
+        <p id="essay-nav-links"></p>
+        <p style="margin-top: 1.5rem;">&copy; 2026 TokiStorage. All rights reserved.</p>
+    </footer>
+
+</article>
+
+<script src="contact-form.js" defer></script>
+<script src="essay-tts.js?v=20260220"></script>
+<script src="essay-nav.js?v=20260220"></script>
+<script src="tracker.js" defer></script>
+</body>
+</html>
