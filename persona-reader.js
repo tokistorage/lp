@@ -141,8 +141,8 @@
             msgs[m].style.display = msgs[m].getAttribute('data-persona-msg') === persona ? '' : 'none';
         }
 
-        /* elements with explicit data-persona restrictions */
-        var restricted = document.querySelectorAll('[data-persona]');
+        /* elements with explicit data-persona restrictions (exclude selector buttons) */
+        var restricted = document.querySelectorAll('[data-persona]:not(.persona-btn)');
         for (var r = 0; r < restricted.length; r++) {
             var allowed = restricted[r].getAttribute('data-persona').split(' ');
             restricted[r].style.display = allowed.indexOf(persona) !== -1 ? '' : 'none';
