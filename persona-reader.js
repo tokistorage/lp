@@ -115,7 +115,7 @@
     var html = '<p class="persona-label">' + config.label + '</p><div class="persona-buttons">';
     Object.keys(config.personas).forEach(function (key) {
         var p = config.personas[key];
-        html += '<button class="persona-btn' + (key === 'full' ? ' active' : '') + '" data-persona="' + key + '" title="' + p.desc + '">' + p.name + '</button>';
+        html += '<button class="persona-btn' + (key === 'full' ? ' active' : '') + '" data-persona-key="' + key + '" title="' + p.desc + '">' + p.name + '</button>';
     });
     html += '</div>';
     selector.innerHTML = html;
@@ -132,7 +132,7 @@
         /* buttons */
         var btns = selector.querySelectorAll('.persona-btn');
         for (var b = 0; b < btns.length; b++) {
-            btns[b].classList.toggle('active', btns[b].getAttribute('data-persona') === persona);
+            btns[b].classList.toggle('active', btns[b].getAttribute('data-persona-key') === persona);
         }
 
         /* persona-specific core messages */
@@ -141,8 +141,8 @@
             msgs[m].style.display = msgs[m].getAttribute('data-persona-msg') === persona ? '' : 'none';
         }
 
-        /* elements with explicit data-persona restrictions (exclude selector buttons) */
-        var restricted = document.querySelectorAll('[data-persona]:not(.persona-btn)');
+        /* elements with explicit data-persona restrictions */
+        var restricted = document.querySelectorAll('[data-persona]');
         for (var r = 0; r < restricted.length; r++) {
             var allowed = restricted[r].getAttribute('data-persona').split(' ');
             restricted[r].style.display = allowed.indexOf(persona) !== -1 ? '' : 'none';
@@ -182,7 +182,7 @@
         var btn = e.target.closest ? e.target.closest('.persona-btn') : null;
         if (!btn && e.target.classList.contains('persona-btn')) btn = e.target;
         if (!btn) return;
-        var persona = btn.getAttribute('data-persona');
+        var persona = btn.getAttribute('data-persona-key');
         switchPersona(persona);
         if (history.replaceState) history.replaceState(null, '', '#' + persona);
     });
