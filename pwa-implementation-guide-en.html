@@ -1,0 +1,289 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" type="image/png" sizes="32x32" href="asset/favicon-32.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="asset/apple-touch-icon.png">
+    <title>PWA Installation Guide | TokiStorage</title>
+    <meta name="robots" content="index, follow">
+    <meta name="description" content="No app store needed. Just 'Add to Home Screen' from your browser, and TokiQR works as a native app. Step-by-step instructions for Android, iPhone, and desktop.">    <style>
+        :root {
+            --toki-blue: #2563EB;
+            --toki-blue-dark: #1D4ED8;
+            --toki-blue-pale: #EFF6FF;
+            --accent-blue: #3B82F6;
+            --bg-white: #FFFFFF;
+            --text-primary: #1E293B;
+            --text-secondary: #475569;
+            --text-muted: #94A3B8;
+            --border: #E2E8F0;
+            --font-display: 'Georgia', 'Times New Roman', serif;
+            --font-body: -apple-system, 'Segoe UI', Helvetica, Arial, sans-serif;
+        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        html { scroll-behavior: smooth; }
+        body { font-family: var(--font-body); font-weight: 400; background: var(--bg-white); color: var(--text-primary); line-height: 2; font-size: 16px; }
+
+        .article-nav { position: fixed; top: 0; left: 0; right: 0; z-index: 1000; background: rgba(255,255,255,0.95); backdrop-filter: blur(12px); border-bottom: 1px solid var(--border); padding: 0.6rem 1.2rem; display: flex; align-items: center; justify-content: space-between; gap: 1rem; }
+        .article-nav .nav-brand { font-family: var(--font-display); font-size: 0.9rem; font-weight: 600; color: var(--toki-blue); text-decoration: none; white-space: nowrap; }
+        .article-nav .nav-brand::before { content: ''; display: inline-block; width: 20px; height: 20px; background: url('asset/tokistorage-icon-512.png') no-repeat center / contain; vertical-align: -3px; margin-right: 5px; }
+        .article-nav .nav-right { display: flex; align-items: center; gap: 1rem; }
+        .article-nav .nav-label { font-size: 0.6rem; color: var(--text-muted); letter-spacing: 0.08em; }
+        .article-nav .lang-switch { font-size: 0.75rem; color: var(--toki-blue); text-decoration: none; padding: 0.3rem 0.6rem; border: 1px solid var(--toki-blue); border-radius: 4px; }
+        .article-nav .lang-switch:hover { background: var(--toki-blue); color: #fff; }
+
+        .article-container { max-width: 680px; margin: 0 auto; padding: 7rem 2rem 4rem; }
+        .article-header { margin-bottom: 3rem; padding-bottom: 2rem; border-bottom: 1px solid var(--border); }
+        .article-category { font-size: 0.7rem; color: var(--toki-blue); letter-spacing: 0.15em; margin-bottom: 1rem; }
+        .article-header h1 { font-family: var(--font-display); font-size: 1.8rem; font-weight: 700; line-height: 1.5; margin-bottom: 1.5rem; }
+        .article-subtitle { font-size: 0.95rem; color: var(--text-secondary); line-height: 1.9; }
+
+        .article-content h2 { font-family: var(--font-display); font-size: 1.3rem; font-weight: 600; margin: 3rem 0 1.5rem; padding-bottom: 0.5rem; border-bottom: 2px solid var(--toki-blue-pale); }
+        .article-content h3 { font-family: var(--font-display); font-size: 1.1rem; font-weight: 600; margin: 2rem 0 1rem; color: var(--toki-blue-dark); }
+        .article-content p { margin-bottom: 1.5rem; text-align: justify; }
+        .article-content blockquote { border-left: 3px solid var(--toki-blue); padding-left: 1.5rem; margin: 2rem 0; font-family: var(--font-display); color: var(--text-secondary); }
+        .article-content ul, .article-content ol { margin: 1.5rem 0; padding-left: 1.5rem; }
+        .article-content li { margin-bottom: 0.75rem; }
+
+        .core-message { background: var(--toki-blue-pale); border-left: 4px solid var(--toki-blue); padding: 1.5rem; margin: 2rem 0; font-size: 0.95rem; line-height: 1.8; }
+        .key-point { background: linear-gradient(135deg, var(--toki-blue-pale) 0%, #fff 100%); border: 1px solid var(--accent-blue); border-radius: 8px; padding: 1.5rem; margin: 2rem 0; text-align: center; }
+        .key-point p { font-family: var(--font-display); font-size: 1.1rem; color: var(--toki-blue-dark); margin: 0; }
+
+        .step-box { background: #F8FAFC; border: 1px solid var(--border); border-radius: 8px; padding: 1.5rem; margin: 1.5rem 0; }
+        .step-box .step-label { font-size: 0.7rem; color: var(--toki-blue); letter-spacing: 0.1em; font-weight: 600; margin-bottom: 0.5rem; }
+        .step-box ol { padding-left: 1.2rem; margin: 0; }
+        .step-box li { margin-bottom: 0.5rem; line-height: 1.8; }
+        .step-box code { background: var(--toki-blue-pale); padding: 0.15rem 0.4rem; border-radius: 3px; font-size: 0.9em; }
+
+        .article-footer { margin-top: 4rem; padding-top: 2rem; border-top: 1px solid var(--border); text-align: center; }
+        .article-footer p { font-size: 0.8rem; color: var(--text-muted); margin-bottom: 1rem; }
+        .article-footer a { color: var(--toki-blue); text-decoration: none; }
+        .article-footer a:hover { text-decoration: underline; }
+
+        @media (max-width: 768px) {
+            .article-container { padding: 6rem 1.2rem 3rem; }
+            .article-header h1 { font-size: 1.5rem; }
+            .article-nav .nav-label { display: none; }
+        }
+        @media print { .article-nav { display: none; } .article-container { padding-top: 2rem; } }
+    </style>
+    <link rel="stylesheet" href="contact-form.css">
+    <meta property="og:type" content="article">
+    <meta property="og:title" content="PWA Installation Guide | TokiStorage">
+    <meta property="og:description" content="No app store needed. Just 'Add to Home Screen' from your browser, and TokiQR works as a native app. Step-by-step instructions for Android, iPhone, and desktop.">
+    <meta property="og:url" content="https://tokistorage.github.io/lp/pwa-implementation-guide-en.html">
+    <meta property="og:site_name" content="TokiStorage">
+    <meta name="twitter:card" content="summary">
+    <meta name="twitter:title" content="PWA Installation Guide | TokiStorage">
+    <meta name="twitter:description" content="No app store needed. Just 'Add to Home Screen' from your browser, and TokiQR works as a native app. Step-by-step instructions for Android, iPhone, and desktop.">
+    <meta property="og:image" content="https://tokistorage.github.io/lp/asset/tokistorage-icon-512.png">
+    <meta property="og:image:width" content="512">
+    <meta property="og:image:height" content="512">
+    <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Article",
+  "headline": "PWA Installation Guide",
+  "author": {
+    "@type": "Person",
+    "name": "Takuya Sato",
+    "url": "https://tokistorage.github.io/lp/profile.html"
+  },
+  "publisher": {
+    "@type": "Organization",
+    "name": "TokiStorage",
+    "url": "https://tokistorage.github.io/lp",
+    "logo": {
+      "@type": "ImageObject",
+      "url": "https://tokistorage.github.io/lp/asset/tokistorage-icon-512.png"
+    }
+  },
+  "url": "https://tokistorage.github.io/lp/pwa-implementation-guide-en.html",
+  "inLanguage": "en",
+  "mainEntityOfPage": "https://tokistorage.github.io/lp/pwa-implementation-guide-en.html",
+  "description": "No app store needed. Just 'Add to Home Screen' from your browser, and TokiQR works as a native app. Step-by-step instructions for Android, iPhone, and desktop."
+}
+    </script>
+    <link rel="alternate" hreflang="ja" href="https://tokistorage.github.io/lp/pwa-implementation-guide.html">
+    <link rel="alternate" hreflang="en" href="https://tokistorage.github.io/lp/pwa-implementation-guide-en.html">
+    <link rel="alternate" hreflang="x-default" href="https://tokistorage.github.io/lp/pwa-implementation-guide.html">
+    <link rel="canonical" href="https://tokistorage.github.io/lp/pwa-implementation-guide-en.html">
+</head>
+<body>
+
+<nav class="article-nav">
+    <a href="index-en.html" class="nav-brand">TokiStorage</a>
+    <div class="nav-right">
+        <span class="nav-label">Technology &amp; Design</span>
+        <a href="pwa-implementation-guide.html" class="lang-switch">JA</a>
+    </div>
+</nav>
+
+<main class="article-container">
+
+    <header class="article-header">
+        <p class="article-category">ESSAY &mdash; Technology &amp; Design</p>
+        <h1>PWA Installation Guide<br><span style="font-size: 0.6em; font-weight: 400; color: var(--text-secondary);">&mdash;&mdash; Add to home screen &mdash; that&rsquo;s all it takes to become an app</span></h1>
+        <p class="article-subtitle">
+            No app store needed.<br>
+            Just &ldquo;Add to Home Screen&rdquo; from your browser,<br>
+            and TokiQR works as a native app.
+        </p>
+    </header>
+
+    <article class="article-content">
+
+        <div class="core-message">
+            <strong>What this article explains:</strong> TokiQR is built as a PWA (Progressive Web App). You don&rsquo;t need to download it from the App Store or Google Play. Simply &ldquo;Add to Home Screen&rdquo; from your browser, and it works just like a native app. This page walks you through the steps for Android, iPhone, and desktop.
+        </div>
+
+        <h2>1. What Is a PWA?</h2>
+
+        <p>A PWA (Progressive Web App) is a website that behaves like a native app. It can be installed directly from your browser, bypassing the App Store and Google Play entirely.</p>
+
+        <p>TokiQR uses this technology. Once you add it to your home screen, the browser&rsquo;s address bar disappears and it launches with the same look and feel as any other app. It works offline, and updates are applied automatically whenever the web page is updated.</p>
+
+        <p>No app store review process, no registration fee, no annual subscription. This mechanism underpins the <a href="burn-rate-zero-en.html">zero running cost</a> design that allows TokiStorage to endure for 1,000 years.</p>
+
+        <blockquote>
+            If it opens in a browser,<br>
+            it&rsquo;s already an app.
+        </blockquote>
+
+        <h2>2. Installing on Android (Chrome)</h2>
+
+        <p>On Android smartphones, you can add TokiQR to your home screen using Google Chrome. It takes about 30 seconds.</p>
+
+        <div class="step-box">
+            <div class="step-label">ANDROID &mdash; STEP BY STEP</div>
+            <ol>
+                <li>Open the TokiQR page (<code>tokistorage.github.io/lp/tokiqr/</code>) in Google Chrome</li>
+                <li>Tap the <strong>&#8942;</strong> (three-dot menu) in the top-right corner</li>
+                <li>Select <strong>&ldquo;Add to Home screen&rdquo;</strong> or <strong>&ldquo;Install app&rdquo;</strong></li>
+                <li>Confirm the app name and tap <strong>&ldquo;Add&rdquo;</strong></li>
+                <li>The TokiQR icon appears on your home screen</li>
+            </ol>
+        </div>
+
+        <p>From now on, just tap the icon on your home screen to launch TokiQR. The browser&rsquo;s address bar won&rsquo;t appear &mdash; it runs as a full-screen app.</p>
+
+        <h3>When Chrome prompts you automatically</h3>
+
+        <p>If you visit the TokiQR page multiple times, Chrome may automatically display a banner at the bottom of the screen saying &ldquo;Add TokiQR to Home screen.&rdquo; When this banner appears, a single tap completes the installation.</p>
+
+        <h2>3. Installing on iPhone / iPad (Safari)</h2>
+
+        <p>On iPhone and iPad, you must use Safari (the default browser). Chrome and Firefox on iOS cannot install PWAs, so make sure to use Safari.</p>
+
+        <div class="step-box">
+            <div class="step-label">iPHONE / iPAD &mdash; STEP BY STEP</div>
+            <ol>
+                <li>Open the TokiQR page (<code>tokistorage.github.io/lp/tokiqr/</code>) in <strong>Safari</strong></li>
+                <li>Tap the <strong>Share button</strong> (the square with an upward arrow) at the bottom of the screen</li>
+                <li>Scroll through the share menu and tap <strong>&ldquo;Add to Home Screen&rdquo;</strong></li>
+                <li>Confirm the app name and tap <strong>&ldquo;Add&rdquo;</strong> in the top-right corner</li>
+                <li>The TokiQR icon appears on your home screen</li>
+            </ol>
+        </div>
+
+        <p>The key point is that only Safari supports PWA installation on iOS. This is an Apple platform restriction, not a TokiQR limitation.</p>
+
+        <h3>On iPad</h3>
+
+        <p>On iPad, the Share button may be located differently &mdash; look for it near the address bar at the top of Safari. The steps that follow are identical.</p>
+
+        <h2>4. Installing on Desktop (Chrome / Edge)</h2>
+
+        <p>TokiQR can also be installed as a PWA on your computer using Google Chrome or Microsoft Edge.</p>
+
+        <div class="step-box">
+            <div class="step-label">DESKTOP &mdash; STEP BY STEP</div>
+            <ol>
+                <li>Open the TokiQR page in Chrome or Edge</li>
+                <li>Click the <strong>install icon</strong> (a monitor with a download arrow) at the right end of the address bar</li>
+                <li>A dialog asking &ldquo;Install app?&rdquo; appears</li>
+                <li>Click <strong>&ldquo;Install&rdquo;</strong></li>
+                <li>TokiQR launches in its own window, and an icon is added to your taskbar (or Dock)</li>
+            </ol>
+        </div>
+
+        <p>After installation, you can launch TokiQR directly from a desktop shortcut or your taskbar. It runs in its own window, separate from your browser, with no tabs or address bar.</p>
+
+        <h3>If the install icon doesn&rsquo;t appear in Chrome</h3>
+
+        <p>If you don&rsquo;t see the install icon at the right end of the address bar, open Chrome&rsquo;s menu (&#8942;) and select <strong>&ldquo;Install TokiQR&rdquo;</strong> or <strong>&ldquo;More tools &rarr; Create shortcut&rdquo;</strong>.</p>
+
+        <h2>5. What Changes After Installation</h2>
+
+        <p>Once installed as a PWA, TokiQR gains the following capabilities:</p>
+
+        <ul>
+            <li><strong>Offline access</strong> &mdash; Pages you&rsquo;ve loaded once continue to work without an internet connection. The Service Worker caches all necessary resources.</li>
+            <li><strong>Full-screen display</strong> &mdash; The browser&rsquo;s address bar and toolbar disappear. The entire screen belongs to the app, creating an immersive experience.</li>
+            <li><strong>Home screen launch</strong> &mdash; Just like any other app, tap the icon and it opens. No need to open a browser and type a URL.</li>
+            <li><strong>Automatic updates</strong> &mdash; When TokiQR is updated, the Service Worker fetches the latest version in the background the next time you launch. No manual app store updates required.</li>
+        </ul>
+
+        <blockquote>
+            What you installed isn&rsquo;t an &ldquo;app.&rdquo;<br>
+            It&rsquo;s the Web itself, freed from the browser frame.
+        </blockquote>
+
+        <h2>6. Why No App Store</h2>
+
+        <p>&ldquo;Why isn&rsquo;t TokiQR on the App Store or Google Play?&rdquo; &mdash; There is a clear design philosophy behind this decision.</p>
+
+        <p>Publishing on the Apple App Store costs $99 per year. Google Play charges a one-time $25 fee. The issue isn&rsquo;t the amount. <strong>The structure of having to keep paying to keep existing</strong> is fundamentally incompatible with a project designed to endure for 1,000 years.</p>
+
+        <p>With a PWA, deploying to GitHub Pages is all it takes to reach every platform. No review process, no registration fees, zero maintenance cost. For a deeper discussion, see <a href="pwa-not-appstore-en.html">&ldquo;Why We Skip the App Store.&rdquo;</a></p>
+
+        <p>The entry point for TokiQR is not an app store &mdash; it&rsquo;s the QR code itself. A QR code engraved on a headstone, etched into a monument &mdash; scan it and the content is there. A distribution model that needs no storefront is precisely why PWA is the optimal choice.</p>
+
+        <h2>7. Frequently Asked Questions</h2>
+
+        <h3>How much storage space does it use?</h3>
+
+        <p>TokiQR&rsquo;s PWA is extremely lightweight. Installation requires only a few megabytes &mdash; less than one-hundredth of a typical native app. Storage space is not a concern.</p>
+
+        <h3>How do I uninstall it?</h3>
+
+        <p><strong>Android:</strong> Long-press the icon on your home screen and select &ldquo;Uninstall&rdquo; or &ldquo;Remove.&rdquo;<br>
+        <strong>iPhone / iPad:</strong> Long-press the icon on your home screen and tap &ldquo;Delete Bookmark.&rdquo;<br>
+        <strong>Desktop:</strong> Open the app window&rsquo;s menu (&#8942;) and select &ldquo;Uninstall.&rdquo;</p>
+
+        <h3>Do I need to update it manually?</h3>
+
+        <p>No manual updates are needed. Each time you launch TokiQR, the Service Worker checks for the latest version in the background and updates automatically. You&rsquo;re always on the most current version.</p>
+
+        <h3>Will I receive notifications?</h3>
+
+        <p>TokiQR does not use push notifications. It is designed purely for QR code generation and playback, and notification features are intentionally omitted. Being a quiet app is part of the design philosophy.</p>
+
+        <h3>Can I install it on multiple devices?</h3>
+
+        <p>There are no restrictions. Smartphone, tablet, computer &mdash; you can install TokiQR on all of them simultaneously. No account registration or license is required.</p>
+
+        <div class="core-message">
+            Installing a PWA takes 30 seconds. No app store to search, no account to create. Open it in your browser, tap &ldquo;Add to Home Screen.&rdquo; That&rsquo;s it &mdash; TokiQR becomes your app. Zero maintenance cost, no review process, automatic updates. The distribution method designed to last 1,000 years turned out to be the simplest one.
+        </div>
+
+        <div class="key-point">
+            <p>Add it to your home screen.<br>That single action places a tool for 1,000 years in your hands.</p>
+        </div>
+
+    </article>
+
+    <footer class="article-footer">
+        <p id="essay-nav-links"></p>
+        <p style="margin-top: 2rem; font-size: 0.75rem;">&copy; 2026 TokiStorage. All rights reserved.</p>
+    </footer>
+
+</main>
+
+<script src="contact-form.js" defer></script>
+<script src="essay-tts.js?v=20260220"></script>
+<script src="essay-nav.js?v=20260302"></script>
+<script src="tracker.js" defer></script>
+</body>
+</html>

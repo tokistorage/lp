@@ -170,6 +170,7 @@
     { id: 'pipeline-renovation', ja: 'パイプライン改修記', en: 'Pipeline Renovation Notes', date: '2026-03-01' },
     { id: 'trust-guidelines', ja: '信頼で書く利用規約', en: 'Writing Terms of Service on Trust', date: '2026-03-01' },
     { id: 'beyond-the-screen', ja: '画面の向こう側', en: 'Beyond the Screen', date: '2026-03-02' },
+    { id: 'pwa-implementation-guide', ja: 'PWA導入ガイド', en: 'PWA Installation Guide', date: '2026-03-02' },
 
     // ── メタ視点 ──
     { id: 'mission-statement', ja: 'ミッション・ステートメントの設計思想', en: 'Designing a Mission Statement', date: '2026-02-23' },
@@ -190,6 +191,7 @@
   // LATEST_COUNT で表示件数を制御
   const LATEST_COUNT = 5;
   const latestEssayIds = [
+    'pwa-implementation-guide',
     'rural-workaway',
     'group-event',
     'custom-soap-guide',
@@ -355,7 +357,7 @@
     'safari-webp':            ['device-dependency', 'image-clarity', 'vibe-coding', 'poc', 'uptime'],
     'seo-aio':                ['vibe-coding', 'openness', 'safari-webp', 'burn-rate-zero', 'why-essays'],
     'oss-foundation':         ['openness', 'seo-aio', 'vibe-coding', 'ssdlc', 'what-is-github'],
-    'pwa-not-appstore':       ['burn-rate-zero', 'disintermediation', 'uptime', 'device-dependency', 'free-strategy'],
+    'pwa-not-appstore':       ['pwa-implementation-guide', 'burn-rate-zero', 'disintermediation', 'device-dependency', 'free-strategy'],
     'no-external-deps':       ['uptime', 'burn-rate-zero', 'pwa-not-appstore', 'cloudflare-gas', 'qualification-boundary'],
     'qualification-boundary':  ['evaluation-outside', 'no-external-deps', 'headhunter', 'enterprise-architecture', 'decision-maker'],
     'evaluation-outside':      ['qualification-boundary', 'no-external-deps', 'utilization-productivity', 'burn-rate-zero', 'decision-maker'],
@@ -364,7 +366,7 @@
     'corporate-site':          ['seo-aio', 'no-external-deps', 'brochure-essay', 'openness', 'burn-rate-zero'],
     'equipment-guide':         ['uv-laminate', 'diy-partner', 'backup-rule', 'try-and-revert', 'burn-rate-zero'],
     'hero-parallax':           ['corporate-site', 'no-external-deps', 'seo-aio', 'image-clarity', 'burn-rate-zero'],
-    'offline-freedom':        ['device-dependency', 'pwa-not-appstore', 'no-external-deps', '30seconds', 'storage-strategy'],
+    'offline-freedom':        ['pwa-implementation-guide', 'device-dependency', 'pwa-not-appstore', 'no-external-deps', '30seconds'],
     'millennium-navigation':  ['storage-strategy', 'openness', 'recital-record', 'legacy', 'offline-freedom'],
     'restoration-architecture': ['backup-rule', 'self-print-economy', 'storage-strategy', 'millennium-navigation', 'offline-freedom'],
     'monitor-program':        ['payment', 'storage-strategy', 'no-external-deps', 'cloudflare-gas', 'narrative-trust'],
@@ -376,6 +378,7 @@
     'pipeline-renovation': ['dev-to-ops', 'development-chronicle', 'storage-strategy', 'migration', 'restoration-architecture'],
     'trust-guidelines': ['zero-personal-data', 'offline-freedom', 'openness', 'narrative-trust', 'ssdlc'],
     'beyond-the-screen': ['smartphone-complete', 'device-dependency', 'pwa-not-appstore', 'safari-webp', 'polishing'],
+    'pwa-implementation-guide': ['pwa-not-appstore', 'offline-freedom', 'beyond-the-screen', 'device-dependency', 'smartphone-complete'],
     // ── メタ視点 ──
     'mission-statement':      ['narrative-trust', 'preserving-words', 'why-essays', 'corporate-site', 'integrity'],
     'preserving-words':       ['why-essays', 'akashic-record', 'what-to-leave', 'narrative-trust', 'openness'],

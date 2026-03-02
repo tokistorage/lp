@@ -1,0 +1,289 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" type="image/png" sizes="32x32" href="asset/favicon-32.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="asset/apple-touch-icon.png">
+    <title>PWA導入ガイド | トキストレージ</title>
+    <meta name="robots" content="index, follow">
+    <meta name="description" content="アプリストアは不要。ブラウザから「ホーム画面に追加」するだけで、TokiQRはアプリとして動く。Android・iPhone・デスクトップ、すべての手順を解説する。">    <style>
+        :root {
+            --toki-blue: #2563EB;
+            --toki-blue-dark: #1D4ED8;
+            --toki-blue-pale: #EFF6FF;
+            --accent-blue: #3B82F6;
+            --bg-white: #FFFFFF;
+            --text-primary: #1E293B;
+            --text-secondary: #475569;
+            --text-muted: #94A3B8;
+            --border: #E2E8F0;
+            --font-display: 'Hiragino Mincho ProN', 'Yu Mincho', serif;
+            --font-body: 'Hiragino Kaku Gothic ProN', 'Yu Gothic', 'Meiryo', sans-serif;
+        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        html { scroll-behavior: smooth; }
+        body { font-family: var(--font-body); font-weight: 400; background: var(--bg-white); color: var(--text-primary); line-height: 2; font-size: 16px; }
+
+        .article-nav { position: fixed; top: 0; left: 0; right: 0; z-index: 1000; background: rgba(255,255,255,0.95); backdrop-filter: blur(12px); border-bottom: 1px solid var(--border); padding: 0.6rem 1.2rem; display: flex; align-items: center; justify-content: space-between; gap: 1rem; }
+        .article-nav .nav-brand { font-family: var(--font-display); font-size: 0.9rem; font-weight: 600; color: var(--toki-blue); text-decoration: none; white-space: nowrap; }
+        .article-nav .nav-brand::before { content: ''; display: inline-block; width: 20px; height: 20px; background: url('asset/tokistorage-icon-512.png') no-repeat center / contain; vertical-align: -3px; margin-right: 5px; }
+        .article-nav .nav-right { display: flex; align-items: center; gap: 1rem; }
+        .article-nav .nav-label { font-size: 0.6rem; color: var(--text-muted); letter-spacing: 0.08em; }
+        .article-nav .lang-switch { font-size: 0.75rem; color: var(--toki-blue); text-decoration: none; padding: 0.3rem 0.6rem; border: 1px solid var(--toki-blue); border-radius: 4px; }
+        .article-nav .lang-switch:hover { background: var(--toki-blue); color: #fff; }
+
+        .article-container { max-width: 680px; margin: 0 auto; padding: 7rem 2rem 4rem; }
+        .article-header { margin-bottom: 3rem; padding-bottom: 2rem; border-bottom: 1px solid var(--border); }
+        .article-category { font-size: 0.7rem; color: var(--toki-blue); letter-spacing: 0.15em; margin-bottom: 1rem; }
+        .article-header h1 { font-family: var(--font-display); font-size: 1.8rem; font-weight: 700; line-height: 1.5; margin-bottom: 1.5rem; }
+        .article-subtitle { font-size: 0.95rem; color: var(--text-secondary); line-height: 1.9; }
+
+        .article-content h2 { font-family: var(--font-display); font-size: 1.3rem; font-weight: 600; margin: 3rem 0 1.5rem; padding-bottom: 0.5rem; border-bottom: 2px solid var(--toki-blue-pale); }
+        .article-content h3 { font-family: var(--font-display); font-size: 1.1rem; font-weight: 600; margin: 2rem 0 1rem; color: var(--toki-blue-dark); }
+        .article-content p { margin-bottom: 1.5rem; text-align: justify; }
+        .article-content blockquote { border-left: 3px solid var(--toki-blue); padding-left: 1.5rem; margin: 2rem 0; font-family: var(--font-display); color: var(--text-secondary); }
+        .article-content ul, .article-content ol { margin: 1.5rem 0; padding-left: 1.5rem; }
+        .article-content li { margin-bottom: 0.75rem; }
+
+        .core-message { background: var(--toki-blue-pale); border-left: 4px solid var(--toki-blue); padding: 1.5rem; margin: 2rem 0; font-size: 0.95rem; line-height: 1.8; }
+        .key-point { background: linear-gradient(135deg, var(--toki-blue-pale) 0%, #fff 100%); border: 1px solid var(--accent-blue); border-radius: 8px; padding: 1.5rem; margin: 2rem 0; text-align: center; }
+        .key-point p { font-family: var(--font-display); font-size: 1.1rem; color: var(--toki-blue-dark); margin: 0; }
+
+        .step-box { background: #F8FAFC; border: 1px solid var(--border); border-radius: 8px; padding: 1.5rem; margin: 1.5rem 0; }
+        .step-box .step-label { font-size: 0.7rem; color: var(--toki-blue); letter-spacing: 0.1em; font-weight: 600; margin-bottom: 0.5rem; }
+        .step-box ol { padding-left: 1.2rem; margin: 0; }
+        .step-box li { margin-bottom: 0.5rem; line-height: 1.8; }
+        .step-box code { background: var(--toki-blue-pale); padding: 0.15rem 0.4rem; border-radius: 3px; font-size: 0.9em; }
+
+        .article-footer { margin-top: 4rem; padding-top: 2rem; border-top: 1px solid var(--border); text-align: center; }
+        .article-footer p { font-size: 0.8rem; color: var(--text-muted); margin-bottom: 1rem; }
+        .article-footer a { color: var(--toki-blue); text-decoration: none; }
+        .article-footer a:hover { text-decoration: underline; }
+
+        @media (max-width: 768px) {
+            .article-container { padding: 6rem 1.2rem 3rem; }
+            .article-header h1 { font-size: 1.5rem; }
+            .article-nav .nav-label { display: none; }
+        }
+        @media print { .article-nav { display: none; } .article-container { padding-top: 2rem; } }
+    </style>
+    <link rel="stylesheet" href="contact-form.css">
+    <meta property="og:type" content="article">
+    <meta property="og:title" content="PWA導入ガイド | トキストレージ">
+    <meta property="og:description" content="アプリストアは不要。ブラウザから「ホーム画面に追加」するだけで、TokiQRはアプリとして動く。Android・iPhone・デスクトップ、すべての手順を解説する。">
+    <meta property="og:url" content="https://tokistorage.github.io/lp/pwa-implementation-guide.html">
+    <meta property="og:site_name" content="トキストレージ">
+    <meta name="twitter:card" content="summary">
+    <meta name="twitter:title" content="PWA導入ガイド | トキストレージ">
+    <meta name="twitter:description" content="アプリストアは不要。ブラウザから「ホーム画面に追加」するだけで、TokiQRはアプリとして動く。Android・iPhone・デスクトップ、すべての手順を解説する。">
+    <meta property="og:image" content="https://tokistorage.github.io/lp/asset/tokistorage-icon-512.png">
+    <meta property="og:image:width" content="512">
+    <meta property="og:image:height" content="512">
+    <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Article",
+  "headline": "PWA導入ガイド",
+  "author": {
+    "@type": "Person",
+    "name": "Takuya Sato",
+    "url": "https://tokistorage.github.io/lp/profile.html"
+  },
+  "publisher": {
+    "@type": "Organization",
+    "name": "TokiStorage",
+    "url": "https://tokistorage.github.io/lp",
+    "logo": {
+      "@type": "ImageObject",
+      "url": "https://tokistorage.github.io/lp/asset/tokistorage-icon-512.png"
+    }
+  },
+  "url": "https://tokistorage.github.io/lp/pwa-implementation-guide.html",
+  "inLanguage": "ja",
+  "mainEntityOfPage": "https://tokistorage.github.io/lp/pwa-implementation-guide.html",
+  "description": "アプリストアは不要。ブラウザから「ホーム画面に追加」するだけで、TokiQRはアプリとして動く。Android・iPhone・デスクトップ、すべての手順を解説する。"
+}
+    </script>
+    <link rel="alternate" hreflang="ja" href="https://tokistorage.github.io/lp/pwa-implementation-guide.html">
+    <link rel="alternate" hreflang="en" href="https://tokistorage.github.io/lp/pwa-implementation-guide-en.html">
+    <link rel="alternate" hreflang="x-default" href="https://tokistorage.github.io/lp/pwa-implementation-guide.html">
+    <link rel="canonical" href="https://tokistorage.github.io/lp/pwa-implementation-guide.html">
+</head>
+<body>
+
+<nav class="article-nav">
+    <a href="index.html" class="nav-brand">トキストレージ</a>
+    <div class="nav-right">
+        <span class="nav-label">技術・設計 / Technology</span>
+        <a href="pwa-implementation-guide-en.html" class="lang-switch">EN</a>
+    </div>
+</nav>
+
+<main class="article-container">
+
+    <header class="article-header">
+        <p class="article-category">ESSAY &mdash; 技術・設計</p>
+        <h1>PWA導入ガイド<br><span style="font-size: 0.6em; font-weight: 400; color: var(--text-secondary);">&mdash;&mdash; ホーム画面に追加するだけで、アプリになる</span></h1>
+        <p class="article-subtitle">
+            アプリストアは不要。<br>
+            ブラウザから「ホーム画面に追加」するだけで、<br>
+            TokiQRはネイティブアプリのように動く。
+        </p>
+    </header>
+
+    <article class="article-content">
+
+        <div class="core-message">
+            <strong>この記事で伝えたいこと：</strong>TokiQRはPWA（Progressive Web App）として設計されている。App StoreやGoogle Playからのインストールは不要だ。お使いのブラウザから「ホーム画面に追加」するだけで、アプリと同じように使える。このページでは、Android・iPhone・デスクトップそれぞれの具体的な手順を解説する。
+        </div>
+
+        <h2>1. PWAとは何か</h2>
+
+        <p>PWA（Progressive Web App）とは、Webサイトでありながらネイティブアプリのように動作する技術だ。App StoreやGoogle Playを経由せず、ブラウザから直接インストールできる。</p>
+
+        <p>TokiQRはこのPWA技術を採用している。一度ホーム画面に追加すれば、ブラウザのアドレスバーは消え、アプリと同じ見た目で起動する。オフラインでも動作し、アップデートはWebページを更新するだけで自動的に反映される。</p>
+
+        <p>アプリストアの審査も、登録料も、年間維持費もない。この仕組みが、<a href="burn-rate-zero.html">ランニングコストゼロ</a>で1000年持続する設計を支えている。</p>
+
+        <blockquote>
+            ブラウザで開けるなら、<br>
+            それはすでにアプリだ。
+        </blockquote>
+
+        <h2>2. Android（Chrome）での導入手順</h2>
+
+        <p>Androidスマートフォンでは、Google Chromeを使ってTokiQRをホーム画面に追加できる。所要時間は約30秒。</p>
+
+        <div class="step-box">
+            <div class="step-label">ANDROID — STEP BY STEP</div>
+            <ol>
+                <li>Google ChromeでTokiQRのページ（<code>tokistorage.github.io/lp/tokiqr/</code>）を開く</li>
+                <li>画面右上の <strong>︙</strong>（三点メニュー）をタップする</li>
+                <li>メニューから<strong>「ホーム画面に追加」</strong>または<strong>「アプリをインストール」</strong>をタップする</li>
+                <li>アプリ名を確認し、<strong>「追加」</strong>をタップする</li>
+                <li>ホーム画面にTokiQRのアイコンが追加される</li>
+            </ol>
+        </div>
+
+        <p>次回からは、ホーム画面のアイコンをタップするだけで起動する。ブラウザのアドレスバーは表示されず、フルスクリーンのアプリとして動作する。</p>
+
+        <h3>Chromeが自動で促すケース</h3>
+
+        <p>TokiQRのページを何度か訪問すると、Chromeが画面下部に「ホーム画面にTokiQRを追加」というバナーを自動的に表示することがある。このバナーが表示された場合は、タップするだけでインストールが完了する。</p>
+
+        <h2>3. iPhone / iPad（Safari）での導入手順</h2>
+
+        <p>iPhoneやiPadでは、Safari（標準ブラウザ）を使う。ChromeやFirefoxではPWAのインストールができないため、必ずSafariで操作する必要がある。</p>
+
+        <div class="step-box">
+            <div class="step-label">iPHONE / iPAD — STEP BY STEP</div>
+            <ol>
+                <li><strong>Safari</strong>でTokiQRのページ（<code>tokistorage.github.io/lp/tokiqr/</code>）を開く</li>
+                <li>画面下部の<strong>共有ボタン</strong>（□に↑の矢印アイコン）をタップする</li>
+                <li>共有メニューを上にスクロールし、<strong>「ホーム画面に追加」</strong>をタップする</li>
+                <li>アプリ名を確認し、右上の<strong>「追加」</strong>をタップする</li>
+                <li>ホーム画面にTokiQRのアイコンが追加される</li>
+            </ol>
+        </div>
+
+        <p>Safariでしかインストールできない点だけ注意が必要だ。これはAppleの仕様による制約であり、TokiQR側の問題ではない。</p>
+
+        <h3>iPadの場合</h3>
+
+        <p>iPadでは、共有ボタンの位置がiPhoneと異なる場合がある。Safari画面上部のアドレスバー付近にある共有ボタン（□に↑）をタップすれば、同じ手順でインストールできる。</p>
+
+        <h2>4. デスクトップ（Chrome / Edge）での導入手順</h2>
+
+        <p>パソコンでもPWAとしてインストールできる。Google ChromeまたはMicrosoft Edgeを使用する。</p>
+
+        <div class="step-box">
+            <div class="step-label">DESKTOP — STEP BY STEP</div>
+            <ol>
+                <li>ChromeまたはEdgeでTokiQRのページを開く</li>
+                <li>アドレスバーの右端に表示される<strong>インストールアイコン</strong>（モニターに↓矢印）をクリックする</li>
+                <li>「アプリをインストールしますか？」というダイアログが表示される</li>
+                <li><strong>「インストール」</strong>をクリックする</li>
+                <li>TokiQRが独立したウィンドウで起動し、タスクバー（Dock）にアイコンが追加される</li>
+            </ol>
+        </div>
+
+        <p>インストール後は、デスクトップのショートカットやタスクバーから直接起動できる。ブラウザとは独立したウィンドウで動作し、タブやアドレスバーは表示されない。</p>
+
+        <h3>Chromeでインストールアイコンが表示されない場合</h3>
+
+        <p>アドレスバーの右端にインストールアイコンが見当たらない場合は、Chromeのメニュー（︙）から<strong>「TokiQRをインストール」</strong>または<strong>「その他のツール → ショートカットを作成」</strong>を選択する。</p>
+
+        <h2>5. インストール後にできること</h2>
+
+        <p>PWAとしてインストールしたTokiQRは、次の特徴を持つ。</p>
+
+        <ul>
+            <li><strong>オフライン動作</strong> — 一度読み込んだページは、インターネット接続がなくても動作する。Service Workerがコンテンツをキャッシュしているためだ。</li>
+            <li><strong>フルスクリーン表示</strong> — ブラウザのアドレスバーやツールバーが消え、画面全体をアプリが使う。没入感のある体験になる。</li>
+            <li><strong>ホーム画面からの起動</strong> — 他のアプリと同様に、アイコンをタップするだけで起動する。ブラウザを開いてURLを入力する必要はない。</li>
+            <li><strong>自動アップデート</strong> — TokiQRが更新されると、次回起動時に自動的に最新版が読み込まれる。アプリストアでの手動アップデートは不要だ。</li>
+        </ul>
+
+        <blockquote>
+            インストールしたのは「アプリ」ではない。<br>
+            ブラウザの枠を外した、Webそのものだ。
+        </blockquote>
+
+        <h2>6. アプリストアが不要な理由</h2>
+
+        <p>「なぜApp StoreやGoogle Playに出さないのか？」——この疑問には、明確な設計思想がある。</p>
+
+        <p>Apple App Storeへの登録は年間$99。Google Playは$25の一時金。金額の問題ではない。<strong>毎年支払い続けなければ存在し続けられない</strong>という構造が、1000年持続するプロジェクトの設計思想と相容れないのだ。</p>
+
+        <p>PWAなら、GitHub Pagesにデプロイするだけで全プラットフォームに配信される。審査もなく、登録料もなく、維持費もゼロだ。詳しくは<a href="pwa-not-appstore.html">「アプリストアに出さない理由」</a>で論じている。</p>
+
+        <p>TokiQRの入口はアプリストアではなく、QRコードそのものだ。墓石に刻まれたQRコード、記念碑のQRコード——そこから直接Webにアクセスする。ストアフロントを介する必要がない配布モデルだからこそ、PWAが最適解になる。</p>
+
+        <h2>7. よくある質問</h2>
+
+        <h3>ストレージ容量はどれくらい使いますか？</h3>
+
+        <p>TokiQRのPWAは非常に軽量だ。インストールに必要な容量は数MB程度で、ネイティブアプリの100分の1以下。ストレージ不足を心配する必要はない。</p>
+
+        <h3>アンインストール（削除）するには？</h3>
+
+        <p><strong>Android：</strong>ホーム画面のアイコンを長押しし、「アンインストール」または「削除」を選択する。<br>
+        <strong>iPhone / iPad：</strong>ホーム画面のアイコンを長押しし、「ブックマークを削除」をタップする。<br>
+        <strong>デスクトップ：</strong>アプリのウィンドウ上部のメニュー（︙）から「アンインストール」を選択する。</p>
+
+        <h3>アップデートは必要ですか？</h3>
+
+        <p>手動でのアップデートは不要だ。TokiQRを起動するたびに、Service Workerがバックグラウンドで最新版をチェックし、自動的に更新する。常に最新の状態で使える。</p>
+
+        <h3>通知は届きますか？</h3>
+
+        <p>TokiQRはプッシュ通知を使用していない。QRコードの生成と再生に特化した設計であり、通知機能は意図的に省いている。静かなアプリであることも、設計思想の一部だ。</p>
+
+        <h3>複数のデバイスにインストールできますか？</h3>
+
+        <p>制限はない。スマートフォン、タブレット、パソコン——すべてのデバイスに同時にインストールできる。アカウント登録もライセンスも不要だ。</p>
+
+        <div class="core-message">
+            PWAのインストールは、30秒で終わる。アプリストアを探す必要も、アカウントを作る必要もない。ブラウザで開いて、「ホーム画面に追加」する。それだけで、TokiQRはあなたのアプリになる。維持費ゼロ、審査なし、自動アップデート。1000年続くための配布方法は、最もシンプルな方法だった。
+        </div>
+
+        <div class="key-point">
+            <p>ホーム画面に追加する。<br>それだけで、1000年のツールが手元に届く。</p>
+        </div>
+
+    </article>
+
+    <footer class="article-footer">
+        <p id="essay-nav-links"></p>
+        <p style="margin-top: 2rem; font-size: 0.75rem;">&copy; 2026 TokiStorage. All rights reserved.</p>
+    </footer>
+
+</main>
+
+<script src="contact-form.js" defer></script>
+<script src="essay-tts.js?v=20260220"></script>
+<script src="essay-nav.js?v=20260302"></script>
+<script src="tracker.js" defer></script>
+</body>
+</html>
