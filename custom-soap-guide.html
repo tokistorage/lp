@@ -1,0 +1,601 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" type="image/png" sizes="32x32" href="asset/favicon-32.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="asset/apple-touch-icon.png">
+    <title>カスタム形状ソープの作り方——贈与の入り口から、場に合わせた柔軟な対応へ | トキストレージ</title>
+    <meta name="robots" content="index, follow">
+    <meta name="description" content="パールソープは贈与の入り口。カスタム形状ソープはシリコンモールド・シリコンパテ・金型・3Dプリンタ・レーザー刻印で、場に合わせて柔軟に対応できる。その技術と可能性を解説する。">    <style>
+        :root {
+            --toki-amber: #D97706;
+            --toki-amber-dark: #B45309;
+            --toki-amber-pale: #FFFBEB;
+            --accent-amber: #FBBF24;
+            --bg-white: #FFFFFF;
+            --bg-section: #FEF9EE;
+            --text-primary: #1E293B;
+            --text-secondary: #475569;
+            --text-muted: #94A3B8;
+            --border: #E2E8F0;
+            --font-display: 'Hiragino Mincho ProN', 'Yu Mincho', serif;
+            --font-body: 'Hiragino Kaku Gothic ProN', 'Yu Gothic', 'Meiryo', sans-serif;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        html { scroll-behavior: smooth; }
+
+        body {
+            font-family: var(--font-body);
+            font-weight: 400;
+            background: var(--bg-white);
+            color: var(--text-primary);
+            line-height: 2;
+            font-size: 16px;
+        }
+
+        .article-nav {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 1000;
+            background: rgba(255,255,255,0.95);
+            backdrop-filter: blur(12px);
+            border-bottom: 1px solid var(--border);
+            padding: 0.6rem 1.2rem;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 1rem;
+        }
+        .article-nav .nav-brand {
+            font-family: var(--font-display);
+            font-size: 0.9rem;
+            font-weight: 600;
+            color: var(--toki-amber);
+            text-decoration: none;
+            white-space: nowrap;
+        }
+        .article-nav .nav-right {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+        .article-nav .nav-label {
+            font-size: 0.6rem;
+            color: var(--text-muted);
+            letter-spacing: 0.08em;
+        }
+        .article-nav .lang-switch {
+            font-size: 0.75rem;
+            color: var(--toki-amber);
+            text-decoration: none;
+            padding: 0.3rem 0.6rem;
+            border: 1px solid var(--toki-amber);
+            border-radius: 4px;
+        }
+        .article-nav .lang-switch:hover {
+            background: var(--toki-amber);
+            color: #fff;
+        }
+
+        .article-container {
+            max-width: 680px;
+            margin: 0 auto;
+            padding: 7rem 2rem 4rem;
+        }
+
+        .article-header {
+            margin-bottom: 3rem;
+            padding-bottom: 2rem;
+            border-bottom: 1px solid var(--border);
+        }
+        .article-category {
+            font-size: 0.7rem;
+            color: var(--toki-amber);
+            letter-spacing: 0.15em;
+            margin-bottom: 1rem;
+        }
+        .article-header h1 {
+            font-family: var(--font-display);
+            font-size: 1.8rem;
+            font-weight: 600;
+            line-height: 1.5;
+            margin-bottom: 1rem;
+        }
+        .article-subtitle {
+            font-size: 0.95rem;
+            color: var(--text-secondary);
+            line-height: 1.8;
+        }
+
+        .article-content h2 {
+            font-family: var(--font-display);
+            font-size: 1.25rem;
+            font-weight: 600;
+            margin: 3rem 0 1.5rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 1px solid var(--border);
+        }
+        .article-content h3 {
+            font-family: var(--font-display);
+            font-size: 1.1rem;
+            font-weight: 500;
+            margin: 2rem 0 1rem;
+            color: var(--text-primary);
+        }
+        .article-content p {
+            margin-bottom: 1.5rem;
+            text-align: justify;
+        }
+        .article-content blockquote {
+            margin: 2rem 0;
+            padding: 1.5rem 2rem;
+            background: var(--bg-section);
+            border-left: 3px solid var(--toki-amber);
+            font-style: italic;
+        }
+        .article-content blockquote p {
+            margin-bottom: 0.5rem;
+        }
+        .article-content blockquote cite {
+            display: block;
+            font-size: 0.85rem;
+            color: var(--text-muted);
+            font-style: normal;
+            margin-top: 0.5rem;
+        }
+        .article-content ul, .article-content ol {
+            margin: 1.5rem 0;
+            padding-left: 1.5rem;
+        }
+        .article-content li {
+            margin-bottom: 0.75rem;
+        }
+
+        .key-point {
+            background: var(--toki-amber-pale);
+            padding: 1.5rem 2rem;
+            border-radius: 8px;
+            margin: 2rem 0;
+        }
+        .key-point p {
+            margin-bottom: 0;
+            font-size: 0.95rem;
+        }
+
+        .core-message {
+            background: linear-gradient(135deg, var(--toki-amber-pale) 0%, #FEF3C7 100%);
+            border-left: 4px solid var(--toki-amber);
+            padding: 1.2rem 1.5rem;
+            margin: 0 0 1.5rem 0;
+            border-radius: 0 8px 8px 0;
+            font-size: 0.95rem;
+            line-height: 1.8;
+        }
+        .disclaimer {
+            font-size: 0.8rem;
+            color: var(--text-muted);
+            margin-bottom: 2rem;
+            padding-bottom: 1rem;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .method-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 1.5rem 0;
+            font-size: 0.88rem;
+        }
+        .method-table th, .method-table td {
+            border: 1px solid var(--border);
+            padding: 0.8rem 1rem;
+            text-align: left;
+        }
+        .method-table th {
+            background: var(--toki-amber-pale);
+            font-weight: 600;
+            font-size: 0.85rem;
+        }
+        .method-table td {
+            color: var(--text-secondary);
+            line-height: 1.6;
+        }
+
+        .references {
+            margin-top: 4rem;
+            padding-top: 2rem;
+            border-top: 1px solid var(--border);
+        }
+        .references h2 {
+            font-size: 1rem;
+            margin-bottom: 1.5rem;
+        }
+        .references ul {
+            list-style: none;
+            padding: 0;
+        }
+        .references li {
+            font-size: 0.85rem;
+            color: var(--text-secondary);
+            margin-bottom: 0.75rem;
+            padding-left: 1.5rem;
+            text-indent: -1.5rem;
+        }
+
+        .article-footer {
+            margin-top: 4rem;
+            padding-top: 2rem;
+            border-top: 1px solid var(--border);
+            text-align: center;
+        }
+        .article-footer p {
+            font-size: 0.8rem;
+            color: var(--text-muted);
+            margin-bottom: 1rem;
+        }
+        .article-footer a {
+            color: var(--toki-amber);
+            text-decoration: none;
+        }
+        .article-footer a:hover {
+            text-decoration: underline;
+        }
+
+        @media (max-width: 768px) {
+            .article-container { padding: 6rem 1.2rem 3rem; }
+            .article-header h1 { font-size: 1.5rem; }
+            .article-nav .nav-label { display: none; }
+            .method-table { font-size: 0.8rem; }
+            .method-table th, .method-table td { padding: 0.5rem; }
+        }
+
+        @media print {
+            .article-nav { display: none; }
+            .article-container { padding-top: 2rem; }
+        }
+        .nav-brand::before {
+            content: '';
+            display: inline-block;
+            width: 20px;
+            height: 20px;
+            background: url('asset/tokistorage-icon-512.png') no-repeat center / contain;
+            vertical-align: -3px;
+            margin-right: 5px;
+        }
+    </style>
+<link rel="stylesheet" href="contact-form.css">
+    <meta property="og:type" content="article">
+    <meta property="og:title" content="カスタム形状ソープの作り方——贈与の入り口から、場に合わせた柔軟な対応へ | トキストレージ">
+    <meta property="og:description" content="パールソープは贈与の入り口。カスタム形状ソープはシリコンモールド・シリコンパテ・金型・3Dプリンタ・レーザー刻印で、場に合わせて柔軟に対応できる。その技術と可能性を解説する。">
+    <meta property="og:url" content="https://tokistorage.github.io/lp/custom-soap-guide.html">
+    <meta property="og:site_name" content="トキストレージ">
+    <meta name="twitter:card" content="summary">
+    <meta name="twitter:title" content="カスタム形状ソープの作り方——贈与の入り口から、場に合わせた柔軟な対応へ | トキストレージ">
+    <meta name="twitter:description" content="パールソープは贈与の入り口。カスタム形状ソープはシリコンモールド・シリコンパテ・金型・3Dプリンタ・レーザー刻印で、場に合わせて柔軟に対応できる。その技術と可能性を解説する。">
+    <meta property="og:image" content="https://tokistorage.github.io/lp/asset/tokistorage-icon-512.png">
+    <meta property="og:image:width" content="512">
+    <meta property="og:image:height" content="512">
+    <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Article",
+  "headline": "カスタム形状ソープの作り方——贈与の入り口から、場に合わせた柔軟な対応へ",
+  "author": {
+    "@type": "Person",
+    "name": "Takuya Sato",
+    "url": "https://tokistorage.github.io/lp/profile.html"
+  },
+  "publisher": {
+    "@type": "Organization",
+    "name": "TokiStorage",
+    "url": "https://tokistorage.github.io/lp",
+    "logo": {
+      "@type": "ImageObject",
+      "url": "https://tokistorage.github.io/lp/asset/tokistorage-icon-512.png"
+    }
+  },
+  "url": "https://tokistorage.github.io/lp/custom-soap-guide.html",
+  "inLanguage": "ja",
+  "mainEntityOfPage": "https://tokistorage.github.io/lp/custom-soap-guide.html",
+  "description": "パールソープは贈与の入り口。カスタム形状ソープはシリコンモールド・シリコンパテ・金型・3Dプリンタ・レーザー刻印で、場に合わせて柔軟に対応できる。その技術と可能性を解説する。"
+}
+    </script>
+    <link rel="alternate" hreflang="ja" href="https://tokistorage.github.io/lp/custom-soap-guide.html">
+    <link rel="alternate" hreflang="en" href="https://tokistorage.github.io/lp/custom-soap-guide-en.html">
+    <link rel="alternate" hreflang="x-default" href="https://tokistorage.github.io/lp/custom-soap-guide.html">
+    <link rel="canonical" href="https://tokistorage.github.io/lp/custom-soap-guide.html">
+</head>
+<body>
+
+<nav class="article-nav">
+    <a href="index.html" class="nav-brand">トキストレージ</a>
+    <div class="nav-right">
+        <span class="nav-label">ものづくり / CRAFT</span>
+        <a href="custom-soap-guide-en.html" class="lang-switch">EN</a>
+    </div>
+</nav>
+
+<main class="article-container">
+
+    <header class="article-header">
+        <p class="article-category">ESSAY — ものづくりと贈与</p>
+        <h1>カスタム形状ソープの作り方<br>——贈与の入り口から、場に合わせた柔軟な対応へ</h1>
+        <p class="article-subtitle">
+            パールソープは「いてくれてありがとう」を伝える贈与の入り口。<br>
+            そこから先、場や相手に合わせたカスタム形状のソープへと広がる技術と可能性を解説する。
+        </p>
+    </header>
+
+    <article class="article-content">
+
+        <div class="core-message">
+            <strong>この記事で言いたいこと：</strong>パールソープは肉球形状という一つの「型」から始まる贈与の入り口である。しかし、贈る相手や場が変われば、形状も変わりうる。シリコンモールド、シリコンパテ、金型、3Dプリンタ、レーザー刻印——これらの技術を組み合わせることで、カスタム形状のソープは場に合わせて柔軟に対応できる。ただし、カスタム対応には個別の見積もりと調達が伴う。必要に応じてご相談いただきたい。
+        </div>
+
+        <p class="disclaimer">※本稿は制作技術の概要解説であり、特定の製品仕様を保証するものではありません。</p>
+
+
+        <h2>1. パールソープの作り方——贈与の原点</h2>
+
+        <p>すべては一つの石鹸から始まる。</p>
+
+        <p>パールソープは、MPソープベース（Melt &amp; Pour）を使った手作り石鹸だ。工程はシンプルで、特別な資格や設備は必要ない。</p>
+
+        <h3>基本工程</h3>
+
+        <ol>
+            <li><strong>溶かす</strong>——MPソープベースをミニフライパンで弱火にかけ、完全に液状にする</li>
+            <li><strong>着色する</strong>——食品安全グレードの着色料を少量加え、好みの色に調整する</li>
+            <li><strong>香りづけ</strong>——ココナッツエッセンシャルオイルを数滴加える</li>
+            <li><strong>流し込む</strong>——シリコン製の肉球モールドに静かに注ぐ</li>
+            <li><strong>固める</strong>——常温で10分程度置き、モールドから取り出す</li>
+            <li><strong>包装する</strong>——オーガンジー巾着袋に入れ、OPP袋で包む</li>
+        </ol>
+
+        <p>これだけである。5歳の子どもでも一緒に作れる。マウイ島の屋外でも作れた。場所を選ばず、誰でもできる——パールソープの原点はこのシンプルさにある。</p>
+
+        <p>肉球という形状は、愛犬Pearlへの想いから生まれた。しかし、この「形」は固定されたものではない。贈る場が変われば、形も変わる。</p>
+
+        <div class="key-point">
+            <p>パールソープの作り方の詳細は <a href="how-to-make.html" style="color: var(--toki-amber);">Pearl Soapの作り方</a> を参照。材料の入手先リンクも掲載している。</p>
+        </div>
+
+
+        <h2>2. カスタム形状の作り方——三つのアプローチ</h2>
+
+        <p>「肉球ではなく、別の形にしたい」——そう思ったとき、選べる方法は大きく三つある。</p>
+
+        <h3>A. シリコンモールド（既製品）</h3>
+
+        <p>最も手軽な方法。Amazonや手芸店で購入できるシリコンモールドを使う。花、動物、ハート、文字、幾何学模様——既製品のバリエーションは驚くほど豊富だ。</p>
+
+        <ul>
+            <li><strong>コスト</strong>：1,000〜3,000円程度</li>
+            <li><strong>リードタイム</strong>：数日（通販の配送時間）</li>
+            <li><strong>適する場面</strong>：季節のギフト、イベント記念品、ワークショップ</li>
+            <li><strong>制約</strong>：既存のデザインに限られる。完全オリジナルは作れない</li>
+        </ul>
+
+        <p>パールソープも、最初は市販のシリコンモールドから始まった。既製品で始めて、必要に応じてカスタムへと進む——段階的なアプローチが現実的だ。</p>
+
+        <h3>B. シリコンパテ（型取り）</h3>
+
+        <p>「この形を石鹸にしたい」という原型がある場合、シリコンパテで型取りする方法がある。二液混合型のシリコンパテを練り合わせ、原型を押し込んで硬化させると、オリジナルのモールドができる。</p>
+
+        <ul>
+            <li><strong>コスト</strong>：シリコンパテ 2,000〜5,000円程度（原型の制作費は別途）</li>
+            <li><strong>リードタイム</strong>：硬化に数時間〜1日</li>
+            <li><strong>適する場面</strong>：ロゴ入りソープ、企業ノベルティ、記念品</li>
+            <li><strong>制約</strong>：原型の精度がそのまま型の精度になる。細かいディテールの再現には限界がある</li>
+        </ul>
+
+        <p>シリコンパテの利点は、手元にある「もの」をそのまま型にできること。例えば、実際の肉球の型を取ることもできる。生きている間にしか取れない形がある。</p>
+
+        <h3>C. 金型（業務用）</h3>
+
+        <p>大量生産や高精度が求められる場合は、金属製の金型を使う。アルミやステンレスの金型は、シリコンモールドでは再現できない鋭いエッジやディテールを実現する。</p>
+
+        <ul>
+            <li><strong>コスト</strong>：数万円〜数十万円（サイズ・複雑さによる）</li>
+            <li><strong>リードタイム</strong>：数週間〜数ヶ月</li>
+            <li><strong>適する場面</strong>：大ロットの企業ノベルティ、ブランドグッズ</li>
+            <li><strong>制約</strong>：初期投資が大きい。小ロットには向かない</li>
+        </ul>
+
+        <p>金型は「何百個も同じものを作る」場面でこそ力を発揮する。逆に言えば、10個以下なら、シリコンモールドやシリコンパテのほうが合理的だ。</p>
+
+        <table class="method-table">
+            <thead>
+                <tr>
+                    <th>方法</th>
+                    <th>コスト</th>
+                    <th>リードタイム</th>
+                    <th>オリジナリティ</th>
+                    <th>適正ロット</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>シリコンモールド（既製品）</td>
+                    <td>低</td>
+                    <td>数日</td>
+                    <td>限定的</td>
+                    <td>1個〜</td>
+                </tr>
+                <tr>
+                    <td>シリコンパテ（型取り）</td>
+                    <td>中</td>
+                    <td>1〜2日</td>
+                    <td>高い</td>
+                    <td>1〜50個</td>
+                </tr>
+                <tr>
+                    <td>金型（業務用）</td>
+                    <td>高</td>
+                    <td>数週間〜</td>
+                    <td>非常に高い</td>
+                    <td>100個〜</td>
+                </tr>
+            </tbody>
+        </table>
+
+
+        <h2>3. 凹凸の表現——3Dプリンタとレーザー刻印機</h2>
+
+        <p>形状だけでなく、石鹸の表面に凹凸や模様を刻むことで、さらに個性的なソープを作ることができる。</p>
+
+        <h3>3Dプリンタによる原型制作</h3>
+
+        <p>3Dプリンタは、デジタルデータから立体物を出力する技術である。石鹸そのものを3Dプリントするのではなく、「原型」を3Dプリントし、それをシリコンパテで型取りするという使い方をする。</p>
+
+        <ul>
+            <li><strong>利点</strong>：CADデータがあれば、どんな形状でも原型を作れる。微細な凹凸、文字、ロゴ、キャラクターの立体表現が可能</li>
+            <li><strong>精度</strong>：FDM方式で0.1mm〜0.2mm、光造形（SLA/DLP）方式で0.025mm〜0.05mm</li>
+            <li><strong>適する表現</strong>：企業ロゴの立体化、記念日の刻印、名前入りソープ、建築物のミニチュア形状</li>
+        </ul>
+
+        <p>3Dプリンタの普及により、「頭の中にある形」をそのまま石鹸にできるようになった。ただし、3Dモデリングのスキル、または外注先の確保が必要になる。</p>
+
+        <h3>レーザー刻印機による表面加工</h3>
+
+        <p>レーザー刻印機は、固化した石鹸の表面にレーザーを照射し、文字や模様を直接彫り込む技術である。</p>
+
+        <ul>
+            <li><strong>利点</strong>：既存の石鹸に後から加工できる。モールドを作る必要がない</li>
+            <li><strong>精度</strong>：CO2レーザーで0.1mm程度の線幅が可能</li>
+            <li><strong>適する表現</strong>：名前、日付、メッセージ、QRコード、細密な模様</li>
+            <li><strong>制約</strong>：深い彫りには不向き。表面の浅い刻印に適する</li>
+        </ul>
+
+        <p>レーザー刻印の最大の魅力は、一個一個異なるメッセージを刻めることだ。「結婚式の引き出物に、ゲスト全員の名前入り石鹸を」——こうした要望に応えられる。</p>
+
+        <div class="key-point">
+            <p>3Dプリンタは「形そのもの」を自由に作り、レーザー刻印は「表面のディテール」を自由に加える。この二つを組み合わせることで、形状と表面の両方をカスタマイズできる。</p>
+        </div>
+
+
+        <h2>4. パールソープは贈与の入り口</h2>
+
+        <p>ここまでカスタム形状の技術を解説してきたが、重要なことがある。</p>
+
+        <p>パールソープは「カスタム形状ソープの一例」ではない。パールソープは「贈与の入り口」である。</p>
+
+        <p>パールソープの肉球形状は、愛犬Pearlとの18年間の歳月から生まれた。技術的にはMPソープベースと市販のシリコンモールドだけで作れる、もっともシンプルな手作り石鹸だ。しかし、このシンプルな石鹸が「いてくれてありがとう」という想いを伝える媒体として機能している。</p>
+
+        <p>贈与は技術の問題ではない。想いの問題だ。</p>
+
+        <p>パールソープを受け取った人は、ギフトエコノミーの循環に触れる。「見返りを求めない贈与」という体験は、受け手の中に何かを残す。それは記憶かもしれないし、「自分も誰かに何かを贈りたい」という気持ちかもしれない。</p>
+
+        <blockquote>
+            <p>「まず受け取る。次に手渡す。贈与の循環は、一個の石鹸から始まる。」</p>
+        </blockquote>
+
+        <p>パールソープは、その最初の一歩を担っている。</p>
+
+
+        <h2>5. カスタム形状は場に合わせて柔軟に対応できる</h2>
+
+        <p>パールソープの肉球形状は、ペットを愛する人に響く。しかし、すべての場で肉球が最適とは限らない。</p>
+
+        <h3>場に合わせた形状の例</h3>
+
+        <ul>
+            <li><strong>結婚式</strong>——新郎新婦のイニシャル入りハート型ソープ</li>
+            <li><strong>卒業式</strong>——校章や卒業年を刻んだ記念ソープ</li>
+            <li><strong>企業イベント</strong>——企業ロゴを立体化したノベルティソープ</li>
+            <li><strong>地域行事</strong>——地元のランドマークや特産品を模したソープ</li>
+            <li><strong>動物病院</strong>——来院するペットの足型を取った世界に一つの石鹸</li>
+            <li><strong>退職記念</strong>——社員の名前とメッセージをレーザー刻印したソープ</li>
+        </ul>
+
+        <p>形状が変わっても、「いてくれてありがとう」「ここにいたことを忘れない」という想いは変わらない。カスタム形状は、想いの表現方法を広げるためのものだ。</p>
+
+        <h3>技術の組み合わせ</h3>
+
+        <p>場面によって、最適な技術の組み合わせは異なる。</p>
+
+        <ul>
+            <li>少量でオリジナリティが必要なら：<strong>3Dプリンタ + シリコンパテ</strong></li>
+            <li>一個一個にメッセージを入れたいなら：<strong>既製モールド + レーザー刻印</strong></li>
+            <li>大量に統一品質で作りたいなら：<strong>金型</strong></li>
+            <li>ペットの足型を残したいなら：<strong>シリコンパテ（実物型取り）</strong></li>
+        </ul>
+
+        <p>正解は一つではない。場と想いに合わせて、最適な組み合わせを選ぶ。</p>
+
+
+        <h2>6. 対応はできるが、個別の見積もりと調達が伴う</h2>
+
+        <p>カスタム形状ソープの制作は、技術的には対応可能だ。しかし、正直に伝えなければならないことがある。</p>
+
+        <p>カスタム対応には、個別の見積もりと調達が伴う。</p>
+
+        <h3>なぜ「すぐに」対応できないのか</h3>
+
+        <ul>
+            <li><strong>原型の制作</strong>：3Dモデリングや原型制作には、デザインの打ち合わせと制作時間が必要</li>
+            <li><strong>モールドの製作</strong>：シリコンパテの硬化、金型の発注——それぞれ異なるリードタイムがある</li>
+            <li><strong>材料の調達</strong>：特殊な着色料、香料、包装材は、都度の調達になることがある</li>
+            <li><strong>試作と調整</strong>：初回は試作を繰り返し、品質を確認する工程がある</li>
+        </ul>
+
+        <p>パールソープのようにレシピが確立されたものは即座に制作できるが、カスタム形状は「ゼロから設計する」工程が加わる。そのぶん、時間とコストがかかる。</p>
+
+        <h3>見積もりに含まれるもの</h3>
+
+        <ul>
+            <li>デザイン・原型制作費</li>
+            <li>モールド・金型の製作費</li>
+            <li>材料費（ソープベース、着色料、香料、包装材）</li>
+            <li>制作費（手作業による制作工賃）</li>
+            <li>レーザー刻印費（該当する場合）</li>
+        </ul>
+
+        <p>これは「高いから頼めない」という話ではない。規模や仕様によって、数千円から対応できるケースもある。大切なのは、事前に相談することだ。</p>
+
+        <div class="key-point">
+            <p>カスタム形状ソープは「できるか、できないか」ではなく、「どう実現するか」を一緒に考えるプロセスである。まずは気軽にご相談いただきたい。</p>
+        </div>
+
+
+        <h2>結び——一個の石鹸から、無限の形へ</h2>
+
+        <p>パールソープは肉球一つの形から始まった。</p>
+
+        <p>その形は、愛犬Pearlへの「いてくれてありがとう」から生まれた。シンプルなMPソープベースと、市販のシリコンモールドと、ココナッツの香り。それだけで、贈与の循環は始まった。</p>
+
+        <p>カスタム形状は、その循環をさらに広げる。結婚式、卒業式、企業イベント、地域行事——場が変われば、形も変わる。シリコンパテで実物を型取りし、3Dプリンタでデジタルデータから原型を作り、レーザー刻印で一個一個に言葉を刻む。技術は想いの表現手段に過ぎない。</p>
+
+        <p>対応はできる。ただし、カスタムには個別の見積もりと調達が伴う。だからこそ、早めにご相談いただきたい。一緒に「どんな形が、この場にふさわしいか」を考える。そのプロセスこそが、贈与の設計である。</p>
+
+        <blockquote>
+            <p>「形は無限に変えられる。変わらないのは、贈る想いだ。」</p>
+        </blockquote>
+
+        <p>まずはパールソープから。その一個が、あなたの贈与の入り口になる。</p>
+
+        <p>カスタム形状についてのご相談は、お気軽にどうぞ。</p>
+
+        <p style="margin-top: 2rem;"><a href="pearl-soap.html" style="color: var(--toki-amber); font-weight: 500;">Pearl Soapについて &rarr;</a></p>
+        <p><a href="how-to-make.html" style="color: var(--toki-amber); font-weight: 500;">Pearl Soapの作り方 &rarr;</a></p>
+        <p><a href="workshop.html" style="color: var(--toki-amber); font-weight: 500;">ワークショップのご案内 &rarr;</a></p>
+
+    </article>
+
+    <footer class="article-footer">
+        <p>本稿は、カスタム形状ソープの技術と贈与の可能性についての概要解説です。</p>
+        <p id="essay-nav-links"></p>
+        <p style="margin-top: 2rem; font-size: 0.75rem;">&copy; 2026 TokiStorage. All rights reserved.</p>
+    </footer>
+
+</main>
+
+<script src="contact-form.js" defer></script>
+<script src="essay-tts.js?v=20260220"></script>
+<script src="essay-nav.js?v=20260220"></script>
+<script src="tracker.js" defer></script>
+</body>
+</html>
