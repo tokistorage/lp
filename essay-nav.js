@@ -85,6 +85,7 @@
     { id: 'self-print-economy', ja: 'セルフプリント経済圏', en: 'The Self-Print Economy', date: '2026-02-25' },
     { id: 'affiliate-transparency', ja: '紹介リンクの開示', en: 'Disclosure of Referral Links', date: '2026-02-27' },
     { id: 'soap-pitch', ja: '石鹸がエレベーターピッチを超えた日', en: 'The Day Soap Beat the Elevator Pitch', date: '2026-02-27' },
+    { id: 'testimonial-persistence', ja: 'テスティモニアルの永続化', en: 'The Persistence of Testimonials', date: '2026-03-02' },
 
     // ── 文化・社会活動 ──
     { id: 'education', ja: '教育', en: 'Education', date: '2026-02-13' },
@@ -186,6 +187,7 @@
   // LATEST_COUNT で表示件数を制御
   const LATEST_COUNT = 5;
   const latestEssayIds = [
+    'testimonial-persistence',
     'beyond-the-screen',
     'product-codes',
     'trust-guidelines',
@@ -286,6 +288,7 @@
     'self-print-economy':     ['free-strategy', 'uniform-pricing', 'payment', 'diy-partner', '30seconds'],
     'affiliate-transparency': ['burn-rate-zero', 'payment', 'openness', 'free-strategy', 'no-external-deps'],
     'soap-pitch': ['novelty-soap', 'gift-economy', 'monitor-program', 'customer-journey-transformation', 'narrative-trust'],
+    'testimonial-persistence': ['narrative-trust', 'what-to-leave', 'customer-journey-transformation', 'monitor-program', 'ceremony'],
     // ── 文化・社会活動 ──
     'education':              ['early-education', 'history', 'media', 'psychology', 'lifestyle'],
     'early-education':        ['education', 'recital-record', 'music', 'psychology', 'entertainment'],
