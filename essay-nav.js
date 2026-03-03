@@ -103,6 +103,7 @@
     { id: 'sports', ja: 'スポーツ', en: 'Sports', date: '2026-02-13' },
     { id: 'history', ja: '歴史学', en: 'History', date: '2026-02-13' },
     { id: 'wedding-partnership', ja: '結婚式という共創', en: 'Co-Creation in Weddings', date: '2026-02-23' },
+    { id: 'immigrant-burial-ecosystem', ja: '日系移民の納骨エコシステム', en: 'Immigrant Burial Ecosystem', date: '2026-03-03' },
 
     // ── 自然・宇宙 ──
     { id: 'animal-welfare', ja: '動物愛護', en: 'Animal Welfare', date: '2026-02-13' },
