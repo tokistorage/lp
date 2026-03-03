@@ -32,7 +32,8 @@ function handleMonitorFeedback(ss, data) {
     var newVoice = {
       wisetag: (data.wisetag || '').toString(),
       date: dateStr,
-      comment: (data.comment || '').toString().trim()
+      comment: (data.comment || '').toString().trim(),
+      track: (data.track || 'paid').toString()
     };
 
     // 年ファイルに追記
