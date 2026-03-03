@@ -90,6 +90,7 @@
     { id: 'group-event', ja: '10分で始まるグループイベント', en: 'The 10-Minute Group Event', date: '2026-03-02' },
     { id: 'wise-guide', ja: 'Wiseの始め方', en: 'Getting Started with Wise', date: '2026-03-03' },
     { id: 'entrepreneurship', ja: '起業家精神の変容', en: 'The Transformation of Entrepreneurship', date: '2026-03-03' },
+    { id: 'pearl-soap-roots', ja: 'パールソープが地域に根付くとき', en: 'When Pearl Soap Takes Root', date: '2026-03-03' },
 
     // ── 文化・社会活動 ──
     { id: 'education', ja: '教育', en: 'Education', date: '2026-02-13' },
@@ -196,6 +197,7 @@
   // LATEST_COUNT で表示件数を制御
   const LATEST_COUNT = 5;
   const latestEssayIds = [
+    'pearl-soap-roots',
     'embodied-oral',
     'kumihimo',
     'entrepreneurship',
@@ -271,9 +273,9 @@
     // ── 経済・財産 ──
     'industry':               ['consumption', 'organization', 'platform', 'ecosystem', 'disintermediation'],
     'consumption':            ['industry', 'satiation', 'gift-economy', 'novelty-soap', 'fragrance'],
-    'gift-economy':           ['consumption', 'sanpoyoshi', 'free-strategy', 'walking-partner', 'ceremony'],
-    'novelty-soap':           ['custom-soap-guide', 'fragrance', 'gift-economy', 'advertising', 'brochure-essay'],
-    'custom-soap-guide':      ['novelty-soap', 'gift-economy', 'fragrance', 'made-to-order', 'consumption'],
+    'gift-economy':           ['consumption', 'sanpoyoshi', 'free-strategy', 'pearl-soap-roots', 'ceremony'],
+    'novelty-soap':           ['custom-soap-guide', 'fragrance', 'gift-economy', 'advertising', 'pearl-soap-roots'],
+    'custom-soap-guide':      ['novelty-soap', 'gift-economy', 'fragrance', 'made-to-order', 'pearl-soap-roots'],
     'fragrance':              ['novelty-soap', 'custom-soap-guide', 'consumption', 'advertising', 'ecology'],
     'advertising':            ['brochure-essay', 'free-strategy', 'media', 'novelty-soap', 'price-acceptance'],
     'price-acceptance':       ['advertising', 'no-competition', 'brochure-essay', 'narrative-trust', 'framework'],
@@ -310,6 +312,7 @@
     'group-event': ['soap-pitch', 'monitor-program', 'gift-economy', 'customer-journey-transformation', 'novelty-soap'],
     'wise-guide': ['payment', 'affiliate-transparency', 'burn-rate-zero', 'monitor-program', 'partner-boundary'],
     'entrepreneurship': ['burn-rate-zero', 'ceremony', 'ecosystem', 'gift-economy', 'no-competition'],
+    'pearl-soap-roots':   ['novelty-soap', 'custom-soap-guide', 'gift-economy', 'fragrance', 'community-benefit'],
     // ── 文化・社会活動 ──
     'education':              ['early-education', 'history', 'media', 'psychology', 'lifestyle'],
     'early-education':        ['education', 'recital-record', 'music', 'psychology', 'entertainment'],
