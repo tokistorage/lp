@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" type="image/png" sizes="32x32" href="asset/favicon-32.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="asset/apple-touch-icon.png">
+    <title>信頼に基づく設計 | トキストレージ</title>
+    <meta name="robots" content="index, follow">
+    <meta name="description" content="フォールバックコードの公開からPWA復旧コンソールの実装、そしてtextContentバグの修正へ。意図していなかった信頼の三つの層が浮かび上がった体験の記録。">    <style>
+        :root {
+            --toki-blue: #2563EB;
+            --toki-blue-dark: #1E40AF;
+            --toki-blue-pale: #EFF6FF;
+            --accent-blue: #60A5FA;
+            --bg-white: #FFFFFF;
+            --text-primary: #1E293B;
+            --text-secondary: #475569;
+            --text-muted: #94A3B8;
+            --border: #E2E8F0;
+            --font-display: 'Hiragino Mincho ProN', 'Yu Mincho', serif;
+            --font-body: 'Hiragino Kaku Gothic ProN', 'Yu Gothic', 'Meiryo', sans-serif;
+        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        html { scroll-behavior: smooth; }
+        body { font-family: var(--font-body); font-weight: 400; background: var(--bg-white); color: var(--text-primary); line-height: 2; font-size: 16px; }
+
+        .article-nav { position: fixed; top: 0; left: 0; right: 0; z-index: 1000; background: rgba(255,255,255,0.95); backdrop-filter: blur(12px); border-bottom: 1px solid var(--border); padding: 0.6rem 1.2rem; display: flex; align-items: center; justify-content: space-between; gap: 1rem; }
+        .article-nav .nav-brand { font-family: var(--font-display); font-size: 0.9rem; font-weight: 600; color: var(--toki-blue); text-decoration: none; white-space: nowrap; }
+        .article-nav .nav-brand::before { content: ''; display: inline-block; width: 20px; height: 20px; background: url('asset/tokistorage-icon-512.png') no-repeat center / contain; vertical-align: -3px; margin-right: 5px; }
+        .article-nav .nav-right { display: flex; align-items: center; gap: 1rem; }
+        .article-nav .nav-label { font-size: 0.6rem; color: var(--text-muted); letter-spacing: 0.08em; }
+        .article-nav .lang-switch { font-size: 0.75rem; color: var(--toki-blue); text-decoration: none; padding: 0.3rem 0.6rem; border: 1px solid var(--toki-blue); border-radius: 4px; }
+        .article-nav .lang-switch:hover { background: var(--toki-blue); color: #fff; }
+
+        .article-container { max-width: 680px; margin: 0 auto; padding: 7rem 2rem 4rem; }
+        .article-header { margin-bottom: 3rem; padding-bottom: 2rem; border-bottom: 1px solid var(--border); }
+        .article-category { font-size: 0.7rem; color: var(--toki-blue); letter-spacing: 0.15em; margin-bottom: 1rem; }
+        .article-header h1 { font-family: var(--font-display); font-size: 1.8rem; font-weight: 700; line-height: 1.5; margin-bottom: 1.5rem; }
+        .article-subtitle { font-size: 0.95rem; color: var(--text-secondary); line-height: 1.9; }
+
+        .article-content h2 { font-family: var(--font-display); font-size: 1.3rem; font-weight: 600; margin: 3rem 0 1.5rem; padding-bottom: 0.5rem; border-bottom: 2px solid var(--toki-blue-pale); }
+        .article-content h3 { font-family: var(--font-display); font-size: 1.1rem; font-weight: 600; margin: 2rem 0 1rem; color: var(--toki-blue-dark); }
+        .article-content p { margin-bottom: 1.5rem; text-align: justify; }
+        .article-content blockquote { border-left: 3px solid var(--toki-blue); padding-left: 1.5rem; margin: 2rem 0; font-family: var(--font-display); color: var(--text-secondary); }
+        .article-content ul { margin: 1.5rem 0; padding-left: 1.5rem; }
+        .article-content li { margin-bottom: 0.75rem; }
+
+        .core-message { background: var(--toki-blue-pale); border-left: 4px solid var(--toki-blue); padding: 1.5rem; margin: 2rem 0; font-size: 0.95rem; line-height: 1.8; }
+        .key-point { background: linear-gradient(135deg, var(--toki-blue-pale) 0%, #fff 100%); border: 1px solid var(--accent-blue); border-radius: 8px; padding: 1.5rem; margin: 2rem 0; text-align: center; }
+        .key-point p { font-family: var(--font-display); font-size: 1.1rem; color: var(--toki-blue-dark); margin: 0; }
+
+        .article-footer { margin-top: 4rem; padding-top: 2rem; border-top: 1px solid var(--border); text-align: center; }
+        .article-footer p { font-size: 0.8rem; color: var(--text-muted); margin-bottom: 1rem; }
+        .article-footer a { color: var(--toki-blue); text-decoration: none; }
+        .article-footer a:hover { text-decoration: underline; }
+
+        @media (max-width: 768px) {
+            .article-container { padding: 6rem 1.2rem 3rem; }
+            .article-header h1 { font-size: 1.5rem; }
+            .article-nav .nav-label { display: none; }
+        }
+        @media print { .article-nav { display: none; } .article-container { padding-top: 2rem; } }
+    </style>
+</head>
+<body>
+
+<nav class="article-nav">
+    <a href="essays.html" class="nav-brand">トキストレージ</a>
+    <div class="nav-right">
+        <span class="nav-label">ESSAY</span>
+        <a href="trust-by-design-en.html" class="lang-switch">EN</a>
+    </div>
+</nav>
+
+<main class="article-container">
+    <header class="article-header">
+        <div class="article-category">信仰・思想</div>
+        <h1>信頼に基づく設計</h1>
+        <p class="article-subtitle">フォールバックコードの公開から復旧コンソールの実装、そしてバグ修正を経て見えた、意図していなかった信頼の三つの層。</p>
+    </header>
+
+    <article class="article-content">
+
+        <h2>フォールバックコードの公開</h2>
+
+        <p>利用ガイドラインの第8条「信頼に基づく設計」に、クレジット残高の確認コードとトークン履歴の確認コード、そして書き換えコードを公開した。千年の保管を掲げるサービスが、自社サーバーの存続を前提にしてはならない。サーバーが消えたあとも、ユーザーが自分のデータを確認し、必要であれば修正できる手段を残すこと。それが、永続性を約束するサービスの最低限の誠実さだと考えた。</p>
+
+        <p>コードはJavaScriptで書かれている。ブラウザの開発者ツールのConsoleに貼り付ければ動く。localStorageに保存されたクレジット残高やトークン履歴を読み出し、表示し、書き換える。技術的には何も難しくない。むしろ、サーバーサイドの認証を置かない設計だからこそ成り立つ、透明性の帰結だ。</p>
+
+        <h2>Consoleが使えない</h2>
+
+        <p>問題はすぐに明らかになった。TokiQRはPWAとしてインストールされる。standaloneモードで起動したとき、ブラウザの開発者ツールは開けない。アドレスバーもない。メニューもない。Consoleにアクセスする手段がない。</p>
+
+        <p>災害時を想定してほしい。スマートフォン一台しか手元にない。PCに繋いでリモートデバッグする環境もない。そもそもネットワークが断絶しているかもしれない。フォールバックコードが、フォールバックが必要な状況で使えない。手段は存在するが、到達できない。</p>
+
+        <div class="core-message">永続性を設計するなら、その復旧手段もまた、外部依存ゼロでなければならない。</div>
+
+        <h2>復旧コンソールを内蔵する</h2>
+
+        <p>答えは明快だった。開発者ツールが使えないなら、アプリの中にConsoleを作ればいい。textarea、evalボタン、出力エリア。外部ライブラリゼロ。150行で完結する復旧コンソールを、設定ページに埋め込んだ。</p>
+
+        <p>ユーザーは設定ページを開き、復旧コンソールのセクションを展開し、利用ガイドラインに記載されたコードを貼り付けて実行する。PWAのstandaloneモードでも、オフラインでも、どんな環境でも動く。ブラウザさえあれば完結する。</p>
+
+        <h2>リンクがそのまま表示された</h2>
+
+        <p>復旧コンソールの案内文に、設定ページへのリンクを含めた。利用ガイドラインの第8条に「設定ページの復旧コンソールをお使いください」と書き、設定ページへのリンクを埋め込んだ。ところが画面に表示されたのは、クリックできるリンクではなく、HTMLタグがそのまま文字列として現れた姿だった。</p>
+
+        <p><code>&lt;a href="settings.html"&gt;設定ページ&lt;/a&gt;</code> がそのまま画面に出ている。textContentで文字列を流し込んでいたからだ。textContentはHTMLをパースしない。タグを含む文字列はそのままテキストとして描画される。innerHTMLに修正して解決した。</p>
+
+        <h2>人間にだけ見える</h2>
+
+        <p>バグを直した直後、ふと気づいた。利用ガイドラインのフォールバックコードは、HTMLのソースコードには存在しない。i18n対応のために、すべてのテキストはJavaScriptで動的にレンダリングしている。HTMLの要素は空のままで、ページが読み込まれた後にJSがテキストを注入する。</p>
+
+        <p>つまり、クローラーやAIフェッチがHTMLを取得しても、フォールバックコードは見えない。ソースコードを静的に読んでも、空の要素しかない。JavaScriptを実行するブラウザ——すなわち、自分でページを開いた人間——にだけ、コードが表示される。</p>
+
+        <div class="key-point"><p>フォールバックコードは、人間がブラウザで開いたときにだけ現れる。</p></div>
+
+        <h2>三つの層</h2>
+
+        <p>振り返ると、信頼の設計には三つの層があった。</p>
+
+        <ul>
+            <li><strong>第一層：データをサーバーに預けない</strong>——すべてのデータはユーザーのブラウザに留まる。サーバーはデータにアクセスする手段を持たない。プライバシーの層。</li>
+            <li><strong>第二層：改変コードを公開する</strong>——クレジット残高の書き換えコードを利用ガイドラインに明記する。改ざんを不可能にするのではなく、改ざんの方法を開示する。透明性の層。</li>
+            <li><strong>第三層：人間にだけ見える</strong>——JSレンダリングにより、フォールバックコードはブラウザで開いた人間にだけ表示される。クローラーには空の要素しか見えない。意図せざる整合の層。</li>
+        </ul>
+
+        <p>第三層は設計時に意図したものではない。i18nのためにJSレンダリングを選んだ結果、偶然そうなっていた。多言語対応という実務的な判断が、結果として「コードを必要とする人間にだけコードが届く」という構造を生んでいた。</p>
+
+        <h2>信頼とは</h2>
+
+        <p>技術で縛るのではなく、可能であることを明示したうえで信じる。HMAC鍵をソースコードに公開する。改ざんを不可能にするのではなく、改ざんが可能であることを前提にして、それでもしないという関係を選ぶ。</p>
+
+        <p>これは性善説ではない。性善説は「人は善である」と仮定する。信頼に基づく設計は、善悪を仮定しない。手段を開示し、選択を委ね、その選択を受け入れる。監視しないことを選んだから、信頼を求める。</p>
+
+        <div class="core-message">改ざんを不可能にするのではなく、改ざんが可能であることを前提にして、それでもしないという関係を選ぶ。</div>
+
+        <h2>千年の射程</h2>
+
+        <p>サーバーは消える。企業は消える。法律も変わる。ドメインは失効し、APIは廃止され、認証基盤は跡形もなくなる。残るのは、コードとブラウザと、それを開く人間だけだ。</p>
+
+        <p>信頼に基づく設計とは、その最後の一人に向けて書くことである。千年後に誰かがこのコードを見つけたとき、サーバーに問い合わせる必要がなく、認証を通す必要がなく、ただブラウザで開けばすべてが動く。それが永続性の意味であり、信頼の意味だ。</p>
+
+        <blockquote>コードとブラウザと、それを開く人間。信頼に基づく設計は、その三者だけで完結する世界を書く。</blockquote>
+
+    </article>
+
+    <footer class="article-footer">
+        <p id="essay-nav-links"></p>
+        <p style="font-size: 0.75rem; color: var(--text-muted);">&copy; 2026 TokiStorage. All rights reserved.</p>
+    </footer>
+
+</main>
+
+<script src="essay-nav.js"></script>
+<script src="essay-tts.js"></script>
+</body>
+</html>
