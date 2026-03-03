@@ -105,6 +105,7 @@
     { id: 'history', ja: '歴史学', en: 'History', date: '2026-02-13' },
     { id: 'wedding-partnership', ja: '結婚式という共創', en: 'Co-Creation in Weddings', date: '2026-02-23' },
     { id: 'immigrant-burial-ecosystem', ja: '日系移民の納骨エコシステム', en: 'Immigrant Burial Ecosystem', date: '2026-03-03' },
+    { id: 'kumihimo', ja: '組紐', en: 'Kumihimo', date: '2026-03-03' },
 
     // ── 自然・宇宙 ──
     { id: 'animal-welfare', ja: '動物愛護', en: 'Animal Welfare', date: '2026-02-13' },
@@ -194,6 +195,7 @@
   // LATEST_COUNT で表示件数を制御
   const LATEST_COUNT = 5;
   const latestEssayIds = [
+    'kumihimo',
     'entrepreneurship',
     'wise-guide',
     'pwa-implementation-guide',
@@ -311,7 +313,7 @@
     'early-education':        ['education', 'recital-record', 'music', 'psychology', 'entertainment'],
     'media':                  ['entertainment', 'advertising', 'platform', 'history', 'openness'],
     'entertainment':          ['media', 'music', 'art', 'sports', 'tourism'],
-    'art':                    ['music', 'hands', 'entertainment', 'preserving-words', 'history'],
+    'art':                    ['music', 'hands', 'entertainment', 'preserving-words', 'kumihimo'],
     'music':                  ['copyright-jasrac', 'art', 'entertainment', '30seconds', 'recital-record'],
     'community-benefit':      ['sanpoyoshi', 'hyoutanjima', 'walking-partner', 'ecology', 'rural-workaway'],
     'tourism':                ['commemorative-photo', 'urayasu', 'hyoutanjima', 'sports', 'entertainment'],
@@ -319,6 +321,7 @@
     'sports':                 ['entertainment', 'tourism', 'education', 'adversity', 'lifestyle'],
     'history':                ['national-record', 'preserving-words', 'geology', 'education', 'akashic-record'],
     'wedding-partnership':    ['ceremony', 'commemorative-photo', 'community-benefit', 'what-to-leave', 'partner-boundary'],
+    'kumihimo':               ['art', 'hands', 'rural-workaway', 'history', 'ceremony'],
     // ── 自然・宇宙 ──
     'animal-welfare':         ['ecology', 'esg', 'turtle', 'peace', 'sdgs'],
     'ecology':                ['animal-welfare', 'sdgs', 'esg', 'geology', 'rural-workaway'],
@@ -328,13 +331,13 @@
     'urayasu':                ['hyoutanjima', 'realestate', 'geology', 'tourism', 'ecology'],
     'hyoutanjima':            ['urayasu', 'dimension', 'geology', 'space', 'ecology'],
     'space':                  ['dimension', 'geology', 'hyoutanjima', 'akashic-record', 'future'],
-    'rural-workaway':         ['ecology', 'community-benefit', 'independence', 'sdgs', 'post-nomad'],
+    'rural-workaway':         ['ecology', 'community-benefit', 'independence', 'sdgs', 'kumihimo'],
     // ── 技術・設計 ──
     'coach':                  ['chief-timeless', 'perspective', 'future', 'backcasting', 'departure'],
     'future':                 ['vibe-coding', 'coach', 'api-transformation', 'perspective', 'chief-timeless'],
     'perspective':            ['coach', 'chief-timeless', 'backcasting', 'philosophy', 'decision-maker'],
     'chief-timeless':         ['coach', 'perspective', 'future', 'decision-maker', 'departure'],
-    'hands':                  ['departure', 'legacy', 'deposition', 'art', 'preserving-words'],
+    'hands':                  ['departure', 'legacy', 'deposition', 'art', 'kumihimo'],
     'departure':              ['legacy', 'openness', 'hands', 'no-competition', 'headhunter'],
     'openness':               ['akashic-record', 'legacy', 'departure', 'ssdlc', 'what-is-github'],
     'akashic-record':         ['openness', 'legacy', 'national-record', 'dimension', 'preserving-words'],
