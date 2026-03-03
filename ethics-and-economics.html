@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" type="image/png" sizes="32x32" href="asset/favicon-32.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="asset/apple-touch-icon.png">
+    <title>倫理と経済の歪み | トキストレージ</title>
+    <meta name="robots" content="index, follow">
+    <meta name="description" content="倫理は普遍を語る。しかし経済が絡んだ瞬間、その普遍は条件付きになる。この構造的な歪みに対して、設計で応答する試み。">    <style>
+        :root {
+            --toki-blue: #2563EB;
+            --toki-blue-dark: #1E40AF;
+            --toki-blue-pale: #EFF6FF;
+            --accent-blue: #60A5FA;
+            --bg-white: #FFFFFF;
+            --text-primary: #1E293B;
+            --text-secondary: #475569;
+            --text-muted: #94A3B8;
+            --border: #E2E8F0;
+            --font-display: 'Hiragino Mincho ProN', 'Yu Mincho', serif;
+            --font-body: 'Hiragino Kaku Gothic ProN', 'Yu Gothic', 'Meiryo', sans-serif;
+        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        html { scroll-behavior: smooth; }
+        body { font-family: var(--font-body); font-weight: 400; background: var(--bg-white); color: var(--text-primary); line-height: 2; font-size: 16px; }
+
+        .article-nav { position: fixed; top: 0; left: 0; right: 0; z-index: 1000; background: rgba(255,255,255,0.95); backdrop-filter: blur(12px); border-bottom: 1px solid var(--border); padding: 0.6rem 1.2rem; display: flex; align-items: center; justify-content: space-between; gap: 1rem; }
+        .article-nav .nav-brand { font-family: var(--font-display); font-size: 0.9rem; font-weight: 600; color: var(--toki-blue); text-decoration: none; white-space: nowrap; }
+        .article-nav .nav-brand::before { content: ''; display: inline-block; width: 20px; height: 20px; background: url('asset/tokistorage-icon-512.png') no-repeat center / contain; vertical-align: -3px; margin-right: 5px; }
+        .article-nav .nav-right { display: flex; align-items: center; gap: 1rem; }
+        .article-nav .nav-label { font-size: 0.6rem; color: var(--text-muted); letter-spacing: 0.08em; }
+        .article-nav .lang-switch { font-size: 0.75rem; color: var(--toki-blue); text-decoration: none; padding: 0.3rem 0.6rem; border: 1px solid var(--toki-blue); border-radius: 4px; }
+        .article-nav .lang-switch:hover { background: var(--toki-blue); color: #fff; }
+
+        .article-container { max-width: 680px; margin: 0 auto; padding: 7rem 2rem 4rem; }
+        .article-header { margin-bottom: 3rem; padding-bottom: 2rem; border-bottom: 1px solid var(--border); }
+        .article-category { font-size: 0.7rem; color: var(--toki-blue); letter-spacing: 0.15em; margin-bottom: 1rem; }
+        .article-header h1 { font-family: var(--font-display); font-size: 1.8rem; font-weight: 700; line-height: 1.5; margin-bottom: 1.5rem; }
+        .article-subtitle { font-size: 0.95rem; color: var(--text-secondary); line-height: 1.9; }
+
+        .article-content h2 { font-family: var(--font-display); font-size: 1.3rem; font-weight: 600; margin: 3rem 0 1.5rem; padding-bottom: 0.5rem; border-bottom: 2px solid var(--toki-blue-pale); }
+        .article-content h3 { font-family: var(--font-display); font-size: 1.1rem; font-weight: 600; margin: 2rem 0 1rem; color: var(--toki-blue-dark); }
+        .article-content p { margin-bottom: 1.5rem; text-align: justify; }
+        .article-content blockquote { border-left: 3px solid var(--toki-blue); padding-left: 1.5rem; margin: 2rem 0; font-family: var(--font-display); color: var(--text-secondary); }
+        .article-content ul { margin: 1.5rem 0; padding-left: 1.5rem; }
+        .article-content li { margin-bottom: 0.75rem; }
+
+        .core-message { background: var(--toki-blue-pale); border-left: 4px solid var(--toki-blue); padding: 1.5rem; margin: 2rem 0; font-size: 0.95rem; line-height: 1.8; }
+        .key-point { background: linear-gradient(135deg, var(--toki-blue-pale) 0%, #fff 100%); border: 1px solid var(--accent-blue); border-radius: 8px; padding: 1.5rem; margin: 2rem 0; text-align: center; }
+        .key-point p { font-family: var(--font-display); font-size: 1.1rem; color: var(--toki-blue-dark); margin: 0; }
+
+        .disclaimer { background: #F8FAFC; border: 1px solid var(--border); border-radius: 6px; padding: 1rem 1.2rem; margin: 2rem 0; font-size: 0.85rem; color: var(--text-secondary); line-height: 1.8; }
+
+        .article-footer { margin-top: 4rem; padding-top: 2rem; border-top: 1px solid var(--border); text-align: center; }
+        .article-footer p { font-size: 0.8rem; color: var(--text-muted); margin-bottom: 1rem; }
+        .article-footer a { color: var(--toki-blue); text-decoration: none; }
+        .article-footer a:hover { text-decoration: underline; }
+
+        @media (max-width: 768px) {
+            .article-container { padding: 6rem 1.2rem 3rem; }
+            .article-header h1 { font-size: 1.5rem; }
+            .article-nav .nav-label { display: none; }
+        }
+        @media print { .article-nav { display: none; } .article-container { padding-top: 2rem; } }
+    </style>
+</head>
+<body>
+
+<nav class="article-nav">
+    <a href="essays.html" class="nav-brand">トキストレージ</a>
+    <div class="nav-right">
+        <span class="nav-label">ESSAY</span>
+        <a href="ethics-and-economics-en.html" class="lang-switch">EN</a>
+    </div>
+</nav>
+
+<main class="article-container">
+    <header class="article-header">
+        <div class="article-category">信仰・思想</div>
+        <h1>倫理と経済の歪み</h1>
+        <p class="article-subtitle">倫理は普遍を語る。しかし経済が絡んだ瞬間、その普遍は条件付きになる。この構造的な歪みに対して、設計で応答する試み。</p>
+    </header>
+
+    <article class="article-content">
+
+        <div class="disclaimer">本稿は特定の宗教・団体・伝統を批判する意図を持ちません。倫理と経済が交差する場面で生じる構造的な緊張を、筆者の個人的な経験に基づいて観察したものです。</div>
+
+        <h2>倫理の普遍性</h2>
+
+        <p>倫理は本来、普遍を志向する。「こう生きるべき」という問いに対して、条件を付けない。貧富、地位、出自を問わず、すべての人間に等しく向けられた指針であるからこそ、倫理は倫理たりうる。</p>
+
+        <p>宗教もまた、教えの核心においては同じ構造を持つ。慈悲、隣人愛、利他。これらは万人に向けられた言葉であり、対象を限定しない。限定した瞬間に、それは教えではなく契約になる。</p>
+
+        <h2>経済が絡む瞬間</h2>
+
+        <p>しかし現実には、倫理の伝達と維持にはコストがかかる。場所が要る。人が要る。教材が要る。そのコストを誰かが負担しなければならない以上、経済は必ず絡む。</p>
+
+        <p>問題は、コストの回収が構造に組み込まれた瞬間に起きる。「こう生きるべき」が「こう生きるべき、ただし参加費を払える人は」に変わる。教えの普遍性が、課金の瞬間に条件付きになる。</p>
+
+        <div class="core-message">倫理が普遍を語りながら、その入口に経済的な条件を置くとき、構造的な歪みが生まれる。</div>
+
+        <h2>歴史が抱えてきた構造</h2>
+
+        <p>この歪みは新しいものではない。宗教の歴史は、倫理と経済の緊張関係の歴史でもある。</p>
+
+        <p>中世ヨーロッパの免罪符は、救済を経済取引に変換した極端な事例として知られている。日本の仏教における戒名制度には、名前の格付けと布施の額が対応するという慣習が存在する。神社仏閣への奉納は「任意」とされながらも、社会的な期待や格付けと無縁ではない。</p>
+
+        <p>これらの仕組みには、それぞれの歴史的文脈と正当性がある。寺院や神社の維持管理、宗教者の生活、文化財の保存。経済的な基盤なしに継続できないのは事実だ。問題はその仕組み自体ではなく、経済が倫理へのアクセスを事実上制限するという構造が生まれうることにある。</p>
+
+        <h2>会費制という直接的なゲート</h2>
+
+        <p>現代には、倫理的な学びを会費制で提供する団体がある。毎月の会費を納めることで、倫理に関する講話や研修に参加できる。組織としての持続可能性を担保するために、会費という仕組みが選ばれている。</p>
+
+        <p>会費制の合理性は理解できる。無料では運営が成り立たない。しかし、会費制は宗教的な奉納と比べてさらに直接的に経済がゲートになる。奉納には「任意」という建前があるが、会費には明確な入口がある。払えなければ、入れない。</p>
+
+        <p>筆者自身、神社仏閣への奉納や会費制団体への参加を通じて、この構造を内側から経験してきた。どちらにも価値があった。しかし同時に、「この教えに触れるために経済的な条件があるのは、教えの性質と矛盾していないか」という問いが消えなかった。</p>
+
+        <div class="key-point"><p>教えが万人に向けられているなら、入口も万人に開かれているべきではないか。</p></div>
+
+        <h2>絡ませない設計</h2>
+
+        <p>では、倫理と経済が絡むと歪むなら、絡ませなければいい。</p>
+
+        <p>TokiStorageの<a href="trust-by-design.html" style="color: var(--toki-blue); text-decoration: none; border-bottom: 1px solid var(--accent-blue);">信頼に基づく設計</a>は、この問いに対する一つの応答になっている。HMAC鍵をソースコードに公開する。改ざんコードを利用ガイドラインに記載する。55,000円相当のサービスのアクティベイトコードを、誰でも読めるページにそのまま掲載する。</p>
+
+        <p>経済的な縛りで信頼を担保するのではなく、すべてを開示したうえで人間の選択に委ねる。「払える人だけがアクセスできる」のではなく、万人に道が開かれた状態で、自分の意思で選ぶ。</p>
+
+        <p>これは技術的な設計であると同時に、倫理的な設計でもある。経済をゲートにしないことで、倫理の普遍性を構造として保つ。</p>
+
+        <h2>千年後の風景</h2>
+
+        <p>千年後を想像する。サーバーは消えている。企業も消えている。課金インフラは跡形もない。千年後の世界は、課金で信頼を担保する仕組みそのものが存在しない世界だ。</p>
+
+        <p>そのとき残るのは、コードとブラウザと、それを開く人間だけだ。そこに経済的なゲートはない。万人に開かれた道だけがある。</p>
+
+        <p>今この瞬間の設計が、千年後の構造と同じであるということ。それは偶然ではなく、経済を介在させない設計が、結果として時間に対してもっとも堅牢だったということだ。</p>
+
+        <div class="core-message">経済を介在させない設計は、倫理の普遍性を守るだけでなく、時間に対してもっとも堅牢な構造を持つ。</div>
+
+        <h2>歪まない場所</h2>
+
+        <p>倫理と経済の歪みは、人類が繰り返し直面してきた問題であり、簡単に解ける問いではない。組織の維持に経済が必要であることは否定できないし、そのための仕組みにはそれぞれの正当性がある。</p>
+
+        <p>しかし少なくとも、設計によって歪みを最小化することはできる。入口に経済的な条件を置かない。改ざんを不可能にするのではなく、改ざんが可能であることを明示したうえで選択を委ねる。信頼を課金で買うのではなく、開示で築く。</p>
+
+        <blockquote>倫理が語る普遍を、設計が裏切らない場所をつくる。それが、経済と倫理を絡ませない設計の意味だ。</blockquote>
+
+    </article>
+
+    <footer class="article-footer">
+        <p id="essay-nav-links"></p>
+        <p style="font-size: 0.75rem; color: var(--text-muted);">&copy; 2026 TokiStorage. All rights reserved.</p>
+    </footer>
+
+</main>
+
+<script src="essay-nav.js"></script>
+<script src="essay-tts.js"></script>
+</body>
+</html>

@@ -39,6 +39,7 @@
     { id: 'dimension', ja: '5次元という視点', en: 'The Fifth Dimension', date: '2026-02-13' },
     { id: 'shiseikan', ja: '死生観の醸成', en: 'Cultivating a View of Life & Death', date: '2026-02-14' },
     { id: 'trust-by-design', ja: '信頼に基づく設計', en: 'Designed on Trust', date: '2026-03-04' },
+    { id: 'ethics-and-economics', ja: '倫理と経済の歪み', en: 'When Ethics Meets Economics', date: '2026-03-04' },
 
     // ── 社会制度（小→大）──
     { id: 'organization', ja: '組織', en: 'Organizations', date: '2026-02-13' },
@@ -198,6 +199,7 @@
   // LATEST_COUNT で表示件数を制御
   const LATEST_COUNT = 5;
   const latestEssayIds = [
+    'ethics-and-economics',
     'trust-by-design',
     'pearl-soap-roots',
     'embodied-oral',
@@ -264,7 +266,8 @@
     'existentialism':         ['philosophy', 'religion', 'dimension', 'shiseikan', 'burn-rate-zero'],
     'dimension':              ['existentialism', 'akashic-record', 'space', 'religion', 'hyoutanjima'],
     'shiseikan':              ['lifecycle', 'religion', 'what-to-leave', 'existentialism', 'dimension'],
-    'trust-by-design':        ['trust-guidelines', 'narrative-trust', 'patent-departure', 'openness', 'restoration-architecture'],
+    'trust-by-design':        ['ethics-and-economics', 'trust-guidelines', 'narrative-trust', 'patent-departure', 'openness'],
+    'ethics-and-economics':   ['trust-by-design', 'religion', 'existentialism', 'gift-economy', 'openness'],
     // ── 社会制度 ──
     'organization':           ['government', 'boundary', 'enterprise-architecture', 'meiwaku', 'industry'],
     'government':             ['organization', 'nation', 'election', 'strategy', 'national-record'],
