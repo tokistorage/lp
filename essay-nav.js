@@ -89,6 +89,7 @@
     { id: 'testimonial-persistence', ja: 'テスティモニアルの永続化', en: 'The Persistence of Testimonials', date: '2026-03-02' },
     { id: 'group-event', ja: '10分で始まるグループイベント', en: 'The 10-Minute Group Event', date: '2026-03-02' },
     { id: 'wise-guide', ja: 'Wiseの始め方', en: 'Getting Started with Wise', date: '2026-03-03' },
+    { id: 'entrepreneurship', ja: '起業家精神の変容', en: 'The Transformation of Entrepreneurship', date: '2026-03-03' },
 
     // ── 文化・社会活動 ──
     { id: 'education', ja: '教育', en: 'Education', date: '2026-02-13' },
@@ -192,6 +193,7 @@
   // LATEST_COUNT で表示件数を制御
   const LATEST_COUNT = 5;
   const latestEssayIds = [
+    'entrepreneurship',
     'wise-guide',
     'pwa-implementation-guide',
     'rural-workaway',
@@ -241,7 +243,7 @@
     // ── 人生の節目 ──
     'lifecycle':              ['shiseikan', 'ceremony', 'what-to-leave', 'pathology', 'transformation-journey'],
     'adversity':              ['lifecycle', 'backcasting', 'integrity', 'pathology', 'headhunter'],
-    'ceremony':               ['lifecycle', 'what-to-leave', 'recital-record', 'shiseikan', 'religion'],
+    'ceremony':               ['lifecycle', 'what-to-leave', 'recital-record', 'shiseikan', 'entrepreneurship'],
     'recital-record':         ['ceremony', 'early-education', 'playground-gift', 'commemorative-photo', 'music'],
     'playground-gift':        ['recital-record', 'gift-economy', 'ceremony', 'what-to-leave', 'early-education'],
     'lifestyle':              ['independence', 'solitude', 'burn-rate-zero', 'post-nomad', 'backcasting'],
@@ -279,7 +281,7 @@
     'platform':               ['no-competition', 'ecosystem', 'disintermediation', 'api-transformation', 'global-niche'],
     'global-niche':           ['no-competition', 'platform', 'global', 'global-honbinos', 'headhunter'],
     'global-honbinos':        ['global-niche', 'global', 'sanpoyoshi', 'ecology', 'turtle'],
-    'ecosystem':              ['platform', 'sanpoyoshi', 'no-competition', 'disintermediation', 'product-codes'],
+    'ecosystem':              ['platform', 'sanpoyoshi', 'no-competition', 'disintermediation', 'entrepreneurship'],
     'free-strategy':          ['burn-rate-zero', 'sanpoyoshi', 'no-competition', 'gift-economy', 'advertising'],
     'brochure-essay':         ['advertising', 'free-strategy', 'novelty-soap', 'why-essays', 'choosing-not-to-choose'],
     'choosing-not-to-choose': ['brochure-essay', 'free-strategy', 'narrative-trust', 'openness', 'headhunter'],
@@ -290,7 +292,7 @@
     'disintermediation':      ['platform', 'ecosystem', 'industry', 'api-transformation', 'walking-partner'],
     'walking-partner':        ['sanpoyoshi', 'partner-boundary', 'global-honbinos', 'gift-economy', 'disintermediation'],
     'sanpoyoshi':             ['walking-partner', 'partner-boundary', 'ecosystem', 'free-strategy', 'gift-economy'],
-    'burn-rate-zero':         ['vibe-coding', 'rapid-prototyping', 'migration', 'free-strategy', 'headhunter'],
+    'burn-rate-zero':         ['vibe-coding', 'rapid-prototyping', 'migration', 'free-strategy', 'entrepreneurship'],
     'uniform-pricing':        ['price-acceptance', 'free-strategy', 'storage-strategy', 'sanpoyoshi', 'openness'],
     'framework':              ['burn-rate-zero', 'no-competition', 'enterprise-architecture', 'price-acceptance', 'product-codes'],
     'prime-location':         ['realestate', 'post-nomad', 'utilization-productivity', 'urayasu', 'site-geology'],
@@ -302,6 +304,7 @@
     'testimonial-persistence': ['narrative-trust', 'what-to-leave', 'customer-journey-transformation', 'monitor-program', 'ceremony'],
     'group-event': ['soap-pitch', 'monitor-program', 'gift-economy', 'customer-journey-transformation', 'novelty-soap'],
     'wise-guide': ['payment', 'affiliate-transparency', 'burn-rate-zero', 'monitor-program', 'partner-boundary'],
+    'entrepreneurship': ['burn-rate-zero', 'ceremony', 'ecosystem', 'gift-economy', 'no-competition'],
     // ── 文化・社会活動 ──
     'education':              ['early-education', 'history', 'media', 'psychology', 'lifestyle'],
     'early-education':        ['education', 'recital-record', 'music', 'psychology', 'entertainment'],
