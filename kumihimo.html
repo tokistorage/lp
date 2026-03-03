@@ -1,0 +1,247 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" type="image/png" sizes="32x32" href="asset/favicon-32.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="asset/apple-touch-icon.png">
+    <title>組紐——糸が編む持続可能性の問い | トキストレージ</title>
+    <meta name="robots" content="index, follow">
+    <meta name="description" content="組紐という日本の伝統工芸から、機械化・サプライチェーン・電力依存・後継者問題・素材選択・保存手段を考察する。糸が編むのは紐だけではない。持続可能性という問いそのものである。">    <style>
+        :root {
+            --toki-blue: #2563EB;
+            --toki-blue-dark: #1E40AF;
+            --toki-blue-pale: #EFF6FF;
+            --accent-blue: #60A5FA;
+            --bg-white: #FFFFFF;
+            --text-primary: #1E293B;
+            --text-secondary: #475569;
+            --text-muted: #94A3B8;
+            --border: #E2E8F0;
+            --font-display: 'Hiragino Mincho ProN', 'Yu Mincho', serif;
+            --font-body: 'Hiragino Kaku Gothic ProN', 'Yu Gothic', 'Meiryo', sans-serif;
+        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        html { scroll-behavior: smooth; }
+        body { font-family: var(--font-body); font-weight: 400; background: var(--bg-white); color: var(--text-primary); line-height: 2; font-size: 16px; }
+
+        .article-nav { position: fixed; top: 0; left: 0; right: 0; z-index: 1000; background: rgba(255,255,255,0.95); backdrop-filter: blur(12px); border-bottom: 1px solid var(--border); padding: 0.6rem 1.2rem; display: flex; align-items: center; justify-content: space-between; gap: 1rem; }
+        .article-nav .nav-brand { font-family: var(--font-display); font-size: 0.9rem; font-weight: 600; color: var(--toki-blue); text-decoration: none; white-space: nowrap; }
+        .article-nav .nav-brand::before { content: ''; display: inline-block; width: 20px; height: 20px; background: url('asset/tokistorage-icon-512.png') no-repeat center / contain; vertical-align: -3px; margin-right: 5px; }
+        .article-nav .nav-right { display: flex; align-items: center; gap: 1rem; }
+        .article-nav .nav-label { font-size: 0.6rem; color: var(--text-muted); letter-spacing: 0.08em; }
+        .article-nav .lang-switch { font-size: 0.75rem; color: var(--toki-blue); text-decoration: none; padding: 0.3rem 0.6rem; border: 1px solid var(--toki-blue); border-radius: 4px; }
+        .article-nav .lang-switch:hover { background: var(--toki-blue); color: #fff; }
+
+        .article-container { max-width: 680px; margin: 0 auto; padding: 7rem 2rem 4rem; }
+        .article-header { margin-bottom: 3rem; padding-bottom: 2rem; border-bottom: 1px solid var(--border); }
+        .article-category { font-size: 0.7rem; color: var(--toki-blue); letter-spacing: 0.15em; margin-bottom: 1rem; }
+        .article-header h1 { font-family: var(--font-display); font-size: 1.8rem; font-weight: 700; line-height: 1.5; margin-bottom: 1.5rem; }
+        .article-subtitle { font-size: 0.95rem; color: var(--text-secondary); line-height: 1.9; }
+
+        .article-content h2 { font-family: var(--font-display); font-size: 1.3rem; font-weight: 600; margin: 3rem 0 1.5rem; padding-bottom: 0.5rem; border-bottom: 2px solid var(--toki-blue-pale); }
+        .article-content h3 { font-family: var(--font-display); font-size: 1.1rem; font-weight: 600; margin: 2rem 0 1rem; color: var(--toki-blue-dark); }
+        .article-content p { margin-bottom: 1.5rem; text-align: justify; }
+        .article-content blockquote { border-left: 3px solid var(--toki-blue); padding-left: 1.5rem; margin: 2rem 0; font-family: var(--font-display); color: var(--text-secondary); }
+        .article-content ul { margin: 1.5rem 0; padding-left: 1.5rem; }
+        .article-content li { margin-bottom: 0.75rem; }
+
+        .core-message { background: var(--toki-blue-pale); border-left: 4px solid var(--toki-blue); padding: 1.5rem; margin: 2rem 0; font-size: 0.95rem; line-height: 1.8; }
+        .key-point { background: linear-gradient(135deg, var(--toki-blue-pale) 0%, #fff 100%); border: 1px solid var(--accent-blue); border-radius: 8px; padding: 1.5rem; margin: 2rem 0; text-align: center; }
+        .key-point p { font-family: var(--font-display); font-size: 1.1rem; color: var(--toki-blue-dark); margin: 0; }
+
+        .article-footer { margin-top: 4rem; padding-top: 2rem; border-top: 1px solid var(--border); text-align: center; }
+        .article-footer p { font-size: 0.8rem; color: var(--text-muted); margin-bottom: 1rem; }
+        .article-footer a { color: var(--toki-blue); text-decoration: none; }
+        .article-footer a:hover { text-decoration: underline; }
+
+        @media (max-width: 768px) {
+            .article-container { padding: 6rem 1.2rem 3rem; }
+            .article-header h1 { font-size: 1.5rem; }
+            .article-nav .nav-label { display: none; }
+        }
+        @media print { .article-nav { display: none; } .article-container { padding-top: 2rem; } }
+    </style>
+    <meta property="og:type" content="article">
+    <meta property="og:title" content="組紐——糸が編む持続可能性の問い | トキストレージ">
+    <meta property="og:description" content="組紐という日本の伝統工芸から、機械化・サプライチェーン・電力依存・後継者問題・素材選択・保存手段を考察する。">
+    <meta property="og:url" content="https://tokistorage.github.io/lp/kumihimo.html">
+    <meta property="og:site_name" content="トキストレージ">
+    <meta name="twitter:card" content="summary">
+    <meta name="twitter:title" content="組紐——糸が編む持続可能性の問い | トキストレージ">
+    <meta name="twitter:description" content="組紐という日本の伝統工芸から、機械化・サプライチェーン・電力依存・後継者問題・素材選択・保存手段を考察する。">
+    <meta property="og:image" content="https://tokistorage.github.io/lp/asset/tokistorage-icon-512.png">
+    <meta property="og:image:width" content="512">
+    <meta property="og:image:height" content="512">
+    <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Article",
+  "headline": "組紐——糸が編む持続可能性の問い",
+  "author": {
+    "@type": "Person",
+    "name": "Takuya Sato",
+    "url": "https://tokistorage.github.io/lp/profile.html"
+  },
+  "publisher": {
+    "@type": "Organization",
+    "name": "TokiStorage",
+    "url": "https://tokistorage.github.io/lp",
+    "logo": {
+      "@type": "ImageObject",
+      "url": "https://tokistorage.github.io/lp/asset/tokistorage-icon-512.png"
+    }
+  },
+  "url": "https://tokistorage.github.io/lp/kumihimo.html",
+  "inLanguage": "ja",
+  "mainEntityOfPage": "https://tokistorage.github.io/lp/kumihimo.html",
+  "description": "組紐という日本の伝統工芸から、機械化・サプライチェーン・電力依存・後継者問題・素材選択・保存手段を考察する。糸が編むのは紐だけではない。持続可能性という問いそのものである。"
+}
+    </script>
+    <link rel="alternate" hreflang="ja" href="https://tokistorage.github.io/lp/kumihimo.html">
+    <link rel="alternate" hreflang="en" href="https://tokistorage.github.io/lp/kumihimo-en.html">
+    <link rel="alternate" hreflang="x-default" href="https://tokistorage.github.io/lp/kumihimo.html">
+    <link rel="canonical" href="https://tokistorage.github.io/lp/kumihimo.html">
+</head>
+<body>
+
+<nav class="article-nav">
+    <a href="essays.html" class="nav-brand">トキストレージ</a>
+    <div class="nav-right">
+        <span class="nav-label">ESSAY</span>
+        <a href="kumihimo-en.html" class="lang-switch">EN</a>
+    </div>
+</nav>
+
+<main class="article-container">
+    <header class="article-header">
+        <div class="article-category">文化・社会活動</div>
+        <h1>組紐<br>——糸が編む持続可能性の問い</h1>
+        <p class="article-subtitle">
+            何百本もの絹糸が、人の手で交差し、一本の紐になる。<br>
+            その営みが今、機械化・電力依存・後継者不在・素材の代替という<br>
+            複数の断層に同時に直面している。
+        </p>
+    </header>
+
+    <article class="article-content">
+
+        <div class="core-message">
+            <strong>この記事で言いたいこと：</strong>組紐は「美しい紐を作る技術」ではない。素材の選定、身体知の継承、エネルギー依存、サプライチェーンの脆弱性——あらゆる持続可能性の問いが、数十センチの紐の中に凝縮されている。そしてWorkawayのような仕組みが、この問いに新しい解を提示しうる。
+        </div>
+
+        <h2>組紐という伝統工芸</h2>
+
+        <p>組紐とは、複数の糸を斜めに交差させて組み上げる日本の伝統工芸である。奈良時代にはすでに存在し、武家社会では刀の下げ緒や鎧の紐として実用され、やがて帯締めや装飾品として発展した。京都、伊賀、江戸がそれぞれ独自の流派を育て、組み方は数十種類に及ぶ。</p>
+
+        <p>丸台、角台、高台、綾竹台——道具の名前だけで一つの世界がある。組み手は重りのついた玉を操り、決められた順序で糸を交差させていく。手の動きは単調に見えるが、張力の加減、糸の送り方、交差の角度は経験でしか身につかない身体知の領域だ。</p>
+
+        <p>組紐が他の繊維工芸と異なるのは、織物のように経糸と緯糸が直交するのではなく、すべての糸が斜めに走る点にある。この構造が独特の伸縮性と強度を生み、結んだときの美しい結び目を可能にする。構造そのものが美を内包している——それが組紐である。</p>
+
+        <h2>機械化で生まれた価値と得られないこと</h2>
+
+        <p>明治以降、組紐にも機械化の波が押し寄せた。製紐機（せいちゅうき）と呼ばれる機械は、人間の手の動きを機構に翻訳し、均質な紐を高速に量産することを可能にした。帯締め一本を組むのに手組みでは数時間から数日を要するが、機械なら数分で完成する。</p>
+
+        <p>機械化がもたらしたのは、組紐の民主化である。かつて武家や富裕層しか手にできなかった組紐が、一般に流通するようになった。着物文化の裾野が広がったのは、機械組みの帯締めが手頃な価格で供給されるようになったことと無縁ではない。</p>
+
+        <p>しかし機械化で失われたものもある。手組みでは、組み手が一本一本の糸の張力を指先で感じながら調整する。その微細な不均一性が、光の反射に揺らぎを与え、手に触れたときの柔らかさを生む。機械組みは均質だが、その均質さゆえに「手の痕跡」が消える。</p>
+
+        <div class="key-point">
+            <p>機械化は組紐を民主化した。しかし、指先の身体知が生む揺らぎ——それは機械の精度の外側にある。</p>
+        </div>
+
+        <h2>サプライチェーンの観点から持続可能性を問う</h2>
+
+        <p>一本の手組み組紐が完成するまでに、どれだけのサプライチェーンが関与しているかを考えたことがあるだろうか。</p>
+
+        <p>まず絹糸。養蚕農家が蚕を育て、繭を収穫し、製糸工場が繭から生糸を繰る。その生糸を撚糸工場が撚り、染色工場が染める。染料は天然染料であれば植物の栽培から始まり、化学染料であれば石油化学のサプライチェーンにつながる。染め上がった糸を組紐職人が仕入れ、組み台に掛けて組む。</p>
+
+        <p>この一連の流れのどこか一箇所が途絶えれば、組紐は作れない。そして実際に、途絶えつつある。国内の養蚕農家は最盛期の数十万戸から数百戸にまで激減した。天然染料を扱える染色職人も高齢化が進んでいる。組紐職人の手元に届くまでに、すでにサプライチェーンは細い糸一本で繋がっている状態なのだ。</p>
+
+        <p>これは組紐に限った話ではない。伝統工芸のサプライチェーンは、一つの完成品の背後に何層もの専門技術が連なっている。最終製品を作る職人だけを保護しても、上流の素材供給が絶えれば技術は消える。持続可能性とは、サプライチェーン全体の持続可能性なのだ。</p>
+
+        <h2>コストパフォーマンスという理由の断絶の兆し</h2>
+
+        <p>「手組みの帯締めは高い。機械組みで十分。」——この判断は、経済合理性の観点からは正しい。機械組みの帯締めは数千円、手組みは数万円から数十万円。見た目の違いは、並べて比較しなければ分からないことも多い。</p>
+
+        <p>しかし「コストパフォーマンス」という評価軸そのものが、ある前提に依存している。それは、比較対象が常に存在するという前提だ。手組みの職人がいなくなれば、機械組みと手組みを比較する意味自体が消失する。選択肢の一方が消えたとき、コストパフォーマンスという概念は成立しない。</p>
+
+        <p>断絶は突然やってくるように見えるが、実際には長い時間をかけて進行する。一人の職人が引退し、弟子を取らず、工房が閉じる。それが各地で静かに繰り返されるうちに、ある日「最後の一人」がいなくなる。消費者が気づくのは、もう手組みを注文できなくなった後だ。</p>
+
+        <p>コストパフォーマンスで選び続けた結果、選択肢そのものが消える。これは組紐に限らず、多くの伝統技術が直面している構造的な問題である。</p>
+
+        <h2>近代化という名の電力依存</h2>
+
+        <p>手組みの組紐は、電力を必要としない。丸台に糸を掛け、手で玉を動かし、組んでいく。必要なのは道具と素材と人の手だけである。照明すら、窓辺の自然光で足りる。</p>
+
+        <p>一方、機械組みは電力に依存する。製紐機を動かす電力、工場の空調、照明、品質管理のセンサー。さらに上流を辿れば、合成染料の製造、化学繊維の生産、物流のすべてが化石燃料または電力網に接続されている。</p>
+
+        <p>「近代化」とは、多くの場合、電力依存度を高めることと同義である。効率は上がるが、電力供給が途絶えたとき、すべてが止まる。手組みの組紐は、停電しても組める。この事実は、平時には無意味に思えるが、長期の持続可能性を考えたときに意味を持つ。</p>
+
+        <p>1000年という時間軸で見れば、電力網の安定供給を前提にできるかどうかは自明ではない。手の技術は、エネルギーインフラから独立した生産手段である。それ自体が一種のレジリエンスだ。</p>
+
+        <div class="key-point">
+            <p>手組みの組紐は電力を必要としない。それは非効率の象徴ではなく、エネルギーインフラから独立したレジリエンスである。</p>
+        </div>
+
+        <h2>需要はあるのに受け継げないというジレンマ</h2>
+
+        <p>組紐の需要がゼロになったわけではない。着物を着る人は減ったが、帯締めは今も必要とされている。神社仏閣の装飾紐、茶道具の仕覆の紐、刀剣の下げ緒——需要は細くとも確実に存在する。近年では、組紐のブレスレットやアクセサリーが海外でも人気を集めている。</p>
+
+        <p>問題は需要の有無ではなく、技術の継承構造にある。手組みの組紐を習得するには年単位の修業が必要だ。しかし修業期間中の収入は極めて低く、若者が生活を成り立たせながら技術を習得する道筋が見えにくい。師匠の側も、弟子を養うだけの経済的余裕がないケースが多い。</p>
+
+        <p>需要と供給の間に、技術伝達のボトルネックがある。市場は製品を求めているのに、製品を作れる人を育てる仕組みが機能していない。これは教育の問題であり、経済構造の問題であり、社会の価値観の問題でもある。</p>
+
+        <p>伝統工芸の後継者問題は、しばしば「若者の意識」の問題として語られる。しかし本質は、技術を伝えるための経済的・時間的な回路が断たれていることにある。意志があっても、回路がなければ技術は渡らない。</p>
+
+        <h2>素材の上質性が選ばれなくなる時</h2>
+
+        <p>組紐の最も伝統的な素材は絹である。絹糸の光沢、手触り、染色の深み——これらは化学繊維では完全には再現できない。しかし絹は高価であり、国産の絹糸はさらに高価だ。</p>
+
+        <p>市場の圧力は、素材の代替を促す。正絹の帯締めの代わりにレーヨンやポリエステルの製品が流通する。見た目は似ているが、手に取れば分かる。光の反射が均一すぎる。結んだときの「しまり」が違う。経年変化の仕方が違う。</p>
+
+        <p>素材の上質性は、それを知る人がいて初めて価値になる。正絹の手触りを知らない世代が多数派になったとき、「正絹である理由」を説明すること自体が難しくなる。比較基準が失われるのだ。</p>
+
+        <p>これはワインの世界で言えば、テロワールを知らない消費者にテロワールの価値を語るようなものだ。体験の蓄積なしに、上質さは伝わらない。素材の選択は、最終的には文化の厚みの問題に帰着する。</p>
+
+        <h2>残すという観点からの組紐</h2>
+
+        <p>組紐は物理的に極めて耐久性の高い工芸品である。正倉院には奈良時代の組紐が現存しており、1300年以上の時を経てなお形を保っている。絹は紫外線と湿度に弱いが、適切な環境で保存すれば驚くほど長持ちする。</p>
+
+        <p>しかし「残す」ということを考えたとき、問題は物理的な耐久性だけではない。組紐そのものが残っても、それを組んだ技術が失われれば、修復も再現もできなくなる。正倉院の組紐を研究する学者がいるのは、現代にまだ組紐の技術が生きているからだ。技術が消えた後では、残された紐は「読めない古文書」と同じになる。</p>
+
+        <p>つまり、組紐を「残す」とは、紐を保存することではなく、紐を組む技術と知識を保存することである。物理的な保存と技術的な継承は、車の両輪のように機能しなければならない。</p>
+
+        <blockquote>
+            <p>残された紐は、それを組める人がいて初めて「生きた遺産」になる。技術の断絶は、物理的な遺物を沈黙させる。</p>
+        </blockquote>
+
+        <h2>Workawayという伝統文化保存手段</h2>
+
+        <p>Workawayは、宿泊と食事を提供する代わりに一日数時間の作業を行うマッチングプラットフォームである。農業、建築修繕、語学交流などが一般的な用途だが、ここに伝統工芸の技術伝達という新しい可能性がある。</p>
+
+        <p>組紐職人の工房にWorkawayerが滞在し、日々の組み作業を手伝いながら技術の基礎に触れる。職人にとっては人手が得られ、滞在者にとっては他では得られない身体知の体験になる。金銭的な雇用関係ではないため、弟子を雇う経済的余裕がない工房でも受け入れが可能だ。</p>
+
+        <p>海外からの滞在者が組紐に触れることで、技術の認知が国際的に広がる副次効果もある。実際に体験した人が自国に戻り、組紐について語ったり、作品を購入したりすることで、新たな需要の回路が生まれうる。</p>
+
+        <p>もちろん、短期滞在で身につく技術には限界がある。手組みの奥義は年月をかけなければ到達できない。しかし「入口」としてのWorkawayは、技術伝達の回路が細っている現状において、新しい導線になりうる。技術に関心を持つ人の母数を増やすこと——それが、長期的な継承の第一歩だ。</p>
+
+        <p>里山再生にWorkawayが活用されているように、伝統工芸の現場にもこの仕組みは適用できる。金銭ではなく体験を介した交換が、市場経済の枠組みでは成立しにくい技術伝達を可能にする。糸が編むのは紐だけではない。人と人、世代と世代、文化と文化を編んでいく回路そのものである。</p>
+
+        <div class="key-point">
+            <p>組紐の持続可能性は、紐の保存ではなく、紐を組む技術の伝達にかかっている。Workawayは、その伝達の新しい回路になりうる。</p>
+        </div>
+
+    </article>
+
+    <footer class="article-footer">
+        <p id="essay-nav-links"></p>
+        <p style="font-size: 0.75rem; color: var(--text-muted);">&copy; 2026 TokiStorage. All rights reserved.</p>
+    </footer>
+
+</main>
+
+<script src="essay-nav.js"></script>
+<script src="essay-tts.js"></script>
+</body>
+</html>
