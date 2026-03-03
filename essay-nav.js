@@ -38,6 +38,7 @@
     { id: 'existentialism', ja: '存在主義経済', en: 'Existentialism', date: '2026-02-13' },
     { id: 'dimension', ja: '5次元という視点', en: 'The Fifth Dimension', date: '2026-02-13' },
     { id: 'shiseikan', ja: '死生観の醸成', en: 'Cultivating a View of Life & Death', date: '2026-02-14' },
+    { id: 'trust-by-design', ja: '信頼に基づく設計', en: 'Designed on Trust', date: '2026-03-04' },
 
     // ── 社会制度（小→大）──
     { id: 'organization', ja: '組織', en: 'Organizations', date: '2026-02-13' },
@@ -197,6 +198,7 @@
   // LATEST_COUNT で表示件数を制御
   const LATEST_COUNT = 5;
   const latestEssayIds = [
+    'trust-by-design',
     'pearl-soap-roots',
     'embodied-oral',
     'kumihimo',
@@ -262,6 +264,7 @@
     'existentialism':         ['philosophy', 'religion', 'dimension', 'shiseikan', 'burn-rate-zero'],
     'dimension':              ['existentialism', 'akashic-record', 'space', 'religion', 'hyoutanjima'],
     'shiseikan':              ['lifecycle', 'religion', 'what-to-leave', 'existentialism', 'dimension'],
+    'trust-by-design':        ['trust-guidelines', 'narrative-trust', 'patent-departure', 'openness', 'restoration-architecture'],
     // ── 社会制度 ──
     'organization':           ['government', 'boundary', 'enterprise-architecture', 'meiwaku', 'industry'],
     'government':             ['organization', 'nation', 'election', 'strategy', 'national-record'],
@@ -384,7 +387,7 @@
     'hero-parallax':           ['corporate-site', 'no-external-deps', 'seo-aio', 'image-clarity', 'burn-rate-zero'],
     'offline-freedom':        ['pwa-implementation-guide', 'device-dependency', 'pwa-not-appstore', 'no-external-deps', '30seconds'],
     'millennium-navigation':  ['storage-strategy', 'openness', 'recital-record', 'legacy', 'offline-freedom'],
-    'restoration-architecture': ['backup-rule', 'self-print-economy', 'storage-strategy', 'millennium-navigation', 'offline-freedom'],
+    'restoration-architecture': ['trust-by-design', 'backup-rule', 'self-print-economy', 'storage-strategy', 'millennium-navigation'],
     'monitor-program':        ['payment', 'storage-strategy', 'no-external-deps', 'cloudflare-gas', 'narrative-trust'],
     'development-chronicle':  ['storage-strategy', 'vibe-coding', 'monitor-program', 'burn-rate-zero', 'rapid-prototyping'],
     'vibe-coding-secrets':    ['vibe-coding', 'rapid-prototyping', 'development-chronicle', 'try-and-revert', 'burn-rate-zero'],
@@ -392,7 +395,7 @@
     'polishing': ['narrative-trust', 'brochure-essay', 'customer-journey-transformation', 'patent-departure', 'mission-statement'],
     'ai-concierge': ['future', 'cloudflare-gas', 'vibe-coding-secrets', 'api-transformation', 'why-not-consulting'],
     'pipeline-renovation': ['dev-to-ops', 'development-chronicle', 'storage-strategy', 'migration', 'restoration-architecture'],
-    'trust-guidelines': ['zero-personal-data', 'offline-freedom', 'openness', 'narrative-trust', 'ssdlc'],
+    'trust-guidelines': ['trust-by-design', 'zero-personal-data', 'offline-freedom', 'openness', 'narrative-trust'],
     'beyond-the-screen': ['smartphone-complete', 'device-dependency', 'pwa-not-appstore', 'safari-webp', 'polishing'],
     'pwa-implementation-guide': ['pwa-not-appstore', 'offline-freedom', 'beyond-the-screen', 'device-dependency', 'smartphone-complete'],
     // ── メタ視点 ──
