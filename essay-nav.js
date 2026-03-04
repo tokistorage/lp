@@ -93,6 +93,7 @@
     { id: 'wise-guide', ja: 'Wiseの始め方', en: 'Getting Started with Wise', date: '2026-03-03' },
     { id: 'entrepreneurship', ja: '起業家精神の変容', en: 'The Transformation of Entrepreneurship', date: '2026-03-03' },
     { id: 'pearl-soap-roots', ja: 'パールソープが地域に根付くとき', en: 'When Pearl Soap Takes Root', date: '2026-03-03' },
+    { id: 'upcycling', ja: 'アップサイクルの視座', en: 'The Lens of Upcycling', date: '2026-03-04' },
 
     // ── 文化・社会活動 ──
     { id: 'education', ja: '教育', en: 'Education', date: '2026-02-13' },
@@ -199,6 +200,7 @@
   // LATEST_COUNT で表示件数を制御
   const LATEST_COUNT = 5;
   const latestEssayIds = [
+    'upcycling',
     'ethics-and-economics',
     'trust-by-design',
     'pearl-soap-roots',
@@ -279,7 +281,7 @@
     // ── 経済・財産 ──
     'industry':               ['consumption', 'organization', 'platform', 'ecosystem', 'disintermediation'],
     'consumption':            ['industry', 'satiation', 'gift-economy', 'novelty-soap', 'fragrance'],
-    'gift-economy':           ['consumption', 'sanpoyoshi', 'free-strategy', 'pearl-soap-roots', 'ceremony'],
+    'gift-economy':           ['consumption', 'sanpoyoshi', 'free-strategy', 'pearl-soap-roots', 'upcycling'],
     'novelty-soap':           ['custom-soap-guide', 'fragrance', 'gift-economy', 'advertising', 'pearl-soap-roots'],
     'custom-soap-guide':      ['novelty-soap', 'gift-economy', 'fragrance', 'made-to-order', 'pearl-soap-roots'],
     'fragrance':              ['novelty-soap', 'custom-soap-guide', 'consumption', 'advertising', 'ecology'],
@@ -293,7 +295,7 @@
     'no-competition':         ['platform', 'global-niche', 'free-strategy', 'ecosystem', 'framework'],
     'platform':               ['no-competition', 'ecosystem', 'disintermediation', 'api-transformation', 'global-niche'],
     'global-niche':           ['no-competition', 'platform', 'global', 'global-honbinos', 'headhunter'],
-    'global-honbinos':        ['global-niche', 'global', 'sanpoyoshi', 'ecology', 'turtle'],
+    'global-honbinos':        ['global-niche', 'global', 'sanpoyoshi', 'ecology', 'upcycling'],
     'ecosystem':              ['platform', 'sanpoyoshi', 'no-competition', 'disintermediation', 'entrepreneurship'],
     'free-strategy':          ['burn-rate-zero', 'sanpoyoshi', 'no-competition', 'gift-economy', 'advertising'],
     'brochure-essay':         ['advertising', 'free-strategy', 'novelty-soap', 'why-essays', 'choosing-not-to-choose'],
@@ -319,6 +321,7 @@
     'wise-guide': ['payment', 'affiliate-transparency', 'burn-rate-zero', 'monitor-program', 'partner-boundary'],
     'entrepreneurship': ['burn-rate-zero', 'ceremony', 'ecosystem', 'gift-economy', 'no-competition'],
     'pearl-soap-roots':   ['novelty-soap', 'custom-soap-guide', 'gift-economy', 'fragrance', 'community-benefit'],
+    'upcycling':          ['gift-economy', 'consumption', 'global-honbinos', 'ecology', 'disintermediation'],
     // ── 文化・社会活動 ──
     'education':              ['early-education', 'history', 'media', 'psychology', 'lifestyle'],
     'early-education':        ['education', 'recital-record', 'music', 'psychology', 'entertainment'],
