@@ -203,6 +203,7 @@
   // LATEST_COUNT で表示件数を制御
   const LATEST_COUNT = 5;
   const latestEssayIds = [
+    'scattered-ashes',
     'stakeholder-awareness',
     'ethics-exclusion',
     'upcycling',
