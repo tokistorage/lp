@@ -452,6 +452,39 @@
             </tr>
         </table>
 
+        <h3>"Can't Existing Tools Handle This?"</h3>
+
+        <p>A natural objection: "Just save it to Google Drive or iCloud." "A note app is enough." "We already use Notion for our roster." In peacetime, these are valid. But under disaster conditions, each has a critical weakness.</p>
+
+        <table class="comparison-table">
+            <tr>
+                <th>Alternative</th>
+                <th>Weakness in Disasters</th>
+            </tr>
+            <tr>
+                <td><strong>Google Drive / iCloud</strong><br>Cloud storage</td>
+                <td>Without signal, files are inaccessible. "Make available offline" must be set per file in advance — most residents haven't done this. If the device is lost, data is lost too</td>
+            </tr>
+            <tr>
+                <td><strong>Apple Notes / Google Keep</strong><br>Note apps</td>
+                <td>Text is readable, but audio requires the app. You can't open your notes on someone else's phone. At a shelter check-in, there's no way to hand your information to reception staff — you can only show your screen, one person at a time</td>
+            </tr>
+            <tr>
+                <td><strong>Notion / Google Sheets</strong><br>Cloud rosters</td>
+                <td>Fully internet-dependent. Offline modes exist but require connection for sync. If your login session expires, you can't even view the data. And there's always the risk of service discontinuation</td>
+            </tr>
+            <tr>
+                <td><strong>LINE / Slack</strong><br>Messaging apps</td>
+                <td>No signal means no sending or receiving. Past messages may be cached locally, but no new communication is possible. The assumption that every member uses the same app is also unrealistic for community associations</td>
+            </tr>
+            <tr>
+                <td><strong>PDF / Paper rosters</strong><br>Traditional</td>
+                <td>Water damage makes them unreadable. Easily forgotten during evacuation. Must be reprinted with every update. Cannot record audio. Physically limited in information capacity</td>
+            </tr>
+        </table>
+
+        <p>What makes TokiQR fundamentally different is that <strong>data resides neither on a device nor in the cloud, but inside the QR code itself</strong>. A QR code printed on paper can be read by anyone's smartphone camera — even if the owner's device is destroyed, even if the cloud is down. The information lives on physical paper, not on a server or a specific device. That is what matters in a disaster.</p>
+
         <p>TokiQR's decoding process runs entirely within the smartphone. Data is stored in the QR code itself, and no external communication occurs. This is a matter of design philosophy. TokiQR is not designed with the assumption that you will be connected. It is designed with the assumption that you will not be.</p>
 
         <p>Specifically, by tapping "Add to Home Screen" on your smartphone, TokiQR installs as a PWA (Progressive Web App). The audio encoder (Codec2), compression engine (Brotli), and decoder are all cached locally via Service Worker — after which everything works without internet. From recording to QR generation, from scanning to playback, all processing completes within the smartphone. As stated in the <a href="../qr/faq.html" style="color: var(--toki-teal);">FAQ</a>, data generated during QR creation is never sent to any server. There is zero risk of personal household data leaking externally.</p>
