@@ -162,46 +162,70 @@
 
     <div class="portal-latest">
         <div class="portal-latest-label">LATEST</div>
-        <div class="portal-latest-list">
-            <div><a href="accessibility-en.html">The Reach of Usability</a></div>
-            <div><a href="scattered-ashes-en.html">Scattered Ashes &amp; the Soul</a></div>
-            <div><a href="stakeholder-awareness-en.html">Stakeholder Awareness</a></div>
-            <div><a href="upcycling-en.html">The Lens of Upcycling</a></div>
-            <div><a href="ethics-and-economics-en.html">When Ethics Meets Economics</a></div>
-            <div><a href="trust-by-design-en.html">Designed on Trust</a></div>
-            <div><a href="pearl-soap-roots-en.html">When Pearl Soap Takes Root</a></div>
-            <div><a href="embodied-oral-en.html">Embodied Knowledge &amp; Oral Tradition</a></div>
-            <div><a href="kumihimo-en.html">Kumihimo</a></div>
-            <div><a href="immigrant-burial-ecosystem-en.html">The Immigrant Burial Ecosystem</a></div>
-            <div><a href="wise-guide-en.html">Getting Started with Wise</a></div>
-            <div><a href="pwa-implementation-guide-en.html">PWA Installation Guide</a></div>
-            <div><a href="rural-workaway-en.html">Satoyama Regeneration &amp; Workaway</a></div>
-            <div><a href="group-event-en.html">The 10-Minute Group Event</a></div>
-            <div><a href="testimonial-persistence-en.html">The Persistence of Testimonials</a></div>
-            <div><a href="entrepreneurship-en.html">The Transformation of Entrepreneurship</a></div>
-            <div><a href="beyond-the-screen-en.html">Beyond the Screen</a></div>
-            <div><a href="product-codes-en.html">Product Codes as a Design Language</a></div>
-            <div><a href="trust-guidelines-en.html">Writing Terms of Service on Trust</a></div>
-            <div><a href="pipeline-renovation-en.html">Pipeline Renovation Notes</a></div>
-            <div><a href="zero-personal-data-en.html">Abolishing Secrets</a></div>
-            <div><a href="smartphone-complete-en.html">A Smartphone Is All You Need</a></div>
-            <div><a href="primitive-edge-en.html">The Primitive Edge</a></div>
-            <div><a href="dev-to-ops-en.html">The Operational Lens</a></div>
-            <div><a href="ai-concierge-en.html">The AI Concierge as a Quiet Moat</a></div>
-            <div><a href="soap-pitch-en.html">The Day Soap Beat the Elevator Pitch</a></div>
-            <div><a href="polishing-en.html">Polishing</a></div>
-            <div><a href="customer-journey-transformation-en.html">The Transformation of the Customer Journey</a></div>
-            <div><a href="vibe-coding-secrets-en.html">The Secrets of Vibe Coding</a></div>
-            <div><a href="affiliate-transparency-en.html">Disclosure of Referral Links</a></div>
-            <div><a href="development-chronicle-en.html">Thirteen Days of Building</a></div>
-            <div><a href="monitor-program-en.html">Designing the Monitor Program</a></div>
-            <div><a href="restoration-architecture-en.html">Multi-Layered Restoration Architecture</a></div>
-            <div><a href="millennium-navigation-en.html">Designing Navigation for a Millennium</a></div>
-            <div><a href="self-print-economy-en.html">The Self-Print Economy</a></div>
-            <div><a href="offline-freedom-en.html">Freedom from the Network</a></div>
-            <div><a href="copyright-jasrac-en.html">Copyright and JASRAC</a></div>
-        </div>
+        <div class="portal-latest-list" id="latest-list"></div>
+        <button id="latest-more" style="display:none;margin-top:0.75rem;padding:0.4rem 1.2rem;font-size:0.8rem;color:var(--toki-gold);background:none;border:1px solid rgba(146,112,42,0.3);border-radius:6px;cursor:pointer;font-family:var(--font-body);">Show more</button>
     </div>
+    <script>
+    (function(){
+        var essays=[
+            {h:'accessibility-en.html',t:'The Reach of Usability',d:'2026-03-05'},
+            {h:'scattered-ashes-en.html',t:'Scattered Ashes \u0026 the Soul',d:'2026-03-05'},
+            {h:'stakeholder-awareness-en.html',t:'Stakeholder Awareness',d:'2026-03-05'},
+            {h:'ethics-exclusion-en.html',t:'What Lies at the Opposite Pole of Ethics',d:'2026-03-05'},
+            {h:'upcycling-en.html',t:'The Lens of Upcycling',d:'2026-03-04'},
+            {h:'ethics-and-economics-en.html',t:'When Ethics Meets Economics',d:'2026-03-04'},
+            {h:'trust-by-design-en.html',t:'Designed on Trust',d:'2026-03-04'},
+            {h:'pearl-soap-roots-en.html',t:'When Pearl Soap Takes Root',d:'2026-03-03'},
+            {h:'embodied-oral-en.html',t:'Embodied Knowledge \u0026 Oral Tradition',d:'2026-03-03'},
+            {h:'kumihimo-en.html',t:'Kumihimo',d:'2026-03-03'},
+            {h:'immigrant-burial-ecosystem-en.html',t:'The Immigrant Burial Ecosystem',d:'2026-03-03'},
+            {h:'wise-guide-en.html',t:'Getting Started with Wise',d:'2026-03-03'},
+            {h:'pwa-implementation-guide-en.html',t:'PWA Installation Guide',d:'2026-03-02'},
+            {h:'rural-workaway-en.html',t:'Satoyama Regeneration \u0026 Workaway',d:'2026-03-02'},
+            {h:'group-event-en.html',t:'The 10-Minute Group Event',d:'2026-03-02'},
+            {h:'testimonial-persistence-en.html',t:'The Persistence of Testimonials',d:'2026-03-02'},
+            {h:'entrepreneurship-en.html',t:'The Transformation of Entrepreneurship',d:'2026-03-03'},
+            {h:'beyond-the-screen-en.html',t:'Beyond the Screen',d:'2026-03-02'},
+            {h:'product-codes-en.html',t:'Product Codes as a Design Language',d:'2026-03-01'},
+            {h:'trust-guidelines-en.html',t:'Writing Terms of Service on Trust',d:'2026-03-01'},
+            {h:'pipeline-renovation-en.html',t:'Pipeline Renovation Notes',d:'2026-03-01'},
+            {h:'zero-personal-data-en.html',t:'Abolishing Secrets',d:'2026-02-28'},
+            {h:'smartphone-complete-en.html',t:'A Smartphone Is All You Need',d:'2026-02-28'},
+            {h:'primitive-edge-en.html',t:'The Primitive Edge',d:'2026-02-28'},
+            {h:'dev-to-ops-en.html',t:'The Operational Lens',d:'2026-02-28'},
+            {h:'ai-concierge-en.html',t:'The AI Concierge as a Quiet Moat',d:'2026-02-28'},
+            {h:'soap-pitch-en.html',t:'The Day Soap Beat the Elevator Pitch',d:'2026-02-27'},
+            {h:'polishing-en.html',t:'Polishing',d:'2026-02-27'},
+            {h:'customer-journey-transformation-en.html',t:'The Transformation of the Customer Journey',d:'2026-02-27'},
+            {h:'vibe-coding-secrets-en.html',t:'The Secrets of Vibe Coding',d:'2026-02-27'},
+            {h:'affiliate-transparency-en.html',t:'Disclosure of Referral Links',d:'2026-02-27'},
+            {h:'development-chronicle-en.html',t:'Thirteen Days of Building',d:'2026-02-27'},
+            {h:'monitor-program-en.html',t:'Designing the Monitor Program',d:'2026-02-26'},
+            {h:'restoration-architecture-en.html',t:'Multi-Layered Restoration Architecture',d:'2026-02-26'},
+            {h:'millennium-navigation-en.html',t:'Designing Navigation for a Millennium',d:'2026-02-26'},
+            {h:'self-print-economy-en.html',t:'The Self-Print Economy',d:'2026-02-25'},
+            {h:'offline-freedom-en.html',t:'Freedom from the Network',d:'2026-02-24'},
+            {h:'copyright-jasrac-en.html',t:'Copyright and JASRAC',d:'2026-02-24'}
+        ];
+        var PAGE=10,shown=PAGE;
+        var list=document.getElementById('latest-list');
+        var btn=document.getElementById('latest-more');
+        function render(){
+            var html='';
+            for(var i=0;i<Math.min(shown,essays.length);i++){
+                var e=essays[i];
+                html+='<div><a href="'+e.h+'">'+e.t+'</a><span>'+e.d+'</span></div>';
+            }
+            list.innerHTML=html;
+            btn.style.display=shown<essays.length?'inline-block':'none';
+        }
+        btn.addEventListener('click',function(){
+            shown=Math.min(shown+PAGE,essays.length);
+            render();
+        });
+        render();
+    })();
+    </script>
 
     <!-- Foundations -->
     <section class="portal-category" id="foundations">
