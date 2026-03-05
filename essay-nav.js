@@ -50,6 +50,7 @@
     { id: 'national-record', ja: '国家記録の意義', en: 'National Records', date: '2026-02-18' },
     { id: 'global', ja: '国際社会', en: 'Global Society', date: '2026-02-13' },
     { id: 'strategy', ja: '国家戦略', en: 'National Strategy', date: '2026-02-13' },
+    { id: 'community-disaster-response', ja: '自治会DX', en: 'Community Association DX', date: '2026-03-05' },
 
     // ── 経済・財産 ──
     { id: 'industry', ja: '産業', en: 'Industry', date: '2026-02-13' },
@@ -204,6 +205,7 @@
   // LATEST_COUNT で表示件数を制御
   const LATEST_COUNT = 5;
   const latestEssayIds = [
+    'community-disaster-response',
     'scattered-ashes',
     'stakeholder-awareness',
     'ethics-exclusion',
@@ -286,6 +288,7 @@
     'national-record':        ['nation', 'akashic-record', 'preserving-words', 'legacy', 'history'],
     'global':                 ['nation', 'strategy', 'global-niche', 'global-honbinos', 'sdgs'],
     'strategy':               ['nation', 'global', 'no-competition', 'global-niche', 'platform'],
+    'community-disaster-response': ['government', 'stakeholder-awareness', 'legacy', 'backup-rule', 'organization'],
     // ── 経済・財産 ──
     'industry':               ['consumption', 'organization', 'platform', 'ecosystem', 'disintermediation'],
     'consumption':            ['industry', 'satiation', 'gift-economy', 'novelty-soap', 'fragrance'],
