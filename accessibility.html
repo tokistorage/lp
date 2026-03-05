@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" type="image/png" sizes="32x32" href="asset/favicon-32.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="asset/apple-touch-icon.png">
+    <title>使えるということの射程 | トキストレージ</title>
+    <meta name="robots" content="index, follow">
+    <meta name="description" content="「誰でも使える」は想像の産物か、設計の帰結か。五体満足の境界線、当事者の感覚、AIの変容を通じて、存在証明の民主化が本当に届く範囲を問い直す。">    <style>
+        :root {
+            --toki-blue: #2563EB;
+            --toki-blue-dark: #1E40AF;
+            --toki-blue-pale: #EFF6FF;
+            --accent-blue: #60A5FA;
+            --bg-white: #FFFFFF;
+            --text-primary: #1E293B;
+            --text-secondary: #475569;
+            --text-muted: #94A3B8;
+            --border: #E2E8F0;
+            --font-display: 'Hiragino Mincho ProN', 'Yu Mincho', serif;
+            --font-body: 'Hiragino Kaku Gothic ProN', 'Yu Gothic', 'Meiryo', sans-serif;
+        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        html { scroll-behavior: smooth; }
+        body { font-family: var(--font-body); font-weight: 400; background: var(--bg-white); color: var(--text-primary); line-height: 2; font-size: 16px; }
+
+        .article-nav { position: fixed; top: 0; left: 0; right: 0; z-index: 1000; background: rgba(255,255,255,0.95); backdrop-filter: blur(12px); border-bottom: 1px solid var(--border); padding: 0.6rem 1.2rem; display: flex; align-items: center; justify-content: space-between; gap: 1rem; }
+        .article-nav .nav-brand { font-family: var(--font-display); font-size: 0.9rem; font-weight: 600; color: var(--toki-blue); text-decoration: none; white-space: nowrap; }
+        .article-nav .nav-brand::before { content: ''; display: inline-block; width: 20px; height: 20px; background: url('asset/tokistorage-icon-512.png') no-repeat center / contain; vertical-align: -3px; margin-right: 5px; }
+        .article-nav .nav-right { display: flex; align-items: center; gap: 1rem; }
+        .article-nav .nav-label { font-size: 0.6rem; color: var(--text-muted); letter-spacing: 0.08em; }
+
+        .article-container { max-width: 680px; margin: 0 auto; padding: 7rem 2rem 4rem; }
+        .article-header { margin-bottom: 3rem; padding-bottom: 2rem; border-bottom: 1px solid var(--border); }
+        .article-category { font-size: 0.7rem; color: var(--toki-blue); letter-spacing: 0.15em; margin-bottom: 1rem; }
+        .article-header h1 { font-family: var(--font-display); font-size: 1.8rem; font-weight: 700; line-height: 1.5; margin-bottom: 1.5rem; }
+        .article-subtitle { font-size: 0.95rem; color: var(--text-secondary); line-height: 1.9; }
+
+        .article-content h2 { font-family: var(--font-display); font-size: 1.3rem; font-weight: 600; margin: 3rem 0 1.5rem; padding-bottom: 0.5rem; border-bottom: 2px solid var(--toki-blue-pale); }
+        .article-content h3 { font-family: var(--font-display); font-size: 1.1rem; font-weight: 600; margin: 2rem 0 1rem; color: var(--toki-blue-dark); }
+        .article-content p { margin-bottom: 1.5rem; text-align: justify; }
+        .article-content blockquote { border-left: 3px solid var(--toki-blue); padding-left: 1.5rem; margin: 2rem 0; font-family: var(--font-display); color: var(--text-secondary); }
+        .article-content ul { margin: 1.5rem 0; padding-left: 1.5rem; }
+        .article-content li { margin-bottom: 0.75rem; }
+
+        .core-message { background: var(--toki-blue-pale); border-left: 4px solid var(--toki-blue); padding: 1.5rem; margin: 2rem 0; font-size: 0.95rem; line-height: 1.8; }
+        .key-point { background: linear-gradient(135deg, var(--toki-blue-pale) 0%, #fff 100%); border: 1px solid var(--accent-blue); border-radius: 8px; padding: 1.5rem; margin: 2rem 0; text-align: center; }
+        .key-point p { font-family: var(--font-display); font-size: 1.1rem; color: var(--toki-blue-dark); margin: 0; }
+
+        .disclaimer { background: #F8FAFC; border: 1px solid var(--border); border-radius: 6px; padding: 1rem 1.2rem; margin: 2rem 0; font-size: 0.85rem; color: var(--text-secondary); line-height: 1.8; }
+
+        .article-footer { margin-top: 4rem; padding-top: 2rem; border-top: 1px solid var(--border); text-align: center; }
+        .article-footer p { font-size: 0.8rem; color: var(--text-muted); margin-bottom: 1rem; }
+        .article-footer a { color: var(--toki-blue); text-decoration: none; }
+        .article-footer a:hover { text-decoration: underline; }
+
+        @media (max-width: 768px) {
+            .article-container { padding: 6rem 1.2rem 3rem; }
+            .article-header h1 { font-size: 1.5rem; }
+            .article-nav .nav-label { display: none; }
+        }
+        @media print { .article-nav { display: none; } .article-container { padding-top: 2rem; } }
+    </style>
+</head>
+<body>
+
+<nav class="article-nav">
+    <a href="essays.html" class="nav-brand">トキストレージ</a>
+    <div class="nav-right">
+        <span class="nav-label">ESSAY</span>
+    </div>
+</nav>
+
+<main class="article-container">
+    <header class="article-header">
+        <div class="article-category">技術・設計</div>
+        <h1>使えるということの射程</h1>
+        <p class="article-subtitle">「誰でも使える」は想像の産物か、設計の帰結か。五体満足の境界線、当事者の感覚、AIの変容を通じて、存在証明の民主化が本当に届く範囲を問い直す。</p>
+    </header>
+
+    <article class="article-content">
+
+        <div class="disclaimer">本稿は特定の障害や疾患を持つ方々を代弁する意図を持ちません。設計者の視座から、アクセシビリティの構造を観察したものです。</div>
+
+        <h2>「誰でも使える」の輪郭</h2>
+
+        <p>ある人がTokiStorageで声を録ろうとしている。スマートフォンを手に取り、ブラウザを開き、録音ボタンを押し、三十秒間話し、保存する。この一連の動作は、ほとんどの人にとって数分で終わる作業に見える。</p>
+
+        <p>しかし、この「ほとんどの人」とは誰のことだろうか。</p>
+
+        <p>画面が見えることを前提にしている。ボタンの位置を指で正確にタップできることを前提にしている。日本語の表示を読めることを前提にしている。声を出せることを前提にしている。三十秒間、安定した姿勢を保てることを前提にしている。インターネットに接続された端末を持っていることを前提にしている。</p>
+
+        <p>「誰でも使える」という言葉は、たいていの場合、設計者が想像できる範囲の「誰でも」を指している。想像の外にいる人は、最初から「誰でも」の中にいない。</p>
+
+        <p>TokiStorageは「<a href="manifesto.html" style="color: var(--toki-blue); text-decoration: none; border-bottom: 1px solid var(--accent-blue);">存在証明の民主化</a>」を掲げている。民主化という言葉が本気であるならば、その射程は設計者の想像の内側に留まっていてはならない。</p>
+
+        <h2>五体満足という前提</h2>
+
+        <p>五体満足という言葉がある。両手両足が揃い、五感が機能している状態。この言葉は、「満足」すなわち「完全である」という意味を含んでいる。裏を返せば、そうでない状態は「不完全」だということになる。</p>
+
+        <p>製品設計は、暗黙のうちにこの「完全な身体」を前提にして進む。画面のコントラスト比は、標準的な視力を想定して決められる。ボタンのサイズは、標準的な指の大きさと運動精度を想定して決められる。音声ガイダンスは、標準的な聴力を想定して設計される。「標準」という言葉の中に、すでに境界線が引かれている。</p>
+
+        <p>しかし、この境界線は二値ではない。見える・見えないの二択ではなく、見えにくさにはグラデーションがある。聞こえる・聞こえないの二択ではなく、聞こえにくさは周波数帯によって異なる。動ける・動けないの二択ではなく、今日は調子が良くても明日は握力が出ないという変動がある。</p>
+
+        <p>加齢は、すべての人間をこのグラデーションの上で移動させる。三十歳のときに難なく読めた文字サイズが、六十歳では読みにくくなる。一時的な怪我もまた、境界線を越えさせる。利き手を骨折した人は、片手でスマートフォンを操作しなければならない。子どもを抱いている親も同じだ。騒がしい駅のホームでは、誰もが聴覚に制約を抱えた状態になる。</p>
+
+        <div class="core-message">五体満足の境界線は、「障害のある人」と「ない人」を分ける線ではない。すべての人間がその上を移動する、連続的なスペクトラムである。</div>
+
+        <p>TokiStorageが千年の保管を謳うなら、この時間軸の中で利用者の身体は必ず変化する。三十歳で声を録った人が、八十歳でその録音を聞き返そうとしたとき、同じインターフェースが使えるとは限らない。アクセシビリティは、現在の配慮であると同時に、未来の利用者への約束でもある。</p>
+
+        <h2>利用性を左右するもの</h2>
+
+        <p>アクセシビリティを「障害者への配慮」と捉えている限り、利用性に影響する要素の全体像は見えない。利用性は、複数の層が重なって決まる。</p>
+
+        <p>第一に、身体的要素がある。視覚、聴覚、運動機能、発話機能。これらは先天的な場合もあれば、後天的に変化する場合もある。恒常的な場合もあれば、変動する場合もある。</p>
+
+        <p>第二に、認知的要素がある。識字能力、デジタルリテラシー、言語の壁。日本語が母語でない人にとって、日本語のみのインターフェースは障壁になる。七十代の利用者にとって、「QRコードをスキャンする」という操作は自明ではない。</p>
+
+        <p>第三に、環境的要素がある。通信環境、照明条件、騒音レベル、気温。直射日光の下では画面が見えにくくなる。寒冷地では手袋をしたまま操作しなければならない。通信速度が遅い地域では、大きなファイルのアップロードが現実的でない。</p>
+
+        <p>第四に、経済的要素がある。端末の価格、データ通信費、電力の確保。世界の人口の約三割は、まだスマートフォンを持っていない。持っていても、安価な端末では最新のブラウザ機能が動作しないことがある。</p>
+
+        <p>第五に、時間的要素がある。これはTokiStorageに固有の問題だ。千年の保管を掲げるサービスは、千年分の身体変化、技術変化、社会変化に耐えなければならない。今日のアクセシビリティ基準は、百年後には陳腐化しているかもしれない。しかし、記録された声は百年後も再生される必要がある。</p>
+
+        <div class="key-point"><p>アクセシビリティとは、障害への配慮ではない。すべての人間が時間とともに変化する存在であるという前提に立つ設計である。</p></div>
+
+        <h2>デバイス、ソフトウェア、操作——現代の配慮の地層</h2>
+
+        <p>アクセシビリティの具体的な実装は、地層のように積み重なっている。</p>
+
+        <p>最も深い層にあるのは、セマンティックなHTMLである。見出しが見出しとして、ボタンがボタンとして、リンクがリンクとしてマークアップされていること。この構造が正しければ、スクリーンリーダーは画面の内容を音声で読み上げることができる。逆に、見た目だけをdivタグで整えた画面は、視覚的には美しくても、スクリーンリーダーからは意味のない文字の羅列にしか見えない。</p>
+
+        <p>その上の層に、WAI-ARIAがある。HTMLだけでは表現しきれない状態——展開・折りたたみ、選択状態、エラー通知——を支援技術に伝えるための属性。正しく使えば橋になるが、誤用すれば壁になる。</p>
+
+        <p>さらに上の層に、視覚的な配慮がある。コントラスト比、文字サイズ、色だけに頼らない情報伝達、アニメーションの抑制。WCAG（Web Content Accessibility Guidelines）は、これらの基準を体系化している。しかし、基準を満たすことと、実際に使いやすいことは同義ではない。</p>
+
+        <p>操作の層がある。キーボードだけで全機能にアクセスできるか。タッチターゲットは十分な大きさか。スイッチアクセスに対応しているか。音声入力で操作できるか。これらは個別の機能ではなく、設計の前提として最初から組み込まれるべきものだ。</p>
+
+        <p>TokiStorageの技術選択には、アクセシビリティの含意がある。PWAを採用したことで、アプリストアを経由せずにブラウザから直接使える。これはインストールの障壁を下げるが、同時にネイティブアプリが持つOS固有の支援機能へのアクセスが制限される場合がある。GitHub Pagesでの公開は、ソースコードが誰にでも検査可能であるという透明性を提供するが、GitHubという特定のプラットフォームへの依存も意味する。QRコードは物理とデジタルを橋渡しするが、QRコードを読み取れない端末や、カメラにアクセスできない環境では機能しない。</p>
+
+        <blockquote>配慮は足し算ではない。最初の設計図に含まれているか、後から追加されたかで、到達範囲が変わる。</blockquote>
+
+        <p>「<a href="smartphone-complete.html" style="color: var(--toki-blue); text-decoration: none; border-bottom: 1px solid var(--accent-blue);">スマホ一台で完結する</a>」という設計思想は、スマートフォンを持っている人にとっては強力な簡便さを提供する。しかし、スマートフォンを持てない人にとっては、その簡便さ自体が障壁になる。どの設計選択にも、包摂と排除の両面がある。「<a href="device-dependency.html" style="color: var(--toki-blue); text-decoration: none; border-bottom: 1px solid var(--accent-blue);">機種依存・ブラウザ依存の断層</a>」で論じた問題は、アクセシビリティの文脈ではさらに深刻な意味を持つ。</p>
+
+        <h2>「使えるだろう」と「使えない」のあいだ</h2>
+
+        <p>設計者は、自分の身体を基準にして「使いやすさ」を判断する。画面を見てボタンを押せる自分の身体を、利用者の身体に投影する。「これなら使えるだろう」という判断は、自分の身体感覚から発せられた想像である。</p>
+
+        <p>この想像と、当事者の感覚のあいだには、構造的な断絶がある。</p>
+
+        <p>たとえば、色覚多様性を持つ人にとって、赤と緑で区別された情報は区別できない。設計者が「色分けしたから分かりやすい」と思っているものが、当事者には「どちらも同じに見える」。設計者は善意で色を付けた。しかし、その善意は設計者の色覚を前提にしている。</p>
+
+        <p>たとえば、手指に震えのある人にとって、小さなボタンを正確にタップすることは困難だ。設計者が「このサイズなら押しやすい」と思っているものが、当事者には「何度やっても隣のボタンを押してしまう」。設計者は自分の指で検証した。しかし、その検証は設計者の運動精度を前提にしている。</p>
+
+        <p>たとえば、認知負荷に敏感な人にとって、情報量の多い画面は圧倒的だ。設計者が「必要な情報をすべて載せた」と思っているものが、当事者には「どこを見ればいいか分からない」。設計者は網羅性を善としている。しかし、当事者にとっては選択肢の削減こそが善である。</p>
+
+        <div class="key-point"><p>「使いやすいだろう」は、設計者の身体から発された想像である。当事者の感覚は、想像の外側にある。</p></div>
+
+        <p>この断絶を埋める方法は一つしかない。当事者に聞くことだ。当事者と一緒にテストすることだ。しかし、「当事者」は一枚岩ではない。視覚障害のある人の中にも、全盲の人、弱視の人、色覚多様性のある人がいる。それぞれの体験はまったく異なる。一人の当事者に聞いたことが、別の当事者にも当てはまるとは限らない。</p>
+
+        <p>だからこそ、アクセシビリティは完成しない。一度の設計で終わるものではなく、継続的な観察と修正の過程である。前稿「<a href="ethics-exclusion.html" style="color: var(--toki-blue); text-decoration: none; border-bottom: 1px solid var(--accent-blue);">倫理の対極にあるもの</a>」で論じた「善意による排除」は、アクセシビリティの文脈でも同じ構造を持つ。「使いやすくしたつもり」が、別の誰かを排除している可能性は常にある。</p>
+
+        <h2>AIがもたらす地殻変動</h2>
+
+        <p>AIの進化は、アクセシビリティの地形を根本から変えつつある。</p>
+
+        <p>リアルタイム文字起こしは、聴覚に制約のある人が音声コンテンツにアクセスする道を開いた。音声合成は、視覚に制約のある人がテキストを音として受け取ることを可能にした。画像認識は、写真の中に何が映っているかを言語で説明できるようになった。意図予測は、不完全な入力から利用者が何をしたいかを推測し、操作を補完する。</p>
+
+        <p>これらの技術は、人間の能力とデジタルインターフェースのあいだに立つ「翻訳者」として機能する。かつては専用のハードウェアや高価なソフトウェアが必要だった支援が、スマートフォンに標準搭載されるようになった。VoiceOverやTalkBackは、追加費用なしで利用できる。</p>
+
+        <p>AIは適応的なインターフェースの可能性も開いている。利用者の操作パターンを学習し、ボタンの配置を最適化する。入力の傾向を分析し、予測変換の精度を上げる。個々の利用者に合わせてインターフェースが変形する世界は、もはや実験段階ではない。</p>
+
+        <p>しかし、AIに依存したアクセシビリティには、構造的なリスクがある。</p>
+
+        <p>第一に、AIサービスが停止したとき、アクセシビリティも停止する。文字起こしサービスが障害を起こせば、聴覚に制約のある人は再び音声コンテンツから遮断される。TokiStorageが「<a href="no-external-deps.html" style="color: var(--toki-blue); text-decoration: none; border-bottom: 1px solid var(--accent-blue);">外部依存性を増やさない</a>」という原則を掲げるのは、この脆弱性を認識しているからだ。アクセシビリティがAIに依存するならば、AIが消えたときにアクセシビリティも消える。千年の保管を掲げるサービスにとって、これは受け入れられないリスクである。</p>
+
+        <p>第二に、AIの学習データに偏りがあれば、アクセシビリティにも偏りが生まれる。英語の音声認識は高精度だが、少数言語の認識精度は低い。標準的な発話パターンは正確に認識されるが、構音障害のある人の発話は認識されにくい。AIは万人のためのツールになりうるが、学習データの構成が万人を含んでいなければ、AIもまた排除の装置になる。</p>
+
+        <p>第三に、AIが「代わりにやってくれる」ことで、基盤技術への投資が怠られるリスクがある。セマンティックなHTMLを書かなくても、AIが画面を解釈してくれるなら、開発者はHTMLの構造を気にしなくなるかもしれない。しかし、AIなしでも機能する基盤がなければ、AIが使えない環境では何も機能しない。</p>
+
+        <div class="core-message">AIはアクセシビリティを拡張するが、AIに依存したアクセシビリティは脆い。基盤はAIなしでも機能しなければならない。</div>
+
+        <p>では、設計者に何ができるのか。</p>
+
+        <p>観察することだ。自分の設計が誰を包摂し、誰を排除しているかを、継続的に観察すること。そして、観察した結果を設計に適用すること。チェックリストを満たして終わりではない。WCAGの基準をクリアして終わりでもない。基準の外側にいる人を見つけたら、基準そのものを更新する。</p>
+
+        <p>「観察して適用する」は、一度きりの行為ではなく、設計の姿勢である。TokiStorageが千年の保管を本気で掲げるなら、千年分の観察と適用を続ける覚悟がいる。存在証明の民主化とは、記録する権利を誰にも閉じないことだ。誰にも閉じないためには、まず、閉じている場所を観察しなければならない。</p>
+
+        <blockquote>存在証明の民主化とは、記録する権利を誰にも閉じないことだ。誰にも閉じないためには、まず、閉じている場所を観察しなければならない。</blockquote>
+
+    </article>
+
+    <footer class="article-footer">
+        <p id="essay-nav-links"></p>
+        <p style="font-size: 0.75rem; color: var(--text-muted);">&copy; 2026 TokiStorage. All rights reserved.</p>
+    </footer>
+
+</main>
+
+<script src="essay-nav.js"></script>
+<script src="essay-tts.js"></script>
+</body>
+</html>

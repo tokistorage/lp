@@ -183,6 +183,7 @@
     { id: 'trust-guidelines', ja: '信頼で書く利用規約', en: 'Writing Terms of Service on Trust', date: '2026-03-01' },
     { id: 'beyond-the-screen', ja: '画面の向こう側', en: 'Beyond the Screen', date: '2026-03-02' },
     { id: 'pwa-implementation-guide', ja: 'PWA導入ガイド', en: 'PWA Installation Guide', date: '2026-03-02' },
+    { id: 'accessibility', ja: 'アクセシビリティ', en: 'Accessibility', date: '2026-03-05' },
 
     // ── メタ視点 ──
     { id: 'mission-statement', ja: 'ミッション・ステートメントの設計思想', en: 'Designing a Mission Statement', date: '2026-02-23' },
