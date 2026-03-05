@@ -1,0 +1,554 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" type="image/png" sizes="32x32" href="asset/favicon-32.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="asset/apple-touch-icon.png">
+    <title>自治会DX——災害時に届く声 | トキストレージ</title>
+    <meta name="robots" content="index, follow">
+    <meta name="description" content="自治会の本質は「共助」である。電話が繋がらず、電波が届かないとき、それでも届く記録がある。自治会DXと防災を、存在証明の視点から考える。">    <style>
+        :root {
+            --toki-teal: #0D7377;
+            --toki-teal-dark: #065A5C;
+            --toki-teal-pale: #E6F4F4;
+            --bg-white: #FFFFFF;
+            --bg-section: #F8FAFC;
+            --text-primary: #1E293B;
+            --text-secondary: #475569;
+            --text-muted: #94A3B8;
+            --border: #E2E8F0;
+            --font-display: 'Hiragino Mincho ProN', 'Yu Mincho', serif;
+            --font-body: 'Hiragino Kaku Gothic ProN', 'Yu Gothic', 'Meiryo', sans-serif;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        html { scroll-behavior: smooth; }
+
+        body {
+            font-family: var(--font-body);
+            font-weight: 400;
+            background: var(--bg-white);
+            color: var(--text-primary);
+            line-height: 2;
+            font-size: 16px;
+        }
+
+        .article-nav {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 1000;
+            background: rgba(255,255,255,0.95);
+            backdrop-filter: blur(12px);
+            border-bottom: 1px solid var(--border);
+            padding: 0.6rem 1.2rem;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 1rem;
+        }
+        .article-nav .nav-brand {
+            font-family: var(--font-display);
+            font-size: 0.9rem;
+            font-weight: 600;
+            color: var(--toki-teal);
+            text-decoration: none;
+            white-space: nowrap;
+        }
+        .article-nav .nav-right {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+        .article-nav .nav-label {
+            font-size: 0.6rem;
+            color: var(--text-muted);
+            letter-spacing: 0.08em;
+        }
+        .article-nav .lang-switch {
+            font-size: 0.75rem;
+            color: var(--toki-teal);
+            text-decoration: none;
+            padding: 0.3rem 0.6rem;
+            border: 1px solid var(--toki-teal);
+            border-radius: 4px;
+        }
+        .article-nav .lang-switch:hover {
+            background: var(--toki-teal);
+            color: #fff;
+        }
+
+        .article-container {
+            max-width: 680px;
+            margin: 0 auto;
+            padding: 7rem 2rem 4rem;
+        }
+
+        .article-header {
+            margin-bottom: 3rem;
+            padding-bottom: 2rem;
+            border-bottom: 1px solid var(--border);
+        }
+        .article-category {
+            font-size: 0.7rem;
+            color: var(--toki-teal);
+            letter-spacing: 0.15em;
+            margin-bottom: 1rem;
+        }
+        .article-header h1 {
+            font-family: var(--font-display);
+            font-size: 1.8rem;
+            font-weight: 600;
+            line-height: 1.5;
+            margin-bottom: 1rem;
+        }
+        .article-subtitle {
+            font-size: 0.95rem;
+            color: var(--text-secondary);
+            line-height: 1.8;
+        }
+
+        .article-content h2 {
+            font-family: var(--font-display);
+            font-size: 1.25rem;
+            font-weight: 600;
+            margin: 3rem 0 1.5rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 1px solid var(--border);
+        }
+        .article-content h3 {
+            font-family: var(--font-display);
+            font-size: 1.1rem;
+            font-weight: 500;
+            margin: 2rem 0 1rem;
+            color: var(--text-primary);
+        }
+        .article-content p {
+            margin-bottom: 1.5rem;
+            text-align: justify;
+        }
+        .article-content blockquote {
+            margin: 2rem 0;
+            padding: 1.5rem 2rem;
+            background: var(--bg-section);
+            border-left: 3px solid var(--toki-teal);
+            font-style: italic;
+        }
+        .article-content blockquote p {
+            margin-bottom: 0.5rem;
+        }
+        .article-content blockquote cite {
+            display: block;
+            font-size: 0.85rem;
+            color: var(--text-muted);
+            font-style: normal;
+            margin-top: 0.5rem;
+        }
+        .article-content ul, .article-content ol {
+            margin: 1.5rem 0;
+            padding-left: 1.5rem;
+        }
+        .article-content li {
+            margin-bottom: 0.75rem;
+        }
+
+        .key-point {
+            background: var(--toki-teal-pale);
+            padding: 1.5rem 2rem;
+            border-radius: 8px;
+            margin: 2rem 0;
+        }
+        .key-point p {
+            margin-bottom: 0;
+            font-size: 0.95rem;
+        }
+
+        .core-message {
+            background: linear-gradient(135deg, var(--toki-teal-pale) 0%, #CCFBF1 100%);
+            border-left: 4px solid var(--toki-teal);
+            padding: 1.2rem 1.5rem;
+            margin: 0 0 1.5rem 0;
+            border-radius: 0 8px 8px 0;
+            font-size: 0.95rem;
+            line-height: 1.8;
+        }
+        .disclaimer {
+            font-size: 0.8rem;
+            color: var(--text-muted);
+            margin-bottom: 2rem;
+            padding-bottom: 1rem;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .comparison-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 2rem 0;
+            font-size: 0.9rem;
+        }
+        .comparison-table th,
+        .comparison-table td {
+            padding: 1rem;
+            text-align: left;
+            border-bottom: 1px solid var(--border);
+        }
+        .comparison-table th {
+            background: var(--bg-section);
+            font-weight: 500;
+            width: 50%;
+        }
+        .comparison-table td {
+            vertical-align: top;
+        }
+
+        .bylaw-template {
+            background: var(--bg-section);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            padding: 1.5rem 2rem;
+            margin: 2rem 0;
+            font-size: 0.9rem;
+        }
+        .bylaw-template h4 {
+            font-family: var(--font-display);
+            font-size: 1rem;
+            margin-bottom: 1rem;
+            color: var(--toki-teal-dark);
+        }
+        .bylaw-template ol {
+            padding-left: 1.5rem;
+        }
+        .bylaw-template li {
+            margin-bottom: 0.5rem;
+            line-height: 1.8;
+        }
+
+        .references {
+            margin-top: 4rem;
+            padding-top: 2rem;
+            border-top: 1px solid var(--border);
+        }
+        .references h2 {
+            font-size: 1rem;
+            margin-bottom: 1.5rem;
+        }
+        .references ul {
+            list-style: none;
+            padding: 0;
+        }
+        .references li {
+            font-size: 0.85rem;
+            color: var(--text-secondary);
+            margin-bottom: 0.75rem;
+            padding-left: 1.5rem;
+            text-indent: -1.5rem;
+        }
+
+        .article-footer {
+            margin-top: 4rem;
+            padding-top: 2rem;
+            border-top: 1px solid var(--border);
+            text-align: center;
+        }
+        .article-footer p {
+            font-size: 0.8rem;
+            color: var(--text-muted);
+            margin-bottom: 1rem;
+        }
+        .article-footer a {
+            color: var(--toki-teal);
+            text-decoration: none;
+        }
+        .article-footer a:hover {
+            text-decoration: underline;
+        }
+
+        @media (max-width: 768px) {
+            .article-container { padding: 6rem 1.2rem 3rem; }
+            .article-header h1 { font-size: 1.5rem; }
+            .article-nav .nav-label { display: none; }
+            .comparison-table { font-size: 0.8rem; }
+            .comparison-table th,
+            .comparison-table td { padding: 0.75rem; }
+        }
+
+        @media print {
+            .article-nav { display: none; }
+            .article-container { padding: 2rem; }
+        }
+        .nav-brand::before {
+            content: '';
+            display: inline-block;
+            width: 20px;
+            height: 20px;
+            background: url('asset/tokistorage-icon-512.png') no-repeat center / contain;
+            vertical-align: -3px;
+            margin-right: 5px;
+        }
+    </style>
+<link rel="stylesheet" href="contact-form.css">
+    <meta property="og:type" content="article">
+    <meta property="og:title" content="自治会DX——災害時に届く声 | トキストレージ">
+    <meta property="og:description" content="自治会の本質は「共助」である。電話が繋がらず、電波が届かないとき、それでも届く記録がある。自治会DXと防災を、存在証明の視点から考える。">
+    <meta property="og:url" content="https://tokistorage.github.io/lp/community-disaster-response.html">
+    <meta property="og:site_name" content="トキストレージ">
+    <meta name="twitter:card" content="summary">
+    <meta name="twitter:title" content="自治会DX——災害時に届く声 | トキストレージ">
+    <meta name="twitter:description" content="自治会の本質は「共助」である。電話が繋がらず、電波が届かないとき、それでも届く記録がある。自治会DXと防災を、存在証明の視点から考える。">
+    <meta property="og:image" content="https://tokistorage.github.io/lp/asset/tokistorage-icon-512.png">
+    <meta property="og:image:width" content="512">
+    <meta property="og:image:height" content="512">
+    <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Article",
+  "headline": "自治会DX——災害時に届く声",
+  "author": {
+    "@type": "Person",
+    "name": "Takuya Sato",
+    "url": "https://tokistorage.github.io/lp/profile.html"
+  },
+  "publisher": {
+    "@type": "Organization",
+    "name": "TokiStorage",
+    "url": "https://tokistorage.github.io/lp",
+    "logo": {
+      "@type": "ImageObject",
+      "url": "https://tokistorage.github.io/lp/asset/tokistorage-icon-512.png"
+    }
+  },
+  "url": "https://tokistorage.github.io/lp/community-disaster-response.html",
+  "inLanguage": "ja",
+  "mainEntityOfPage": "https://tokistorage.github.io/lp/community-disaster-response.html",
+  "description": "自治会の本質は「共助」である。電話が繋がらず、電波が届かないとき、それでも届く記録がある。自治会DXと防災を、存在証明の視点から考える。"
+}
+    </script>
+    <link rel="alternate" hreflang="ja" href="https://tokistorage.github.io/lp/community-disaster-response.html">
+    <link rel="alternate" hreflang="en" href="https://tokistorage.github.io/lp/community-disaster-response-en.html">
+    <link rel="alternate" hreflang="x-default" href="https://tokistorage.github.io/lp/community-disaster-response.html">
+    <link rel="canonical" href="https://tokistorage.github.io/lp/community-disaster-response.html">
+</head>
+<body>
+
+<nav class="article-nav">
+    <a href="index.html" class="nav-brand">トキストレージ</a>
+    <div class="nav-right">
+        <span class="nav-label">自治会DX / COMMUNITY DX</span>
+        <a href="community-disaster-response-en.html" class="lang-switch">EN</a>
+    </div>
+</nav>
+
+<article class="article-container">
+
+    <header class="article-header">
+        <p class="article-category">ESSAY — 社会と記録</p>
+        <h1>自治会DX<br>——災害時に届く声</h1>
+        <p class="article-subtitle">
+            自治会の本質は「共助」である。<br>
+            電話が繋がらず、電波が届かないとき、それでも届く記録がある。
+        </p>
+    </header>
+
+    <div class="article-content">
+
+        <div class="core-message">
+            <strong>この記事で言いたいこと：</strong>自治会DXとは、回覧板をアプリに置き換えることではない。インフラが断たれた「最悪の瞬間」にこそ機能する共助の仕組みを、平時から設計し訓練に組み込むことである。
+        </div>
+
+        <p class="disclaimer">※本稿は筆者の自治会長経験に基づく考察であり、特定の自治体・団体の見解を代表するものではありません。</p>
+
+        <h2>1. 自治会とは何か——共助の最小単位</h2>
+
+        <p>日本には約30万の自治会・町内会が存在する。地方自治法第260条の2に基づく「認可地縁団体」として、自治会は地域住民の自治組織であり、行政の末端でも企業でもない。その本質は「共助」——隣近所が互いに支え合う、最も原始的で最も強靭な社会単位である。</p>
+
+        <p>しかし、多くの自治会が形骸化している。高齢化による役員のなり手不足、マンション住民の無関心、形式的な総会と消化試合のようなイベント。自治会費を払っているが何をしているか知らない——そんな住民が大多数を占める地域も珍しくない。</p>
+
+        <p>私は250世帯からなるタイムレスタウン新浦安で2年間、自治会長を務めた。前任者から引き継いだ目標は「自治会DX」だった。LINE Worksの導入、ハロウィンイベントの継続、バスツアーの企画運営——平時の親睦活動としては一定の成果を残せたと思う。しかし、任期を終えて振り返ると、もっと根本的な問いに向き合うべきだったと感じている。</p>
+
+        <blockquote>
+            <p>「自治会は何のために存在するのか。」</p>
+        </blockquote>
+
+        <p>その答えは、平時ではなく有事に現れる。祭りやイベントは自治会の「顔」だが、その存在意義の核心は災害時の共助にある。そして、災害時の共助を可能にする仕組みこそが、真の自治会DXである。</p>
+
+        <h3>自治会規約の雛形——DX条項を含む</h3>
+
+        <p>自治会規約は、その組織の目的と運営の骨格を定める。多くの自治会規約は以下の構成を持つ。</p>
+
+        <div class="bylaw-template">
+            <h4>自治会規約 雛形（抜粋）</h4>
+            <ol>
+                <li><strong>第1条（名称）</strong>　本会は○○自治会と称する。</li>
+                <li><strong>第2条（目的）</strong>　本会は、会員相互の親睦を図り、<strong>防災・防犯・環境美化</strong>等の活動を通じて、安全で住みよい地域社会の実現に寄与することを目的とする。</li>
+                <li><strong>第3条（会員）</strong>　本会の区域内に住所を有する世帯の代表者をもって会員とする。</li>
+                <li><strong>第4条（役員）</strong>　本会に会長1名、副会長若干名、会計1名、監事1名、防災委員若干名を置く。</li>
+                <li><strong>第5条（防災委員会）</strong>　防災委員会は、災害時の避難誘導、安否確認、避難所運営を担当する。<strong>防災委員会はデジタル防災ツールの導入および訓練を推進する。</strong></li>
+                <li><strong>第6条（総会）</strong>　年1回の定期総会を開催し、事業計画、収支予算、規約改正等を議決する。</li>
+                <li><strong>第7条（会計）</strong>　本会の経費は、会費、補助金、その他の収入をもって充てる。</li>
+            </ol>
+        </div>
+
+        <p>注目すべきは第5条である。従来の自治会規約に「デジタル防災ツールの導入および訓練を推進する」という一文を加えるだけで、自治会DXは規約レベルで制度化される。規約に書かれていなければ、どれだけ優れたツールも「個人の取り組み」に留まり、会長が交代すれば消える。規約に書くことで、仕組みが人を超えて継続する。</p>
+
+        <h2>2. 災害時、避難所での活用——紙もスマホも使えないとき</h2>
+
+        <p>2011年の東日本大震災。2024年の能登半島地震。日本は繰り返し、大規模災害に見舞われてきた。そのたびに浮かび上がるのは、情報の断絶という問題である。</p>
+
+        <p>避難所の現実を想像してほしい。停電で照明が消える。携帯電話の基地局がダウンし、スマートフォンは「圏外」を表示する。紙の名簿は浸水で読めなくなるか、そもそも持ち出す余裕がない。誰がどこにいるのか、誰が逃げ遅れたのか、誰にアレルギーがあるのか——最も必要な情報が最も手に入らない。</p>
+
+        <p>ここにTokiQRの可能性がある。</p>
+
+        <p>TokiQRは、音声・画像・テキストをQRコード内に直接エンコードする技術である。通常のQRコードがURLへのリンクであるのに対し、TokiQRはデータそのものをQRコードに格納する。つまり、インターネット接続なしで、スマートフォンのカメラだけでデータを読み取り、再生できる。</p>
+
+        <ul>
+            <li><strong>避難所受付</strong>：世帯ごとのTokiQRカードを提示するだけで、世帯構成・緊急連絡先・持病情報が表示される</li>
+            <li><strong>アレルギー・持病共有</strong>：避難所での食事配給時、アレルギー情報を口頭で伝える必要がなくなる</li>
+            <li><strong>要配慮者の特定</strong>：高齢者、乳幼児、障害者、外国人——配慮が必要な住民の情報を即座に確認できる</li>
+            <li><strong>安否確認の記録</strong>：避難所に到着した住民の情報を物理的に記録し、後から行政へ引き渡せる</li>
+        </ul>
+
+        <div class="key-point">
+            <p>避難所に電気がなくても、Wi-Fiがなくても、スマートフォンのバッテリーが残っていれば、TokiQRは機能する。紙よりも多くの情報を、紙よりもコンパクトに、紙よりも確実に伝達できる。</p>
+        </div>
+
+        <h2>3. インフラ障害時の活用——電気・通信が止まった世界</h2>
+
+        <p>インフラ障害には段階がある。</p>
+
+        <p>まず停電。次に携帯電話基地局のバッテリー切れ（通常3〜24時間）。そして固定電話の不通。最終的には、電気も通信も水道も止まった「完全孤立」状態に至る。</p>
+
+        <p>多くの自治会が導入してきたDXツール——LINE、Slack、クラウド上の名簿管理、Googleフォーム——は、すべてインターネット接続を前提としている。平時には極めて便利だが、最も必要な瞬間に使えなくなる。これを「インフラ依存のパラドクス」と呼びたい。</p>
+
+        <table class="comparison-table">
+            <tr>
+                <th>従来のDXツール</th>
+                <th>TokiQR</th>
+            </tr>
+            <tr>
+                <td>インターネット接続が必要</td>
+                <td>オフラインで完結</td>
+            </tr>
+            <tr>
+                <td>サーバーダウンで使用不能</td>
+                <td>サーバー不要</td>
+            </tr>
+            <tr>
+                <td>アカウント・パスワードが必要</td>
+                <td>カメラをかざすだけ</td>
+            </tr>
+            <tr>
+                <td>電波がなければ機能しない</td>
+                <td>電波不要</td>
+            </tr>
+            <tr>
+                <td>バッテリー消費が大きい</td>
+                <td>カメラ起動のみ、省電力</td>
+            </tr>
+        </table>
+
+        <p>TokiQRのデコード処理はスマートフォン内で完結する。データはQRコード自体に格納されており、外部との通信は一切発生しない。これは設計思想の問題である。TokiQRは「接続すること」を前提としていない。「接続できないこと」を前提として設計されている。</p>
+
+        <div class="key-point">
+            <p>真のDXとは、デジタルに依存することではない。デジタルの恩恵を、オフラインでも享受できる設計である。インフラが断たれた瞬間にこそ、その設計思想が試される。</p>
+        </div>
+
+        <h2>4. 親族連絡ツール——電話が繋がらないとき</h2>
+
+        <p>大規模災害発生直後、電話は繋がらなくなる。東日本大震災では、発信規制が最大90%に達し、通話が成立するまで数時間から数日を要した。家族の安否が確認できない時間は、被災そのもの以上に人を追い詰める。</p>
+
+        <p>災害用伝言ダイヤル（171）やweb171といった代替手段は存在するが、いくつかの限界がある。171は固定電話網が前提であり、携帯電話からの利用には制約がある。web171はインターネット接続が必要である。そして何より、これらのサービスの存在と使い方を知っている住民は少ない。</p>
+
+        <p>TokiQRを使った「声の安否確認カード」を提案したい。</p>
+
+        <ul>
+            <li><strong>事前エンコード</strong>：家族の集合場所、離散時の連絡手順、各自の行動方針を音声で録音し、TokiQRとして印刷</li>
+            <li><strong>携帯性</strong>：名刺サイズのカードとして、財布・定期入れ・ランドセルに常時携帯</li>
+            <li><strong>操作性</strong>：スマートフォンのカメラをかざすだけ。アプリのインストール不要。高齢者や子どもでも直感的に使える</li>
+            <li><strong>多言語対応</strong>：外国人住民向けに、母語での音声メッセージをエンコードすることも可能</li>
+        </ul>
+
+        <p>「お父さんの声」が財布から聞こえる。「おばあちゃんのメッセージ」がランドセルから再生される。電話が繋がらなくても、声は届く。それは安否確認であると同時に、不安の中にいる家族への存在証明でもある。</p>
+
+        <h2>5. オフライン記録——電波が届かなくなったとき</h2>
+
+        <p>災害の被害を記録することは、復興の出発点である。罹災証明書の発行、保険金の請求、公的支援の申請——いずれも「何がどう壊れたか」の記録が必要になる。</p>
+
+        <p>被災直後、多くの人がスマートフォンで写真や動画を撮影する。しかし、クラウドに自動同期されない。電波がないからだ。スマートフォンが水没したり、バッテリーが切れたりすれば、ローカルに保存されたデータも失われる。</p>
+
+        <p>TokiQRは、この問題に対して二つの解を提供する。</p>
+
+        <h3>即時のオフライン記録</h3>
+
+        <p>被災状況を音声・テキスト・画像としてTokiQRにエンコードし、紙に印刷する。プリンターがなければ、画面上のQRコードを別のスマートフォンのカメラで撮影するだけでもよい。データが物理的な形を持つことで、電子機器の故障や電池切れのリスクから解放される。</p>
+
+        <h3>永続的な震災アーカイブ</h3>
+
+        <p>復興後の段階では、被災の記録を石英ガラスに刻印するトキストレージの三層保存が活きる。石英ガラスは火災（1000度以上）にも浸水にも耐える。デジタルデータ、国立国会図書館への納本、そして石英ガラスへの物理刻印——三層の冗長性が、災害の記憶を1000年先まで保存する。</p>
+
+        <blockquote>
+            <p>「記録は、復興の出発点である。記録がなければ、被害も支援も『なかったこと』にされる。」</p>
+        </blockquote>
+
+        <p>能登半島地震では、高齢の被災者が家屋の被害状況を行政に伝えることができず、支援から取り残される事例が報告された。記録する手段を持たないことは、支援を受ける権利を失うことに等しい。</p>
+
+        <h2>6. 防災訓練への組み込み——平時にこそ備える</h2>
+
+        <p>どれだけ優れた技術も、使い方を知らなければ意味がない。災害時に初めてTokiQRに触れるのでは遅い。平時の防災訓練に組み込んでこそ、有事に機能する。</p>
+
+        <p>具体的な訓練メニューを提案する。</p>
+
+        <h3>訓練メニュー案</h3>
+
+        <ul>
+            <li><strong>ステップ1：家族情報QRの作成</strong>（30分）<br>各世帯が、集合場所・緊急連絡先・持病情報・家族へのメッセージを録音し、TokiQRとして印刷する。年1回の防災訓練で内容を更新する。</li>
+            <li><strong>ステップ2：避難所受付シミュレーション</strong>（20分）<br>TokiQRカードを使った避難所受付を模擬体験する。受付係と避難者に分かれ、カードの読み取りと情報確認を実践する。</li>
+            <li><strong>ステップ3：オフライン再生体験</strong>（10分）<br>スマートフォンを「機内モード」にした状態で、TokiQRの読み取りと再生を体験する。「電波がなくても使える」ことを体感的に理解する。</li>
+        </ul>
+
+        <p>この訓練は、年1回の防災訓練（多くの自治会で9月1日前後に実施）に「TokiQR体験ブース」として組み込むことができる。消火器の使い方やAEDの操作を訓練するのと同じ位置づけである。</p>
+
+        <div class="key-point">
+            <p>防災訓練は「知識」を伝える場ではない。「体験」を通じて身体に覚えさせる場である。TokiQRの操作を年1回体験し、家族情報を更新し続けることで、有事の対応力は確実に上がる。</p>
+        </div>
+
+        <h2>結び——声は届く</h2>
+
+        <p>250世帯の自治会長を務めた2年間で、私が最も考えたのは「仕組みの持続性」だった。会長が替われば方針が変わり、ツールが変わり、ノウハウが消える。それは自治会に限らず、あらゆる組織が直面する課題である。</p>
+
+        <p>トキストレージを構想したとき、この課題が重なった。人が変わっても消えない記録。インフラが断たれても機能するツール。1000年先に届く声。それは存在証明の技術であると同時に、共助の技術でもある。</p>
+
+        <p>自治会DXの本質は、テクノロジーの導入ではない。テクノロジーは手段に過ぎない。目的は「共助」——隣人を助け、隣人に助けられる関係を、仕組みとして維持することである。そして、最も共助が求められる瞬間——電気が止まり、電話が繋がらず、電波が届かない瞬間——にこそ機能する仕組みが、真のDXである。</p>
+
+        <blockquote>
+            <p>「電波が届かなくても、声は届く。それが自治会DXの核心である。」</p>
+        </blockquote>
+
+    </div>
+
+    <section class="references">
+        <h2>参考文献</h2>
+        <ul>
+            <li>内閣府 (2024).『防災白書 令和6年版』.</li>
+            <li>総務省 (2022).『地域コミュニティに関する研究会報告書』.</li>
+            <li>地方自治法 第260条の2（認可地縁団体）.</li>
+            <li>NTT東日本 (2011).「東日本大震災における通信の被災・輻輳状況と対策について」.</li>
+            <li>内閣府 (2024).「令和6年能登半島地震における避難所運営に関する調査」.</li>
+        </ul>
+    </section>
+
+    <footer class="article-footer">
+        <p>トキストレージ エッセイシリーズ</p>
+        <p id="essay-nav-links"></p>
+        <p style="margin-top: 1.5rem;">&copy; 2026 TokiStorage. All rights reserved.</p>
+    </footer>
+
+</article>
+
+<script src="contact-form.js" defer></script>
+<script src="essay-tts.js?v=20260220"></script>
+<script src="essay-nav.js?v=20260220"></script>
+<script src="tracker.js" defer></script>
+</body>
+</html>

@@ -1,0 +1,552 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" type="image/png" sizes="32x32" href="asset/favicon-32.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="asset/apple-touch-icon.png">
+    <title>Community Association DX — Voices That Reach in Disaster | TokiStorage</title>
+    <meta name="robots" content="index, follow">
+    <meta name="description" content="The essence of community associations is mutual aid. When phones fail and signals disappear, there are still records that reach. Rethinking community DX and disaster preparedness through proof of existence.">    <style>
+        :root {
+            --toki-teal: #0D7377;
+            --toki-teal-dark: #065A5C;
+            --toki-teal-pale: #E6F4F4;
+            --bg-white: #FFFFFF;
+            --bg-section: #F8FAFC;
+            --text-primary: #1E293B;
+            --text-secondary: #475569;
+            --text-muted: #94A3B8;
+            --border: #E2E8F0;
+            --font-display: 'Hiragino Mincho ProN', 'Yu Mincho', serif;
+            --font-body: 'Hiragino Kaku Gothic ProN', 'Yu Gothic', 'Meiryo', sans-serif;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        html { scroll-behavior: smooth; }
+
+        body {
+            font-family: var(--font-body);
+            font-weight: 400;
+            background: var(--bg-white);
+            color: var(--text-primary);
+            line-height: 2;
+            font-size: 16px;
+        }
+
+        .article-nav {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 1000;
+            background: rgba(255,255,255,0.95);
+            backdrop-filter: blur(12px);
+            border-bottom: 1px solid var(--border);
+            padding: 0.6rem 1.2rem;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 1rem;
+        }
+        .article-nav .nav-brand {
+            font-family: var(--font-display);
+            font-size: 0.9rem;
+            font-weight: 600;
+            color: var(--toki-teal);
+            text-decoration: none;
+            white-space: nowrap;
+        }
+        .article-nav .nav-right {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+        .article-nav .nav-label {
+            font-size: 0.6rem;
+            color: var(--text-muted);
+            letter-spacing: 0.08em;
+        }
+        .article-nav .lang-switch {
+            font-size: 0.75rem;
+            color: var(--toki-teal);
+            text-decoration: none;
+            padding: 0.3rem 0.6rem;
+            border: 1px solid var(--toki-teal);
+            border-radius: 4px;
+        }
+        .article-nav .lang-switch:hover {
+            background: var(--toki-teal);
+            color: #fff;
+        }
+
+        .article-container {
+            max-width: 680px;
+            margin: 0 auto;
+            padding: 7rem 2rem 4rem;
+        }
+
+        .article-header {
+            margin-bottom: 3rem;
+            padding-bottom: 2rem;
+            border-bottom: 1px solid var(--border);
+        }
+        .article-category {
+            font-size: 0.7rem;
+            color: var(--toki-teal);
+            letter-spacing: 0.15em;
+            margin-bottom: 1rem;
+        }
+        .article-header h1 {
+            font-family: var(--font-display);
+            font-size: 1.8rem;
+            font-weight: 600;
+            line-height: 1.5;
+            margin-bottom: 1rem;
+        }
+        .article-subtitle {
+            font-size: 0.95rem;
+            color: var(--text-secondary);
+            line-height: 1.8;
+        }
+
+        .article-content h2 {
+            font-family: var(--font-display);
+            font-size: 1.25rem;
+            font-weight: 600;
+            margin: 3rem 0 1.5rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 1px solid var(--border);
+        }
+        .article-content h3 {
+            font-family: var(--font-display);
+            font-size: 1.1rem;
+            font-weight: 500;
+            margin: 2rem 0 1rem;
+            color: var(--text-primary);
+        }
+        .article-content p {
+            margin-bottom: 1.5rem;
+            text-align: justify;
+        }
+        .article-content blockquote {
+            margin: 2rem 0;
+            padding: 1.5rem 2rem;
+            background: var(--bg-section);
+            border-left: 3px solid var(--toki-teal);
+            font-style: italic;
+        }
+        .article-content blockquote p {
+            margin-bottom: 0.5rem;
+        }
+        .article-content blockquote cite {
+            display: block;
+            font-size: 0.85rem;
+            color: var(--text-muted);
+            font-style: normal;
+            margin-top: 0.5rem;
+        }
+        .article-content ul, .article-content ol {
+            margin: 1.5rem 0;
+            padding-left: 1.5rem;
+        }
+        .article-content li {
+            margin-bottom: 0.75rem;
+        }
+
+        .key-point {
+            background: var(--toki-teal-pale);
+            padding: 1.5rem 2rem;
+            border-radius: 8px;
+            margin: 2rem 0;
+        }
+        .key-point p {
+            margin-bottom: 0;
+            font-size: 0.95rem;
+        }
+
+        .core-message {
+            background: linear-gradient(135deg, var(--toki-teal-pale) 0%, #CCFBF1 100%);
+            border-left: 4px solid var(--toki-teal);
+            padding: 1.2rem 1.5rem;
+            margin: 0 0 1.5rem 0;
+            border-radius: 0 8px 8px 0;
+            font-size: 0.95rem;
+            line-height: 1.8;
+        }
+        .disclaimer {
+            font-size: 0.8rem;
+            color: var(--text-muted);
+            margin-bottom: 2rem;
+            padding-bottom: 1rem;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .comparison-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 2rem 0;
+            font-size: 0.9rem;
+        }
+        .comparison-table th,
+        .comparison-table td {
+            padding: 1rem;
+            text-align: left;
+            border-bottom: 1px solid var(--border);
+        }
+        .comparison-table th {
+            background: var(--bg-section);
+            font-weight: 500;
+            width: 50%;
+        }
+        .comparison-table td {
+            vertical-align: top;
+        }
+
+        .bylaw-template {
+            background: var(--bg-section);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            padding: 1.5rem 2rem;
+            margin: 2rem 0;
+            font-size: 0.9rem;
+        }
+        .bylaw-template h4 {
+            font-family: var(--font-display);
+            font-size: 1rem;
+            margin-bottom: 1rem;
+            color: var(--toki-teal-dark);
+        }
+        .bylaw-template ol {
+            padding-left: 1.5rem;
+        }
+        .bylaw-template li {
+            margin-bottom: 0.5rem;
+            line-height: 1.8;
+        }
+
+        .references {
+            margin-top: 4rem;
+            padding-top: 2rem;
+            border-top: 1px solid var(--border);
+        }
+        .references h2 {
+            font-size: 1rem;
+            margin-bottom: 1.5rem;
+        }
+        .references ul {
+            list-style: none;
+            padding: 0;
+        }
+        .references li {
+            font-size: 0.85rem;
+            color: var(--text-secondary);
+            margin-bottom: 0.75rem;
+            padding-left: 1.5rem;
+            text-indent: -1.5rem;
+        }
+
+        .article-footer {
+            margin-top: 4rem;
+            padding-top: 2rem;
+            border-top: 1px solid var(--border);
+            text-align: center;
+        }
+        .article-footer p {
+            font-size: 0.8rem;
+            color: var(--text-muted);
+            margin-bottom: 1rem;
+        }
+        .article-footer a {
+            color: var(--toki-teal);
+            text-decoration: none;
+        }
+        .article-footer a:hover {
+            text-decoration: underline;
+        }
+
+        @media (max-width: 768px) {
+            .article-container { padding: 6rem 1.2rem 3rem; }
+            .article-header h1 { font-size: 1.5rem; }
+            .article-nav .nav-label { display: none; }
+            .comparison-table { font-size: 0.8rem; }
+            .comparison-table th,
+            .comparison-table td { padding: 0.75rem; }
+        }
+
+        @media print {
+            .article-nav { display: none; }
+            .article-container { padding: 2rem; }
+        }
+        .nav-brand::before {
+            content: '';
+            display: inline-block;
+            width: 20px;
+            height: 20px;
+            background: url('asset/tokistorage-icon-512.png') no-repeat center / contain;
+            vertical-align: -3px;
+            margin-right: 5px;
+        }
+    </style>
+<link rel="stylesheet" href="contact-form.css">
+    <meta property="og:type" content="article">
+    <meta property="og:title" content="Community Association DX — Voices That Reach in Disaster | TokiStorage">
+    <meta property="og:description" content="The essence of community associations is mutual aid. When phones fail and signals disappear, there are still records that reach. Rethinking community DX and disaster preparedness through proof of existence.">
+    <meta property="og:url" content="https://tokistorage.github.io/lp/community-disaster-response-en.html">
+    <meta property="og:site_name" content="TokiStorage">
+    <meta name="twitter:card" content="summary">
+    <meta name="twitter:title" content="Community Association DX — Voices That Reach in Disaster | TokiStorage">
+    <meta name="twitter:description" content="The essence of community associations is mutual aid. When phones fail and signals disappear, there are still records that reach. Rethinking community DX and disaster preparedness through proof of existence.">
+    <meta property="og:image" content="https://tokistorage.github.io/lp/asset/tokistorage-icon-512.png">
+    <meta property="og:image:width" content="512">
+    <meta property="og:image:height" content="512">
+    <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Article",
+  "headline": "Community Association DX — Voices That Reach in Disaster",
+  "author": {
+    "@type": "Person",
+    "name": "Takuya Sato",
+    "url": "https://tokistorage.github.io/lp/profile.html"
+  },
+  "publisher": {
+    "@type": "Organization",
+    "name": "TokiStorage",
+    "url": "https://tokistorage.github.io/lp",
+    "logo": {
+      "@type": "ImageObject",
+      "url": "https://tokistorage.github.io/lp/asset/tokistorage-icon-512.png"
+    }
+  },
+  "url": "https://tokistorage.github.io/lp/community-disaster-response-en.html",
+  "inLanguage": "en",
+  "mainEntityOfPage": "https://tokistorage.github.io/lp/community-disaster-response-en.html",
+  "description": "The essence of community associations is mutual aid. When phones fail and signals disappear, there are still records that reach. Rethinking community DX and disaster preparedness through proof of existence."
+}
+    </script>
+    <link rel="alternate" hreflang="ja" href="https://tokistorage.github.io/lp/community-disaster-response.html">
+    <link rel="alternate" hreflang="en" href="https://tokistorage.github.io/lp/community-disaster-response-en.html">
+    <link rel="alternate" hreflang="x-default" href="https://tokistorage.github.io/lp/community-disaster-response.html">
+    <link rel="canonical" href="https://tokistorage.github.io/lp/community-disaster-response-en.html">
+</head>
+<body>
+
+<nav class="article-nav">
+    <a href="index-en.html" class="nav-brand">TokiStorage</a>
+    <div class="nav-right">
+        <span class="nav-label">COMMUNITY DX</span>
+        <a href="community-disaster-response.html" class="lang-switch">JA</a>
+    </div>
+</nav>
+
+<article class="article-container">
+
+    <header class="article-header">
+        <p class="article-category">ESSAY — Society & Records</p>
+        <h1>Community Association DX<br>— Voices That Reach in Disaster</h1>
+        <p class="article-subtitle">
+            The essence of a community association is mutual aid.<br>
+            When phones fail and signals disappear, there are still records that reach.
+        </p>
+    </header>
+
+    <div class="article-content">
+
+        <div class="core-message">
+            <strong>The core argument:</strong> Community DX is not about replacing bulletin boards with apps. It is about designing mutual-aid systems that function at the worst possible moment — when infrastructure fails — and embedding those systems into regular drills.
+        </div>
+
+        <p class="disclaimer">*This essay is based on the author's experience as a community association president and does not represent the views of any specific municipality or organization.</p>
+
+        <h2>1. What Is a Community Association? — The Smallest Unit of Mutual Aid</h2>
+
+        <p>Japan has approximately 300,000 community associations (jichikai/chonaikai). Under Article 260-2 of the Local Autonomy Act, they are recognized as local community organizations — neither government bodies nor corporations. Their essence is mutual aid: neighbors helping neighbors, the most primitive and most resilient social unit.</p>
+
+        <p>Yet many associations have become hollow. Aging populations leave officer positions unfilled. Apartment residents remain indifferent. General meetings become formalities. Events feel like obligations. Most residents pay their dues without knowing what their association actually does.</p>
+
+        <p>I served as president of a 250-household community association — Timeless Town Shinurayasu — for two years. The goal inherited from my predecessor was "community association DX." We introduced LINE Works, continued Halloween events, organized bus tours — adequate results for peacetime fellowship. But looking back after my term, I believe we should have confronted a more fundamental question.</p>
+
+        <blockquote>
+            <p>"What is a community association for?"</p>
+        </blockquote>
+
+        <p>The answer emerges not in peace but in crisis. Festivals and events are the "face" of a community association, but its existential core lies in mutual aid during disasters. And the systems that enable disaster-time mutual aid — that is the true community DX.</p>
+
+        <h3>Bylaw Template — Including a DX Provision</h3>
+
+        <p>Community association bylaws define the organization's purpose and operational framework. Most follow a standard structure:</p>
+
+        <div class="bylaw-template">
+            <h4>Community Association Bylaws Template (Excerpt)</h4>
+            <ol>
+                <li><strong>Article 1 (Name)</strong> — This association shall be called the XX Community Association.</li>
+                <li><strong>Article 2 (Purpose)</strong> — This association aims to foster mutual fellowship among members and contribute to a safe, livable community through activities including <strong>disaster preparedness, crime prevention, and environmental beautification</strong>.</li>
+                <li><strong>Article 3 (Membership)</strong> — Household representatives residing within the association's district shall be members.</li>
+                <li><strong>Article 4 (Officers)</strong> — The association shall have one president, several vice presidents, one treasurer, one auditor, and several disaster preparedness committee members.</li>
+                <li><strong>Article 5 (Disaster Preparedness Committee)</strong> — The committee shall oversee evacuation guidance, safety confirmation, and shelter operations during disasters. <strong>The committee shall promote the adoption of digital disaster preparedness tools and related training.</strong></li>
+                <li><strong>Article 6 (General Meeting)</strong> — An annual general meeting shall be held to approve business plans, budgets, and bylaw amendments.</li>
+                <li><strong>Article 7 (Finances)</strong> — Association expenses shall be covered by membership fees, subsidies, and other income.</li>
+            </ol>
+        </div>
+
+        <p>Note Article 5. By adding a single clause — "promote the adoption of digital disaster preparedness tools and related training" — community DX becomes institutionalized at the bylaw level. Without bylaw authority, even the best tools remain individual initiatives that disappear when the president changes. Bylaws allow systems to outlast individuals.</p>
+
+        <h2>2. Disaster and Evacuation Shelter Use — When Neither Paper Nor Smartphones Work</h2>
+
+        <p>The 2011 Great East Japan Earthquake. The 2024 Noto Peninsula Earthquake. Japan has been struck by major disasters repeatedly. Each time, the same problem surfaces: information blackout.</p>
+
+        <p>Imagine the reality of an evacuation shelter. Power is out, so there are no lights. Cell towers have lost backup power, and smartphones display "No Service." Paper rosters have been soaked by floodwater — or were never brought in the rush to evacuate. Who is here? Who is missing? Who has allergies? The information most needed becomes the least available.</p>
+
+        <p>This is where TokiQR's potential emerges.</p>
+
+        <p>TokiQR encodes voice, images, and text directly within QR codes. Unlike standard QR codes that link to URLs, TokiQR stores the data itself inside the code. This means data can be read and played back using only a smartphone camera — no internet connection required.</p>
+
+        <ul>
+            <li><strong>Shelter check-in</strong>: Present a household TokiQR card to instantly display family composition, emergency contacts, and medical conditions</li>
+            <li><strong>Allergy and medical info sharing</strong>: Eliminate the need to verbally communicate dietary restrictions during meal distribution</li>
+            <li><strong>Identifying vulnerable persons</strong>: Instantly confirm information about elderly, infants, disabled, and foreign residents who need special care</li>
+            <li><strong>Safety confirmation records</strong>: Physically record which residents arrived at the shelter, for later handoff to authorities</li>
+        </ul>
+
+        <div class="key-point">
+            <p>Even without electricity or Wi-Fi at the shelter, if a smartphone still has battery, TokiQR works. It carries more information than paper, in a more compact form, with greater reliability.</p>
+        </div>
+
+        <h2>3. Infrastructure Failure — When Power and Communications Stop</h2>
+
+        <p>Infrastructure failure follows a progression. First, power goes out. Then cell tower backup batteries die (typically 3–24 hours). Landlines follow. Eventually, a state of total isolation arrives — no electricity, no communications, no water.</p>
+
+        <p>Most DX tools adopted by community associations — LINE, Slack, cloud-based rosters, Google Forms — all require internet connectivity. They are extraordinarily useful in peacetime but become useless at the moment they are needed most. I call this the "infrastructure dependency paradox."</p>
+
+        <table class="comparison-table">
+            <tr>
+                <th>Conventional DX Tools</th>
+                <th>TokiQR</th>
+            </tr>
+            <tr>
+                <td>Requires internet connection</td>
+                <td>Works completely offline</td>
+            </tr>
+            <tr>
+                <td>Unusable during server outages</td>
+                <td>No server required</td>
+            </tr>
+            <tr>
+                <td>Requires accounts and passwords</td>
+                <td>Just point a camera</td>
+            </tr>
+            <tr>
+                <td>Nonfunctional without signal</td>
+                <td>No signal needed</td>
+            </tr>
+            <tr>
+                <td>High battery consumption</td>
+                <td>Camera only — low power</td>
+            </tr>
+        </table>
+
+        <p>TokiQR's decoding process runs entirely within the smartphone. Data is stored in the QR code itself, and no external communication occurs. This is a matter of design philosophy. TokiQR is not designed with the assumption that you will be connected. It is designed with the assumption that you will not be.</p>
+
+        <div class="key-point">
+            <p>True DX is not about depending on digital infrastructure. It is about designing digital benefits that remain accessible even offline. When infrastructure fails, that design philosophy is put to the test.</p>
+        </div>
+
+        <h2>4. Family Contact Tool — When Phones Cannot Connect</h2>
+
+        <p>Immediately after a major disaster, phone networks collapse. During the Great East Japan Earthquake, call restrictions reached 90%, and it took hours to days before calls connected. The inability to confirm family safety is, for many, more devastating than the disaster itself.</p>
+
+        <p>Alternatives like NTT's Disaster Message Dial (171) and web171 exist, but they have limitations. 171 is designed for landline networks and has restrictions on mobile access. Web171 requires internet. And most critically, few residents know these services exist or how to use them.</p>
+
+        <p>I propose a "Voice Safety Confirmation Card" using TokiQR.</p>
+
+        <ul>
+            <li><strong>Pre-encoding</strong>: Record family meeting points, communication procedures in case of separation, and each member's action plan as audio, then print as TokiQR</li>
+            <li><strong>Portability</strong>: A business-card-sized card kept permanently in wallets, transit pass holders, or school bags</li>
+            <li><strong>Ease of use</strong>: Just point a smartphone camera. No app installation needed. Intuitive for the elderly and children</li>
+            <li><strong>Multilingual support</strong>: Voice messages can be encoded in any language for foreign residents</li>
+        </ul>
+
+        <p>"Dad's voice" plays from a wallet. "Grandma's message" plays from a school bag. Even when phones cannot connect, voices reach. This is safety confirmation and, at the same time, a proof of existence for family members amid uncertainty.</p>
+
+        <h2>5. Offline Recording — When Signals Disappear</h2>
+
+        <p>Recording disaster damage is the starting point of recovery. Disaster damage certificates, insurance claims, public assistance applications — all require records of "what was damaged and how."</p>
+
+        <p>In the immediate aftermath, many people take photos and videos on their smartphones. But these do not sync to the cloud — there is no signal. If the phone is submerged or the battery dies, locally stored data is lost as well.</p>
+
+        <p>TokiQR offers two solutions to this problem.</p>
+
+        <h3>Immediate Offline Recording</h3>
+
+        <p>Encode damage assessments as voice, text, and images in TokiQR format and print them on paper. If no printer is available, simply photographing the QR code on screen with another smartphone preserves the data. By giving data a physical form, it is freed from the risk of device failure or battery death.</p>
+
+        <h3>Permanent Disaster Archive</h3>
+
+        <p>In the recovery phase, TokiStorage's three-layer preservation comes into play. Quartz glass withstands temperatures above 1,000 degrees Celsius and is impervious to water. Digital data, deposit with the National Diet Library, and physical quartz glass inscription — this triple redundancy preserves disaster memory for 1,000 years.</p>
+
+        <blockquote>
+            <p>"Records are the starting point of recovery. Without records, damage and aid alike are treated as if they never happened."</p>
+        </blockquote>
+
+        <p>In the 2024 Noto Peninsula Earthquake, elderly evacuees who could not document their home damage to authorities were left behind in receiving aid. Lacking the means to record is tantamount to losing the right to receive support.</p>
+
+        <h2>6. Integration into Disaster Drills — Preparing in Peacetime</h2>
+
+        <p>No matter how brilliant the technology, it is meaningless if people do not know how to use it. Encountering TokiQR for the first time during a disaster is too late. Only by embedding it in peacetime drills can it function in crisis.</p>
+
+        <p>I propose the following drill program.</p>
+
+        <h3>Proposed Drill Menu</h3>
+
+        <ul>
+            <li><strong>Step 1: Create Family Information QR</strong> (30 minutes)<br>Each household records meeting points, emergency contacts, medical conditions, and messages to family, then prints a TokiQR card. Content is updated annually at the disaster drill.</li>
+            <li><strong>Step 2: Evacuation Shelter Check-in Simulation</strong> (20 minutes)<br>Practice shelter check-in using TokiQR cards. Participants split into reception staff and evacuees, practicing card scanning and information verification.</li>
+            <li><strong>Step 3: Offline Playback Experience</strong> (10 minutes)<br>With smartphones set to airplane mode, participants scan and play TokiQR codes. They experience firsthand that "it works without signal."</li>
+        </ul>
+
+        <p>This can be incorporated into the annual disaster drill (typically held around September 1 in many associations) as a "TokiQR Experience Booth" — positioned alongside fire extinguisher training and AED instruction.</p>
+
+        <div class="key-point">
+            <p>Disaster drills are not about conveying knowledge. They are about imprinting experience into the body. By experiencing TokiQR operation once a year and updating family information continuously, disaster response capacity reliably improves.</p>
+        </div>
+
+        <h2>Conclusion — Voices Reach</h2>
+
+        <p>During my two years as president of a 250-household association, what I thought about most was the sustainability of systems. When presidents change, policies change, tools change, know-how disappears. This is a challenge not unique to community associations but common to all organizations.</p>
+
+        <p>When I conceived TokiStorage, this challenge resonated. Records that persist regardless of who leads. Tools that function when infrastructure is severed. Voices that reach 1,000 years into the future. This is proof-of-existence technology, and it is also mutual-aid technology.</p>
+
+        <p>The essence of community association DX is not the introduction of technology. Technology is merely a means. The purpose is mutual aid — maintaining the structure of helping and being helped by neighbors. And the systems that function at the very moment mutual aid is needed most — when power is out, phones are dead, and signals have vanished — those are the systems that constitute true DX.</p>
+
+        <blockquote>
+            <p>"Even when signals cannot reach, voices can. That is the core of community association DX."</p>
+        </blockquote>
+
+    </div>
+
+    <section class="references">
+        <h2>References</h2>
+        <ul>
+            <li>Cabinet Office, Government of Japan (2024). <em>White Paper on Disaster Management 2024</em>.</li>
+            <li>Ministry of Internal Affairs and Communications (2022). <em>Report of the Study Group on Regional Communities</em>.</li>
+            <li>Local Autonomy Act, Article 260-2 (Certified Local Community Organizations).</li>
+            <li>NTT East (2011). "Damage and Congestion Status of Communications and Countermeasures in the Great East Japan Earthquake."</li>
+            <li>Cabinet Office, Government of Japan (2024). "Survey on Evacuation Shelter Operations in the 2024 Noto Peninsula Earthquake."</li>
+        </ul>
+    </section>
+
+    <footer class="article-footer">
+        <p>TokiStorage Essay Series</p>
+        <p id="essay-nav-links"></p>
+        <p style="margin-top: 1.5rem;">&copy; 2026 TokiStorage. All rights reserved.</p>
+    </footer>
+
+</article>
+
+<script src="contact-form.js" defer></script>
+<script src="essay-tts.js?v=20260220"></script>
+<script src="essay-nav.js?v=20260220"></script>
+<script src="tracker.js" defer></script>
+</body>
+</html>
