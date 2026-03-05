@@ -398,9 +398,15 @@
 
         <p>Imagine the reality of an evacuation shelter. Power is out, so there are no lights. Cell towers have lost backup power, and smartphones display "No Service." Paper rosters have been soaked by floodwater — or were never brought in the rush to evacuate. Who is here? Who is missing? Who has allergies? The information most needed becomes the least available.</p>
 
-        <p>This is where TokiQR's potential emerges.</p>
+        <p>This is where <a href="../qr/" style="color: var(--toki-teal);">TokiQR</a>'s potential emerges.</p>
 
-        <p>TokiQR encodes voice, images, and text directly within QR codes. Unlike standard QR codes that link to URLs, TokiQR stores the data itself inside the code. This means data can be read and played back using only a smartphone camera — no internet connection required.</p>
+        <p>TokiQR encodes voice, images, and text directly within QR codes. Unlike standard QR codes that link to URLs, TokiQR stores the data itself inside the code. This means data can be read and played back using only a smartphone camera — no internet connection required. It offers three media modes, each suited to different disaster communication needs.</p>
+
+        <ul>
+            <li><strong>Voice mode</strong>: Using Codec2 encoding, up to approximately 29 seconds of audio can be stored in a single QR code (at 450bps). Six quality levels from 3200bps (high clarity) to 450bps (maximum duration) are available</li>
+            <li><strong>Image mode</strong>: Capture photos or upload files, compressed as WebP and embedded directly in QR codes. Resolution auto-optimizes between 32×32 and 320×320px</li>
+            <li><strong>Text mode</strong>: Brotli compression stores approximately 5,000 characters in a single QR code — enough to cover household composition, medical conditions, allergies, and emergency contacts</li>
+        </ul>
 
         <ul>
             <li><strong>Shelter check-in</strong>: Present a household TokiQR card to instantly display family composition, emergency contacts, and medical conditions</li>
@@ -448,6 +454,10 @@
 
         <p>TokiQR's decoding process runs entirely within the smartphone. Data is stored in the QR code itself, and no external communication occurs. This is a matter of design philosophy. TokiQR is not designed with the assumption that you will be connected. It is designed with the assumption that you will not be.</p>
 
+        <p>Specifically, by tapping "Add to Home Screen" on your smartphone, TokiQR installs as a PWA (Progressive Web App). The audio encoder (Codec2), compression engine (Brotli), and decoder are all cached locally via Service Worker — after which everything works without internet. From recording to QR generation, from scanning to playback, all processing completes within the smartphone. As stated in the <a href="../qr/faq.html" style="color: var(--toki-teal);">FAQ</a>, data generated during QR creation is never sent to any server. There is zero risk of personal household data leaking externally.</p>
+
+        <p>This design extends to financial infrastructure resilience. TokiQR uses a one-time purchase model — not subscriptions (normal mode is free with unlimited use; additional credits at ¥150 per QR). No monthly license authentication exists. Even if the payment platform (Wise) goes down, the <a href="../qr/monitor.html" style="color: var(--toki-teal);">monitor program</a> includes a free track that remains operational. The <a href="../qr/settings.html" style="color: var(--toki-teal);">settings page</a> also includes a recovery console, allowing direct manipulation and restoration of on-device credits and settings via console commands in case of any disruption. Eliminating external service dependencies to the absolute minimum — this is what "designed for disconnection" means in practice.</p>
+
         <div class="key-point">
             <p>True DX is not about depending on digital infrastructure. It is about designing digital benefits that remain accessible even offline. When infrastructure fails, that design philosophy is put to the test.</p>
         </div>
@@ -461,10 +471,11 @@
         <p>I propose a "Voice Safety Confirmation Card" using TokiQR.</p>
 
         <ul>
-            <li><strong>Pre-encoding</strong>: Record family meeting points, communication procedures in case of separation, and each member's action plan as audio, then print as TokiQR</li>
+            <li><strong>Pre-encoding</strong>: Record family meeting points, communication procedures in case of separation, and each member's action plan as audio, then print as TokiQR. Recommended setting: 1200bps (approximately 14 seconds) for clear messages, or 450bps (approximately 29 seconds) for detailed instructions. Audio mode can be selected on the <a href="../qr/setup.html" style="color: var(--toki-teal);">setup page</a></li>
             <li><strong>Portability</strong>: A business-card-sized card kept permanently in wallets, transit pass holders, or school bags</li>
-            <li><strong>Ease of use</strong>: Just point a smartphone camera. No app installation needed. Intuitive for the elderly and children</li>
-            <li><strong>Multilingual support</strong>: Voice messages can be encoded in any language for foreign residents</li>
+            <li><strong>Ease of use</strong>: Just point a smartphone camera. No app installation required, no account registration needed. Intuitive for the elderly and children</li>
+            <li><strong>Multilingual support</strong>: Display language can be set to Japanese or English on the setup page. Voice messages can be encoded in any language for foreign residents</li>
+            <li><strong>Text supplement</strong>: In addition to audio, use text mode to record addresses, phone numbers, and medical information as a separate QR card for redundancy</li>
         </ul>
 
         <p>"Dad's voice" plays from a wallet. "Grandma's message" plays from a school bag. Even when phones cannot connect, voices reach. This is safety confirmation and, at the same time, a proof of existence for family members amid uncertainty.</p>
@@ -479,7 +490,7 @@
 
         <h3>Immediate Offline Recording</h3>
 
-        <p>Encode damage assessments as voice, text, and images in TokiQR format and print them on paper. If no printer is available, simply photographing the QR code on screen with another smartphone preserves the data. By giving data a physical form, it is freed from the risk of device failure or battery death.</p>
+        <p>Encode damage assessments as voice, text, and images in TokiQR format and print them on paper. Voice mode records up to 29 seconds of damage description, image mode embeds photos of structural damage directly into QR codes, and text mode uses Brotli compression to store approximately 5,000 characters — enough for addresses, damage details, support needs, and contact information. If no printer is available, simply photographing the QR code on screen with another smartphone preserves the data. By giving data a physical form, it is freed from the risk of device failure or battery death.</p>
 
         <h3>Permanent Disaster Archive</h3>
 
@@ -500,15 +511,61 @@
         <h3>Proposed Drill Menu</h3>
 
         <ul>
-            <li><strong>Step 1: Create Family Information QR</strong> (30 minutes)<br>Each household records meeting points, emergency contacts, medical conditions, and messages to family, then prints a TokiQR card. Content is updated annually at the disaster drill.</li>
-            <li><strong>Step 2: Evacuation Shelter Check-in Simulation</strong> (20 minutes)<br>Practice shelter check-in using TokiQR cards. Participants split into reception staff and evacuees, practicing card scanning and information verification.</li>
-            <li><strong>Step 3: Offline Playback Experience</strong> (10 minutes)<br>With smartphones set to airplane mode, participants scan and play TokiQR codes. They experience firsthand that "it works without signal."</li>
+            <li><strong>Step 1: TokiQR Setup</strong> (10 minutes)<br>Open <a href="../qr/" style="color: var(--toki-teal);">TokiQR</a> on your smartphone and tap "Add to Home Screen" to install it as a PWA. This enables full offline functionality from that point forward. No account registration required.</li>
+            <li><strong>Step 2: Create Family Information QR</strong> (30 minutes)<br>Use the <a href="../qr/setup.html" style="color: var(--toki-teal);">setup page</a> to create a custom association page. Set the page title to "XX Community — Disaster Card" and the print title to the district name and issue date. Audio mode of 1200bps (approximately 14 seconds, good clarity) is recommended. Each household records meeting points, emergency contacts, medical conditions, and messages, then prints a QR card. Content is updated annually. Creating a separate text-mode card for addresses, contacts, and allergy information is also recommended.</li>
+            <li><strong>Step 3: Evacuation Shelter Check-in Simulation</strong> (20 minutes)<br>Practice shelter check-in using TokiQR cards. Reception staff scan QR codes with smartphone cameras, play audio messages, and verify text information. Participants practice processing multiple households in sequence.</li>
+            <li><strong>Step 4: Offline Playback Experience</strong> (10 minutes)<br>With smartphones set to airplane mode, participants scan and play TokiQR codes. They experience firsthand that "it works without signal." Confirm that generated QR codes are stored locally and can be reprinted or updated anytime from the <a href="../qr/history.html" style="color: var(--toki-teal);">history page</a>.</li>
         </ul>
 
         <p>This can be incorporated into the annual disaster drill (typically held around September 1 in many associations) as a "TokiQR Experience Booth" — positioned alongside fire extinguisher training and AED instruction.</p>
 
         <div class="key-point">
             <p>Disaster drills are not about conveying knowledge. They are about imprinting experience into the body. By experiencing TokiQR operation once a year and updating family information continuously, disaster response capacity reliably improves.</p>
+        </div>
+
+        <h2>7. TokiQR Quick Reference</h2>
+
+        <p>Key TokiQR pages and features that disaster preparedness officers should know.</p>
+
+        <table class="comparison-table">
+            <tr>
+                <th>Page</th>
+                <th>Purpose</th>
+            </tr>
+            <tr>
+                <td><a href="../qr/" style="color: var(--toki-teal);">TokiQR Home</a></td>
+                <td>QR code generation. Three modes: voice, image, text. Add to Home Screen for offline use</td>
+            </tr>
+            <tr>
+                <td><a href="../qr/setup.html" style="color: var(--toki-teal);">Setup</a></td>
+                <td>Create custom association pages. Configure page title, print title, audio mode, available media, and display language</td>
+            </tr>
+            <tr>
+                <td><a href="../qr/history.html" style="color: var(--toki-teal);">History</a></td>
+                <td>List of generated QR codes. Reprint, export (ZIP), and archive. Stored locally on device</td>
+            </tr>
+            <tr>
+                <td><a href="../qr/faq.html" style="color: var(--toki-teal);">FAQ</a></td>
+                <td>Common questions. Offline operation, supported formats, privacy, and credit system details</td>
+            </tr>
+            <tr>
+                <td><a href="../qr/settings.html" style="color: var(--toki-teal);">App Settings</a></td>
+                <td>Service Worker cache management and updates. Settings accessible even offline</td>
+            </tr>
+        </table>
+
+        <h3>Recommended Settings for Disaster Preparedness</h3>
+
+        <ul>
+            <li><strong>Audio mode</strong>: 1200bps (approximately 14 seconds) recommended. Good balance of clarity and duration. Use 450bps (approximately 29 seconds) when detailed instructions are needed</li>
+            <li><strong>Default tab</strong>: Voice recommended. In evacuation shelters, voice is the most intuitive form of communication</li>
+            <li><strong>Available media</strong>: Enable voice + text (two modes), or all three. Effective pattern: text for household data, voice for safety messages</li>
+            <li><strong>Display language</strong>: For multinational communities, select "Follow device." Japanese devices see Japanese; English devices see English</li>
+            <li><strong>Print title</strong>: Include district name and update date, e.g., "XX Community Disaster Card / Updated September 2026"</li>
+        </ul>
+
+        <div class="key-point">
+            <p>TokiQR requires no registration, is free in normal mode, and has no usage limits. The barrier to "just try it" across all households is extremely low. The ideal cycle: experience at disaster drills leads to voluntary creation and regular updating of family information QR codes.</p>
         </div>
 
         <h2>Conclusion — Voices Reach</h2>
