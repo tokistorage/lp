@@ -110,6 +110,7 @@
     { id: 'history', ja: '歴史学', en: 'History', date: '2026-02-13' },
     { id: 'wedding-partnership', ja: '結婚式という共創', en: 'Co-Creation in Weddings', date: '2026-02-23' },
     { id: 'immigrant-burial-ecosystem', ja: '日系移民の納骨エコシステム', en: 'Immigrant Burial Ecosystem', date: '2026-03-03' },
+    { id: 'scattered-ashes', ja: '散骨と魂の帰属', en: 'Scattered Ashes & the Soul', date: '2026-03-05' },
     { id: 'kumihimo', ja: '組紐', en: 'Kumihimo', date: '2026-03-03' },
     { id: 'embodied-oral', ja: '身体感覚と口伝', en: 'Embodied Knowledge & Oral Tradition', date: '2026-03-03' },
 
@@ -338,6 +339,7 @@
     'sports':                 ['entertainment', 'tourism', 'education', 'adversity', 'lifestyle'],
     'history':                ['national-record', 'preserving-words', 'embodied-oral', 'education', 'akashic-record'],
     'wedding-partnership':    ['ceremony', 'commemorative-photo', 'community-benefit', 'what-to-leave', 'partner-boundary'],
+    'scattered-ashes':        ['immigrant-burial-ecosystem', 'ceremony', 'shiseikan', 'lifecycle', 'legacy'],
     'kumihimo':               ['art', 'hands', 'rural-workaway', 'history', 'embodied-oral'],
     'embodied-oral':          ['hands', 'kumihimo', 'history', 'preserving-words', 'ceremony'],
     // ── 自然・宇宙 ──
