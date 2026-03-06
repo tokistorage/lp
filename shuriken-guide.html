@@ -1,0 +1,428 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" type="image/png" sizes="32x32" href="asset/favicon-32.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="asset/apple-touch-icon.png">
+    <title>手裏剣 完全ガイド | トキストレージ</title>
+    <meta name="robots" content="index, follow">
+    <meta name="description" content="伊賀特産品「手裏剣石鹸」開発のための基礎研究。手裏剣の歴史・種類・投法から、「戦いから平和へ」のコアコンセプト、石鹸開発への示唆まで。">    <style>
+        :root {
+            --toki-blue: #2563EB;
+            --toki-blue-dark: #1E40AF;
+            --toki-blue-pale: #EFF6FF;
+            --accent-blue: #60A5FA;
+            --bg-white: #FFFFFF;
+            --text-primary: #1E293B;
+            --text-secondary: #475569;
+            --text-muted: #94A3B8;
+            --border: #E2E8F0;
+            --font-display: 'Hiragino Mincho ProN', 'Yu Mincho', serif;
+            --font-body: 'Hiragino Kaku Gothic ProN', 'Yu Gothic', 'Meiryo', sans-serif;
+        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        html { scroll-behavior: smooth; }
+        body { font-family: var(--font-body); font-weight: 400; background: var(--bg-white); color: var(--text-primary); line-height: 2; font-size: 16px; }
+
+        .article-nav { position: fixed; top: 0; left: 0; right: 0; z-index: 1000; background: rgba(255,255,255,0.95); backdrop-filter: blur(12px); border-bottom: 1px solid var(--border); padding: 0.6rem 1.2rem; display: flex; align-items: center; justify-content: space-between; gap: 1rem; }
+        .article-nav .nav-brand { font-family: var(--font-display); font-size: 0.9rem; font-weight: 600; color: var(--toki-blue); text-decoration: none; white-space: nowrap; }
+        .article-nav .nav-brand::before { content: ''; display: inline-block; width: 20px; height: 20px; background: url('asset/tokistorage-icon-512.png') no-repeat center / contain; vertical-align: -3px; margin-right: 5px; }
+        .article-nav .nav-right { display: flex; align-items: center; gap: 1rem; }
+        .article-nav .nav-label { font-size: 0.6rem; color: var(--text-muted); letter-spacing: 0.08em; }
+        .article-nav .lang-switch { font-size: 0.75rem; color: var(--toki-blue); text-decoration: none; padding: 0.3rem 0.6rem; border: 1px solid var(--toki-blue); border-radius: 4px; }
+        .article-nav .lang-switch:hover { background: var(--toki-blue); color: #fff; }
+
+        .article-container { max-width: 680px; margin: 0 auto; padding: 7rem 2rem 4rem; }
+        .article-header { margin-bottom: 3rem; padding-bottom: 2rem; border-bottom: 1px solid var(--border); }
+        .article-category { font-size: 0.7rem; color: var(--toki-blue); letter-spacing: 0.15em; margin-bottom: 1rem; }
+        .article-header h1 { font-family: var(--font-display); font-size: 1.8rem; font-weight: 700; line-height: 1.5; margin-bottom: 1.5rem; }
+        .article-subtitle { font-size: 0.95rem; color: var(--text-secondary); line-height: 1.9; }
+
+        .article-content h2 { font-family: var(--font-display); font-size: 1.3rem; font-weight: 600; margin: 3rem 0 1.5rem; padding-bottom: 0.5rem; border-bottom: 2px solid var(--toki-blue-pale); }
+        .article-content h3 { font-family: var(--font-display); font-size: 1.1rem; font-weight: 600; margin: 2rem 0 1rem; color: var(--toki-blue-dark); }
+        .article-content p { margin-bottom: 1.5rem; text-align: justify; }
+        .article-content blockquote { border-left: 3px solid var(--toki-blue); padding-left: 1.5rem; margin: 2rem 0; font-family: var(--font-display); color: var(--text-secondary); }
+        .article-content ul, .article-content ol { margin: 1.5rem 0; padding-left: 1.5rem; }
+        .article-content li { margin-bottom: 0.75rem; }
+
+        .core-message { background: var(--toki-blue-pale); border-left: 4px solid var(--toki-blue); padding: 1.5rem; margin: 2rem 0; font-size: 0.95rem; line-height: 1.8; }
+        .key-point { background: linear-gradient(135deg, var(--toki-blue-pale) 0%, #fff 100%); border: 1px solid var(--accent-blue); border-radius: 8px; padding: 1.5rem; margin: 2rem 0; text-align: center; }
+        .key-point p { font-family: var(--font-display); font-size: 1.1rem; color: var(--toki-blue-dark); margin: 0; }
+
+        .ref-table { width: 100%; border-collapse: collapse; margin: 1.5rem 0; font-size: 0.9rem; }
+        .ref-table th, .ref-table td { padding: 0.75rem 1rem; text-align: left; border-bottom: 1px solid var(--border); }
+        .ref-table th { background: var(--toki-blue-pale); font-weight: 500; }
+        .ref-table td { vertical-align: top; }
+
+        .article-footer { margin-top: 4rem; padding-top: 2rem; border-top: 1px solid var(--border); text-align: center; }
+        .article-footer p { font-size: 0.8rem; color: var(--text-muted); margin-bottom: 1rem; }
+        .article-footer a { color: var(--toki-blue); text-decoration: none; }
+        .article-footer a:hover { text-decoration: underline; }
+
+        @media (max-width: 768px) {
+            .article-container { padding: 6rem 1.2rem 3rem; }
+            .article-header h1 { font-size: 1.5rem; }
+            .article-nav .nav-label { display: none; }
+            .ref-table { font-size: 0.8rem; }
+            .ref-table th, .ref-table td { padding: 0.5rem 0.75rem; }
+        }
+        @media print { .article-nav { display: none; } .article-container { padding-top: 2rem; } }
+    </style>
+</head>
+<body>
+
+<nav class="article-nav">
+    <a href="essays.html" class="nav-brand">トキストレージ</a>
+    <div class="nav-right">
+        <span class="nav-label">ESSAY</span>
+        <a href="shuriken-guide-en.html" class="lang-switch">EN</a>
+    </div>
+</nav>
+
+<main class="article-container">
+    <header class="article-header">
+        <div class="article-category">ESSAY — 文化・社会活動</div>
+        <h1>手裏剣 完全ガイド</h1>
+        <p class="article-subtitle">伊賀特産品「手裏剣石鹸」開発のための基礎研究。<br>戦いの形が、平和を分かち合う形に変わるとき。</p>
+    </header>
+
+    <article class="article-content">
+
+        <div class="core-message">
+            <strong>この記事で言いたいこと：</strong>手裏剣は正義を求めて貫くもの。石鹸は平和を求めて分かち合うもの。求めるものは同じ。手段が、時代とともに変わった。
+        </div>
+
+        <h2>1. 歴史・起源</h2>
+
+        <h3>発祥と時代背景</h3>
+
+        <p>手裏剣は室町時代後期から戦国時代（15〜16世紀）にかけて、実戦用の武器として発展した。主な使用者は忍者（忍び）、武士、一部の傭兵集団である。刀や槍のような主武器ではなく、補助武器・撹乱武器として位置づけられていた。「手裏剣」の語源は「手の裏に隠した剣（刃物）」に由来する。</p>
+
+        <h3>伊賀との関係</h3>
+
+        <p>伊賀国（現・三重県伊賀市・名張市）は伊賀流忍術の発祥地である。戦国時代、伊賀忍者は諸大名に仕え、諜報・暗殺・撹乱任務を担った。1581年（天正伊賀の乱）で織田信長に壊滅させられるも、技術・文化は継承された。現在も伊賀流忍者博物館が手裏剣打ち体験を観光資源として展開している。</p>
+
+        <h3>江戸時代以降</h3>
+
+        <p>平和な時代に入り実戦使用は減少し、武芸・修行の道具へと変化した。各流派が独自の形状・投法を発展させ「手裏剣術」として体系化。明治以降は武術の近代化の中で一時衰退したが、文化としての手裏剣は今も息づいている。</p>
+
+        <h2>2. 種類・形状</h2>
+
+        <h3>棒手裏剣（ぼうしゅりけん）</h3>
+
+        <p>細長い棒状・釘状の手裏剣。鉄や鋼で作られ、直線投法で高い貫通力を持つ。懐に複数携帯しやすい形状で、戸田流、根岸流などの流派で使用された。</p>
+
+        <h3>車剣・多角手裏剣（くるまけん）</h3>
+
+        <p>いわゆる「忍者スター」として現代に広く認知される形状である。</p>
+
+        <table class="ref-table">
+            <tr>
+                <th>形状</th>
+                <th>特徴</th>
+            </tr>
+            <tr>
+                <td>四方手裏剣（4枚刃）</td>
+                <td>最もオーソドックス。バランスが良い</td>
+            </tr>
+            <tr>
+                <td>六方手裏剣（6枚刃）</td>
+                <td>安定性が高く初心者向き</td>
+            </tr>
+            <tr>
+                <td>八方手裏剣（8枚刃）</td>
+                <td>飛行安定性が高い</td>
+            </tr>
+            <tr>
+                <td>卍手裏剣</td>
+                <td>非対称形で独特の飛び方をする</td>
+            </tr>
+            <tr>
+                <td>三角手裏剣</td>
+                <td>鋭角で貫通力が高い</td>
+            </tr>
+        </table>
+
+        <h3>その他の形状</h3>
+
+        <ul>
+            <li><strong>十字型（クロス型）</strong>：映画・ゲームで一般的なイメージ</li>
+            <li><strong>菱型</strong>：シンプルで製作しやすい</li>
+            <li><strong>花型（桜・梅）</strong>：現代の装飾・土産物に多用</li>
+        </ul>
+
+        <h2>3. 用途・戦術</h2>
+
+        <h3>実戦での使用法</h3>
+
+        <ol>
+            <li><strong>撹乱・牽制</strong>：敵の動きを止める、注意をそらす</li>
+            <li><strong>逃走補助</strong>：追手に投げて時間を稼ぐ</li>
+            <li><strong>目つぶし</strong>：顔面を狙い視覚を奪う</li>
+            <li><strong>毒塗り</strong>：刃に毒を塗り小さな傷でも致命的にする</li>
+        </ol>
+
+        <h3>非殺傷用途</h3>
+
+        <ul>
+            <li><strong>音による陽動</strong>：金属音・地面への打撃音で敵を誘導</li>
+            <li><strong>道具として</strong>：蔓や布を切る、鍵を開けるなど多目的使用</li>
+        </ul>
+
+        <h3>現代の用途</h3>
+
+        <ul>
+            <li><strong>武道・競技</strong>：手裏剣術の演武・競技会</li>
+            <li><strong>観光体験</strong>：忍者テーマパークでの体験アクティビティ</li>
+            <li><strong>コレクション</strong>：歴史的工芸品としての収集</li>
+            <li><strong>エンターテインメント</strong>：映画・アニメ・ゲームの象徴的アイテム</li>
+        </ul>
+
+        <h2>4. 作り方（伝統的製法）</h2>
+
+        <h3>素材</h3>
+
+        <p>伝統的には鉄・鋼鉄（炭素鋼）を用いる。厚さは約3〜6mmで、用途により異なる。</p>
+
+        <h3>製造工程</h3>
+
+        <ol>
+            <li><strong>型取り</strong>：金属板に形状を描く・型を当てる</li>
+            <li><strong>切断</strong>：鑿（のみ）・グラインダーで切り出し</li>
+            <li><strong>研削</strong>：刃を薄く鋭利に研ぐ</li>
+            <li><strong>熱処理</strong>：焼き入れ（硬化）→焼き戻し（靭性付与）</li>
+            <li><strong>研磨</strong>：表面を滑らかに仕上げ</li>
+            <li><strong>穴あけ</strong>（中心穴）：回転安定性のため</li>
+        </ol>
+
+        <p>伊賀市内の一部鍛冶工房では体験プログラムが提供されており、薄い金属板をグラインダーで切り出す簡易版も人気がある。</p>
+
+        <h2>5. 投法・技術</h2>
+
+        <table class="ref-table">
+            <tr>
+                <th>投法</th>
+                <th>特徴</th>
+            </tr>
+            <tr>
+                <td>正手打ち</td>
+                <td>手首のスナップで回転をかける基本形</td>
+            </tr>
+            <tr>
+                <td>逆手打ち</td>
+                <td>手首を逆向きに使い変化球的軌道</td>
+            </tr>
+            <tr>
+                <td>水平打ち</td>
+                <td>水平に飛ばし広範囲をカバー</td>
+            </tr>
+            <tr>
+                <td>垂直打ち</td>
+                <td>縦回転で地面に刺さる</td>
+            </tr>
+        </table>
+
+        <p>有効射程は約5〜10m（実戦的には3〜7m）。現代の競技では的への命中精度を競う。</p>
+
+        <h2>6. 文化・トレンド</h2>
+
+        <h3>ポップカルチャーでの浸透</h3>
+
+        <p>アニメ『NARUTO』の世界的ヒットにより「忍者＝手裏剣」のイメージは国際的に定着した。ゲーム、ハリウッド映画にも忍者・手裏剣は頻繁に登場する。SNSでは手裏剣型グッズ・フード・クラフトが定期的にバズる。</p>
+
+        <h3>体験観光トレンド</h3>
+
+        <p>伊賀・甲賀での忍者体験需要は訪日外国人（インバウンド）に特に高い。「体験して持ち帰れる」土産物の需要は増加しており、映えを意識した形状・パッケージの商品化が進んでいる。</p>
+
+        <h3>手裏剣型グッズの現在</h3>
+
+        <ul>
+            <li>手裏剣型クッキー・チョコレート</li>
+            <li>手裏剣型キーホルダー・アクセサリー</li>
+            <li>手裏剣型ピザカッター・キッチン用品</li>
+            <li>手裏剣型石鹸（少数存在するが、本格的な特産品化は未開拓）</li>
+        </ul>
+
+        <h2>7. コアコンセプト：戦いから平和へ</h2>
+
+        <h3>「手裏剣を石鹸に」</h3>
+
+        <p>手裏剣は<strong>正義を求めて、貫くもの</strong>。石鹸は<strong>平和を求めて、分かち合うもの</strong>。</p>
+
+        <p>求めるものは同じ。手段が、時代とともに変わった。</p>
+
+        <blockquote>
+            <p>忍者たちは悪意で戦ったのではない。<br>
+            里を守るため、正義のために命をかけた。<br>
+            その魂を否定せず、形を変えて受け継ぐ。</p>
+        </blockquote>
+
+        <p>これは武器への批判ではなく、<strong>志の継承</strong>である。</p>
+
+        <h3>三層の意味構造</h3>
+
+        <table class="ref-table">
+            <tr>
+                <th>層</th>
+                <th>内容</th>
+            </tr>
+            <tr>
+                <td><strong>志の継承</strong></td>
+                <td>正義を貫く形 → 平和を分かち合う形へ。魂は同じ</td>
+            </tr>
+            <tr>
+                <td><strong>時間の文脈</strong></td>
+                <td>戦後80年——「戦争が終わった」ではなく「志が形を変えた」80年</td>
+            </tr>
+            <tr>
+                <td><strong>数字の変容</strong></td>
+                <td><strong>80を横にすると∞になる</strong>——永遠の平和への願い</td>
+            </tr>
+        </table>
+
+        <p>説明しなくても、手に取った人が自分で気づいていく。気づきが感動になり、感動が記憶になる設計。</p>
+
+        <div class="key-point">
+            <p>戦後80年。その数字を横にすると、∞になる。<br>
+            正義を貫いた形が、今は平和を分かち合う。<br>
+            伊賀から、永遠の願いを込めて。</p>
+        </div>
+
+        <h3>参照軸：Swords into Plowshares</h3>
+
+        <p>聖書イザヤ書の「剣を鋤に打ち直す」という普遍的な平和の比喩。ただしこの石鹸が語るのは否定ではなく<strong>継承</strong>——剣を持った者の志を、形を変えて今に生かす。</p>
+
+        <h3>なぜ伊賀でなければならないか</h3>
+
+        <p>よそが手裏剣石鹸を作っても、それは<strong>コスプレ</strong>になる。伊賀が作るから、<strong>本物の継承</strong>になる。</p>
+
+        <table class="ref-table">
+            <tr>
+                <th>理由</th>
+                <th>内容</th>
+            </tr>
+            <tr>
+                <td><strong>歴史の当事者性</strong></td>
+                <td>天正伊賀の乱で実際に滅ぼされた。その子孫の土地が「平和を願う」と言う重さは、よそには出せない</td>
+            </tr>
+            <tr>
+                <td><strong>正義の文脈</strong></td>
+                <td>伊賀忍者は侵略者ではなく守る側だった。「正義を貫いた」という言葉が嘘にならない。甲賀でさえ、文脈が変わる</td>
+            </tr>
+            <tr>
+                <td><strong>地理的孤立性</strong></td>
+                <td>山に囲まれた盆地。外からの侵略に対して里を守り続けた地形そのものが、コンセプトの背景になっている</td>
+            </tr>
+            <tr>
+                <td><strong>松尾芭蕉の存在</strong></td>
+                <td>伊賀出身の芭蕉は、武士の家系でありながら俳句で「美」を追求した。志を形を変えて生きた先人が、すでにこの土地にいる</td>
+            </tr>
+        </table>
+
+        <p>「伊賀しかできない」は販売上の差別化ではなく、<strong>コンセプトの真実性</strong>の話である。</p>
+
+        <h3>ストーリーライン</h3>
+
+        <p>忍者たちは戦うために手裏剣を持った。しかし本当に守りたかったのは、家族であり、里であり、平和な日常だった。その形を石鹸に変えることは、彼らの本当の願いを現代に受け取ることかもしれない。</p>
+
+        <h2>8. 「手裏剣石鹸」開発への示唆</h2>
+
+        <h3>形状設計のヒント</h3>
+
+        <table class="ref-table">
+            <tr>
+                <th>形状</th>
+                <th>特産品としての訴求</th>
+            </tr>
+            <tr>
+                <td>四方手裏剣</td>
+                <td>認知度最高。万人受け</td>
+            </tr>
+            <tr>
+                <td>桜・梅モチーフ変形</td>
+                <td>日本らしさ＋可愛さの両立</td>
+            </tr>
+            <tr>
+                <td>伊賀特有デザイン</td>
+                <td>伊賀流の家紋・紋様を取り入れたオリジナル</td>
+            </tr>
+        </table>
+
+        <h3>素材・香り方向性</h3>
+
+        <ul>
+            <li><strong>松・ヒノキ</strong>：忍者の山岳修行イメージ</li>
+            <li><strong>墨・白檀</strong>：和の精神性</li>
+            <li><strong>伊賀焼の土</strong>：地域性（入浴剤的要素として）</li>
+            <li><strong>茶</strong>：伊賀茶（地域農産物との連携）</li>
+        </ul>
+
+        <h3>パッケージ・ストーリー</h3>
+
+        <ul>
+            <li>「手で握って投げる」→「手を清める」へのコンセプト転換</li>
+            <li>巻物型・木箱型パッケージで非日常感の演出</li>
+            <li>英語・多言語対応でインバウンド需要を取り込む</li>
+        </ul>
+
+        <h3>製造・販売体制</h3>
+
+        <table class="ref-table">
+            <tr>
+                <th>役割</th>
+                <th>担い手</th>
+            </tr>
+            <tr>
+                <td><strong>製造・卸</strong></td>
+                <td>NPO法人伊賀の友（就労移行支援・障害者就労支援）</td>
+            </tr>
+            <tr>
+                <td><strong>販売</strong></td>
+                <td>道の駅 お茶の京都 みなみやましろ村<br>ヒルホテル サンピア伊賀<br>むらい萬香園<br>ほか</td>
+            </tr>
+            <tr>
+                <td><strong>その他</strong></td>
+                <td>ふるさと納税返礼品として展開</td>
+            </tr>
+        </table>
+
+        <p>製造を就労支援NPOが担うことで、「戦いから平和へ」のコンセプトにもうひとつの層が加わる。手裏剣石鹸は伊賀の歴史を継承するだけでなく、現在の地域社会を支える仕組みでもある。</p>
+
+        <h3>Pearl Soapとの接続点</h3>
+
+        <ul>
+            <li><strong>物語性のある石鹸</strong>という共通コンセプト</li>
+            <li>体験型配布・ギフトとしての展開</li>
+            <li>QRコード刻印による「手裏剣の歴史」「平和へのメッセージ」へのリンク</li>
+            <li>Pearl Soapが「喪失から再生」の物語なら、手裏剣石鹸は「争いから平和」の物語——どちらも<strong>形に宿る祈り</strong>という同じ思想の上にある</li>
+        </ul>
+
+        <h2>参考：伊賀の関連観光資源</h2>
+
+        <ul>
+            <li>伊賀流忍者博物館（伊賀市上野丸之内）</li>
+            <li>伊賀上野城</li>
+            <li>芭蕉翁記念館（松尾芭蕉の出身地）</li>
+            <li>伊賀焼伝統産業会館</li>
+            <li>手裏剣打ち体験施設（複数）</li>
+        </ul>
+
+        <blockquote>
+            <p>手裏剣を石鹸に変えることは、武器を否定することではない。<br>
+            志を受け継ぐことである。</p>
+        </blockquote>
+
+    </article>
+
+    <footer class="article-footer">
+        <p id="essay-nav-links"></p>
+        <p style="font-size: 0.75rem; color: var(--text-muted);">&copy; 2026 TokiStorage. All rights reserved.</p>
+    </footer>
+
+</main>
+
+<script src="essay-nav.js"></script>
+<script src="essay-tts.js"></script>
+</body>
+</html>

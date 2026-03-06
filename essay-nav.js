@@ -115,6 +115,7 @@
     { id: 'stakeholder-awareness', ja: '当事者としての自覚', en: 'Stakeholder Awareness', date: '2026-03-05' },
     { id: 'kumihimo', ja: '組紐', en: 'Kumihimo', date: '2026-03-03' },
     { id: 'embodied-oral', ja: '身体感覚と口伝', en: 'Embodied Knowledge & Oral Tradition', date: '2026-03-03' },
+    { id: 'shuriken-guide', ja: '手裏剣 完全ガイド', en: 'The Complete Guide to Shuriken', date: '2026-03-06' },
 
     // ── 自然・宇宙 ──
     { id: 'animal-welfare', ja: '動物愛護', en: 'Animal Welfare', date: '2026-02-13' },
@@ -205,6 +206,7 @@
   // LATEST_COUNT で表示件数を制御
   const LATEST_COUNT = 5;
   const latestEssayIds = [
+    'shuriken-guide',
     'community-disaster-response',
     'scattered-ashes',
     'stakeholder-awareness',
@@ -350,6 +352,7 @@
     'stakeholder-awareness':  ['national-record', 'what-to-leave', 'history', 'shiseikan', 'preserving-words'],
     'kumihimo':               ['art', 'hands', 'rural-workaway', 'history', 'embodied-oral'],
     'embodied-oral':          ['hands', 'kumihimo', 'history', 'preserving-words', 'ceremony'],
+    'shuriken-guide':         ['history', 'tourism', 'novelty-soap', 'pearl-soap-roots', 'kumihimo'],
     // ── 自然・宇宙 ──
     'animal-welfare':         ['ecology', 'esg', 'turtle', 'peace', 'sdgs'],
     'ecology':                ['animal-welfare', 'sdgs', 'esg', 'geology', 'rural-workaway'],
