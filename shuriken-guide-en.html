@@ -1,0 +1,428 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" type="image/png" sizes="32x32" href="asset/favicon-32.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="asset/apple-touch-icon.png">
+    <title>The Complete Guide to Shuriken | TokiStorage</title>
+    <meta name="robots" content="index, follow">
+    <meta name="description" content="Foundational research for developing 'Shuriken Soap' as an Iga specialty. From shuriken history, types, and throwing techniques to the core concept of 'from warfare to peace.'">    <style>
+        :root {
+            --toki-blue: #2563EB;
+            --toki-blue-dark: #1E40AF;
+            --toki-blue-pale: #EFF6FF;
+            --accent-blue: #60A5FA;
+            --bg-white: #FFFFFF;
+            --text-primary: #1E293B;
+            --text-secondary: #475569;
+            --text-muted: #94A3B8;
+            --border: #E2E8F0;
+            --font-display: 'Georgia', 'Times New Roman', serif;
+            --font-body: -apple-system, 'Segoe UI', Helvetica, Arial, sans-serif;
+        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        html { scroll-behavior: smooth; }
+        body { font-family: var(--font-body); font-weight: 400; background: var(--bg-white); color: var(--text-primary); line-height: 2; font-size: 16px; }
+
+        .article-nav { position: fixed; top: 0; left: 0; right: 0; z-index: 1000; background: rgba(255,255,255,0.95); backdrop-filter: blur(12px); border-bottom: 1px solid var(--border); padding: 0.6rem 1.2rem; display: flex; align-items: center; justify-content: space-between; gap: 1rem; }
+        .article-nav .nav-brand { font-family: var(--font-display); font-size: 0.9rem; font-weight: 600; color: var(--toki-blue); text-decoration: none; white-space: nowrap; }
+        .article-nav .nav-brand::before { content: ''; display: inline-block; width: 20px; height: 20px; background: url('asset/tokistorage-icon-512.png') no-repeat center / contain; vertical-align: -3px; margin-right: 5px; }
+        .article-nav .nav-right { display: flex; align-items: center; gap: 1rem; }
+        .article-nav .nav-label { font-size: 0.6rem; color: var(--text-muted); letter-spacing: 0.08em; }
+        .article-nav .lang-switch { font-size: 0.75rem; color: var(--toki-blue); text-decoration: none; padding: 0.3rem 0.6rem; border: 1px solid var(--toki-blue); border-radius: 4px; }
+        .article-nav .lang-switch:hover { background: var(--toki-blue); color: #fff; }
+
+        .article-container { max-width: 680px; margin: 0 auto; padding: 7rem 2rem 4rem; }
+        .article-header { margin-bottom: 3rem; padding-bottom: 2rem; border-bottom: 1px solid var(--border); }
+        .article-category { font-size: 0.7rem; color: var(--toki-blue); letter-spacing: 0.15em; margin-bottom: 1rem; }
+        .article-header h1 { font-family: var(--font-display); font-size: 1.8rem; font-weight: 700; line-height: 1.5; margin-bottom: 1.5rem; }
+        .article-subtitle { font-size: 0.95rem; color: var(--text-secondary); line-height: 1.9; }
+
+        .article-content h2 { font-family: var(--font-display); font-size: 1.3rem; font-weight: 600; margin: 3rem 0 1.5rem; padding-bottom: 0.5rem; border-bottom: 2px solid var(--toki-blue-pale); }
+        .article-content h3 { font-family: var(--font-display); font-size: 1.1rem; font-weight: 600; margin: 2rem 0 1rem; color: var(--toki-blue-dark); }
+        .article-content p { margin-bottom: 1.5rem; text-align: justify; }
+        .article-content blockquote { border-left: 3px solid var(--toki-blue); padding-left: 1.5rem; margin: 2rem 0; font-family: var(--font-display); color: var(--text-secondary); }
+        .article-content ul, .article-content ol { margin: 1.5rem 0; padding-left: 1.5rem; }
+        .article-content li { margin-bottom: 0.75rem; }
+
+        .core-message { background: var(--toki-blue-pale); border-left: 4px solid var(--toki-blue); padding: 1.5rem; margin: 2rem 0; font-size: 0.95rem; line-height: 1.8; }
+        .key-point { background: linear-gradient(135deg, var(--toki-blue-pale) 0%, #fff 100%); border: 1px solid var(--accent-blue); border-radius: 8px; padding: 1.5rem; margin: 2rem 0; text-align: center; }
+        .key-point p { font-family: var(--font-display); font-size: 1.1rem; color: var(--toki-blue-dark); margin: 0; }
+
+        .ref-table { width: 100%; border-collapse: collapse; margin: 1.5rem 0; font-size: 0.9rem; }
+        .ref-table th, .ref-table td { padding: 0.75rem 1rem; text-align: left; border-bottom: 1px solid var(--border); }
+        .ref-table th { background: var(--toki-blue-pale); font-weight: 500; }
+        .ref-table td { vertical-align: top; }
+
+        .article-footer { margin-top: 4rem; padding-top: 2rem; border-top: 1px solid var(--border); text-align: center; }
+        .article-footer p { font-size: 0.8rem; color: var(--text-muted); margin-bottom: 1rem; }
+        .article-footer a { color: var(--toki-blue); text-decoration: none; }
+        .article-footer a:hover { text-decoration: underline; }
+
+        @media (max-width: 768px) {
+            .article-container { padding: 6rem 1.2rem 3rem; }
+            .article-header h1 { font-size: 1.5rem; }
+            .article-nav .nav-label { display: none; }
+            .ref-table { font-size: 0.8rem; }
+            .ref-table th, .ref-table td { padding: 0.5rem 0.75rem; }
+        }
+        @media print { .article-nav { display: none; } .article-container { padding-top: 2rem; } }
+    </style>
+</head>
+<body>
+
+<nav class="article-nav">
+    <a href="essays-en.html" class="nav-brand">TokiStorage</a>
+    <div class="nav-right">
+        <span class="nav-label">ESSAY</span>
+        <a href="shuriken-guide.html" class="lang-switch">JA</a>
+    </div>
+</nav>
+
+<main class="article-container">
+    <header class="article-header">
+        <div class="article-category">ESSAY — Culture &amp; Community</div>
+        <h1>The Complete Guide to Shuriken</h1>
+        <p class="article-subtitle">Foundational research for developing "Shuriken Soap" as an Iga specialty.<br>When the shape of warfare becomes the shape of sharing peace.</p>
+    </header>
+
+    <article class="article-content">
+
+        <div class="core-message">
+            <strong>What this essay is about:</strong> The shuriken was wielded to pierce through in pursuit of justice. Soap is shared in pursuit of peace. The aspiration is the same. Only the means have changed with time.
+        </div>
+
+        <h2>1. History &amp; Origins</h2>
+
+        <h3>Birth and Historical Context</h3>
+
+        <p>Shuriken developed as practical weapons from the late Muromachi period through the Sengoku era (15th&ndash;16th century). Primary users were ninja (shinobi), samurai, and certain mercenary groups. Rather than a primary weapon like a sword or spear, shuriken were positioned as auxiliary and disruption tools. The word "shuriken" derives from "a blade hidden in the palm of the hand."</p>
+
+        <h3>The Iga Connection</h3>
+
+        <p>Iga Province (present-day Iga City and Nabari City, Mie Prefecture) is the birthplace of Iga-ryu ninjutsu. During the Sengoku period, Iga ninja served various feudal lords in intelligence, assassination, and disruption missions. Though devastated by Oda Nobunaga in the Tensho Iga War of 1581, their techniques and culture were passed down. Today, the Iga-ryu Ninja Museum continues to offer shuriken-throwing experiences as a tourism attraction.</p>
+
+        <h3>From the Edo Period Onward</h3>
+
+        <p>With the arrival of peace, practical use declined and shuriken transformed into tools of martial training and discipline. Various schools developed distinctive shapes and throwing methods, systematizing the practice as "shurikenjutsu." After the Meiji Restoration, it temporarily declined amid the modernization of martial arts, but shuriken culture endures to this day.</p>
+
+        <h2>2. Types &amp; Shapes</h2>
+
+        <h3>Bo-shuriken (Stick Shuriken)</h3>
+
+        <p>Elongated, nail-shaped shuriken made of iron or steel. They deliver high penetrating power through straight-line throwing and are easy to conceal in clothing. Used in schools such as Toda-ryu and Negishi-ryu.</p>
+
+        <h3>Kuruma-ken &amp; Multi-Pointed Shuriken</h3>
+
+        <p>The shape widely recognized today as the "ninja star."</p>
+
+        <table class="ref-table">
+            <tr>
+                <th>Shape</th>
+                <th>Characteristics</th>
+            </tr>
+            <tr>
+                <td>Four-pointed (4 blades)</td>
+                <td>The most classic design. Well-balanced</td>
+            </tr>
+            <tr>
+                <td>Six-pointed (6 blades)</td>
+                <td>High stability, suitable for beginners</td>
+            </tr>
+            <tr>
+                <td>Eight-pointed (8 blades)</td>
+                <td>Excellent flight stability</td>
+            </tr>
+            <tr>
+                <td>Manji (swastika-shaped)</td>
+                <td>Asymmetric form with a distinctive flight pattern</td>
+            </tr>
+            <tr>
+                <td>Triangular</td>
+                <td>Acute angles for high penetrating power</td>
+            </tr>
+        </table>
+
+        <h3>Other Shapes</h3>
+
+        <ul>
+            <li><strong>Cross-shaped</strong>: The image most common in films and games</li>
+            <li><strong>Diamond-shaped</strong>: Simple and easy to produce</li>
+            <li><strong>Flower-shaped (cherry blossom, plum)</strong>: Widely used in modern decorative souvenirs</li>
+        </ul>
+
+        <h2>3. Uses &amp; Tactics</h2>
+
+        <h3>Battlefield Applications</h3>
+
+        <ol>
+            <li><strong>Disruption &amp; diversion</strong>: Halt or distract the enemy</li>
+            <li><strong>Escape aid</strong>: Throw at pursuers to buy time</li>
+            <li><strong>Blinding</strong>: Aimed at the face to impair vision</li>
+            <li><strong>Poison application</strong>: Coated blades make even small wounds lethal</li>
+        </ol>
+
+        <h3>Non-lethal Uses</h3>
+
+        <ul>
+            <li><strong>Sound decoys</strong>: Metallic sounds or ground impacts to misdirect enemies</li>
+            <li><strong>Multi-purpose tool</strong>: Cutting vines or cloth, picking locks, and other utility tasks</li>
+        </ul>
+
+        <h3>Modern Uses</h3>
+
+        <ul>
+            <li><strong>Martial arts &amp; competition</strong>: Shurikenjutsu demonstrations and tournaments</li>
+            <li><strong>Tourism experiences</strong>: Activities at ninja-themed parks</li>
+            <li><strong>Collecting</strong>: Historical craftsmanship as collectibles</li>
+            <li><strong>Entertainment</strong>: Iconic items in films, anime, and games</li>
+        </ul>
+
+        <h2>4. Crafting (Traditional Methods)</h2>
+
+        <h3>Materials</h3>
+
+        <p>Traditionally made from iron or carbon steel. Thickness ranges from approximately 3&ndash;6mm depending on the intended use.</p>
+
+        <h3>Manufacturing Process</h3>
+
+        <ol>
+            <li><strong>Template</strong>: Drawing the shape onto a metal plate or applying a pattern</li>
+            <li><strong>Cutting</strong>: Carving out with chisels or grinders</li>
+            <li><strong>Grinding</strong>: Sharpening the blades to a fine edge</li>
+            <li><strong>Heat treatment</strong>: Quenching (hardening) followed by tempering (adding toughness)</li>
+            <li><strong>Polishing</strong>: Smoothing the surface</li>
+            <li><strong>Center hole</strong>: Drilled for rotational stability</li>
+        </ol>
+
+        <p>Some blacksmith workshops in Iga City offer hands-on programs, with simplified versions where participants cut thin metal sheets with grinders also proving popular.</p>
+
+        <h2>5. Throwing Techniques</h2>
+
+        <table class="ref-table">
+            <tr>
+                <th>Technique</th>
+                <th>Characteristics</th>
+            </tr>
+            <tr>
+                <td>Seite-uchi (overhand)</td>
+                <td>The basic form, using wrist snap to generate spin</td>
+            </tr>
+            <tr>
+                <td>Gyakute-uchi (underhand)</td>
+                <td>Reversed wrist motion for a curving trajectory</td>
+            </tr>
+            <tr>
+                <td>Suihei-uchi (horizontal)</td>
+                <td>Thrown flat to cover a wide area</td>
+            </tr>
+            <tr>
+                <td>Suichoku-uchi (vertical)</td>
+                <td>Vertical spin, designed to stick into the ground</td>
+            </tr>
+        </table>
+
+        <p>Effective range is approximately 5&ndash;10 meters (practically 3&ndash;7 meters in combat). Modern competitions focus on target accuracy.</p>
+
+        <h2>6. Culture &amp; Trends</h2>
+
+        <h3>Pop Culture Penetration</h3>
+
+        <p>The global success of the anime <em>NARUTO</em> cemented the "ninja = shuriken" image worldwide. Ninja and shuriken appear frequently in games and Hollywood films. On social media, shuriken-shaped goods, foods, and crafts regularly go viral.</p>
+
+        <h3>Experiential Tourism Trends</h3>
+
+        <p>Demand for ninja experiences in Iga and Koka is particularly high among international visitors (inbound tourism). The market for "try it and take it home" souvenirs is growing, with product design increasingly shaped by visual appeal and social media shareability.</p>
+
+        <h3>Shuriken-Shaped Goods Today</h3>
+
+        <ul>
+            <li>Shuriken-shaped cookies and chocolates</li>
+            <li>Shuriken-shaped keychains and accessories</li>
+            <li>Shuriken-shaped pizza cutters and kitchen tools</li>
+            <li>Shuriken-shaped soap (a few exist, but full-scale specialty product development remains untapped)</li>
+        </ul>
+
+        <h2>7. Core Concept: From Warfare to Peace</h2>
+
+        <h3>"Turning Shuriken into Soap"</h3>
+
+        <p>The shuriken was wielded to <strong>pierce through in pursuit of justice</strong>. Soap is shared to <strong>cleanse in pursuit of peace</strong>.</p>
+
+        <p>The aspiration is the same. Only the means have changed with time.</p>
+
+        <blockquote>
+            <p>The ninja did not fight out of malice.<br>
+            They risked their lives to protect their villages, for the sake of justice.<br>
+            We do not deny their spirit&mdash;we inherit it in a new form.</p>
+        </blockquote>
+
+        <p>This is not a critique of weapons. It is the <strong>succession of a conviction</strong>.</p>
+
+        <h3>Three Layers of Meaning</h3>
+
+        <table class="ref-table">
+            <tr>
+                <th>Layer</th>
+                <th>Content</th>
+            </tr>
+            <tr>
+                <td><strong>Succession of conviction</strong></td>
+                <td>From a shape that pierced for justice to a shape that shares peace. The spirit remains</td>
+            </tr>
+            <tr>
+                <td><strong>Temporal context</strong></td>
+                <td>80 years since the war&mdash;not "the war ended" but "the conviction changed form" over 80 years</td>
+            </tr>
+            <tr>
+                <td><strong>Numeric transformation</strong></td>
+                <td><strong>Turn 80 on its side and it becomes &infin;</strong>&mdash;a wish for eternal peace</td>
+            </tr>
+        </table>
+
+        <p>No explanation needed. Those who hold it discover the meaning on their own. Discovery becomes emotion, and emotion becomes memory. That is the design.</p>
+
+        <div class="key-point">
+            <p>Eighty years since the war. Turn that number on its side, and it becomes &infin;.<br>
+            The shape that once pierced for justice now shares peace.<br>
+            From Iga, with an eternal wish.</p>
+        </div>
+
+        <h3>Reference: Swords into Plowshares</h3>
+
+        <p>The universal peace metaphor from the Book of Isaiah: "beat their swords into plowshares." But what this soap speaks of is not denial&mdash;it is <strong>succession</strong>: carrying forward the conviction of those who once bore blades, in a form fit for today.</p>
+
+        <h3>Why It Must Be Iga</h3>
+
+        <p>If someone elsewhere makes shuriken soap, it becomes <strong>cosplay</strong>. When Iga makes it, it becomes <strong>authentic succession</strong>.</p>
+
+        <table class="ref-table">
+            <tr>
+                <th>Reason</th>
+                <th>Detail</th>
+            </tr>
+            <tr>
+                <td><strong>Historical stakes</strong></td>
+                <td>Iga was actually destroyed in the Tensho Iga War. When the descendants of that land say "we wish for peace," the weight is something no other place can replicate</td>
+            </tr>
+            <tr>
+                <td><strong>Context of justice</strong></td>
+                <td>Iga ninja were defenders, not invaders. The phrase "pierced for justice" rings true. Even Koka carries a different context</td>
+            </tr>
+            <tr>
+                <td><strong>Geographic isolation</strong></td>
+                <td>A basin surrounded by mountains. The very terrain that was defended against outside invasion forms the backdrop of the concept</td>
+            </tr>
+            <tr>
+                <td><strong>Matsuo Basho</strong></td>
+                <td>Born in Iga to a samurai family, Basho pursued beauty through haiku. A predecessor who lived by transforming conviction into a new form already exists in this land</td>
+            </tr>
+        </table>
+
+        <p>"Only Iga can do this" is not a matter of market differentiation. It is a matter of <strong>conceptual authenticity</strong>.</p>
+
+        <h3>Storyline</h3>
+
+        <p>Ninja carried shuriken to fight. But what they truly wanted to protect was their families, their villages, their peaceful daily lives. Transforming that shape into soap may be a way of receiving their true wish in the present day.</p>
+
+        <h2>8. Implications for "Shuriken Soap" Development</h2>
+
+        <h3>Shape Design Hints</h3>
+
+        <table class="ref-table">
+            <tr>
+                <th>Shape</th>
+                <th>Appeal as a Specialty Product</th>
+            </tr>
+            <tr>
+                <td>Four-pointed shuriken</td>
+                <td>Highest recognition. Universal appeal</td>
+            </tr>
+            <tr>
+                <td>Cherry blossom / plum blossom variation</td>
+                <td>Combines Japanese aesthetics with charm</td>
+            </tr>
+            <tr>
+                <td>Iga-original design</td>
+                <td>Incorporating Iga-ryu family crests and motifs</td>
+            </tr>
+        </table>
+
+        <h3>Materials &amp; Fragrance Direction</h3>
+
+        <ul>
+            <li><strong>Pine &amp; Japanese cypress (hinoki)</strong>: Evoking the ninja's mountain training</li>
+            <li><strong>Ink &amp; sandalwood (byakudan)</strong>: Japanese spiritual aesthetics</li>
+            <li><strong>Iga-yaki clay</strong>: Regional character (as a bath additive element)</li>
+            <li><strong>Tea</strong>: Iga tea (collaboration with regional agriculture)</li>
+        </ul>
+
+        <h3>Packaging &amp; Story</h3>
+
+        <ul>
+            <li>"Gripped and thrown by hand" &rarr; "Cleansing the hands"&mdash;a conceptual pivot</li>
+            <li>Scroll-shaped or wooden-box packaging for a sense of occasion</li>
+            <li>English and multilingual support to capture inbound tourism demand</li>
+        </ul>
+
+        <h3>Manufacturing &amp; Sales Structure</h3>
+
+        <table class="ref-table">
+            <tr>
+                <th>Role</th>
+                <th>Partner</th>
+            </tr>
+            <tr>
+                <td><strong>Manufacturing &amp; wholesale</strong></td>
+                <td>NPO Iga no Tomo (vocational transition support &amp; disability employment services)</td>
+            </tr>
+            <tr>
+                <td><strong>Retail</strong></td>
+                <td>Michi-no-Eki Ocha no Kyoto Minamiyamashiro Village<br>Hill Hotel Sunpia Iga<br>Murai Bankoen<br>and others</td>
+            </tr>
+            <tr>
+                <td><strong>Other</strong></td>
+                <td>Available as a Furusato Nozei (hometown tax) return gift</td>
+            </tr>
+        </table>
+
+        <p>By entrusting manufacturing to a vocational support NPO, another layer is added to the "from warfare to peace" concept. Shuriken soap does not merely inherit Iga's history&mdash;it also becomes a mechanism that supports the local community today.</p>
+
+        <h3>Connection to Pearl Soap</h3>
+
+        <ul>
+            <li><strong>Soap with a story</strong> as a shared concept</li>
+            <li>Experiential distribution and gift applications</li>
+            <li>QR code imprint linking to "the history of shuriken" and "a message of peace"</li>
+            <li>If Pearl Soap tells a story of "rebirth from loss," Shuriken Soap tells a story of "peace from conflict"&mdash;both rest on the same philosophy of <strong>prayer embodied in form</strong></li>
+        </ul>
+
+        <h2>Reference: Iga Tourism Resources</h2>
+
+        <ul>
+            <li>Iga-ryu Ninja Museum (Ueno-Marunouchi, Iga City)</li>
+            <li>Iga Ueno Castle</li>
+            <li>Basho Memorial Museum (birthplace of Matsuo Basho)</li>
+            <li>Iga-yaki Traditional Industry Hall</li>
+            <li>Shuriken-throwing experience facilities (multiple)</li>
+        </ul>
+
+        <blockquote>
+            <p>Turning shuriken into soap is not a denial of weapons.<br>
+            It is the succession of a conviction.</p>
+        </blockquote>
+
+    </article>
+
+    <footer class="article-footer">
+        <p id="essay-nav-links"></p>
+        <p style="font-size: 0.75rem; color: var(--text-muted);">&copy; 2026 TokiStorage. All rights reserved.</p>
+    </footer>
+
+</main>
+
+<script src="essay-nav.js"></script>
+<script src="essay-tts.js"></script>
+</body>
+</html>
