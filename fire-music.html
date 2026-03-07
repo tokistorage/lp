@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" type="image/png" sizes="32x32" href="asset/favicon-32.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="asset/apple-touch-icon.png">
+    <title>消防音楽隊とトキストレージ | トキストレージ</title>
+    <meta name="robots" content="index, follow">
+    <meta name="description" content="消防音楽隊の演奏は、消えた瞬間から記憶になる。消防イベントの音楽・市長の挨拶・市民の歌を、世代を超えて届ける仕組みを考える。">    <style>
+        :root {
+            --toki-blue: #2563EB;
+            --toki-blue-dark: #1E40AF;
+            --toki-blue-pale: #EFF6FF;
+            --accent-blue: #60A5FA;
+            --bg-white: #FFFFFF;
+            --text-primary: #1E293B;
+            --text-secondary: #475569;
+            --text-muted: #94A3B8;
+            --border: #E2E8F0;
+            --font-display: 'Hiragino Mincho ProN', 'Yu Mincho', serif;
+            --font-body: 'Hiragino Kaku Gothic ProN', 'Yu Gothic', 'Meiryo', sans-serif;
+        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        html { scroll-behavior: smooth; }
+        body { font-family: var(--font-body); font-weight: 400; background: var(--bg-white); color: var(--text-primary); line-height: 2; font-size: 16px; }
+
+        .article-nav { position: fixed; top: 0; left: 0; right: 0; z-index: 1000; background: rgba(255,255,255,0.95); backdrop-filter: blur(12px); border-bottom: 1px solid var(--border); padding: 0.6rem 1.2rem; display: flex; align-items: center; justify-content: space-between; gap: 1rem; }
+        .article-nav .nav-brand { font-family: var(--font-display); font-size: 0.9rem; font-weight: 600; color: var(--toki-blue); text-decoration: none; white-space: nowrap; }
+        .article-nav .nav-brand::before { content: ''; display: inline-block; width: 20px; height: 20px; background: url('asset/tokistorage-icon-512.png') no-repeat center / contain; vertical-align: -3px; margin-right: 5px; }
+        .article-nav .nav-right { display: flex; align-items: center; gap: 1rem; }
+        .article-nav .nav-label { font-size: 0.6rem; color: var(--text-muted); letter-spacing: 0.08em; }
+        .article-nav .lang-switch { font-size: 0.75rem; color: var(--toki-blue); text-decoration: none; padding: 0.3rem 0.6rem; border: 1px solid var(--toki-blue); border-radius: 4px; }
+        .article-nav .lang-switch:hover { background: var(--toki-blue); color: #fff; }
+
+        .article-container { max-width: 680px; margin: 0 auto; padding: 7rem 2rem 4rem; }
+        .article-header { margin-bottom: 3rem; padding-bottom: 2rem; border-bottom: 1px solid var(--border); }
+        .article-category { font-size: 0.7rem; color: var(--toki-blue); letter-spacing: 0.15em; margin-bottom: 1rem; }
+        .article-header h1 { font-family: var(--font-display); font-size: 1.8rem; font-weight: 700; line-height: 1.5; margin-bottom: 1.5rem; }
+        .article-subtitle { font-size: 0.95rem; color: var(--text-secondary); line-height: 1.9; }
+
+        .article-content h2 { font-family: var(--font-display); font-size: 1.3rem; font-weight: 600; margin: 3rem 0 1.5rem; padding-bottom: 0.5rem; border-bottom: 2px solid var(--toki-blue-pale); }
+        .article-content h3 { font-family: var(--font-display); font-size: 1.1rem; font-weight: 600; margin: 2rem 0 1rem; color: var(--toki-blue-dark); }
+        .article-content p { margin-bottom: 1.5rem; text-align: justify; }
+        .article-content blockquote { border-left: 3px solid var(--toki-blue); padding-left: 1.5rem; margin: 2rem 0; font-family: var(--font-display); color: var(--text-secondary); }
+        .article-content ul { margin: 1.5rem 0; padding-left: 1.5rem; }
+        .article-content li { margin-bottom: 0.75rem; }
+
+        .core-message { background: var(--toki-blue-pale); border-left: 4px solid var(--toki-blue); padding: 1.5rem; margin: 2rem 0; font-size: 0.95rem; line-height: 1.8; }
+        .key-point { background: linear-gradient(135deg, var(--toki-blue-pale) 0%, #fff 100%); border: 1px solid var(--accent-blue); border-radius: 8px; padding: 1.5rem; margin: 2rem 0; text-align: center; }
+        .key-point p { font-family: var(--font-display); font-size: 1.1rem; color: var(--toki-blue-dark); margin: 0; }
+
+        .article-footer { margin-top: 4rem; padding-top: 2rem; border-top: 1px solid var(--border); text-align: center; }
+        .article-footer p { font-size: 0.8rem; color: var(--text-muted); margin-bottom: 1rem; }
+        .article-footer a { color: var(--toki-blue); text-decoration: none; }
+        .article-footer a:hover { text-decoration: underline; }
+
+        @media (max-width: 768px) {
+            .article-container { padding: 6rem 1.2rem 3rem; }
+            .article-header h1 { font-size: 1.5rem; }
+            .article-nav .nav-label { display: none; }
+        }
+        @media print { .article-nav { display: none; } .article-container { padding-top: 2rem; } }
+    </style>
+</head>
+<body>
+
+<nav class="article-nav">
+    <a href="essays.html" class="nav-brand">トキストレージ</a>
+    <div class="nav-right">
+        <span class="nav-label">ESSAY</span>
+        <a href="fire-music-en.html" class="lang-switch">EN</a>
+    </div>
+</nav>
+
+<main class="article-container">
+    <header class="article-header">
+        <div class="article-category">ESSAY — 文化・社会活動</div>
+        <h1>消防音楽隊とトキストレージ</h1>
+        <p class="article-subtitle">消防音楽隊の演奏は、消えた瞬間から記憶になる。<br>その記憶を、世代を超えて届ける仕組みがある。</p>
+    </header>
+
+    <article class="article-content">
+
+        <div class="core-message">
+            消防イベントで鳴る音楽は、行政と市民が同じ空気を吸う瞬間の記録である。消火体験や避難訓練と同じように、音楽もまた「体験して持ち帰る」ことができる——TokiQRという形で。
+        </div>
+
+        <h2>1. 消防イベントの風景</h2>
+
+        <p>消防車と救急車が並ぶ。子どもたちが放水体験に歓声を上げ、煙の中を匍匐前進する避難体験に緊張する。看護施設のブースでは心肺蘇生の手順が丁寧に教えられ、防災グッズの展示が並ぶ。</p>
+
+        <p>その一角で、消防音楽隊が演奏を始める。</p>
+
+        <p>消防音楽隊は多くの自治体に存在する。消防職員が本業の傍ら練習を重ね、地域行事で演奏する。彼らの音楽は、消防という組織の「もうひとつの顔」である。火を消すだけでなく、音楽で地域と繋がる。消防イベントの空気を作っているのは、消防車の赤でも放水の水しぶきでもなく、この生きた音楽かもしれない。</p>
+
+        <h2>2. 演奏音楽を残す意義</h2>
+
+        <p>音楽は演奏された瞬間に消える。これは音楽という芸術の本質的な性質であり、CDやYouTubeがそれを変えたように見えて、実は変えていない。録音されたものは音楽の複製であり、「あの日、あの場所で鳴った音」ではない。</p>
+
+        <p>消防音楽隊の演奏には、その場でしか感じられないものがある。屋外の風、子どもの笑い声と重なる旋律、消防車のサイレンとの不思議なコントラスト。それらは録音には入らない——しかし、その場にいた人の声なら、断片を伝えることができる。</p>
+
+        <p>「今日の消防音楽隊、すごくよかったね」という一言。「この曲、おばあちゃんが好きだった曲だ」という呟き。音楽そのものは消えても、音楽に触発された声は、記憶の鍵になる。</p>
+
+        <h2>3. 市長の挨拶と想いの継承</h2>
+
+        <p>消防イベントには、市長の挨拶がある。行政の長が市民の前に立ち、防災への決意を語り、地域の安全を誓う。多くの人はこれを儀礼的なものとして聞き流すかもしれない。</p>
+
+        <p>しかし市長の挨拶は、その時代の市政の意志表明である。</p>
+
+        <p>災害の教訓をどう語ったか。市民に何を約束したか。どんな言葉を選び、どんな声のトーンで語ったか。10年後、20年後に振り返ったとき、「あの時の市長は何を語ったか」という記録は、議事録では伝わらない温度を持っている。</p>
+
+        <p>テキストは内容を伝える。しかし声は、内容とともに覚悟を伝える。市長が震災の記憶を語るとき、声の震えや間の取り方に、文字には載らない意志が宿る。</p>
+
+        <h2>4. 市民の歌——世代を超えて残る意味</h2>
+
+        <p>多くの自治体には「市民の歌」がある。制定された経緯も、歌詞の内容も、自治体ごとに異なる。しかし共通しているのは、そこに地域のアイデンティティが込められていることだ。</p>
+
+        <p>市民の歌の歌詞には、その土地の風景が描かれる。川の名前、山の稜線、海の匂い。人は移り住み、建物は建て替わっても、歌に刻まれた風景は変わらない。歌は、変わりゆく街の不変の肖像画である。</p>
+
+        <p>消防音楽隊が市民の歌を演奏するとき、行政と文化が重なる。消防という命を守る組織が、地域の歌を奏でる。そこには「守るべきものは命だけではない、この街の記憶もまた守る」という無言のメッセージがある。</p>
+
+        <div class="key-point">
+            <p>人は消えても歌は残る。歌が残れば、その歌を歌った人々の記憶も残る。</p>
+        </div>
+
+        <h2>5. 著作権と公開主体</h2>
+
+        <p>行政イベントの演奏記録には、著作権の問題がつきまとう。演奏された楽曲の著作権は作曲者に帰属し、演奏の著作隣接権は演奏者にある。自治体が主催するイベントであっても、記録の公開には権利処理が必要になる。</p>
+
+        <p>しかし市民の歌であれば話は異なる。多くの場合、自治体が著作権を保有しているか、広く利用を許諾している。消防音楽隊が市民の歌を演奏し、その記録を自治体が市民に還元する——この構図は、権利関係がもっともシンプルになるケースのひとつである。</p>
+
+        <p>TokiQRの特性がここで活きる。TokiQRは音声データをQRコード内に直接エンコードする。サーバーに音声ファイルをアップロードする必要がない。つまり、配信プラットフォームへの権利許諾も、ストリーミングサービスとの契約も不要になる。自治体が印刷物としてQRを配布するだけで、市民は「あの日の音」を手元に持つことができる。</p>
+
+        <h2>6. 参加型の体験としてのTokiQR</h2>
+
+        <p>消防イベントは体験型である。消火器を握り、煙の中を進み、AEDの手順を学ぶ。参加者は見るだけでなく、体を使って記憶に刻む。</p>
+
+        <p>音楽も同じように「体験して持ち帰る」ことができたらどうだろうか。</p>
+
+        <p>消防音楽隊の演奏から30秒をTokiQRにエンコードし、イベントのチラシに印刷する。参加者はスマートフォンでQRを読み取り、「あの日の演奏」を持ち帰る。消火体験の記憶と、音楽の記憶が、一枚の紙の上で重なる。</p>
+
+        <p>市長の挨拶の核心部分——30秒に凝縮された決意表明——を音声QRにして年次報告に添える。文字だけの報告書には載らない「声の温度」が、市民に届く。</p>
+
+        <p>この発想は、防災訓練との接続も自然に生まれる。自治会の防災マニュアルにTokiQRを載せれば、避難手順を音声で確認できる。消防イベントと日常の防災が、QRコードという小さな接点で繋がる。</p>
+
+        <h3>配布シナリオ</h3>
+        <ul>
+            <li>イベントチラシの裏面に消防音楽隊の演奏30秒をQRで印刷</li>
+            <li>市報・広報誌に市長メッセージの音声QRを掲載</li>
+            <li>防災マニュアルに避難手順の音声ガイドをQRで添付</li>
+            <li>消防署の見学記念カードに音楽隊の演奏QRを印刷</li>
+        </ul>
+
+        <h2>7. 音は消えても、届く</h2>
+
+        <p>消防音楽隊の演奏は、イベントが終われば消える。市長の挨拶は、その場にいなかった人には届かない。市民の歌は、歌う人が減れば忘れられていく。</p>
+
+        <p>しかし消えることは、届かないことと同義ではない。</p>
+
+        <p>TokiQRは、消えゆく音を紙の上に定着させる。一枚のQRコードが、10年後の市民に「あの日の音」を届ける。石英ガラスに刻めば、1000年後にも届く。消防音楽隊が奏でた市民の歌が、まだ生まれていない世代の耳に届く日が来る。</p>
+
+        <blockquote>
+            <p>消えるから美しいのではない。届くから意味がある。</p>
+        </blockquote>
+
+        <p>消防イベントは、命を守る技術と知識を市民に届ける場である。その場で鳴る音楽は、技術や知識と同じくらい大切なものを届けている——この街に暮らす意味、この街を守る意志、この街の記憶。</p>
+
+        <p>音は消えても、届けることはできる。TokiStorageは、その届ける仕組みを作り続ける。</p>
+
+    </article>
+
+    <footer class="article-footer">
+        <p id="essay-nav-links"></p>
+        <p style="font-size: 0.75rem; color: var(--text-muted);">&copy; 2026 TokiStorage. All rights reserved.</p>
+    </footer>
+
+</main>
+
+<script src="essay-nav.js"></script>
+<script src="essay-tts.js"></script>
+</body>
+</html>
