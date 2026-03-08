@@ -214,13 +214,17 @@
             e.preventDefault();
             if (form.querySelector('input[name="botcheck"]').value) return;
 
+            var nameVal = form.querySelector('input[name="name"]').value.trim();
+            var contactVal = form.querySelector('input[name="contact"]').value.trim();
+            if (!nameVal || !contactVal) return;
+
             submitBtn.disabled = true;
             submitBtn.textContent = t.sending;
 
             var device = getDeviceInfo();
             var payload = {
-                name: form.querySelector('input[name="name"]').value,
-                contact: form.querySelector('input[name="contact"]').value,
+                name: nameVal,
+                contact: contactVal,
                 message: form.querySelector('textarea[name="message"]').value,
                 page: document.title,
                 url: window.location.href,
