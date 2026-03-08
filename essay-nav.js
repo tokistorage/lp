@@ -205,53 +205,13 @@
   ];
 
   // ── Latest Articles (最新記事) ──
-  // 新しいエッセイを先頭に追加する（最新→古い順）
-  // LATEST_COUNT で表示件数を制御
+  // essays配列のdateから自動生成（手動リスト不要）
   const LATEST_COUNT = 5;
-  const latestEssayIds = [
-    'animal-coexistence',
-    'government-guide',
-    'fire-music',
-    'shuriken-guide',
-    'community-disaster-response',
-    'scattered-ashes',
-    'stakeholder-awareness',
-    'ethics-exclusion',
-    'upcycling',
-    'ethics-and-economics',
-    'trust-by-design',
-    'pearl-soap-roots',
-    'embodied-oral',
-    'kumihimo',
-    'entrepreneurship',
-    'wise-guide',
-    'pwa-implementation-guide',
-    'rural-workaway',
-    'group-event',
-    'custom-soap-guide',
-    'testimonial-persistence',
-    'beyond-the-screen',
-    'product-codes',
-    'trust-guidelines',
-    'pipeline-renovation',
-    'zero-personal-data',
-    'smartphone-complete',
-    'primitive-edge',
-    'dev-to-ops',
-    'ai-concierge',
-    'soap-pitch',
-    'polishing',
-    'customer-journey-transformation',
-    'vibe-coding-secrets',
-    'affiliate-transparency',
-    'development-chronicle',
-    'monitor-program',
-    'restoration-architecture',
-    'millennium-navigation',
-    'self-print-economy',
-    'offline-freedom',
-    'copyright-jasrac',
-  ];
+  const PORTAL_LATEST_PAGE = 10;
+  const latestEssayIds = essays
+    .slice()
+    .sort(function(a, b) { return b.date.localeCompare(a.date); })
+    .map(function(e) { return e.id; });
 
   // ── Related Essays Map ──
   // 各エッセイに3〜5本の関連エッセイを定義
@@ -623,6 +583,36 @@
           subtitle.insertAdjacentElement('afterend', dateEl);
         }
       }
+    }
+
+    // ── Portal page LATEST rendering ──
+    var portalList = document.getElementById('latest-list');
+    var portalBtn = document.getElementById('latest-more');
+    if (portalList) {
+      var portalSorted = essays
+        .slice()
+        .sort(function(a, b) { return b.date.localeCompare(a.date); });
+      var portalShown = PORTAL_LATEST_PAGE;
+      function renderPortalLatest() {
+        var html = '';
+        for (var i = 0; i < Math.min(portalShown, portalSorted.length); i++) {
+          var e = portalSorted[i];
+          var href = isEnglish ? e.id + '-en.html' : e.id + '.html';
+          var label = isEnglish ? e.en : e.ja;
+          html += '<div><a href="' + href + '">' + label + '</a><span>' + e.date + '</span></div>';
+        }
+        portalList.innerHTML = html;
+        if (portalBtn) {
+          portalBtn.style.display = portalShown < portalSorted.length ? 'inline-block' : 'none';
+        }
+      }
+      if (portalBtn) {
+        portalBtn.addEventListener('click', function() {
+          portalShown = Math.min(portalShown + PORTAL_LATEST_PAGE, portalSorted.length);
+          renderPortalLatest();
+        });
+      }
+      renderPortalLatest();
     }
 
     // Share buttons (only on essay pages with .article-content)

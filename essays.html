@@ -167,72 +167,6 @@
         <div class="portal-latest-list" id="latest-list"></div>
         <button id="latest-more" style="display:none;margin-top:0.75rem;padding:0.4rem 1.2rem;font-size:0.8rem;color:var(--toki-gold);background:none;border:1px solid rgba(146,112,42,0.3);border-radius:6px;cursor:pointer;font-family:var(--font-body);">もっと見る</button>
     </div>
-    <script>
-    (function(){
-        var essays=[
-            {h:'animal-coexistence.html',t:'動物との共生',d:'2026-03-08'},
-            {h:'government-guide.html',t:'行政水準の情報ガイド',d:'2026-03-08'},
-            {h:'fire-music.html',t:'消防音楽隊とトキストレージ',d:'2026-03-07'},
-            {h:'shuriken-guide.html',t:'手裏剣 完全ガイド',d:'2026-03-06'},
-            {h:'community-disaster-response.html',t:'自治会DX',d:'2026-03-05'},
-            {h:'accessibility.html',t:'使えるということの射程',d:'2026-03-05'},
-            {h:'scattered-ashes.html',t:'散骨と魂の帰属',d:'2026-03-05'},
-            {h:'stakeholder-awareness.html',t:'当事者としての自覚',d:'2026-03-05'},
-            {h:'ethics-exclusion.html',t:'倫理の対極にあるもの',d:'2026-03-05'},
-            {h:'upcycling.html',t:'アップサイクルの視座',d:'2026-03-04'},
-            {h:'ethics-and-economics.html',t:'倫理と経済の歪み',d:'2026-03-04'},
-            {h:'trust-by-design.html',t:'信頼に基づく設計',d:'2026-03-04'},
-            {h:'pearl-soap-roots.html',t:'パールソープが地域に根付くとき',d:'2026-03-03'},
-            {h:'embodied-oral.html',t:'身体感覚と口伝',d:'2026-03-03'},
-            {h:'kumihimo.html',t:'組紐',d:'2026-03-03'},
-            {h:'immigrant-burial-ecosystem.html',t:'日系移民の納骨エコシステム',d:'2026-03-03'},
-            {h:'wise-guide.html',t:'Wiseの始め方',d:'2026-03-03'},
-            {h:'pwa-implementation-guide.html',t:'PWA導入ガイド',d:'2026-03-02'},
-            {h:'rural-workaway.html',t:'里山再生とWorkaway',d:'2026-03-02'},
-            {h:'group-event.html',t:'10分で始まるグループイベント',d:'2026-03-02'},
-            {h:'testimonial-persistence.html',t:'テスティモニアルの永続化',d:'2026-03-02'},
-            {h:'entrepreneurship.html',t:'起業家精神の変容',d:'2026-03-03'},
-            {h:'beyond-the-screen.html',t:'画面の向こう側',d:'2026-03-02'},
-            {h:'product-codes.html',t:'プロダクトコードという設計言語',d:'2026-03-01'},
-            {h:'trust-guidelines.html',t:'信頼で書く利用規約',d:'2026-03-01'},
-            {h:'pipeline-renovation.html',t:'パイプライン改修記',d:'2026-03-01'},
-            {h:'zero-personal-data.html',t:'機密情報の撤廃',d:'2026-02-28'},
-            {h:'smartphone-complete.html',t:'スマホ一台で完結する',d:'2026-02-28'},
-            {h:'primitive-edge.html',t:'プリミティブの刃',d:'2026-02-28'},
-            {h:'dev-to-ops.html',t:'運用という視座',d:'2026-02-28'},
-            {h:'ai-concierge.html',t:'AIコンシェルジュという静かな堀',d:'2026-02-28'},
-            {h:'soap-pitch.html',t:'石鹸がエレベーターピッチを超えた日',d:'2026-02-27'},
-            {h:'polishing.html',t:'研磨',d:'2026-02-27'},
-            {h:'customer-journey-transformation.html',t:'カスタマージャーニーの変容',d:'2026-02-27'},
-            {h:'vibe-coding-secrets.html',t:'バイブコーディングの秘訣',d:'2026-02-27'},
-            {h:'affiliate-transparency.html',t:'紹介リンクの開示',d:'2026-02-27'},
-            {h:'development-chronicle.html',t:'13日間の開発記録',d:'2026-02-27'},
-            {h:'monitor-program.html',t:'モニタープログラムの設計',d:'2026-02-26'},
-            {h:'restoration-architecture.html',t:'多層復元アーキテクチャ',d:'2026-02-26'},
-            {h:'millennium-navigation.html',t:'1000年のナビゲーション設計',d:'2026-02-26'},
-            {h:'self-print-economy.html',t:'セルフプリント経済圏',d:'2026-02-25'},
-            {h:'offline-freedom.html',t:'ネットワークからの自由',d:'2026-02-24'},
-            {h:'copyright-jasrac.html',t:'著作権とJASRAC',d:'2026-02-24'}
-        ];
-        var PAGE=10,shown=PAGE;
-        var list=document.getElementById('latest-list');
-        var btn=document.getElementById('latest-more');
-        function render(){
-            var html='';
-            for(var i=0;i<Math.min(shown,essays.length);i++){
-                var e=essays[i];
-                html+='<div><a href="'+e.h+'">'+e.t+'</a><span>'+e.d+'</span></div>';
-            }
-            list.innerHTML=html;
-            btn.style.display=shown<essays.length?'inline-block':'none';
-        }
-        btn.addEventListener('click',function(){
-            shown=Math.min(shown+PAGE,essays.length);
-            render();
-        });
-        render();
-    })();
-    </script>
 
     <!-- 基礎理論 -->
     <section class="portal-category" id="kiso">
@@ -539,5 +473,6 @@
 
 </main>
 
+<script src="essay-nav.js"></script>
 </body>
 </html>
