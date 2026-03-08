@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" type="image/png" sizes="32x32" href="asset/favicon-32.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="asset/apple-touch-icon.png">
+    <title>行政水準の情報ガイド | トキストレージ</title>
+    <meta name="robots" content="index, follow">
+    <meta name="description" content="著作権、アクセシビリティ、推奨環境、表示設定、RSS、初訪問者ガイド。行政や大企業が当たり前に整備する情報ページ群を個人プロダクトでも揃える意義を論じる。">    <style>
+        :root {
+            --toki-blue: #2563EB;
+            --toki-blue-dark: #1E40AF;
+            --toki-blue-pale: #EFF6FF;
+            --accent-blue: #60A5FA;
+            --bg-white: #FFFFFF;
+            --text-primary: #1E293B;
+            --text-secondary: #475569;
+            --text-muted: #94A3B8;
+            --border: #E2E8F0;
+            --font-display: 'Hiragino Mincho ProN', 'Yu Mincho', serif;
+            --font-body: 'Hiragino Kaku Gothic ProN', 'Yu Gothic', 'Meiryo', sans-serif;
+        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        html { scroll-behavior: smooth; }
+        body { font-family: var(--font-body); font-weight: 400; background: var(--bg-white); color: var(--text-primary); line-height: 2; font-size: 16px; }
+
+        .article-nav { position: fixed; top: 0; left: 0; right: 0; z-index: 1000; background: rgba(255,255,255,0.95); backdrop-filter: blur(12px); border-bottom: 1px solid var(--border); padding: 0.6rem 1.2rem; display: flex; align-items: center; justify-content: space-between; gap: 1rem; }
+        .article-nav .nav-brand { font-family: var(--font-display); font-size: 0.9rem; font-weight: 600; color: var(--toki-blue); text-decoration: none; white-space: nowrap; }
+        .article-nav .nav-brand::before { content: ''; display: inline-block; width: 20px; height: 20px; background: url('asset/tokistorage-icon-512.png') no-repeat center / contain; vertical-align: -3px; margin-right: 5px; }
+        .article-nav .nav-right { display: flex; align-items: center; gap: 1rem; }
+        .article-nav .nav-label { font-size: 0.6rem; color: var(--text-muted); letter-spacing: 0.08em; }
+        .article-nav .lang-switch { font-size: 0.75rem; color: var(--toki-blue); text-decoration: none; padding: 0.3rem 0.6rem; border: 1px solid var(--toki-blue); border-radius: 4px; }
+        .article-nav .lang-switch:hover { background: var(--toki-blue); color: #fff; }
+
+        .article-container { max-width: 680px; margin: 0 auto; padding: 7rem 2rem 4rem; }
+        .article-header { margin-bottom: 3rem; padding-bottom: 2rem; border-bottom: 1px solid var(--border); }
+        .article-category { font-size: 0.7rem; color: var(--toki-blue); letter-spacing: 0.15em; margin-bottom: 1rem; }
+        .article-header h1 { font-family: var(--font-display); font-size: 1.8rem; font-weight: 700; line-height: 1.5; margin-bottom: 1.5rem; }
+        .article-subtitle { font-size: 0.95rem; color: var(--text-secondary); line-height: 1.9; }
+
+        .article-content h2 { font-family: var(--font-display); font-size: 1.3rem; font-weight: 600; margin: 3rem 0 1.5rem; padding-bottom: 0.5rem; border-bottom: 2px solid var(--toki-blue-pale); }
+        .article-content h3 { font-family: var(--font-display); font-size: 1.1rem; font-weight: 600; margin: 2rem 0 1rem; color: var(--toki-blue-dark); }
+        .article-content p { margin-bottom: 1.5rem; text-align: justify; }
+        .article-content blockquote { border-left: 3px solid var(--toki-blue); padding-left: 1.5rem; margin: 2rem 0; font-family: var(--font-display); color: var(--text-secondary); }
+        .article-content ul { margin: 1.5rem 0; padding-left: 1.5rem; }
+        .article-content li { margin-bottom: 0.75rem; }
+
+        .core-message { background: var(--toki-blue-pale); border-left: 4px solid var(--toki-blue); padding: 1.5rem; margin: 2rem 0; font-size: 0.95rem; line-height: 1.8; }
+        .key-point { background: linear-gradient(135deg, var(--toki-blue-pale) 0%, #fff 100%); border: 1px solid var(--accent-blue); border-radius: 8px; padding: 1.5rem; margin: 2rem 0; text-align: center; }
+        .key-point p { font-family: var(--font-display); font-size: 1.1rem; color: var(--toki-blue-dark); margin: 0; }
+
+        .article-footer { margin-top: 4rem; padding-top: 2rem; border-top: 1px solid var(--border); text-align: center; }
+        .article-footer p { font-size: 0.8rem; color: var(--text-muted); margin-bottom: 1rem; }
+        .article-footer a { color: var(--toki-blue); text-decoration: none; }
+        .article-footer a:hover { text-decoration: underline; }
+
+        @media (max-width: 768px) {
+            .article-container { padding: 6rem 1.2rem 3rem; }
+            .article-header h1 { font-size: 1.5rem; }
+            .article-nav .nav-label { display: none; }
+        }
+        @media print { .article-nav { display: none; } .article-container { padding-top: 2rem; } }
+    </style>
+</head>
+<body>
+
+<nav class="article-nav">
+    <a href="essays.html" class="nav-brand">トキストレージ</a>
+    <div class="nav-right">
+        <span class="nav-label">ESSAY</span>
+        <a href="government-guide-en.html" class="lang-switch">EN</a>
+    </div>
+</nav>
+
+<main class="article-container">
+    <header class="article-header">
+        <div class="article-category">技術・設計</div>
+        <h1>行政水準の情報ガイド</h1>
+        <p class="article-subtitle">信頼は機能のスペックではなく、配慮の積層で築かれる。行政や大企業が当たり前に整備する情報ページ群を、個人プロダクトでも揃えることの意義。</p>
+    </header>
+
+    <article class="article-content">
+
+        <h2>市役所のウェブサイトにあるもの</h2>
+
+        <p>市区町村のウェブサイトを開くと、フッターの片隅に「著作権について」「アクセシビリティ方針」「推奨環境」といったリンクが並んでいる。ほとんどの訪問者はクリックしない。存在に気づかない人も多い。</p>
+
+        <p>しかし、これらのページは偶然そこにあるわけではない。情報公開条例、JIS X 8341-3、総務省のガイドラインといった制度的要請に基づいて、計画的に整備されたものだ。行政は「誰一人取り残さない」という原則のもと、情報の受け手がどのような環境にあっても必要な情報にたどり着けるよう、補助的なページ群を設けている。</p>
+
+        <p>大企業のウェブサイトにも同じ構造がある。法務部門がリンクポリシーを定め、情報システム部門が推奨環境を明示し、広報部門がサイト全体の案内ページを用意する。これらは顧客対応のコストを下げるための投資であり、同時に組織の信頼性を示すシグナルでもある。</p>
+
+        <p>では、個人プロダクトにはこれらが不要なのか。</p>
+
+        <h2>六つのページが果たす役割</h2>
+
+        <p>TokiStorageでは、以下の六つの情報ページを整備した。それぞれが固有の役割を担っている。</p>
+
+        <h3>著作権・リンクポリシー</h3>
+
+        <p>コンテンツの二次利用に関するルールを明文化するページ。「このサイトの文章を引用してよいのか」「リンクを貼るのに許可がいるのか」という疑問に事前に答える。明示されていなければ、利用者は萎縮して引用を控えるか、あるいは無断で転載する。どちらもコンテンツの健全な流通を妨げる。ルールが明文化されていれば、利用者は安心して引用・共有できる。</p>
+
+        <h3>アクセシビリティポリシー</h3>
+
+        <p>サイトがどのようなアクセシビリティ基準を目指しているかを宣言するページ。完璧な対応を約束するものではなく、「どこまで対応し、どこに課題があるか」を正直に記述する。「<a href="accessibility.html" style="color: var(--toki-blue); text-decoration: none; border-bottom: 1px solid var(--accent-blue);">使えるということの射程</a>」で論じたように、アクセシビリティは到達点ではなく継続的な過程である。その過程を可視化すること自体が、使い手を選ばない姿勢の表明になる。</p>
+
+        <h3>動作環境・推奨環境</h3>
+
+        <p>どのブラウザ、どのOSで動作確認しているかを明示するページ。「開いたけど動かない」という不満の多くは、事前に推奨環境を知っていれば回避できる。サポート対象外の環境であっても、そう明記されていれば利用者は自己判断できる。困りごとを事前に防ぐための、もっとも費用対効果の高い施策のひとつだ。</p>
+
+        <h3>文字サイズ・配色の変更</h3>
+
+        <p>ブラウザの設定やOS機能を使って表示をカスタマイズする方法を案内するページ。サイト側に文字サイズ変更ボタンを実装するのではなく、利用者が自分の環境全体で使える方法を案内する。これは個別のニーズに対応するだけでなく、「あなたの環境に合わせて使ってほしい」というメッセージでもある。</p>
+
+        <h3>RSSガイド</h3>
+
+        <p>RSSフィードの存在と使い方を説明するページ。RSSは技術に明るい人にとっては自明だが、そうでない人にとっては聞いたこともない概念だ。「このサイトの更新を自動で受け取れる仕組みがあります」と平易に説明することで、技術的な前提知識のない人にも情報取得の選択肢を提供する。</p>
+
+        <h3>はじめての方へ</h3>
+
+        <p>サイト全体の見取り図を示すページ。百本を超えるエッセイ、複数のサービスページ、法的情報が並ぶサイトに初めて訪れた人が、どこから読み始めればよいかを案内する。迷子にさせないための設計であり、同時にサイトの思想を最初の一分で伝える導線でもある。</p>
+
+        <div class="core-message">六つのページは、それぞれが独立した価値を持つ。しかし、それ以上に重要なのは、これらが揃っていること自体が発するメッセージである。「このサイトは、あなたが困る場面を想像している。」</div>
+
+        <h2>なぜ個人プロダクトでも必要か</h2>
+
+        <p>「行政や大企業には法的義務や社会的責任があるから整備するのであって、個人プロダクトには不要だ」という反論は合理的に聞こえる。法的に義務づけられていないものに時間を割く必要があるのか。</p>
+
+        <p>しかし、信頼は義務から生まれるものではない。</p>
+
+        <p>個人プロダクトが大企業のプロダクトと比較されるとき、最初に不利になるのは信頼性だ。ブランドの知名度がない。顧客対応の窓口がない。上場企業の看板がない。利用者は「このサービスは大丈夫なのか」という不安を抱えたまま訪問する。</p>
+
+        <p>その不安に対して、機能のスペックで応えようとしても限界がある。「1000年保管できます」と言われても、それを検証する手段が利用者にはない。しかし、「このサイトはアクセシビリティに配慮しています」「推奨環境はこちらです」「著作権のルールはこう定めています」というページ群は、利用者が自分の目で確認できる。</p>
+
+        <p>信頼は「困ったときの受け皿」で測られる。プロダクトの機能が完璧に動いているとき、利用者は信頼について考えない。何かうまくいかないとき、初めて「このサービスは信頼できるのか」と問う。そのとき、推奨環境のページがあれば自分の環境を確認できる。アクセシビリティポリシーがあれば、対応状況を知ることができる。はじめての方へのページがあれば、そもそもの使い方を確認できる。</p>
+
+        <div class="key-point"><p>信頼とは、困ったときに受け皿があるかどうかである。受け皿の存在は、困る前から見えていなければならない。</p></div>
+
+        <p>「<a href="trust-guidelines.html" style="color: var(--toki-blue); text-decoration: none; border-bottom: 1px solid var(--accent-blue);">信頼で書く利用規約</a>」で論じたように、規約やポリシーは防御の道具ではなく、信頼構築の道具である。情報ガイドも同じだ。利用者を守るために書くのではなく、利用者との関係を築くために書く。</p>
+
+        <h2>行政に学ぶ設計思想</h2>
+
+        <p>行政のウェブサイト設計には、数十年にわたって蓄積された「誰一人取り残さない」設計思想がある。</p>
+
+        <p>JIS X 8341-3は、ウェブコンテンツのアクセシビリティに関する日本工業規格だ。WCAG 2.1（Web Content Accessibility Guidelines）の国際基準を日本の文脈に翻訳したものであり、行政機関はこの規格への準拠が求められる。コントラスト比、文字サイズ、代替テキスト、キーボード操作——これらの基準は、特定の障害を持つ人だけでなく、すべての利用者の体験を向上させる。</p>
+
+        <p>情報公開条例は、行政が保有する情報を市民に開示することを定めている。ウェブサイトにおける情報ガイドは、この精神のデジタルな延長線上にある。「サイトの仕組みをわかりやすく説明する」という行為は、情報を隠さないという姿勢の表れだ。</p>
+
+        <p>総務省の「みんなの公共サイト運用ガイドライン」は、公共サイトが備えるべきページ構成や運用体制を具体的に示している。著作権表示、個人情報保護方針、サイトマップ、推奨環境——これらは「あれば便利」ではなく「なければ不完全」とされている。</p>
+
+        <p>「<a href="openness.html" style="color: var(--toki-blue); text-decoration: none; border-bottom: 1px solid var(--accent-blue);">公開主義</a>」で論じたように、TokiStorageは情報を隠さないことを原則としている。行政の設計思想は、この原則と共鳴する。行政は法的義務として情報を公開する。TokiStorageは思想的選択として情報を公開する。動機は異なるが、到達する地点は同じだ。すべての人が必要な情報にたどり着ける状態をつくること。</p>
+
+        <p>個人プロダクトが行政の設計思想を取り入れることは、規模の模倣ではない。思想の翻訳である。予算も人員も行政とは比較にならないが、「困る人を想像し、その人のためのページを用意する」という姿勢は、規模に関係なく実装できる。</p>
+
+        <div class="core-message">行政が蓄積した「誰一人取り残さない」設計思想は、法的義務を超えた普遍的な原則である。この原則を個人プロダクトに翻訳することは、規模の問題ではなく、姿勢の問題だ。</div>
+
+        <h2>配慮の積層としての信頼</h2>
+
+        <p>六つの情報ページは、それぞれ数時間で作成できる。技術的な難易度は低い。デザインの華やかさもない。しかし、これらが揃っているサイトと揃っていないサイトでは、訪問者が受け取る印象がまったく異なる。</p>
+
+        <p>その差は、個々のページの内容ではなく、「配慮の積層」にある。</p>
+
+        <p>著作権ポリシーがある。アクセシビリティ方針がある。推奨環境がある。表示設定の案内がある。RSSの説明がある。初訪問者向けのガイドがある。これらが一枚ずつ重なることで、訪問者は「このサイトは、私が困る場面をあらかじめ想像している」と感じる。その感覚が、信頼になる。</p>
+
+        <p>「<a href="corporate-site.html" style="color: var(--toki-blue); text-decoration: none; border-bottom: 1px solid var(--accent-blue);">コーポレートサイト</a>」で論じたように、サイトの構造はそのまま組織の思想を映す。情報ガイドが揃っていることは、「このプロダクトを運営する人間は、利用者の体験を丁寧に考えている」という非言語的なメッセージだ。</p>
+
+        <p>「<a href="seo-aio.html" style="color: var(--toki-blue); text-decoration: none; border-bottom: 1px solid var(--accent-blue);">見つけてもらうための設計</a>」で論じた発見性の設計とも通底する。情報ガイドは、検索エンジンに対してもサイトの網羅性と信頼性を示すシグナルになる。構造化されたサイトは、人間にもアルゴリズムにも信頼される。</p>
+
+        <p>1000年残すプロダクトなら、1000年分の配慮が必要だ。その配慮は、華々しい機能追加ではなく、フッターの片隅にある小さなリンクから始まる。目に見えない基盤を、目に見える形にしたもの。それが情報ガイドの本質である。</p>
+
+        <blockquote>信頼性は目に見えない基盤であり、それを見えるかたちにしたのが情報ガイドである。配慮は積層する。一枚では薄くても、重なれば基盤になる。</blockquote>
+
+    </article>
+
+    <footer class="article-footer">
+        <p id="essay-nav-links"></p>
+        <p style="font-size: 0.75rem; color: var(--text-muted);">&copy; TokiStorage. All rights reserved.</p>
+    </footer>
+
+</main>
+
+<script src="essay-nav.js"></script>
+<script src="essay-tts.js"></script>
+</body>
+</html>

@@ -187,6 +187,7 @@
     { id: 'beyond-the-screen', ja: '画面の向こう側', en: 'Beyond the Screen', date: '2026-03-02' },
     { id: 'pwa-implementation-guide', ja: 'PWA導入ガイド', en: 'PWA Installation Guide', date: '2026-03-02' },
     { id: 'accessibility', ja: 'アクセシビリティ', en: 'Accessibility', date: '2026-03-05' },
+    { id: 'government-guide', ja: '行政水準の情報ガイド', en: 'Government-Grade Information Guides', date: '2026-03-08' },
 
     // ── メタ視点 ──
     { id: 'mission-statement', ja: 'ミッション・ステートメントの設計思想', en: 'Designing a Mission Statement', date: '2026-02-23' },
@@ -207,6 +208,7 @@
   // LATEST_COUNT で表示件数を制御
   const LATEST_COUNT = 5;
   const latestEssayIds = [
+    'government-guide',
     'fire-music',
     'shuriken-guide',
     'community-disaster-response',
@@ -434,7 +436,8 @@
     'primitive-edge':         ['smartphone-complete', 'dev-to-ops', 'no-external-deps', '30seconds', 'ai-concierge'],
     'smartphone-complete':    ['primitive-edge', 'dev-to-ops', 'burn-rate-zero', 'vibe-coding', 'ai-concierge'],
     'zero-personal-data':               ['patent-departure', 'dev-to-ops', 'burn-rate-zero', 'primitive-edge', 'customer-journey-transformation'],
-    'product-codes':                    ['ecosystem', 'framework', 'self-print-economy', 'customer-journey-transformation', 'corporate-site']
+    'product-codes':                    ['ecosystem', 'framework', 'self-print-economy', 'customer-journey-transformation', 'corporate-site'],
+    'government-guide':                 ['accessibility', 'trust-guidelines', 'corporate-site', 'seo-aio', 'openness']
   };
 
   const isEnglish = document.documentElement.lang === 'en';
