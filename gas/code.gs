@@ -143,6 +143,13 @@ function handleEvent(ss, data) {
 }
 
 function handleContact(ss, data) {
+  // 空送信を拒否（ボット対策）
+  var name = (data.name || '').trim();
+  var contact = (data.contact || '').trim();
+  if (!name || !contact) {
+    return jsonResponse({ success: false, error: 'name and contact are required' });
+  }
+
   try {
     var sheet = getOrCreateSheet(ss, 'お問い合わせ', [
       '日時', '名前', '連絡先', 'メッセージ', 'ページ', 'URL',
