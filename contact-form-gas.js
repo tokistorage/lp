@@ -70,6 +70,15 @@ function handlePageview(ss, data) {
 }
 
 function handleContact(ss, data) {
+  // 空送信を拒否（ボット対策）
+  var name = (data.name || '').trim();
+  var contact = (data.contact || '').trim();
+  if (!name || !contact) {
+    return ContentService
+      .createTextOutput(JSON.stringify({ success: false, error: 'name and contact are required' }))
+      .setMimeType(ContentService.MimeType.JSON);
+  }
+
   // スプレッドシート記録（失敗してもメールは送る）
   try {
     var sheet = getOrCreateSheet(ss, 'お問い合わせ', [
