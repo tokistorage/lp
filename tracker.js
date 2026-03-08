@@ -98,3 +98,44 @@
         track();
     }
 })();
+
+/**
+ * TokiStorage Display Settings
+ * localStorage に保存された文字サイズ・配色設定を全ページに適用
+ */
+(function() {
+    var FONT_SIZES = { small: '14px', medium: '16px', large: '18px', xlarge: '20px' };
+    var COLOR_SCHEMES = {
+        standard:  null,
+        high:      { bg: '#FFFFFF', text: '#000000', link: '#0000EE' },
+        dark:      { bg: '#1a1a2e', text: '#E0E0E0', link: '#64B5F6' },
+        yellow:    { bg: '#000000', text: '#FFFF00', link: '#00FFFF' }
+    };
+
+    function apply() {
+        var fs = localStorage.getItem('toki_fontsize');
+        var cs = localStorage.getItem('toki_colorscheme');
+
+        var style = document.getElementById('toki-display-override');
+        if (!style) {
+            style = document.createElement('style');
+            style.id = 'toki-display-override';
+            document.head.appendChild(style);
+        }
+
+        var rules = [];
+        if (fs && FONT_SIZES[fs]) {
+            rules.push('html { font-size: ' + FONT_SIZES[fs] + ' !important; }');
+        }
+        if (cs && COLOR_SCHEMES[cs]) {
+            var c = COLOR_SCHEMES[cs];
+            rules.push('body, .legal-page, .legal-inner, main, .toki-nav, footer, .toki-footer { background-color: ' + c.bg + ' !important; color: ' + c.text + ' !important; }');
+            rules.push('h1, h2, h3, h4, h5, h6, p, li, td, th, span, label, .legal-inner p, .legal-inner li, .legal-inner h2 { color: ' + c.text + ' !important; }');
+            rules.push('a, .legal-inner a { color: ' + c.link + ' !important; }');
+        }
+        style.textContent = rules.join('\n');
+    }
+
+    apply();
+    window._tokiDisplayApply = apply;
+})();
