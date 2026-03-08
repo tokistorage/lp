@@ -1,0 +1,275 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" type="image/png" sizes="32x32" href="asset/favicon-32.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="asset/apple-touch-icon.png">
+    <title>RSS購読ガイド | トキストレージ</title>
+    <meta name="description" content="トキストレージのエッセイ・ニュースレターをRSSリーダーで購読する方法をご案内します。">
+    <link rel="stylesheet" href="index.css">
+    <link rel="stylesheet" href="contact-form.css">
+    <link rel="alternate" type="application/rss+xml" title="トキストレージ RSS" href="https://tokistorage.github.io/lp/feed.xml">
+    <style>
+        .legal-page { padding: 6rem 2rem 4rem; }
+        .legal-inner { max-width: 700px; margin: 0 auto; }
+        .legal-inner h1 {
+            font-family: var(--font-display);
+            font-size: 1.5rem;
+            font-weight: 600;
+            color: var(--text-primary);
+            margin-bottom: 0.5rem;
+            text-align: center;
+        }
+        .legal-date {
+            text-align: center;
+            font-size: 0.78rem;
+            color: var(--text-muted);
+            margin-bottom: 2.5rem;
+        }
+        .legal-inner h2 {
+            font-family: var(--font-display);
+            font-size: 1.05rem;
+            font-weight: 600;
+            color: var(--text-primary);
+            margin-top: 2rem;
+            margin-bottom: 0.8rem;
+            text-align: left;
+        }
+        .legal-inner h3 {
+            font-family: var(--font-display);
+            font-size: 0.95rem;
+            font-weight: 600;
+            color: var(--text-primary);
+            margin-top: 1.5rem;
+            margin-bottom: 0.5rem;
+        }
+        .legal-inner p,
+        .legal-inner li {
+            font-size: 0.88rem;
+            color: var(--text-secondary);
+            line-height: 1.9;
+        }
+        .legal-inner ul, .legal-inner ol {
+            padding-left: 1.5rem;
+            margin-bottom: 1rem;
+        }
+        .legal-inner li { margin-bottom: 0.3rem; }
+        .legal-inner a {
+            color: var(--toki-blue);
+            text-decoration: none;
+        }
+        .legal-inner a:hover { text-decoration: underline; }
+
+        .rss-url-box {
+            background: #F8FAFC;
+            border: 1px solid #E2E8F0;
+            border-radius: 8px;
+            padding: 1rem 1.2rem;
+            margin: 1rem 0;
+            display: flex;
+            align-items: center;
+            gap: 0.8rem;
+            flex-wrap: wrap;
+        }
+        .rss-url-box code {
+            flex: 1;
+            font-size: 0.82rem;
+            color: var(--text-primary);
+            word-break: break-all;
+            min-width: 200px;
+        }
+        .rss-copy-btn {
+            padding: 0.4rem 1rem;
+            border: 1px solid var(--toki-blue);
+            border-radius: 6px;
+            background: none;
+            color: var(--toki-blue);
+            font-size: 0.82rem;
+            cursor: pointer;
+            font-family: var(--font-body);
+            white-space: nowrap;
+        }
+        .rss-copy-btn:hover {
+            background: var(--toki-blue);
+            color: #fff;
+        }
+        .rss-icon {
+            display: inline-block;
+            width: 16px;
+            height: 16px;
+            background: #F97316;
+            border-radius: 3px;
+            position: relative;
+            vertical-align: -2px;
+            margin-right: 4px;
+        }
+        .rss-icon::after {
+            content: '';
+            position: absolute;
+            top: 3px; left: 3px;
+            width: 10px; height: 10px;
+            border: 2px solid #fff;
+            border-radius: 0 50% 0 0;
+            border-left: none;
+            border-bottom: none;
+        }
+        .rss-icon::before {
+            content: '';
+            position: absolute;
+            bottom: 3px; left: 3px;
+            width: 3px; height: 3px;
+            background: #fff;
+            border-radius: 50%;
+        }
+
+        .reader-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 1rem 0 1.5rem;
+            font-size: 0.85rem;
+        }
+        .reader-table th,
+        .reader-table td {
+            border: 1px solid #E2E8F0;
+            padding: 0.6rem 0.8rem;
+            text-align: left;
+            vertical-align: top;
+        }
+        .reader-table th {
+            background: #F8FAFC;
+            font-weight: 600;
+            color: var(--text-primary);
+        }
+        .reader-table td {
+            color: var(--text-secondary);
+            line-height: 1.7;
+        }
+    </style>
+    <meta property="og:type" content="article">
+    <meta property="og:title" content="RSS購読ガイド | トキストレージ">
+    <meta property="og:description" content="トキストレージのRSS購読方法のご案内">
+    <meta property="og:url" content="https://tokistorage.github.io/lp/rss.html">
+    <meta property="og:site_name" content="トキストレージ">
+    <meta name="twitter:card" content="summary">
+    <meta property="og:image" content="https://tokistorage.github.io/lp/asset/tokistorage-icon-512.png">
+    <meta property="og:image:width" content="512">
+    <meta property="og:image:height" content="512">
+    <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "WebPage",
+  "name": "RSS購読ガイド | トキストレージ",
+  "url": "https://tokistorage.github.io/lp/rss.html",
+  "inLanguage": "ja",
+  "publisher": {
+    "@type": "Organization",
+    "name": "TokiStorage",
+    "url": "https://tokistorage.github.io/lp"
+  }
+}
+    </script>
+    <link rel="alternate" hreflang="ja" href="https://tokistorage.github.io/lp/rss.html">
+    <link rel="alternate" hreflang="en" href="https://tokistorage.github.io/lp/rss-en.html">
+    <link rel="alternate" hreflang="x-default" href="https://tokistorage.github.io/lp/rss.html">
+    <link rel="canonical" href="https://tokistorage.github.io/lp/rss.html">
+</head>
+<body>
+
+<nav class="toki-nav">
+    <a href="index.html" class="nav-logo">トキストレージ</a>
+</nav>
+
+<main class="legal-page">
+    <div class="legal-inner">
+        <h1>RSS購読ガイド</h1>
+        <p class="legal-date">トキストレージの最新情報をRSSリーダーで受け取る方法をご案内します。</p>
+
+        <h2>RSSフィードURL</h2>
+        <p>以下のURLをお使いのRSSリーダーに登録してください。</p>
+        <div class="rss-url-box">
+            <code id="rssUrl">https://tokistorage.github.io/lp/feed.xml</code>
+            <button class="rss-copy-btn" id="copyBtn" onclick="navigator.clipboard.writeText(document.getElementById('rssUrl').textContent).then(function(){document.getElementById('copyBtn').textContent='コピーしました';setTimeout(function(){document.getElementById('copyBtn').textContent='URLをコピー'},2000)})">URLをコピー</button>
+        </div>
+
+        <h2>配信される内容</h2>
+        <ul>
+            <li><strong>エッセイ</strong> — 1000年の設計思想（最新10本）</li>
+            <li><strong>ニュースレター</strong> — 月次の活動報告</li>
+        </ul>
+
+        <h2>RSSとは</h2>
+        <p>RSS（Really Simple Syndication）は、ウェブサイトの更新情報を自動的に受け取るための仕組みです。RSSリーダーにフィードURLを登録すると、新しい記事が公開されたときに通知を受け取ることができます。メールアドレスの登録は不要です。</p>
+
+        <h2>おすすめのRSSリーダー</h2>
+        <table class="reader-table">
+            <tr>
+                <th>リーダー</th>
+                <th>プラットフォーム</th>
+                <th>特徴</th>
+            </tr>
+            <tr>
+                <td><a href="https://feedly.com/" target="_blank" rel="noopener">Feedly</a></td>
+                <td>Web / iOS / Android</td>
+                <td>無料プランあり。直感的なUI。最も人気のあるリーダー</td>
+            </tr>
+            <tr>
+                <td><a href="https://www.inoreader.com/" target="_blank" rel="noopener">Inoreader</a></td>
+                <td>Web / iOS / Android</td>
+                <td>無料プランあり。検索・フィルタが強力</td>
+            </tr>
+            <tr>
+                <td><a href="https://netnewswire.com/" target="_blank" rel="noopener">NetNewsWire</a></td>
+                <td>macOS / iOS</td>
+                <td>完全無料・オープンソース。Apple製品向け</td>
+            </tr>
+            <tr>
+                <td><a href="https://newsblur.com/" target="_blank" rel="noopener">NewsBlur</a></td>
+                <td>Web / iOS / Android</td>
+                <td>無料プランあり。オープンソース</td>
+            </tr>
+        </table>
+
+        <h2>登録方法</h2>
+
+        <h3>Feedlyの場合</h3>
+        <ol>
+            <li><a href="https://feedly.com/" target="_blank" rel="noopener">feedly.com</a> にアクセスし、アカウントを作成（Googleアカウントで登録可）</li>
+            <li>左メニューの「+」ボタンをクリック</li>
+            <li>検索欄に <code>https://tokistorage.github.io/lp/feed.xml</code> を貼り付け</li>
+            <li>「Follow」をクリック</li>
+        </ol>
+
+        <h3>NetNewsWireの場合（Mac / iPhone）</h3>
+        <ol>
+            <li>App StoreからNetNewsWireをインストール</li>
+            <li>メニューの「File」→「New Web Feed...」を選択</li>
+            <li>URLに <code>https://tokistorage.github.io/lp/feed.xml</code> を入力</li>
+            <li>「Add」をクリック</li>
+        </ol>
+
+        <h3>その他のリーダー</h3>
+        <p>ほとんどのRSSリーダーで「フィードを追加」または「購読」の機能から、上記のURLを入力するだけで登録できます。</p>
+
+        <h2>ブラウザの拡張機能</h2>
+        <p>ブラウザにRSS拡張機能を入れると、ワンクリックで購読できます。</p>
+        <ul>
+            <li><strong>Chrome</strong>：「RSS Feed Reader」「Feedly Mini」など</li>
+            <li><strong>Firefox</strong>：「Feedbro」「Livemarks」など</li>
+            <li><strong>Safari</strong>：NetNewsWireアプリと連携</li>
+        </ul>
+
+        <h2>更新頻度</h2>
+        <p>エッセイはほぼ毎日、ニュースレターは月1回のペースで更新しています。RSSフィードは新しいコンテンツの公開に合わせて更新されます。</p>
+
+    </div>
+</main>
+<footer style="text-align: center; padding: 2rem 1.5rem; margin-top: 3rem; border-top: 1px solid #E2E8F0;">
+    <p style="font-family: Georgia, 'Times New Roman', serif; font-size: 0.8rem; color: #94A3B8; font-style: italic; margin-bottom: 0.8rem;">あなたが物語となり、世代の対話が重なり、未来の道となる。</p>
+    <p style="font-size: 0.75rem; color: #94A3B8;">&copy; 2026 TokiStorage. All rights reserved.</p>
+</footer>
+
+<script src="contact-form.js" defer></script>
+<script src="tracker.js" defer></script>
+</body>
+</html>
