@@ -1,0 +1,282 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" type="image/png" sizes="32x32" href="asset/favicon-32.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="asset/apple-touch-icon.png">
+    <title>文字サイズ・配色の変更 | トキストレージ</title>
+    <meta name="description" content="トキストレージの文字サイズ・配色を変更できます。お好みの表示設定を選んでください。">
+    <link rel="stylesheet" href="index.css">
+    <link rel="stylesheet" href="contact-form.css">
+    <style>
+        .legal-page { padding: 6rem 2rem 4rem; }
+        .legal-inner { max-width: 700px; margin: 0 auto; }
+        .legal-inner h1 {
+            font-family: var(--font-display);
+            font-size: 1.5rem;
+            font-weight: 600;
+            color: var(--text-primary);
+            margin-bottom: 0.5rem;
+            text-align: center;
+        }
+        .legal-date {
+            text-align: center;
+            font-size: 0.78rem;
+            color: var(--text-muted);
+            margin-bottom: 2.5rem;
+        }
+        .legal-inner h2 {
+            font-family: var(--font-display);
+            font-size: 1.05rem;
+            font-weight: 600;
+            color: var(--text-primary);
+            margin-top: 2rem;
+            margin-bottom: 0.8rem;
+            text-align: left;
+        }
+        .legal-inner p,
+        .legal-inner li {
+            font-size: 0.88rem;
+            color: var(--text-secondary);
+            line-height: 1.9;
+        }
+        .legal-inner a {
+            color: var(--toki-blue);
+            text-decoration: none;
+        }
+        .legal-inner a:hover { text-decoration: underline; }
+
+        .ds-group {
+            margin: 1.5rem 0;
+        }
+        .ds-buttons {
+            display: flex;
+            gap: 0.6rem;
+            flex-wrap: wrap;
+            margin-top: 0.8rem;
+        }
+        .ds-btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            min-width: 80px;
+            padding: 0.7rem 1.2rem;
+            border: 2px solid #E2E8F0;
+            border-radius: 8px;
+            background: #FFFFFF;
+            color: var(--text-primary);
+            font-family: var(--font-body);
+            font-size: 0.88rem;
+            cursor: pointer;
+            transition: border-color 0.2s, background-color 0.2s;
+        }
+        .ds-btn:hover {
+            border-color: var(--toki-blue);
+        }
+        .ds-btn.active {
+            border-color: var(--toki-blue);
+            background: #EFF6FF;
+            font-weight: 600;
+        }
+        .ds-btn-small { font-size: 0.78rem; }
+        .ds-btn-medium { font-size: 0.88rem; }
+        .ds-btn-large { font-size: 1.05rem; }
+        .ds-btn-xlarge { font-size: 1.2rem; }
+
+        .ds-color-standard { background: #FFFFFF; color: #1E293B; }
+        .ds-color-high { background: #FFFFFF; color: #000000; border-color: #000000; }
+        .ds-color-dark { background: #1a1a2e; color: #E0E0E0; }
+        .ds-color-yellow { background: #000000; color: #FFFF00; }
+
+        .ds-preview {
+            margin: 1.5rem 0;
+            padding: 1.5rem;
+            border: 1px solid #E2E8F0;
+            border-radius: 8px;
+        }
+        .ds-preview h3 {
+            font-family: var(--font-display);
+            font-size: 1.05rem;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+        }
+        .ds-preview p {
+            margin-bottom: 0.5rem;
+        }
+        .ds-preview a {
+            color: var(--toki-blue);
+        }
+
+        .ds-reset {
+            display: inline-block;
+            margin-top: 1rem;
+            padding: 0.5rem 1.2rem;
+            border: 1px solid #E2E8F0;
+            border-radius: 6px;
+            background: none;
+            color: var(--text-secondary);
+            font-size: 0.82rem;
+            cursor: pointer;
+            font-family: var(--font-body);
+        }
+        .ds-reset:hover {
+            border-color: var(--toki-blue);
+            color: var(--toki-blue);
+        }
+    </style>
+    <meta property="og:type" content="article">
+    <meta property="og:title" content="文字サイズ・配色の変更 | トキストレージ">
+    <meta property="og:description" content="文字サイズ・配色の変更 | トキストレージ">
+    <meta property="og:url" content="https://tokistorage.github.io/lp/display-settings.html">
+    <meta property="og:site_name" content="トキストレージ">
+    <meta name="twitter:card" content="summary">
+    <meta name="twitter:title" content="文字サイズ・配色の変更 | トキストレージ">
+    <meta name="twitter:description" content="文字サイズ・配色の変更 | トキストレージ">
+    <meta property="og:image" content="https://tokistorage.github.io/lp/asset/tokistorage-icon-512.png">
+    <meta property="og:image:width" content="512">
+    <meta property="og:image:height" content="512">
+    <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "WebPage",
+  "name": "文字サイズ・配色の変更 | トキストレージ",
+  "url": "https://tokistorage.github.io/lp/display-settings.html",
+  "inLanguage": "ja",
+  "publisher": {
+    "@type": "Organization",
+    "name": "TokiStorage",
+    "url": "https://tokistorage.github.io/lp"
+  }
+}
+    </script>
+    <link rel="alternate" hreflang="ja" href="https://tokistorage.github.io/lp/display-settings.html">
+    <link rel="alternate" hreflang="en" href="https://tokistorage.github.io/lp/display-settings-en.html">
+    <link rel="alternate" hreflang="x-default" href="https://tokistorage.github.io/lp/display-settings.html">
+    <link rel="canonical" href="https://tokistorage.github.io/lp/display-settings.html">
+</head>
+<body>
+
+<nav class="toki-nav">
+    <a href="index.html" class="nav-logo">トキストレージ</a>
+</nav>
+
+<main class="legal-page">
+    <div class="legal-inner">
+        <h1>文字サイズ・配色の変更</h1>
+        <p class="legal-date">お好みの表示設定を選んでください。設定はブラウザに保存され、次回以降も自動的に適用されます。</p>
+
+        <h2>文字サイズ</h2>
+        <div class="ds-group">
+            <div class="ds-buttons" id="fontButtons">
+                <button class="ds-btn ds-btn-small" data-size="small">小</button>
+                <button class="ds-btn ds-btn-medium" data-size="medium">中（標準）</button>
+                <button class="ds-btn ds-btn-large" data-size="large">大</button>
+                <button class="ds-btn ds-btn-xlarge" data-size="xlarge">特大</button>
+            </div>
+        </div>
+
+        <h2>配色</h2>
+        <div class="ds-group">
+            <div class="ds-buttons" id="colorButtons">
+                <button class="ds-btn ds-color-standard" data-scheme="standard">標準</button>
+                <button class="ds-btn ds-color-high" data-scheme="high">高コントラスト</button>
+                <button class="ds-btn ds-color-dark" data-scheme="dark">暗い背景</button>
+                <button class="ds-btn ds-color-yellow" data-scheme="yellow">黒地に黄色</button>
+            </div>
+        </div>
+
+        <h2>プレビュー</h2>
+        <div class="ds-preview" id="preview">
+            <h3>表示サンプル</h3>
+            <p>TokiStorage（トキストレージ）は、声・写真・テキストを石英ガラスやQRコードに記録し、大切な記憶を長期保管するサービスです。</p>
+            <p><a href="#">リンクの表示例</a> — このように表示されます。</p>
+        </div>
+
+        <button class="ds-reset" id="resetBtn">設定をリセット（初期状態に戻す）</button>
+
+        <h2>ブラウザの設定で変更する方法</h2>
+        <p>お使いのブラウザにも文字サイズや配色を変更する機能があります。</p>
+        <ul>
+            <li><strong>文字サイズの拡大・縮小</strong>：Ctrl（Mac: ⌘）を押しながら + / - キー、またはマウスホイール</li>
+            <li><strong>ダークモード</strong>：OSの設定から「ダークモード」を有効にすると、対応サイトの表示が切り替わります</li>
+            <li><strong>ハイコントラスト</strong>：Windows「設定」→「アクセシビリティ」→「コントラストテーマ」</li>
+        </ul>
+
+    </div>
+</main>
+<footer style="text-align: center; padding: 2rem 1.5rem; margin-top: 3rem; border-top: 1px solid #E2E8F0;">
+    <p style="font-family: Georgia, 'Times New Roman', serif; font-size: 0.8rem; color: #94A3B8; font-style: italic; margin-bottom: 0.8rem;">あなたが物語となり、世代の対話が重なり、未来の道となる。</p>
+    <p style="font-size: 0.75rem; color: #94A3B8;">&copy; 2026 TokiStorage. All rights reserved.</p>
+</footer>
+
+<script src="contact-form.js" defer></script>
+<script src="tracker.js" defer></script>
+<script>
+(function() {
+    function updateActive(containerId, dataAttr, value) {
+        var btns = document.getElementById(containerId).querySelectorAll('.ds-btn');
+        btns.forEach(function(b) { b.classList.toggle('active', b.getAttribute(dataAttr) === value); });
+    }
+
+    function applyPreview() {
+        if (window._tokiDisplayApply) window._tokiDisplayApply();
+        var cs = localStorage.getItem('toki_colorscheme');
+        var schemes = {
+            standard: null,
+            high:   { bg: '#FFFFFF', text: '#000000', link: '#0000EE' },
+            dark:   { bg: '#1a1a2e', text: '#E0E0E0', link: '#64B5F6' },
+            yellow: { bg: '#000000', text: '#FFFF00', link: '#00FFFF' }
+        };
+        var preview = document.getElementById('preview');
+        if (cs && schemes[cs]) {
+            var c = schemes[cs];
+            preview.style.backgroundColor = c.bg;
+            preview.style.color = c.text;
+            preview.querySelectorAll('h3, p').forEach(function(el) { el.style.color = c.text; });
+            preview.querySelectorAll('a').forEach(function(el) { el.style.color = c.link; });
+        } else {
+            preview.style.backgroundColor = '';
+            preview.style.color = '';
+            preview.querySelectorAll('h3, p, a').forEach(function(el) { el.style.color = ''; });
+        }
+    }
+
+    // Init active states
+    var currentFont = localStorage.getItem('toki_fontsize') || 'medium';
+    var currentColor = localStorage.getItem('toki_colorscheme') || 'standard';
+    updateActive('fontButtons', 'data-size', currentFont);
+    updateActive('colorButtons', 'data-scheme', currentColor);
+
+    // Font size buttons
+    document.getElementById('fontButtons').addEventListener('click', function(e) {
+        var btn = e.target.closest('.ds-btn');
+        if (!btn) return;
+        var size = btn.getAttribute('data-size');
+        localStorage.setItem('toki_fontsize', size);
+        updateActive('fontButtons', 'data-size', size);
+        applyPreview();
+    });
+
+    // Color scheme buttons
+    document.getElementById('colorButtons').addEventListener('click', function(e) {
+        var btn = e.target.closest('.ds-btn');
+        if (!btn) return;
+        var scheme = btn.getAttribute('data-scheme');
+        localStorage.setItem('toki_colorscheme', scheme);
+        updateActive('colorButtons', 'data-scheme', scheme);
+        applyPreview();
+    });
+
+    // Reset
+    document.getElementById('resetBtn').addEventListener('click', function() {
+        localStorage.removeItem('toki_fontsize');
+        localStorage.removeItem('toki_colorscheme');
+        updateActive('fontButtons', 'data-size', 'medium');
+        updateActive('colorButtons', 'data-scheme', 'standard');
+        applyPreview();
+    });
+})();
+</script>
+</body>
+</html>
