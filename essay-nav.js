@@ -207,7 +207,7 @@
   // ── Latest Articles (最新記事) ──
   // essays配列のdateから自動生成（手動リスト不要）
   const LATEST_COUNT = 5;
-  const PORTAL_LATEST_PAGE = 10;
+  const PORTAL_LATEST_PAGE = 5;
   const latestEssayIds = essays
     .slice()
     .sort(function(a, b) { return b.date.localeCompare(a.date); })
