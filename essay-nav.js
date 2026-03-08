@@ -32,6 +32,7 @@
     { id: 'independence', ja: 'オフグリッド', en: 'Off-Grid', date: '2026-02-13' },
     { id: 'what-to-leave', ja: '人が残したいもの', en: 'What to Leave Behind', date: '2026-02-19' },
     { id: 'brides-letter', ja: '花嫁の手紙', en: "The Bride's Letter", date: '2026-02-23' },
+    { id: 'animal-coexistence', ja: '動物との共生', en: 'Animal Coexistence', date: '2026-03-08' },
 
     // ── 信仰・思想 ──
     { id: 'religion', ja: '宗教・神話', en: 'Religion', date: '2026-02-13' },
@@ -208,6 +209,7 @@
   // LATEST_COUNT で表示件数を制御
   const LATEST_COUNT = 5;
   const latestEssayIds = [
+    'animal-coexistence',
     'government-guide',
     'fire-music',
     'shuriken-guide',
@@ -269,7 +271,7 @@
     'transformation-journey': ['backcasting', 'emotion', 'satiation', 'solitude', 'lifecycle'],
     'influence-boundaries':   ['boundary', 'integrity', 'solitude', 'erasure', 'departure'],
     // ── 人生の節目 ──
-    'lifecycle':              ['shiseikan', 'ceremony', 'what-to-leave', 'pathology', 'transformation-journey'],
+    'lifecycle':              ['shiseikan', 'ceremony', 'what-to-leave', 'animal-coexistence', 'pathology'],
     'adversity':              ['lifecycle', 'backcasting', 'integrity', 'pathology', 'headhunter'],
     'ceremony':               ['lifecycle', 'what-to-leave', 'recital-record', 'shiseikan', 'entrepreneurship'],
     'recital-record':         ['ceremony', 'early-education', 'playground-gift', 'commemorative-photo', 'music'],
@@ -278,6 +280,7 @@
     'independence':           ['lifestyle', 'burn-rate-zero', 'post-nomad', 'ecology', 'platform'],
     'what-to-leave':          ['lifecycle', 'preserving-words', 'ceremony', 'shiseikan', 'legacy'],
     'brides-letter':          ['ceremony', 'wedding-partnership', 'what-to-leave', 'recital-record', 'commemorative-photo'],
+    'animal-coexistence':     ['animal-welfare', 'lifecycle', 'ceremony', 'adversity', 'what-to-leave'],
     // ── 信仰・思想 ──
     'religion':               ['shiseikan', 'philosophy', 'ceremony', 'existentialism', 'peace'],
     'existentialism':         ['philosophy', 'religion', 'dimension', 'shiseikan', 'burn-rate-zero'],
@@ -359,7 +362,7 @@
     'shuriken-guide':         ['history', 'tourism', 'novelty-soap', 'pearl-soap-roots', 'kumihimo'],
     'fire-music':             ['music', 'copyright-jasrac', 'community-disaster-response', 'community-benefit', '30seconds'],
     // ── 自然・宇宙 ──
-    'animal-welfare':         ['ecology', 'esg', 'turtle', 'peace', 'sdgs'],
+    'animal-welfare':         ['animal-coexistence', 'ecology', 'esg', 'turtle', 'peace'],
     'ecology':                ['animal-welfare', 'sdgs', 'esg', 'geology', 'rural-workaway'],
     'geology':                ['site-geology', 'ecology', 'turtle', 'urayasu', 'history'],
     'site-geology':           ['geology', 'hyoutanjima', 'community-benefit', 'tech-roadmap', 'backup-rule'],
