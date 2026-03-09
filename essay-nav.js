@@ -601,7 +601,12 @@
           var e = portalSorted[i];
           var href = isEnglish ? e.id + '-en.html' : e.id + '.html';
           var label = isEnglish ? e.en : e.ja;
-          html += '<div><a href="' + href + '">' + label + '</a><span>' + e.date + '</span></div>';
+          var d = new Date(e.date + 'T00:00:00');
+          var dayNames = isEnglish
+            ? ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat']
+            : ['日', '月', '火', '水', '木', '金', '土'];
+          var dateStr = e.date + ' (' + dayNames[d.getDay()] + ')';
+          html += '<div><a href="' + href + '">' + label + '</a><span>' + dateStr + '</span></div>';
         }
         portalList.innerHTML = html;
         if (portalBtn) {
