@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" type="image/png" sizes="32x32" href="asset/favicon-32.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="asset/apple-touch-icon.png">
+    <title>生存から復旧へ | トキストレージ</title>
+    <meta name="robots" content="index, follow">
+    <meta name="description" content="179本のエッセイと67のsub-issueを経て、生存モードから復旧モードへの心理的転換が起きた。踊り場に立つことの意味と、出し切ることで不安が消えるメカニズムを言語化する。">    <style>
+        :root {
+            --toki-blue: #2563EB;
+            --toki-blue-dark: #1E40AF;
+            --toki-blue-pale: #EFF6FF;
+            --accent-blue: #60A5FA;
+            --bg-white: #FFFFFF;
+            --text-primary: #1E293B;
+            --text-secondary: #475569;
+            --text-muted: #94A3B8;
+            --border: #E2E8F0;
+            --font-display: 'Hiragino Mincho ProN', 'Yu Mincho', serif;
+            --font-body: 'Hiragino Kaku Gothic ProN', 'Yu Gothic', 'Meiryo', sans-serif;
+        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        html { scroll-behavior: smooth; }
+        body { font-family: var(--font-body); font-weight: 400; background: var(--bg-white); color: var(--text-primary); line-height: 2; font-size: 16px; }
+
+        .article-nav { position: fixed; top: 0; left: 0; right: 0; z-index: 1000; background: rgba(255,255,255,0.95); backdrop-filter: blur(12px); border-bottom: 1px solid var(--border); padding: 0.6rem 1.2rem; display: flex; align-items: center; justify-content: space-between; gap: 1rem; }
+        .article-nav .nav-brand { font-family: var(--font-display); font-size: 0.9rem; font-weight: 600; color: var(--toki-blue); text-decoration: none; white-space: nowrap; }
+        .article-nav .nav-brand::before { content: ''; display: inline-block; width: 20px; height: 20px; background: url('asset/tokistorage-icon-512.png') no-repeat center / contain; vertical-align: -3px; margin-right: 5px; }
+        .article-nav .nav-right { display: flex; align-items: center; gap: 1rem; }
+        .article-nav .nav-label { font-size: 0.6rem; color: var(--text-muted); letter-spacing: 0.08em; }
+        .article-nav .lang-switch { font-size: 0.75rem; color: var(--toki-blue); text-decoration: none; padding: 0.3rem 0.6rem; border: 1px solid var(--toki-blue); border-radius: 4px; }
+        .article-nav .lang-switch:hover { background: var(--toki-blue); color: #fff; }
+
+        .article-container { max-width: 680px; margin: 0 auto; padding: 7rem 2rem 4rem; }
+        .article-header { margin-bottom: 3rem; padding-bottom: 2rem; border-bottom: 1px solid var(--border); }
+        .article-category { font-size: 0.7rem; color: var(--toki-blue); letter-spacing: 0.15em; margin-bottom: 1rem; }
+        .article-header h1 { font-family: var(--font-display); font-size: 1.8rem; font-weight: 700; line-height: 1.5; margin-bottom: 1.5rem; }
+        .article-subtitle { font-size: 0.95rem; color: var(--text-secondary); line-height: 1.9; }
+
+        .article-content h2 { font-family: var(--font-display); font-size: 1.3rem; font-weight: 600; margin: 3rem 0 1.5rem; padding-bottom: 0.5rem; border-bottom: 2px solid var(--toki-blue-pale); }
+        .article-content h3 { font-family: var(--font-display); font-size: 1.1rem; font-weight: 600; margin: 2rem 0 1rem; color: var(--toki-blue-dark); }
+        .article-content p { margin-bottom: 1.5rem; text-align: justify; }
+        .article-content blockquote { border-left: 3px solid var(--toki-blue); padding-left: 1.5rem; margin: 2rem 0; font-family: var(--font-display); color: var(--text-secondary); }
+        .article-content ul { margin: 1.5rem 0; padding-left: 1.5rem; }
+        .article-content li { margin-bottom: 0.75rem; }
+
+        .core-message { background: var(--toki-blue-pale); border-left: 4px solid var(--toki-blue); padding: 1.5rem; margin: 2rem 0; font-size: 0.95rem; line-height: 1.8; }
+        .key-point { background: linear-gradient(135deg, var(--toki-blue-pale) 0%, #fff 100%); border: 1px solid var(--accent-blue); border-radius: 8px; padding: 1.5rem; margin: 2rem 0; text-align: center; }
+        .key-point p { font-family: var(--font-display); font-size: 1.1rem; color: var(--toki-blue-dark); margin: 0; }
+
+        .article-footer { margin-top: 4rem; padding-top: 2rem; border-top: 1px solid var(--border); text-align: center; }
+        .article-footer p { font-size: 0.8rem; color: var(--text-muted); margin-bottom: 1rem; }
+        .article-footer a { color: var(--toki-blue); text-decoration: none; }
+        .article-footer a:hover { text-decoration: underline; }
+
+        @media (max-width: 768px) {
+            .article-container { padding: 6rem 1.2rem 3rem; }
+            .article-header h1 { font-size: 1.5rem; }
+            .article-nav .nav-label { display: none; }
+        }
+        @media print { .article-nav { display: none; } .article-container { padding-top: 2rem; } }
+    </style>
+</head>
+<body>
+
+<nav class="article-nav">
+    <a href="essays.html" class="nav-brand">トキストレージ</a>
+    <div class="nav-right">
+        <span class="nav-label">ESSAY</span>
+        <a href="survival-to-recovery-en.html" class="lang-switch">EN</a>
+    </div>
+</nav>
+
+<main class="article-container">
+    <header class="article-header">
+        <div class="article-category">基礎理論</div>
+        <h1>生存から復旧へ</h1>
+        <p class="article-subtitle">179本のエッセイと67のsub-issueを経て、踊り場に立った。生存モードから復旧モードへの心理的転換と、出し切ることで不安が消えるメカニズムを言語化する。</p>
+    </header>
+
+    <article class="article-content">
+
+        <h2>踊り場の認識</h2>
+
+        <p>階段の踊り場は、上りでも下りでもない水平の場所だ。そこに立つと、足が止まる。けれどそれは停滞ではない。方向を確認するための構造的な必然である。</p>
+
+        <p>喪失の連鎖から始まった創業。思想を言語化するために書き続けた179本のエッセイ。会社の沿革を整理し、「中心的な問い」を挿入した。GitHub Projectを立ち上げ、67のsub-issueを採番し、優先順位を振った。そこで、ふと立ち止まった。</p>
+
+        <p>これまで走り続けてきた足が、はじめて水平な床を踏んだ感覚だった。上にも下にも進まない。ただ、周囲が見える。踊り場とは、方向転換のために設計された構造物なのだと、そのとき気づいた。</p>
+
+        <div class="core-message">踊り場は停滞ではない。それは次の階段の向きを決めるために、建築家が意図的に設計した水平面である。</div>
+
+        <h2>生存から復旧へ</h2>
+
+        <p>生存モードとは、目の前の問題を片っ端から処理する状態だ。視野は狭い。感情を封じ、判断を速くし、一つずつ片づけていく。それは危機の中で有効な戦略であり、実際にそれで乗り越えてきた。</p>
+
+        <p>復旧モードは異なる。全体を見渡し、順序を付け、仕組みを作る。そして何より、感情が戻ってくる。生存モードでは感じる暇がなかったものが、復旧モードでは浮上してくる。痛みも、安堵も、喜びも。</p>
+
+        <p>沿革ページに「中心的な問い」を書いた瞬間、生存モードの自分を俯瞰できた。それは復旧の入口だった。走りながら振り返ることはできない。立ち止まってはじめて、自分がどこから来たのかが見える。</p>
+
+        <div class="key-point"><p>生存モードでは感情を封じる。復旧モードでは感情が戻ってくる。その切り替わりの瞬間が、踊り場である。</p></div>
+
+        <h2>沿革という整理ツール</h2>
+
+        <p>沿革は本来、出来事を時系列に並べるだけの文書だ。いつ何が起きたか。事実の羅列。しかし、そこに「なぜそれをしたか」という問いを挿入した瞬間、沿革は思想のマップに変わった。</p>
+
+        <p>「中心的な問い」セクションの追加は、事実の羅列から意味の構造化への転換だった。創業の動機、技術選択の理由、公開主義の背景——それぞれの出来事に「なぜ」を付与することで、点が線になり、線が面になった。</p>
+
+        <p>そして、すべての原体験が1点に集約される体験をした。「喪失と責任を共存できるのか」——この問いが、自分の行動のすべてを貫いていたことに気づいた。沿革は、自分の思想を発見するためのツールだった。</p>
+
+        <h2>出し切ることで起こる心理</h2>
+
+        <p>67のsub-issueを採番した。一つひとつに概要を書き、前提条件を整理し、完了条件を定義した。優先順位を振り、依存関係を明示した。頭の中にあった全てが外に出た。</p>
+
+        <p>その瞬間の感覚は、GPSで全地形を見渡せるようになったことに似ていた。霧の中を歩いていたのに、突然地図が手に入った。やるべきことの総量が見えた。そして、総量が見えたことで、不安が消えた。</p>
+
+        <div class="core-message">不安の正体は「見えていないものがある」という感覚だった。全てを出し切ると、未知が既知に変わる。残るのは、実行するかしないかの選択だけだ。</div>
+
+        <p>出し切るとは、完璧に計画することではない。頭の中にある曖昧なものを、全て言語化して外に置くことだ。精度は問わない。存在することが重要なのだ。</p>
+
+        <h2>パブリックとプライベート</h2>
+
+        <p>沿革は公開ページだ。誰でも読める。一方、GitHub Projectはprivateに設定した。この二層構造には意味がある。</p>
+
+        <p>公開できる形に言語化するとは、自分の物語を社会に差し出す行為だ。沿革の「中心的な問い」は、自分の原体験を他者が読める形に翻訳したものだ。それは覚悟を伴う。しかし、差し出すことで物語は自分だけのものではなくなり、社会との接点を持つ。</p>
+
+        <p>一方、privateなタスク管理は自分だけの実行リストだ。感情を排した番号順の遂行。67のissueには優先順位があり、依存関係があり、完了条件がある。そこに物語はない。あるのは実行だけだ。</p>
+
+        <div class="key-point"><p>思想の公開と実行の非公開——この二層構造が、持続可能な前進を支える。</p></div>
+
+        <h2>GitHub Projectとバイブコーディング</h2>
+
+        <p>バイブコーディングで179本のエッセイを書いた。同じ手法でGitHub Projectを構築した。AIとの対話で思考を外在化し、構造化し、実行可能な単位に分解する。このプロセスは、もはや「コードを書く」行為ではない。</p>
+
+        <p>エッセイの執筆は思想の言語化だった。GitHub Projectの構築はタスクの言語化だった。どちらも同じ本質を持つ——意図を言葉にすれば、実装は従う。コードも、プロジェクト管理も、人生設計も、入口は同じだ。意図の言語化である。</p>
+
+        <p>バイブコーディングとは、技術を使いこなす手法ではない。自分の意図を精密に言語化する訓練だ。AIはその言語化を受け取り、構造化し、実行可能な形にする。だからこそ、技術者でなくても使える。必要なのは、自分が何を望んでいるかを知っていることだけだ。</p>
+
+        <blockquote>生存モードから復旧モードへの転換は、意志ではなく構造が引き起こす。出し切り、見渡し、立ち止まる——その構造を自ら設計できたとき、踊り場は次の階段の始点になる。</blockquote>
+
+    </article>
+
+    <footer class="article-footer">
+        <p id="essay-nav-links"></p>
+        <p style="font-size: 0.75rem; color: var(--text-muted);">&copy; TokiStorage. All rights reserved.</p>
+    </footer>
+
+</main>
+
+<script src="essay-nav.js"></script>
+<script src="essay-tts.js"></script>
+</body>
+</html>

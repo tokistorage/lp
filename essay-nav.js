@@ -21,6 +21,7 @@
     { id: 'transformation-journey', ja: '変容の旅路', en: 'Transformation Journey', date: '2026-02-18' },
     { id: 'influence-boundaries', ja: '影響力の外側', en: 'Beyond the Boundaries of Influence', date: '2026-02-21' },
     { id: 'approval-affinity', ja: '承認と親和の違い', en: 'Approval vs. Affinity', date: '2026-02-21' },
+    { id: 'survival-to-recovery', ja: '生存から復旧へ', en: 'From Survival to Recovery', date: '2026-03-09' },
 
     // ── 人生の節目 ──
     { id: 'lifecycle', ja: '生老病死', en: 'Life Cycle', date: '2026-02-13' },
@@ -230,6 +231,7 @@
     'satiation':              ['emotion', 'solitude', 'transformation-journey', 'consumption', 'lifestyle'],
     'transformation-journey': ['backcasting', 'emotion', 'satiation', 'solitude', 'lifecycle'],
     'influence-boundaries':   ['boundary', 'integrity', 'solitude', 'erasure', 'departure'],
+    'survival-to-recovery':   ['psychology', 'backcasting', 'vibe-coding', 'what-is-github', 'transformation-journey'],
     // ── 人生の節目 ──
     'lifecycle':              ['shiseikan', 'ceremony', 'what-to-leave', 'animal-coexistence', 'pathology'],
     'adversity':              ['lifecycle', 'backcasting', 'integrity', 'pathology', 'headhunter'],
