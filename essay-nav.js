@@ -34,6 +34,7 @@
     { id: 'what-to-leave', ja: '人が残したいもの', en: 'What to Leave Behind', date: '2026-02-19' },
     { id: 'brides-letter', ja: '花嫁の手紙', en: "The Bride's Letter", date: '2026-02-23' },
     { id: 'animal-coexistence', ja: '動物との共生', en: 'Animal Coexistence', date: '2026-03-08' },
+    { id: 'expectation-boundary', ja: '期待値の境界', en: 'Boundaries of Expectations', date: '2026-03-09' },
 
     // ── 信仰・思想 ──
     { id: 'religion', ja: '宗教・神話', en: 'Religion', date: '2026-02-13' },
@@ -230,7 +231,7 @@
     'meiwaku':                ['peace', 'philosophy', 'organization', 'boundary', 'psychology'],
     'satiation':              ['emotion', 'solitude', 'transformation-journey', 'consumption', 'lifestyle'],
     'transformation-journey': ['backcasting', 'emotion', 'satiation', 'solitude', 'lifecycle'],
-    'influence-boundaries':   ['boundary', 'integrity', 'solitude', 'erasure', 'departure'],
+    'influence-boundaries':   ['boundary', 'integrity', 'expectation-boundary', 'solitude', 'erasure'],
     'survival-to-recovery':   ['psychology', 'backcasting', 'vibe-coding', 'what-is-github', 'transformation-journey'],
     // ── 人生の節目 ──
     'lifecycle':              ['shiseikan', 'ceremony', 'what-to-leave', 'animal-coexistence', 'pathology'],
@@ -243,6 +244,7 @@
     'what-to-leave':          ['lifecycle', 'preserving-words', 'ceremony', 'shiseikan', 'legacy'],
     'brides-letter':          ['ceremony', 'wedding-partnership', 'what-to-leave', 'recital-record', 'commemorative-photo'],
     'animal-coexistence':     ['animal-welfare', 'lifecycle', 'ceremony', 'adversity', 'what-to-leave'],
+    'expectation-boundary':   ['psychology', 'approval-affinity', 'influence-boundaries', 'partner-boundary', 'ethics-exclusion'],
     // ── 信仰・思想 ──
     'religion':               ['shiseikan', 'philosophy', 'ceremony', 'existentialism', 'peace'],
     'existentialism':         ['philosophy', 'religion', 'dimension', 'shiseikan', 'burn-rate-zero'],
