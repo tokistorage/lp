@@ -218,7 +218,11 @@
   const PORTAL_LATEST_PAGE = 5;
   const latestEssayIds = essays
     .slice()
-    .sort(function(a, b) { return b.date.localeCompare(a.date); })
+    .sort(function(a, b) {
+      var d = b.date.localeCompare(a.date);
+      if (d !== 0) return d;
+      return essays.indexOf(b) - essays.indexOf(a); // 同日付は配列後ろが上位
+    })
     .map(function(e) { return e.id; });
 
   // ── Related Essays Map ──
@@ -605,7 +609,11 @@
     if (portalList) {
       var portalSorted = essays
         .slice()
-        .sort(function(a, b) { return b.date.localeCompare(a.date); });
+        .sort(function(a, b) {
+          var d = b.date.localeCompare(a.date);
+          if (d !== 0) return d;
+          return essays.indexOf(b) - essays.indexOf(a); // 同日付は配列後ろが上位
+        });
       var portalShown = PORTAL_LATEST_PAGE;
       function renderPortalLatest() {
         var html = '';
