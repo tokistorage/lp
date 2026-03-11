@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" type="image/png" sizes="32x32" href="asset/favicon-32.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="asset/apple-touch-icon.png">
+    <title>読まれなくてもいい手紙 | トキストレージ</title>
+    <meta name="robots" content="index, follow">
+    <meta name="description" content="世界的な国際機関に個人事業主が手紙を送った。返事は来なかった。届かなかった手紙も存在証明になる——それはトキストレージのミッションそのものだった。">    <style>
+        :root {
+            --toki-blue: #2563EB;
+            --toki-blue-dark: #1D4ED8;
+            --toki-blue-pale: #EFF6FF;
+            --accent-blue: #3B82F6;
+            --bg-white: #FFFFFF;
+            --text-primary: #1E293B;
+            --text-secondary: #475569;
+            --text-muted: #94A3B8;
+            --border: #E2E8F0;
+            --font-display: 'Hiragino Mincho ProN', 'Yu Mincho', serif;
+            --font-body: 'Hiragino Kaku Gothic ProN', 'Yu Gothic', 'Meiryo', sans-serif;
+        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        html { scroll-behavior: smooth; }
+        body { font-family: var(--font-body); font-weight: 400; background: var(--bg-white); color: var(--text-primary); line-height: 2; font-size: 16px; }
+
+        .article-nav { position: fixed; top: 0; left: 0; right: 0; z-index: 1000; background: rgba(255,255,255,0.95); backdrop-filter: blur(12px); border-bottom: 1px solid var(--border); padding: 0.6rem 1.2rem; display: flex; align-items: center; justify-content: space-between; gap: 1rem; }
+        .article-nav .nav-brand { font-family: var(--font-display); font-size: 0.9rem; font-weight: 600; color: var(--toki-blue); text-decoration: none; white-space: nowrap; }
+        .article-nav .nav-brand::before { content: ''; display: inline-block; width: 20px; height: 20px; background: url('asset/tokistorage-icon-512.png') no-repeat center / contain; vertical-align: -3px; margin-right: 5px; }
+        .article-nav .nav-right { display: flex; align-items: center; gap: 1rem; }
+        .article-nav .nav-label { font-size: 0.6rem; color: var(--text-muted); letter-spacing: 0.08em; }
+        .article-nav .lang-switch { font-size: 0.75rem; color: var(--toki-blue); text-decoration: none; padding: 0.3rem 0.6rem; border: 1px solid var(--toki-blue); border-radius: 4px; }
+        .article-nav .lang-switch:hover { background: var(--toki-blue); color: #fff; }
+
+        .article-container { max-width: 680px; margin: 0 auto; padding: 7rem 2rem 4rem; }
+        .article-header { margin-bottom: 3rem; padding-bottom: 2rem; border-bottom: 1px solid var(--border); }
+        .article-category { font-size: 0.7rem; color: var(--toki-blue); letter-spacing: 0.15em; margin-bottom: 1rem; }
+        .article-header h1 { font-family: var(--font-display); font-size: 1.8rem; font-weight: 700; line-height: 1.5; margin-bottom: 1.5rem; }
+        .article-subtitle { font-size: 0.95rem; color: var(--text-secondary); line-height: 1.9; }
+
+        .article-content h2 { font-family: var(--font-display); font-size: 1.3rem; font-weight: 600; margin: 3rem 0 1.5rem; padding-bottom: 0.5rem; border-bottom: 2px solid var(--toki-blue-pale); }
+        .article-content h3 { font-family: var(--font-display); font-size: 1.1rem; font-weight: 600; margin: 2rem 0 1rem; color: var(--toki-blue-dark); }
+        .article-content p { margin-bottom: 1.5rem; text-align: justify; }
+        .article-content blockquote { border-left: 3px solid var(--toki-blue); padding-left: 1.5rem; margin: 2rem 0; font-family: var(--font-display); color: var(--text-secondary); }
+        .article-content ul { margin: 1.5rem 0; padding-left: 1.5rem; }
+        .article-content li { margin-bottom: 0.75rem; }
+
+        .core-message { background: var(--toki-blue-pale); border-left: 4px solid var(--toki-blue); padding: 1.5rem; margin: 2rem 0; font-size: 0.95rem; line-height: 1.8; }
+        .key-point { background: linear-gradient(135deg, var(--toki-blue-pale) 0%, #fff 100%); border: 1px solid var(--accent-blue); border-radius: 8px; padding: 1.5rem; margin: 2rem 0; text-align: center; }
+        .key-point p { font-family: var(--font-display); font-size: 1.1rem; color: var(--toki-blue-dark); margin: 0; }
+
+        .article-footer { margin-top: 4rem; padding-top: 2rem; border-top: 1px solid var(--border); text-align: center; }
+        .article-footer p { font-size: 0.8rem; color: var(--text-muted); margin-bottom: 1rem; }
+        .article-footer a { color: var(--toki-blue); text-decoration: none; }
+        .article-footer a:hover { text-decoration: underline; }
+
+        @media (max-width: 768px) {
+            .article-container { padding: 6rem 1.2rem 3rem; }
+            .article-header h1 { font-size: 1.5rem; }
+            .article-nav .nav-label { display: none; }
+        }
+        @media print { .article-nav { display: none; } .article-container { padding-top: 2rem; } }
+    </style>
+    <link rel="stylesheet" href="contact-form.css">
+    <meta property="og:type" content="article">
+    <meta property="og:title" content="読まれなくてもいい手紙 | トキストレージ">
+    <meta property="og:description" content="世界的な国際機関に個人事業主が手紙を送った。返事は来なかった。届かなかった手紙も存在証明になる——それはトキストレージのミッションそのものだった。">
+    <meta property="og:url" content="https://tokistorage.github.io/lp/unread-letters.html">
+    <meta property="og:site_name" content="トキストレージ">
+    <meta name="twitter:card" content="summary">
+    <meta name="twitter:title" content="読まれなくてもいい手紙 | トキストレージ">
+    <meta name="twitter:description" content="世界的な国際機関に個人事業主が手紙を送った。返事は来なかった。届かなかった手紙も存在証明になる——それはトキストレージのミッションそのものだった。">
+    <meta property="og:image" content="https://tokistorage.github.io/lp/asset/tokistorage-icon-512.png">
+    <meta property="og:image:width" content="512">
+    <meta property="og:image:height" content="512">
+    <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Article",
+  "headline": "読まれなくてもいい手紙",
+  "author": {
+    "@type": "Person",
+    "name": "Takuya Sato",
+    "url": "https://tokistorage.github.io/lp/profile.html"
+  },
+  "publisher": {
+    "@type": "Organization",
+    "name": "TokiStorage",
+    "url": "https://tokistorage.github.io/lp",
+    "logo": {
+      "@type": "ImageObject",
+      "url": "https://tokistorage.github.io/lp/asset/tokistorage-icon-512.png"
+    }
+  },
+  "url": "https://tokistorage.github.io/lp/unread-letters.html",
+  "inLanguage": "ja",
+  "mainEntityOfPage": "https://tokistorage.github.io/lp/unread-letters.html",
+  "description": "世界的な国際機関に個人事業主が手紙を送った。返事は来なかった。届かなかった手紙も存在証明になる——それはトキストレージのミッションそのものだった。"
+}
+    </script>
+    <link rel="alternate" hreflang="ja" href="https://tokistorage.github.io/lp/unread-letters.html">
+    <link rel="alternate" hreflang="en" href="https://tokistorage.github.io/lp/unread-letters-en.html">
+    <link rel="alternate" hreflang="x-default" href="https://tokistorage.github.io/lp/unread-letters.html">
+    <link rel="canonical" href="https://tokistorage.github.io/lp/unread-letters.html">
+</head>
+<body>
+
+<nav class="article-nav">
+    <a href="index.html" class="nav-brand">トキストレージ</a>
+    <div class="nav-right">
+        <span class="nav-label">活動記録 / Activity Log</span>
+        <a href="unread-letters-en.html" class="lang-switch">EN</a>
+    </div>
+</nav>
+
+<main class="article-container">
+
+    <header class="article-header">
+        <p class="article-category">ESSAY &mdash; 活動記録</p>
+        <h1>読まれなくてもいい手紙<br><span style="font-size: 0.6em; font-weight: 400; color: var(--text-secondary);">&mdash;&mdash; 届かなかった手紙が、最もトキストレージらしかった</span></h1>
+        <p class="article-subtitle">
+            世界的な国際機関に、個人事業主が手紙を送った。<br>
+            返事は来なかった。アドレスは弾かれた。スパムフォルダに沈んだかもしれない。<br>
+            それでも——届かなかった手紙も、存在証明になる。
+        </p>
+    </header>
+
+    <article class="article-content">
+
+        <h2>1. なぜ手紙を書いたか</h2>
+
+        <p>世界的な国際機関に手紙を送った。三つの機関に、それぞれ別の文面で。</p>
+
+        <p>個人事業主が、世界を動かしている機関に手紙を送る。冷静に考えれば無謀だ。返事が来る確率は限りなく低い。担当者の目に触れる保証すらない。わかっている。わかっていて、送った。</p>
+
+        <p>理由は単純だった。トキストレージが取り組んでいることは、これらの機関のミッションと重なる部分があると思ったからだ。声を残す。名前のない人々の記録を残す。1000年後にも読める形で。それは文化保護であり、人権の記録であり、人類のアーカイブへの貢献でもある。自分たちの活動がその文脈に位置づけられると信じた。信じたなら、伝えるべきだと思った。</p>
+
+        <p>返事を期待していたかと聞かれれば、正直に言えば少しは期待していた。でも、それが主目的ではなかった。「伝えた」という事実を作ること——それ自体に意味があった。</p>
+
+        <h2>2. 手紙を作る過程</h2>
+
+        <p>手紙は一通ずつ、別の文章で書いた。</p>
+
+        <p>まず各機関のミッションを調べた。公式サイトを読み、年次報告書を開き、どんな言葉で自らの活動を語っているかを把握した。そこに接続できるポイントを探した。</p>
+
+        <p>ある機関には、地域創生モデルとしてトキストレージを紹介した。過疎地域の声を残し、土地の記憶を次世代に渡す仕組みとして。ある機関には、分散型音声遺産という新しいカテゴリーの提案として書いた。既存の文化遺産の枠には収まらないが、保護する価値がある領域があると。そしてある機関には、「無名の人々の記録」という共通言語で語りかけた。歴史に名前が残らない人々の声を物理的に保存する——その思想がその機関の活動と重なると考えた。</p>
+
+        <p>すべて英語と日本語の両方を用意した。カバーメールと本レターを分け、カバーメールは簡潔に、本レターは具体的に書いた。一機関あたり、調査と執筆に数日かけた。丁寧に作ったつもりだった。</p>
+
+        <h2>3. アドレスが弾かれた</h2>
+
+        <p>送信ボタンを押した。数分後、メーラーにエラー通知が返ってきた。</p>
+
+        <p>公式サイトに掲載されているメールアドレスに送ったのに、届かなかった。アドレスが無効だという。調べてみると、いくつかの機関は一般からのメール受信を事実上停止しており、コンタクトフォーム経由でなければ受け付けない仕組みになっていた。</p>
+
+        <p>フォーム経由で送り直した機関もある。しかしフォームには文字数制限があり、丁寧に書いた本レターの全文は入らなかった。要約版を作り、カバーメールの要素を圧縮して詰め込んだ。元の手紙の意図がどこまで伝わるか、正直自信はなかった。</p>
+
+        <p>別の機関はフォームすら見当たらず、最終的に送達を確認できなかった。世界的な機関であっても——いや、世界的な機関だからこそ——個人が連絡を取る手段は限られている。公開されている窓口は、実は入口ではなかった。</p>
+
+        <h2>4. スパムになっていると気づいた</h2>
+
+        <p>ここで、ある不快な事実に気づいた。</p>
+
+        <p>自分がやっていることの構造を客観的に見ると、複数の機関に類似の内容を一斉送信しようとしている。文面は差別化したつもりだが、構造は同じだ。自己紹介、活動概要、提案、協力の可能性——テンプレートの変奏に過ぎない。</p>
+
+        <div class="core-message">
+            内容がどれだけ誠実でも、形式がスパムであれば、読まれる前に廃棄される。「正しいことを正しく届ける」は、「正しいことを書く」とは別の問題だ。
+        </div>
+
+        <p>受信側の視点に立てば、知らない個人事業主から英語と日本語の長い手紙が届き、自分たちの活動と接続があると主張している。善意は疑わないとしても、対応する優先度は低い。毎日何百通と届くメールの中で、この手紙が特別扱いされる理由はない。</p>
+
+        <p>スパムフィルタに引っかかったかもしれない。迷惑メールフォルダに入ったかもしれない。そもそも開封されていないかもしれない。どの段階で消えたのかすらわからない。</p>
+
+        <p>誠実さは必要条件であって、十分条件ではない。到達するには、誠実さとは別の技術が要る。紹介者、実績、タイミング、チャネル——手紙の中身以前の問題が山ほどある。</p>
+
+        <h2>5. それでもやった価値</h2>
+
+        <p>では、無駄だったのか。</p>
+
+        <p>そうは思わない。</p>
+
+        <p>「あの三つの機関に手紙を送った」という事実は、トキストレージの活動記録として存在する。送信履歴がある。文面が残っている。調査の過程で得た知見がある。各機関のミッションを深く読み込んだことで、自分たちの活動の位置づけがより明確になった。</p>
+
+        <p>返事がなくても、届かなくても、書いた手紙は消えない。</p>
+
+        <p>そしてここで気づく。これはまさにトキストレージのミッションそのものだ。</p>
+
+        <div class="key-point">
+            <p>届かなかった手紙も存在証明になる。<br>読まれなかった声も、記録されていれば消えない。</p>
+        </div>
+
+        <p>トキストレージは「残す」ためのサービスだ。声を残す。記録を残す。名前のない人々の存在を残す。その前提は、「残されたものが必ず読まれる」ではない。残すこと自体に意味がある——それがトキストレージの思想だ。</p>
+
+        <p>1000年後に石英ガラスに刻まれた声を誰かが再生するかどうかは、わからない。国立国会図書館に納本した資料を誰かが閲覧するかどうかも、わからない。GitHubのリポジトリが1000年後に残っているかどうかも、わからない。</p>
+
+        <p>それでも残す。残すことが、存在の証明だからだ。</p>
+
+        <h2>結び——読まれなかった手紙</h2>
+
+        <p>三通の手紙を送った。一通はエラーで返ってきた。一通はフォーム経由で要約版を送った。一通は送達すら確認できなかった。返事は、どこからも来ていない。</p>
+
+        <p>でも、この手紙を書く過程で、トキストレージが何をしているのかをあらためて言語化できた。なぜ声を残すのか。なぜ1000年なのか。なぜ無名の人々なのか。手紙を書くために自分たちの活動を整理し直した。相手に伝えるために、まず自分に伝え直した。</p>
+
+        <p>読まれなかった手紙が、結果的に、最もトキストレージらしい活動だったのかもしれない。</p>
+
+        <blockquote>
+            届かなくても、書いた。<br>
+            読まれなくても、残した。<br>
+            それが存在証明だ。
+        </blockquote>
+
+    </article>
+
+    <footer class="article-footer">
+        <p id="essay-nav-links"></p>
+        <p style="margin-top: 2rem; font-size: 0.75rem;">&copy; TokiStorage. All rights reserved.</p>
+    </footer>
+
+</main>
+
+<script src="contact-form.js" defer></script>
+<script src="essay-tts.js"></script>
+<script src="essay-nav.js?v=20260220"></script>
+<script src="tracker.js" defer></script>
+</body>
+</html>
