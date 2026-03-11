@@ -1,0 +1,58 @@
+name: Add Post
+
+on:
+  workflow_dispatch:
+    inputs:
+      body:
+        description: '投稿内容'
+        required: true
+        type: string
+      tag:
+        description: 'タグ（任意）'
+        required: false
+        type: string
+
+jobs:
+  add-post:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Append to posts.json
+        run: |
+          python3 - << 'PYEOF'
+          import json
+          from datetime import datetime, timezone, timedelta
+
+          JST = timezone(timedelta(hours=9))
+          now = datetime.now(JST).isoformat()
+
+          try:
+              with open("posts.json", "r", encoding="utf-8") as f:
+                  posts = json.load(f)
+          except FileNotFoundError:
+              posts = []
+
+          posts.append({
+              "date": now,
+              "body": """${{ github.event.inputs.body }}""",
+              "tag": """${{ github.event.inputs.tag }}"""
+          })
+
+          with open("posts.json", "w", encoding="utf-8") as f:
+              json.dump(posts, f, ensure_ascii=False, indent=2)
+
+          print(f"Total posts: {len(posts)}")
+          PYEOF
+
+      - name: Commit and push
+        run: |
+          git config user.name "TokiStorage Bot"
+          git config user.email "actions@github.com"
+          git add posts.json
+          git commit -m "Add post: $(date '+%Y-%m-%d %H:%M')"
+          git push
