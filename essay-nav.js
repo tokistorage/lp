@@ -194,7 +194,6 @@
     { id: 'accessibility', ja: 'アクセシビリティ', en: 'Accessibility', date: '2026-03-05' },
     { id: 'government-guide', ja: '行政水準の情報ガイド', en: 'Government-Grade Information Guides', date: '2026-03-08' },
     { id: 'public-readiness', ja: '公共提供への備え', en: 'Public Readiness', date: '2026-03-11' },
-    { id: 'zero-cost-autonomy', ja: 'コストゼロの自律', en: 'Zero-Cost Autonomy', date: '2026-03-13' },
 
     // ── メタ視点 ──
     { id: 'mission-statement', ja: 'ミッション・ステートメントの設計思想', en: 'Designing a Mission Statement', date: '2026-02-23' },
@@ -208,7 +207,8 @@
     { id: 'smartphone-complete', ja: 'スマホ一台で完結する', en: 'A Smartphone Is All You Need', date: '2026-02-28' },
     { id: 'zero-personal-data', ja: '機密情報の撤廃', en: 'Abolishing Secrets', date: '2026-02-28' },
     { id: 'product-codes', ja: 'プロダクトコードという設計言語', en: 'Product Codes as a Design Language', date: '2026-03-01' },
-    { id: 'constraint-philosophy', ja: '制約主義がもたらす静寂', en: 'The Silence of Constraint Philosophy', date: '2026-03-12' }
+    { id: 'constraint-philosophy', ja: '制約主義がもたらす静寂', en: 'The Silence of Constraint Philosophy', date: '2026-03-12' },
+    { id: 'zero-cost-autonomy', ja: 'コストゼロの自律', en: 'Zero-Cost Autonomy', date: '2026-03-12' }
   ];
 
   // ── Latest Articles (最新記事) ──

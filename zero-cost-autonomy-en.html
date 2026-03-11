@@ -7,7 +7,7 @@
     <link rel="apple-touch-icon" sizes="180x180" href="asset/apple-touch-icon.png">
     <title>Zero-Cost Autonomy | TokiStorage</title>
     <meta name="robots" content="index, follow">
-    <meta name="description" content="I typed 'good morning.' Thirty seconds later, ninety tasks were lined up in order of priority. A record of the personal infrastructure built from two repositories.">
+    <meta name="description" content="Claude.ai can run git push. api.github.com is blocked, but git access to github.com goes through. A design record of the personal infrastructure built on that asymmetry.">
     <style>
         :root {
             --toki-blue: #2563EB;
@@ -37,13 +37,17 @@
         .article-container { max-width: 680px; margin: 0 auto; padding: 7rem 2rem 4rem; }
         .article-header { margin-bottom: 3rem; padding-bottom: 2rem; border-bottom: 1px solid var(--border); }
         .article-category { font-size: 0.7rem; color: var(--toki-blue); letter-spacing: 0.15em; margin-bottom: 1rem; }
-        .article-header h1 { font-family: var(--font-display); font-size: 1.8rem; font-weight: 700; line-height: 1.4; margin-bottom: 1.5rem; }
+        .article-header h1 { font-family: var(--font-display); font-size: 1.8rem; font-weight: 700; line-height: 1.5; margin-bottom: 1.5rem; }
         .article-subtitle { font-size: 0.95rem; color: var(--text-secondary); line-height: 1.9; }
 
-        .article-content p { font-family: var(--font-display); margin-bottom: 1.5rem; line-height: 2.1; }
-        .article-content hr { border: none; border-top: 1px solid var(--border); margin: 2.5rem 0; }
+        .article-content h2 { font-family: var(--font-display); font-size: 1.3rem; font-weight: 600; margin: 3rem 0 1.5rem; padding-bottom: 0.5rem; border-bottom: 2px solid var(--toki-blue-pale); }
+        .article-content p { margin-bottom: 1.5rem; text-align: justify; }
+        .article-content blockquote { border-left: 3px solid var(--toki-blue); padding-left: 1.5rem; margin: 2rem 0; font-family: var(--font-display); color: var(--text-secondary); }
+        .article-content ul { margin: 1.5rem 0; padding-left: 1.5rem; }
+        .article-content li { margin-bottom: 0.75rem; }
         .article-content code { font-family: 'SF Mono', 'Fira Code', 'Courier New', monospace; font-size: 0.85em; background: #F1F5F9; padding: 0.15em 0.45em; border-radius: 3px; color: var(--toki-blue-dark); }
 
+        .core-message { background: var(--toki-blue-pale); border-left: 4px solid var(--toki-blue); padding: 1.5rem; margin: 2rem 0; font-size: 0.95rem; line-height: 1.8; }
         .key-point { background: linear-gradient(135deg, var(--toki-blue-pale) 0%, #fff 100%); border: 1px solid var(--accent-blue); border-radius: 8px; padding: 1.5rem; margin: 2rem 0; text-align: center; }
         .key-point p { font-family: var(--font-display); font-size: 1.05rem; color: var(--toki-blue-dark); margin: 0; }
 
@@ -61,7 +65,7 @@
     </style>
     <meta property="og:type" content="article">
     <meta property="og:title" content="Zero-Cost Autonomy | TokiStorage">
-    <meta property="og:description" content="I typed 'good morning.' Thirty seconds later, ninety tasks were lined up in order of priority.">
+    <meta property="og:description" content="Claude.ai can run git push. A design record of the personal infrastructure built on that asymmetry.">
     <meta property="og:url" content="https://tokistorage.github.io/lp/zero-cost-autonomy-en.html">
     <meta property="og:site_name" content="TokiStorage">
     <meta property="og:image" content="https://tokistorage.github.io/lp/asset/tokistorage-icon-512.png">
@@ -69,7 +73,7 @@
     <meta property="og:image:height" content="512">
     <meta name="twitter:card" content="summary">
     <meta name="twitter:title" content="Zero-Cost Autonomy | TokiStorage">
-    <meta name="twitter:description" content="I typed 'good morning.' Thirty seconds later, ninety tasks were lined up in order of priority.">
+    <meta name="twitter:description" content="Claude.ai can run git push. A design record of the personal infrastructure built on that asymmetry.">
     <script type="application/ld+json">
 {
   "@context": "https://schema.org",
@@ -83,6 +87,7 @@
     </script>
     <link rel="alternate" hreflang="ja" href="https://tokistorage.github.io/lp/zero-cost-autonomy.html">
     <link rel="alternate" hreflang="en" href="https://tokistorage.github.io/lp/zero-cost-autonomy-en.html">
+    <link rel="alternate" hreflang="x-default" href="https://tokistorage.github.io/lp/zero-cost-autonomy.html">
     <link rel="canonical" href="https://tokistorage.github.io/lp/zero-cost-autonomy-en.html">
 </head>
 <body>
@@ -99,45 +104,66 @@
     <header class="article-header">
         <div class="article-category">TECHNOLOGY &amp; DESIGN</div>
         <h1>Zero-Cost Autonomy</h1>
-        <p class="article-subtitle">
-            The Personal Infrastructure Built from Two Repositories — public and private<br>
-            <span style="font-size:0.85em; color:var(--text-muted);">March 12, 2026 &nbsp;·&nbsp; Takuya Sato</span>
-        </p>
+        <p class="article-subtitle">The Personal Infrastructure Built from Two Repositories — public and private</p>
     </header>
 
     <article class="article-content">
 
-        <p>I typed "good morning."</p>
-
-        <p>Thirty seconds later, ninety tasks were lined up in order of priority — along with a note that the tax filing deadline was three days away.</p>
-
-        <p>Not a single yen of additional cost was required to make this happen.</p>
-
-        <hr>
-
-        <p>It started with a simple question: can Claude.ai run a git push?</p>
-
-        <p>The answer turned out to be asymmetric. Access to <code>github.com</code> went through. Access to <code>api.github.com</code> was restricted. That asymmetry determined the design. Claude operates via git. Anything requiring API access is delegated to GitHub Actions. Actions on public repositories run without limits — and without cost.</p>
-
-        <p>Two repositories were set up. <code>tokistorage.github.io</code> is public — the place where Actions run. <code>tr</code> is private — where data, skills, and memory live. Claude pushes a request to the public repo. Actions call <code>api.github.com</code>, write the result to the private repo. Claude pulls and reads.</p>
-
-        <p>Asynchronous — but that's enough.</p>
-
-        <hr>
-
-        <p>The memory feature goes unused. Instead, context is written to <code>memory/context/</code>. Pull at the start of the next session, and the thread continues. The data lives in my own GitHub, not on Anthropic's servers. The format is plain text and JSON — always readable, always editable, with a full history in git log.</p>
-
-        <p>Skills live in the same place: how to write an essay, a brochure template, a guide for generating slide decks. Claude pulls them when needed. Capability accumulates in the repository — it doesn't disappear when the conversation ends.</p>
-
-        <hr>
-
-        <div class="key-point">
-            <p>A forty-year-old technology called git becomes the foundation for a personal AI agent.</p>
+        <div class="core-message">
+            The point of this essay: Claude.ai can run git push. <code>api.github.com</code> is blocked, but git access to <code>github.com</code> goes through. Using that asymmetry, we built a loop — Claude → public repo → GitHub Actions → private repo → Claude. No new technology was used. The cost is zero. And yet Claude.ai is no longer just a system that receives instructions. It has become an agent that actively operates the infrastructure around it.
         </div>
 
-        <p>"Turning Claude.ai into an agent" sounds ambitious. The reality is simple: a forty-year-old technology called git, the free Actions on a public repository, and the privacy of a private one. No new technology was used.</p>
+        <h2>1. Reading the Map of Constraints</h2>
 
-        <p>Infrastructure lasts longer when it's simple. When the cost is zero, there's no reason to stop.</p>
+        <p>Claude.ai's computer use environment has network restrictions.</p>
+
+        <p>When we tested it, git access to <code>github.com</code> was allowed. But <code>api.github.com</code> returned 403. At first it felt like a wall. Then it became a design clue.</p>
+
+        <p>Constraints teach you the shape of a system. Understanding what cannot be done reveals the terrain of what can.</p>
+
+        <p>Git goes through. GitHub Actions on public repositories run without limits. Inside Actions, there are no restrictions on calling <code>api.github.com</code>. Connect these three facts and a circuit emerges.</p>
+
+        <h2>2. Dividing Responsibility Between Two Repositories</h2>
+
+        <p>The public repository (tokistorage.github.io) serves as a bridge. When Claude pushes a file here, GitHub Actions starts. Actions call <code>api.github.com</code>, retrieve data from GitHub Projects, and write the result to a private repository.</p>
+
+        <p>The private repository (tr) is where memory and capability live. A cache of project data, essay skill definitions, brochure templates, daily context notes. When Claude runs git pull at the start of a new session, the previous thread resumes. The data lives in your own GitHub, not on Anthropic's servers.</p>
+
+        <p>The flow looks like this:</p>
+
+        <blockquote>Claude → git push (inbox/request.json) → Actions trigger → api.github.com → git push (result.json) → tr (private) → Claude git pull → read &amp; analyze</blockquote>
+
+        <p>Asynchronous — but most work is. Morning briefings, task updates, document generation: none of these demand sub-second response times.</p>
+
+        <h2>3. Repository over Memory</h2>
+
+        <p>AI memory features look convenient, but carry structural fragility. The provider holds the data. The format is opaque. Migration is difficult. When the service ends, the memory goes with it.</p>
+
+        <p>Git-based context management has the opposite properties. It lives in your own repository. It's readable as text and JSON. The full history survives in git log. Any AI tool can reference it.</p>
+
+        <p>Context goes in <code>memory/context/</code>. Daily logs accumulate in <code>memory/daily/</code>. Skill definitions live in <code>skills/</code>. Claude pulls them when needed. Capability accumulates in the repository rather than disappearing when the conversation ends.</p>
+
+        <p>This isn't a substitute for memory. It is more transparent than memory, more durable than memory, and more fully yours.</p>
+
+        <h2>4. Why Mature Technology Makes a Better Foundation</h2>
+
+        <p>Git was designed by Linus Torvalds in 2005. Twenty years of production use. The specification is stable. Implementations exist everywhere. The risk of it disappearing is effectively zero.</p>
+
+        <p>GitHub Actions workflows are written in yaml and version-controlled. If Actions were ever discontinued, migration to another CI/CD service would be straightforward. There is no lock-in.</p>
+
+        <p>Newer platforms and purpose-built tools offer richer features at the cost of deeper dependencies. Systems built on mature technology carry fewer dependencies and last longer for it. The cost is zero not because free services were assembled, but because the right infrastructure choices produced a structure with no fixed costs.</p>
+
+        <h2>5. What an Agent Actually Is</h2>
+
+        <p>"AI agent" tends to conjure images of specialized frameworks and complex orchestration layers.</p>
+
+        <p>This setup has none of that. Just git commands, yaml-defined workflows, and JSON files.</p>
+
+        <p>And yet Claude.ai is no longer a system that simply receives and responds. It actively operates repositories, triggers Actions, retrieves results, and decides what to do next. The boundary between the one who instructs and the one who executes has dissolved.</p>
+
+        <div class="key-point">
+            <p>An agent is defined not by the complexity of its architecture, but by the presence of agency.</p>
+        </div>
 
     </article>
 

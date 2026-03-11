@@ -7,7 +7,7 @@
     <link rel="apple-touch-icon" sizes="180x180" href="asset/apple-touch-icon.png">
     <title>コストゼロの自律 | トキストレージ</title>
     <meta name="robots" content="index, follow">
-    <meta name="description" content="「おはよう」と打った。30秒後、90件のタスクが優先度順に並んでいた。publicとprivate、二つのリポジトリが作った個人インフラの記録。">
+    <meta name="description" content="Claude.aiはgit pushができる。api.github.comはブロックされているが、github.comへのgitアクセスは通る。この非対称性を利用して構築した個人インフラの設計記録。">
     <style>
         :root {
             --toki-blue: #2563EB;
@@ -40,10 +40,14 @@
         .article-header h1 { font-family: var(--font-display); font-size: 1.8rem; font-weight: 700; line-height: 1.5; margin-bottom: 1.5rem; }
         .article-subtitle { font-size: 0.95rem; color: var(--text-secondary); line-height: 1.9; }
 
-        .article-content p { font-family: var(--font-display); margin-bottom: 1.5rem; text-align: justify; line-height: 2.1; }
-        .article-content hr { border: none; border-top: 1px solid var(--border); margin: 2.5rem 0; }
+        .article-content h2 { font-family: var(--font-display); font-size: 1.3rem; font-weight: 600; margin: 3rem 0 1.5rem; padding-bottom: 0.5rem; border-bottom: 2px solid var(--toki-blue-pale); }
+        .article-content p { margin-bottom: 1.5rem; text-align: justify; }
+        .article-content blockquote { border-left: 3px solid var(--toki-blue); padding-left: 1.5rem; margin: 2rem 0; font-family: var(--font-display); color: var(--text-secondary); }
+        .article-content ul { margin: 1.5rem 0; padding-left: 1.5rem; }
+        .article-content li { margin-bottom: 0.75rem; }
         .article-content code { font-family: 'SF Mono', 'Fira Code', 'Courier New', monospace; font-size: 0.85em; background: #F1F5F9; padding: 0.15em 0.45em; border-radius: 3px; color: var(--toki-blue-dark); }
 
+        .core-message { background: var(--toki-blue-pale); border-left: 4px solid var(--toki-blue); padding: 1.5rem; margin: 2rem 0; font-size: 0.95rem; line-height: 1.8; }
         .key-point { background: linear-gradient(135deg, var(--toki-blue-pale) 0%, #fff 100%); border: 1px solid var(--accent-blue); border-radius: 8px; padding: 1.5rem; margin: 2rem 0; text-align: center; }
         .key-point p { font-family: var(--font-display); font-size: 1.05rem; color: var(--toki-blue-dark); margin: 0; }
 
@@ -61,7 +65,7 @@
     </style>
     <meta property="og:type" content="article">
     <meta property="og:title" content="コストゼロの自律 | トキストレージ">
-    <meta property="og:description" content="「おはよう」と打った。30秒後、90件のタスクが優先度順に並んでいた。publicとprivate、二つのリポジトリが作った個人インフラの記録。">
+    <meta property="og:description" content="Claude.aiはgit pushができる。この非対称性を利用して構築した個人インフラの設計記録。">
     <meta property="og:url" content="https://tokistorage.github.io/lp/zero-cost-autonomy.html">
     <meta property="og:site_name" content="トキストレージ">
     <meta property="og:image" content="https://tokistorage.github.io/lp/asset/tokistorage-icon-512.png">
@@ -69,7 +73,7 @@
     <meta property="og:image:height" content="512">
     <meta name="twitter:card" content="summary">
     <meta name="twitter:title" content="コストゼロの自律 | トキストレージ">
-    <meta name="twitter:description" content="「おはよう」と打った。30秒後、90件のタスクが優先度順に並んでいた。">
+    <meta name="twitter:description" content="Claude.aiはgit pushができる。この非対称性を利用して構築した個人インフラの設計記録。">
     <script type="application/ld+json">
 {
   "@context": "https://schema.org",
@@ -83,6 +87,7 @@
     </script>
     <link rel="alternate" hreflang="ja" href="https://tokistorage.github.io/lp/zero-cost-autonomy.html">
     <link rel="alternate" hreflang="en" href="https://tokistorage.github.io/lp/zero-cost-autonomy-en.html">
+    <link rel="alternate" hreflang="x-default" href="https://tokistorage.github.io/lp/zero-cost-autonomy.html">
     <link rel="canonical" href="https://tokistorage.github.io/lp/zero-cost-autonomy.html">
 </head>
 <body>
@@ -99,42 +104,66 @@
     <header class="article-header">
         <div class="article-category">技術・設計</div>
         <h1>コストゼロの自律</h1>
-        <p class="article-subtitle">publicとprivate、二つのリポジトリが作った個人インフラ　／　2026年3月12日</p>
+        <p class="article-subtitle">publicとprivate、二つのリポジトリが作った個人インフラ</p>
     </header>
 
     <article class="article-content">
 
-        <p>「おはよう」と打った。</p>
-
-        <p>30秒後、90件のタスクが優先度順に並んでいた。確定申告の期限まであと3日、という一文とともに。</p>
-
-        <p>これを動かすのに、追加でお金は一円もかかっていない。</p>
-
-        <hr>
-
-        <p>きっかけは単純な問いだった。Claude.aiはgit pushできるのか。</p>
-
-        <p>試してみると、<code>github.com</code>へのアクセスは通った。<code>api.github.com</code>は制限されていた。その非対称性が、設計を決めた。Claudeはgitで動く。APIが必要な処理はGitHub Actionsに任せる。publicリポジトリのActionsは無制限・無料だ。</p>
-
-        <p>二つのリポジトリを用意した。<code>tokistorage.github.io</code>はpublic、Actionsが走る場所。<code>tr</code>はprivate、データとスキルと記憶が住む場所。Claudeはpublicにリクエストをpushし、Actionsが<code>api.github.com</code>を叩き、結果をprivateに書き込む。Claudeはpullして読む。</p>
-
-        <p>非同期だが、それで十分だった。</p>
-
-        <hr>
-
-        <p>メモリ機能は使っていない。代わりに<code>memory/context/</code>に文脈を書いておく。次のセッションでpullすれば、前回の続きから始まる。データはAnthropicのサーバーではなく、自分のGitHubにある。形式はテキストとJSONで、いつでも読めて、編集できて、git logで全履歴が残る。</p>
-
-        <p>スキルも同じ場所に置いた。エッセイの書き方、ブローシャのテンプレート、pptxの生成手順。Claudeが必要なときにpullして読む。能力が会話に閉じず、リポジトリに蓄積されていく。</p>
-
-        <hr>
-
-        <div class="key-point">
-            <p>gitという四十年の枯れた技術が、個人のAIエージェント基盤になる。</p>
+        <div class="core-message">
+            この記事で言いたいこと：Claude.aiはgit pushができる。<code>api.github.com</code>はブロックされているが、<code>github.com</code>へのgitアクセスは通る。この非対称性を利用して「Claude → publicリポジトリ → GitHub Actions → privateリポジトリ → Claude」という非同期ループを構築した。新しい技術は何一つ使っていない。コストはゼロ。それでもClaude.aiは、指示を受けるだけの存在から、能動的にシステムを操作するエージェントになれる。
         </div>
 
-        <p>「Claude.aiをエージェントにする」というと大げさに聞こえるが、実態はシンプルだ。gitという四十年の枯れた技術と、publicリポジトリの無料Actionsと、privateリポジトリの秘匿性を組み合わせただけ。新しい技術は何一つ使っていない。</p>
+        <h2>1. 制約の地図を読む</h2>
 
-        <p>インフラはシンプルなほど長持ちする。コストがゼロなら、やめる理由もない。</p>
+        <p>Claude.aiのコンピュータ使用環境には、ネットワーク制限がある。</p>
+
+        <p>試してみると、<code>github.com</code>へのgitアクセスは許可されていた。しかし<code>api.github.com</code>は403で弾かれた。最初は制限と感じた。すぐに設計の手がかりだと気づいた。</p>
+
+        <p>制約は、システムの輪郭を教える。何ができないかを知ることで、何ができるかの地形が浮かぶ。</p>
+
+        <p>gitは通る。GitHub Actionsはpublicリポジトリなら無制限に動く。Actions内では<code>api.github.com</code>へのアクセスに制限はない。この三つを繋ぐと、一つの回路が見えた。</p>
+
+        <h2>2. 二つのリポジトリの役割分担</h2>
+
+        <p>publicリポジトリ（tokistorage.github.io）は、橋の役割を担う。Claudeがここにファイルをpushすると、GitHub Actionsが起動する。Actionsは<code>api.github.com</code>を叩き、GitHub Projectのデータを取得し、結果をprivateリポジトリに書き込む。</p>
+
+        <p>privateリポジトリ（tr）は、記憶と能力の置き場だ。プロジェクトデータのキャッシュ、エッセイのスキル定義、ブローシャのテンプレート、日々の文脈メモ。次のセッションでClaudeがgit pullすれば、前回の続きから始まる。データはAnthropicのサーバーではなく、自分のGitHubにある。</p>
+
+        <p>フローはこうなる。</p>
+
+        <blockquote>Claude → git push（inbox/request.json）→ Actions起動 → api.github.com → git push（result.json）→ tr（private）→ Claude git pull → 読む・分析する</blockquote>
+
+        <p>非同期だが、業務の大半はそれで足りる。朝の確認、タスクの更新、資料の生成——どれも「30秒待てない」用途ではない。</p>
+
+        <h2>3. メモリより、リポジトリ</h2>
+
+        <p>AIサービスのメモリ機能は便利に見えて、構造的な脆弱性を持つ。プロバイダーが保持する。形式が見えない。削除や移行ができない。サービスが終われば消える。</p>
+
+        <p>gitによるコンテキスト管理は逆の性質を持つ。自分のリポジトリにある。テキストとJSONで読める。git logで全履歴が残る。どのAIツールからでも参照できる。</p>
+
+        <p><code>memory/context/</code>に文脈を書いておく。<code>memory/daily/</code>に日次ログを積む。<code>skills/</code>に用途別のスキル定義を置く。Claudeが必要なときにpullして読む。能力が会話に閉じず、リポジトリに蓄積されていく。</p>
+
+        <p>これは「メモリの代替」ではない。メモリより透明で、メモリより永続的で、メモリより自分のものだ。</p>
+
+        <h2>4. 枯れた技術が基盤になる理由</h2>
+
+        <p>gitは2005年にLinus Torvaldsが設計した。二十年の実績を持つ。仕様は安定している。実装は世界中に存在する。消えるリスクは実質ゼロだ。</p>
+
+        <p>GitHub Actionsのワークフローファイルはyamlで書かれ、バージョン管理される。Actionsが廃止されても、別のCI/CDサービスに移行できる。ロックインがない。</p>
+
+        <p>新しいプラットフォームや専用ツールは、機能が豊富な代わりに依存を生む。枯れた技術の上に構築されたシステムは、依存が少ない分だけ長持ちする。コストがゼロなのは、無料サービスを組み合わせたからではない。インフラの選択が正しかったから、固定費が発生しない構造になったのだ。</p>
+
+        <h2>5. エージェントとは何か</h2>
+
+        <p>「AIエージェント」という言葉は、専用フレームワークや複雑なオーケストレーションを連想させる。</p>
+
+        <p>この構成には、何もない。gitコマンドと、yamlで書かれたワークフローと、JSONファイルだけだ。</p>
+
+        <p>それでもClaude.aiは、指示を受けて答えるだけの存在ではなくなった。能動的にリポジトリを操作し、Actionsを起動し、結果を取得し、次の行動を決める。「指示する側」と「実行する側」の境界が、消えた。</p>
+
+        <div class="key-point">
+            <p>エージェントとは、アーキテクチャの複雑さではなく、能動性の有無で定義される。</p>
+        </div>
 
     </article>
 
