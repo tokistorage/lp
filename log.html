@@ -299,6 +299,13 @@ footer {
         .replace(/"/g, '&quot;');
     }
 
+    function refresh() {
+      const btn = document.getElementById('refreshBtn');
+      btn.classList.add('spinning');
+      setTimeout(() => btn.classList.remove('spinning'), 600);
+      loadPosts();
+    }
+
     loadPosts();
   </script>
 
