@@ -1,0 +1,241 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" type="image/png" sizes="32x32" href="asset/favicon-32.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="asset/apple-touch-icon.png">
+    <title>公共提供への備え——個人ツールが公共の信頼を得るまで | トキストレージ</title>
+    <meta name="robots" content="index, follow">
+    <meta name="description" content="個人開発のQRツールに公共施設から引き合いが来た。機能の差ではなく信頼の差を構造的に埋める——課金透明化、UI状態設計、初期導入支援の記録。">
+    <style>
+        :root {
+            --toki-blue: #2563EB;
+            --toki-blue-dark: #1E40AF;
+            --toki-blue-pale: #EFF6FF;
+            --accent-blue: #60A5FA;
+            --bg-white: #FFFFFF;
+            --text-primary: #1E293B;
+            --text-secondary: #475569;
+            --text-muted: #94A3B8;
+            --border: #E2E8F0;
+            --font-display: 'Hiragino Mincho ProN', 'Yu Mincho', serif;
+            --font-body: 'Hiragino Kaku Gothic ProN', 'Yu Gothic', 'Meiryo', sans-serif;
+        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        html { scroll-behavior: smooth; }
+        body { font-family: var(--font-body); font-weight: 400; background: var(--bg-white); color: var(--text-primary); line-height: 2; font-size: 16px; }
+
+        .article-nav { position: fixed; top: 0; left: 0; right: 0; z-index: 1000; background: rgba(255,255,255,0.95); backdrop-filter: blur(12px); border-bottom: 1px solid var(--border); padding: 0.6rem 1.2rem; display: flex; align-items: center; justify-content: space-between; gap: 1rem; }
+        .article-nav .nav-brand { font-family: var(--font-display); font-size: 0.9rem; font-weight: 600; color: var(--toki-blue); text-decoration: none; white-space: nowrap; }
+        .article-nav .nav-brand::before { content: ''; display: inline-block; width: 20px; height: 20px; background: url('asset/tokistorage-icon-512.png') no-repeat center / contain; vertical-align: -3px; margin-right: 5px; }
+        .article-nav .nav-right { display: flex; align-items: center; gap: 1rem; }
+        .article-nav .nav-label { font-size: 0.6rem; color: var(--text-muted); letter-spacing: 0.08em; }
+        .article-nav .lang-switch { font-size: 0.75rem; color: var(--toki-blue); text-decoration: none; padding: 0.3rem 0.6rem; border: 1px solid var(--toki-blue); border-radius: 4px; }
+        .article-nav .lang-switch:hover { background: var(--toki-blue); color: #fff; }
+
+        .article-container { max-width: 680px; margin: 0 auto; padding: 7rem 2rem 4rem; }
+        .article-header { margin-bottom: 3rem; padding-bottom: 2rem; border-bottom: 1px solid var(--border); }
+        .article-category { font-size: 0.7rem; color: var(--toki-blue); letter-spacing: 0.15em; margin-bottom: 1rem; }
+        .article-header h1 { font-family: var(--font-display); font-size: 1.8rem; font-weight: 700; line-height: 1.5; margin-bottom: 1.5rem; }
+        .article-subtitle { font-size: 0.95rem; color: var(--text-secondary); line-height: 1.9; }
+
+        .article-content h2 { font-family: var(--font-display); font-size: 1.3rem; font-weight: 600; margin: 3rem 0 1.5rem; padding-bottom: 0.5rem; border-bottom: 2px solid var(--toki-blue-pale); }
+        .article-content h3 { font-family: var(--font-display); font-size: 1.1rem; font-weight: 600; margin: 2rem 0 1rem; color: var(--toki-blue-dark); }
+        .article-content p { margin-bottom: 1.5rem; text-align: justify; }
+        .article-content blockquote { border-left: 3px solid var(--toki-blue); padding-left: 1.5rem; margin: 2rem 0; font-family: var(--font-display); color: var(--text-secondary); }
+        .article-content ul { margin: 1.5rem 0; padding-left: 1.5rem; }
+        .article-content li { margin-bottom: 0.75rem; }
+
+        .core-message { background: var(--toki-blue-pale); border-left: 4px solid var(--toki-blue); padding: 1.5rem; margin: 2rem 0; font-size: 0.95rem; line-height: 1.8; }
+        .key-point { background: linear-gradient(135deg, var(--toki-blue-pale) 0%, #fff 100%); border: 1px solid var(--accent-blue); border-radius: 8px; padding: 1.5rem; margin: 2rem 0; text-align: center; }
+        .key-point p { font-family: var(--font-display); font-size: 1.1rem; color: var(--toki-blue-dark); margin: 0; }
+
+        .article-footer { margin-top: 4rem; padding-top: 2rem; border-top: 1px solid var(--border); text-align: center; }
+        .article-footer p { font-size: 0.8rem; color: var(--text-muted); margin-bottom: 1rem; }
+        .article-footer a { color: var(--toki-blue); text-decoration: none; }
+        .article-footer a:hover { text-decoration: underline; }
+
+        @media (max-width: 768px) {
+            .article-container { padding: 6rem 1.2rem 3rem; }
+            .article-header h1 { font-size: 1.5rem; }
+            .article-nav .nav-label { display: none; }
+        }
+        @media print { .article-nav { display: none; } .article-container { padding-top: 2rem; } }
+    </style>
+    <meta property="og:type" content="article">
+    <meta property="og:title" content="公共提供への備え——個人ツールが公共の信頼を得るまで | トキストレージ">
+    <meta property="og:description" content="個人開発のQRツールに公共施設から引き合いが来た。機能の差ではなく信頼の差を構造的に埋める——課金透明化、UI状態設計、初期導入支援の記録。">
+    <meta property="og:url" content="https://tokistorage.github.io/lp/public-readiness.html">
+    <meta property="og:site_name" content="トキストレージ">
+    <meta name="twitter:card" content="summary">
+    <meta name="twitter:title" content="公共提供への備え——個人ツールが公共の信頼を得るまで | トキストレージ">
+    <meta name="twitter:description" content="個人開発のQRツールに公共施設から引き合いが来た。機能の差ではなく信頼の差を構造的に埋める——課金透明化、UI状態設計、初期導入支援の記録。">
+    <meta property="og:image" content="https://tokistorage.github.io/lp/asset/tokistorage-icon-512.png">
+    <meta property="og:image:width" content="512">
+    <meta property="og:image:height" content="512">
+    <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Article",
+  "headline": "公共提供への備え——個人ツールが公共の信頼を得るまで",
+  "author": {
+    "@type": "Person",
+    "name": "Takuya Sato",
+    "url": "https://tokistorage.github.io/lp/profile.html"
+  },
+  "publisher": {
+    "@type": "Organization",
+    "name": "TokiStorage",
+    "url": "https://tokistorage.github.io/lp",
+    "logo": {
+      "@type": "ImageObject",
+      "url": "https://tokistorage.github.io/lp/asset/tokistorage-icon-512.png"
+    }
+  },
+  "url": "https://tokistorage.github.io/lp/public-readiness.html",
+  "inLanguage": "ja",
+  "mainEntityOfPage": "https://tokistorage.github.io/lp/public-readiness.html",
+  "description": "個人開発のQRツールに公共施設から引き合いが来た。機能の差ではなく信頼の差を構造的に埋める——課金透明化、UI状態設計、初期導入支援の記録。"
+}
+    </script>
+    <link rel="alternate" hreflang="ja" href="https://tokistorage.github.io/lp/public-readiness.html">
+    <link rel="alternate" hreflang="en" href="https://tokistorage.github.io/lp/public-readiness-en.html">
+    <link rel="alternate" hreflang="x-default" href="https://tokistorage.github.io/lp/public-readiness.html">
+    <link rel="canonical" href="https://tokistorage.github.io/lp/public-readiness.html">
+</head>
+<body>
+
+<nav class="article-nav">
+    <a href="index.html" class="nav-brand">トキストレージ</a>
+    <div class="nav-right">
+        <span class="nav-label">公共提供への備え</span>
+        <a href="public-readiness-en.html" class="lang-switch">EN</a>
+    </div>
+</nav>
+
+<main class="article-container">
+    <header class="article-header">
+        <p class="article-category">エッセイ——技術と設計</p>
+        <h1>公共提供への備え<br>——個人ツールが公共の信頼を得るまで</h1>
+        <p class="article-subtitle">
+            音声をQRコードに刻む個人ツールに、公共施設から引き合いが来た。<br>
+            機能は同じだ。足りなかったのは信頼だった。<br>
+            課金の透明化、UIの状態設計、寄り添う初期導入——<br>
+            不安を名指しし、構造的に取り除いた記録。
+        </p>
+    </header>
+
+    <article class="article-content">
+
+        <div class="core-message">
+            <strong>この記事で言いたいこと：</strong>個人ツールと公共ツールの差は、機能ではなく信頼にある。信頼とは抽象的な概念ではなく、課金プロセスの透明性、UIの状態遷移、初期操作の伴走といった具体的な設計の積み重ねである。不安を名指しし、構造的に起こさない——それが公共提供への備えだ。
+        </div>
+
+        <h2>1. なぜ今これを書くか</h2>
+
+        <p>TokiQRは、音声・画像・テキストをQRコード一枚に埋め込む個人開発のツールとして生まれた。Codec2による音声圧縮、Brotliによるテキスト圧縮、完全オフライン動作。技術的には、ブラウザだけで完結する。サーバーにデータを送らない。ネットワークが断たれても動く。</p>
+
+        <p>そのツールに、公共施設や図書館から問い合わせが届くようになった。「音声ガイドに使えないか」「展示物の説明をQRに入れられないか」。機能に関する質問ではなかった。聞かれたのは、「これは信頼できるのか」だった。</p>
+
+        <p>個人ツールから公共ツールへの移行は、機能の拡張ではない。信頼の差を埋める作業である。その差が何であり、どう埋めたかを記録する。</p>
+
+        <h2>2. お金のかかる話なら説明を聞きたい——透明な課金モデル</h2>
+
+        <p>TokiQRのバルクモード——複数のQRコードを一括生成する機能——は、マルチQRクレジットを消費する。公共施設の担当者にとって、クレジットの消費は稟議の対象になる。「いくらかかるか事前にわかるか」という問いに、当初のUIは答えられなかった。</p>
+
+        <p>改善は単純だった。生成プロセスを二段階に分けた。まず見積もりを表示する。何枚のQRコードが生成され、何クレジット消費するかを明示する。ユーザーはその見積もりを確認してから、実行するかキャンセルするかを選ぶ。</p>
+
+        <p>「見積もりを見てからキャンセルできる」——これは、上長に説明する担当者にとっての最低条件だ。技術的には数行のコード変更だが、公共利用においてはこの一手順が導入の可否を分ける。</p>
+
+        <div class="key-point"><p>課金の透明化は技術の問題ではない。説明責任を構造に埋め込むことだ。</p></div>
+
+        <h2>3. 無料でも始められるという備え</h2>
+
+        <p>公共施設の担当者が最初に直面するのは、予算の壁ではない。「予算がないと試せない」という思い込みの壁だ。</p>
+
+        <p>TokiQRでは、短い音声をQRコード一枚に収める処理にクレジットは不要である。バルクモードであっても、単一チャンクで収まる処理にはクレジットが消費されない。つまり「予算ゼロで始められる」という事実が存在する。</p>
+
+        <p>この事実は、導入検討の初期段階で決定的に重要だ。公共施設の担当者が上長に「まず無料で試せます」と言えるかどうか。この一言が、検討の俎上に載るか載らないかを決める。</p>
+
+        <p>機能を増やすことより、入り口の敷居を下げること。それが公共利用の第一歩だ。</p>
+
+        <h2>4. 実導入を想定した検証</h2>
+
+        <p>開発者の手元で動くことと、現場で動くことは違う。公共施設への提供を見据えたとき、検証すべきは四つの条件だった。</p>
+
+        <ul>
+            <li><strong>オフライン動作：</strong>Service Workerによるキャッシュで、初回アクセス後はネットワーク不要で動作するか。施設内のWi-Fiが不安定な環境を想定する。</li>
+            <li><strong>低速回線での初回読み込み：</strong>初回アクセス時にService Workerが登録される前、低速なモバイル回線でもページが表示されるか。待ち時間が長すぎると、ユーザーは離脱する。</li>
+            <li><strong>旧型スマートフォンのカメラ性能：</strong>生成したQRコードを、三年前、五年前の端末のカメラで読み取れるか。公共施設の利用者は最新端末を持っているとは限らない。</li>
+            <li><strong>印刷時のQRコード品質：</strong>画面表示では読めても、プリンターで印刷したときに解像度が足りるか。展示パネルに貼り付けたとき、照明の反射で読み取れなくならないか。</li>
+        </ul>
+
+        <p>これらは仕様書に書かれない要件だ。しかし現場で動かなければ、仕様がどれほど優れていても意味がない。公共提供とは、開発者の理想環境ではなく、利用者の現実環境で動くことを保証する行為である。</p>
+
+        <h2>5. 四つの不安を構造的に起こさない</h2>
+
+        <p>公共施設の担当者がツールを操作するとき、技術的な失敗よりも心理的な不安が障壁になる。観察から四つの不安を特定した。</p>
+
+        <h3>「終わるのか？」——完了の見通し</h3>
+        <p>音声のエンコード処理は時間がかかる。プログレスバーがなければ、ユーザーは処理が進んでいるのか、フリーズしているのか判断できない。Opus圧縮のプログレスバーを追加し、経過時間と残り時間を表示するようにした。「あと何秒で終わる」がわかるだけで、不安は消える。</p>
+
+        <h3>「故障かな？」——無反応への不信</h3>
+        <p>処理中にボタンが押せる状態のままだと、ユーザーは「反応しないのは故障か」と疑う。処理中はボタンを無効化し、ローディングインジケーターを表示する。見積もり表示中は設定UIをロックする。「押せない」という状態そのものが、「いま処理中です」というメッセージになる。</p>
+
+        <h3>「やり直し？」——操作ミスへの恐怖</h3>
+        <p>見積もりを表示した後に設定を変更すると、見積もりが無効になる。しかしユーザーは「設定を触ったら最初からやり直しか」と不安になる。見積もり表示中は設定UIをロックし、変更するにはキャンセルが必要な設計にした。誤操作の余地を構造的になくすことで、やり直しの不安を断つ。</p>
+
+        <h3>構造的に起こさない、とは</h3>
+        <p>個々のバグ修正ではなく、状態遷移の設計で不安を排除する。ボタンが有効ならば「押してよい」。ボタンが無効ならば「待つべき」。UIの状態がそのまま行動の指示になる。これが「構造的に起こさない」の意味だ。</p>
+
+        <div class="key-point"><p>不安はバグではない。状態設計で除去する対象だ。</p></div>
+
+        <h2>6. 見て興味あるけど触るのが怖い——寄り添って一緒に超える</h2>
+
+        <p>機能を説明し、UIを改善しても、なお残る壁がある。「自分が触って壊さないか」という恐怖だ。</p>
+
+        <p>公共施設の担当者は、ITの専門家ではない。ツールが「使いやすい」と評価されても、最初の一歩を踏み出せないことがある。マニュアルを渡しても、読むだけで手が動かない。</p>
+
+        <p>解決策は機能的なものではなく、体験的なものだった。最初のQRコード生成を一緒にやる。担当者の隣で、同じ画面を見ながら操作する。間違えても戻せることを実演する。成功体験を共有する。</p>
+
+        <p>「一緒にやる」というのは、技術的なサポートではなく、心理的な壁を超える伴走だ。一度成功すれば、二度目からは一人でできる。最初の一回だけ、隣にいること。それが導入支援の本質である。</p>
+
+        <h2>7. 導入実績ゼロのときは自分が利用者の流れを一緒に体験すること</h2>
+
+        <p>導入実績がゼロの状態で、担当者は孤独だ。「他にどこが使っているのか」と聞かれて、「まだどこも使っていない」と答えるしかない。実績という安全網がない。</p>
+
+        <p>開発者にできることは、導入担当者と一緒に利用者の動線を歩くことだ。受付から案内まで、QRコードのスキャンから音声再生まで、実際の施設で実際の端末を使い、一連の流れを体験する。</p>
+
+        <p>この体験が、実績のゼロをイチにする。他施設の事例ではなく、自分の施設での成功体験。開発者が隣にいるという安心感ではなく、「自分たちの施設で動いた」という事実。ゼロからイチへの跳躍は、機能ではなく共有された体験によって起こる。</p>
+
+        <h2>8. まとめ——公共の信頼とは不安を名指しすること</h2>
+
+        <p>公共提供への備えとは、機能を追加することではない。不安を減らすことだ。</p>
+
+        <ul>
+            <li>課金プロセスを二段階にし、見積もりとキャンセルを保証する——<strong>財務の不安</strong>を除く。</li>
+            <li>無料で試せる入り口を維持する——<strong>予算の不安</strong>を除く。</li>
+            <li>UIの状態遷移で操作の正しさを示す——<strong>操作の不安</strong>を除く。</li>
+            <li>最初の一回を一緒に体験する——<strong>孤立の不安</strong>を除く。</li>
+        </ul>
+
+        <p>個人ツールが公共ツールになるとき、コードの変更量は多くない。変わるのは、不安に対する解像度だ。誰が、何を、なぜ怖がるのか。それを名指しし、構造的に取り除く。</p>
+
+        <blockquote>
+            <p>公共の信頼は、機能の完成度ではなく、不安の不在によって生まれる。不安を名指しし、構造で断つ。それが、個人ツールが公共に開かれるための条件である。</p>
+        </blockquote>
+
+    </article>
+
+    <footer class="article-footer">
+        <p id="essay-nav-links"></p>
+        <p style="font-size: 0.75rem; color: var(--text-muted);">&copy; TokiStorage. All rights reserved.</p>
+    </footer>
+
+</main>
+
+<script src="essay-nav.js"></script>
+<script src="essay-tts.js"></script>
+</body>
+</html>
