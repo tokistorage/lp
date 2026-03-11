@@ -1,0 +1,87 @@
+name: Add Essay
+
+on:
+  workflow_dispatch:
+    inputs:
+      filename:
+        description: 'ファイル名 (例: my-essay.html)'
+        required: true
+        type: string
+      title:
+        description: 'エッセイタイトル'
+        required: true
+        type: string
+      category:
+        description: 'カテゴリ'
+        required: false
+        default: '未分類'
+        type: string
+      content:
+        description: 'HTMLコンテンツ（bodyタグ内）'
+        required: true
+        type: string
+
+jobs:
+  add-essay:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Create essay HTML file
+        run: |
+          python3 - << 'PYEOF'
+          title = """${{ github.event.inputs.title }}"""
+          content = """${{ github.event.inputs.content }}"""
+          filename = "${{ github.event.inputs.filename }}"
+
+          html = f"""<!DOCTYPE html>
+          <html lang="ja">
+          <head>
+            <meta charset="UTF-8">
+            <meta name="viewport" content="width=device-width, initial-scale=1.0">
+            <title>{title} | TokiStorage</title>
+            <link rel="stylesheet" href="./style.css">
+          </head>
+          <body>
+          {content}
+          </body>
+          </html>"""
+
+          with open(filename, "w", encoding="utf-8") as f:
+              f.write(html)
+          PYEOF
+
+      - name: Update essays.json
+        run: |
+          python3 - << 'PYEOF'
+          import json
+          from datetime import date
+
+          try:
+              with open("essays.json", "r", encoding="utf-8") as f:
+                  essays = json.load(f)
+          except FileNotFoundError:
+              essays = []
+
+          essays.append({
+              "filename": "${{ github.event.inputs.filename }}",
+              "title": "${{ github.event.inputs.title }}",
+              "category": "${{ github.event.inputs.category }}",
+              "date": str(date.today())
+          })
+
+          with open("essays.json", "w", encoding="utf-8") as f:
+              json.dump(essays, f, ensure_ascii=False, indent=2)
+          PYEOF
+
+      - name: Commit and push
+        run: |
+          git config user.name "TokiStorage Bot"
+          git config user.email "actions@github.com"
+          git add ${{ github.event.inputs.filename }} essays.json
+          git commit -m "Add essay: ${{ github.event.inputs.title }}"
+          git push
