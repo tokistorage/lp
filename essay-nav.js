@@ -160,6 +160,7 @@
     { id: 'cloudflare-gas', ja: 'CloudflareとGAS', en: 'Cloudflare & GAS', date: '2026-02-18' },
     { id: 'migration', ja: 'マイグレーションの設計', en: 'Designing Migration', date: '2026-02-19' },
     { id: 'vibe-coding', ja: 'バイブコーディング', en: 'Vibe Coding', date: '2026-02-19' },
+    { id: 'offgrid-ai-tools', ja: 'AIツールのコスト最適化', en: 'AI Tools Cost Optimization', date: '2026-03-11' },
     { id: 'rapid-prototyping', ja: 'ラピッドプロトタイピング', en: 'Rapid Prototyping', date: '2026-02-19' },
     { id: 'device-dependency', ja: '機種依存・ブラウザ依存・組織依存の断層', en: 'Device, Browser & Organizational Dependency', date: '2026-02-20' },
     { id: 'tech-roadmap', ja: '技術ロードマップ', en: 'Technology Roadmap', date: '2026-02-20' },
