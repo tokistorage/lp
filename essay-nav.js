@@ -194,6 +194,7 @@
     { id: 'accessibility', ja: 'アクセシビリティ', en: 'Accessibility', date: '2026-03-05' },
     { id: 'government-guide', ja: '行政水準の情報ガイド', en: 'Government-Grade Information Guides', date: '2026-03-08' },
     { id: 'public-readiness', ja: '公共提供への備え', en: 'Public Readiness', date: '2026-03-11' },
+    { id: 'zero-cost-autonomy', ja: 'コストゼロの自律', en: 'Zero-Cost Autonomy', date: '2026-03-12' },
 
     // ── メタ視点 ──
     { id: 'mission-statement', ja: 'ミッション・ステートメントの設計思想', en: 'Designing a Mission Statement', date: '2026-02-23' },
@@ -410,7 +411,8 @@
     'zero-personal-data':               ['patent-departure', 'dev-to-ops', 'burn-rate-zero', 'primitive-edge', 'customer-journey-transformation'],
     'product-codes':                    ['ecosystem', 'framework', 'self-print-economy', 'customer-journey-transformation', 'corporate-site'],
     'government-guide':                 ['accessibility', 'trust-guidelines', 'corporate-site', 'seo-aio', 'openness'],
-    'public-readiness':                 ['poc', 'trust-by-design', 'why-not-consulting', 'pwa-implementation-guide', 'government-guide']
+    'public-readiness':                 ['poc', 'trust-by-design', 'why-not-consulting', 'pwa-implementation-guide', 'government-guide'],
+    'zero-cost-autonomy':               ['burn-rate-zero', 'vibe-coding', 'what-is-github', 'cloudflare-gas', 'primitive-edge']
   };
 
   const isEnglish = document.documentElement.lang === 'en';
