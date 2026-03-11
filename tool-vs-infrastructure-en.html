@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" type="image/png" sizes="32x32" href="asset/favicon-32.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="asset/apple-touch-icon.png">
+    <title>Tool vs. Infrastructure | TokiStorage</title>
+    <meta name="robots" content="index, follow">
+    <meta name="description" content="Tools are borrowed and wear out with use. Infrastructure is yours and grows with use. The difference comes from who holds the design authority.">
+    <style>
+        :root {
+            --toki-blue: #2563EB;
+            --toki-blue-dark: #1D4ED8;
+            --toki-blue-pale: #EFF6FF;
+            --accent-blue: #3B82F6;
+            --bg-white: #FFFFFF;
+            --text-primary: #1E293B;
+            --text-secondary: #475569;
+            --text-muted: #94A3B8;
+            --border: #E2E8F0;
+            --font-display: 'Hiragino Mincho ProN', 'Yu Mincho', Georgia, serif;
+            --font-body: 'Hiragino Kaku Gothic ProN', 'Yu Gothic', system-ui, sans-serif;
+        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        html { scroll-behavior: smooth; }
+        body { font-family: var(--font-body); font-weight: 400; background: var(--bg-white); color: var(--text-primary); line-height: 2; font-size: 16px; }
+
+        .article-nav { position: fixed; top: 0; left: 0; right: 0; z-index: 1000; background: rgba(255,255,255,0.95); backdrop-filter: blur(12px); border-bottom: 1px solid var(--border); padding: 0.6rem 1.2rem; display: flex; align-items: center; justify-content: space-between; gap: 1rem; }
+        .article-nav .nav-brand { font-family: var(--font-display); font-size: 0.9rem; font-weight: 600; color: var(--toki-blue); text-decoration: none; white-space: nowrap; }
+        .article-nav .nav-brand::before { content: ''; display: inline-block; width: 20px; height: 20px; background: url('asset/tokistorage-icon-512.png') no-repeat center / contain; vertical-align: -3px; margin-right: 5px; }
+        .article-nav .nav-right { display: flex; align-items: center; gap: 1rem; }
+        .article-nav .nav-label { font-size: 0.6rem; color: var(--text-muted); letter-spacing: 0.08em; }
+        .article-nav .lang-switch { font-size: 0.75rem; color: var(--toki-blue); text-decoration: none; padding: 0.3rem 0.6rem; border: 1px solid var(--toki-blue); border-radius: 4px; }
+        .article-nav .lang-switch:hover { background: var(--toki-blue); color: #fff; }
+
+        .article-container { max-width: 680px; margin: 0 auto; padding: 7rem 2rem 4rem; }
+        .article-header { margin-bottom: 3rem; padding-bottom: 2rem; border-bottom: 1px solid var(--border); }
+        .article-category { font-size: 0.7rem; color: var(--toki-blue); letter-spacing: 0.15em; margin-bottom: 1rem; }
+        .article-header h1 { font-family: var(--font-display); font-size: 1.8rem; font-weight: 700; line-height: 1.5; margin-bottom: 1.5rem; }
+        .article-subtitle { font-size: 0.95rem; color: var(--text-secondary); line-height: 1.9; }
+
+        .article-content h2 { font-family: var(--font-display); font-size: 1.3rem; font-weight: 600; margin: 3rem 0 1.5rem; padding-bottom: 0.5rem; border-bottom: 2px solid var(--toki-blue-pale); }
+        .article-content p { margin-bottom: 1.5rem; text-align: justify; }
+        .article-content blockquote { border-left: 3px solid var(--toki-blue); padding-left: 1.5rem; margin: 2rem 0; font-family: var(--font-display); color: var(--text-secondary); }
+        .article-content code { font-family: 'SF Mono', 'Fira Code', 'Courier New', monospace; font-size: 0.85em; background: #F1F5F9; padding: 0.15em 0.45em; border-radius: 3px; color: var(--toki-blue-dark); }
+
+        .core-message { background: var(--toki-blue-pale); border-left: 4px solid var(--toki-blue); padding: 1.5rem; margin: 2rem 0; font-size: 0.95rem; line-height: 1.8; }
+        .key-point { background: linear-gradient(135deg, var(--toki-blue-pale) 0%, #fff 100%); border: 1px solid var(--accent-blue); border-radius: 8px; padding: 1.5rem; margin: 2rem 0; text-align: center; }
+        .key-point p { font-family: var(--font-display); font-size: 1.05rem; color: var(--toki-blue-dark); margin: 0; }
+
+        .article-footer { margin-top: 4rem; padding-top: 2rem; border-top: 1px solid var(--border); text-align: center; }
+        .article-footer p { font-size: 0.8rem; color: var(--text-muted); margin-bottom: 1rem; }
+        .article-footer a { color: var(--toki-blue); text-decoration: none; }
+        .article-footer a:hover { text-decoration: underline; }
+
+        @media (max-width: 768px) {
+            .article-container { padding: 6rem 1.2rem 3rem; }
+            .article-header h1 { font-size: 1.5rem; }
+            .article-nav .nav-label { display: none; }
+        }
+        @media print { .article-nav { display: none; } .article-container { padding-top: 2rem; } }
+    </style>
+    <meta property="og:type" content="article">
+    <meta property="og:title" content="Tool vs. Infrastructure | TokiStorage">
+    <meta property="og:description" content="Tools are borrowed and wear out with use. Infrastructure is yours and grows with use.">
+    <meta property="og:url" content="https://tokistorage.github.io/lp/tool-vs-infrastructure-en.html">
+    <meta property="og:site_name" content="TokiStorage">
+    <meta property="og:image" content="https://tokistorage.github.io/lp/asset/tokistorage-icon-512.png">
+    <meta property="og:image:width" content="512">
+    <meta property="og:image:height" content="512">
+    <meta name="twitter:card" content="summary">
+    <meta name="twitter:title" content="Tool vs. Infrastructure | TokiStorage">
+    <meta name="twitter:description" content="Tools are borrowed and wear out with use. Infrastructure is yours and grows with use.">
+    <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Article",
+  "headline": "Tool vs. Infrastructure",
+  "description": "What depletes with use versus what grows with use — a design philosophy",
+  "author": {"@type": "Person", "name": "Takuya Sato"},
+  "datePublished": "2026-03-12",
+  "publisher": {"@type": "Organization", "name": "TokiStorage", "url": "https://tokistorage.github.io/"}
+}
+    </script>
+    <link rel="alternate" hreflang="ja" href="https://tokistorage.github.io/lp/tool-vs-infrastructure.html">
+    <link rel="alternate" hreflang="en" href="https://tokistorage.github.io/lp/tool-vs-infrastructure-en.html">
+    <link rel="alternate" hreflang="x-default" href="https://tokistorage.github.io/lp/tool-vs-infrastructure.html">
+    <link rel="canonical" href="https://tokistorage.github.io/lp/tool-vs-infrastructure-en.html">
+</head>
+<body>
+
+<nav class="article-nav">
+    <a href="essays-en.html" class="nav-brand">TokiStorage</a>
+    <div class="nav-right">
+        <span class="nav-label">ESSAY</span>
+        <a href="tool-vs-infrastructure.html" class="lang-switch">JA</a>
+    </div>
+</nav>
+
+<main class="article-container">
+    <header class="article-header">
+        <div class="article-category">TECHNOLOGY &amp; DESIGN</div>
+        <h1>Tool vs. Infrastructure</h1>
+        <p class="article-subtitle">What depletes with use versus what grows with use — a design philosophy</p>
+    </header>
+
+    <article class="article-content">
+
+        <div class="core-message">
+            The point of this essay: what we call a tool is something borrowed — it either wears out with use or accumulates billing. What we call infrastructure is something owned — it grows with use. Claude Code is a high-performance tool. The personal agent system built on git and GitHub Actions is infrastructure. The difference does not come from feature count. It comes from where the data lives, how costs scale, and which direction accumulation flows.
+        </div>
+
+        <h2>1. The Realization: "Claude Code Is Unnecessary"</h2>
+
+        <p>Claude Code is excellent. It can directly manipulate local files. Responses are real-time. Errors can be identified and corrected immediately. In terms of raw capability, it clearly outperforms the system built today.</p>
+
+        <p>And yet: unnecessary.</p>
+
+        <p>With Claude Code, data lives on Anthropic's servers. Context disappears when the session ends. Costs accumulate with every use. It is high-performance — but it is borrowed high-performance.</p>
+
+        <p>The system built today is asynchronous, with a wait of around thirty seconds. It is not real-time. But the data lives in your own GitHub. Context persists across sessions. The cost is zero, and with every session, the <code>tr/</code> repository grows.</p>
+
+        <p>A choice was made: owned infrastructure over high-performance borrowing. What follows is the reasoning behind that choice.</p>
+
+        <h2>2. Three Properties of a Tool</h2>
+
+        <p>Tools share three common properties.</p>
+
+        <p>First: ownership does not belong to you. A hammer is yours, but a SaaS tool is not. Terms of service change. Prices increase. Services shut down. All such decisions rest with the provider.</p>
+
+        <p>Second: costs scale with usage. The more you use, the more you pay. Operating under a usage ceiling distorts judgment. The question "is this worth the cost?" arises in places where it should never need to be asked.</p>
+
+        <p>Third: accumulation does not stay with you. Hundreds of conversations in Claude Code produce nothing durable. The context, the decisions, the patterns — all of it dissolves with the session. The next session starts from zero.</p>
+
+        <h2>3. Three Properties of Infrastructure</h2>
+
+        <p>Infrastructure inverts each of these.</p>
+
+        <p>Ownership belongs to you. <code>tokistorage/tr</code> is your repository. If GitHub were to shut down, the git repository can be cloned locally and migrated to any hosting service. There is no lock-in.</p>
+
+        <p>Costs do not scale with usage. Actions on public repositories run without limits, at no cost. Whether used once a day or ten times, the fixed cost remains zero. The ability to use something without watching the meter changes the quality of decisions made with it.</p>
+
+        <p>Accumulation stays with you. Context written to <code>memory/context/</code> can be pulled in the next session. Skills defined in <code>skills/</code> compound over time. Data in <code>project/cache/</code> keeps updating. The more you use it, the more it fits.</p>
+
+        <h2>4. Is Asynchrony a Flaw?</h2>
+
+        <p>The system has one clear weakness: it is asynchronous. Push a request, wait for Actions to run, pull the result. Tens of seconds pass.</p>
+
+        <p>But looking at actual work, "cannot wait thirty seconds" describes remarkably few tasks. Morning project reviews, status updates, document generation, essay publication — all of these are fine with asynchrony. The demand for real-time response was a habit formed around tools, not a genuine requirement of the work.</p>
+
+        <p>Infrastructure does not need to respond instantly. A power plant is not on-demand — it runs continuously, available when needed. This system works the same way.</p>
+
+        <h2>5. The Design Authority Belongs to Different People</h2>
+
+        <p>A tool is designed by its provider. Users operate within that design. Feature requests can be submitted; whether they are accepted is the provider's decision.</p>
+
+        <p>Infrastructure is designed by you. Write a yaml file in <code>.github/workflows/</code> and any process can be implemented in Actions. Add a skill definition to <code>skills/</code> and the behavior of the system changes. Design authority rests with you.</p>
+
+        <p>In a single day, three use cases came online: morning briefings, task updates, and essay publication. Tomorrow, a fourth can be designed. The limit is not the provider's roadmap — it is your own imagination.</p>
+
+        <div class="key-point">
+            <p>Tools deplete. Infrastructure grows. The difference comes from who holds the design authority.</p>
+        </div>
+
+    </article>
+
+    <footer class="article-footer">
+        <p id="essay-nav-links"></p>
+        <p style="font-size: 0.75rem; color: var(--text-muted);">&copy; TokiStorage. All rights reserved.</p>
+    </footer>
+
+</main>
+
+<script src="essay-nav.js"></script>
+<script src="essay-tts.js"></script>
+</body>
+</html>

@@ -208,7 +208,8 @@
     { id: 'zero-personal-data', ja: '機密情報の撤廃', en: 'Abolishing Secrets', date: '2026-02-28' },
     { id: 'product-codes', ja: 'プロダクトコードという設計言語', en: 'Product Codes as a Design Language', date: '2026-03-01' },
     { id: 'constraint-philosophy', ja: '制約主義がもたらす静寂', en: 'The Silence of Constraint Philosophy', date: '2026-03-12' },
-    { id: 'zero-cost-autonomy', ja: 'コストゼロの自律', en: 'Zero-Cost Autonomy', date: '2026-03-12' }
+    { id: 'zero-cost-autonomy', ja: 'コストゼロの自律', en: 'Zero-Cost Autonomy', date: '2026-03-12' },
+    { id: 'tool-vs-infrastructure', ja: '道具とインフラの違い', en: 'Tool vs. Infrastructure', date: '2026-03-12' }
   ];
 
   // ── Latest Articles (最新記事) ──
@@ -412,7 +413,8 @@
     'product-codes':                    ['ecosystem', 'framework', 'self-print-economy', 'customer-journey-transformation', 'corporate-site'],
     'government-guide':                 ['accessibility', 'trust-guidelines', 'corporate-site', 'seo-aio', 'openness'],
     'public-readiness':                 ['poc', 'trust-by-design', 'why-not-consulting', 'pwa-implementation-guide', 'government-guide'],
-    'zero-cost-autonomy':               ['burn-rate-zero', 'vibe-coding', 'what-is-github', 'cloudflare-gas', 'primitive-edge']
+    'zero-cost-autonomy':               ['burn-rate-zero', 'vibe-coding', 'what-is-github', 'cloudflare-gas', 'primitive-edge'],
+    'tool-vs-infrastructure':           ['zero-cost-autonomy', 'burn-rate-zero', 'vibe-coding', 'primitive-edge', 'constraint-philosophy']
   };
 
   const isEnglish = document.documentElement.lang === 'en';

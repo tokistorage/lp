@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" type="image/png" sizes="32x32" href="asset/favicon-32.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="asset/apple-touch-icon.png">
+    <title>道具とインフラの違い | トキストレージ</title>
+    <meta name="robots" content="index, follow">
+    <meta name="description" content="Claude Codeはいらない、と気づいた日。道具は借りるもので消耗する。インフラは自分のもので、使うほど育つ。その差がどこから来るかを考えた。">
+    <style>
+        :root {
+            --toki-blue: #2563EB;
+            --toki-blue-dark: #1D4ED8;
+            --toki-blue-pale: #EFF6FF;
+            --accent-blue: #3B82F6;
+            --bg-white: #FFFFFF;
+            --text-primary: #1E293B;
+            --text-secondary: #475569;
+            --text-muted: #94A3B8;
+            --border: #E2E8F0;
+            --font-display: 'Hiragino Mincho ProN', 'Yu Mincho', serif;
+            --font-body: 'Hiragino Kaku Gothic ProN', 'Yu Gothic', 'Meiryo', sans-serif;
+        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        html { scroll-behavior: smooth; }
+        body { font-family: var(--font-body); font-weight: 400; background: var(--bg-white); color: var(--text-primary); line-height: 2; font-size: 16px; }
+
+        .article-nav { position: fixed; top: 0; left: 0; right: 0; z-index: 1000; background: rgba(255,255,255,0.95); backdrop-filter: blur(12px); border-bottom: 1px solid var(--border); padding: 0.6rem 1.2rem; display: flex; align-items: center; justify-content: space-between; gap: 1rem; }
+        .article-nav .nav-brand { font-family: var(--font-display); font-size: 0.9rem; font-weight: 600; color: var(--toki-blue); text-decoration: none; white-space: nowrap; }
+        .article-nav .nav-brand::before { content: ''; display: inline-block; width: 20px; height: 20px; background: url('asset/tokistorage-icon-512.png') no-repeat center / contain; vertical-align: -3px; margin-right: 5px; }
+        .article-nav .nav-right { display: flex; align-items: center; gap: 1rem; }
+        .article-nav .nav-label { font-size: 0.6rem; color: var(--text-muted); letter-spacing: 0.08em; }
+        .article-nav .lang-switch { font-size: 0.75rem; color: var(--toki-blue); text-decoration: none; padding: 0.3rem 0.6rem; border: 1px solid var(--toki-blue); border-radius: 4px; }
+        .article-nav .lang-switch:hover { background: var(--toki-blue); color: #fff; }
+
+        .article-container { max-width: 680px; margin: 0 auto; padding: 7rem 2rem 4rem; }
+        .article-header { margin-bottom: 3rem; padding-bottom: 2rem; border-bottom: 1px solid var(--border); }
+        .article-category { font-size: 0.7rem; color: var(--toki-blue); letter-spacing: 0.15em; margin-bottom: 1rem; }
+        .article-header h1 { font-family: var(--font-display); font-size: 1.8rem; font-weight: 700; line-height: 1.5; margin-bottom: 1.5rem; }
+        .article-subtitle { font-size: 0.95rem; color: var(--text-secondary); line-height: 1.9; }
+
+        .article-content h2 { font-family: var(--font-display); font-size: 1.3rem; font-weight: 600; margin: 3rem 0 1.5rem; padding-bottom: 0.5rem; border-bottom: 2px solid var(--toki-blue-pale); }
+        .article-content p { margin-bottom: 1.5rem; text-align: justify; }
+        .article-content blockquote { border-left: 3px solid var(--toki-blue); padding-left: 1.5rem; margin: 2rem 0; font-family: var(--font-display); color: var(--text-secondary); }
+        .article-content code { font-family: 'SF Mono', 'Fira Code', 'Courier New', monospace; font-size: 0.85em; background: #F1F5F9; padding: 0.15em 0.45em; border-radius: 3px; color: var(--toki-blue-dark); }
+
+        .core-message { background: var(--toki-blue-pale); border-left: 4px solid var(--toki-blue); padding: 1.5rem; margin: 2rem 0; font-size: 0.95rem; line-height: 1.8; }
+        .key-point { background: linear-gradient(135deg, var(--toki-blue-pale) 0%, #fff 100%); border: 1px solid var(--accent-blue); border-radius: 8px; padding: 1.5rem; margin: 2rem 0; text-align: center; }
+        .key-point p { font-family: var(--font-display); font-size: 1.05rem; color: var(--toki-blue-dark); margin: 0; }
+
+        .article-footer { margin-top: 4rem; padding-top: 2rem; border-top: 1px solid var(--border); text-align: center; }
+        .article-footer p { font-size: 0.8rem; color: var(--text-muted); margin-bottom: 1rem; }
+        .article-footer a { color: var(--toki-blue); text-decoration: none; }
+        .article-footer a:hover { text-decoration: underline; }
+
+        @media (max-width: 768px) {
+            .article-container { padding: 6rem 1.2rem 3rem; }
+            .article-header h1 { font-size: 1.5rem; }
+            .article-nav .nav-label { display: none; }
+        }
+        @media print { .article-nav { display: none; } .article-container { padding-top: 2rem; } }
+    </style>
+    <meta property="og:type" content="article">
+    <meta property="og:title" content="道具とインフラの違い | トキストレージ">
+    <meta property="og:description" content="道具は借りるもので消耗する。インフラは自分のもので、使うほど育つ。">
+    <meta property="og:url" content="https://tokistorage.github.io/lp/tool-vs-infrastructure.html">
+    <meta property="og:site_name" content="トキストレージ">
+    <meta property="og:image" content="https://tokistorage.github.io/lp/asset/tokistorage-icon-512.png">
+    <meta property="og:image:width" content="512">
+    <meta property="og:image:height" content="512">
+    <meta name="twitter:card" content="summary">
+    <meta name="twitter:title" content="道具とインフラの違い | トキストレージ">
+    <meta name="twitter:description" content="道具は借りるもので消耗する。インフラは自分のもので、使うほど育つ。">
+    <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Article",
+  "headline": "道具とインフラの違い",
+  "description": "使うほど消耗するものと、使うほど育つものの設計思想",
+  "author": {"@type": "Person", "name": "佐藤卓也"},
+  "datePublished": "2026-03-12",
+  "publisher": {"@type": "Organization", "name": "TokiStorage", "url": "https://tokistorage.github.io/"}
+}
+    </script>
+    <link rel="alternate" hreflang="ja" href="https://tokistorage.github.io/lp/tool-vs-infrastructure.html">
+    <link rel="alternate" hreflang="en" href="https://tokistorage.github.io/lp/tool-vs-infrastructure-en.html">
+    <link rel="alternate" hreflang="x-default" href="https://tokistorage.github.io/lp/tool-vs-infrastructure.html">
+    <link rel="canonical" href="https://tokistorage.github.io/lp/tool-vs-infrastructure.html">
+</head>
+<body>
+
+<nav class="article-nav">
+    <a href="essays.html" class="nav-brand">トキストレージ</a>
+    <div class="nav-right">
+        <span class="nav-label">ESSAY</span>
+        <a href="tool-vs-infrastructure-en.html" class="lang-switch">EN</a>
+    </div>
+</nav>
+
+<main class="article-container">
+    <header class="article-header">
+        <div class="article-category">技術・設計</div>
+        <h1>道具とインフラの違い</h1>
+        <p class="article-subtitle">使うほど消耗するものと、使うほど育つものの設計思想</p>
+    </header>
+
+    <article class="article-content">
+
+        <div class="core-message">
+            この記事で言いたいこと：道具と呼ばれるものは借りるものであり、使うほど消耗するか、使用料が積み上がる。インフラと呼ばれるものは自分のものであり、使うほど育つ。Claude Codeは高性能な道具だ。一方、gitとGitHub Actionsで構築した個人エージェント基盤はインフラだ。この差は機能の多寡ではなく、データの所在・コスト構造・蓄積の方向性から来る。
+        </div>
+
+        <h2>1. 「Claude Codeいらない」という気づき</h2>
+
+        <p>Claude Codeは優れている。ローカルファイルを直接操作できる。レスポンスはリアルタイムだ。エラーを即座に確認して即座に直せる。機能だけ見れば、今日構築したシステムより明らかに高性能だ。</p>
+
+        <p>それでも「いらない」と思った。なぜか。</p>
+
+        <p>Claude Codeを使う限り、データはAnthropicのサーバーにある。セッションが終われば文脈は消える。使うほど課金が積み上がる。高性能だが、それは借り物の高性能だ。</p>
+
+        <p>今日構築したシステムは非同期で、30秒の待ち時間がある。リアルタイムではない。だがデータは自分のGitHubにある。セッションをまたいで文脈が続く。コストはゼロで、使うほど<code>tr/</code>リポジトリが育っていく。</p>
+
+        <p>「高性能な借り物」より「自分のインフラ」を選んだ。その判断の根拠を整理する。</p>
+
+        <h2>2. 道具の三つの性質</h2>
+
+        <p>道具には共通した三つの性質がある。</p>
+
+        <p>一つ目は、所有権が自分にないこと。ハンマーは自分のものだが、SaaSツールは違う。利用規約が変わる。値上げされる。サービスが終了する。その判断は常に提供者側にある。</p>
+
+        <p>二つ目は、コストが使用量に比例すること。使わなければ安く、使えば高い。上限を気にしながら使う構造は、判断を歪める。「この処理はコストに見合うか」という問いが、本来不要なところで発生する。</p>
+
+        <p>三つ目は、蓄積が自分の手元に残らないこと。Claude Codeで何百回会話しても、その文脈・判断・学習はセッションと共に消える。次のセッションは、また最初からだ。</p>
+
+        <h2>3. インフラの三つの性質</h2>
+
+        <p>インフラはこの逆だ。</p>
+
+        <p>所有権が自分にある。<code>tokistorage/tr</code>は自分のリポジトリだ。GitHubがサービスを終了しても、gitリポジトリはローカルにクローンできる。どのホスティングサービスにも移行できる。ロックインがない。</p>
+
+        <p>コストが使用量に比例しない。publicリポジトリのActionsは無制限・無料だ。朝に一回使っても、一日に十回使っても、固定費はゼロのままだ。コストを気にせず使える状態は、判断の質を変える。</p>
+
+        <p>蓄積が手元に残る。<code>memory/context/</code>に書いた文脈は次のセッションでpullできる。<code>skills/</code>に定義したスキルは積み上がる。<code>project/cache/</code>のデータは更新され続ける。使うほど、システムが自分に合ってくる。</p>
+
+        <h2>4. 非同期は欠点か</h2>
+
+        <p>このシステムの明確な弱点は非同期であることだ。リクエストをpushして、Actionsが動いて、結果をpullする。数十秒かかる。</p>
+
+        <p>だが業務を振り返ると、「30秒待てない」処理は思いのほか少ない。朝のプロジェクト確認、タスクの更新、資料の生成、エッセイの公開——どれも非同期で足りる。むしろリアルタイム性を求めていたのは、道具に慣れた感覚の側にあった。</p>
+
+        <p>インフラは即応しなくていい。水道は蛇口をひねった瞬間に水が出るが、発電所は予約制ではない。常に動いていて、必要なときに使える。このシステムも同じだ。</p>
+
+        <h2>5. 設計の方向性が違う</h2>
+
+        <p>道具は、提供者が設計する。ユーザーはその設計の範囲内で使う。機能リクエストを出せるが、受け入れるかどうかは提供者が決める。</p>
+
+        <p>インフラは、自分が設計する。<code>.github/workflows/</code>のyamlを書けば、どんな処理でもActionsに実装できる。スキル定義を<code>skills/</code>に追加すれば、Claudeの振る舞いが変わる。設計の主体が自分にある。</p>
+
+        <p>今日一日で、朝のブリーフィング・タスク更新・エッセイ公開という三つの用途が動いた。明日は四つ目を設計できる。上限は提供者ではなく、自分の想像力だ。</p>
+
+        <div class="key-point">
+            <p>道具は消耗する。インフラは育つ。その差は、設計の主体が誰にあるかから来る。</p>
+        </div>
+
+    </article>
+
+    <footer class="article-footer">
+        <p id="essay-nav-links"></p>
+        <p style="font-size: 0.75rem; color: var(--text-muted);">&copy; TokiStorage. All rights reserved.</p>
+    </footer>
+
+</main>
+
+<script src="essay-nav.js"></script>
+<script src="essay-tts.js"></script>
+</body>
+</html>
