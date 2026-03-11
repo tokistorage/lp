@@ -1,0 +1,289 @@
+<!DOCTYPE html>
+
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>LOG | TokiStorage</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+JP:wght@300;400;500&family=DM+Mono:ital,wght@0,300;1,300&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg: #0d0d0d;
+      --surface: #141414;
+      --border: #222;
+      --text: #d4cfc8;
+      --muted: #5a5650;
+      --accent: #c8a96e;
+      --tag: #2a2520;
+    }
+
+```
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: 'Noto Serif JP', serif;
+  font-weight: 300;
+  min-height: 100vh;
+}
+
+/* grain overlay */
+body::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.04'/%3E%3C/svg%3E");
+  pointer-events: none;
+  z-index: 0;
+  opacity: 0.4;
+}
+
+.container {
+  max-width: 680px;
+  margin: 0 auto;
+  padding: 0 24px;
+  position: relative;
+  z-index: 1;
+}
+
+header {
+  padding: 48px 0 32px;
+  border-bottom: 1px solid var(--border);
+  margin-bottom: 48px;
+}
+
+.nav {
+  display: flex;
+  align-items: baseline;
+  gap: 24px;
+  margin-bottom: 32px;
+}
+
+.nav a {
+  color: var(--muted);
+  text-decoration: none;
+  font-family: 'DM Mono', monospace;
+  font-size: 11px;
+  letter-spacing: 0.1em;
+  transition: color 0.2s;
+}
+
+.nav a:hover { color: var(--text); }
+
+.header-title {
+  font-family: 'DM Mono', monospace;
+  font-size: 11px;
+  font-weight: 300;
+  letter-spacing: 0.25em;
+  color: var(--accent);
+  text-transform: uppercase;
+  margin-bottom: 12px;
+}
+
+h1 {
+  font-size: 28px;
+  font-weight: 400;
+  letter-spacing: 0.05em;
+  color: var(--text);
+  line-height: 1.3;
+}
+
+.subtitle {
+  margin-top: 10px;
+  color: var(--muted);
+  font-size: 13px;
+  line-height: 1.7;
+}
+
+/* Timeline */
+.timeline {
+  position: relative;
+}
+
+.timeline::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  width: 1px;
+  background: linear-gradient(to bottom, var(--accent), transparent);
+  opacity: 0.3;
+}
+
+.post {
+  padding: 0 0 40px 28px;
+  position: relative;
+  animation: fadeIn 0.4s ease both;
+}
+
+.post::before {
+  content: '';
+  position: absolute;
+  left: -3px;
+  top: 6px;
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: var(--accent);
+  opacity: 0.6;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(8px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.post-meta {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 10px;
+}
+
+.post-date {
+  font-family: 'DM Mono', monospace;
+  font-size: 11px;
+  color: var(--muted);
+  letter-spacing: 0.05em;
+}
+
+.post-tag {
+  font-family: 'DM Mono', monospace;
+  font-size: 10px;
+  color: var(--accent);
+  background: var(--tag);
+  padding: 2px 8px;
+  border-radius: 2px;
+  letter-spacing: 0.08em;
+}
+
+.post-body {
+  font-size: 15px;
+  line-height: 1.85;
+  color: var(--text);
+  white-space: pre-wrap;
+  word-break: break-word;
+}
+
+/* Empty state */
+.empty {
+  padding: 60px 0;
+  text-align: center;
+  color: var(--muted);
+  font-size: 13px;
+  font-family: 'DM Mono', monospace;
+  letter-spacing: 0.1em;
+}
+
+/* Loading */
+.loading {
+  padding: 60px 0;
+  text-align: center;
+  color: var(--muted);
+  font-size: 12px;
+  font-family: 'DM Mono', monospace;
+  letter-spacing: 0.15em;
+}
+
+.loading::after {
+  content: '';
+  animation: dots 1.2s infinite;
+}
+
+@keyframes dots {
+  0%,20% { content: '.'; }
+  40% { content: '..'; }
+  60%,100% { content: '...'; }
+}
+
+footer {
+  padding: 48px 0;
+  border-top: 1px solid var(--border);
+  margin-top: 24px;
+  font-family: 'DM Mono', monospace;
+  font-size: 11px;
+  color: var(--muted);
+  letter-spacing: 0.08em;
+}
+```
+
+  </style>
+</head>
+<body>
+  <div class="container">
+    <header>
+      <nav class="nav">
+        <a href="index.html">トキストレージ</a>
+        <a href="essays.html">エッセイ</a>
+      </nav>
+      <div class="header-title">Personal Log</div>
+      <h1>思考の断片</h1>
+      <p class="subtitle">気づき、問い、ことばの欠片。時系列で積み上がっていく。</p>
+    </header>
+
+```
+<div class="timeline" id="timeline">
+  <div class="loading">loading</div>
+</div>
+
+<footer>© TokiStorage</footer>
+```
+
+  </div>
+
+  <script>
+    async function loadPosts() {
+      const timeline = document.getElementById('timeline');
+      try {
+        const res = await fetch('posts.json?t=' + Date.now());
+        if (!res.ok) throw new Error('not found');
+        const posts = await res.json();
+
+        if (!posts.length) {
+          timeline.innerHTML = '<div class="empty">no posts yet</div>';
+          return;
+        }
+
+        // 新しい順に表示
+        const sorted = [...posts].reverse();
+
+        timeline.innerHTML = sorted.map((p, i) => `
+          <div class="post" style="animation-delay:${i * 0.05}s">
+            <div class="post-meta">
+              <span class="post-date">${formatDate(p.date)}</span>
+              ${p.tag ? `<span class="post-tag">${p.tag}</span>` : ''}
+            </div>
+            <div class="post-body">${escapeHtml(p.body)}</div>
+          </div>
+        `).join('');
+      } catch (e) {
+        timeline.innerHTML = '<div class="empty">no posts yet</div>';
+      }
+    }
+
+    function formatDate(iso) {
+      const d = new Date(iso);
+      const y = d.getFullYear();
+      const m = String(d.getMonth() + 1).padStart(2, '0');
+      const day = String(d.getDate()).padStart(2, '0');
+      const h = String(d.getHours()).padStart(2, '0');
+      const min = String(d.getMinutes()).padStart(2, '0');
+      return `${y}.${m}.${day} ${h}:${min}`;
+    }
+
+    function escapeHtml(str) {
+      return str
+        .replace(/&/g, '&amp;')
+        .replace(/</g, '&lt;')
+        .replace(/>/g, '&gt;')
+        .replace(/"/g, '&quot;');
+    }
+
+    loadPosts();
+  </script>
+
+</body>
+</html>
