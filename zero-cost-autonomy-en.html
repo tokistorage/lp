@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" type="image/png" sizes="32x32" href="asset/favicon-32.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="asset/apple-touch-icon.png">
+    <title>Zero-Cost Autonomy | TokiStorage</title>
+    <meta name="robots" content="index, follow">
+    <meta name="description" content="I typed 'good morning.' Thirty seconds later, ninety tasks were lined up in order of priority. A record of the personal infrastructure built from two repositories.">
+    <style>
+        :root {
+            --toki-blue: #2563EB;
+            --toki-blue-dark: #1D4ED8;
+            --toki-blue-pale: #EFF6FF;
+            --accent-blue: #3B82F6;
+            --bg-white: #FFFFFF;
+            --text-primary: #1E293B;
+            --text-secondary: #475569;
+            --text-muted: #94A3B8;
+            --border: #E2E8F0;
+            --font-display: 'Hiragino Mincho ProN', 'Yu Mincho', Georgia, serif;
+            --font-body: 'Hiragino Kaku Gothic ProN', 'Yu Gothic', system-ui, sans-serif;
+        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        html { scroll-behavior: smooth; }
+        body { font-family: var(--font-body); font-weight: 400; background: var(--bg-white); color: var(--text-primary); line-height: 2; font-size: 16px; }
+
+        .article-nav { position: fixed; top: 0; left: 0; right: 0; z-index: 1000; background: rgba(255,255,255,0.95); backdrop-filter: blur(12px); border-bottom: 1px solid var(--border); padding: 0.6rem 1.2rem; display: flex; align-items: center; justify-content: space-between; gap: 1rem; }
+        .article-nav .nav-brand { font-family: var(--font-display); font-size: 0.9rem; font-weight: 600; color: var(--toki-blue); text-decoration: none; white-space: nowrap; }
+        .article-nav .nav-brand::before { content: ''; display: inline-block; width: 20px; height: 20px; background: url('asset/tokistorage-icon-512.png') no-repeat center / contain; vertical-align: -3px; margin-right: 5px; }
+        .article-nav .nav-right { display: flex; align-items: center; gap: 1rem; }
+        .article-nav .nav-label { font-size: 0.6rem; color: var(--text-muted); letter-spacing: 0.08em; }
+        .article-nav .lang-switch { font-size: 0.75rem; color: var(--toki-blue); text-decoration: none; padding: 0.3rem 0.6rem; border: 1px solid var(--toki-blue); border-radius: 4px; }
+        .article-nav .lang-switch:hover { background: var(--toki-blue); color: #fff; }
+
+        .article-container { max-width: 680px; margin: 0 auto; padding: 7rem 2rem 4rem; }
+        .article-header { margin-bottom: 3rem; padding-bottom: 2rem; border-bottom: 1px solid var(--border); }
+        .article-category { font-size: 0.7rem; color: var(--toki-blue); letter-spacing: 0.15em; margin-bottom: 1rem; }
+        .article-header h1 { font-family: var(--font-display); font-size: 1.8rem; font-weight: 700; line-height: 1.4; margin-bottom: 1.5rem; }
+        .article-subtitle { font-size: 0.95rem; color: var(--text-secondary); line-height: 1.9; }
+
+        .article-content p { font-family: var(--font-display); margin-bottom: 1.5rem; line-height: 2.1; }
+        .article-content hr { border: none; border-top: 1px solid var(--border); margin: 2.5rem 0; }
+        .article-content code { font-family: 'SF Mono', 'Fira Code', 'Courier New', monospace; font-size: 0.85em; background: #F1F5F9; padding: 0.15em 0.45em; border-radius: 3px; color: var(--toki-blue-dark); }
+
+        .key-point { background: linear-gradient(135deg, var(--toki-blue-pale) 0%, #fff 100%); border: 1px solid var(--accent-blue); border-radius: 8px; padding: 1.5rem; margin: 2rem 0; text-align: center; }
+        .key-point p { font-family: var(--font-display); font-size: 1.05rem; color: var(--toki-blue-dark); margin: 0; }
+
+        .article-footer { margin-top: 4rem; padding-top: 2rem; border-top: 1px solid var(--border); text-align: center; }
+        .article-footer p { font-size: 0.8rem; color: var(--text-muted); margin-bottom: 1rem; }
+        .article-footer a { color: var(--toki-blue); text-decoration: none; }
+        .article-footer a:hover { text-decoration: underline; }
+
+        @media (max-width: 768px) {
+            .article-container { padding: 6rem 1.2rem 3rem; }
+            .article-header h1 { font-size: 1.5rem; }
+            .article-nav .nav-label { display: none; }
+        }
+        @media print { .article-nav { display: none; } .article-container { padding-top: 2rem; } }
+    </style>
+    <meta property="og:type" content="article">
+    <meta property="og:title" content="Zero-Cost Autonomy | TokiStorage">
+    <meta property="og:description" content="I typed 'good morning.' Thirty seconds later, ninety tasks were lined up in order of priority.">
+    <meta property="og:url" content="https://tokistorage.github.io/lp/zero-cost-autonomy-en.html">
+    <meta property="og:site_name" content="TokiStorage">
+    <meta property="og:image" content="https://tokistorage.github.io/lp/asset/tokistorage-icon-512.png">
+    <meta property="og:image:width" content="512">
+    <meta property="og:image:height" content="512">
+    <meta name="twitter:card" content="summary">
+    <meta name="twitter:title" content="Zero-Cost Autonomy | TokiStorage">
+    <meta name="twitter:description" content="I typed 'good morning.' Thirty seconds later, ninety tasks were lined up in order of priority.">
+    <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Article",
+  "headline": "Zero-Cost Autonomy",
+  "description": "The Personal Infrastructure Built from Two Repositories — public and private",
+  "author": {"@type": "Person", "name": "Takuya Sato"},
+  "datePublished": "2026-03-12",
+  "publisher": {"@type": "Organization", "name": "TokiStorage", "url": "https://tokistorage.github.io/"}
+}
+    </script>
+    <link rel="alternate" hreflang="ja" href="https://tokistorage.github.io/lp/zero-cost-autonomy.html">
+    <link rel="alternate" hreflang="en" href="https://tokistorage.github.io/lp/zero-cost-autonomy-en.html">
+    <link rel="canonical" href="https://tokistorage.github.io/lp/zero-cost-autonomy-en.html">
+</head>
+<body>
+
+<nav class="article-nav">
+    <a href="essays-en.html" class="nav-brand">TokiStorage</a>
+    <div class="nav-right">
+        <span class="nav-label">ESSAY</span>
+        <a href="zero-cost-autonomy.html" class="lang-switch">JA</a>
+    </div>
+</nav>
+
+<main class="article-container">
+    <header class="article-header">
+        <div class="article-category">TECHNOLOGY &amp; DESIGN</div>
+        <h1>Zero-Cost Autonomy</h1>
+        <p class="article-subtitle">
+            The Personal Infrastructure Built from Two Repositories — public and private<br>
+            <span style="font-size:0.85em; color:var(--text-muted);">March 12, 2026 &nbsp;·&nbsp; Takuya Sato</span>
+        </p>
+    </header>
+
+    <article class="article-content">
+
+        <p>I typed "good morning."</p>
+
+        <p>Thirty seconds later, ninety tasks were lined up in order of priority — along with a note that the tax filing deadline was three days away.</p>
+
+        <p>Not a single yen of additional cost was required to make this happen.</p>
+
+        <hr>
+
+        <p>It started with a simple question: can Claude.ai run a git push?</p>
+
+        <p>The answer turned out to be asymmetric. Access to <code>github.com</code> went through. Access to <code>api.github.com</code> was restricted. That asymmetry determined the design. Claude operates via git. Anything requiring API access is delegated to GitHub Actions. Actions on public repositories run without limits — and without cost.</p>
+
+        <p>Two repositories were set up. <code>tokistorage.github.io</code> is public — the place where Actions run. <code>tr</code> is private — where data, skills, and memory live. Claude pushes a request to the public repo. Actions call <code>api.github.com</code>, write the result to the private repo. Claude pulls and reads.</p>
+
+        <p>Asynchronous — but that's enough.</p>
+
+        <hr>
+
+        <p>The memory feature goes unused. Instead, context is written to <code>memory/context/</code>. Pull at the start of the next session, and the thread continues. The data lives in my own GitHub, not on Anthropic's servers. The format is plain text and JSON — always readable, always editable, with a full history in git log.</p>
+
+        <p>Skills live in the same place: how to write an essay, a brochure template, a guide for generating slide decks. Claude pulls them when needed. Capability accumulates in the repository — it doesn't disappear when the conversation ends.</p>
+
+        <hr>
+
+        <div class="key-point">
+            <p>A forty-year-old technology called git becomes the foundation for a personal AI agent.</p>
+        </div>
+
+        <p>"Turning Claude.ai into an agent" sounds ambitious. The reality is simple: a forty-year-old technology called git, the free Actions on a public repository, and the privacy of a private one. No new technology was used.</p>
+
+        <p>Infrastructure lasts longer when it's simple. When the cost is zero, there's no reason to stop.</p>
+
+    </article>
+
+    <footer class="article-footer">
+        <p id="essay-nav-links"></p>
+        <p style="font-size: 0.75rem; color: var(--text-muted);">&copy; TokiStorage. All rights reserved.</p>
+    </footer>
+
+</main>
+
+<script src="essay-nav.js"></script>
+<script src="essay-tts.js"></script>
+</body>
+</html>
