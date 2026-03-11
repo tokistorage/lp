@@ -198,6 +198,26 @@ h1 {
   60%,100% { content: '...'; }
 }
 
+    .refresh {
+      background: none;
+      border: none;
+      color: var(--muted);
+      font-family: 'DM Mono', monospace;
+      font-size: 11px;
+      letter-spacing: 0.1em;
+      cursor: pointer;
+      padding: 0;
+      transition: color 0.2s;
+    }
+
+    .refresh:hover { color: var(--accent); }
+
+    .refresh.spinning { animation: spin 0.6s linear; }
+
+    @keyframes spin {
+      from { display: inline-block; transform: rotate(0deg); }
+      to { display: inline-block; transform: rotate(360deg); }
+    }
 footer {
   padding: 48px 0;
   border-top: 1px solid var(--border);
@@ -207,7 +227,6 @@ footer {
   color: var(--muted);
   letter-spacing: 0.08em;
 }
-```
 
   </style>
 </head>
@@ -217,6 +236,7 @@ footer {
       <nav class="nav">
         <a href="index.html">トキストレージ</a>
         <a href="essays.html">エッセイ</a>
+                <button class="refresh" id="refreshBtn" onclick="refresh()">↻ 更新</button>
       </nav>
       <div class="header-title">Personal Log</div>
       <h1>思考の断片</h1>
