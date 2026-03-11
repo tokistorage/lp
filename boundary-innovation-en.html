@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" type="image/png" sizes="32x32" href="asset/favicon-32.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="asset/apple-touch-icon.png">
+    <title>The Design Philosophy of Boundaryism | TokiStorage</title>
+    <meta name="robots" content="index, follow">
+    <meta name="description" content="Detour, constraint, limits, breakthroughs, tension, transformation, perspective, generalization, industry creation. Ten propositions on how boundaries generate design.">
+    <style>
+        :root {
+            --toki-blue: #2563EB;
+            --toki-blue-dark: #1D4ED8;
+            --toki-blue-pale: #EFF6FF;
+            --accent-blue: #3B82F6;
+            --bg-white: #FFFFFF;
+            --text-primary: #1E293B;
+            --text-secondary: #475569;
+            --text-muted: #94A3B8;
+            --border: #E2E8F0;
+            --font-display: 'Hiragino Mincho ProN', 'Yu Mincho', Georgia, serif;
+            --font-body: 'Hiragino Kaku Gothic ProN', 'Yu Gothic', system-ui, sans-serif;
+        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        html { scroll-behavior: smooth; }
+        body { font-family: var(--font-body); font-weight: 400; background: var(--bg-white); color: var(--text-primary); line-height: 2; font-size: 16px; }
+
+        .article-nav { position: fixed; top: 0; left: 0; right: 0; z-index: 1000; background: rgba(255,255,255,0.95); backdrop-filter: blur(12px); border-bottom: 1px solid var(--border); padding: 0.6rem 1.2rem; display: flex; align-items: center; justify-content: space-between; gap: 1rem; }
+        .article-nav .nav-brand { font-family: var(--font-display); font-size: 0.9rem; font-weight: 600; color: var(--toki-blue); text-decoration: none; white-space: nowrap; }
+        .article-nav .nav-brand::before { content: ''; display: inline-block; width: 20px; height: 20px; background: url('asset/tokistorage-icon-512.png') no-repeat center / contain; vertical-align: -3px; margin-right: 5px; }
+        .article-nav .nav-right { display: flex; align-items: center; gap: 1rem; }
+        .article-nav .nav-label { font-size: 0.6rem; color: var(--text-muted); letter-spacing: 0.08em; }
+        .article-nav .lang-switch { font-size: 0.75rem; color: var(--toki-blue); text-decoration: none; padding: 0.3rem 0.6rem; border: 1px solid var(--toki-blue); border-radius: 4px; }
+        .article-nav .lang-switch:hover { background: var(--toki-blue); color: #fff; }
+
+        .article-container { max-width: 680px; margin: 0 auto; padding: 7rem 2rem 4rem; }
+        .article-header { margin-bottom: 3rem; padding-bottom: 2rem; border-bottom: 1px solid var(--border); }
+        .article-category { font-size: 0.7rem; color: var(--toki-blue); letter-spacing: 0.15em; margin-bottom: 1rem; }
+        .article-header h1 { font-family: var(--font-display); font-size: 1.8rem; font-weight: 700; line-height: 1.5; margin-bottom: 1.5rem; }
+        .article-subtitle { font-size: 0.95rem; color: var(--text-secondary); line-height: 1.9; }
+
+        .article-content h2 { font-family: var(--font-display); font-size: 1.3rem; font-weight: 600; margin: 3rem 0 1.5rem; padding-bottom: 0.5rem; border-bottom: 2px solid var(--toki-blue-pale); }
+        .article-content p { margin-bottom: 1.5rem; text-align: justify; }
+        .article-content blockquote { border-left: 3px solid var(--toki-blue); padding-left: 1.5rem; margin: 2rem 0; font-family: var(--font-display); color: var(--text-secondary); line-height: 2; }
+        .article-content code { font-family: 'SF Mono', 'Fira Code', 'Courier New', monospace; font-size: 0.85em; background: #F1F5F9; padding: 0.15em 0.45em; border-radius: 3px; color: var(--toki-blue-dark); }
+
+        .core-message { background: var(--toki-blue-pale); border-left: 4px solid var(--toki-blue); padding: 1.5rem; margin: 2rem 0; font-size: 0.95rem; line-height: 1.8; }
+        .key-point { background: linear-gradient(135deg, var(--toki-blue-pale) 0%, #fff 100%); border: 1px solid var(--accent-blue); border-radius: 8px; padding: 1.5rem; margin: 2rem 0; text-align: center; }
+        .key-point p { font-family: var(--font-display); font-size: 1.05rem; color: var(--toki-blue-dark); margin: 0; }
+        .proposition { background: #F8FAFC; border: 1px solid var(--border); border-radius: 6px; padding: 0.4rem 1rem; margin: 0.5rem 0 1.5rem; font-size: 0.8rem; color: var(--toki-blue); letter-spacing: 0.1em; font-weight: 600; }
+
+        .article-footer { margin-top: 4rem; padding-top: 2rem; border-top: 1px solid var(--border); text-align: center; }
+        .article-footer p { font-size: 0.8rem; color: var(--text-muted); margin-bottom: 1rem; }
+        .article-footer a { color: var(--toki-blue); text-decoration: none; }
+        .article-footer a:hover { text-decoration: underline; }
+
+        @media (max-width: 768px) {
+            .article-container { padding: 6rem 1.2rem 3rem; }
+            .article-header h1 { font-size: 1.5rem; }
+            .article-nav .nav-label { display: none; }
+        }
+        @media print { .article-nav { display: none; } .article-container { padding-top: 2rem; } }
+    </style>
+    <meta property="og:type" content="article">
+    <meta property="og:title" content="The Design Philosophy of Boundaryism | TokiStorage">
+    <meta property="og:description" content="Ten propositions on how detour, constraint, and limits generate structure — and eventually, industries.">
+    <meta property="og:url" content="https://tokistorage.github.io/lp/boundary-innovation-en.html">
+    <meta property="og:site_name" content="TokiStorage">
+    <meta property="og:image" content="https://tokistorage.github.io/lp/asset/tokistorage-icon-512.png">
+    <meta property="og:image:width" content="512">
+    <meta property="og:image:height" content="512">
+    <meta name="twitter:card" content="summary">
+    <meta name="twitter:title" content="The Design Philosophy of Boundaryism | TokiStorage">
+    <meta name="twitter:description" content="Ten propositions on how detour, constraint, and limits generate structure — and eventually, industries.">
+    <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Article",
+  "headline": "The Design Philosophy of Boundaryism",
+  "description": "From detour to industry creation — ten propositions",
+  "author": {"@type": "Person", "name": "Takuya Sato"},
+  "datePublished": "2026-03-12",
+  "publisher": {"@type": "Organization", "name": "TokiStorage", "url": "https://tokistorage.github.io/"}
+}
+    </script>
+    <link rel="alternate" hreflang="ja" href="https://tokistorage.github.io/lp/boundary-innovation.html">
+    <link rel="alternate" hreflang="en" href="https://tokistorage.github.io/lp/boundary-innovation-en.html">
+    <link rel="alternate" hreflang="x-default" href="https://tokistorage.github.io/lp/boundary-innovation.html">
+    <link rel="canonical" href="https://tokistorage.github.io/lp/boundary-innovation-en.html">
+</head>
+<body>
+
+<nav class="article-nav">
+    <a href="essays-en.html" class="nav-brand">TokiStorage</a>
+    <div class="nav-right">
+        <span class="nav-label">ESSAY</span>
+        <a href="boundary-innovation.html" class="lang-switch">JA</a>
+    </div>
+</nav>
+
+<main class="article-container">
+    <header class="article-header">
+        <div class="article-category">TECHNOLOGY &amp; DESIGN</div>
+        <h1>The Design Philosophy of Boundaryism</h1>
+        <p class="article-subtitle">From detour to industry creation — ten propositions</p>
+    </header>
+
+    <article class="article-content">
+
+        <div class="core-message">
+            The point of this essay: boundaries do not obstruct — they initiate design. Detour generates structure. Constraint sharpens thought. When limits are exposed, a breakthrough becomes visible. Moving forward while holding tension, offering transformation to others, expanding perspective until generalization becomes possible — this is the sequence by which a boundary becomes a category, and a category becomes an industry. Boundaryism is the deliberate design of this chain.
+        </div>
+
+        <h2>1. The Aesthetics of Detour</h2>
+        <div class="proposition">Proposition I — When the shortest path is refused, design becomes deeper</div>
+
+        <p>The day <code>api.github.com</code> returned 403, the first instinct was to find a workaround. But there is a difference between avoiding a problem and routing around it.</p>
+
+        <p>Avoidance pretends the problem does not exist. Detour passes through the problem and arrives somewhere else. The resulting structures are entirely different. A system built on avoidance is fragile. A system built on detour carries the route itself as part of its architecture.</p>
+
+        <p>The bridge structure between public and private repositories — mediated by Actions — would not have existed if direct access had been possible. The shortest path is not always the best design.</p>
+
+        <h2>2. Constraint Sharpens</h2>
+        <div class="proposition">Proposition II — Without constraint, thought cannot find its outline</div>
+
+        <p>A writer told they can write anything often finds themselves unable to write at all. When constraint is imposed — word count, form, theme — words undergo selection. Only the selected words survive, and they become a style.</p>
+
+        <p>System design works the same way. With unlimited cloud budget, microservices proliferate. With a zero-cost constraint, every process is interrogated: is this truly necessary? The constraint of zero burn rate is what stripped TokiStorage's architecture down to its skeleton.</p>
+
+        <p>Constraint does not limit capability. It defines the direction capability flows.</p>
+
+        <h2>3. The Exposure of Limits</h2>
+        <div class="proposition">Proposition III — A limit is not a failure. It is the edge of the map.</div>
+
+        <p>When a limit is reached, most people record it as a setback. But a limit is the furthest point the current system can reach — which means it is the edge of the map. Beyond the edge, the next map begins.</p>
+
+        <p>The fact that Claude.ai could not reach <code>api.github.com</code> was the edge of the map marked "Claude alone cannot complete this." Beyond that edge lay GitHub Actions. Closing the limit as a failure would have hidden what came next.</p>
+
+        <p>Measuring a limit precisely is how you determine the starting point of the next design.</p>
+
+        <h2>4. Finding the Breakthrough</h2>
+        <div class="proposition">Proposition IV — A breakthrough is not forced open. It is found by reading the gaps in structure.</div>
+
+        <p>Some people try to break through walls. Others look for gaps. The former uses force; the latter uses observation.</p>
+
+        <p>Git goes through. That single point was the breakthrough. No force was needed — only a precise reading of the asymmetry in what was permitted and what was blocked. Finding a breakthrough means reading the structure of the whole system: where is there tension, and where is there slack? Those who can read that terrain move the farthest with the least energy.</p>
+
+        <h2>5. Coexisting with Tension</h2>
+        <div class="proposition">Proposition V — Tension is not something to resolve. It is something to carry while moving forward.</div>
+
+        <p>"Is this really right?" came many times during the design process. Is asynchrony acceptable? Is git truly sufficient? Isn't there a better approach?</p>
+
+        <p>Trying to resolve this tension produces paralysis. Waiting for the perfect answer stops the design. The alternative is to take one step while holding the tension, and learn from what results. Tension is the friction that sharpens judgment — not noise to be eliminated.</p>
+
+        <p>Design without tension lacks depth. Moving while continuing to question is what produces design with thought behind it.</p>
+
+        <h2>6. Offering Transformation</h2>
+        <div class="proposition">Proposition VI — When you pass your breakthrough to others, transformation becomes contagious</div>
+
+        <p>Publishing this system's design as an essay is not about sharing information. It is about passing on the structure of a breakthrough.</p>
+
+        <p>Someone who reads "Claude.ai can run git push" may redraw their own map of constraints. That redrawing may generate another detour. Transformation does not complete within a single person. It becomes contagious when passed to others.</p>
+
+        <p>This is why TokiStorage keeps writing essays.</p>
+
+        <h2>7. Expanding Perspective</h2>
+        <div class="proposition">Proposition VII — Only from outside the boundary can you see the boundary's shape</div>
+
+        <p>Inside a constraint, it looks like a wall. One step outside, and it becomes a contour. A contour tells you the shape of what you are inside.</p>
+
+        <p>Seen from within, "Claude.ai cannot call APIs" is a restriction. Seen from outside, it is a definition: "an environment whose characteristic is that only git is available." This shift in perspective changes the direction of design. A designer who laments a restriction and a designer who reads it as a characteristic will produce entirely different systems from identical conditions.</p>
+
+        <h2>8. Generalization Creates Categories</h2>
+        <div class="proposition">Proposition VIII — Abstract one breakthrough and a category emerges</div>
+
+        <p>"Trigger GitHub Actions via git from Claude.ai" is a specific solution. Abstract it, and it becomes: "In environments with network restrictions, permitted pathways can serve as bridges to external systems." That is a category.</p>
+
+        <p>Once a category exists, other solutions become visible. Sending Slack notifications from GAS. Connecting form submissions on static sites to webhooks. All are different implementations of the same structure. Abstracting a single breakthrough creates a template for solving an entire class of problems.</p>
+
+        <p>Most innovation begins not with the discovery of a specific solution, but with its generalization.</p>
+
+        <h2>9. The Mass Production of Industries</h2>
+        <div class="proposition">Proposition IX — When a category takes hold, it becomes an industry</div>
+
+        <p>"Storing data in the cloud" was once a specialized solution. It generalized into SaaS as a category, and became an industry. "Building services without writing code" became no-code as a category, and became an industry.</p>
+
+        <p>"AI autonomously operating infrastructure" is still mid-formation as a category. When designs like today's accumulate, are abstracted, and become reproducible patterns, a new category will emerge. When that category is adopted by multiple operators, it will become an industry.</p>
+
+        <p>Industries do not appear suddenly. They follow a sequence: breakthrough → detour → generalization → category → industry.</p>
+
+        <h2>10. Boundaryism as the Origin of Innovation</h2>
+        <div class="proposition">Proposition X — By deliberately setting boundaries, the depth of design can be controlled</div>
+
+        <p>The first nine propositions described what happens when a boundary is encountered. The tenth runs in reverse.</p>
+
+        <p>Boundaries are not only encountered by chance — they can be set deliberately. TokiStorage's self-imposed boundary of zero burn rate controlled the direction of its design. "Build only within what is free" produced a stronger design philosophy than having no constraints at all.</p>
+
+        <p>Boundaryism is not passive acceptance of constraint. It is using boundaries as instruments — deliberately setting them to control the depth and direction of your own design.</p>
+
+        <div class="key-point">
+            <p>Boundaries do not obstruct. They initiate design.<br>Detour builds structure. Limits extend the map. Generalization builds industries.</p>
+        </div>
+
+    </article>
+
+    <footer class="article-footer">
+        <p id="essay-nav-links"></p>
+        <p style="font-size: 0.75rem; color: var(--text-muted);">&copy; TokiStorage. All rights reserved.</p>
+    </footer>
+
+</main>
+
+<script src="essay-nav.js"></script>
+<script src="essay-tts.js"></script>
+</body>
+</html>
