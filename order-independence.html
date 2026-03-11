@@ -1,0 +1,291 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" type="image/png" sizes="32x32" href="asset/favicon-32.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="asset/apple-touch-icon.png">
+    <title>順序独立性——許可を待たずに責任を負う構造 | トキストレージ</title>
+    <meta name="robots" content="index, follow">
+    <meta name="description" content="ステークホルダーの増加が意思決定の順序を複層化させる。待つことの効果と代償、服従と自走の境界、公開主義における序列——順序独立性という設計思想について。">    <style>
+        :root {
+            --toki-indigo: #4F46E5;
+            --toki-indigo-dark: #4338CA;
+            --toki-indigo-pale: #EEF2FF;
+            --bg-white: #FFFFFF;
+            --bg-section: #E0E7FF;
+            --text-primary: #1E293B;
+            --text-secondary: #475569;
+            --text-muted: #94A3B8;
+            --border: #E2E8F0;
+            --font-display: 'Hiragino Mincho ProN', 'Yu Mincho', serif;
+            --font-body: 'Hiragino Kaku Gothic ProN', 'Yu Gothic', 'Meiryo', sans-serif;
+        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        html { scroll-behavior: smooth; }
+        body { font-family: var(--font-body); font-weight: 400; background: var(--bg-white); color: var(--text-primary); line-height: 2; font-size: 16px; }
+        .article-nav { position: fixed; top: 0; left: 0; right: 0; z-index: 1000; background: rgba(255,255,255,0.95); backdrop-filter: blur(12px); border-bottom: 1px solid var(--border); padding: 0.6rem 1.2rem; display: flex; align-items: center; justify-content: space-between; }
+        .article-nav .nav-brand { font-family: var(--font-display); font-size: 0.9rem; font-weight: 600; color: var(--toki-indigo); text-decoration: none; }
+        .article-nav .nav-right { display: flex; align-items: center; gap: 1rem; }
+        .article-nav .nav-label { font-size: 0.6rem; color: var(--text-muted); letter-spacing: 0.08em; }
+        .article-nav .lang-switch { font-size: 0.75rem; color: var(--toki-indigo); text-decoration: none; padding: 0.3rem 0.6rem; border: 1px solid var(--toki-indigo); border-radius: 4px; }
+        .article-nav .lang-switch:hover { background: var(--toki-indigo); color: #fff; }
+        .article-container { max-width: 680px; margin: 0 auto; padding: 7rem 2rem 4rem; }
+        .article-header { margin-bottom: 3rem; padding-bottom: 2rem; border-bottom: 1px solid var(--border); }
+        .article-category { font-size: 0.7rem; color: var(--toki-indigo); letter-spacing: 0.15em; margin-bottom: 1rem; }
+        .article-header h1 { font-family: var(--font-display); font-size: 1.8rem; font-weight: 600; line-height: 1.5; margin-bottom: 1rem; }
+        .article-subtitle { font-size: 0.95rem; color: var(--text-secondary); line-height: 1.8; }
+        .article-content h2 { font-family: var(--font-display); font-size: 1.25rem; font-weight: 600; margin: 3rem 0 1.5rem; padding-bottom: 0.5rem; border-bottom: 1px solid var(--border); }
+        .article-content h3 { font-family: var(--font-display); font-size: 1.1rem; font-weight: 500; margin: 2rem 0 1rem; }
+        .article-content p { margin-bottom: 1.5rem; text-align: justify; }
+        .article-content blockquote { margin: 2rem 0; padding: 1.5rem 2rem; background: var(--bg-section); border-left: 3px solid var(--toki-indigo); font-style: italic; }
+        .article-content blockquote cite { display: block; font-size: 0.85rem; color: var(--text-muted); font-style: normal; margin-top: 0.5rem; }
+        .article-content ul { margin: 1.5rem 0; padding-left: 1.5rem; }
+        .article-content li { margin-bottom: 0.75rem; }
+        .key-point { background: var(--toki-indigo-pale); padding: 1.5rem 2rem; border-radius: 8px; margin: 2rem 0; }
+        .key-point p { margin-bottom: 0; font-size: 0.95rem; }
+        .core-message { background: linear-gradient(135deg, var(--toki-indigo-pale) 0%, var(--bg-section) 100%); border-left: 4px solid var(--toki-indigo); padding: 1.2rem 1.5rem; margin: 0 0 1.5rem 0; border-radius: 0 8px 8px 0; font-size: 0.95rem; line-height: 1.8; }
+        .disclaimer { font-size: 0.8rem; color: var(--text-muted); margin-bottom: 2rem; padding-bottom: 1rem; border-bottom: 1px solid var(--border); }
+        .references { margin-top: 4rem; padding-top: 2rem; border-top: 1px solid var(--border); }
+        .references h2 { font-size: 1rem; margin-bottom: 1.5rem; }
+        .references ul { list-style: none; padding: 0; }
+        .references li { font-size: 0.85rem; color: var(--text-secondary); margin-bottom: 0.75rem; padding-left: 1.5rem; text-indent: -1.5rem; }
+        .article-footer { margin-top: 4rem; padding-top: 2rem; border-top: 1px solid var(--border); text-align: center; }
+        .article-footer p { font-size: 0.8rem; color: var(--text-muted); margin-bottom: 1rem; }
+        .article-footer a { color: var(--toki-indigo); text-decoration: none; }
+        @media (max-width: 768px) { .article-container { padding: 6rem 1.2rem 3rem; } .article-header h1 { font-size: 1.5rem; } .article-nav .nav-label { display: none; } }
+        @media print { .article-nav { display: none; } .article-container { padding-top: 2rem; } }
+        .nav-brand::before {
+            content: '';
+            display: inline-block;
+            width: 20px;
+            height: 20px;
+            background: url('asset/tokistorage-icon-512.png') no-repeat center / contain;
+            vertical-align: -3px;
+            margin-right: 5px;
+        }
+    </style>
+<link rel="stylesheet" href="contact-form.css">
+    <meta property="og:type" content="article">
+    <meta property="og:title" content="順序独立性——許可を待たずに責任を負う構造 | トキストレージ">
+    <meta property="og:description" content="ステークホルダーの増加が意思決定の順序を複層化させる。待つことの効果と代償、服従と自走の境界、公開主義における序列——順序独立性という設計思想について。">
+    <meta property="og:url" content="https://tokistorage.github.io/lp/order-independence.html">
+    <meta property="og:site_name" content="トキストレージ">
+    <meta name="twitter:card" content="summary">
+    <meta name="twitter:title" content="順序独立性——許可を待たずに責任を負う構造 | トキストレージ">
+    <meta name="twitter:description" content="ステークホルダーの増加が意思決定の順序を複層化させる。待つことの効果と代償、服従と自走の境界、公開主義における序列——順序独立性という設計思想について。">
+    <meta property="og:image" content="https://tokistorage.github.io/lp/asset/tokistorage-icon-512.png">
+    <meta property="og:image:width" content="512">
+    <meta property="og:image:height" content="512">
+    <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Article",
+  "headline": "順序独立性——許可を待たずに責任を負う構造",
+  "author": {
+    "@type": "Person",
+    "name": "Takuya Sato",
+    "url": "https://tokistorage.github.io/lp/profile.html"
+  },
+  "publisher": {
+    "@type": "Organization",
+    "name": "TokiStorage",
+    "url": "https://tokistorage.github.io/lp",
+    "logo": {
+      "@type": "ImageObject",
+      "url": "https://tokistorage.github.io/lp/asset/tokistorage-icon-512.png"
+    }
+  },
+  "url": "https://tokistorage.github.io/lp/order-independence.html",
+  "inLanguage": "ja",
+  "mainEntityOfPage": "https://tokistorage.github.io/lp/order-independence.html",
+  "description": "ステークホルダーの増加が意思決定の順序を複層化させる。待つことの効果と代償、服従と自走の境界、公開主義における序列——順序独立性という設計思想について。"
+}
+    </script>
+    <link rel="alternate" hreflang="ja" href="https://tokistorage.github.io/lp/order-independence.html">
+    <link rel="alternate" hreflang="en" href="https://tokistorage.github.io/lp/order-independence-en.html">
+    <link rel="alternate" hreflang="x-default" href="https://tokistorage.github.io/lp/order-independence.html">
+    <link rel="canonical" href="https://tokistorage.github.io/lp/order-independence.html">
+</head>
+<body>
+
+<nav class="article-nav">
+    <a href="index.html" class="nav-brand">トキストレージ</a>
+    <div class="nav-right">
+        <span class="nav-label">順序独立性</span>
+        <a href="order-independence-en.html" class="lang-switch">EN</a>
+    </div>
+</nav>
+
+<main class="article-container">
+    <header class="article-header">
+        <p class="article-category">エッセイ——設計と自律</p>
+        <h1>順序独立性<br>——許可を待たずに責任を負う構造</h1>
+        <p class="article-subtitle">
+            ステークホルダーが増えるほど、意思決定の順序は複層化する。<br>
+            待つことには効果と代償がある。<br>
+            服従か自走かの境界線は、許可の構造によって決まる。<br>
+            トキストレージは「順序を自己に帰属させる」という設計を選んだ。
+        </p>
+    </header>
+
+    <article class="article-content">
+        <div class="core-message">
+            <strong>この記事で言いたいこと：</strong>組織の行動が「誰かの許可」に依存するとき、その組織は順序に支配されている。ステークホルダーが増えれば意向は複層化し、待機コストは増大し、自律と服従の境界は曖昧になる。順序独立性とは、許可の連鎖を断ち切ることではない。責任を自ら引き受けることで、順序への依存を構造的に解消する設計思想である。
+        </div>
+        <p class="disclaimer">本稿は組織設計と意思決定構造に関する考察であり、すべての組織に順序独立性を推奨するものではありません。</p>
+
+        <h2>1. 意向の複層化——ステークホルダーが増えるとき</h2>
+
+        <h3>一人のときは順序がない</h3>
+        <p>個人で何かをつくるとき、順序という概念はほとんど意識されない。思いついたことを、思いついた順に実行する。誰の承認も要らない。失敗しても、修正するのは自分だけである。行動と判断の間に距離がない。</p>
+
+        <h3>二人になると順序が生まれる</h3>
+        <p>もう一人が加わった瞬間、「先にどちらが」という問いが発生する。意見が一致していれば順序は問題にならないが、意見が異なるとき、どちらの意向を先に反映するかが決定の本質になる。ここに最小単位の順序依存が生じる。</p>
+
+        <h3>複層化のメカニズム</h3>
+        <p>ステークホルダーが三人、五人、十人と増えるにつれて、意向の層は幾何級数的に複雑になる。それぞれが異なる利害、異なる時間軸、異なる優先度を持つ。Aの意向を満たすにはBの承認が必要だが、Bの承認にはCの確認が先行する——こうした連鎖が、組織の動きを規定する「順序」となる。</p>
+        <p>問題は、この複層化が自覚されないまま進行することにある。会議が増え、確認メールが増え、「念のため」の根回しが増える。個々の行為は合理的に見えるが、全体としては意思決定の速度が指数関数的に低下する。ステークホルダーの数は足し算で増えるが、合意形成のコストは掛け算で増える。</p>
+
+        <blockquote>
+            <p>「委員会が馬を設計すると、ラクダができあがる。」</p>
+            <cite>——アレック・イシゴニス</cite>
+        </blockquote>
+
+        <h2>2. 待つことの効果と代償</h2>
+
+        <h3>待つことの効果——熟成と調整</h3>
+        <p>待つことには正の側面がある。判断を保留することで情報が集まり、感情が沈静化し、より良い選択肢が見えてくる場合がある。外交交渉において「戦略的忍耐」が有効であるように、組織においても拙速な意思決定より、時間をかけた合意形成のほうが結果的に良い成果をもたらすことは確かにある。</p>
+        <p>日本の「根回し」文化は、この効果を制度化したものである。事前に関係者の意向を調整し、正式な場では異論が出ないようにする。これは一見非効率だが、実行段階での抵抗を最小化するという意味では、トータルコストを下げている可能性がある。</p>
+
+        <h3>待つことの代償——停滞と逸失</h3>
+        <p>しかし待つことには代償がある。最も明白なのは機会損失である。市場は待ってくれない。技術は待ってくれない。競合は待ってくれない。「全員の合意が得られるまで」と待っている間に、行動した者が先行者利益を獲得する。</p>
+        <p>より深刻な代償は、待つことが常態化したとき、組織の筋肉が萎縮することである。「判断を待つ」が習慣になると、判断する能力そのものが退化する。待機は安全に見えるが、その安全は能力の毀損と引き換えに得られている。</p>
+
+        <h3>待機コストの非対称性</h3>
+        <p>興味深いのは、待つことのコストが待たせる側には見えにくいという非対称性である。承認者にとって「もう少し検討する」は慎重さの表れだが、待っている側にとっては時間と意欲の浪費である。この非対称性が解消されないかぎり、組織は構造的に待機コストを過小評価し続ける。</p>
+
+        <div class="key-point">
+            <p>待つことの効果は「情報の増加」と「感情の沈静化」に限定される。それ以外の待機は、ほとんどの場合、構造的な怠慢の別名である。</p>
+        </div>
+
+        <h2>3. 服従か自走かの境界線</h2>
+
+        <h3>指示待ちの合理性</h3>
+        <p>「指示待ち」は批判的に語られることが多いが、多くの組織では合理的な行動である。権限がない領域で勝手に動けば叱責される。責任を取る立場にない者が判断を下せば、越権行為とされる。指示を待つことは、組織の秩序を維持するための適応行動であり、個人の怠惰ではない。</p>
+
+        <h3>自走の危険と必然</h3>
+        <p>一方、自走——自らの判断で行動を開始すること——には常に危険が伴う。判断を誤れば責任を問われる。他者の領域を侵せば軋轢が生じる。しかし、環境の変化が速く、承認の連鎖が長い組織では、指示を待っていては対応が間に合わない場面が必然的に発生する。</p>
+        <p>この矛盾は構造的なものである。組織は秩序を求めるが、秩序は速度を犠牲にする。速度を求めれば秩序が乱れる。服従か自走かの選択は、個人の性格の問題ではなく、組織の設計の問題である。</p>
+
+        <h3>境界線を決めるもの</h3>
+        <p>服従と自走の境界線は、明文化されることが少ない。多くの組織では暗黙のうちに「ここまでは自分で判断してよい」「ここからは上の判断を仰ぐ」という範囲が了解されている。しかし暗黙の了解は、人によって解釈が異なり、状況によって移動する。この曖昧さこそが、組織における順序依存の根本原因である。</p>
+
+        <blockquote>
+            <p>「許可より謝罪のほうが簡単だ。」</p>
+            <cite>——グレース・ホッパー</cite>
+        </blockquote>
+
+        <h2>4. 許可許諾の必要条件</h2>
+
+        <h3>許可が必要な場面</h3>
+        <p>すべての行動が許可不要であるべきだとは言わない。不可逆な行動、他者に重大な影響を及ぼす行動、組織の信用を毀損しうる行動——これらには許可という手続きが構造的に必要である。資金の支出、契約の締結、公式な声明の発表。許可制度は、不可逆性とリスクの大きさに比例して正当化される。</p>
+
+        <h3>許可が不要な場面</h3>
+        <p>逆に、可逆的で、影響範囲が限定的で、試行錯誤が前提の行動に許可を求めることは、コストのみを生む。コードの修正、文書の下書き、アイデアの試作——これらに逐一承認を求める組織は、許可制度の目的と手段を取り違えている。許可の目的はリスクの管理であって、行動の管理ではない。</p>
+
+        <h3>許可の構造的問題</h3>
+        <p>許可制度の最大の問題は、一度導入されると拡張する傾向にあることだ。最初は重大な判断にのみ必要だった承認が、やがてすべての判断に適用される。これは官僚制の自然な帰結であり、パーキンソンの法則の変形である。許可を求める手続き自体が仕事になり、許可を与えることが権力の源泉になる。</p>
+        <p>許可許諾の必要条件を明確にすることは、順序独立性の前提条件である。何に許可が要り、何に許可が要らないかを構造的に定義しなければ、すべてが許可待ちの状態に陥る。</p>
+
+        <h2>5. 公開主義における序列</h2>
+
+        <h3>情報の非対称が序列を生む</h3>
+        <p>伝統的な組織において、序列は情報の非対称性と結びついている。上位者はより多くの情報を持ち、その情報に基づいて判断を下す。下位者は情報が不足しているから判断できず、上位者の指示を待つ。情報格差が権力格差を生み、権力格差が順序を固定する。</p>
+
+        <h3>公開主義が序列を変容させる</h3>
+        <p>情報がすべて公開されている組織では、この構造が根底から変わる。全員が同じ情報にアクセスできるとき、「上が知っていて下が知らない」という前提は消失する。序列の根拠が情報量から判断力に移行する。判断力による序列は、地位による序列より流動的であり、文脈に依存する。ある領域では新人のほうが的確な判断を下すこともありうる。</p>
+
+        <h3>トキストレージの実践</h3>
+        <p>トキストレージはソースコード、事業情報、懸念事項のすべてを公開している。この公開主義は、情報による序列を構造的に排除する。誰もが同じ情報を持つなら、「確認してから動く」必要は減る。自分で情報を見て、自分で判断し、自分で行動する——公開主義は、順序独立性の基盤である。</p>
+
+        <div class="key-point">
+            <p>情報を公開するとは、判断の権利を分配することである。全員が同じ情報を持つとき、「許可を待つ」理由の大半は消滅する。</p>
+        </div>
+
+        <h2>6. 限定化欲求の超越</h2>
+
+        <h3>限定したがる本能</h3>
+        <p>人間には範囲を限定したがる本能がある。「自分の担当」「自分の権限」「自分の領域」——境界線を引くことで、責任の範囲を明確にし、不確実性を減らそうとする。これは心理的安全の確保としては合理的だが、組織全体で見ると順序依存を生む構造である。</p>
+        <p>Aの担当領域の問題がBの担当領域に波及するとき、「まずAが対応し、次にBに引き継ぐ」という順序が発生する。領域の境界が多いほど、こうした受け渡しの回数が増え、順序の連鎖が長くなる。</p>
+
+        <h3>限定が順序を生む</h3>
+        <p>権限の限定は、許可の必要性を生む。「ここから先は自分の権限ではない」と感じた瞬間、次の行動には他者の許可が必要になる。権限の境界線が、そのまま順序の発生点になる。限定が細かいほど、順序は多くなる。</p>
+
+        <h3>超越の設計</h3>
+        <p>限定化欲求を超越するとは、境界線を消すことではない。境界線を越えて行動しても許容される構造をつくることである。「越境しても叱られない」ではなく、「越境が前提の設計になっている」ことが重要である。オープンソースのプルリクエストは、この設計の一例である。誰でもコードの任意の箇所に変更を提案できる。領域の限定はなく、あるのはレビューという事後的な品質保証だけである。</p>
+
+        <h2>7. 解放と抑圧</h2>
+
+        <h3>順序からの解放が生むもの</h3>
+        <p>順序依存から解放された組織では、行動の開始が早くなる。「まず動く、後で調整する」が可能になる。プロトタイプが素早くつくられ、フィードバックが早期に得られ、方向修正が低コストで行える。ソフトウェア開発におけるアジャイル手法は、この解放の制度化である。</p>
+
+        <h3>解放がもたらす混沌</h3>
+        <p>しかし順序の不在は、混沌をもたらしうる。全員が同時に異なる方向に動けば、統合は困難になる。重複作業が発生し、矛盾が生じ、全体の整合性が失われる。無秩序と自律は異なる概念だが、外からは区別しにくい。</p>
+
+        <h3>抑圧の再発明</h3>
+        <p>興味深いのは、順序を廃した組織がしばしば別の形の抑圧を再発明することである。公式な階層がなくなると、非公式な権力構造が出現する。明文化された手続きがないと、声の大きい者や政治力のある者が暗黙の順序を支配する。ジョー・フリーマンが「構造なき暴政」と呼んだこの現象は、順序の廃止が自動的に解放をもたらすわけではないことを示している。</p>
+
+        <blockquote>
+            <p>「構造の不在は自由を意味しない。構造の不在は、構造が見えなくなることを意味する。」</p>
+            <cite>——ジョー・フリーマン『構造なき暴政』</cite>
+        </blockquote>
+
+        <h2>8. 責任を追い、順序を自己に帰属する</h2>
+
+        <h3>順序独立性の核心</h3>
+        <p>ここまで論じてきた問題——複層化、待機コスト、服従と自走の矛盾、許可の肥大化、序列の硬直、限定化欲求、解放と抑圧の両義性——これらに対する構造的な応答が、順序独立性である。</p>
+        <p>順序独立性とは、順序を無視することではない。順序の決定権を外部（上位者、制度、慣習）から自己に移すことである。「誰かが許可するから動く」のではなく、「自分が責任を引き受けるから動く」。行動の起点が許可から責任に移るとき、順序への依存は構造的に解消される。</p>
+
+        <h3>責任と許可の逆転</h3>
+        <p>通常の組織では「許可があるから責任が生じる」という順序で動く。許可された範囲で行動し、その結果について責任を負う。順序独立性はこれを逆転させる——「責任を引き受けるから行動する」。責任が先にあり、行動がそれに続く。許可は事後的に追認されるか、そもそも必要とされない。</p>
+        <p>この逆転が成立するためには、二つの条件が必要である。第一に、行動の結果が可視化されること。第二に、失敗が許容される文化があること。結果が見えなければ責任の所在が曖昧になり、失敗が罰せられるならば誰も先に動かない。</p>
+
+        <h3>自己帰属という設計</h3>
+        <p>トキストレージにおいて、順序は自己に帰属している。コードの変更は各自の判断で行われ、エッセイの執筆は順番を待たない。公開主義が情報の非対称を排除し、GitHubの履歴が行動の結果を可視化し、石英に刻まれた記録が不可逆な責任の表明となる。</p>
+        <p>順序を自己に帰属させるとは、「勝手にやる」ことではない。行動の結果を自ら引き受ける覚悟を持ち、その覚悟を構造的に表明することである。許可を求めないのは、責任を逃れるためではなく、責任をより直接的に引き受けるためである。</p>
+
+        <h2>結論——構造としての自律</h2>
+
+        <p>ステークホルダーが増えれば意向は複層化し、待機コストは増大し、許可の連鎖は長くなる。これは多くの組織にとって所与の条件であり、それ自体に善悪はない。</p>
+        <p>しかし「所与の条件」は「唯一の条件」ではない。順序の決定権を自己に帰属させ、責任を先に引き受け、行動の結果を公開するという設計は可能であり、少なくとも一つの組織がそれを実験している。</p>
+        <p>石英にQRコードを刻むという行為には、誰の許可も必要ない。必要なのは、刻んだ内容に対する責任だけである。「許可を待たずに責任を負う」——この構造が、順序独立性の物理的な実装である。</p>
+        <p>順序独立性とは、信条ではなくアーキテクチャである。正しいから採用したのではなく、この構造がもっとも誠実な行動を可能にすると判断したから採用した。その判断が正しかったかどうかは、結果が証明する。公開された結果が。</p>
+
+        <section class="references">
+            <h2>参考文献</h2>
+            <ul>
+                <li>Freeman, J. (1972). The Tyranny of Structurelessness. <em>The Second Wave</em>, 2(1).</li>
+                <li>Laloux, F. (2014). <em>Reinventing Organizations.</em> Nelson Parker.</li>
+                <li>Semler, R. (1993). <em>Maverick: The Success Story Behind the World's Most Unusual Workplace.</em> Warner Books.</li>
+                <li>Parkinson, C. N. (1957). <em>Parkinson's Law and Other Studies in Administration.</em> Houghton Mifflin.</li>
+                <li>Hopper, G. M. (1987). <em>Future Possibilities: Data, Hardware, Software, and People.</em> Lecture at the University of Virginia.</li>
+                <li>Raymond, E. S. (1999). <em>The Cathedral and the Bazaar.</em> O'Reilly Media.</li>
+                <li>Schwaber, K. & Sutherland, J. (2020). <em>The Scrum Guide.</em></li>
+            </ul>
+        </section>
+    </article>
+
+    <footer class="article-footer">
+        <p>本稿は、組織における順序依存と自律的設計を考察したエッセイです。</p>
+        <p id="essay-nav-links"></p>
+        <p style="margin-top: 2rem; font-size: 0.75rem;">&copy; TokiStorage. All rights reserved.</p>
+    </footer>
+</main>
+
+<script src="contact-form.js" defer></script>
+<script src="essay-tts.js?v=20260220"></script>
+<script src="essay-nav.js?v=20260220"></script>
+<script src="tracker.js" defer></script>
+</body>
+</html>
