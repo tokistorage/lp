@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" type="image/png" sizes="32x32" href="asset/favicon-32.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="asset/apple-touch-icon.png">
+    <title>オフグリッド実践編：AIツールのコスト最適化 | トキストレージ</title>
+    <meta name="robots" content="index, follow">
+    <meta name="description" content="Claude MAXプランからの見直し。クローンとプッシュができれば無料版でもエッセイ作成・修正は可能。Povoへの通信切り替えも含め、1ヶ月の実験記録。">
+    <style>
+        :root {
+            --toki-blue: #2563EB;
+            --toki-blue-dark: #1D4ED8;
+            --toki-blue-pale: #EFF6FF;
+            --accent-blue: #3B82F6;
+            --bg-white: #FFFFFF;
+            --text-primary: #1E293B;
+            --text-secondary: #475569;
+            --text-muted: #94A3B8;
+            --border: #E2E8F0;
+            --font-display: 'Hiragino Mincho ProN', 'Yu Mincho', serif;
+            --font-body: 'Hiragino Kaku Gothic ProN', 'Yu Gothic', 'Meiryo', sans-serif;
+        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        html { scroll-behavior: smooth; }
+        body { font-family: var(--font-body); font-weight: 400; background: var(--bg-white); color: var(--text-primary); line-height: 2; font-size: 16px; }
+
+        .article-nav { position: fixed; top: 0; left: 0; right: 0; z-index: 1000; background: rgba(255,255,255,0.95); backdrop-filter: blur(12px); border-bottom: 1px solid var(--border); padding: 0.6rem 1.2rem; display: flex; align-items: center; justify-content: space-between; gap: 1rem; }
+        .article-nav .nav-brand { font-family: var(--font-display); font-size: 0.9rem; font-weight: 600; color: var(--toki-blue); text-decoration: none; white-space: nowrap; }
+        .article-nav .nav-brand::before { content: ''; display: inline-block; width: 20px; height: 20px; background: url('asset/tokistorage-icon-512.png') no-repeat center / contain; vertical-align: -3px; margin-right: 5px; }
+        .article-nav .nav-right { display: flex; align-items: center; gap: 1rem; }
+        .article-nav .nav-label { font-size: 0.6rem; color: var(--text-muted); letter-spacing: 0.08em; }
+
+        .article-container { max-width: 680px; margin: 0 auto; padding: 7rem 2rem 4rem; }
+        .article-header { margin-bottom: 3rem; padding-bottom: 2rem; border-bottom: 1px solid var(--border); }
+        .article-category { font-size: 0.7rem; color: var(--toki-blue); letter-spacing: 0.15em; margin-bottom: 1rem; }
+        .article-header h1 { font-family: var(--font-display); font-size: 1.8rem; font-weight: 700; line-height: 1.5; margin-bottom: 1.5rem; }
+        .article-subtitle { font-size: 0.95rem; color: var(--text-secondary); line-height: 1.9; }
+
+        .article-content h2 { font-family: var(--font-display); font-size: 1.3rem; font-weight: 600; margin: 3rem 0 1.5rem; padding-bottom: 0.5rem; border-bottom: 2px solid var(--toki-blue-pale); }
+        .article-content h3 { font-family: var(--font-display); font-size: 1.1rem; font-weight: 600; margin: 2rem 0 1rem; color: var(--toki-blue-dark); }
+        .article-content p { margin-bottom: 1.5rem; text-align: justify; }
+        .article-content blockquote { border-left: 3px solid var(--toki-blue); padding-left: 1.5rem; margin: 2rem 0; font-family: var(--font-display); color: var(--text-secondary); }
+        .article-content ul { margin: 1.5rem 0; padding-left: 1.5rem; }
+        .article-content li { margin-bottom: 0.75rem; }
+
+        .core-message { background: var(--toki-blue-pale); border-left: 4px solid var(--toki-blue); padding: 1.5rem; margin: 2rem 0; font-size: 0.95rem; line-height: 1.8; }
+        .key-point { background: linear-gradient(135deg, var(--toki-blue-pale) 0%, #fff 100%); border: 1px solid var(--accent-blue); border-radius: 8px; padding: 1.5rem; margin: 2rem 0; text-align: center; }
+        .key-point p { font-family: var(--font-display); font-size: 1.1rem; color: var(--toki-blue-dark); margin: 0; }
+
+        .experiment-table { width: 100%; border-collapse: collapse; margin: 2rem 0; font-size: 0.9rem; }
+        .experiment-table th { background: var(--toki-blue-pale); color: var(--toki-blue-dark); padding: 0.75rem 1rem; text-align: left; font-weight: 600; border-bottom: 2px solid var(--toki-blue); }
+        .experiment-table td { padding: 0.75rem 1rem; border-bottom: 1px solid var(--border); vertical-align: top; }
+        .experiment-table tr:last-child td { border-bottom: none; }
+
+        .article-footer { margin-top: 4rem; padding-top: 2rem; border-top: 1px solid var(--border); text-align: center; }
+        .article-footer p { font-size: 0.8rem; color: var(--text-muted); margin-bottom: 1rem; }
+        .article-footer a { color: var(--toki-blue); text-decoration: none; }
+        .article-footer a:hover { text-decoration: underline; }
+
+        @media (max-width: 768px) {
+            .article-container { padding: 6rem 1.2rem 3rem; }
+            .article-header h1 { font-size: 1.5rem; }
+            .article-nav .nav-label { display: none; }
+            .experiment-table { font-size: 0.8rem; }
+            .experiment-table th, .experiment-table td { padding: 0.5rem 0.75rem; }
+        }
+        @media print { .article-nav { display: none; } .article-container { padding-top: 2rem; } }
+    </style>
+    <meta property="og:type" content="article">
+    <meta property="og:title" content="オフグリッド実践編：AIツールのコスト最適化 | トキストレージ">
+    <meta property="og:description" content="Claude MAXプランからの見直し。クローンとプッシュができれば無料版でもエッセイ作成・修正は可能。Povoへの通信切り替えも含め、1ヶ月の実験記録。">
+    <meta property="og:url" content="https://tokistorage.github.io/lp/offgrid-ai-tools.html">
+    <meta property="og:site_name" content="トキストレージ">
+    <meta name="twitter:card" content="summary">
+    <meta name="twitter:title" content="オフグリッド実践編：AIツールのコスト最適化 | トキストレージ">
+    <meta name="twitter:description" content="Claude MAXプランからの見直し。クローンとプッシュができれば無料版でもエッセイ作成・修正は可能。Povoへの通信切り替えも含め、1ヶ月の実験記録。">
+    <meta property="og:image" content="https://tokistorage.github.io/lp/asset/tokistorage-icon-512.png">
+    <meta property="og:image:width" content="512">
+    <meta property="og:image:height" content="512">
+    <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Article",
+  "headline": "オフグリッド実践編：AIツールのコスト最適化",
+  "author": {
+    "@type": "Person",
+    "name": "Takuya Sato",
+    "url": "https://tokistorage.github.io/lp/profile.html"
+  },
+  "publisher": {
+    "@type": "Organization",
+    "name": "TokiStorage",
+    "url": "https://tokistorage.github.io/lp",
+    "logo": {
+      "@type": "ImageObject",
+      "url": "https://tokistorage.github.io/lp/asset/tokistorage-icon-512.png"
+    }
+  },
+  "url": "https://tokistorage.github.io/lp/offgrid-ai-tools.html",
+  "inLanguage": "ja",
+  "mainEntityOfPage": "https://tokistorage.github.io/lp/offgrid-ai-tools.html",
+  "description": "Claude MAXプランからの見直し。クローンとプッシュができれば無料版でもエッセイ作成・修正は可能。Povoへの通信切り替えも含め、1ヶ月の実験記録。"
+}
+    </script>
+    <link rel="alternate" hreflang="ja" href="https://tokistorage.github.io/lp/offgrid-ai-tools.html">
+    <link rel="canonical" href="https://tokistorage.github.io/lp/offgrid-ai-tools.html">
+</head>
+<body>
+
+<nav class="article-nav">
+    <a href="index.html" class="nav-brand">トキストレージ</a>
+    <div class="nav-right">
+        <span class="nav-label">技術・設計 / Off-Grid Practice</span>
+    </div>
+</nav>
+
+<main class="article-container">
+
+    <header class="article-header">
+        <p class="article-category">ESSAY &mdash; オフグリッド実践編</p>
+        <h1>AIツールのコスト最適化<br><span style="font-size: 0.6em; font-weight: 400; color: var(--text-secondary);">&mdash;&mdash; MAXプランを手放す実験</span></h1>
+        <p class="article-subtitle">
+            必要なのは最高のプランではなく、必要十分な手段だった。<br>
+            クローンとプッシュができれば、エッセイは書ける。<br>
+            通信もPovoで足りるか、1ヶ月試してみる。
+        </p>
+    </header>
+
+    <article class="article-content">
+
+        <div class="core-message">
+            <strong>この記事で言いたいこと：</strong>Claude MAXプランを更新タイミングで見直した。GitHubリポジトリのクローン・編集・プッシュがClaudeのチャット画面から直接できることがわかったため、エッセイの作成も修正も無料版で十分まかなえる。同時にPovoへのモバイル通信切り替えも実験中。1ヶ月でどこに支障が出るかを記録していく。
+        </div>
+
+        <h2>1. 更新タイミングという見直しの機会</h2>
+
+        <p>サブスクリプションは惰性で続きがちだ。</p>
+
+        <p>Claude MAXプランは便利だった。Claude Codeも使える。アーティファクト機能もある。処理量の上限も余裕がある。「あると良いもの」が全部揃っていた。だからこそ、更新ボタンを押し続けてきた。</p>
+
+        <p>だが更新タイミングという節目に、一度立ち止まって問い直してみた。「これは本当に必要か？」ではなく、「これなしでどこまでできるか？」と。</p>
+
+        <p>オフグリッドの思考は、電力だけに適用されるものではない。情報インフラも、通信も、AIツールも、同じ問いが立てられる。インフラへの依存を一段ずつ見直し、必要十分な構成を探っていくことが、持続可能な個人事業の基盤になる。</p>
+
+        <h2>2. 発見：チャット画面からクローン・プッシュができる</h2>
+
+        <p>きっかけは小さな実験だった。</p>
+
+        <p>Claudeのチャット画面で「GitHubのリポジトリをクローンできる？」と聞いてみたところ、あっさりできた。コンテナ環境でbashが動いており、gitコマンドが使える。Personal Access Tokenを渡せばpushも通る。</p>
+
+        <p>つまり、このリポジトリ（tokistorage/lp）に存在する200本以上のエッセイHTMLは、Claude MAXどころかチャット画面から直接編集・追加できる。実際にこのエッセイもその方法で作成し、pushした。</p>
+
+        <blockquote>
+            コードを書かなくていい。ローカル環境を整えなくていい。<br>
+            「こういうエッセイを書いて」と伝えれば、HTMLが生成され、リポジトリに反映される。
+        </blockquote>
+
+        <p>Claude Codeが強みを発揮するのは、ローカル環境への直接アクセスや長時間の継続作業が必要な場面だ。しかしTokiStorageのエッセイ追加・修正という用途においては、セッション内完結で十分だった。</p>
+
+        <h2>3. コストの棚卸し</h2>
+
+        <p>AIツールと通信費を同時に見直すことにした。</p>
+
+        <table class="experiment-table">
+            <thead>
+                <tr>
+                    <th>項目</th>
+                    <th>変更前</th>
+                    <th>変更後（実験）</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>Claude</td>
+                    <td>MAXプラン</td>
+                    <td>無料版（チャット＋git操作）</td>
+                </tr>
+                <tr>
+                    <td>モバイル通信</td>
+                    <td>キャリア契約</td>
+                    <td>Povo（都度トッピング）</td>
+                </tr>
+            </tbody>
+        </table>
+
+        <p>Povoは基本料金0円で、必要なときだけデータをトッピングする仕組みだ。常時接続が前提の生活ではなく、オフラインでも仕事が進む設計にできているなら、通信費を大幅に圧縮できる可能性がある。</p>
+
+        <p>TokiQRはそもそもサーバー不要・オフライン動作を設計思想の中核においている。音声データをQRコードに封じ込め、スキャンだけで再生できる。その設計者が、常時モバイル通信に依存しているのは、どこか矛盾していた。</p>
+
+        <h2>4. 1ヶ月の実験項目</h2>
+
+        <p>以下の問いに対する答えを、実際の業務を通じて検証していく。</p>
+
+        <ul>
+            <li>エッセイの追加・修正はチャット画面のみで完結するか</li>
+            <li>Claudeの無料版で、通常の情報収集・文章作成に支障は出るか</li>
+            <li>Povoで、日常的なメール・調査・ファイル送受信は足りるか</li>
+            <li>支障が出るとすれば、どの場面か</li>
+        </ul>
+
+        <p>「支障がないか確かめる」のではなく、「支障がどこで出るかを確かめる」という設問設定にしている。前者は現状維持バイアスがかかりやすく、後者の方が正直な観察ができる。</p>
+
+        <div class="key-point">
+            <p>削減できるコストを削減し、その浮いたリソースを本質的な活動に向ける。<br>これもオフグリッドの思想だ。</p>
+        </div>
+
+        <h2>5. 実験の記録について</h2>
+
+        <p>この実験の結果は、随時このリポジトリに追記していく予定だ。</p>
+
+        <p>成功体験だけでなく、「ここは無料版では限界だった」「Povoでは通信が足りなかった」という失敗も含めて記録する。オフグリッドの実践は、理想論ではなく現実の摩擦との対話だからだ。</p>
+
+        <p>1ヶ月後、この文章に追記があれば、実験は続いている。なければ、どこかで軌道修正したということだ。どちらにせよ、記録は残る。</p>
+
+    </article>
+
+    <footer class="article-footer">
+        <p style="font-family: var(--font-display); font-style: italic;">あなたが物語となり、世代の対話が重なり、未来の道となる。</p>
+        <p><a href="essays.html">← エッセイ一覧に戻る</a></p>
+        <p>&copy; TokiStorage. All rights reserved.</p>
+    </footer>
+
+</main>
+
+</body>
+</html>
