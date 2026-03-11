@@ -1,0 +1,241 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" type="image/png" sizes="32x32" href="asset/favicon-32.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="asset/apple-touch-icon.png">
+    <title>Public Readiness — When a Personal Tool Earns Public Trust | TokiStorage</title>
+    <meta name="robots" content="index, follow">
+    <meta name="description" content="A personal QR tool received inquiries from public facilities. The gap was not functionality but trust — transparent billing, UI state design, and hands-on onboarding.">
+    <style>
+        :root {
+            --toki-blue: #2563EB;
+            --toki-blue-dark: #1E40AF;
+            --toki-blue-pale: #EFF6FF;
+            --accent-blue: #60A5FA;
+            --bg-white: #FFFFFF;
+            --text-primary: #1E293B;
+            --text-secondary: #475569;
+            --text-muted: #94A3B8;
+            --border: #E2E8F0;
+            --font-display: 'Hiragino Mincho ProN', 'Yu Mincho', Georgia, serif;
+            --font-body: 'Hiragino Kaku Gothic ProN', 'Yu Gothic', 'Meiryo', sans-serif;
+        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        html { scroll-behavior: smooth; }
+        body { font-family: var(--font-body); font-weight: 400; background: var(--bg-white); color: var(--text-primary); line-height: 2; font-size: 16px; }
+
+        .article-nav { position: fixed; top: 0; left: 0; right: 0; z-index: 1000; background: rgba(255,255,255,0.95); backdrop-filter: blur(12px); border-bottom: 1px solid var(--border); padding: 0.6rem 1.2rem; display: flex; align-items: center; justify-content: space-between; gap: 1rem; }
+        .article-nav .nav-brand { font-family: var(--font-display); font-size: 0.9rem; font-weight: 600; color: var(--toki-blue); text-decoration: none; white-space: nowrap; }
+        .article-nav .nav-brand::before { content: ''; display: inline-block; width: 20px; height: 20px; background: url('asset/tokistorage-icon-512.png') no-repeat center / contain; vertical-align: -3px; margin-right: 5px; }
+        .article-nav .nav-right { display: flex; align-items: center; gap: 1rem; }
+        .article-nav .nav-label { font-size: 0.6rem; color: var(--text-muted); letter-spacing: 0.08em; }
+        .article-nav .lang-switch { font-size: 0.75rem; color: var(--toki-blue); text-decoration: none; padding: 0.3rem 0.6rem; border: 1px solid var(--toki-blue); border-radius: 4px; }
+        .article-nav .lang-switch:hover { background: var(--toki-blue); color: #fff; }
+
+        .article-container { max-width: 680px; margin: 0 auto; padding: 7rem 2rem 4rem; }
+        .article-header { margin-bottom: 3rem; padding-bottom: 2rem; border-bottom: 1px solid var(--border); }
+        .article-category { font-size: 0.7rem; color: var(--toki-blue); letter-spacing: 0.15em; margin-bottom: 1rem; }
+        .article-header h1 { font-family: var(--font-display); font-size: 1.8rem; font-weight: 700; line-height: 1.5; margin-bottom: 1.5rem; }
+        .article-subtitle { font-size: 0.95rem; color: var(--text-secondary); line-height: 1.9; }
+
+        .article-content h2 { font-family: var(--font-display); font-size: 1.3rem; font-weight: 600; margin: 3rem 0 1.5rem; padding-bottom: 0.5rem; border-bottom: 2px solid var(--toki-blue-pale); }
+        .article-content h3 { font-family: var(--font-display); font-size: 1.1rem; font-weight: 600; margin: 2rem 0 1rem; color: var(--toki-blue-dark); }
+        .article-content p { margin-bottom: 1.5rem; text-align: justify; }
+        .article-content blockquote { border-left: 3px solid var(--toki-blue); padding-left: 1.5rem; margin: 2rem 0; font-family: var(--font-display); color: var(--text-secondary); }
+        .article-content ul { margin: 1.5rem 0; padding-left: 1.5rem; }
+        .article-content li { margin-bottom: 0.75rem; }
+
+        .core-message { background: var(--toki-blue-pale); border-left: 4px solid var(--toki-blue); padding: 1.5rem; margin: 2rem 0; font-size: 0.95rem; line-height: 1.8; }
+        .key-point { background: linear-gradient(135deg, var(--toki-blue-pale) 0%, #fff 100%); border: 1px solid var(--accent-blue); border-radius: 8px; padding: 1.5rem; margin: 2rem 0; text-align: center; }
+        .key-point p { font-family: var(--font-display); font-size: 1.1rem; color: var(--toki-blue-dark); margin: 0; }
+
+        .article-footer { margin-top: 4rem; padding-top: 2rem; border-top: 1px solid var(--border); text-align: center; }
+        .article-footer p { font-size: 0.8rem; color: var(--text-muted); margin-bottom: 1rem; }
+        .article-footer a { color: var(--toki-blue); text-decoration: none; }
+        .article-footer a:hover { text-decoration: underline; }
+
+        @media (max-width: 768px) {
+            .article-container { padding: 6rem 1.2rem 3rem; }
+            .article-header h1 { font-size: 1.5rem; }
+            .article-nav .nav-label { display: none; }
+        }
+        @media print { .article-nav { display: none; } .article-container { padding-top: 2rem; } }
+    </style>
+    <meta property="og:type" content="article">
+    <meta property="og:title" content="Public Readiness — When a Personal Tool Earns Public Trust | TokiStorage">
+    <meta property="og:description" content="A personal QR tool received inquiries from public facilities. The gap was not functionality but trust — transparent billing, UI state design, and hands-on onboarding.">
+    <meta property="og:url" content="https://tokistorage.github.io/lp/public-readiness-en.html">
+    <meta property="og:site_name" content="TokiStorage">
+    <meta name="twitter:card" content="summary">
+    <meta name="twitter:title" content="Public Readiness — When a Personal Tool Earns Public Trust | TokiStorage">
+    <meta name="twitter:description" content="A personal QR tool received inquiries from public facilities. The gap was not functionality but trust — transparent billing, UI state design, and hands-on onboarding.">
+    <meta property="og:image" content="https://tokistorage.github.io/lp/asset/tokistorage-icon-512.png">
+    <meta property="og:image:width" content="512">
+    <meta property="og:image:height" content="512">
+    <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Article",
+  "headline": "Public Readiness — When a Personal Tool Earns Public Trust",
+  "author": {
+    "@type": "Person",
+    "name": "Takuya Sato",
+    "url": "https://tokistorage.github.io/lp/profile.html"
+  },
+  "publisher": {
+    "@type": "Organization",
+    "name": "TokiStorage",
+    "url": "https://tokistorage.github.io/lp",
+    "logo": {
+      "@type": "ImageObject",
+      "url": "https://tokistorage.github.io/lp/asset/tokistorage-icon-512.png"
+    }
+  },
+  "url": "https://tokistorage.github.io/lp/public-readiness-en.html",
+  "inLanguage": "en",
+  "mainEntityOfPage": "https://tokistorage.github.io/lp/public-readiness-en.html",
+  "description": "A personal QR tool received inquiries from public facilities. The gap was not functionality but trust — transparent billing, UI state design, and hands-on onboarding."
+}
+    </script>
+    <link rel="alternate" hreflang="ja" href="https://tokistorage.github.io/lp/public-readiness.html">
+    <link rel="alternate" hreflang="en" href="https://tokistorage.github.io/lp/public-readiness-en.html">
+    <link rel="alternate" hreflang="x-default" href="https://tokistorage.github.io/lp/public-readiness.html">
+    <link rel="canonical" href="https://tokistorage.github.io/lp/public-readiness-en.html">
+</head>
+<body>
+
+<nav class="article-nav">
+    <a href="index-en.html" class="nav-brand">TokiStorage</a>
+    <div class="nav-right">
+        <span class="nav-label">Public Readiness</span>
+        <a href="public-readiness.html" class="lang-switch">JA</a>
+    </div>
+</nav>
+
+<main class="article-container">
+    <header class="article-header">
+        <p class="article-category">ESSAY — TECHNOLOGY & DESIGN</p>
+        <h1>Public Readiness<br>— When a Personal Tool Earns Public Trust</h1>
+        <p class="article-subtitle">
+            A personal tool that encodes audio into QR codes received inquiries from public facilities.<br>
+            The functionality was the same. What was missing was trust.<br>
+            Transparent billing, UI state design, hands-on onboarding —<br>
+            a record of naming anxieties and structurally eliminating them.
+        </p>
+    </header>
+
+    <article class="article-content">
+
+        <div class="core-message">
+            <strong>The point of this essay:</strong> The gap between a personal tool and a public tool is not functionality — it is trust. Trust is not an abstract concept but the accumulation of concrete design decisions: transparency in billing, state transitions in UI, and walking alongside users during their first experience. Name the anxiety, eliminate it structurally — that is what public readiness means.
+        </div>
+
+        <h2>1. Why Write This Now</h2>
+
+        <p>TokiQR was born as a personal tool for encoding audio, images, and text into a single QR code. Codec2 for audio compression, Brotli for text compression, fully offline operation. Technically, it runs entirely in the browser. No data is sent to a server. It works even when the network is down.</p>
+
+        <p>Then inquiries began arriving from public facilities and libraries. "Could this be used for audio guides?" "Can we embed exhibit descriptions in QR codes?" These were not questions about functionality. What they were really asking was: "Can we trust this?"</p>
+
+        <p>The transition from a personal tool to a public tool is not a feature expansion. It is the work of closing a trust gap. This essay records what that gap consisted of and how it was closed.</p>
+
+        <h2>2. If It Costs Money, We Need an Explanation — Transparent Billing</h2>
+
+        <p>TokiQR's bulk mode — the feature for generating multiple QR codes at once — consumes multi-QR credits. For a public facility administrator, credit consumption becomes a matter for budget approval. The original UI could not answer the question: "Can we know the cost in advance?"</p>
+
+        <p>The fix was straightforward. The generation process was split into two stages. First, display an estimate. Show exactly how many QR codes will be generated and how many credits will be consumed. The user reviews the estimate, then chooses to proceed or cancel.</p>
+
+        <p>"You can cancel after viewing the estimate" — this is the minimum condition for an administrator who must explain the process to a supervisor. Technically, it was a few lines of code. But for public adoption, this single step determines whether deployment happens or not.</p>
+
+        <div class="key-point"><p>Billing transparency is not a technical problem. It is about embedding accountability into the structure.</p></div>
+
+        <h2>3. The Assurance That You Can Start for Free</h2>
+
+        <p>The first barrier a public facility administrator faces is not the budget itself. It is the assumption that "you cannot try without a budget."</p>
+
+        <p>In TokiQR, encoding short audio into a single QR code requires no credits. Even in bulk mode, single-chunk processing incurs no cost. The fact that "you can start with zero budget" simply exists.</p>
+
+        <p>This fact is decisively important in the early stages of adoption. Whether an administrator can tell their supervisor "we can try it for free first" determines whether the tool even makes it onto the table for consideration.</p>
+
+        <p>Rather than adding features, lowering the threshold of entry. That is the first step toward public adoption.</p>
+
+        <h2>4. Testing for Real-World Deployment</h2>
+
+        <p>Working on a developer's machine and working in the field are different things. When preparing for public facility deployment, four conditions needed verification.</p>
+
+        <ul>
+            <li><strong>Offline operation:</strong> After the initial access, does the Service Worker cache enable the tool to function without a network? This assumes unstable Wi-Fi within the facility.</li>
+            <li><strong>Initial load on slow connections:</strong> Before the Service Worker registers on first access, does the page load on slow mobile connections? If the wait is too long, users abandon the tool.</li>
+            <li><strong>Camera performance on older smartphones:</strong> Can the generated QR codes be read by cameras on devices from three or five years ago? Public facility users do not necessarily carry the latest hardware.</li>
+            <li><strong>Print quality of QR codes:</strong> Even if a QR code reads fine on screen, does it maintain sufficient resolution when printed? Will reflections from exhibit panel lighting prevent scanning?</li>
+        </ul>
+
+        <p>These are requirements that never appear in a specification document. But if the tool does not work in the field, no specification matters. Public readiness means guaranteeing operation in the user's real environment, not the developer's ideal one.</p>
+
+        <h2>5. Structurally Preventing Four Anxieties</h2>
+
+        <p>When a public facility administrator operates the tool, psychological anxiety — not technical failure — becomes the barrier. Observation revealed four specific anxieties.</p>
+
+        <h3>"Will this ever finish?" — Uncertainty about completion</h3>
+        <p>Audio encoding takes time. Without a progress bar, users cannot tell whether processing is ongoing or frozen. An Opus encoding progress bar was added, displaying elapsed and remaining time. Simply knowing "it will finish in X seconds" eliminates the anxiety.</p>
+
+        <h3>"Is it broken?" — Distrust from unresponsiveness</h3>
+        <p>When buttons remain clickable during processing, users suspect malfunction when nothing happens. Buttons are now disabled during processing with loading indicators. Settings UI is locked during estimate display. The "unclickable" state itself communicates "processing in progress."</p>
+
+        <h3>"Do I have to start over?" — Fear of mistakes</h3>
+        <p>If settings are changed after an estimate is displayed, the estimate becomes invalid. Users worry: "Did I just ruin everything?" Settings UI is now locked during estimate display; modification requires explicit cancellation. By structurally eliminating the possibility of accidental changes, the fear of starting over is severed.</p>
+
+        <h3>What "structurally prevent" means</h3>
+        <p>Not individual bug fixes, but state transition design that eliminates anxiety. If a button is enabled, it is appropriate to press. If a button is disabled, it is time to wait. The UI state itself becomes the instruction. That is what "structurally prevent" means.</p>
+
+        <div class="key-point"><p>Anxiety is not a bug. It is a target for elimination through state design.</p></div>
+
+        <h2>6. Interested but Afraid to Touch — Crossing the Threshold Together</h2>
+
+        <p>Even after explaining features and improving the UI, one wall remains: "What if I break something?"</p>
+
+        <p>Public facility administrators are not IT specialists. Even when a tool is praised as "easy to use," they may be unable to take the first step. Handing over a manual does not move their hands.</p>
+
+        <p>The solution was not functional but experiential. Perform the first QR code generation together. Sit beside the administrator, look at the same screen, operate together. Demonstrate that mistakes can be undone. Share the success experience.</p>
+
+        <p>"Doing it together" is not technical support — it is accompaniment across a psychological barrier. Once they succeed once, the second time they can do it alone. Being there for just the first time. That is the essence of onboarding support.</p>
+
+        <h2>7. When There Are Zero Adoption Cases, Walk the User Journey Together</h2>
+
+        <p>With zero adoption cases, the administrator stands alone. When asked "who else is using this?", the only honest answer is "no one yet." There is no safety net of precedent.</p>
+
+        <p>What the developer can do is walk the user journey alongside the adoption coordinator. From reception to guidance, from QR code scanning to audio playback — experience the full flow in the actual facility with actual devices.</p>
+
+        <p>This shared experience turns zero into one. Not a case study from another facility, but a success story in their own. Not the reassurance of having a developer nearby, but the fact that "it worked in our facility." The leap from zero to one happens not through features, but through shared experience.</p>
+
+        <h2>8. Summary — Public Trust Means Naming the Anxiety</h2>
+
+        <p>Preparing for public deployment is not about adding features. It is about reducing anxiety.</p>
+
+        <ul>
+            <li>Split billing into two stages with estimates and cancellation — remove <strong>financial anxiety</strong>.</li>
+            <li>Maintain a free entry point — remove <strong>budget anxiety</strong>.</li>
+            <li>Use UI state transitions to indicate correct actions — remove <strong>operational anxiety</strong>.</li>
+            <li>Experience the first session together — remove <strong>isolation anxiety</strong>.</li>
+        </ul>
+
+        <p>When a personal tool becomes a public tool, the amount of code change is modest. What changes is the resolution with which you perceive anxiety. Who fears what, and why. Name it, then structurally eliminate it.</p>
+
+        <blockquote>
+            <p>Public trust is born not from the completeness of features, but from the absence of anxiety. Name the anxiety, sever it with structure. That is the condition for a personal tool to open itself to the public.</p>
+        </blockquote>
+
+    </article>
+
+    <footer class="article-footer">
+        <p id="essay-nav-links"></p>
+        <p style="font-size: 0.75rem; color: var(--text-muted);">&copy; TokiStorage. All rights reserved.</p>
+    </footer>
+
+</main>
+
+<script src="essay-nav.js"></script>
+<script src="essay-tts.js"></script>
+</body>
+</html>

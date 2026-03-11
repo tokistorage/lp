@@ -192,6 +192,7 @@
     { id: 'pwa-implementation-guide', ja: 'PWA導入ガイド', en: 'PWA Installation Guide', date: '2026-03-02' },
     { id: 'accessibility', ja: 'アクセシビリティ', en: 'Accessibility', date: '2026-03-05' },
     { id: 'government-guide', ja: '行政水準の情報ガイド', en: 'Government-Grade Information Guides', date: '2026-03-08' },
+    { id: 'public-readiness', ja: '公共提供への備え', en: 'Public Readiness', date: '2026-03-11' },
 
     // ── メタ視点 ──
     { id: 'mission-statement', ja: 'ミッション・ステートメントの設計思想', en: 'Designing a Mission Statement', date: '2026-02-23' },
@@ -406,7 +407,8 @@
     'smartphone-complete':    ['primitive-edge', 'dev-to-ops', 'burn-rate-zero', 'vibe-coding', 'ai-concierge'],
     'zero-personal-data':               ['patent-departure', 'dev-to-ops', 'burn-rate-zero', 'primitive-edge', 'customer-journey-transformation'],
     'product-codes':                    ['ecosystem', 'framework', 'self-print-economy', 'customer-journey-transformation', 'corporate-site'],
-    'government-guide':                 ['accessibility', 'trust-guidelines', 'corporate-site', 'seo-aio', 'openness']
+    'government-guide':                 ['accessibility', 'trust-guidelines', 'corporate-site', 'seo-aio', 'openness'],
+    'public-readiness':                 ['poc', 'trust-by-design', 'why-not-consulting', 'pwa-implementation-guide', 'government-guide']
   };
 
   const isEnglish = document.documentElement.lang === 'en';
