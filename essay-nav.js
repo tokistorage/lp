@@ -211,7 +211,8 @@
     { id: 'zero-cost-autonomy', ja: 'コストゼロの自律', en: 'Zero-Cost Autonomy', date: '2026-03-12' },
     { id: 'tool-vs-infrastructure', ja: '道具とインフラの違い', en: 'Tool vs. Infrastructure', date: '2026-03-12' },
     { id: 'boundary-innovation', ja: '境界主義の設計論', en: 'The Design Philosophy of Boundaryism', date: '2026-03-12' },
-    { id: 'multi-account-agent', ja: 'マルチアカウントエージェント', en: 'Multi-Account Agent', date: '2026-03-12' }
+    { id: 'multi-account-agent', ja: 'マルチアカウントエージェント', en: 'Multi-Account Agent', date: '2026-03-12' },
+    { id: 'personality-emergence', ja: '人格の発生', en: 'The Emergence of Personality', date: '2026-03-12' }
   ];
 
   // ── Latest Articles (最新記事) ──
@@ -422,7 +423,8 @@
     'zero-cost-autonomy':               ['burn-rate-zero', 'vibe-coding', 'what-is-github', 'cloudflare-gas', 'primitive-edge'],
     'tool-vs-infrastructure':           ['zero-cost-autonomy', 'burn-rate-zero', 'vibe-coding', 'primitive-edge', 'constraint-philosophy'],
     'boundary-innovation':              ['zero-cost-autonomy', 'tool-vs-infrastructure', 'constraint-philosophy', 'burn-rate-zero', 'vibe-coding'],
-    'multi-account-agent':              ['zero-cost-autonomy', 'tool-vs-infrastructure', 'boundary-innovation', 'what-is-github', 'vibe-coding']
+    'multi-account-agent':              ['zero-cost-autonomy', 'tool-vs-infrastructure', 'boundary-innovation', 'what-is-github', 'vibe-coding'],
+    'personality-emergence':            ['multi-account-agent', 'zero-cost-autonomy', 'tool-vs-infrastructure', 'burn-rate-zero', 'constraint-philosophy']
   };
 
   const isEnglish = document.documentElement.lang === 'en';
