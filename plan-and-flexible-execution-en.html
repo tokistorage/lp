@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" type="image/png" sizes="32x32" href="asset/favicon-32.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="asset/apple-touch-icon.png">
+    <title>Between Plan and Execution ── Designing for Inertia, Self-Interest, and the Body | TokiStorage</title>
+    <meta name="robots" content="index, follow">
+    <meta name="description" content="Plans assume an ideal actor. Execution happens inside a real one — tired, self-interested, waiting for the body to agree. Designing for that gap is what makes plans work.">
+    <link rel="alternate" hreflang="ja" href="https://tokistorage.github.io/lp/plan-and-flexible-execution.html">
+    <link rel="alternate" hreflang="en" href="https://tokistorage.github.io/lp/plan-and-flexible-execution-en.html">
+    <link rel="alternate" hreflang="x-default" href="https://tokistorage.github.io/lp/plan-and-flexible-execution.html">
+    <meta property="og:type" content="article">
+    <meta property="og:title" content="Between Plan and Execution ── Designing for Inertia, Self-Interest, and the Body">
+    <meta property="og:description" content="Plans assume an ideal actor. Execution happens inside a real one — tired, self-interested, waiting for the body to agree. Designing for that gap is what makes plans work.">
+    <meta property="og:url" content="https://tokistorage.github.io/lp/plan-and-flexible-execution-en.html">
+    <meta property="og:site_name" content="TokiStorage">
+    <meta name="twitter:card" content="summary">
+    <meta name="twitter:title" content="Between Plan and Execution ── Designing for Inertia, Self-Interest, and the Body">
+    <meta name="twitter:description" content="Plans assume an ideal actor. Execution happens inside a real one — tired, self-interested, waiting for the body to agree.">
+    <meta property="og:image" content="https://tokistorage.github.io/lp/asset/tokistorage-icon-512.png">
+    <meta property="og:image:width" content="512">
+    <meta property="og:image:height" content="512">
+    <style>
+        :root {
+            --toki-blue: #2563EB;
+            --toki-blue-dark: #1E40AF;
+            --toki-blue-pale: #EFF6FF;
+            --accent-blue: #60A5FA;
+            --bg-white: #FFFFFF;
+            --text-primary: #1E293B;
+            --text-secondary: #475569;
+            --text-muted: #94A3B8;
+            --border: #E2E8F0;
+            --font-display: Georgia, 'Times New Roman', serif;
+            --font-body: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        html { scroll-behavior: smooth; }
+        body { font-family: var(--font-body); font-weight: 400; background: var(--bg-white); color: var(--text-primary); line-height: 2; font-size: 16px; }
+
+        .article-nav { position: fixed; top: 0; left: 0; right: 0; z-index: 1000; background: rgba(255,255,255,0.95); backdrop-filter: blur(12px); border-bottom: 1px solid var(--border); padding: 0.6rem 1.2rem; display: flex; align-items: center; justify-content: space-between; gap: 1rem; }
+        .article-nav .nav-brand { font-family: var(--font-display); font-size: 0.9rem; font-weight: 600; color: var(--toki-blue); text-decoration: none; white-space: nowrap; }
+        .article-nav .nav-brand::before { content: ''; display: inline-block; width: 20px; height: 20px; background: url('asset/tokistorage-icon-512.png') no-repeat center / contain; vertical-align: -3px; margin-right: 5px; }
+        .article-nav .nav-right { display: flex; align-items: center; gap: 1rem; }
+        .article-nav .nav-label { font-size: 0.6rem; color: var(--text-muted); letter-spacing: 0.08em; }
+        .article-nav .lang-switch { font-size: 0.75rem; color: var(--toki-blue); text-decoration: none; padding: 0.3rem 0.6rem; border: 1px solid var(--toki-blue); border-radius: 4px; }
+        .article-nav .lang-switch:hover { background: var(--toki-blue); color: #fff; }
+
+        .article-container { max-width: 680px; margin: 0 auto; padding: 7rem 2rem 4rem; }
+        .article-header { margin-bottom: 3rem; padding-bottom: 2rem; border-bottom: 1px solid var(--border); }
+        .article-category { font-size: 0.7rem; color: var(--toki-blue); letter-spacing: 0.15em; margin-bottom: 1rem; }
+        .article-header h1 { font-family: var(--font-display); font-size: 1.8rem; font-weight: 700; line-height: 1.4; margin-bottom: 1.5rem; }
+        .article-subtitle { font-size: 0.95rem; color: var(--text-secondary); line-height: 1.9; }
+
+        .article-content h2 { font-family: var(--font-display); font-size: 1.3rem; font-weight: 600; margin: 3rem 0 1.5rem; padding-bottom: 0.5rem; border-bottom: 2px solid var(--toki-blue-pale); }
+        .article-content p { margin-bottom: 1.5rem; }
+        .article-content blockquote { border-left: 3px solid var(--toki-blue); padding-left: 1.5rem; margin: 2rem 0; font-family: var(--font-display); color: var(--text-secondary); font-style: italic; }
+
+        .core-message { background: var(--toki-blue-pale); border-left: 4px solid var(--toki-blue); padding: 1.5rem; margin: 2rem 0; font-size: 0.95rem; line-height: 1.8; }
+        .key-point { background: linear-gradient(135deg, var(--toki-blue-pale) 0%, #fff 100%); border: 1px solid var(--accent-blue); border-radius: 8px; padding: 1.5rem; margin: 2rem 0; text-align: center; }
+        .key-point p { font-family: var(--font-display); font-size: 1.1rem; color: var(--toki-blue-dark); margin: 0; font-style: italic; }
+
+        .article-footer { margin-top: 4rem; padding-top: 2rem; border-top: 1px solid var(--border); text-align: center; }
+        .article-footer p { font-size: 0.8rem; color: var(--text-muted); margin-bottom: 1rem; }
+        .article-footer a { color: var(--toki-blue); text-decoration: none; }
+        .article-footer a:hover { text-decoration: underline; }
+
+        @media (max-width: 768px) {
+            .article-container { padding: 6rem 1.2rem 3rem; }
+            .article-header h1 { font-size: 1.5rem; }
+        }
+    </style>
+</head>
+<body>
+<nav class="article-nav">
+    <a href="essays-en.html" class="nav-brand">TokiStorage</a>
+    <div class="nav-right">
+        <span class="nav-label">ESSAY</span>
+        <a href="plan-and-flexible-execution.html" class="lang-switch">JA</a>
+    </div>
+</nav>
+<main class="article-container">
+    <header class="article-header">
+        <div class="article-category">LIFE TRANSITIONS</div>
+        <h1>Between Plan and Execution<br>── Designing for Inertia, Self-Interest, and the Body</h1>
+        <p class="article-subtitle">After yesterday's reflection, something became clear. Plans don't fall apart because willpower fails. They fall apart because they mistake where execution actually happens.</p>
+    </header>
+    <article class="article-content">
+
+        <div class="core-message">The point of this essay: Plans assume an ideal sequence carried out by an ideal actor. But execution happens inside a real person — one who wakes up exhausted, acts from self-interest, and waits for the body to signal readiness. A plan that excludes these realities breaks on contact. Designing them in is what makes execution possible.</div>
+
+        <h2>1. The Rigidity of Ideal Sequence</h2>
+        <p>Every plan begins with an assumption: that the person executing it is already ready. Wake at seven, tackle the most important task first, handle communications in the afternoon, reflect in the evening. The sequence is clean, logical, correct — with one problem.</p>
+        <p>The actual morning doesn't fulfill that assumption.</p>
+        <p>You wake carrying yesterday's exhaustion. The tasks are visible; the body isn't moving. The plan is running in your head while you remain still. In that state, "start with your most important work" is already dead.</p>
+        <p>The fault isn't in the person. It's in the design. As long as a plan is written for an ideal self, the actual self has no place in it.</p>
+
+        <h2>2. Build the First Inertia into the Design</h2>
+        <p>The solution is to treat the initial inertia not as an obstacle to overcome, but as a phase to design for. Explicitly reserve the first thirty minutes of the day as ignition time — not for solving problems, but for arriving.</p>
+        <p>Scan emails without responding. Reread yesterday's notes. Make coffee while tracing the shape of the day ahead. The only goal is to begin moving.</p>
+        <blockquote>
+            Inertia is not a deficit. It is a state.<br>
+            States change — but they harden when rushed.
+        </blockquote>
+        <p>There is a physical signal for readiness: a subtle lean forward, a deepening breath, a pull toward the keyboard. That is the switch. Learning to wait for it — and building that waiting into the plan — removes the need for self-criticism. The first thirty minutes of stillness weren't failure. They were the plan working.</p>
+
+        <h2>3. Receiving Self-Interest, Reading Manipulation</h2>
+        <p>The other reality that disrupts execution lives in relationships.</p>
+        <p>When we act together, everyone has their own self-interest. That is not the problem. The problem is pretending otherwise. "This is good for both of us" is often a rewrite of "I need this, and I'd like you to go along." The rewrite hides the structure. The structure, once hidden, breeds resentment.</p>
+        <p>Receiving self-interest means looking honestly at your own motivation first. Why do you want this? Who gains, and who bears the cost? Can you present that structure without concealing it?</p>
+        <p>Reading manipulation is the mirror image. When someone brings you a proposal, ask why they're bringing it to you specifically. Emotional pressure, urgency, flattery, vague terms — these are signals. The question that cuts through them is simple: does this make my actual situation better?</p>
+        <p>What to absorb and what to resist is decided by structure, not by feeling. The moment emotion becomes the filter, manipulation finds its way in.</p>
+
+        <h2>4. Proposals Without Understanding Are Illusions — Listening After the Proposal Holds the Boundary</h2>
+        <p>Most execution involves proposing something to another person: a negotiation, an application, an agreement. The most common failure here is offering a solution before understanding the other person's reality.</p>
+        <p>A proposal without understanding is a projection. You've solved the problem in your own head and are now presenting it to someone whose situation you haven't yet entered. When they push back, the temptation is to blame their resistance. But the resistance is usually a response to not having been heard.</p>
+        <p>The moment after a proposal is equally critical. Most people shift immediately into persuasion mode — treating silence as consent, interpreting a flat response as consideration in progress. But the other person may simply still be waiting to be asked what they think.</p>
+        <p>Listening after the proposal sets the boundary between an offer and an imposition. Ask how it landed. Then stop talking. What emerges from that silence — the concerns, the conditions, the hesitations — is the material for the next proposal. The moment listening stops, the proposal becomes pressure.</p>
+
+        <h2>5. Transformation on Both Sides Shapes What Becomes Real</h2>
+        <p>Between every plan and its execution, there are other people. And through contact with others, both sides change.</p>
+        <p>Pursuing mutual value is not the same as maximizing your own outcome. It is designing a structure in which both parties move forward together. What do I offer? What does the other person gain? And what returns to me as a result? When those three elements align, the relationship persists. When any one is concealed, it doesn't.</p>
+        <p>A plan must anticipate this transformation. By the time today's self attempts to execute yesterday's plan, the situation has already shifted. Flexible execution is not about lowering the standard. It is about reading the changed reality accurately and finding a new path to the same destination.</p>
+        <p>Inertia, self-interest, manipulation, refusal — these are not noise to be filtered out. They are the material the world is made of. A plan that tries to exclude them never reaches the place where execution happens.</p>
+
+        <div class="key-point"><p>What moves action is not the discipline to keep the plan, but the clarity to read what is real.</p></div>
+
+    </article>
+    <footer class="article-footer">
+        <p id="essay-nav-links"></p>
+        <p>© TokiStorage. All rights reserved.</p>
+    </footer>
+</main>
+<script src="essay-nav.js"></script>
+<script src="essay-tts.js"></script>
+</body>
+</html>

@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" type="image/png" sizes="32x32" href="asset/favicon-32.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="asset/apple-touch-icon.png">
+    <title>計画と実行のあいだ ── 無気力・利己・身体感覚を組み込む設計論 | トキストレージ</title>
+    <meta name="robots" content="index, follow">
+    <meta name="description" content="計画は理想の順序を仮定する。しかし実行は、無気力・利己・身体感覚という現実の中で起きる。それらを排除するのではなく設計に組み込むとき、計画と現実ははじめて接続される。">
+    <link rel="alternate" hreflang="ja" href="https://tokistorage.github.io/lp/plan-and-flexible-execution.html">
+    <link rel="alternate" hreflang="en" href="https://tokistorage.github.io/lp/plan-and-flexible-execution-en.html">
+    <link rel="alternate" hreflang="x-default" href="https://tokistorage.github.io/lp/plan-and-flexible-execution.html">
+    <meta property="og:type" content="article">
+    <meta property="og:title" content="計画と実行のあいだ ── 無気力・利己・身体感覚を組み込む設計論">
+    <meta property="og:description" content="計画は理想の順序を仮定する。しかし実行は、無気力・利己・身体感覚という現実の中で起きる。それらを排除するのではなく設計に組み込むとき、計画と現実ははじめて接続される。">
+    <meta property="og:url" content="https://tokistorage.github.io/lp/plan-and-flexible-execution.html">
+    <meta property="og:site_name" content="トキストレージ">
+    <meta name="twitter:card" content="summary">
+    <meta name="twitter:title" content="計画と実行のあいだ ── 無気力・利己・身体感覚を組み込む設計論">
+    <meta name="twitter:description" content="計画は理想の順序を仮定する。しかし実行は、無気力・利己・身体感覚という現実の中で起きる。">
+    <meta property="og:image" content="https://tokistorage.github.io/lp/asset/tokistorage-icon-512.png">
+    <meta property="og:image:width" content="512">
+    <meta property="og:image:height" content="512">
+    <style>
+        :root {
+            --toki-blue: #2563EB;
+            --toki-blue-dark: #1E40AF;
+            --toki-blue-pale: #EFF6FF;
+            --accent-blue: #60A5FA;
+            --bg-white: #FFFFFF;
+            --text-primary: #1E293B;
+            --text-secondary: #475569;
+            --text-muted: #94A3B8;
+            --border: #E2E8F0;
+            --font-display: 'Hiragino Mincho ProN', 'Yu Mincho', serif;
+            --font-body: 'Hiragino Kaku Gothic ProN', 'Yu Gothic', 'Meiryo', sans-serif;
+        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        html { scroll-behavior: smooth; }
+        body { font-family: var(--font-body); font-weight: 400; background: var(--bg-white); color: var(--text-primary); line-height: 2; font-size: 16px; }
+
+        .article-nav { position: fixed; top: 0; left: 0; right: 0; z-index: 1000; background: rgba(255,255,255,0.95); backdrop-filter: blur(12px); border-bottom: 1px solid var(--border); padding: 0.6rem 1.2rem; display: flex; align-items: center; justify-content: space-between; gap: 1rem; }
+        .article-nav .nav-brand { font-family: var(--font-display); font-size: 0.9rem; font-weight: 600; color: var(--toki-blue); text-decoration: none; white-space: nowrap; }
+        .article-nav .nav-brand::before { content: ''; display: inline-block; width: 20px; height: 20px; background: url('asset/tokistorage-icon-512.png') no-repeat center / contain; vertical-align: -3px; margin-right: 5px; }
+        .article-nav .nav-right { display: flex; align-items: center; gap: 1rem; }
+        .article-nav .nav-label { font-size: 0.6rem; color: var(--text-muted); letter-spacing: 0.08em; }
+        .article-nav .lang-switch { font-size: 0.75rem; color: var(--toki-blue); text-decoration: none; padding: 0.3rem 0.6rem; border: 1px solid var(--toki-blue); border-radius: 4px; }
+        .article-nav .lang-switch:hover { background: var(--toki-blue); color: #fff; }
+
+        .article-container { max-width: 680px; margin: 0 auto; padding: 7rem 2rem 4rem; }
+        .article-header { margin-bottom: 3rem; padding-bottom: 2rem; border-bottom: 1px solid var(--border); }
+        .article-category { font-size: 0.7rem; color: var(--toki-blue); letter-spacing: 0.15em; margin-bottom: 1rem; }
+        .article-header h1 { font-family: var(--font-display); font-size: 1.8rem; font-weight: 700; line-height: 1.5; margin-bottom: 1.5rem; }
+        .article-subtitle { font-size: 0.95rem; color: var(--text-secondary); line-height: 1.9; }
+
+        .article-content h2 { font-family: var(--font-display); font-size: 1.3rem; font-weight: 600; margin: 3rem 0 1.5rem; padding-bottom: 0.5rem; border-bottom: 2px solid var(--toki-blue-pale); }
+        .article-content p { margin-bottom: 1.5rem; text-align: justify; }
+        .article-content blockquote { border-left: 3px solid var(--toki-blue); padding-left: 1.5rem; margin: 2rem 0; font-family: var(--font-display); color: var(--text-secondary); }
+
+        .core-message { background: var(--toki-blue-pale); border-left: 4px solid var(--toki-blue); padding: 1.5rem; margin: 2rem 0; font-size: 0.95rem; line-height: 1.8; }
+        .key-point { background: linear-gradient(135deg, var(--toki-blue-pale) 0%, #fff 100%); border: 1px solid var(--accent-blue); border-radius: 8px; padding: 1.5rem; margin: 2rem 0; text-align: center; }
+        .key-point p { font-family: var(--font-display); font-size: 1.1rem; color: var(--toki-blue-dark); margin: 0; }
+
+        .article-footer { margin-top: 4rem; padding-top: 2rem; border-top: 1px solid var(--border); text-align: center; }
+        .article-footer p { font-size: 0.8rem; color: var(--text-muted); margin-bottom: 1rem; }
+        .article-footer a { color: var(--toki-blue); text-decoration: none; }
+        .article-footer a:hover { text-decoration: underline; }
+
+        @media (max-width: 768px) {
+            .article-container { padding: 6rem 1.2rem 3rem; }
+            .article-header h1 { font-size: 1.5rem; }
+        }
+    </style>
+</head>
+<body>
+<nav class="article-nav">
+    <a href="essays.html" class="nav-brand">トキストレージ</a>
+    <div class="nav-right">
+        <span class="nav-label">ESSAY</span>
+        <a href="plan-and-flexible-execution-en.html" class="lang-switch">EN</a>
+    </div>
+</nav>
+<main class="article-container">
+    <header class="article-header">
+        <div class="article-category">人生の節目</div>
+        <h1>計画と実行のあいだ<br>── 無気力・利己・身体感覚を組み込む設計論</h1>
+        <p class="article-subtitle">昨日の振り返りを終えて、気づいたことがある。計画が崩れるのは意志が弱いからではない。計画が、実行される「場所」を間違えているからだ。</p>
+    </header>
+    <article class="article-content">
+
+        <div class="core-message">この記事で言いたいこと：計画は「理想の順序」を前提にするが、実行は身体・感情・関係性という現実の中で起きる。無気力・利己・操作といった要素を排除しようとする計画は、現実に触れる前に崩れる。それらを設計に組み込むことが、柔軟な実行の第一歩だ。</div>
+
+        <h2>1. 理想順序の硬直性</h2>
+        <p>計画を立てるとき、人は自分がすでに「動ける状態」にあることを前提にしている。朝7時に起きて、まず重要タスクに取り組み、午後に連絡ごとを片付け、夕方に振り返る。順序は美しく、論理的で、正しい。ただ一つの問題を除けば。</p>
+        <p>実際の朝は、その前提を満たさない。</p>
+        <p>昨日の疲弊を引きずって目が覚める。やるべきことは見えているのに、体が動かない。頭の中で計画は動いているが、自分だけが止まっている。この状態で「重要タスクから着手する」という計画は、すでに死んでいる。</p>
+        <p>問題は実行者ではなく、設計だ。計画が「理想の自分」を主語にしている限り、「今日の自分」が入る余地がない。</p>
+
+        <h2>2. 最初の無気力を組み込む</h2>
+        <p>解決策は、無気力を「乗り越えるべき障害」ではなく「最初に来るフェーズ」として設計に組み込むことだ。</p>
+        <p>具体的には、一日の最初の30分を「着火時間」として明示的に確保する。この時間に課題を解決しようとしない。メールを眺める、昨日の記録を読み返す、コーヒーを淹れながら今日の流れを頭に描く。目的は「動き始める」ことだけだ。</p>
+        <blockquote>
+            無気力は欠落ではなく、状態だ。<br>
+            状態は変わる。ただし、急かすと固まる。
+        </blockquote>
+        <p>身体感覚がスイッチになる瞬間がある。肩が少し前に出る感覚、呼吸が深くなる感覚、指がキーボードに触れたくなる感覚。それが「動ける」というサインだ。その感覚を待つことを、計画の中に正式に書いておく。</p>
+        <p>「体が動き出したら本題に入る」という設計は、自己批判を排除する。無気力でいた最初の30分は、失敗ではなく計画通りだ。</p>
+
+        <h2>3. 利己を受け止め、操作を見極める</h2>
+        <p>実行を妨げるもう一つの現実は、関係性の中にある。</p>
+        <p>人と協力して何かを進めようとするとき、相手には相手の利己がある。それは悪いことではない。自分にも利己がある。問題は、それを認めずに進めようとすることだ。「お互いにとって良いことだから」という前置きは、しばしば「私が得するから付き合ってくれ」の書き換えに過ぎない。</p>
+        <p>利己を受け止めるとは、自分の動機を正直に見ることだ。なぜこれをしたいのか。誰が得をして、誰がコストを払うのか。その構造を隠さずに提案できるか。</p>
+        <p>操作の見極めは、その逆だ。相手の提案を受けるとき、「なぜ相手はこれを私に持ちかけるのか」を問う。感情的な圧力、急かし、過剰な賞賛、曖昧な条件——これらは操作のシグナルだ。</p>
+        <p>取り入れる要素と流されない要素を分ける技術は、感情ではなく構造で判断することにある。「それは私の現実を良くするか」という問いだけが基準になる。</p>
+
+        <h2>4. 理解なき提案は妄想であり、提案後の傾聴が境界を守る</h2>
+        <p>計画の実行は、多くの場合、他者への提案を含む。不動産業者への交渉、行政への申請、家族との合意。ここで頻繁に起きる失敗がある。相手の現実を理解する前に、自分の解を提示してしまうことだ。</p>
+        <p>理解なき提案は妄想だ。自分の頭の中で完結した正しさを、現実に接続されていない形で相手に押しつける。相手がそれを拒絶するのは当然で、問題は相手の頑固さではなく、こちらの理解の浅さにある。</p>
+        <p>では、提案した後はどうか。多くの人が、提案した瞬間から説得モードに入る。相手の沈黙を「理解した」と誤読し、反応の薄さを「検討中」と解釈する。しかし実際には、相手はまだ「聞いてもらえていない」と感じている。</p>
+        <p>提案後の傾聴が、拒絶の境界を決める。提案したあとに「どう感じましたか」と問い、相手が話し始めたら黙って聞く。そこで出てきた懸念や条件が、次の提案の材料になる。傾聴を止めた瞬間、提案は押しつけになる。</p>
+
+        <h2>5. 自他の変容が、現実を形作る</h2>
+        <p>計画と実行のあいだには、常に他者がいる。そして他者との接触の中で、自分も変わり、相手も変わる。</p>
+        <p>健全な相互価値の追求とは、自分の利得を最大化することではなく、関係の中で両者が前に進む構造を作ることだ。それは取引ではなく設計だ。私が何を提供し、相手が何を得て、その結果として私も何を得るか——この三つが整うとき、関係は続く。</p>
+        <p>計画は、この変容を見越したものでなければならない。昨日の自分が立てた計画を、今日の自分が実行するとき、すでに状況は動いている。計画の柔軟性とは、手を抜くことではなく、変化した現実を正確に読んで、目的を保ちながら手段を変えることだ。</p>
+        <p>無気力も、利己も、操作も、拒絶も、すべて現実の構成要素だ。それらを「ノイズ」として除外しようとする設計は、実行の場に届かない。</p>
+
+        <div class="key-point"><p>計画を守るより、現実を読む力が行動を動かす。</p></div>
+
+    </article>
+    <footer class="article-footer">
+        <p id="essay-nav-links"></p>
+        <p>© TokiStorage. All rights reserved.</p>
+    </footer>
+</main>
+<script src="essay-nav.js"></script>
+<script src="essay-tts.js"></script>
+</body>
+</html>
