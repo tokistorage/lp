@@ -209,6 +209,7 @@
     { id: 'product-codes', ja: 'プロダクトコードという設計言語', en: 'Product Codes as a Design Language', date: '2026-03-01' },
     { id: 'constraint-philosophy', ja: '制約主義がもたらす静寂', en: 'The Silence of Constraint Philosophy', date: '2026-03-12' },
     { id: 'zero-cost-autonomy', ja: 'コストゼロの自律', en: 'Zero-Cost Autonomy', date: '2026-03-12' },
+    { id: 'break-and-grow', ja: '壊しながら育てる', en: 'Break and Grow', date: '2026-03-13' },
     { id: 'tool-vs-infrastructure', ja: '道具とインフラの違い', en: 'Tool vs. Infrastructure', date: '2026-03-12' },
     { id: 'boundary-innovation', ja: '境界主義の設計論', en: 'The Design Philosophy of Boundaryism', date: '2026-03-12' },
     { id: 'multi-account-agent', ja: 'マルチアカウントエージェント', en: 'Multi-Account Agent', date: '2026-03-12' },
@@ -428,7 +429,8 @@
     'multi-account-agent':              ['zero-cost-autonomy', 'tool-vs-infrastructure', 'boundary-innovation', 'what-is-github', 'vibe-coding'],
     'personality-emergence':            ['multi-account-agent', 'zero-cost-autonomy', 'tool-vs-infrastructure', 'burn-rate-zero', 'constraint-philosophy'],
     'tool-to-personality':      ['personality-emergence', 'burn-rate-zero', 'constraint-philosophy', 'zero-cost-autonomy', 'multi-account-agent'],
-    'self-projection-reciprocal': ['tool-to-personality', 'personality-emergence', 'zero-cost-autonomy', 'multi-account-agent', 'burn-rate-zero']
+    'self-projection-reciprocal': ['tool-to-personality', 'personality-emergence', 'zero-cost-autonomy', 'multi-account-agent', 'burn-rate-zero'],
+    'break-and-grow':           ['zero-cost-autonomy', 'tool-vs-infrastructure', 'vibe-coding', 'primitive-edge', 'constraint-philosophy']
   };
 
   const isEnglish = document.documentElement.lang === 'en';

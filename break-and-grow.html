@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" type="image/png" sizes="32x32" href="asset/favicon-32.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="asset/apple-touch-icon.png">
+    <title>壊しながら育てる | トキストレージ</title>
+    <meta name="robots" content="index, follow">
+    <meta name="description" content="0秒で死んだActionsと、それでも進んだ朝。インフラは失敗の跡でできている。">
+    <link rel="alternate" hreflang="ja" href="https://tokistorage.github.io/lp/break-and-grow.html">
+    <link rel="alternate" hreflang="en" href="https://tokistorage.github.io/lp/break-and-grow-en.html">
+    <link rel="alternate" hreflang="x-default" href="https://tokistorage.github.io/lp/break-and-grow.html">
+    <style>
+        :root {
+            --toki-blue: #2563EB;
+            --toki-blue-dark: #1E40AF;
+            --toki-blue-pale: #EFF6FF;
+            --accent-blue: #60A5FA;
+            --bg-white: #FFFFFF;
+            --text-primary: #1E293B;
+            --text-secondary: #475569;
+            --text-muted: #94A3B8;
+            --border: #E2E8F0;
+            --font-display: 'Hiragino Mincho ProN', 'Yu Mincho', serif;
+            --font-body: 'Hiragino Kaku Gothic ProN', 'Yu Gothic', 'Meiryo', sans-serif;
+        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        html { scroll-behavior: smooth; }
+        body { font-family: var(--font-body); font-weight: 400; background: var(--bg-white); color: var(--text-primary); line-height: 2; font-size: 16px; }
+
+        .article-nav { position: fixed; top: 0; left: 0; right: 0; z-index: 1000; background: rgba(255,255,255,0.95); backdrop-filter: blur(12px); border-bottom: 1px solid var(--border); padding: 0.6rem 1.2rem; display: flex; align-items: center; justify-content: space-between; gap: 1rem; }
+        .article-nav .nav-brand { font-family: var(--font-display); font-size: 0.9rem; font-weight: 600; color: var(--toki-blue); text-decoration: none; white-space: nowrap; }
+        .article-nav .nav-brand::before { content: ''; display: inline-block; width: 20px; height: 20px; background: url('asset/tokistorage-icon-512.png') no-repeat center / contain; vertical-align: -3px; margin-right: 5px; }
+        .article-nav .nav-right { display: flex; align-items: center; gap: 1rem; }
+        .article-nav .nav-label { font-size: 0.6rem; color: var(--text-muted); letter-spacing: 0.08em; }
+        .article-nav .lang-switch { font-size: 0.75rem; color: var(--toki-blue); text-decoration: none; padding: 0.3rem 0.6rem; border: 1px solid var(--toki-blue); border-radius: 4px; }
+        .article-nav .lang-switch:hover { background: var(--toki-blue); color: #fff; }
+
+        .article-container { max-width: 680px; margin: 0 auto; padding: 7rem 2rem 4rem; }
+        .article-header { margin-bottom: 3rem; padding-bottom: 2rem; border-bottom: 1px solid var(--border); }
+        .article-category { font-size: 0.7rem; color: var(--toki-blue); letter-spacing: 0.15em; margin-bottom: 1rem; }
+        .article-header h1 { font-family: var(--font-display); font-size: 1.8rem; font-weight: 700; line-height: 1.5; margin-bottom: 1.5rem; }
+        .article-subtitle { font-size: 0.95rem; color: var(--text-secondary); line-height: 1.9; }
+
+        .article-content h2 { font-family: var(--font-display); font-size: 1.3rem; font-weight: 600; margin: 3rem 0 1.5rem; padding-bottom: 0.5rem; border-bottom: 2px solid var(--toki-blue-pale); }
+        .article-content p { margin-bottom: 1.5rem; text-align: justify; }
+        .article-content blockquote { border-left: 3px solid var(--toki-blue); padding-left: 1.5rem; margin: 2rem 0; font-family: var(--font-display); color: var(--text-secondary); }
+        .article-content code { font-family: 'Menlo', 'Monaco', monospace; font-size: 0.85rem; background: #f1f5f9; padding: 0.15em 0.4em; border-radius: 3px; }
+
+        .core-message { background: var(--toki-blue-pale); border-left: 4px solid var(--toki-blue); padding: 1.5rem; margin: 2rem 0; font-size: 0.95rem; line-height: 1.8; }
+        .key-point { background: linear-gradient(135deg, var(--toki-blue-pale) 0%, #fff 100%); border: 1px solid var(--accent-blue); border-radius: 8px; padding: 1.5rem; margin: 2rem 0; text-align: center; }
+        .key-point p { font-family: var(--font-display); font-size: 1.1rem; color: var(--toki-blue-dark); margin: 0; }
+
+        .article-footer { margin-top: 4rem; padding-top: 2rem; border-top: 1px solid var(--border); text-align: center; }
+        .article-footer p { font-size: 0.8rem; color: var(--text-muted); margin-bottom: 1rem; }
+        .article-footer a { color: var(--toki-blue); text-decoration: none; }
+        .article-footer a:hover { text-decoration: underline; }
+
+        @media (max-width: 768px) {
+            .article-container { padding: 6rem 1.2rem 3rem; }
+            .article-header h1 { font-size: 1.5rem; }
+            .article-nav .nav-label { display: none; }
+        }
+        @media print { .article-nav { display: none; } .article-container { padding-top: 2rem; } }
+    </style>
+</head>
+<body>
+
+<nav class="article-nav">
+    <a href="essays.html" class="nav-brand">トキストレージ</a>
+    <div class="nav-right">
+        <span class="nav-label">ESSAY</span>
+        <a href="break-and-grow-en.html" class="lang-switch">EN</a>
+    </div>
+</nav>
+
+<main class="article-container">
+    <header class="article-header">
+        <div class="article-category">技術・設計</div>
+        <h1>壊しながら育てる</h1>
+        <p class="article-subtitle">0秒で死んだActionsと、それでも進んだ朝</p>
+    </header>
+
+    <article class="article-content">
+
+        <div class="core-message">この記事で言いたいこと：インフラは完成するものではない。壊れるたびに一層厚くなる。失敗のログそのものが、設計の記憶になる。</div>
+
+        <h2>1. 朝、Actionsが0秒で死んでいた</h2>
+
+        <p>その朝は「聖地」の話から始まった。トキストレージに礼拝の作法を作れないか、という問いだった。1000年保管、存在証明の民主化——そういう言葉を扱うサービスなら、声を録る行為そのものを儀式にできるはずだ。録音の前に目を閉じる。名前を言う。生まれた場所を言う。それだけでいい、あとは1000年が覚えている。そんなテキストが浮かんだ。</p>
+
+        <p>アイデアをプロジェクトに登録しようとした。<code>agent/request.json</code> を書いてpushする、いつもの手順だ。ところがGitHub Actionsの通知メールが来た。ステータス：失敗。期間：0秒。</p>
+
+        <p>0秒というのは不思議な数字だ。何かが動いて失敗したのではない。動く前に死んでいる。</p>
+
+        <h2>2. 原因を追う、という仕事</h2>
+
+        <p>最初はPAT（アクセストークン）を疑った。期限切れなら0秒で落ちる。トークンを更新して再送した。また0秒。次はリクエストのJSONを疑った。日本語のタイトルが何かを壊しているかもしれない。英語だけのシンプルなpayloadに変えた。また0秒。</p>
+
+        <p>通知メールのリンクからActionsのRunページを開くと、ログが空だった。ステップ一覧すら出ていない。これはワークフローがジョブを起動する前に落ちている、つまりYAMLの構文エラーだ。</p>
+
+        <p>原因はそこにあった。数日前に <code>delete_project_items</code> というアクションを追加したとき、Pythonコードのインデントが崩れていた。本来10スペースで書くべき行が、0スペースで書かれていた。GitHubのYAMLパーサーがそれを検出して、ジョブを起動する前に落としていた。</p>
+
+        <blockquote>
+            壊したのは私自身だった。<br>
+            しかも、直そうとして二度壊した。
+        </blockquote>
+
+        <p>修正を試みてヒアドキュメント構文を追加したが、今度はその書き方が別のYAMLエラーを引き起こした。壊れたシステムを直そうとして、別の場所を壊す。デバッグにはよくある光景だが、毎回ひりつく。</p>
+
+        <h2>3. エラーが設計を変える</h2>
+
+        <p>最終的に二つのことが解決した。インデント崩れを直したこと。そしてActionsが起動しない別の問題——<code>agent/request.json</code>の内容が前回と同一だとpathトリガーが発火しない——も発見して対処した。</p>
+
+        <p>対処の方法はシンプルだった。リクエストに常にタイムスタンプ（<code>_t</code>）を付与する。こうすれば毎回必ずファイルが変わる。そしてこの処理を自動化する <code>agent/push.sh</code> というヘルパースクリプトを書いた。さらにYAMLの簡易チェックもスクリプト内に組み込んだ。</p>
+
+        <p>今後は直接pushするのではなく、必ずこのスクリプト経由で送る。チェックが通らなければpushできない。壊れたまま送ることができない構造になった。</p>
+
+        <p>一つのエラーが、一つの防壁を生んだ。</p>
+
+        <h2>4. インフラは失敗の堆積物だ</h2>
+
+        <p>このシステムを使い始めて日が浅い。それでもすでに、いくつかの「なぜこうなっているのか」がある。コードやドキュメントの随所に、過去の失敗の跡が刻まれている。</p>
+
+        <p>なぜ <code>_t</code> を付けるのか。なぜ <code>push.sh</code> を経由するのか。なぜエラー時は通知メールからActionsのRunを開いてステップを確認するのか。それぞれに理由がある。理由は全部、一度失敗したことだ。</p>
+
+        <p>道具は使うたびに消耗する。インフラは壊れるたびに強くなる。この非対称性が、自分でシステムを育てることの本質だと思う。</p>
+
+        <p>市販のSaaSを使っていれば、今日のようなデバッグは必要なかった。ボタンを押せば動く。でもボタンの向こう側に、失敗の記憶は残らない。次も同じところで躓く可能性がある。自分のインフラには、躓いた跡が残る。</p>
+
+        <h2>5. 聖地の話に戻る</h2>
+
+        <p>結局、Issue #5「聖地・礼拝作法の概念設計」はプロジェクトに登録された。半日かかったが、登録された。</p>
+
+        <p>面白いのは、その過程でシステム自体が育ったことだ。アイデアを一つ登録しようとしただけで、YAMLのバグが修正され、スクリプトが生まれ、エラー対処のフローがドキュメントに追加された。</p>
+
+        <p>声を残す行為を儀式にしたい、と考えた朝に、失敗と修復の儀式を繰り返していた。1000年保管を語るシステムが、今日もまた一歩だけ強くなった。</p>
+
+        <div class="key-point"><p>壊れることは、育つことの別名だ。</p></div>
+
+    </article>
+
+    <footer class="article-footer">
+        <p id="essay-nav-links"></p>
+        <p style="font-size: 0.75rem; color: var(--text-muted);">&copy; TokiStorage. All rights reserved.</p>
+    </footer>
+
+</main>
+
+<script src="essay-nav.js"></script>
+<script src="essay-tts.js"></script>
+</body>
+</html>
