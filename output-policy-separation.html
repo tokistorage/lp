@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" type="image/png" sizes="32x32" href="asset/favicon-32.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="asset/apple-touch-icon.png">
+    <title>経験と内省を分離せよ | トキストレージ</title>
+    <meta name="robots" content="index, follow">
+    <meta name="description" content="アウトプットに追われると内省が消える。「次はこうしよう」はなぜ揮発するのか。アウトプットとポリシーを物理的に分離したとき、両方が相互に深まり始めた。">
+    <link rel="alternate" hreflang="ja" href="https://tokistorage.github.io/lp/output-policy-separation.html">
+    <link rel="alternate" hreflang="en" href="https://tokistorage.github.io/lp/output-policy-separation-en.html">
+    <link rel="alternate" hreflang="x-default" href="https://tokistorage.github.io/lp/output-policy-separation.html">
+    <style>
+        :root {
+            --toki-blue: #2563EB;
+            --toki-blue-dark: #1E40AF;
+            --toki-blue-pale: #EFF6FF;
+            --accent-blue: #60A5FA;
+            --bg-white: #FFFFFF;
+            --text-primary: #1E293B;
+            --text-secondary: #475569;
+            --text-muted: #94A3B8;
+            --border: #E2E8F0;
+            --font-display: 'Hiragino Mincho ProN', 'Yu Mincho', serif;
+            --font-body: 'Hiragino Kaku Gothic ProN', 'Yu Gothic', 'Meiryo', sans-serif;
+        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        html { scroll-behavior: smooth; }
+        body { font-family: var(--font-body); font-weight: 400; background: var(--bg-white); color: var(--text-primary); line-height: 2; font-size: 16px; }
+
+        .article-nav { position: fixed; top: 0; left: 0; right: 0; z-index: 1000; background: rgba(255,255,255,0.95); backdrop-filter: blur(12px); border-bottom: 1px solid var(--border); padding: 0.6rem 1.2rem; display: flex; align-items: center; justify-content: space-between; gap: 1rem; }
+        .article-nav .nav-brand { font-family: var(--font-display); font-size: 0.9rem; font-weight: 600; color: var(--toki-blue); text-decoration: none; white-space: nowrap; }
+        .article-nav .nav-brand::before { content: ''; display: inline-block; width: 20px; height: 20px; background: url('asset/tokistorage-icon-512.png') no-repeat center / contain; vertical-align: -3px; margin-right: 5px; }
+        .article-nav .nav-right { display: flex; align-items: center; gap: 1rem; }
+        .article-nav .nav-label { font-size: 0.6rem; color: var(--text-muted); letter-spacing: 0.08em; }
+        .article-nav .lang-switch { font-size: 0.75rem; color: var(--toki-blue); text-decoration: none; padding: 0.3rem 0.6rem; border: 1px solid var(--toki-blue); border-radius: 4px; }
+        .article-nav .lang-switch:hover { background: var(--toki-blue); color: #fff; }
+
+        .article-container { max-width: 680px; margin: 0 auto; padding: 7rem 2rem 4rem; }
+        .article-header { margin-bottom: 3rem; padding-bottom: 2rem; border-bottom: 1px solid var(--border); }
+        .article-category { font-size: 0.7rem; color: var(--toki-blue); letter-spacing: 0.15em; margin-bottom: 1rem; }
+        .article-header h1 { font-family: var(--font-display); font-size: 1.8rem; font-weight: 700; line-height: 1.5; margin-bottom: 1.5rem; }
+        .article-subtitle { font-size: 0.95rem; color: var(--text-secondary); line-height: 1.9; }
+
+        .article-content h2 { font-family: var(--font-display); font-size: 1.3rem; font-weight: 600; margin: 3rem 0 1.5rem; padding-bottom: 0.5rem; border-bottom: 2px solid var(--toki-blue-pale); }
+        .article-content p { margin-bottom: 1.5rem; text-align: justify; }
+        .article-content blockquote { border-left: 3px solid var(--toki-blue); padding-left: 1.5rem; margin: 2rem 0; font-family: var(--font-display); color: var(--text-secondary); line-height: 2; }
+        .article-content ul { margin: 1.5rem 0; padding-left: 1.5rem; }
+        .article-content li { margin-bottom: 0.75rem; }
+
+        .core-message { background: var(--toki-blue-pale); border-left: 4px solid var(--toki-blue); padding: 1.5rem; margin: 2rem 0; font-size: 0.95rem; line-height: 1.8; }
+        .key-point { background: linear-gradient(135deg, var(--toki-blue-pale) 0%, #fff 100%); border: 1px solid var(--accent-blue); border-radius: 8px; padding: 1.5rem; margin: 2rem 0; text-align: center; }
+        .key-point p { font-family: var(--font-display); font-size: 1.1rem; color: var(--toki-blue-dark); margin: 0; }
+
+        .cta-block { background: var(--toki-blue); border-radius: 12px; padding: 2rem; margin: 3rem 0; text-align: center; color: #fff; }
+        .cta-block p { color: rgba(255,255,255,0.85); margin-bottom: 1.2rem; font-size: 0.95rem; }
+        .cta-block a { display: inline-block; background: #fff; color: var(--toki-blue); font-weight: 600; text-decoration: none; padding: 0.7rem 1.8rem; border-radius: 6px; font-size: 0.9rem; margin: 0.3rem; }
+        .cta-block a:hover { opacity: 0.9; }
+        .cta-block a.secondary { background: transparent; color: #fff; border: 1px solid rgba(255,255,255,0.5); }
+
+        .article-footer { margin-top: 4rem; padding-top: 2rem; border-top: 1px solid var(--border); text-align: center; }
+        .article-footer p { font-size: 0.8rem; color: var(--text-muted); margin-bottom: 1rem; }
+        .article-footer a { color: var(--toki-blue); text-decoration: none; }
+        .article-footer a:hover { text-decoration: underline; }
+
+        @media (max-width: 768px) {
+            .article-container { padding: 6rem 1.2rem 3rem; }
+            .article-header h1 { font-size: 1.5rem; }
+            .article-nav .nav-label { display: none; }
+        }
+        @media print { .article-nav { display: none; } .article-container { padding-top: 2rem; } }
+    </style>
+</head>
+<body>
+
+<nav class="article-nav">
+    <a href="essays.html" class="nav-brand">トキストレージ</a>
+    <div class="nav-right">
+        <span class="nav-label">ESSAY</span>
+        <a href="output-policy-separation-en.html" class="lang-switch">EN</a>
+    </div>
+</nav>
+
+<main class="article-container">
+    <header class="article-header">
+        <div class="article-category">メタ視点</div>
+        <h1>経験と内省を分離せよ<br>── アウトプットとポリシーが交互に深まる構造の話</h1>
+        <p class="article-subtitle">アウトプットに追われると、内省が消える。「次はこうしよう」という気づきは生まれるが、どこかに消えていく。記録されず、引き継がれず、次の経験に活かされない。アウトプットの置き場とポリシーの置き場を物理的に分離したとき、両方が相互に深まり始めた。</p>
+    </header>
+
+    <article class="article-content">
+
+        <div class="core-message">この記事で言いたいこと：経験（アウトプット）と内省（ポリシー）を同じ場所に置くと、どちらも中途半端になる。分離して、それぞれに専用の置き場を作ったとき、アウトプットがポリシーを具体化し、ポリシーがアウトプットを深めるループが生まれる。これは個人の学習の構造であり、同時にシステム設計の原則でもある。</div>
+
+        <h2>1. アウトプットに追われると内省が消える</h2>
+
+        <p>何かを作り終えた直後、必ず気づきがある。「次はこの順番で進めよう」「あの部分の展開が薄かった」「冒頭のつかみをもう少し具体的にすれば良かった」。その気づきは鮮明で、具体的で、次に活かせるはずのものだ。</p>
+
+        <p>しかし次の作業が始まると、その気づきはどこかへ消える。新しい締め切りが来て、新しいテーマが来て、前回の反省を思い出す暇がない。気づきは経験の中に埋もれ、同じ失敗が繰り返される。</p>
+
+        <p>これはサボっているのではなく、構造の問題だ。アウトプットと内省が同じ流れの中に混在していると、アウトプットの勢いが内省を押し流す。</p>
+
+        <h2>2. 「次はこうしよう」はなぜ揮発するのか</h2>
+
+        <p>気づきが消えるのには、二つの理由がある。一つは記録されないこと。頭の中にある気づきは、次の経験が上書きするたびに薄れていく。人間の記憶はそういうふうにできている。</p>
+
+        <p>もう一つは、記録されても参照されないこと。ノートに書いても、次に作業するときにそのノートを開く習慣がなければ、書いていないのと同じだ。気づきが活きるのは、次のアウトプットの入口で読み返されるときだけだ。</p>
+
+        <p>揮発する気づきは、置き場がないか、置き場はあるが流れに組み込まれていないかのどちらかだ。</p>
+
+        <h2>3. 分離とは何か</h2>
+
+        <p>分離とは、アウトプットの置き場とポリシーの置き場を、物理的に別々にすることだ。</p>
+
+        <blockquote>
+            アウトプット：作ったもの。エッセイ、コード、提案書、記録。<br>
+            ポリシー：作り方の知恵。スキル定義、手順、判断基準、品質チェック。
+        </blockquote>
+
+        <p>この二つを同じファイル、同じフォルダ、同じドキュメントに混在させると、どちらを更新すべきかが曖昧になる。エッセイを書き直すべきなのか、書き方のルールを更新すべきなのか、判断が鈍る。</p>
+
+        <p>物理的に分けることで、「今自分はアウトプットをしているのか、内省しているのか」が明確になる。それだけで、内省が消えにくくなる。</p>
+
+        <h2>4. gitがポリシーの置き場になった</h2>
+
+        <p>このシステムでは、アウトプットとポリシーが別のファイル、別のリポジトリに分かれている。</p>
+
+        <p>エッセイ本文はpublicリポジトリに積み上がっていく。一方、「どう書くか」を定義したスキルファイルはprivateリポジトリの中に置かれ、独立して更新される。エッセイを書いても、スキルファイルは変わらない。スキルファイルを更新しても、過去のエッセイは変わらない。</p>
+
+        <p>そしてどちらもgitで管理されているから、いつ何を変えたかの履歴が残る。ポリシーの進化が、コミットログとして刻まれていく。</p>
+
+        <h2>5. 書くたびにスキルが更新される</h2>
+
+        <p>今日、それが具体的に起きた。</p>
+
+        <p>二本のエッセイを書いた後、「9章+CTAを標準にしよう」という気づきが生まれた。以前なら、その気づきは次の作業の中に消えていた。今日は違った。エッセイを書き終えた直後に、スキルファイルを開いて更新した。章数の記述を書き換え、CTAブロックをコンポーネントとして明文化し、品質チェックリストに項目を加えた。そしてgitにコミットした。</p>
+
+        <p>気づきが揮発する前に、ポリシーの置き場に収まった。次にエッセイを書くとき、そのスキルファイルが読み込まれる。今日の気づきが、次の作品の入口に立っている。</p>
+
+        <h2>6. アウトプットがポリシーを具体化し、ポリシーがアウトプットを深める</h2>
+
+        <p>分離が機能し始めると、相互進化のループが回り出す。</p>
+
+        <p>アウトプットを作るたびに、具体的な気づきが生まれる。その気づきでポリシーが更新される。更新されたポリシーを持って次のアウトプットに臨むと、前回では気づけなかった問題が見えてくる。新しい気づきが生まれ、またポリシーが更新される。</p>
+
+        <p>ここで重要なのは「具体的に」という言葉だ。ポリシーは抽象的な理想論になりやすい。しかしアウトプットの経験を経ると、「この状況でこう判断する」という具体性が宿る。逆に、ポリシーが具体的であるほど、アウトプットの判断が速くなり、品質の底上げが起きる。</p>
+
+        <h2>7. これは人間の学習の構造と同じだ</h2>
+
+        <p>経験と内省の交互作用は、学習の本質として古くから語られてきた。経験だけでは同じ失敗を繰り返す。内省だけでは現実から遊離した理論になる。二つが交互に起きるとき、知恵が育つ。</p>
+
+        <p>しかし多くの人はこれを「心がけ」の問題として捉える。もっと振り返ろう、もっと反省しよう、と。それは正しいが、構造を変えなければ続かない。</p>
+
+        <p>分離は、心がけを構造に変える試みだ。内省したいと思わなくても、ポリシーの置き場があれば書ける。書けば残る。残れば引き継がれる。構造が学習を自動化する。</p>
+
+        <h2>8. 分離することで、両方が自由になる</h2>
+
+        <p>分離の逆説は、分けることで両方がより自由になることだ。</p>
+
+        <p>アウトプットは、ポリシーのことを気にせずに作れる。今この瞬間のベストを尽くせばいい。気づいたことは後でポリシーに反映すればいい。アウトプット中に内省が割り込んでくる必要がない。</p>
+
+        <p>ポリシーは、アウトプットの出来不出来に左右されずに育てられる。失敗作からも気づきは生まれる。むしろ失敗作の方が、ポリシーへの貢献が大きいことが多い。</p>
+
+        <p>二つが同じ場所にいると、どちらも相手の重力に引っ張られる。分離することで、それぞれが自分の速度で、自分の方向に育っていける。</p>
+
+        <div class="key-point"><p>経験と内省を同じ場所に置くな。分離したとき、両方が相互に深まり始める。</p></div>
+
+        <div class="cta-block">
+            <p>トキストレージは、声・画像・テキストを1000年保管する「存在証明の民主化」を目指すプロジェクトです。</p>
+            <a href="https://tokistorage.github.io">トキストレージを知る</a>
+            <a href="essays.html" class="secondary">すべてのエッセイを読む</a>
+        </div>
+
+    </article>
+
+    <footer class="article-footer">
+        <p id="essay-nav-links"></p>
+        <p style="font-size: 0.75rem; color: var(--text-muted);">&copy; TokiStorage. All rights reserved.</p>
+    </footer>
+
+</main>
+
+<script src="essay-nav.js"></script>
+<script src="essay-tts.js"></script>
+</body>
+</html>

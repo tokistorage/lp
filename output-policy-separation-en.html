@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" type="image/png" sizes="32x32" href="asset/favicon-32.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="asset/apple-touch-icon.png">
+    <title>Separate Experience from Reflection | TokiStorage</title>
+    <meta name="robots" content="index, follow">
+    <meta name="description" content="When output and policy share the same space, output wins every time. Separate them physically — give each its own home — and they begin to deepen each other.">
+    <link rel="alternate" hreflang="ja" href="https://tokistorage.github.io/lp/output-policy-separation.html">
+    <link rel="alternate" hreflang="en" href="https://tokistorage.github.io/lp/output-policy-separation-en.html">
+    <link rel="alternate" hreflang="x-default" href="https://tokistorage.github.io/lp/output-policy-separation.html">
+    <style>
+        :root {
+            --toki-blue: #2563EB;
+            --toki-blue-dark: #1E40AF;
+            --toki-blue-pale: #EFF6FF;
+            --accent-blue: #60A5FA;
+            --bg-white: #FFFFFF;
+            --text-primary: #1E293B;
+            --text-secondary: #475569;
+            --text-muted: #94A3B8;
+            --border: #E2E8F0;
+            --font-display: Georgia, 'Times New Roman', serif;
+            --font-body: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        html { scroll-behavior: smooth; }
+        body { font-family: var(--font-body); font-weight: 400; background: var(--bg-white); color: var(--text-primary); line-height: 1.9; font-size: 16px; }
+
+        .article-nav { position: fixed; top: 0; left: 0; right: 0; z-index: 1000; background: rgba(255,255,255,0.95); backdrop-filter: blur(12px); border-bottom: 1px solid var(--border); padding: 0.6rem 1.2rem; display: flex; align-items: center; justify-content: space-between; gap: 1rem; }
+        .article-nav .nav-brand { font-family: var(--font-display); font-size: 0.9rem; font-weight: 600; color: var(--toki-blue); text-decoration: none; white-space: nowrap; }
+        .article-nav .nav-brand::before { content: ''; display: inline-block; width: 20px; height: 20px; background: url('asset/tokistorage-icon-512.png') no-repeat center / contain; vertical-align: -3px; margin-right: 5px; }
+        .article-nav .nav-right { display: flex; align-items: center; gap: 1rem; }
+        .article-nav .nav-label { font-size: 0.6rem; color: var(--text-muted); letter-spacing: 0.08em; }
+        .article-nav .lang-switch { font-size: 0.75rem; color: var(--toki-blue); text-decoration: none; padding: 0.3rem 0.6rem; border: 1px solid var(--toki-blue); border-radius: 4px; }
+        .article-nav .lang-switch:hover { background: var(--toki-blue); color: #fff; }
+
+        .article-container { max-width: 680px; margin: 0 auto; padding: 7rem 2rem 4rem; }
+        .article-header { margin-bottom: 3rem; padding-bottom: 2rem; border-bottom: 1px solid var(--border); }
+        .article-category { font-size: 0.7rem; color: var(--toki-blue); letter-spacing: 0.15em; margin-bottom: 1rem; }
+        .article-header h1 { font-family: var(--font-display); font-size: 1.8rem; font-weight: 700; line-height: 1.4; margin-bottom: 1.5rem; }
+        .article-subtitle { font-size: 0.95rem; color: var(--text-secondary); line-height: 1.8; }
+
+        .article-content h2 { font-family: var(--font-display); font-size: 1.3rem; font-weight: 600; margin: 3rem 0 1.5rem; padding-bottom: 0.5rem; border-bottom: 2px solid var(--toki-blue-pale); }
+        .article-content p { margin-bottom: 1.5rem; }
+        .article-content blockquote { border-left: 3px solid var(--toki-blue); padding-left: 1.5rem; margin: 2rem 0; font-family: var(--font-display); color: var(--text-secondary); line-height: 2; }
+
+        .core-message { background: var(--toki-blue-pale); border-left: 4px solid var(--toki-blue); padding: 1.5rem; margin: 2rem 0; font-size: 0.95rem; line-height: 1.8; }
+        .key-point { background: linear-gradient(135deg, var(--toki-blue-pale) 0%, #fff 100%); border: 1px solid var(--accent-blue); border-radius: 8px; padding: 1.5rem; margin: 2rem 0; text-align: center; }
+        .key-point p { font-family: var(--font-display); font-size: 1.1rem; color: var(--toki-blue-dark); margin: 0; }
+
+        .cta-block { background: var(--toki-blue); border-radius: 12px; padding: 2rem; margin: 3rem 0; text-align: center; color: #fff; }
+        .cta-block p { color: rgba(255,255,255,0.85); margin-bottom: 1.2rem; font-size: 0.95rem; }
+        .cta-block a { display: inline-block; background: #fff; color: var(--toki-blue); font-weight: 600; text-decoration: none; padding: 0.7rem 1.8rem; border-radius: 6px; font-size: 0.9rem; margin: 0.3rem; }
+        .cta-block a:hover { opacity: 0.9; }
+        .cta-block a.secondary { background: transparent; color: #fff; border: 1px solid rgba(255,255,255,0.5); }
+
+        .article-footer { margin-top: 4rem; padding-top: 2rem; border-top: 1px solid var(--border); text-align: center; }
+        .article-footer p { font-size: 0.8rem; color: var(--text-muted); margin-bottom: 1rem; }
+        .article-footer a { color: var(--toki-blue); text-decoration: none; }
+
+        @media (max-width: 768px) {
+            .article-container { padding: 6rem 1.2rem 3rem; }
+            .article-header h1 { font-size: 1.5rem; }
+            .article-nav .nav-label { display: none; }
+        }
+        @media print { .article-nav { display: none; } .article-container { padding-top: 2rem; } }
+    </style>
+</head>
+<body>
+
+<nav class="article-nav">
+    <a href="essays-en.html" class="nav-brand">TokiStorage</a>
+    <div class="nav-right">
+        <span class="nav-label">ESSAY</span>
+        <a href="output-policy-separation.html" class="lang-switch">JA</a>
+    </div>
+</nav>
+
+<main class="article-container">
+    <header class="article-header">
+        <div class="article-category">META PERSPECTIVE</div>
+        <h1>Separate Experience from Reflection<br>— How Output and Policy Deepen Each Other</h1>
+        <p class="article-subtitle">When you're consumed by output, reflection disappears. The insight "I'll do it differently next time" surfaces clearly — then evaporates before the next time arrives. When output and policy were given separate homes, they began to sharpen each other.</p>
+    </header>
+
+    <article class="article-content">
+
+        <div class="core-message">The point of this essay: when output and reflection share the same space, output wins every time. Give each a dedicated home — physical separation — and a loop begins: output generates specific insight, insight refines policy, refined policy deepens the next output. This is both a personal learning structure and a design principle.</div>
+
+        <h2>1. When Output Consumes You, Reflection Disappears</h2>
+
+        <p>Right after finishing something, insight arrives. "Next time I'll approach it in this order." "That section was thin." "The opening needed a more concrete hook." The insight is vivid, specific, and actionable.</p>
+
+        <p>Then the next task starts. A new deadline, a new topic. The previous insight has nowhere to land. It sinks into the flow of experience, and the same mistakes surface again.</p>
+
+        <p>This isn't laziness — it's a structural problem. When output and reflection are mixed in the same current, output's momentum washes reflection away.</p>
+
+        <h2>2. Why "I'll Do It Differently" Evaporates</h2>
+
+        <p>Insight disappears for two reasons. First: it isn't recorded. Insights held only in memory get overwritten by the next experience. That's simply how memory works.</p>
+
+        <p>Second: even when recorded, it isn't consulted. A note taken after the fact only helps if it's read at the start of the next task. The insight earns its value only when it's standing at the door of the next output.</p>
+
+        <p>Evaporating insight has either no home, or a home that isn't wired into the flow.</p>
+
+        <h2>3. What Separation Means</h2>
+
+        <p>Separation means giving output and policy physically distinct locations.</p>
+
+        <blockquote>
+            Output: the thing made. Essays, code, proposals, logs.<br>
+            Policy: the wisdom about how to make things. Skill definitions, procedures, judgment criteria, quality checks.
+        </blockquote>
+
+        <p>When these two live in the same file, folder, or document, what needs updating becomes ambiguous. Should the essay be revised, or the rule about how to write essays? Mixed together, the question gets muddy.</p>
+
+        <p>Physical separation makes it clear: am I producing output right now, or am I reflecting? That clarity alone makes reflection harder to skip.</p>
+
+        <h2>4. Git Became the Home for Policy</h2>
+
+        <p>In this system, output and policy live in separate files, separate repositories.</p>
+
+        <p>Essays accumulate in a public repository. The skill file — the definition of how to write — lives in a private repository and updates independently. Writing an essay doesn't change the skill file. Updating the skill file doesn't change past essays.</p>
+
+        <p>Both are version-controlled, so every change leaves a trace. The evolution of policy is committed to history, readable, reversible.</p>
+
+        <h2>5. Every Essay Updates the Skill</h2>
+
+        <p>Today, it happened concretely.</p>
+
+        <p>After writing two essays, an insight arrived: eight chapters plus a CTA should be the standard. In the past, that insight would have dissolved into the next task. Today it didn't. Immediately after finishing the essays, the skill file was opened and updated — chapter count rewritten, CTA block formalized as a component, quality checklist extended. Then committed to git.</p>
+
+        <p>The insight landed in its home before it could evaporate. The next time an essay is written, that skill file will be loaded. Today's insight will be standing at the door.</p>
+
+        <h2>6. Output Concretizes Policy; Policy Deepens Output</h2>
+
+        <p>Once separation is working, a mutual evolution loop begins to run.</p>
+
+        <p>Each output generates specific insight. That insight updates policy. The updated policy, brought to the next output, surfaces problems invisible the time before. New insight arrives, policy updates again.</p>
+
+        <p>The key word is "specific." Policy tends toward abstraction — ideals and principles that float above practice. Experience grounds it. After going through an actual output, policy acquires the form: "in this situation, make this judgment." And specific policy, in turn, accelerates judgment during output and raises the quality floor.</p>
+
+        <h2>7. This Is the Structure of Human Learning</h2>
+
+        <p>The alternation of experience and reflection has long been described as the essence of learning. Experience alone repeats the same mistakes. Reflection alone loses touch with reality. When the two alternate, wisdom grows.</p>
+
+        <p>Most people treat this as a matter of intention — reflect more, be more disciplined about reviewing. That's right, but structure is what makes it sustainable. Willpower exhausts. Structure persists.</p>
+
+        <p>Separation turns intention into infrastructure. You don't need to feel like reflecting. If the policy home exists, you can write there. If you write, it remains. If it remains, it carries forward. Structure automates the learning.</p>
+
+        <h2>8. Separation Frees Both</h2>
+
+        <p>The paradox of separation is that dividing makes both more free.</p>
+
+        <p>Output can be made without worrying about policy. Give this moment your best. Whatever you notice, put it in the policy home later. Reflection doesn't need to interrupt production.</p>
+
+        <p>Policy can evolve without being judged by any single output. Even from a failed piece, insight comes. Often the failures contribute more to policy than the successes.</p>
+
+        <p>When the two share a space, each is pulled by the other's gravity. Separated, each grows at its own pace, in its own direction — and the pull between them becomes generative rather than constraining.</p>
+
+        <div class="key-point"><p>Don't keep experience and reflection in the same place. Separate them, and they begin to deepen each other.</p></div>
+
+        <div class="cta-block">
+            <p>TokiStorage is a project to democratize proof of existence — preserving voices, images, and text across physical, national, and digital layers for 1,000 years.</p>
+            <a href="https://tokistorage.github.io">Discover TokiStorage</a>
+            <a href="essays-en.html" class="secondary">Read all essays</a>
+        </div>
+
+    </article>
+
+    <footer class="article-footer">
+        <p id="essay-nav-links"></p>
+        <p style="font-size: 0.75rem; color: var(--text-muted);">&copy; TokiStorage. All rights reserved.</p>
+    </footer>
+
+</main>
+
+<script src="essay-nav.js"></script>
+<script src="essay-tts.js"></script>
+</body>
+</html>
