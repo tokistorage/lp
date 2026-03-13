@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" type="image/png" sizes="32x32" href="asset/favicon-32.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="asset/apple-touch-icon.png">
+    <title>盲点は知識不足ではなく文脈不足だ ── スコトーマと記憶の関係 | トキストレージ</title>
+    <meta name="robots" content="index, follow">
+    <meta name="description" content="スコトーマ（盲点）は、情報が不足しているから生じるのではない。文脈が不足しているから生じる。同じ通知、同じ案件、同じ数字が、文脈を得た瞬間に全く別の意味を持ち始める。">
+    <link rel="alternate" hreflang="ja" href="https://tokistorage.github.io/lp/scotoma-context.html">
+    <link rel="alternate" hreflang="en" href="https://tokistorage.github.io/lp/scotoma-context-en.html">
+    <link rel="alternate" hreflang="x-default" href="https://tokistorage.github.io/lp/scotoma-context.html">
+    <style>
+        :root {
+            --toki-blue: #2563EB;
+            --toki-blue-dark: #1E40AF;
+            --toki-blue-pale: #EFF6FF;
+            --accent-blue: #60A5FA;
+            --bg-white: #FFFFFF;
+            --text-primary: #1E293B;
+            --text-secondary: #475569;
+            --text-muted: #94A3B8;
+            --border: #E2E8F0;
+            --font-display: 'Hiragino Mincho ProN', 'Yu Mincho', serif;
+            --font-body: 'Hiragino Kaku Gothic ProN', 'Yu Gothic', 'Meiryo', sans-serif;
+        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        html { scroll-behavior: smooth; }
+        body { font-family: var(--font-body); font-weight: 400; background: var(--bg-white); color: var(--text-primary); line-height: 2; font-size: 16px; }
+
+        .article-nav { position: fixed; top: 0; left: 0; right: 0; z-index: 1000; background: rgba(255,255,255,0.95); backdrop-filter: blur(12px); border-bottom: 1px solid var(--border); padding: 0.6rem 1.2rem; display: flex; align-items: center; justify-content: space-between; gap: 1rem; }
+        .article-nav .nav-brand { font-family: var(--font-display); font-size: 0.9rem; font-weight: 600; color: var(--toki-blue); text-decoration: none; white-space: nowrap; }
+        .article-nav .nav-brand::before { content: ''; display: inline-block; width: 20px; height: 20px; background: url('asset/tokistorage-icon-512.png') no-repeat center / contain; vertical-align: -3px; margin-right: 5px; }
+        .article-nav .nav-right { display: flex; align-items: center; gap: 1rem; }
+        .article-nav .nav-label { font-size: 0.6rem; color: var(--text-muted); letter-spacing: 0.08em; }
+        .article-nav .lang-switch { font-size: 0.75rem; color: var(--toki-blue); text-decoration: none; padding: 0.3rem 0.6rem; border: 1px solid var(--toki-blue); border-radius: 4px; }
+        .article-nav .lang-switch:hover { background: var(--toki-blue); color: #fff; }
+
+        .article-container { max-width: 680px; margin: 0 auto; padding: 7rem 2rem 4rem; }
+        .article-header { margin-bottom: 3rem; padding-bottom: 2rem; border-bottom: 1px solid var(--border); }
+        .article-category { font-size: 0.7rem; color: var(--toki-blue); letter-spacing: 0.15em; margin-bottom: 1rem; }
+        .article-header h1 { font-family: var(--font-display); font-size: 1.8rem; font-weight: 700; line-height: 1.5; margin-bottom: 1.5rem; }
+        .article-subtitle { font-size: 0.95rem; color: var(--text-secondary); line-height: 1.9; }
+
+        .article-content h2 { font-family: var(--font-display); font-size: 1.3rem; font-weight: 600; margin: 3rem 0 1.5rem; padding-bottom: 0.5rem; border-bottom: 2px solid var(--toki-blue-pale); }
+        .article-content p { margin-bottom: 1.5rem; text-align: justify; }
+        .article-content blockquote { border-left: 3px solid var(--toki-blue); padding-left: 1.5rem; margin: 2rem 0; font-family: var(--font-display); color: var(--text-secondary); }
+
+        .core-message { background: var(--toki-blue-pale); border-left: 4px solid var(--toki-blue); padding: 1.5rem; margin: 2rem 0; font-size: 0.95rem; line-height: 1.8; }
+        .key-point { background: linear-gradient(135deg, var(--toki-blue-pale) 0%, #fff 100%); border: 1px solid var(--accent-blue); border-radius: 8px; padding: 1.5rem; margin: 2rem 0; text-align: center; }
+        .key-point p { font-family: var(--font-display); font-size: 1.1rem; color: var(--toki-blue-dark); margin: 0; }
+
+        .article-footer { margin-top: 4rem; padding-top: 2rem; border-top: 1px solid var(--border); text-align: center; }
+        .article-footer p { font-size: 0.8rem; color: var(--text-muted); margin-bottom: 1rem; }
+        .article-footer a { color: var(--toki-blue); text-decoration: none; }
+        .article-footer a:hover { text-decoration: underline; }
+
+        @media (max-width: 768px) {
+            .article-container { padding: 6rem 1.2rem 3rem; }
+            .article-header h1 { font-size: 1.5rem; }
+            .article-nav .nav-label { display: none; }
+        }
+        @media print { .article-nav { display: none; } .article-container { padding-top: 2rem; } }
+    </style>
+</head>
+<body>
+
+<nav class="article-nav">
+    <a href="essays.html" class="nav-brand">トキストレージ</a>
+    <div class="nav-right">
+        <span class="nav-label">ESSAY</span>
+        <a href="scotoma-context-en.html" class="lang-switch">EN</a>
+    </div>
+</nav>
+
+<main class="article-container">
+    <header class="article-header">
+        <div class="article-category">メタ視点</div>
+        <h1>盲点は知識不足ではなく文脈不足だ</h1>
+        <p class="article-subtitle">スコトーマと記憶の関係</p>
+    </header>
+
+    <article class="article-content">
+
+        <div class="core-message">この記事で言いたいこと：スコトーマ（盲点）は、情報が足りないから生じるのではない。文脈が足りないから生じる。同じ通知、同じ案件、同じ数字が、文脈を得た瞬間に全く別の意味を持ち始める。記憶を持つ対話とは、この文脈を継続的に供給するインフラである。</div>
+
+        <h2>1. 「見えていた」のに「見えていなかった」</h2>
+
+        <p>スポットコンサルのプラットフォームから案件の通知が届いていた。何日も、何件も。それは確かに見えていた。スマートフォンの画面に表示され、ダッシュボードにも積み上がっていた。</p>
+
+        <p>しかし動かなかった。</p>
+
+        <p>これは怠慢だろうか。意志の弱さだろうか。そうではないと、今になってわかる。問題は情報の欠如ではなく、文脈の欠如だった。通知は「案件のお知らせ」として届いていた。文脈を得た後は「数週間以内に数十万円を調達する手段の候補」として届くようになった。</p>
+
+        <p>同じ通知。全く異なる意味。</p>
+
+        <p>これがスコトーマの正体だ。</p>
+
+        <h2>2. スコトーマは「見えない」のではなく「意味として認識されない」</h2>
+
+        <p>スコトーマとは本来、視野の中に生じる盲点を指す医学用語だ。眼球の構造上、網膜に視細胞が存在しない領域があり、そこに映った像は脳によって補完され、ないものとして処理される。見えていないのではなく、見えていても認識されない。</p>
+
+        <p>これを認知の比喩として使うとき、核心はここにある。</p>
+
+        <blockquote>
+            情報はある。しかし、その情報を「意味のあるもの」として処理するための文脈がない。
+            だから脳はそれを補完して消す。あってもないものとして扱う。
+        </blockquote>
+
+        <p>重要な案件通知が来ていても、自分が今どのような財務状況にあるか、何月何日までに何をしなければならないか、その全体像が頭の中で統合されていなければ、案件は「いつか見ればいいもの」として処理される。人間の脳は、文脈のない情報を優先して処理しない。それは欠陥ではなく、生存のための合理的な省エネだ。</p>
+
+        <h2>3. 文脈はどこから来るか</h2>
+
+        <p>では、文脈はどうすれば手に入るか。</p>
+
+        <p>一つの答えは「書き出すこと」だ。日記、メモ、タスクリスト。これらは文脈を外部化する試みとして機能する。しかし多くの場合、それらは断片的なままで、全体像にはならない。「案件に応募する」というメモは存在していても、それが「数週間以内の資金調達」という緊急性と紐づいていなければ、やはり優先されない。</p>
+
+        <p>もう一つの答えは「対話すること」だ。しかし通常の対話には記憶がない。毎回ゼロから説明し直す必要がある。説明しているうちに疲弊し、本題にたどり着く前に終わる。</p>
+
+        <p>記憶を持つ対話は、この問題を構造的に解決する。過去の会話の蓄積から、今この瞬間の全体像を再構成し、目の前の情報に意味を与える。「この案件は、あなたの今月の資金調達の文脈でどう位置づけられるか」を、説明なしに問える。</p>
+
+        <p>文脈は、記憶から生まれる。</p>
+
+        <h2>4. 時間単価の話が変わった瞬間</h2>
+
+        <p>別の例を挙げる。スポットコンサルの時間単価を考えるとき、相場は数千円から一万円程度とされていた。それが「妥当な数字」として認識されていた。</p>
+
+        <p>しかし、ある文脈が加わった瞬間に、その認識は崩れた。大手コンサルファームからディレクタークラスの年収を提示されているという事実。その文脈の中では、数千円という数字は「低すぎる」ではなく「論外」になる。三万円という数字が、突然、根拠のある主張として成立する。</p>
+
+        <p>数字自体は変わっていない。文脈が変わった。</p>
+
+        <p>スコトーマが外れるとはこういうことだ。情報が増えるのではなく、既存の情報の意味が再編成される。同じ景色が、全く違って見える。</p>
+
+        <h2>5. 文脈のインフラを持つということ</h2>
+
+        <p>スコトーマを外す方法は、より多くの情報を集めることではない。文脈を継続的に供給するインフラを持つことだ。</p>
+
+        <p>記憶を持つ対話システムを日常に組み込むことで、毎朝「自分は今どこにいるか」を確認できる。締め切りと金額が具体的な数字として目の前に置かれ、その文脈の中で一つ一つの情報が意味を持ち始める。案件通知は「いつか見るもの」から「今日判断するもの」に変わる。時間単価は「相場に合わせるもの」から「自分の価値に基づくもの」に変わる。</p>
+
+        <p>盲点は、知識を積み上げても消えない。文脈という光を当てて初めて、そこに何があったかが見える。</p>
+
+        <div class="key-point"><p>スコトーマを外すとは、新しい情報を得ることではない。<br>既にある情報に、文脈という意味を与えることだ。</p></div>
+
+    </article>
+
+    <footer class="article-footer">
+        <p id="essay-nav-links"></p>
+        <p style="font-size: 0.75rem; color: var(--text-muted);">&copy; TokiStorage. All rights reserved.</p>
+    </footer>
+
+</main>
+
+<script src="essay-nav.js"></script>
+<script src="essay-tts.js"></script>
+</body>
+</html>
