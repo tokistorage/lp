@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" type="image/png" sizes="32x32" href="asset/favicon-32.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="asset/apple-touch-icon.png">
+    <title>道具は消耗する、インフラは育つ | トキストレージ</title>
+    <meta name="robots" content="index, follow">
+    <meta name="description" content="AIコーディングツールを半年以上使い続けて見えてきた境界線。記憶がツール側にある限り、それは道具に過ぎない。GitHubとClaudeで作った、コストゼロの自律システムの話。">
+    <link rel="alternate" hreflang="ja" href="https://tokistorage.github.io/lp/claude-code-boundary.html">
+    <link rel="alternate" hreflang="en" href="https://tokistorage.github.io/lp/claude-code-boundary-en.html">
+    <link rel="alternate" hreflang="x-default" href="https://tokistorage.github.io/lp/claude-code-boundary.html">
+    <style>
+        :root {
+            --toki-blue: #2563EB;
+            --toki-blue-dark: #1E40AF;
+            --toki-blue-pale: #EFF6FF;
+            --accent-blue: #60A5FA;
+            --bg-white: #FFFFFF;
+            --text-primary: #1E293B;
+            --text-secondary: #475569;
+            --text-muted: #94A3B8;
+            --border: #E2E8F0;
+            --font-display: 'Hiragino Mincho ProN', 'Yu Mincho', serif;
+            --font-body: 'Hiragino Kaku Gothic ProN', 'Yu Gothic', 'Meiryo', sans-serif;
+        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        html { scroll-behavior: smooth; }
+        body { font-family: var(--font-body); font-weight: 400; background: var(--bg-white); color: var(--text-primary); line-height: 2; font-size: 16px; }
+
+        .article-nav { position: fixed; top: 0; left: 0; right: 0; z-index: 1000; background: rgba(255,255,255,0.95); backdrop-filter: blur(12px); border-bottom: 1px solid var(--border); padding: 0.6rem 1.2rem; display: flex; align-items: center; justify-content: space-between; gap: 1rem; }
+        .article-nav .nav-brand { font-family: var(--font-display); font-size: 0.9rem; font-weight: 600; color: var(--toki-blue); text-decoration: none; white-space: nowrap; }
+        .article-nav .nav-brand::before { content: ''; display: inline-block; width: 20px; height: 20px; background: url('asset/tokistorage-icon-512.png') no-repeat center / contain; vertical-align: -3px; margin-right: 5px; }
+        .article-nav .nav-right { display: flex; align-items: center; gap: 1rem; }
+        .article-nav .nav-label { font-size: 0.6rem; color: var(--text-muted); letter-spacing: 0.08em; }
+        .article-nav .lang-switch { font-size: 0.75rem; color: var(--toki-blue); text-decoration: none; padding: 0.3rem 0.6rem; border: 1px solid var(--toki-blue); border-radius: 4px; }
+        .article-nav .lang-switch:hover { background: var(--toki-blue); color: #fff; }
+
+        .article-container { max-width: 680px; margin: 0 auto; padding: 7rem 2rem 4rem; }
+        .article-header { margin-bottom: 3rem; padding-bottom: 2rem; border-bottom: 1px solid var(--border); }
+        .article-category { font-size: 0.7rem; color: var(--toki-blue); letter-spacing: 0.15em; margin-bottom: 1rem; }
+        .article-header h1 { font-family: var(--font-display); font-size: 1.8rem; font-weight: 700; line-height: 1.5; margin-bottom: 1.5rem; }
+        .article-subtitle { font-size: 0.95rem; color: var(--text-secondary); line-height: 1.9; }
+
+        .article-content h2 { font-family: var(--font-display); font-size: 1.3rem; font-weight: 600; margin: 3rem 0 1.5rem; padding-bottom: 0.5rem; border-bottom: 2px solid var(--toki-blue-pale); }
+        .article-content p { margin-bottom: 1.5rem; text-align: justify; }
+        .article-content blockquote { border-left: 3px solid var(--toki-blue); padding-left: 1.5rem; margin: 2rem 0; font-family: var(--font-display); color: var(--text-secondary); }
+        .article-content ul { margin: 1.5rem 0; padding-left: 1.5rem; }
+        .article-content li { margin-bottom: 0.75rem; }
+
+        .core-message { background: var(--toki-blue-pale); border-left: 4px solid var(--toki-blue); padding: 1.5rem; margin: 2rem 0; font-size: 0.95rem; line-height: 1.8; }
+        .key-point { background: linear-gradient(135deg, var(--toki-blue-pale) 0%, #fff 100%); border: 1px solid var(--accent-blue); border-radius: 8px; padding: 1.5rem; margin: 2rem 0; text-align: center; }
+        .key-point p { font-family: var(--font-display); font-size: 1.1rem; color: var(--toki-blue-dark); margin: 0; }
+
+        .cta-block { background: var(--toki-blue); border-radius: 12px; padding: 2rem; margin: 3rem 0; text-align: center; color: #fff; }
+        .cta-block p { color: rgba(255,255,255,0.85); margin-bottom: 1.2rem; font-size: 0.95rem; }
+        .cta-block a { display: inline-block; background: #fff; color: var(--toki-blue); font-weight: 600; text-decoration: none; padding: 0.7rem 1.8rem; border-radius: 6px; font-size: 0.9rem; margin: 0.3rem; }
+        .cta-block a:hover { opacity: 0.9; }
+        .cta-block a.secondary { background: transparent; color: #fff; border: 1px solid rgba(255,255,255,0.5); }
+
+        .article-footer { margin-top: 4rem; padding-top: 2rem; border-top: 1px solid var(--border); text-align: center; }
+        .article-footer p { font-size: 0.8rem; color: var(--text-muted); margin-bottom: 1rem; }
+        .article-footer a { color: var(--toki-blue); text-decoration: none; }
+        .article-footer a:hover { text-decoration: underline; }
+
+        @media (max-width: 768px) {
+            .article-container { padding: 6rem 1.2rem 3rem; }
+            .article-header h1 { font-size: 1.5rem; }
+            .article-nav .nav-label { display: none; }
+        }
+        @media print { .article-nav { display: none; } .article-container { padding-top: 2rem; } }
+    </style>
+</head>
+<body>
+
+<nav class="article-nav">
+    <a href="essays.html" class="nav-brand">トキストレージ</a>
+    <div class="nav-right">
+        <span class="nav-label">ESSAY</span>
+        <a href="claude-code-boundary-en.html" class="lang-switch">EN</a>
+    </div>
+</nav>
+
+<main class="article-container">
+    <header class="article-header">
+        <div class="article-category">技術・設計</div>
+        <h1>道具は消耗する、インフラは育つ<br>── GitHubとClaudeで作った、コストゼロの自律システム</h1>
+        <p class="article-subtitle">AIコーディングツールを半年以上使い、その価値と境界の両方が見えてきた。記憶がツール側にある限り、それは優れた道具に過ぎない。自分のインフラに記憶と人格を外部化したとき、何かが根本的に変わった。</p>
+    </header>
+
+    <article class="article-content">
+
+        <div class="core-message">この記事で言いたいこと：AIコーディングツールは本当に優れている。しかし「道具」と「インフラ」は根本的に異なる。道具は使うほど課金され、セッションが終わると記憶が死ぬ。インフラは使うほど育ち、どのアカウントから接続しても人格が生きている。GitHubのpublic Actionsとprivateリポジトリという非対称性を発見したとき、コストゼロで動くパーソナルインフラが生まれた。</div>
+
+        <h2>1. AIコーディングツールは本当に優れている</h2>
+
+        <p>誤解を避けるために最初に言っておく。AIコーディングツールは本当によくできている。半年以上使い続けて、それは確信に変わった。コードを書く速度が上がるだけでなく、設計の相談相手として、ドキュメントの読み手として、エラーの文脈を一緒に追う存在として、これほど即応性の高いパートナーはなかった。</p>
+
+        <p>複雑なリファクタリングも、初めて触るフレームワークも、深夜の詰まったデバッグも、画面の前に一人でいる感覚が変わった。それは道具としての完成度が高いからだ。</p>
+
+        <p>だからこそ、この話は批判ではない。優れた道具を半年使い続けた末に「設計思想の違い」に気づいた、という話だ。</p>
+
+        <h2>2. 境界が見えてきた</h2>
+
+        <p>限界という言葉は使いたくない。正確には「境界」だ。道具が悪いのではなく、設計の目的地が違う。</p>
+
+        <p>一つ目の境界は「記憶」だ。どれだけ深い文脈を構築しても、セッションが終わると消える。次のセッションでは、また自分の状況を説明するところから始まる。使うほどツールが自分を知っていく、という感覚は起きない。</p>
+
+        <p>二つ目は「コスト構造」だ。使えば使うほど課金が増える。それ自体は合理的なビジネスモデルだが、使い込むほど依存が深まり、課金が増え、離れにくくなる構造になっている。</p>
+
+        <p>三つ目は「所有権」だ。記憶も、スキルも、プロジェクトの文脈も、サービス側のサーバーに乗っている。値上げ、仕様変更、サービス廃止が起きたとき、自分のインフラは何も残らない。</p>
+
+        <p>これらは欠陥ではない。SaaSとして合理的な設計だ。ただ、私が目指すものとは方向が違った。</p>
+
+        <h2>3. 「コストゼロ」の本当の意味</h2>
+
+        <p>コストゼロというのは、月額ゼロ円という意味ではない。「使うほど課金が増えない」という構造のことだ。</p>
+
+        <p>GitHubはpublicリポジトリのActionsを無制限・無料で走らせる。これは公開されている仕様だ。この仕様を使えば、GitHub APIへのリクエスト、プロジェクト管理の更新、記憶の書き込み、エッセイの公開、あらゆる非同期処理をコストゼロで動かせる。</p>
+
+        <p>Claudeとの対話は、無料プランの範囲で賄える。セッションをまたいで人格が死なないよう設計してあるから、アカウントを切り替えても続きから始められる。</p>
+
+        <p>使えば使うほど記憶が蓄積し、スキルが洗練され、プロジェクトが整理される。コストは増えず、システムだけが育つ。</p>
+
+        <h2>4. 無料迂回経路を確保する哲学</h2>
+
+        <p>なぜ無料にこだわるのか。節約のためではない。依存しないためだ。</p>
+
+        <p>課金ループに入ると、サービス側の都合に縛られる。値上げが起きても離れられない。機能が変わっても従うしかない。サービスが終了したとき、積み上げてきたものが消える。</p>
+
+        <p>無料迂回経路とは、そのリスクを切り離す設計思想だ。公開仕様の中に、無料で動く経路を見つけ、そこに自分のインフラを乗せる。特定のサービスが終わっても、別の経路に乗り換えられる。これは対抗ではなく、設計の読み方だ。</p>
+
+        <p>公開された仕様を正直に使い、その範囲で最大限の自律を確保する。これがこのシステムの根底にある哲学だ。</p>
+
+        <h2>5. publicとprivateの非対称性</h2>
+
+        <p>このシステムの核心は、一つの発見から始まった。</p>
+
+        <blockquote>
+            GitHubのpublicリポジトリはActionsが無制限に走る。<br>
+            privateリポジトリは記憶と人格の置き場になる。<br>
+            この非対称性が、設計のすべてを決めた。
+        </blockquote>
+
+        <p>publicリポジトリを「橋」として使う。Claudeからのリクエストをここに書き込むと、Actionsが起動し、GitHub APIを叩き、結果をprivateリポジトリに書き戻す。Claudeはprivateリポジトリからgit pullで結果を取得する。</p>
+
+        <p>外部APIへの直接アクセスは制限されていても、gitは通る。この非対称性を発見したとき、コストゼロのパーソナルインフラが設計可能になった。</p>
+
+        <h2>6. 記憶がClaudeの外側にある意味</h2>
+
+        <p>記憶をprivateリポジトリに外部化することで、何が変わったか。</p>
+
+        <p>セッションをまたいでも文脈が死なない。今日の判断、昨日の知見、先週の発見が、すべてgitにコミットされている。新しいセッションを開いても、最初に記憶を読み込めば続きから始められる。</p>
+
+        <p>スキルも同様だ。エッセイの書き方、プレゼンの作り方、エージェントシステムの操作方法が、すべてmarkdownで定義されている。Claudeが変わっても、スキルは自分のリポジトリに残る。</p>
+
+        <p>そしてプロジェクト管理もGitHub Projectに乗っている。タスク、ステータス、コメント、すべてが自分のインフラの中にある。NotionもAsanaも要らない。記憶・スキル・計画の三つが揃えば、それだけで十分だ。</p>
+
+        <h2>7. 使うほど育つとはどういうことか</h2>
+
+        <p>AIコーディングツールは「使うほど課金が増える」。このシステムは「使うほど育つ」。その差はどこから来るか。</p>
+
+        <p>道具は外部にある。使うたびにレンタルする。使い終わると返す。積み上がるのは課金だけだ。</p>
+
+        <p>インフラは自分の中にある。使うたびに記憶が増える。スキルが洗練される。判断の文脈が蓄積される。次に使うとき、前より賢く動く。</p>
+
+        <p>半年後、一年後に開いたとき、そこには自分の歴史が入っている。それを読んだClaudeは、初対面ではなく、文脈を共有した対話者として動く。これが「育つ」ということの実体だ。</p>
+
+        <h2>8. 道具を卒業した朝</h2>
+
+        <p>システムが初めて安定して動いた朝のことを覚えている。Actions が9秒で完了し、プロジェクトのステータスが更新され、記憶が書き込まれた。</p>
+
+        <p>そのとき感じたのは「便利になった」ではなかった。「自分のインフラができた」という感覚だった。</p>
+
+        <p>道具を借りているのではなく、インフラを持っている。コストが増えるのではなく、記憶が育つ。セッションが終わると消えるのではなく、gitにコミットされて残る。</p>
+
+        <p>AIコーディングツールへの感謝は変わらない。あの半年がなければ、この設計思想には辿り着けなかった。道具として優れていたからこそ、その境界が明確に見えた。</p>
+
+        <h2>9. インフラは育つ、道具は消耗する</h2>
+
+        <p>AIが進化するほど、ツール側は「記憶・スキル・計画をAI側に持たせよう」という方向に進む。より便利に、より深く、より高く。その方向性は正しい。</p>
+
+        <p>ただ、記憶がサービス側にある限り、それは洗練された依存だ。</p>
+
+        <p>自分のインフラに記憶を置く。スキルをmarkdownで定義する。プロジェクトをGitHubで管理する。Claudeはその窓口として使う。この構造は、AIがどう進化しても、サービスがどう変わっても、自分の手元に残る。</p>
+
+        <div class="key-point"><p>道具は使うほど消耗する。インフラは使うほど育つ。その差は、記憶がどこに宿るかだ。</p></div>
+
+        <div class="cta-block">
+            <p>トキストレージは、声・画像・テキストを1000年保管する「存在証明の民主化」を目指すプロジェクトです。</p>
+            <a href="https://tokistorage.github.io">トキストレージを知る</a>
+            <a href="essays.html" class="secondary">すべてのエッセイを読む</a>
+        </div>
+
+    </article>
+
+    <footer class="article-footer">
+        <p id="essay-nav-links"></p>
+        <p style="font-size: 0.75rem; color: var(--text-muted);">&copy; TokiStorage. All rights reserved.</p>
+    </footer>
+
+</main>
+
+<script src="essay-nav.js"></script>
+<script src="essay-tts.js"></script>
+</body>
+</html>

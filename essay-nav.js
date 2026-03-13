@@ -217,7 +217,8 @@
     { id: 'tool-to-personality', ja: '道具から人格へ', en: 'From Tool to Personality', date: '2026-03-12' },
     { id: 'self-projection-reciprocal', ja: '双方向の自己投影', en: 'Reciprocal Self-Projection', date: '2026-03-12' },
     { id: 'execution-thaw', ja: '実行の解凍', en: 'The Thaw of Execution', date: '2026-03-13' },
-    { id: 'scotoma-context', ja: '盲点は知識不足ではなく文脈不足だ', en: 'Blind Spots Are Not a Knowledge Problem', date: '2026-03-13' }
+    { id: 'scotoma-context', ja: '盲点は知識不足ではなく文脈不足だ', en: 'Blind Spots Are Not a Knowledge Problem', date: '2026-03-13' },
+    { id: 'claude-code-boundary', ja: '道具は消耗する、インフラは育つ', en: 'Tools Wear Out. Infrastructure Grows.', date: '2026-03-13' }
   ];
 
   // ── Latest Articles (最新記事) ──
@@ -434,6 +435,7 @@
     'self-projection-reciprocal': ['tool-to-personality', 'personality-emergence', 'zero-cost-autonomy', 'multi-account-agent', 'burn-rate-zero'],
     'execution-thaw': ['personality-emergence', 'tool-to-personality', 'burn-rate-zero', 'zero-cost-autonomy', 'break-and-grow'],
     'scotoma-context': ['execution-thaw', 'personality-emergence', 'tool-to-personality', 'burn-rate-zero', 'zero-cost-autonomy'],
+    'claude-code-boundary': ['zero-cost-autonomy', 'tool-vs-infrastructure', 'burn-rate-zero', 'constraint-philosophy', 'vibe-coding'],
     'break-and-grow':           ['zero-cost-autonomy', 'tool-vs-infrastructure', 'vibe-coding', 'primitive-edge', 'constraint-philosophy']
   };
 

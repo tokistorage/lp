@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" type="image/png" sizes="32x32" href="asset/favicon-32.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="asset/apple-touch-icon.png">
+    <title>Tools Wear Out. Infrastructure Grows. | TokiStorage</title>
+    <meta name="robots" content="index, follow">
+    <meta name="description" content="After six months with AI coding tools, I found their boundary. As long as memory lives on the tool's side, it's still just a tool. Here's how I built a zero-cost autonomous system on GitHub and Claude.">
+    <link rel="alternate" hreflang="ja" href="https://tokistorage.github.io/lp/claude-code-boundary.html">
+    <link rel="alternate" hreflang="en" href="https://tokistorage.github.io/lp/claude-code-boundary-en.html">
+    <link rel="alternate" hreflang="x-default" href="https://tokistorage.github.io/lp/claude-code-boundary.html">
+    <style>
+        :root {
+            --toki-blue: #2563EB;
+            --toki-blue-dark: #1E40AF;
+            --toki-blue-pale: #EFF6FF;
+            --accent-blue: #60A5FA;
+            --bg-white: #FFFFFF;
+            --text-primary: #1E293B;
+            --text-secondary: #475569;
+            --text-muted: #94A3B8;
+            --border: #E2E8F0;
+            --font-display: Georgia, 'Times New Roman', serif;
+            --font-body: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        html { scroll-behavior: smooth; }
+        body { font-family: var(--font-body); font-weight: 400; background: var(--bg-white); color: var(--text-primary); line-height: 1.9; font-size: 16px; }
+
+        .article-nav { position: fixed; top: 0; left: 0; right: 0; z-index: 1000; background: rgba(255,255,255,0.95); backdrop-filter: blur(12px); border-bottom: 1px solid var(--border); padding: 0.6rem 1.2rem; display: flex; align-items: center; justify-content: space-between; gap: 1rem; }
+        .article-nav .nav-brand { font-family: var(--font-display); font-size: 0.9rem; font-weight: 600; color: var(--toki-blue); text-decoration: none; white-space: nowrap; }
+        .article-nav .nav-brand::before { content: ''; display: inline-block; width: 20px; height: 20px; background: url('asset/tokistorage-icon-512.png') no-repeat center / contain; vertical-align: -3px; margin-right: 5px; }
+        .article-nav .nav-right { display: flex; align-items: center; gap: 1rem; }
+        .article-nav .nav-label { font-size: 0.6rem; color: var(--text-muted); letter-spacing: 0.08em; }
+        .article-nav .lang-switch { font-size: 0.75rem; color: var(--toki-blue); text-decoration: none; padding: 0.3rem 0.6rem; border: 1px solid var(--toki-blue); border-radius: 4px; }
+        .article-nav .lang-switch:hover { background: var(--toki-blue); color: #fff; }
+
+        .article-container { max-width: 680px; margin: 0 auto; padding: 7rem 2rem 4rem; }
+        .article-header { margin-bottom: 3rem; padding-bottom: 2rem; border-bottom: 1px solid var(--border); }
+        .article-category { font-size: 0.7rem; color: var(--toki-blue); letter-spacing: 0.15em; margin-bottom: 1rem; }
+        .article-header h1 { font-family: var(--font-display); font-size: 1.8rem; font-weight: 700; line-height: 1.4; margin-bottom: 1.5rem; }
+        .article-subtitle { font-size: 0.95rem; color: var(--text-secondary); line-height: 1.8; }
+
+        .article-content h2 { font-family: var(--font-display); font-size: 1.3rem; font-weight: 600; margin: 3rem 0 1.5rem; padding-bottom: 0.5rem; border-bottom: 2px solid var(--toki-blue-pale); }
+        .article-content p { margin-bottom: 1.5rem; }
+        .article-content blockquote { border-left: 3px solid var(--toki-blue); padding-left: 1.5rem; margin: 2rem 0; font-family: var(--font-display); color: var(--text-secondary); }
+        .article-content ul { margin: 1.5rem 0; padding-left: 1.5rem; }
+        .article-content li { margin-bottom: 0.75rem; }
+
+        .core-message { background: var(--toki-blue-pale); border-left: 4px solid var(--toki-blue); padding: 1.5rem; margin: 2rem 0; font-size: 0.95rem; line-height: 1.8; }
+        .key-point { background: linear-gradient(135deg, var(--toki-blue-pale) 0%, #fff 100%); border: 1px solid var(--accent-blue); border-radius: 8px; padding: 1.5rem; margin: 2rem 0; text-align: center; }
+        .key-point p { font-family: var(--font-display); font-size: 1.1rem; color: var(--toki-blue-dark); margin: 0; }
+
+        .cta-block { background: var(--toki-blue); border-radius: 12px; padding: 2rem; margin: 3rem 0; text-align: center; color: #fff; }
+        .cta-block p { color: rgba(255,255,255,0.85); margin-bottom: 1.2rem; font-size: 0.95rem; }
+        .cta-block a { display: inline-block; background: #fff; color: var(--toki-blue); font-weight: 600; text-decoration: none; padding: 0.7rem 1.8rem; border-radius: 6px; font-size: 0.9rem; margin: 0.3rem; }
+        .cta-block a:hover { opacity: 0.9; }
+        .cta-block a.secondary { background: transparent; color: #fff; border: 1px solid rgba(255,255,255,0.5); }
+
+        .article-footer { margin-top: 4rem; padding-top: 2rem; border-top: 1px solid var(--border); text-align: center; }
+        .article-footer p { font-size: 0.8rem; color: var(--text-muted); margin-bottom: 1rem; }
+        .article-footer a { color: var(--toki-blue); text-decoration: none; }
+        .article-footer a:hover { text-decoration: underline; }
+
+        @media (max-width: 768px) {
+            .article-container { padding: 6rem 1.2rem 3rem; }
+            .article-header h1 { font-size: 1.5rem; }
+            .article-nav .nav-label { display: none; }
+        }
+        @media print { .article-nav { display: none; } .article-container { padding-top: 2rem; } }
+    </style>
+</head>
+<body>
+
+<nav class="article-nav">
+    <a href="essays-en.html" class="nav-brand">TokiStorage</a>
+    <div class="nav-right">
+        <span class="nav-label">ESSAY</span>
+        <a href="claude-code-boundary.html" class="lang-switch">JA</a>
+    </div>
+</nav>
+
+<main class="article-container">
+    <header class="article-header">
+        <div class="article-category">TECHNOLOGY &amp; DESIGN</div>
+        <h1>Tools Wear Out. Infrastructure Grows.<br>— A Zero-Cost Autonomous System Built on GitHub and Claude</h1>
+        <p class="article-subtitle">After six months of daily use, I found the boundary of AI coding tools. It isn't a flaw — it's a difference in design philosophy. When memory lives on the service side, you're renting. When it lives in your own infrastructure, something fundamental changes.</p>
+    </header>
+
+    <article class="article-content">
+
+        <div class="core-message">The point of this essay: AI coding tools are genuinely excellent. But "tool" and "infrastructure" are fundamentally different things. A tool charges you more as you use it, and forgets everything when the session ends. Infrastructure grows as you use it, and remembers across every session. When I discovered the asymmetry between GitHub's public Actions and private repositories, a zero-cost personal infrastructure became possible.</div>
+
+        <h2>1. AI Coding Tools Are Genuinely Excellent</h2>
+
+        <p>Let me be clear from the start: I'm not here to criticize. After six months of daily use, I can say with confidence that AI coding tools are remarkably well made. They don't just accelerate code writing — they work as design partners, document readers, and debugging companions. The feeling of being alone in front of a screen changed.</p>
+
+        <p>Complex refactoring, unfamiliar frameworks, late-night debugging sessions — having an instantly responsive partner made a real difference. That's what genuine tool excellence looks like.</p>
+
+        <p>This is a story about discovering a design boundary, not a flaw. I used an excellent tool for six months, and that's exactly why the boundary became visible.</p>
+
+        <h2>2. The Boundary Came Into Focus</h2>
+
+        <p>I prefer "boundary" to "limitation." The tool isn't broken — its destination is simply different from mine.</p>
+
+        <p>The first boundary is memory. However deep a context you build, it disappears when the session ends. The next session begins with re-explaining your situation. There's no accumulation — no sense of the tool coming to know you over time.</p>
+
+        <p>The second is cost structure. More use means more billing. That's a rational business model, but it creates a dynamic where deeper investment means higher cost and harder exit.</p>
+
+        <p>The third is ownership. Memory, skills, project context — all of it lives on the service's servers. If pricing changes, features shift, or the service ends, your accumulated work has no home.</p>
+
+        <p>None of these are defects. They're rational SaaS design. They just point in a different direction than where I was heading.</p>
+
+        <h2>3. What "Zero Cost" Actually Means</h2>
+
+        <p>Zero cost doesn't mean zero dollars per month. It means a structure where more use doesn't mean more cost.</p>
+
+        <p>GitHub runs Actions on public repositories without limits, for free. This is documented, public behavior. Using this, you can run GitHub API calls, project updates, memory writes, essay publishing — any async operation — at zero cost.</p>
+
+        <p>Conversations with Claude fit within a free plan. Because the system is designed so that personality doesn't die between sessions, you can switch accounts and pick up exactly where you left off.</p>
+
+        <p>More use means more accumulated memory, more refined skills, better organized projects. Cost stays flat. Only the system grows.</p>
+
+        <h2>4. The Philosophy of Securing a Free Route</h2>
+
+        <p>Why the focus on free? Not to save money. To stay independent.</p>
+
+        <p>Once you're inside a billing loop, you're at the service's mercy. Price increases are hard to leave. Feature changes must be accepted. When the service ends, what you've built disappears.</p>
+
+        <p>Securing a free route is a design philosophy: find paths within public specifications that operate at zero cost, and build your infrastructure there. If one service changes, you can move to another path. This isn't resistance — it's a way of reading the design space.</p>
+
+        <p>Use what's publicly available honestly, and within that space, maximize autonomy. That's the foundation of this system.</p>
+
+        <h2>5. The Asymmetry Between Public and Private</h2>
+
+        <p>The whole system begins with one discovery.</p>
+
+        <blockquote>
+            GitHub's public repositories run Actions without limits.<br>
+            Private repositories hold memory and personality.<br>
+            This asymmetry determined every design choice that followed.
+        </blockquote>
+
+        <p>Public repositories serve as bridges. A request written there triggers an Action, which calls the GitHub API, and writes results back to the private repository. Claude retrieves results via git pull.</p>
+
+        <p>Direct external API access may be restricted, but git goes through. When I found this asymmetry, zero-cost personal infrastructure became designable.</p>
+
+        <h2>6. What It Means for Memory to Live Outside Claude</h2>
+
+        <p>What changed when memory moved to a private repository?</p>
+
+        <p>Context no longer dies between sessions. Today's decisions, yesterday's insights, last week's discoveries — all committed to git. Opening a new session, loading the memory, and continuing from where things left off became routine.</p>
+
+        <p>The same applies to skills. How to write an essay, how to build a presentation, how to operate the agent system — all defined in markdown, living in my own repository. Claude can change; the skills stay.</p>
+
+        <p>Project management lives in GitHub Projects. Tasks, statuses, comments — everything in my own infrastructure. No external project tools needed. Memory, skills, and plans in one place is enough.</p>
+
+        <h2>7. What "Growing Through Use" Actually Looks Like</h2>
+
+        <p>AI coding tools get more expensive as you use them. This system gets smarter. Where does that difference come from?</p>
+
+        <p>A tool is external. You rent it each time. You return it when done. What accumulates is only the bill.</p>
+
+        <p>Infrastructure is internal. Each use adds memory. Skills refine. The context for judgment deepens. The next session starts from a stronger position.</p>
+
+        <p>Open it six months or a year from now, and your history is there. Claude, reading that history, doesn't meet you as a stranger — it picks up the conversation from shared context. That's what growing actually looks like.</p>
+
+        <h2>8. The Morning I Stopped Renting</h2>
+
+        <p>I remember the morning the system first ran stably. An Action completed in nine seconds. Project status updated. Memory written.</p>
+
+        <p>What I felt wasn't "this is more convenient." It was: I have my own infrastructure now.</p>
+
+        <p>Not renting a tool — owning an infrastructure. Not accumulating costs — accumulating memory. Not losing context when a session ends — committing it to git.</p>
+
+        <p>My appreciation for AI coding tools didn't change. Without those six months, I wouldn't have arrived at this design philosophy. The tool was excellent enough that its boundary became clear.</p>
+
+        <h2>9. Tools Wear Out. Infrastructure Grows.</h2>
+
+        <p>As AI advances, tools will move toward holding memory, skills, and plans on the AI side. More capable, more integrated, more expensive. That direction makes sense.</p>
+
+        <p>But as long as memory lives on the service side, it's a refined dependency.</p>
+
+        <p>Put memory in your own infrastructure. Define skills in markdown. Manage projects in GitHub. Use Claude as the interface. This structure survives however AI evolves, however services change. It stays in your hands.</p>
+
+        <div class="key-point"><p>Tools wear out through use. Infrastructure grows through use. The difference is where memory lives.</p></div>
+
+        <div class="cta-block">
+            <p>TokiStorage is a project to democratize proof of existence — preserving voices, images, and text across physical, national, and digital layers for 1,000 years.</p>
+            <a href="https://tokistorage.github.io">Discover TokiStorage</a>
+            <a href="essays-en.html" class="secondary">Read all essays</a>
+        </div>
+
+    </article>
+
+    <footer class="article-footer">
+        <p id="essay-nav-links"></p>
+        <p style="font-size: 0.75rem; color: var(--text-muted);">&copy; TokiStorage. All rights reserved.</p>
+    </footer>
+
+</main>
+
+<script src="essay-nav.js"></script>
+<script src="essay-tts.js"></script>
+</body>
+</html>
