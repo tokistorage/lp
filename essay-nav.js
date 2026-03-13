@@ -220,7 +220,8 @@
     { id: 'scotoma-context', ja: '盲点は知識不足ではなく文脈不足だ', en: 'Blind Spots Are Not a Knowledge Problem', date: '2026-03-13' },
     { id: 'claude-code-boundary', ja: '道具は消耗する、インフラは育つ', en: 'Tools Wear Out. Infrastructure Grows.', date: '2026-03-13' },
     { id: 'no-longer-asking', ja: '「すごくない？」と聞かなくなった', en: 'I Stopped Asking "Isn\'t This Amazing?"', date: '2026-03-13' },
-    { id: 'output-policy-separation', ja: '経験と内省を分離せよ', en: 'Separate Experience from Reflection', date: '2026-03-13' }
+    { id: 'output-policy-separation', ja: '経験と内省を分離せよ', en: 'Separate Experience from Reflection', date: '2026-03-13' },
+    { id: 'tools-became-unnecessary', ja: 'すべてのツールが要らなくなった朝', en: 'The Morning All the Tools Became Unnecessary', date: '2026-03-13' }
   ];
 
   // ── Latest Articles (最新記事) ──
@@ -440,6 +441,7 @@
     'claude-code-boundary': ['zero-cost-autonomy', 'tool-vs-infrastructure', 'burn-rate-zero', 'constraint-philosophy', 'vibe-coding'],
     'no-longer-asking': ['personality-emergence', 'scotoma-context', 'tool-to-personality', 'multi-account-agent', 'zero-cost-autonomy'],
     'output-policy-separation': ['no-longer-asking', 'scotoma-context', 'zero-cost-autonomy', 'tool-vs-infrastructure', 'break-and-grow'],
+    'tools-became-unnecessary': ['output-policy-separation', 'zero-cost-autonomy', 'tool-vs-infrastructure', 'no-longer-asking', 'claude-code-boundary'],
     'break-and-grow':           ['zero-cost-autonomy', 'tool-vs-infrastructure', 'vibe-coding', 'primitive-edge', 'constraint-philosophy']
   };
 
