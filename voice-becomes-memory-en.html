@@ -156,12 +156,13 @@
     <p>This isn't a workaround for constraints. It's simply a healthier way to work with AI. Not always-on, throw-everything-at-it dependency — but thinking on your own, recording by voice, calling AI only when processing is the bottleneck. Not dependence. Collaboration.</p>
 
     <h2>10. Memory Doesn't Stop at 30,000 Feet</h2>
-    <p>This system assumes an internet connection. Dispatching to GitHub Actions requires one.</p>
-    <p>So what happens on a plane? What about off-grid time?</p>
+    <p>TokiStorage was born from an exploration of disaster resilience. Earthquakes, floods, war, infrastructure collapse — the design assumes memory must survive all of it.</p>
+    <p>Follow that philosophy to its conclusion, and offline capability isn't a feature. It's the implementation of a principle. A system that can only record when the internet works will fail at exactly the moment it matters most.</p>
+    <p>A plane is a small version of that scenario. Communication cuts out. Thought doesn't.</p>
     <p>The answer is a local queue. When offline, voice input saves directly to the iPhone instead. GPS coordinates still work without a connection, so location and timestamp are captured. Address and weather require APIs, so those fields stay empty. That's fine.</p>
     <p>The moment Wi-Fi connects after landing, an automation fires. It loops through the queued files, dispatches each one to the infrastructure, moves sent items to an archive folder, and waits ten seconds between each to avoid rate limits.</p>
     <blockquote>
-      Airplane mode → voice input → saved to iCloud Drive queue<br>
+      Airplane mode → voice input → saved to iPhone queue<br>
       ↓<br>
       Wi-Fi connects (landing) → automation fires → dispatch each → archive
     </blockquote>
