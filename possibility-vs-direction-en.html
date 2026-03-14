@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" type="image/png" sizes="32x32" href="asset/favicon-32.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="asset/apple-touch-icon.png">
+    <title>Between What You Can Do and What You Should | TokiStorage</title>
+    <meta name="robots" content="index, follow">
+    <meta name="description" content="The moment you realize GitHub Actions can do anything, the SaaS temptation begins. Technical possibility is not direction. Philosophy must come first.">
+    <link rel="alternate" hreflang="ja" href="https://tokistorage.github.io/lp/possibility-vs-direction.html">
+    <link rel="alternate" hreflang="en" href="https://tokistorage.github.io/lp/possibility-vs-direction-en.html">
+    <link rel="alternate" hreflang="x-default" href="https://tokistorage.github.io/lp/possibility-vs-direction.html">
+    <style>
+        :root {
+            --toki-blue: #2563EB;
+            --toki-blue-dark: #1E40AF;
+            --toki-blue-pale: #EFF6FF;
+            --accent-blue: #60A5FA;
+            --bg-white: #FFFFFF;
+            --text-primary: #1E293B;
+            --text-secondary: #475569;
+            --text-muted: #94A3B8;
+            --border: #E2E8F0;
+            --font-display: Georgia, 'Times New Roman', serif;
+            --font-body: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        html { scroll-behavior: smooth; }
+        body { font-family: var(--font-body); font-weight: 400; background: var(--bg-white); color: var(--text-primary); line-height: 1.9; font-size: 16px; }
+
+        .article-nav { position: fixed; top: 0; left: 0; right: 0; z-index: 1000; background: rgba(255,255,255,0.95); backdrop-filter: blur(12px); border-bottom: 1px solid var(--border); padding: 0.6rem 1.2rem; display: flex; align-items: center; justify-content: space-between; gap: 1rem; }
+        .article-nav .nav-brand { font-family: var(--font-display); font-size: 0.9rem; font-weight: 600; color: var(--toki-blue); text-decoration: none; white-space: nowrap; }
+        .article-nav .nav-brand::before { content: ''; display: inline-block; width: 20px; height: 20px; background: url('asset/tokistorage-icon-512.png') no-repeat center / contain; vertical-align: -3px; margin-right: 5px; }
+        .article-nav .nav-right { display: flex; align-items: center; gap: 1rem; }
+        .article-nav .nav-label { font-size: 0.6rem; color: var(--text-muted); letter-spacing: 0.08em; }
+        .article-nav .lang-switch { font-size: 0.75rem; color: var(--toki-blue); text-decoration: none; padding: 0.3rem 0.6rem; border: 1px solid var(--toki-blue); border-radius: 4px; }
+        .article-nav .lang-switch:hover { background: var(--toki-blue); color: #fff; }
+
+        .article-container { max-width: 680px; margin: 0 auto; padding: 7rem 2rem 4rem; }
+        .article-header { margin-bottom: 3rem; padding-bottom: 2rem; border-bottom: 1px solid var(--border); }
+        .article-category { font-size: 0.7rem; color: var(--toki-blue); letter-spacing: 0.15em; margin-bottom: 1rem; text-transform: uppercase; }
+        .article-header h1 { font-family: var(--font-display); font-size: 1.8rem; font-weight: 700; line-height: 1.4; margin-bottom: 1.5rem; }
+        .article-subtitle { font-size: 0.95rem; color: var(--text-secondary); line-height: 1.8; }
+
+        .article-content h2 { font-family: var(--font-display); font-size: 1.25rem; font-weight: 600; margin: 3rem 0 1.5rem; padding-bottom: 0.5rem; border-bottom: 2px solid var(--toki-blue-pale); }
+        .article-content p { margin-bottom: 1.5rem; }
+        .article-content blockquote { border-left: 3px solid var(--toki-blue); padding-left: 1.5rem; margin: 2rem 0; font-family: var(--font-display); color: var(--text-secondary); line-height: 2; }
+        .article-content code { font-family: 'Menlo', 'Monaco', monospace; font-size: 0.85rem; background: #F1F5F9; padding: 0.1em 0.4em; border-radius: 3px; }
+
+        .core-message { background: var(--toki-blue-pale); border-left: 4px solid var(--toki-blue); padding: 1.5rem; margin: 2rem 0; font-size: 0.95rem; line-height: 1.8; }
+        .key-point { background: linear-gradient(135deg, var(--toki-blue-pale) 0%, #fff 100%); border: 1px solid var(--accent-blue); border-radius: 8px; padding: 1.5rem; margin: 2rem 0; text-align: center; }
+        .key-point p { font-family: var(--font-display); font-size: 1.1rem; color: var(--toki-blue-dark); margin: 0; }
+
+        .cta-block { background: var(--toki-blue); color: #fff; border-radius: 12px; padding: 2rem; margin: 3rem 0; text-align: center; }
+        .cta-block p { color: rgba(255,255,255,0.9); margin-bottom: 1.5rem; }
+        .cta-block a { display: inline-block; background: #fff; color: var(--toki-blue); padding: 0.6rem 1.5rem; border-radius: 6px; text-decoration: none; font-weight: 600; margin: 0.4rem; font-size: 0.9rem; }
+        .cta-block a.secondary { background: transparent; color: #fff; border: 1px solid rgba(255,255,255,0.6); }
+
+        .article-footer { margin-top: 4rem; padding-top: 2rem; border-top: 1px solid var(--border); text-align: center; }
+        .article-footer p { font-size: 0.8rem; color: var(--text-muted); margin-bottom: 1rem; }
+        .article-footer a { color: var(--toki-blue); text-decoration: none; }
+
+        @media (max-width: 768px) {
+            .article-container { padding: 6rem 1.2rem 3rem; }
+            .article-header h1 { font-size: 1.5rem; }
+            .article-nav .nav-label { display: none; }
+        }
+        @media print { .article-nav { display: none; } .article-container { padding-top: 2rem; } }
+    </style>
+</head>
+<body>
+
+<nav class="article-nav">
+    <a href="essays-en.html" class="nav-brand">TokiStorage</a>
+    <div class="nav-right">
+        <span class="nav-label">ESSAY</span>
+        <a href="possibility-vs-direction.html" class="lang-switch">JA</a>
+    </div>
+</nav>
+
+<main class="article-container">
+    <header class="article-header">
+        <div class="article-category">Technology &amp; Design</div>
+        <h1>Between What You Can Do and What You Should</h1>
+        <p class="article-subtitle">The Boundary Line That GitHub Actions Revealed</p>
+    </header>
+
+    <article class="article-content">
+
+        <div class="core-message">The core idea: technical possibility is not direction. The moment you realize something "can be done," the desire to do it appears — and before long you're moving in a direction unrelated to your philosophy. Infrastructure has no values of its own. That's exactly why philosophy must come first.</div>
+
+        <h2>1. The Morning You Realize You Can Do Anything</h2>
+
+        <p>Automated email retrieval worked. Project management integration worked. Morning briefings became self-running. And in that moment, something started moving in the back of the mind. "We could build a billing system with this." "Newsletter delivery could be automated." "This could expand into a subscription model."</p>
+
+        <p>When technical possibilities come into view, there's a natural pull to fill them in. This isn't a flaw — it's curiosity and creativity at work. But whether any of it aligns with your philosophy is a separate question entirely.</p>
+
+        <h2>2. How the SaaS Temptation Begins</h2>
+
+        <p>At some point, a practical pressure arrives: revenue needs to happen. When that pressure meets an awareness of what's technically possible, the landscape shifts. An ebook publishing platform. A content sales site. Monthly subscription tiers. All of it looks "doable."</p>
+
+        <p>This is the trap. When urgency and technical possibility combine, convergence toward familiar SaaS patterns begins. Acquire users. Convert to recurring billing. Minimize churn. That design logic quietly rewrites your philosophy from the inside.</p>
+
+        <h2>3. Why TokiStorage and SaaS Are Incompatible</h2>
+
+        <p>TokiStorage's core is a promise: entrust something once, and it remains for a thousand years. One decision, complete. No ongoing management, no updates, no subscription. The customer doesn't need to keep depending on it — "you never have to think about it again" is the value.</p>
+
+        <p>SaaS is the opposite. Revenue comes from continued use. The design goal is to prevent departure. Engagement must be maintained. This is dependency by design — and it points in exactly the opposite direction from TokiStorage's aim of permanent, self-sufficient preservation.</p>
+
+        <blockquote>
+        SaaS value: created through continuation<br>
+        TokiStorage value: created through completion
+        </blockquote>
+
+        <p>Neither is wrong in itself. But pursuing both simultaneously produces something that is neither.</p>
+
+        <h2>4. The Publishing Platform as a Concrete Example</h2>
+
+        <p>Publishing on an external platform was attempted. EPUB conversion. Cover design. Regulation review. Waiting for approval. Rejection. Resubmission. Ongoing profile management. External dependencies multiplied. Manual work multiplied. Whether something "passed" became subject to someone else's judgment.</p>
+
+        <p>Publishing platforms are built for distribution, not preservation. If the platform disappears, so does the book. When regulations change, resubmission is required. This amplifies exactly the problem TokiStorage is trying to solve — the external dependency of proof of existence.</p>
+
+        <p>One book was published. That's enough. One act of recording, one entry into existence. No further automation, no ongoing management — from a philosophical standpoint, none of it is needed.</p>
+
+        <h2>5. Why Articulating a Policy Matters</h2>
+
+        <p>"Published once, won't touch it again, won't automate it" — stating this as policy rather than just feeling has real value. It becomes a principle derived from philosophy, not a reaction to circumstance. When the same temptation arrives next time, the answer already exists.</p>
+
+        <p>Without a policy, the same question recurs every time a new technical possibility appears. "Could we do this too?" "Should we try?" With a policy, the question doesn't even arise. A filter aligned with philosophy reduces decision cost to zero.</p>
+
+        <h2>6. The Value and Limits of Trying Things</h2>
+
+        <p>To be clear: trying something because it's technically possible isn't inherently wrong. The automated email retrieval built today started as an experiment — "can this be done?" Trying it was how we learned whether it aligned with the philosophy.</p>
+
+        <p>The problem is not pausing after the experiment. "It worked, it's interesting, let's do more" — that chain skips the check on direction and just keeps running. Technical excitement temporarily suspends philosophical questioning.</p>
+
+        <p>So the question must be kept close: does this strengthen TokiStorage's promise of "entrust once and it's done"? Or does it add management, updates, and continuation? If the latter, stop.</p>
+
+        <h2>7. Infrastructure Has No Values</h2>
+
+        <p>GitHub Actions is neutral. Building a SaaS billing system and building a thousand-year preservation infrastructure are, technically, equally possible. The infrastructure itself has no direction.</p>
+
+        <p>That's what makes it dangerous. Without philosophy, infrastructure flows toward whatever is most tempting — easiest to monetize, most likely to grow users, most likely to spread. All of that sits within the range of "can be done."</p>
+
+        <p>Only when philosophy comes first does infrastructure become a tool. Without it, infrastructure becomes the master.</p>
+
+        <h2>8. How to Find What You Should Do</h2>
+
+        <p>Framing "what you should do" as the opposite of "what you can do" creates a sense of obligation. A more accurate framing: what aligns with your philosophy.</p>
+
+        <p>For TokiStorage, "what should be done" becomes visible through a set of questions. Does this increase external dependency? Does this generate ongoing management costs? Does this compromise the value of "complete in one act"? If the answer to any of these is yes — no matter how technically interesting it is — it falls outside TokiStorage's design.</p>
+
+        <p>The distance between what you can do and what you should — measuring that distance, again and again, is the substance of philosophy-driven product design.</p>
+
+        <div class="key-point">
+            <p>Infrastructure has no values of its own. That's exactly why philosophy must come first. "Can be done" is a starting point, not a direction.</p>
+        </div>
+
+        <div class="cta-block">
+            <p>TokiStorage is a project dedicated to preserving voices, images, and text for a thousand years — democratizing proof of existence. Zero external dependency. Complete in a single act of entrustment.</p>
+            <a href="https://tokistorage.github.io">Learn about TokiStorage</a>
+            <a href="essays-en.html" class="secondary">Read all essays</a>
+        </div>
+
+    </article>
+
+    <footer class="article-footer">
+        <p id="essay-nav-links"></p>
+        <p>© TokiStorage. All rights reserved.</p>
+    </footer>
+</main>
+
+<script src="essay-nav.js"></script>
+<script src="essay-tts.js"></script>
+</body>
+</html>

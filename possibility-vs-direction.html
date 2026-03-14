@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" type="image/png" sizes="32x32" href="asset/favicon-32.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="asset/apple-touch-icon.png">
+    <title>できることと、すべきことの間 | トキストレージ</title>
+    <meta name="robots" content="index, follow">
+    <meta name="description" content="GitHub Actionsで何でもできると気づいた瞬間、SaaSの誘惑が始まった。技術的可能性は方向性ではない。思想が先でなければ、インフラは思想を壊す。">
+    <link rel="alternate" hreflang="ja" href="https://tokistorage.github.io/lp/possibility-vs-direction.html">
+    <link rel="alternate" hreflang="en" href="https://tokistorage.github.io/lp/possibility-vs-direction-en.html">
+    <link rel="alternate" hreflang="x-default" href="https://tokistorage.github.io/lp/possibility-vs-direction.html">
+    <style>
+        :root {
+            --toki-blue: #2563EB;
+            --toki-blue-dark: #1E40AF;
+            --toki-blue-pale: #EFF6FF;
+            --accent-blue: #60A5FA;
+            --bg-white: #FFFFFF;
+            --text-primary: #1E293B;
+            --text-secondary: #475569;
+            --text-muted: #94A3B8;
+            --border: #E2E8F0;
+            --font-display: 'Hiragino Mincho ProN', 'Yu Mincho', serif;
+            --font-body: 'Hiragino Kaku Gothic ProN', 'Yu Gothic', 'Meiryo', sans-serif;
+        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        html { scroll-behavior: smooth; }
+        body { font-family: var(--font-body); font-weight: 400; background: var(--bg-white); color: var(--text-primary); line-height: 2; font-size: 16px; }
+
+        .article-nav { position: fixed; top: 0; left: 0; right: 0; z-index: 1000; background: rgba(255,255,255,0.95); backdrop-filter: blur(12px); border-bottom: 1px solid var(--border); padding: 0.6rem 1.2rem; display: flex; align-items: center; justify-content: space-between; gap: 1rem; }
+        .article-nav .nav-brand { font-family: var(--font-display); font-size: 0.9rem; font-weight: 600; color: var(--toki-blue); text-decoration: none; white-space: nowrap; }
+        .article-nav .nav-brand::before { content: ''; display: inline-block; width: 20px; height: 20px; background: url('asset/tokistorage-icon-512.png') no-repeat center / contain; vertical-align: -3px; margin-right: 5px; }
+        .article-nav .nav-right { display: flex; align-items: center; gap: 1rem; }
+        .article-nav .nav-label { font-size: 0.6rem; color: var(--text-muted); letter-spacing: 0.08em; }
+        .article-nav .lang-switch { font-size: 0.75rem; color: var(--toki-blue); text-decoration: none; padding: 0.3rem 0.6rem; border: 1px solid var(--toki-blue); border-radius: 4px; }
+        .article-nav .lang-switch:hover { background: var(--toki-blue); color: #fff; }
+
+        .article-container { max-width: 680px; margin: 0 auto; padding: 7rem 2rem 4rem; }
+        .article-header { margin-bottom: 3rem; padding-bottom: 2rem; border-bottom: 1px solid var(--border); }
+        .article-category { font-size: 0.7rem; color: var(--toki-blue); letter-spacing: 0.15em; margin-bottom: 1rem; }
+        .article-header h1 { font-family: var(--font-display); font-size: 1.8rem; font-weight: 700; line-height: 1.5; margin-bottom: 1.5rem; }
+        .article-subtitle { font-size: 0.95rem; color: var(--text-secondary); line-height: 1.9; }
+
+        .article-content h2 { font-family: var(--font-display); font-size: 1.3rem; font-weight: 600; margin: 3rem 0 1.5rem; padding-bottom: 0.5rem; border-bottom: 2px solid var(--toki-blue-pale); }
+        .article-content p { margin-bottom: 1.5rem; text-align: justify; }
+        .article-content blockquote { border-left: 3px solid var(--toki-blue); padding-left: 1.5rem; margin: 2rem 0; font-family: var(--font-display); color: var(--text-secondary); }
+        .article-content code { font-family: 'Menlo', 'Monaco', monospace; font-size: 0.85rem; background: #F1F5F9; padding: 0.1em 0.4em; border-radius: 3px; }
+
+        .core-message { background: var(--toki-blue-pale); border-left: 4px solid var(--toki-blue); padding: 1.5rem; margin: 2rem 0; font-size: 0.95rem; line-height: 1.8; }
+        .key-point { background: linear-gradient(135deg, var(--toki-blue-pale) 0%, #fff 100%); border: 1px solid var(--accent-blue); border-radius: 8px; padding: 1.5rem; margin: 2rem 0; text-align: center; }
+        .key-point p { font-family: var(--font-display); font-size: 1.1rem; color: var(--toki-blue-dark); margin: 0; }
+
+        .cta-block { background: var(--toki-blue); color: #fff; border-radius: 12px; padding: 2rem; margin: 3rem 0; text-align: center; }
+        .cta-block p { color: rgba(255,255,255,0.9); margin-bottom: 1.5rem; }
+        .cta-block a { display: inline-block; background: #fff; color: var(--toki-blue); padding: 0.6rem 1.5rem; border-radius: 6px; text-decoration: none; font-weight: 600; margin: 0.4rem; font-size: 0.9rem; }
+        .cta-block a.secondary { background: transparent; color: #fff; border: 1px solid rgba(255,255,255,0.6); }
+
+        .article-footer { margin-top: 4rem; padding-top: 2rem; border-top: 1px solid var(--border); text-align: center; }
+        .article-footer p { font-size: 0.8rem; color: var(--text-muted); margin-bottom: 1rem; }
+        .article-footer a { color: var(--toki-blue); text-decoration: none; }
+
+        @media (max-width: 768px) {
+            .article-container { padding: 6rem 1.2rem 3rem; }
+            .article-header h1 { font-size: 1.5rem; }
+            .article-nav .nav-label { display: none; }
+        }
+        @media print { .article-nav { display: none; } .article-container { padding-top: 2rem; } }
+    </style>
+</head>
+<body>
+
+<nav class="article-nav">
+    <a href="essays.html" class="nav-brand">トキストレージ</a>
+    <div class="nav-right">
+        <span class="nav-label">ESSAY</span>
+        <a href="possibility-vs-direction-en.html" class="lang-switch">EN</a>
+    </div>
+</nav>
+
+<main class="article-container">
+    <header class="article-header">
+        <div class="article-category">技術・設計</div>
+        <h1>できることと、すべきことの間</h1>
+        <p class="article-subtitle">GitHub Actionsが教えてくれた思想の境界線</p>
+    </header>
+
+    <article class="article-content">
+
+        <div class="core-message">この記事で言いたいこと：技術的な可能性は、方向性ではない。「できる」と気づいた瞬間に「やりたい」が生まれ、気づけば思想と無関係な方向へ走り出す。インフラは思想を選ばない。だからこそ、思想が先でなければならない。</div>
+
+        <h2>1. 「何でもできる」と気づいた朝</h2>
+
+        <p>GitHub Actionsでメールの自動取得ができた。プロジェクト管理ツールとの連携もできた。朝のブリーフィングが自動化された。その瞬間、頭の中で何かが動き始めた。「これで課金システムも作れる」「メルマガ配信も自動化できる」「サブスクリプションモデルにも展開できる」。</p>
+
+        <p>技術的な可能性が視野に入ると、人は自然とその可能性を埋めようとする。これは欠陥ではない。好奇心と創造性の表れだ。しかし、それが自分の思想と整合しているかどうかは、別の問いだ。</p>
+
+        <h2>2. SaaSの誘惑が始まる構造</h2>
+
+        <p>ある時点で「収益化しなければ」という現実的な圧力が加わった。その状態でGitHub Actionsの可能性と出会うと、見えてくる景色が変わる。電子書籍の出版プラットフォーム。コンテンツ販売サイト。月額課金のサービス。全部「できる」に見える。</p>
+
+        <p>これが罠だ。「焦り」と「技術的可能性」が掛け合わさると、よくあるSaaSモデルへの収束が始まる。ユーザーを獲得し、継続課金させ、チャーンを防ぐ。その設計は、気づかないうちに思想を上書きしていく。</p>
+
+        <h2>3. トキストレージの思想と、SaaSモデルの非両立性</h2>
+
+        <p>トキストレージの核心は「預けたら1000年残る」という約束だ。一度の決断で完結する。管理も更新も継続課金も不要。顧客が依存し続ける必要がない、むしろ「もう何もしなくていい」が価値の源泉だ。</p>
+
+        <p>SaaSはその逆だ。使い続けてもらうことで収益が生まれる。離脱を防ぐ設計をする。エンゲージメントを高める。これは「依存の設計」であり、「永続的な自律」を目指すトキストレージとは思想として逆方向を向いている。</p>
+
+        <blockquote>
+        SaaSの価値：継続することで生まれる<br>
+        トキストレージの価値：一度で完結することで生まれる
+        </blockquote>
+
+        <p>どちらが正しいという話ではない。ただ、この二つを同時に追うと、どちらも中途半端になる。</p>
+
+        <h2>4. 電子書籍という具体例</h2>
+
+        <p>あるプラットフォームへの出版を試みた。epub変換、表紙作成、レギュレーション確認、審査待ち、差し戻し、再申請。プロフィールの継続管理。外部依存性が増え、手動作業が増え、「通るかどうか」が他者の判断に委ねられる。</p>
+
+        <p>出版プラットフォームは「流通」のための仕組みで、「保存」のための仕組みではない。プラットフォームが消えれば本も消える。レギュレーションが変われば再申請が必要になる。これはトキストレージが解こうとしている問題——存在証明の外部依存性——をむしろ強化する。</p>
+
+        <p>一冊出した。それで十分だ。存在証明として一度記録した。それ以上の自動化も、継続的な管理も、思想の観点からは不要だと気づいた。</p>
+
+        <h2>5. ポリシーとして言語化することの意味</h2>
+
+        <p>「一冊出した、それ以上は触れない、自動化もしない」——これをポリシーとして明示することには意味がある。感情的な決断ではなく、思想から導かれた原則として持っておくと、次に同じ誘惑が来た時に使える。</p>
+
+        <p>ポリシーがなければ、技術的な可能性が出てくるたびに同じ問いを繰り返す。「これもできるんじゃないか」「やってみようか」。ポリシーがあれば、問いすら起きない。思想と整合しているかどうかのフィルターが、判断コストをゼロにする。</p>
+
+        <h2>6. 「できること」を試す価値と限界</h2>
+
+        <p>誤解したくないのは、「できることを試す」こと自体は悪くない。今日のメール自動取得も、最初は「できるかどうか」の実験だった。やってみて初めて、思想と整合するかどうかが分かることもある。</p>
+
+        <p>問題は、試した後に立ち止まらないことだ。「できた、面白い、もっとやろう」という連鎖が、方向性の確認を飛ばして走り続ける。技術的な興奮は、思想的な問いを一時的に麻痺させる。</p>
+
+        <p>だから問いを持つ。「これはトキストレージの『預けたら終わり』という約束を強化するか。それとも、管理・更新・継続を増やすか」。後者なら、いったん止まる。</p>
+
+        <h2>7. インフラは思想を選ばない</h2>
+
+        <p>GitHub Actionsは中立だ。SaaSの課金システムを作ることも、1000年保管のインフラを作ることも、技術的には同じように「できる」。インフラそのものに方向性はない。</p>
+
+        <p>だからこそ怖い。思想がなければ、インフラは最も誘惑的な方向へ流れていく。収益化しやすそうな方向、ユーザーが増えそうな方向、バズりそうな方向。それらは全て「できる」範囲の中にある。</p>
+
+        <p>思想が先にある時だけ、インフラは道具になる。思想がない時、インフラは主人になる。</p>
+
+        <h2>8. 「すべきこと」の見つけ方</h2>
+
+        <p>「できること」の反対概念として「すべきこと」を置くと、義務感が生まれる。そうではなく、「自分の思想と整合していること」として捉える方が正確だ。</p>
+
+        <p>トキストレージにとっての「すべきこと」は、問いを持つことで見えてくる。これは外部依存性を増やすか。これは継続管理コストを生むか。これは「一度で完結する」という価値を損なうか。答えがYesなら、たとえ技術的に面白くても、それはトキストレージの設計から外れている。</p>
+
+        <p>「できること」と「すべきこと」の間にある距離——そこを測り続けることが、思想を持ったプロダクト設計の本質だ。</p>
+
+        <div class="key-point">
+            <p>インフラは思想を選ばない。だからこそ、思想が先でなければならない。「できる」は出発点であって、方向性ではない。</p>
+        </div>
+
+        <div class="cta-block">
+            <p>トキストレージは、声・画像・テキストを1000年保管する「存在証明の民主化」プロジェクトです。外部依存性ゼロ、一度の預け入れで完結する設計を目指しています。</p>
+            <a href="https://tokistorage.github.io">トキストレージを知る</a>
+            <a href="essays.html" class="secondary">すべてのエッセイを読む</a>
+        </div>
+
+    </article>
+
+    <footer class="article-footer">
+        <p id="essay-nav-links"></p>
+        <p>© TokiStorage. All rights reserved.</p>
+    </footer>
+</main>
+
+<script src="essay-nav.js"></script>
+<script src="essay-tts.js"></script>
+</body>
+</html>
