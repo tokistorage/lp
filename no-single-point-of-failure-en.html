@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" type="image/png" sizes="32x32" href="asset/favicon-32.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="asset/apple-touch-icon.png">
+    <title>No Single Point of Failure | TokiStorage</title>
+    <meta name="robots" content="index, follow">
+    <meta name="description" content="Treating Claude, GPT, and Llama as interchangeable parts. How to build an AI agent infrastructure that keeps running no matter which model disappears.">
+    <link rel="alternate" hreflang="ja" href="https://tokistorage.github.io/lp/no-single-point-of-failure.html">
+    <link rel="alternate" hreflang="en" href="https://tokistorage.github.io/lp/no-single-point-of-failure-en.html">
+    <link rel="alternate" hreflang="x-default" href="https://tokistorage.github.io/lp/no-single-point-of-failure.html">
+    <style>
+        :root {
+            --toki-blue: #2563EB; --toki-blue-dark: #1E40AF; --toki-blue-pale: #EFF6FF;
+            --accent-blue: #60A5FA; --bg-white: #FFFFFF; --text-primary: #1E293B;
+            --text-secondary: #475569; --text-muted: #94A3B8; --border: #E2E8F0;
+            --font-display: Georgia, 'Times New Roman', serif;
+            --font-body: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        html { scroll-behavior: smooth; }
+        body { font-family: var(--font-body); background: var(--bg-white); color: var(--text-primary); line-height: 1.9; font-size: 16px; }
+        .article-nav { position: fixed; top: 0; left: 0; right: 0; z-index: 1000; background: rgba(255,255,255,0.95); backdrop-filter: blur(12px); border-bottom: 1px solid var(--border); padding: 0.6rem 1.2rem; display: flex; align-items: center; justify-content: space-between; gap: 1rem; }
+        .article-nav .nav-brand { font-family: var(--font-display); font-size: 0.9rem; font-weight: 600; color: var(--toki-blue); text-decoration: none; }
+        .article-nav .nav-brand::before { content: ''; display: inline-block; width: 20px; height: 20px; background: url('asset/tokistorage-icon-512.png') no-repeat center / contain; vertical-align: -3px; margin-right: 5px; }
+        .article-nav .nav-right { display: flex; align-items: center; gap: 1rem; }
+        .article-nav .nav-label { font-size: 0.6rem; color: var(--text-muted); letter-spacing: 0.08em; }
+        .article-nav .lang-switch { font-size: 0.75rem; color: var(--toki-blue); text-decoration: none; padding: 0.3rem 0.6rem; border: 1px solid var(--toki-blue); border-radius: 4px; }
+        .article-nav .lang-switch:hover { background: var(--toki-blue); color: #fff; }
+        .article-container { max-width: 680px; margin: 0 auto; padding: 7rem 2rem 4rem; }
+        .article-header { margin-bottom: 3rem; padding-bottom: 2rem; border-bottom: 1px solid var(--border); }
+        .article-category { font-size: 0.7rem; color: var(--toki-blue); letter-spacing: 0.15em; margin-bottom: 1rem; }
+        .article-header h1 { font-family: var(--font-display); font-size: 1.8rem; font-weight: 700; line-height: 1.4; margin-bottom: 1.5rem; }
+        .article-subtitle { font-size: 0.95rem; color: var(--text-secondary); line-height: 1.8; }
+        .article-content h2 { font-family: var(--font-display); font-size: 1.25rem; font-weight: 600; margin: 3rem 0 1.5rem; padding-bottom: 0.5rem; border-bottom: 2px solid var(--toki-blue-pale); }
+        .article-content p { margin-bottom: 1.5rem; }
+        .article-content blockquote { border-left: 3px solid var(--toki-blue); padding-left: 1.5rem; margin: 2rem 0; font-family: var(--font-display); color: var(--text-secondary); font-style: italic; }
+        .article-content code { background: var(--toki-blue-pale); padding: 0.1em 0.4em; border-radius: 3px; font-size: 0.9em; }
+        .core-message { background: var(--toki-blue-pale); border-left: 4px solid var(--toki-blue); padding: 1.5rem; margin: 2rem 0; font-size: 0.95rem; line-height: 1.8; }
+        .key-point { background: linear-gradient(135deg, var(--toki-blue-pale) 0%, #fff 100%); border: 1px solid var(--accent-blue); border-radius: 8px; padding: 1.5rem; margin: 2rem 0; text-align: center; }
+        .key-point p { font-family: var(--font-display); font-size: 1.1rem; color: var(--toki-blue-dark); margin: 0; font-style: italic; }
+        .cta-block { background: var(--toki-blue); color: #fff; border-radius: 12px; padding: 2rem; margin: 2rem 0; text-align: center; }
+        .cta-block p { color: rgba(255,255,255,0.9); margin-bottom: 1.5rem; font-size: 0.95rem; }
+        .cta-block a { display: inline-block; background: #fff; color: var(--toki-blue); text-decoration: none; padding: 0.6rem 1.5rem; border-radius: 6px; font-weight: 600; font-size: 0.9rem; margin: 0.3rem; }
+        .cta-block a.secondary { background: transparent; color: #fff; border: 1px solid rgba(255,255,255,0.5); }
+        .article-footer { margin-top: 4rem; padding-top: 2rem; border-top: 1px solid var(--border); text-align: center; }
+        .article-footer p { font-size: 0.8rem; color: var(--text-muted); margin-bottom: 1rem; }
+        .article-footer a { color: var(--toki-blue); text-decoration: none; }
+        @media (max-width: 768px) { .article-container { padding: 6rem 1.2rem 3rem; } .article-header h1 { font-size: 1.5rem; } .article-nav .nav-label { display: none; } }
+    </style>
+</head>
+<body>
+
+<nav class="article-nav">
+    <a href="essays-en.html" class="nav-brand">TokiStorage</a>
+    <div class="nav-right">
+        <span class="nav-label">ESSAY</span>
+        <a href="no-single-point-of-failure.html" class="lang-switch">JA</a>
+    </div>
+</nav>
+
+<main class="article-container">
+    <header class="article-header">
+        <div class="article-category">TECHNOLOGY &amp; DESIGN</div>
+        <h1>No Single Point of Failure</h1>
+        <p class="article-subtitle">Treating Claude, GPT, and Llama as interchangeable parts</p>
+    </header>
+
+    <article class="article-content">
+
+        <div class="core-message">The point of this essay: your dependence on a single AI service has quietly become a single point of failure. Design your models as swappable components, and you get infrastructure that keeps running no matter what disappears.</div>
+
+        <h2>1. The question that changed how I design</h2>
+
+        <p>One day, a simple question surfaced: "If this AI service ended its free tier tomorrow, what would happen to my work?"</p>
+
+        <p>Morning briefings, task management, organizing notes — AI had quietly moved into the center of my daily workflow. It was convenient. Frictionless. And precisely because of that, I hadn't stopped to measure how deep the dependency ran.</p>
+
+        <p>When I answered honestly, the answer was: everything stops. The data was mine. The flows were designed. But the "thinking" part — that was locked to one service.</p>
+
+        <h2>2. What a single point of failure actually means</h2>
+
+        <p>In systems design, a Single Point of Failure is any component whose failure brings down the entire system. It's the opposite of redundancy.</p>
+
+        <p>But this concept isn't limited to servers and networks. It applies to workflows, to personal operating systems, to any structure where one part carries too much weight. The deeper the dependency on a specific tool, a specific service, a specific model — the larger the blast radius when that part fails.</p>
+
+        <p>AI services are moving fast into the core of how people work. Fast enough that the dependency often gets baked in before anyone thinks to question it. By the time you notice, the design is already load-bearing.</p>
+
+        <h2>3. Separate data, logic, and model</h2>
+
+        <p>The fix is straightforward: design AI as a replaceable part.</p>
+
+        <p>To do that, three layers need to be kept clearly separate:</p>
+
+        <blockquote>
+            Data layer (your own repository)<br>
+            &nbsp;&nbsp;↓<br>
+            Logic layer (workflows and skill definitions)<br>
+            &nbsp;&nbsp;↓<br>
+            Model layer (Claude / GPT / Llama / Gemini...)
+        </blockquote>
+
+        <p>Where does the data live? How is the logic written? How is the model called? Keep these three separate and you can swap the model layer without touching anything above it.</p>
+
+        <h2>4. What it looks like in practice</h2>
+
+        <p>Take a morning briefing as an example. Every morning: read the project board, voice memos, and email, then surface the day's focus. A simple routine — but one that had been built around a single AI service.</p>
+
+        <p>First, I moved data into a Git repository and automated the workflow. I wrote down how to ask the AI — the format, the priorities, the filters — as a skill definition file. That's when something became clear: with the right skill definition, any model could produce the same output.</p>
+
+        <p>I switched to a model available through a free tier on a different platform. Same skill definition file. One line changed — the endpoint URL and model name. The briefing kept running.</p>
+
+        <h2>5. What "treating models as equivalent" means</h2>
+
+        <p>It doesn't mean every model performs identically. It means the workflow doesn't depend on any one model's particular style or quirks.</p>
+
+        <p>There's a common experience: a certain model just works with your prompts. Something about how it interprets phrasing, how it structures responses. But when you rely on that, you've built a dependency. Switch the model and things break.</p>
+
+        <p>Designing for equivalence means writing prompts that work across models. Specify the output format explicitly. Structure the input data clearly. Describe the expected behavior in concrete terms. Reduce ambiguity. This doesn't just lower model dependency — it raises the overall quality of the prompts themselves.</p>
+
+        <h2>6. Local models as a fallback</h2>
+
+        <p>Even if every cloud AI service became paid or shut down, locally-running models remain an option. Small models that run on a personal machine have improved dramatically in the past few years. Many now handle Japanese well. Many handle the kind of reasoning that daily workflows require.</p>
+
+        <p>For something like a morning briefing, a capable local model produces output that's close enough to cloud services for the task. No internet required. No rate limits. No data leaving the machine.</p>
+
+        <p>For tasks that genuinely need the highest precision, large cloud models are still the right choice. The point isn't to replace everything with local inference. It's to design so that local models can handle the baseline — so that cloud becomes a performance upgrade, not a dependency.</p>
+
+        <h2>7. The conditions for sustainable AI use</h2>
+
+        <p>The AI services market is still moving fast. Free tiers shrink. Pricing changes. Services merge and shut down. What felt essential a few years ago has already been replaced by something else.</p>
+
+        <p>Sustainable AI use means deliberately reducing dependency on any single service over time. Own your data. Write your own logic. Make models swappable. When those three conditions hold, AI stops being a tool you borrow and becomes a component in infrastructure you own.</p>
+
+        <p>Tools wear out. Infrastructure grows. That difference lives in the design.</p>
+
+        <h2>8. The quiet of a system that doesn't stop</h2>
+
+        <p>There's a particular stillness to a system with no single point of failure. When something goes down, something else is already running. No panic. No scramble for alternatives. Because the alternative was designed in from the beginning.</p>
+
+        <p>This is about redundancy — but more fundamentally, it's about making dependencies visible. Know what you depend on. Have a plan for when that dependency breaks. That alone takes most of the fragility out of a system.</p>
+
+        <p>The better question isn't how to use AI. It's how to design the relationship with AI. Staying with that question is what builds infrastructure that lasts.</p>
+
+        <div class="key-point"><p>Models are components. As long as the data and logic stay in your hands, no model disappearing can stop the system.</p></div>
+
+        <div class="cta-block">
+            <p>TokiStorage is a project for preserving voice, image, and text for 1,000 years.<br>Sustainable design is built into the preservation system itself.</p>
+            <a href="https://tokistorage.github.io">Explore TokiStorage</a>
+            <a href="essays-en.html" class="secondary">Read all essays</a>
+        </div>
+
+    </article>
+
+    <footer class="article-footer">
+        <p id="essay-nav-links"></p>
+        <p>© TokiStorage. All rights reserved.</p>
+    </footer>
+</main>
+
+<script src="essay-nav.js"></script>
+<script src="essay-tts.js"></script>
+</body>
+</html>

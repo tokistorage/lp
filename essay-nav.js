@@ -229,6 +229,7 @@
     { id: 'ai-infrastructure-connection', ja: 'インフラに接続できるか', en: 'Can It Connect to Infrastructure?', date: '2026-03-14' },
     { id: 'gap-between-outputs', ja: '聞き流していた時間', en: 'The Hours I Listened Without Hearing', date: '2026-03-14' },
     { id: 'voice-becomes-memory', ja: '声が記憶になる日', en: 'The Day Voice Became Memory', date: '2026-03-14' }
+    { id: 'no-single-point-of-failure', ja: '単一障害点をなくす', en: 'No Single Point of Failure', date: '2026-03-15' },
   ];
 
   // ── Latest Articles (最新記事) ──
@@ -456,6 +457,7 @@
     'ai-infrastructure-connection': ['morning-inbox-autonomous', 'claude-code-boundary', 'zero-cost-autonomy', 'delete-all-apps', 'tool-vs-infrastructure'],
     'gap-between-outputs': ['temptation-no-philosophy', 'delete-all-apps', 'possibility-vs-direction', 'burn-rate-zero', 'zero-cost-autonomy'],
     'voice-becomes-memory': ['delete-all-apps', 'zero-cost-autonomy', 'tool-vs-infrastructure', 'morning-inbox-autonomous', 'ai-infrastructure-connection'],
+    'no-single-point-of-failure': ['tool-vs-infrastructure', 'zero-cost-autonomy', 'ai-infrastructure-connection', 'break-and-grow', 'voice-becomes-memory'],
     'break-and-grow':           ['zero-cost-autonomy', 'tool-vs-infrastructure', 'vibe-coding', 'primitive-edge', 'constraint-philosophy']
   };
 

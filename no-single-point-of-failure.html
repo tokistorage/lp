@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" type="image/png" sizes="32x32" href="asset/favicon-32.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="asset/apple-touch-icon.png">
+    <title>単一障害点をなくす | トキストレージ</title>
+    <meta name="robots" content="index, follow">
+    <meta name="description" content="Claude・GPT・Llamaを等価に扱う設計思想。特定のAIサービスへの依存をなくし、どのモデルが消えても動き続けるエージェントインフラの作り方。">
+    <link rel="alternate" hreflang="ja" href="https://tokistorage.github.io/lp/no-single-point-of-failure.html">
+    <link rel="alternate" hreflang="en" href="https://tokistorage.github.io/lp/no-single-point-of-failure-en.html">
+    <link rel="alternate" hreflang="x-default" href="https://tokistorage.github.io/lp/no-single-point-of-failure.html">
+    <style>
+        :root {
+            --toki-blue: #2563EB;
+            --toki-blue-dark: #1E40AF;
+            --toki-blue-pale: #EFF6FF;
+            --accent-blue: #60A5FA;
+            --bg-white: #FFFFFF;
+            --text-primary: #1E293B;
+            --text-secondary: #475569;
+            --text-muted: #94A3B8;
+            --border: #E2E8F0;
+            --font-display: 'Hiragino Mincho ProN', 'Yu Mincho', serif;
+            --font-body: 'Hiragino Kaku Gothic ProN', 'Yu Gothic', 'Meiryo', sans-serif;
+        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        html { scroll-behavior: smooth; }
+        body { font-family: var(--font-body); font-weight: 400; background: var(--bg-white); color: var(--text-primary); line-height: 2; font-size: 16px; }
+
+        .article-nav { position: fixed; top: 0; left: 0; right: 0; z-index: 1000; background: rgba(255,255,255,0.95); backdrop-filter: blur(12px); border-bottom: 1px solid var(--border); padding: 0.6rem 1.2rem; display: flex; align-items: center; justify-content: space-between; gap: 1rem; }
+        .article-nav .nav-brand { font-family: var(--font-display); font-size: 0.9rem; font-weight: 600; color: var(--toki-blue); text-decoration: none; white-space: nowrap; }
+        .article-nav .nav-brand::before { content: ''; display: inline-block; width: 20px; height: 20px; background: url('asset/tokistorage-icon-512.png') no-repeat center / contain; vertical-align: -3px; margin-right: 5px; }
+        .article-nav .nav-right { display: flex; align-items: center; gap: 1rem; }
+        .article-nav .nav-label { font-size: 0.6rem; color: var(--text-muted); letter-spacing: 0.08em; }
+        .article-nav .lang-switch { font-size: 0.75rem; color: var(--toki-blue); text-decoration: none; padding: 0.3rem 0.6rem; border: 1px solid var(--toki-blue); border-radius: 4px; }
+        .article-nav .lang-switch:hover { background: var(--toki-blue); color: #fff; }
+
+        .article-container { max-width: 680px; margin: 0 auto; padding: 7rem 2rem 4rem; }
+        .article-header { margin-bottom: 3rem; padding-bottom: 2rem; border-bottom: 1px solid var(--border); }
+        .article-category { font-size: 0.7rem; color: var(--toki-blue); letter-spacing: 0.15em; margin-bottom: 1rem; }
+        .article-header h1 { font-family: var(--font-display); font-size: 1.8rem; font-weight: 700; line-height: 1.5; margin-bottom: 1.5rem; }
+        .article-subtitle { font-size: 0.95rem; color: var(--text-secondary); line-height: 1.9; }
+
+        .article-content h2 { font-family: var(--font-display); font-size: 1.3rem; font-weight: 600; margin: 3rem 0 1.5rem; padding-bottom: 0.5rem; border-bottom: 2px solid var(--toki-blue-pale); }
+        .article-content p { margin-bottom: 1.5rem; text-align: justify; }
+        .article-content blockquote { border-left: 3px solid var(--toki-blue); padding-left: 1.5rem; margin: 2rem 0; font-family: var(--font-display); color: var(--text-secondary); }
+        .article-content code { background: var(--toki-blue-pale); padding: 0.1em 0.4em; border-radius: 3px; font-size: 0.9em; font-family: 'SF Mono', 'Fira Code', monospace; }
+
+        .core-message { background: var(--toki-blue-pale); border-left: 4px solid var(--toki-blue); padding: 1.5rem; margin: 2rem 0; font-size: 0.95rem; line-height: 1.8; }
+        .key-point { background: linear-gradient(135deg, var(--toki-blue-pale) 0%, #fff 100%); border: 1px solid var(--accent-blue); border-radius: 8px; padding: 1.5rem; margin: 2rem 0; text-align: center; }
+        .key-point p { font-family: var(--font-display); font-size: 1.1rem; color: var(--toki-blue-dark); margin: 0; }
+
+        .cta-block { background: var(--toki-blue); color: #fff; border-radius: 12px; padding: 2rem; margin: 2rem 0; text-align: center; }
+        .cta-block p { color: rgba(255,255,255,0.9); margin-bottom: 1.5rem; font-size: 0.95rem; }
+        .cta-block a { display: inline-block; background: #fff; color: var(--toki-blue); text-decoration: none; padding: 0.6rem 1.5rem; border-radius: 6px; font-weight: 600; font-size: 0.9rem; margin: 0.3rem; }
+        .cta-block a.secondary { background: transparent; color: #fff; border: 1px solid rgba(255,255,255,0.5); }
+        .cta-block a:hover { opacity: 0.85; }
+
+        .article-footer { margin-top: 4rem; padding-top: 2rem; border-top: 1px solid var(--border); text-align: center; }
+        .article-footer p { font-size: 0.8rem; color: var(--text-muted); margin-bottom: 1rem; }
+        .article-footer a { color: var(--toki-blue); text-decoration: none; }
+
+        @media (max-width: 768px) {
+            .article-container { padding: 6rem 1.2rem 3rem; }
+            .article-header h1 { font-size: 1.5rem; }
+            .article-nav .nav-label { display: none; }
+        }
+        @media print { .article-nav { display: none; } .article-container { padding-top: 2rem; } }
+    </style>
+</head>
+<body>
+
+<nav class="article-nav">
+    <a href="essays.html" class="nav-brand">トキストレージ</a>
+    <div class="nav-right">
+        <span class="nav-label">ESSAY</span>
+        <a href="no-single-point-of-failure-en.html" class="lang-switch">EN</a>
+    </div>
+</nav>
+
+<main class="article-container">
+    <header class="article-header">
+        <div class="article-category">技術・設計</div>
+        <h1>単一障害点をなくす</h1>
+        <p class="article-subtitle">Claude・GPT・Llamaを等価に扱うエージェント設計</p>
+    </header>
+
+    <article class="article-content">
+
+        <div class="core-message">この記事で言いたいこと：AIサービスへの依存は、気づかないうちに単一障害点になっている。モデルを差し替え可能な部品として設計することで、どのサービスが終わっても動き続けるインフラが手に入る。</div>
+
+        <h2>1. 「無料プランが終わったら」という問いが設計を変えた</h2>
+
+        <p>あるとき、こんな問いが浮かんだ。「このAIサービスの無料プランがなくなったら、自分の仕事はどうなるか。」</p>
+
+        <p>朝のブリーフィング、タスク管理、メモの整理——気づけばAIが日常業務の中枢を担っていた。便利だった。摩擦がなかった。だからこそ、依存の深さを測ることを怠っていた。</p>
+
+        <p>問いに正直に答えようとしたとき、答えは「止まる」だった。データは手元にある。フローも設計している。だが「考える」部分だけが、特定のサービスに縛られていた。</p>
+
+        <h2>2. 単一障害点とは何か</h2>
+
+        <p>システム設計の世界に「単一障害点（Single Point of Failure）」という概念がある。ひとつの部品が止まると、システム全体が止まる構造のことだ。冗長化設計の反対語でもある。</p>
+
+        <p>これはサーバーやネットワークだけの話ではない。業務フローにも、個人のワークスタイルにも、同じ概念が当てはまる。特定のツール、特定のサービス、特定のモデル——それらへの依存が深まるほど、その部品が止まったときのダメージは大きくなる。</p>
+
+        <p>AIサービスは今、急速に業務の中核に入り込んでいる。その速さゆえに、依存の構造を意識する前に組み込まれてしまうことが多い。気づいたときには、抜けられない設計になっている。</p>
+
+        <h2>3. データとロジックとモデルを分離する</h2>
+
+        <p>解決策は単純だった。AIを「交換可能な部品」として設計することだ。</p>
+
+        <p>そのためには、三つの層を明確に分ける必要がある。</p>
+
+        <blockquote>
+            データ層（自分のGit）<br>
+            　↓<br>
+            ロジック層（ワークフロー・スキル定義）<br>
+            　↓<br>
+            モデル層（Claude / GPT / Llama / Gemini...）
+        </blockquote>
+
+        <p>データはどこに置くか。ロジックはどう書くか。モデルはどう呼ぶか。この三つを分離して設計すれば、モデル層だけを差し替えることができる。上の二層は何も変わらない。</p>
+
+        <h2>4. 実際にやってみた</h2>
+
+        <p>朝のブリーフィングを例に取る。毎朝、プロジェクトの状況・声メモ・メールを読んで、今日のフォーカスを整理するルーティンだ。</p>
+
+        <p>最初はAIに手動で渡していた。毎朝、ファイルを読んで、整理して、返答をもらう。便利だったが、AIなしでは動かない設計だった。</p>
+
+        <p>次に、データをGitリポジトリに置き、ワークフローを自動化した。AIへの問いかけ方をスキル定義としてファイルに書き起こした。すると、あることに気づいた。このスキル定義さえあれば、どのモデルに渡しても同じ出力が得られる。</p>
+
+        <p>試しに、あるAIサービスの無料枠で動くモデルに切り替えてみた。スキル定義のファイルはそのまま。呼び出すエンドポイントのURLと、モデル名の一行だけを変えた。ブリーフィングは動き続けた。</p>
+
+        <h2>5. モデルを等価に扱うということ</h2>
+
+        <p>「等価に扱う」とは、どういうことか。それは、モデルに固有の語り口や癖に依存しないということだ。</p>
+
+        <p>特定のモデルが「なぜかうまく答えてくれる」という体験がある。プロンプトの微妙なニュアンスが、そのモデルの特性とたまたま合っていることがある。だが、それに依存してしまうと、モデルを変えたときに壊れる。</p>
+
+        <p>等価に扱うための設計原則は、「どのモデルに渡しても動くプロンプトを書く」ことだ。出力フォーマットを明示する。入力データの構造を整える。期待する動作を具体的に書く。曖昧さを減らす。これは、特定のモデルへの依存を減らすだけでなく、プロンプト全体の品質を上げることにもつながる。</p>
+
+        <h2>6. ローカルモデルという選択肢</h2>
+
+        <p>クラウドのAIサービスがすべて有料化・停止されたとしても、ローカルで動くモデルという選択肢がある。手元のコンピュータで動かせる小型モデルは、数年前と比べて格段に精度が上がっている。日本語にも強いモデルが増えた。</p>
+
+        <p>ブリーフィング程度のタスクなら、クラウドサービスと遜色ない出力が得られる。インターネット接続がなくても動く。利用制限もない。データが外部に出ない。</p>
+
+        <p>もちろん、高精度が求められるタスクにはクラウドの大型モデルが適している。重要なのは、用途に応じて使い分けられる設計を持つことだ。ローカルモデルでも動くように設計しておけば、クラウドは「性能向上のオプション」になる。依存ではなく、選択になる。</p>
+
+        <h2>7. 持続可能なAI活用の条件</h2>
+
+        <p>AIサービスの市場は今も激しく動いている。無料枠が縮小され、価格が改定され、サービス自体が統合・終了するケースも出てきた。数年前に「これしかない」と思っていたサービスが、今は別の何かに置き換わっている。</p>
+
+        <p>持続可能なAI活用の条件は、特定のサービスへの依存度を意識的に下げ続けることだ。データを自分で持つ。ロジックを自分で書く。モデルを差し替え可能にする。この三つが揃ったとき、AIは「借りている道具」から「自分のインフラの部品」に変わる。</p>
+
+        <p>道具は消耗する。インフラは育つ。その違いは、設計思想にある。</p>
+
+        <h2>8. 止まらないシステムの静けさ</h2>
+
+        <p>単一障害点のないシステムには、独特の静けさがある。何かが止まっても、別の何かが動いている。慌てない。焦らない。代替を探す必要がない。なぜなら、代替は最初から設計に組み込まれているからだ。</p>
+
+        <p>これは冗長化の話でもあるが、もっと根本的には「依存の意識化」の話だ。何に依存しているかを知り、その依存が断ち切られたときのプランを持つ。それだけで、システムの脆弱性は大きく下がる。</p>
+
+        <p>AIをどう使うかより、AIとどう付き合うかを設計する。その問いに答え続けることが、長く動き続けるインフラを育てることになる。</p>
+
+        <div class="key-point"><p>モデルは部品だ。データとロジックが自分の手にある限り、どのモデルが消えても、システムは止まらない。</p></div>
+
+        <div class="cta-block">
+            <p>トキストレージは、声・画像・テキストを1000年残すプロジェクトです。<br>持続可能な設計思想を、記録の仕組みそのものに組み込んでいます。</p>
+            <a href="https://tokistorage.github.io">トキストレージを知る</a>
+            <a href="essays.html" class="secondary">すべてのエッセイを読む</a>
+        </div>
+
+    </article>
+
+    <footer class="article-footer">
+        <p id="essay-nav-links"></p>
+        <p>© TokiStorage. All rights reserved.</p>
+    </footer>
+</main>
+
+<script src="essay-nav.js"></script>
+<script src="essay-tts.js"></script>
+</body>
+</html>
