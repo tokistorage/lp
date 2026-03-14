@@ -225,7 +225,8 @@
     { id: 'morning-inbox-autonomous', ja: '朝、メールはすでに届いている', en: 'By Morning, the Mail Has Already Arrived', date: '2026-03-14' },
     { id: 'possibility-vs-direction', ja: 'できることと、すべきことの間', en: 'Between What You Can Do and What You Should', date: '2026-03-14' },
     { id: 'temptation-no-philosophy', ja: '誘惑は戦う相手ではない', en: 'Temptation Is Not the Enemy', date: '2026-03-14' },
-    { id: 'delete-all-apps', ja: 'アプリを消す', en: 'Delete All Apps', date: '2026-03-14' }
+    { id: 'delete-all-apps', ja: 'アプリを消す', en: 'Delete All Apps', date: '2026-03-14' },
+    { id: 'ai-infrastructure-connection', ja: 'インフラに接続できるか', en: 'Can It Connect to Infrastructure?', date: '2026-03-14' }
   ];
 
   // ── Latest Articles (最新記事) ──
@@ -450,6 +451,7 @@
     'possibility-vs-direction': ['morning-inbox-autonomous', 'zero-cost-autonomy', 'claude-code-boundary', 'tool-vs-infrastructure', 'burn-rate-zero'],
     'temptation-no-philosophy': ['possibility-vs-direction', 'burn-rate-zero', 'zero-cost-autonomy', 'ethics-exclusion', 'constraint-philosophy'],
     'delete-all-apps': ['temptation-no-philosophy', 'possibility-vs-direction', 'zero-cost-autonomy', 'burn-rate-zero', 'morning-inbox-autonomous'],
+    'ai-infrastructure-connection': ['morning-inbox-autonomous', 'claude-code-boundary', 'zero-cost-autonomy', 'delete-all-apps', 'tool-vs-infrastructure'],
     'break-and-grow':           ['zero-cost-autonomy', 'tool-vs-infrastructure', 'vibe-coding', 'primitive-edge', 'constraint-philosophy']
   };
 

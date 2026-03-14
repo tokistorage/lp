@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" type="image/png" sizes="32x32" href="asset/favicon-32.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="asset/apple-touch-icon.png">
+    <title>Can It Connect to Infrastructure? | TokiStorage</title>
+    <meta name="robots" content="index, follow">
+    <meta name="description" content="The day came to sort AI tools. Not by habit or preference — by a single question: can it connect to infrastructure? The answer made the choice clear.">
+    <link rel="alternate" hreflang="ja" href="https://tokistorage.github.io/lp/ai-infrastructure-connection.html">
+    <link rel="alternate" hreflang="en" href="https://tokistorage.github.io/lp/ai-infrastructure-connection-en.html">
+    <link rel="alternate" hreflang="x-default" href="https://tokistorage.github.io/lp/ai-infrastructure-connection.html">
+    <style>
+        :root {
+            --toki-blue: #2563EB;
+            --toki-blue-dark: #1E40AF;
+            --toki-blue-pale: #EFF6FF;
+            --accent-blue: #60A5FA;
+            --bg-white: #FFFFFF;
+            --text-primary: #1E293B;
+            --text-secondary: #475569;
+            --text-muted: #94A3B8;
+            --border: #E2E8F0;
+            --font-display: Georgia, 'Times New Roman', serif;
+            --font-body: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        html { scroll-behavior: smooth; }
+        body { font-family: var(--font-body); font-weight: 400; background: var(--bg-white); color: var(--text-primary); line-height: 1.9; font-size: 16px; }
+
+        .article-nav { position: fixed; top: 0; left: 0; right: 0; z-index: 1000; background: rgba(255,255,255,0.95); backdrop-filter: blur(12px); border-bottom: 1px solid var(--border); padding: 0.6rem 1.2rem; display: flex; align-items: center; justify-content: space-between; gap: 1rem; }
+        .article-nav .nav-brand { font-family: var(--font-display); font-size: 0.9rem; font-weight: 600; color: var(--toki-blue); text-decoration: none; white-space: nowrap; }
+        .article-nav .nav-brand::before { content: ''; display: inline-block; width: 20px; height: 20px; background: url('asset/tokistorage-icon-512.png') no-repeat center / contain; vertical-align: -3px; margin-right: 5px; }
+        .article-nav .nav-right { display: flex; align-items: center; gap: 1rem; }
+        .article-nav .nav-label { font-size: 0.6rem; color: var(--text-muted); letter-spacing: 0.08em; }
+        .article-nav .lang-switch { font-size: 0.75rem; color: var(--toki-blue); text-decoration: none; padding: 0.3rem 0.6rem; border: 1px solid var(--toki-blue); border-radius: 4px; }
+        .article-nav .lang-switch:hover { background: var(--toki-blue); color: #fff; }
+
+        .article-container { max-width: 680px; margin: 0 auto; padding: 7rem 2rem 4rem; }
+        .article-header { margin-bottom: 3rem; padding-bottom: 2rem; border-bottom: 1px solid var(--border); }
+        .article-category { font-size: 0.7rem; color: var(--toki-blue); letter-spacing: 0.15em; margin-bottom: 1rem; text-transform: uppercase; }
+        .article-header h1 { font-family: var(--font-display); font-size: 1.8rem; font-weight: 700; line-height: 1.4; margin-bottom: 1.5rem; }
+        .article-subtitle { font-size: 0.95rem; color: var(--text-secondary); line-height: 1.8; }
+
+        .article-content h2 { font-family: var(--font-display); font-size: 1.25rem; font-weight: 600; margin: 3rem 0 1.5rem; padding-bottom: 0.5rem; border-bottom: 2px solid var(--toki-blue-pale); }
+        .article-content p { margin-bottom: 1.5rem; }
+        .article-content blockquote { border-left: 3px solid var(--toki-blue); padding-left: 1.5rem; margin: 2rem 0; font-family: var(--font-display); color: var(--text-secondary); line-height: 2; }
+        .article-content code { font-family: 'Menlo', 'Monaco', monospace; font-size: 0.85rem; background: #F1F5F9; padding: 0.1em 0.4em; border-radius: 3px; }
+
+        .core-message { background: var(--toki-blue-pale); border-left: 4px solid var(--toki-blue); padding: 1.5rem; margin: 2rem 0; font-size: 0.95rem; line-height: 1.8; }
+        .key-point { background: linear-gradient(135deg, var(--toki-blue-pale) 0%, #fff 100%); border: 1px solid var(--accent-blue); border-radius: 8px; padding: 1.5rem; margin: 2rem 0; text-align: center; }
+        .key-point p { font-family: var(--font-display); font-size: 1.1rem; color: var(--toki-blue-dark); margin: 0; }
+
+        .cta-block { background: var(--toki-blue); color: #fff; border-radius: 12px; padding: 2rem; margin: 3rem 0; text-align: center; }
+        .cta-block p { color: rgba(255,255,255,0.9); margin-bottom: 1.5rem; }
+        .cta-block a { display: inline-block; background: #fff; color: var(--toki-blue); padding: 0.6rem 1.5rem; border-radius: 6px; text-decoration: none; font-weight: 600; margin: 0.4rem; font-size: 0.9rem; }
+        .cta-block a.secondary { background: transparent; color: #fff; border: 1px solid rgba(255,255,255,0.6); }
+
+        .article-footer { margin-top: 4rem; padding-top: 2rem; border-top: 1px solid var(--border); text-align: center; }
+        .article-footer p { font-size: 0.8rem; color: var(--text-muted); margin-bottom: 1rem; }
+        .article-footer a { color: var(--toki-blue); text-decoration: none; }
+
+        @media (max-width: 768px) {
+            .article-container { padding: 6rem 1.2rem 3rem; }
+            .article-header h1 { font-size: 1.5rem; }
+            .article-nav .nav-label { display: none; }
+        }
+        @media print { .article-nav { display: none; } .article-container { padding-top: 2rem; } }
+    </style>
+</head>
+<body>
+
+<nav class="article-nav">
+    <a href="essays-en.html" class="nav-brand">TokiStorage</a>
+    <div class="nav-right">
+        <span class="nav-label">ESSAY</span>
+        <a href="ai-infrastructure-connection.html" class="lang-switch">JA</a>
+    </div>
+</nav>
+
+<main class="article-container">
+    <header class="article-header">
+        <div class="article-category">Technology &amp; Design</div>
+        <h1>Can It Connect to Infrastructure?</h1>
+        <p class="article-subtitle">A New Standard for Choosing AI Tools</p>
+    </header>
+
+    <article class="article-content">
+
+        <div class="core-message">The core idea: the day came to sort AI tools. Not by emotion or habit — by a single question: can it connect to infrastructure? An AI that completes within a conversation and an AI that can push and pull from a git repository are fundamentally different categories of tool. That difference made the choice clear.</div>
+
+        <h2>1. The Day Apps Were Cleared, AI Tools Were Sorted Too</h2>
+
+        <p>On the day of sorting through smartphone apps, AI tools were reviewed by the same standard. Over eighty apps were deleted. The selection wasn't emotional — it was philosophical. "Is this app for creating, or for consuming?" That question divided what stayed from what went.</p>
+
+        <p>AI tools were no exception. Several AI apps were on the phone. Each was held against the same question. One remained. Not an emotional choice. The day's work provided the evidence on which the judgment rested.</p>
+
+        <h2>2. The Gap Between "Completes in Conversation" and "Connects to Infrastructure"</h2>
+
+        <p>AI tools fall into two broad categories. One type produces answers within a conversation; when the session ends, everything disappears. The other executes code within the session and can write changes to external systems.</p>
+
+        <p>The first is an excellent advisor — clarifying thinking, refining language, developing ideas. But when the session ends, the output lives only in the conversation log. The second is different. Code executed within the session writes into an external repository. In the next session, those files are still there.</p>
+
+        <blockquote>
+        AI that completes in conversation: the answer lives inside the session<br>
+        AI that connects to infrastructure: the change is written into the world
+        </blockquote>
+
+        <h2>3. What Push and Pull Actually Mean</h2>
+
+        <p>Git push and pull look like technical operations. But the essence is making changes persist. It's the act of taking something thought through inside a session and committing it to the world outside that session.</p>
+
+        <p>Looking back at one day's work: an automated mail retrieval system was built. Morning briefings became self-running. Several essays were published. All of it was born inside conversations with an AI, and all of it was written into the world outside those conversations. The git commit log remains as evidence.</p>
+
+        <h2>4. The Allowed Domain List as a Design Philosophy</h2>
+
+        <p>Not all AI environments can connect to infrastructure equally. For security reasons, many AI environments restrict access to external networks. The key question is which domains are permitted — a design decision with significant consequences.</p>
+
+        <p>In an environment where <code>github.com</code> is on the allowed list, code running inside a session can push to a repository in real time. This isn't a convenience feature. It's the dividing line between an AI that can function as part of infrastructure and one that cannot. Can it change the world outside the conversation? That gap grows larger with continued use.</p>
+
+        <h2>5. Can Other AI Tools Do the Same?</h2>
+
+        <p>It might seem like the same result is achievable with other AI tools — have the code written, copy it, push it manually. That's true. But the structure is different.</p>
+
+        <p>Write code, copy it, paste into a terminal, push — this workflow always requires human intervention. Human intervention means friction. Friction means situations where the step gets skipped. Skipped steps accumulate, and infrastructure stops growing. The ability to push directly from within a session eliminates that friction. Because friction is zero, execution actually happens.</p>
+
+        <h2>6. The Standard for Selecting AI as a Tool</h2>
+
+        <p>"Can it connect to infrastructure?" will become an increasingly important criterion for selecting AI tools. The value of what an AI produces is determined by whether it persists in the world. If it completes only within a conversation, that value disappears when the session ends.</p>
+
+        <p>Through this lens, AI tool selection becomes clear. Choose AI that can write directly to your infrastructure — your repository, your file system, your records. Choose designs where the output of a conversation remains in the world outside it. Anything else, no matter how capable, is an AI for consuming.</p>
+
+        <h2>7. Memory Across Sessions and Execution Within Sessions</h2>
+
+        <p>AI has two constraints: no memory across sessions, and no ability to run multiple sessions simultaneously. The design built today answered both. Memory is externalized to a private repository. Execution is asynchronized through automated workflows. A system where AI can keep moving the world outside the session, even between sessions.</p>
+
+        <p>"Can it connect to infrastructure?" is the prerequisite for that design. Without the connection, the design doesn't hold. Push and pull capability is what makes externalized memory work. The connection is what allows infrastructure to grow across sessions.</p>
+
+        <h2>8. What Remains Reflects What You Value</h2>
+
+        <p>At the end of the app sorting, seven apps remained. One AI tool was among them. That choice wasn't based on emotion or habit — it was based on one day's evidence. Automated workflows, mail retrieval, six published essays — all of it emerged from sessions with that AI, and all of it was written into infrastructure.</p>
+
+        <p>When the standard for sorting tools becomes clear, what to keep and what to remove decides itself. "Can it connect to infrastructure?" This question applies not just to AI tools but to every tool choice. Does it complete in conversation, or does it change the world? That difference, accumulated, becomes the difference that matters most.</p>
+
+        <div class="key-point">
+            <p>The standard for selecting AI tools is whether it can connect to infrastructure. An AI that completes within a conversation and one that writes changes into the world are fundamentally different tools.</p>
+        </div>
+
+        <div class="cta-block">
+            <p>TokiStorage is a project dedicated to preserving voices, images, and text for a thousand years — democratizing proof of existence. The design philosophy of using AI as infrastructure is shared openly through these essays.</p>
+            <a href="https://tokistorage.github.io">Learn about TokiStorage</a>
+            <a href="essays-en.html" class="secondary">Read all essays</a>
+        </div>
+
+    </article>
+
+    <footer class="article-footer">
+        <p id="essay-nav-links"></p>
+        <p>© TokiStorage. All rights reserved.</p>
+    </footer>
+</main>
+
+<script src="essay-nav.js"></script>
+<script src="essay-tts.js"></script>
+</body>
+</html>

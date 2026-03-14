@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" type="image/png" sizes="32x32" href="asset/favicon-32.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="asset/apple-touch-icon.png">
+    <title>インフラに接続できるか | トキストレージ</title>
+    <meta name="robots" content="index, follow">
+    <meta name="description" content="AIツールを選別する日が来た。感情でも習慣でもなく、インフラに接続できるかどうかという一点で判断した。その基準が、残すべきものを教えてくれた。">
+    <link rel="alternate" hreflang="ja" href="https://tokistorage.github.io/lp/ai-infrastructure-connection.html">
+    <link rel="alternate" hreflang="en" href="https://tokistorage.github.io/lp/ai-infrastructure-connection-en.html">
+    <link rel="alternate" hreflang="x-default" href="https://tokistorage.github.io/lp/ai-infrastructure-connection.html">
+    <style>
+        :root {
+            --toki-blue: #2563EB;
+            --toki-blue-dark: #1E40AF;
+            --toki-blue-pale: #EFF6FF;
+            --accent-blue: #60A5FA;
+            --bg-white: #FFFFFF;
+            --text-primary: #1E293B;
+            --text-secondary: #475569;
+            --text-muted: #94A3B8;
+            --border: #E2E8F0;
+            --font-display: 'Hiragino Mincho ProN', 'Yu Mincho', serif;
+            --font-body: 'Hiragino Kaku Gothic ProN', 'Yu Gothic', 'Meiryo', sans-serif;
+        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        html { scroll-behavior: smooth; }
+        body { font-family: var(--font-body); font-weight: 400; background: var(--bg-white); color: var(--text-primary); line-height: 2; font-size: 16px; }
+
+        .article-nav { position: fixed; top: 0; left: 0; right: 0; z-index: 1000; background: rgba(255,255,255,0.95); backdrop-filter: blur(12px); border-bottom: 1px solid var(--border); padding: 0.6rem 1.2rem; display: flex; align-items: center; justify-content: space-between; gap: 1rem; }
+        .article-nav .nav-brand { font-family: var(--font-display); font-size: 0.9rem; font-weight: 600; color: var(--toki-blue); text-decoration: none; white-space: nowrap; }
+        .article-nav .nav-brand::before { content: ''; display: inline-block; width: 20px; height: 20px; background: url('asset/tokistorage-icon-512.png') no-repeat center / contain; vertical-align: -3px; margin-right: 5px; }
+        .article-nav .nav-right { display: flex; align-items: center; gap: 1rem; }
+        .article-nav .nav-label { font-size: 0.6rem; color: var(--text-muted); letter-spacing: 0.08em; }
+        .article-nav .lang-switch { font-size: 0.75rem; color: var(--toki-blue); text-decoration: none; padding: 0.3rem 0.6rem; border: 1px solid var(--toki-blue); border-radius: 4px; }
+        .article-nav .lang-switch:hover { background: var(--toki-blue); color: #fff; }
+
+        .article-container { max-width: 680px; margin: 0 auto; padding: 7rem 2rem 4rem; }
+        .article-header { margin-bottom: 3rem; padding-bottom: 2rem; border-bottom: 1px solid var(--border); }
+        .article-category { font-size: 0.7rem; color: var(--toki-blue); letter-spacing: 0.15em; margin-bottom: 1rem; }
+        .article-header h1 { font-family: var(--font-display); font-size: 1.8rem; font-weight: 700; line-height: 1.5; margin-bottom: 1.5rem; }
+        .article-subtitle { font-size: 0.95rem; color: var(--text-secondary); line-height: 1.9; }
+
+        .article-content h2 { font-family: var(--font-display); font-size: 1.3rem; font-weight: 600; margin: 3rem 0 1.5rem; padding-bottom: 0.5rem; border-bottom: 2px solid var(--toki-blue-pale); }
+        .article-content p { margin-bottom: 1.5rem; text-align: justify; }
+        .article-content blockquote { border-left: 3px solid var(--toki-blue); padding-left: 1.5rem; margin: 2rem 0; font-family: var(--font-display); color: var(--text-secondary); }
+        .article-content code { font-family: 'Menlo', 'Monaco', monospace; font-size: 0.85rem; background: #F1F5F9; padding: 0.1em 0.4em; border-radius: 3px; }
+
+        .core-message { background: var(--toki-blue-pale); border-left: 4px solid var(--toki-blue); padding: 1.5rem; margin: 2rem 0; font-size: 0.95rem; line-height: 1.8; }
+        .key-point { background: linear-gradient(135deg, var(--toki-blue-pale) 0%, #fff 100%); border: 1px solid var(--accent-blue); border-radius: 8px; padding: 1.5rem; margin: 2rem 0; text-align: center; }
+        .key-point p { font-family: var(--font-display); font-size: 1.1rem; color: var(--toki-blue-dark); margin: 0; }
+
+        .cta-block { background: var(--toki-blue); color: #fff; border-radius: 12px; padding: 2rem; margin: 3rem 0; text-align: center; }
+        .cta-block p { color: rgba(255,255,255,0.9); margin-bottom: 1.5rem; }
+        .cta-block a { display: inline-block; background: #fff; color: var(--toki-blue); padding: 0.6rem 1.5rem; border-radius: 6px; text-decoration: none; font-weight: 600; margin: 0.4rem; font-size: 0.9rem; }
+        .cta-block a.secondary { background: transparent; color: #fff; border: 1px solid rgba(255,255,255,0.6); }
+
+        .article-footer { margin-top: 4rem; padding-top: 2rem; border-top: 1px solid var(--border); text-align: center; }
+        .article-footer p { font-size: 0.8rem; color: var(--text-muted); margin-bottom: 1rem; }
+        .article-footer a { color: var(--toki-blue); text-decoration: none; }
+
+        @media (max-width: 768px) {
+            .article-container { padding: 6rem 1.2rem 3rem; }
+            .article-header h1 { font-size: 1.5rem; }
+            .article-nav .nav-label { display: none; }
+        }
+        @media print { .article-nav { display: none; } .article-container { padding-top: 2rem; } }
+    </style>
+</head>
+<body>
+
+<nav class="article-nav">
+    <a href="essays.html" class="nav-brand">トキストレージ</a>
+    <div class="nav-right">
+        <span class="nav-label">ESSAY</span>
+        <a href="ai-infrastructure-connection-en.html" class="lang-switch">EN</a>
+    </div>
+</nav>
+
+<main class="article-container">
+    <header class="article-header">
+        <div class="article-category">技術・設計</div>
+        <h1>インフラに接続できるか</h1>
+        <p class="article-subtitle">AIツール選択の新しい基準</p>
+    </header>
+
+    <article class="article-content">
+
+        <div class="core-message">この記事で言いたいこと：AIツールを選別する日が来た。感情でも習慣でもなく、「インフラに接続できるか」という一点で判断した。会話で完結するAIと、gitリポジトリにpush/pullできるAIは、根本的に異なるカテゴリの道具だ。その差が、残すべきものを教えてくれた。</div>
+
+        <h2>1. アプリを全て消す日に、AIも選別された</h2>
+
+        <p>スマートフォンのアプリを整理した日、AIツールも同じ基準で見直した。80本以上のアプリを消した。感情で選ばず、思想で選んだ。「このアプリは創るためのものか、消費するためのものか」。その問いに照らして、残すものと消すものが分かれた。</p>
+
+        <p>AIツールも例外ではなかった。複数のAIアプリがスマートフォンに入っていた。全てを同じ問いに照らした。残ったのは一つだった。感情的な選択ではない。その日一日の作業実績が、判断の根拠になった。</p>
+
+        <h2>2. 「会話で完結する」と「インフラに接続できる」の差</h2>
+
+        <p>AIツールには大きく二つのカテゴリがある。会話の中で答えを出し、セッションが終われば全てが消えるタイプ。もう一つは、セッション内でコードを実行し、外部のシステムに変更を書き込めるタイプだ。</p>
+
+        <p>前者は優秀なアドバイザーだ。考えを整理し、文章を磨き、アイデアを展開する。しかしセッションが終われば、その成果物は会話ログの中にしかない。後者は違う。セッション内で実行したコードが、外部のリポジトリに書き込まれる。次のセッションでも、そのファイルは残っている。</p>
+
+        <blockquote>
+        会話で完結するAI：答えはセッションの中にある<br>
+        インフラに接続できるAI：変更は世界に書き込まれる
+        </blockquote>
+
+        <h2>3. push/pullが意味すること</h2>
+
+        <p>gitのpush/pullは、一見すると技術的な操作に見える。しかし本質は「変更を永続させる」ことだ。セッション内で考えたことを、セッションの外の世界に確定させる行為だ。</p>
+
+        <p>今日一日を振り返ると、メールの自動取得の仕組みを構築した。朝のブリーフィングが自動化された。複数のエッセイが公開された。消防本部面談の準備が進んだ。これら全ては、AIとの会話の中で生まれたが、会話の外の世界に書き込まれた。gitのコミットログが、その証拠として残っている。</p>
+
+        <h2>4. ネットワークの許可リストという設計思想</h2>
+
+        <p>全てのAIが同じようにインフラに接続できるわけではない。セキュリティ上の理由から、外部ネットワークへのアクセスを制限しているAI環境も多い。重要なのは、どのドメインへのアクセスを許可するかという設計判断だ。</p>
+
+        <p><code>github.com</code> が許可リストに入っている環境では、セッション内のコードがリアルにリポジトリへpushできる。これは単なる便利機能ではない。AIが「インフラの一部」として機能できるかどうかの分水嶺だ。会話の外の世界を変えられるかどうか。その差は、使い続けるほど大きくなる。</p>
+
+        <h2>5. 同じことが他のAIでできるか</h2>
+
+        <p>他の主要なAIでも、似たような操作ができると思われるかもしれない。コードを書いてもらい、それをコピーして自分でpushすればいい、と。それは正しい。しかし構造が違う。</p>
+
+        <p>コードを書いてもらい、コピーし、ターミナルに貼り付けてpushする——この流れには、人間が必ず介在する。人間が介在するということは、その分だけ摩擦がある。摩擦があるということは、省略される場面が生まれる。省略が積み重なると、インフラが育たなくなる。セッション内から直接pushできる環境は、その摩擦をゼロにする。摩擦がゼロだから、実行される。</p>
+
+        <h2>6. 道具としてのAIを選別する基準</h2>
+
+        <p>AIツールを選別する基準として、「インフラに接続できるか」は今後ますます重要になる。AIが生成するものの価値は、それが世界に永続するかどうかで決まる。会話の中だけで完結するなら、その価値はセッション終了とともに消える。</p>
+
+        <p>この基準で見ると、AIツールの選択は明確になる。自分のインフラ——リポジトリ、ファイルシステム、データベース——に直接書き込めるAIを選ぶ。会話の成果物が、会話の外の世界に残る設計を選ぶ。それ以外は、どれだけ賢くても、消費するためのAIだ。</p>
+
+        <h2>7. セッションをまたぐ記憶と、セッション内の実行</h2>
+
+        <p>AIには二つの制約がある。セッションをまたぐ記憶がないこと、そして複数のセッションを同時に持てないことだ。この制約に対して、今日構築した設計はこう答えた。記憶はプライベートリポジトリに外部化する。実行はGitHub Actionsに非同期化する。AIがセッションの外の世界を動かし続けられる仕組みを作る。</p>
+
+        <p>「インフラに接続できるか」という基準は、この設計の前提だ。接続できないAIでは、この設計が成立しない。push/pullができるから、記憶の外部化が機能する。接続があるから、セッションをまたいでインフラが育つ。</p>
+
+        <h2>8. 残すものが、思想を映す</h2>
+
+        <p>アプリ整理の最後に残ったものは7本だった。その中にAIツールは1本だけ入っていた。その選択は、感情でも習慣でもなく、今日一日の実績に基づいていた。GitHub Actions、メール自動取得、エッセイ5本の公開——全てがそのAIとのセッションから生まれ、インフラに書き込まれた。</p>
+
+        <p>道具を選別する基準が明確になった時、何を残し何を消すかは自然に決まる。「インフラに接続できるか」。この問いは、AIツールだけでなく、全ての道具選択に適用できる。会話で完結するものか、世界を変えるものか。その差が、積み重なった先で大きな違いになる。</p>
+
+        <div class="key-point">
+            <p>AIツールを選別する基準は、インフラに接続できるかどうかだ。会話で完結するAIと、世界に変更を書き込めるAIは、根本的に異なる道具だ。</p>
+        </div>
+
+        <div class="cta-block">
+            <p>トキストレージは、声・画像・テキストを1000年保管する「存在証明の民主化」プロジェクトです。AIをインフラとして使う設計思想を、エッセイで公開しています。</p>
+            <a href="https://tokistorage.github.io">トキストレージを知る</a>
+            <a href="essays.html" class="secondary">すべてのエッセイを読む</a>
+        </div>
+
+    </article>
+
+    <footer class="article-footer">
+        <p id="essay-nav-links"></p>
+        <p>© TokiStorage. All rights reserved.</p>
+    </footer>
+</main>
+
+<script src="essay-nav.js"></script>
+<script src="essay-tts.js"></script>
+</body>
+</html>
