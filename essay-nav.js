@@ -227,7 +227,8 @@
     { id: 'temptation-no-philosophy', ja: '誘惑は戦う相手ではない', en: 'Temptation Is Not the Enemy', date: '2026-03-14' },
     { id: 'delete-all-apps', ja: 'アプリを消す', en: 'Delete All Apps', date: '2026-03-14' },
     { id: 'ai-infrastructure-connection', ja: 'インフラに接続できるか', en: 'Can It Connect to Infrastructure?', date: '2026-03-14' },
-    { id: 'gap-between-outputs', ja: '聞き流していた時間', en: 'The Hours I Listened Without Hearing', date: '2026-03-14' }
+    { id: 'gap-between-outputs', ja: '聞き流していた時間', en: 'The Hours I Listened Without Hearing', date: '2026-03-14' },
+    { id: 'voice-becomes-memory', ja: '声が記憶になる日', en: 'The Day Voice Became Memory', date: '2026-03-14' }
   ];
 
   // ── Latest Articles (最新記事) ──
@@ -454,6 +455,7 @@
     'delete-all-apps': ['temptation-no-philosophy', 'possibility-vs-direction', 'zero-cost-autonomy', 'burn-rate-zero', 'morning-inbox-autonomous'],
     'ai-infrastructure-connection': ['morning-inbox-autonomous', 'claude-code-boundary', 'zero-cost-autonomy', 'delete-all-apps', 'tool-vs-infrastructure'],
     'gap-between-outputs': ['temptation-no-philosophy', 'delete-all-apps', 'possibility-vs-direction', 'burn-rate-zero', 'zero-cost-autonomy'],
+    'voice-becomes-memory': ['delete-all-apps', 'zero-cost-autonomy', 'tool-vs-infrastructure', 'morning-inbox-autonomous', 'ai-infrastructure-connection'],
     'break-and-grow':           ['zero-cost-autonomy', 'tool-vs-infrastructure', 'vibe-coding', 'primitive-edge', 'constraint-philosophy']
   };
 

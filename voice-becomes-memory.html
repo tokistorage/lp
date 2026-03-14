@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="icon" type="image/png" sizes="32x32" href="asset/favicon-32.png">
+  <link rel="apple-touch-icon" sizes="180x180" href="asset/apple-touch-icon.png">
+  <title>声が記憶になる日 | トキストレージ</title>
+  <meta name="robots" content="index, follow">
+  <meta name="description" content="アプリを消した翌日、ショートカットを一本作った。音声入力で声が記憶になる。依存を増やすのではなく、インフラを育てる設計の話。">
+  <link rel="alternate" hreflang="ja" href="https://tokistorage.github.io/lp/voice-becomes-memory.html">
+  <link rel="alternate" hreflang="en" href="https://tokistorage.github.io/lp/voice-becomes-memory-en.html">
+  <link rel="alternate" hreflang="x-default" href="https://tokistorage.github.io/lp/voice-becomes-memory.html">
+  <link rel="canonical" href="https://tokistorage.github.io/lp/voice-becomes-memory.html">
+  <style>
+    :root {
+      --toki-blue: #2563EB;
+      --toki-blue-dark: #1E40AF;
+      --toki-blue-pale: #EFF6FF;
+      --accent-blue: #60A5FA;
+      --bg-white: #FFFFFF;
+      --text-primary: #1E293B;
+      --text-secondary: #475569;
+      --text-muted: #94A3B8;
+      --border: #E2E8F0;
+      --font-display: 'Hiragino Mincho ProN', 'Yu Mincho', serif;
+      --font-body: 'Hiragino Kaku Gothic ProN', 'Yu Gothic', 'Meiryo', sans-serif;
+    }
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body { font-family: var(--font-body); font-weight: 400; background: var(--bg-white); color: var(--text-primary); line-height: 2; font-size: 16px; }
+
+    .article-nav { position: fixed; top: 0; left: 0; right: 0; z-index: 1000; background: rgba(255,255,255,0.95); backdrop-filter: blur(12px); border-bottom: 1px solid var(--border); padding: 0.6rem 1.2rem; display: flex; align-items: center; justify-content: space-between; gap: 1rem; }
+    .article-nav .nav-brand { font-family: var(--font-display); font-size: 0.9rem; font-weight: 600; color: var(--toki-blue); text-decoration: none; white-space: nowrap; }
+    .article-nav .nav-brand::before { content: ''; display: inline-block; width: 20px; height: 20px; background: url('asset/tokistorage-icon-512.png') no-repeat center / contain; vertical-align: -3px; margin-right: 5px; }
+    .article-nav .nav-right { display: flex; align-items: center; gap: 1rem; }
+    .article-nav .nav-label { font-size: 0.6rem; color: var(--text-muted); letter-spacing: 0.08em; }
+    .article-nav .lang-switch { font-size: 0.75rem; color: var(--toki-blue); text-decoration: none; padding: 0.3rem 0.6rem; border: 1px solid var(--toki-blue); border-radius: 4px; }
+    .article-nav .lang-switch:hover { background: var(--toki-blue); color: #fff; }
+
+    .article-container { max-width: 680px; margin: 0 auto; padding: 7rem 2rem 4rem; }
+    .article-header { margin-bottom: 3rem; padding-bottom: 2rem; border-bottom: 1px solid var(--border); }
+    .article-category { font-size: 0.7rem; color: var(--toki-blue); letter-spacing: 0.15em; margin-bottom: 1rem; }
+    .article-header h1 { font-family: var(--font-display); font-size: 1.8rem; font-weight: 700; line-height: 1.5; margin-bottom: 1.5rem; }
+    .article-subtitle { font-size: 0.95rem; color: var(--text-secondary); line-height: 1.9; }
+
+    .article-content h2 { font-family: var(--font-display); font-size: 1.3rem; font-weight: 600; margin: 3rem 0 1.5rem; padding-bottom: 0.5rem; border-bottom: 2px solid var(--toki-blue-pale); }
+    .article-content p { margin-bottom: 1.5rem; text-align: justify; }
+    .article-content blockquote { border-left: 3px solid var(--toki-blue); padding-left: 1.5rem; margin: 2rem 0; font-family: var(--font-display); color: var(--text-secondary); }
+    .article-content code { background: var(--toki-blue-pale); padding: 0.1rem 0.4rem; border-radius: 3px; font-size: 0.9em; font-family: monospace; }
+
+    .core-message { background: var(--toki-blue-pale); border-left: 4px solid var(--toki-blue); padding: 1.5rem; margin: 2rem 0; font-size: 0.95rem; line-height: 1.8; }
+    .key-point { background: linear-gradient(135deg, var(--toki-blue-pale) 0%, #fff 100%); border: 1px solid var(--accent-blue); border-radius: 8px; padding: 1.5rem; margin: 2rem 0; text-align: center; }
+    .key-point p { font-family: var(--font-display); font-size: 1.1rem; color: var(--toki-blue-dark); margin: 0; }
+
+    .cta-block { background: var(--toki-blue); color: #fff; border-radius: 12px; padding: 2rem; margin: 3rem 0; text-align: center; }
+    .cta-block p { color: rgba(255,255,255,0.9); margin-bottom: 1.5rem; font-size: 0.95rem; line-height: 1.8; }
+    .cta-block a { display: inline-block; background: #fff; color: var(--toki-blue); text-decoration: none; padding: 0.6rem 1.5rem; border-radius: 6px; font-weight: 600; font-size: 0.9rem; margin: 0.3rem; }
+    .cta-block a.secondary { background: transparent; color: #fff; border: 1px solid rgba(255,255,255,0.5); }
+    .cta-block a.secondary:hover { background: rgba(255,255,255,0.1); }
+
+    .article-footer { margin-top: 4rem; padding-top: 2rem; border-top: 1px solid var(--border); text-align: center; }
+    .article-footer p { font-size: 0.8rem; color: var(--text-muted); margin-bottom: 1rem; }
+    .article-footer a { color: var(--toki-blue); text-decoration: none; }
+
+    @media (max-width: 768px) {
+      .article-container { padding: 6rem 1.2rem 3rem; }
+      .article-header h1 { font-size: 1.5rem; }
+    }
+  </style>
+</head>
+<body>
+<nav class="article-nav">
+  <a href="essays.html" class="nav-brand">トキストレージ</a>
+  <div class="nav-right">
+    <span class="nav-label">ESSAY</span>
+    <a href="voice-becomes-memory-en.html" class="lang-switch">EN</a>
+  </div>
+</nav>
+
+<main class="article-container">
+  <header class="article-header">
+    <div class="article-category">技術・設計</div>
+    <h1>声が記憶になる日</h1>
+    <p class="article-subtitle">アプリを消した翌日、ショートカットを一本作った</p>
+  </header>
+
+  <article class="article-content">
+
+    <div class="core-message">この記事で言いたいこと：新しいツールを導入することと、既存のインフラに新しい入口を作ることは、まったく別の行為だ。前者は依存を増やし、後者はインフラを育てる。声が記憶になる仕組みを一本のショートカットで作った日、その違いが体でわかった。</div>
+
+    <h2>1. 67本を消した翌朝</h2>
+    <p>前日、スマートフォンから67本のアプリを消した。消費するためのものを全部外した。残ったのは7本だった。創る、記録する、保存する——そのためのものだけが手元に残った。</p>
+    <p>不思議なことに、翌朝の手は軽かった。何かを失った感覚がなかった。むしろ、次に何かを作りたくなった。</p>
+    <p>その朝にやったことが、一本のショートカットを組むことだった。</p>
+
+    <h2>2. ショートカットの構造</h2>
+    <p>作ったのはシンプルなものだ。音声入力でテキストを受け取り、GitHubのワークフローをディスパッチする。それだけだ。</p>
+    <blockquote>
+      音声入力 → テキスト取得<br>
+      → GitHub Actions dispatch（inbox_text を渡す）<br>
+      → <code>tr/memory/inbox/</code> に日時付きで保存
+    </blockquote>
+    <p>ボタンを一度押して話す。それだけで記憶が刻まれる。朝の思いつき、気になったこと、今日やりたいこと。声が、インフラの記憶になる。</p>
+
+    <h2>3. 既存のインフラという意味</h2>
+    <p>このショートカットは何も新しいシステムを作っていない。すでにあるものに、入口を一つ追加しただけだ。</p>
+    <p>記憶を蓄積するリポジトリはすでにある。GitHub Actionsのエンジンはすでに動いている。ファイルを書き込むワークフローはすでにある。今回やったのは、それらを音声で呼び出せるようにしただけだ。</p>
+    <p>新しい依存関係は一つも増えていない。新しいサービスへの登録もない。使用料も発生しない。既存のインフラが、一つ賢くなった。</p>
+
+    <h2>4. 依存を増やすことの正体</h2>
+    <p>世の中には「便利なアプリ」が溢れている。使い始めるとき、人はそれを「ツールを手に入れた」と思う。だが実際には「依存先を増やした」に近い。</p>
+    <p>そのアプリがサービス終了したら？　値上げしたら？　仕様が変わったら？　データが取り出せなくなったら？　利便性の裏に、常にリスクが貼り付いている。</p>
+    <p>依存は重なるほど、身動きが取れなくなる。アプリを消すことで、その重さが初めて体感できた。</p>
+
+    <h2>5. インフラを育てるという設計</h2>
+    <p>対照的に、インフラへの投資は使うほど育つ。</p>
+    <p>自分のリポジトリにデータが積み上がる。ワークフローは使うたびに洗練される。記憶は蓄積され、次のセッションでも参照できる。コストはかからない。外部サービスへの依存もない。</p>
+    <p>インフラとは、自分のものであり続けるシステムのことだ。ツールは借りるもの、インフラは育てるもの——この違いが、設計の思想を根本から変える。</p>
+
+    <h2>6. 声という入力の自然さ</h2>
+    <p>テキスト入力には摩擦がある。キーボードを開く、タップする、変換する。その摩擦の分だけ、思いつきが取りこぼされる。</p>
+    <p>声は違う。思ったことをそのまま外に出せる。「石鹸を作る」「忍者農業について深掘りする」——歩きながら、目を覚ましながら、ふと浮かんだ言葉が、そのままインフラの記憶になる。</p>
+    <p>インボックスに積まれたメモを翌朝読むと、前日の頭の流れが見える。それはノートとも、タスクリストとも違う何かだ。声の粒度の記憶。</p>
+
+    <h2>7. ブリーフィングでインサイトが出る理由</h2>
+    <p>朝のブリーフィングで、インボックスのメモをスキャンするようにした。ただ読むだけでなく、タスクとの関連・緊急度・流れを分析して提示する。</p>
+    <p>すると気づいた。昨日の「部屋を片付けたい」というメモと、今日の「物理的な整理から始めよう」という感覚が、自然につながっている。「石鹸作り」というメモが、タスクリストの一項目を今日動かすシグナルになっている。</p>
+    <p>個別のメモには意味がない。流れを読むことで意味が生まれる。インフラが声を受け取り、時系列に並べ、文脈を与える。そのサイクルが、自律的な思考の補助線になる。</p>
+
+    <h2>8. 入口の数だけ、インフラは広がる</h2>
+    <p>インフラに入口を増やすことは、インフラを育てることだ。</p>
+    <p>声で入力する。写真で記録する。チャットで指示する。どの経路から入っても、同じ場所に積み上がる。記憶は一元化され、分析は深まり、次の行動につながる。</p>
+    <p>新しいアプリを入れるたびに、人は別の場所に何かを預けていく。いつの間にか、自分のデータが分散し、誰のものかわからなくなる。入口を増やすのではなく、一つのインフラへの入口を増やす——この方向が、長期的な自律を作る。</p>
+
+    <div class="key-point"><p>依存を増やすな。インフラを育てろ。声が記憶になる日、設計の哲学が一本の線でつながった。</p></div>
+
+    <div class="cta-block">
+      <p>トキストレージは、声・画像・テキストを1000年保管するプロジェクトです。インフラを育てる設計思想で、存在証明の民主化を目指しています。</p>
+      <a href="https://tokistorage.github.io">トキストレージを知る</a>
+      <a href="essays.html" class="secondary">すべてのエッセイを読む</a>
+    </div>
+
+  </article>
+
+  <footer class="article-footer">
+    <p id="essay-nav-links"></p>
+    <p>© TokiStorage. All rights reserved.</p>
+  </footer>
+</main>
+<script src="essay-nav.js"></script>
+<script src="essay-tts.js"></script>
+</body>
+</html>

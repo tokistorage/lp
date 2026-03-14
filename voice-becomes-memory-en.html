@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="icon" type="image/png" sizes="32x32" href="asset/favicon-32.png">
+  <link rel="apple-touch-icon" sizes="180x180" href="asset/apple-touch-icon.png">
+  <title>The Day Voice Became Memory | TokiStorage</title>
+  <meta name="robots" content="index, follow">
+  <meta name="description" content="The day after deleting 67 apps, I built one shortcut. Voice input flows into infrastructure. Not adding dependencies — growing the system I already own.">
+  <link rel="alternate" hreflang="ja" href="https://tokistorage.github.io/lp/voice-becomes-memory.html">
+  <link rel="alternate" hreflang="en" href="https://tokistorage.github.io/lp/voice-becomes-memory-en.html">
+  <link rel="alternate" hreflang="x-default" href="https://tokistorage.github.io/lp/voice-becomes-memory.html">
+  <link rel="canonical" href="https://tokistorage.github.io/lp/voice-becomes-memory-en.html">
+  <style>
+    :root {
+      --toki-blue: #2563EB;
+      --toki-blue-dark: #1E40AF;
+      --toki-blue-pale: #EFF6FF;
+      --accent-blue: #60A5FA;
+      --bg-white: #FFFFFF;
+      --text-primary: #1E293B;
+      --text-secondary: #475569;
+      --text-muted: #94A3B8;
+      --border: #E2E8F0;
+      --font-display: Georgia, 'Times New Roman', serif;
+      --font-body: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    }
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body { font-family: var(--font-body); font-weight: 400; background: var(--bg-white); color: var(--text-primary); line-height: 2; font-size: 16px; }
+
+    .article-nav { position: fixed; top: 0; left: 0; right: 0; z-index: 1000; background: rgba(255,255,255,0.95); backdrop-filter: blur(12px); border-bottom: 1px solid var(--border); padding: 0.6rem 1.2rem; display: flex; align-items: center; justify-content: space-between; gap: 1rem; }
+    .article-nav .nav-brand { font-family: var(--font-display); font-size: 0.9rem; font-weight: 600; color: var(--toki-blue); text-decoration: none; white-space: nowrap; }
+    .article-nav .nav-brand::before { content: ''; display: inline-block; width: 20px; height: 20px; background: url('asset/tokistorage-icon-512.png') no-repeat center / contain; vertical-align: -3px; margin-right: 5px; }
+    .article-nav .nav-right { display: flex; align-items: center; gap: 1rem; }
+    .article-nav .nav-label { font-size: 0.6rem; color: var(--text-muted); letter-spacing: 0.08em; }
+    .article-nav .lang-switch { font-size: 0.75rem; color: var(--toki-blue); text-decoration: none; padding: 0.3rem 0.6rem; border: 1px solid var(--toki-blue); border-radius: 4px; }
+    .article-nav .lang-switch:hover { background: var(--toki-blue); color: #fff; }
+
+    .article-container { max-width: 680px; margin: 0 auto; padding: 7rem 2rem 4rem; }
+    .article-header { margin-bottom: 3rem; padding-bottom: 2rem; border-bottom: 1px solid var(--border); }
+    .article-category { font-size: 0.7rem; color: var(--toki-blue); letter-spacing: 0.15em; margin-bottom: 1rem; }
+    .article-header h1 { font-family: var(--font-display); font-size: 1.8rem; font-weight: 700; line-height: 1.4; margin-bottom: 1.5rem; }
+    .article-subtitle { font-size: 0.95rem; color: var(--text-secondary); line-height: 1.9; }
+
+    .article-content h2 { font-family: var(--font-display); font-size: 1.3rem; font-weight: 600; margin: 3rem 0 1.5rem; padding-bottom: 0.5rem; border-bottom: 2px solid var(--toki-blue-pale); }
+    .article-content p { margin-bottom: 1.5rem; }
+    .article-content blockquote { border-left: 3px solid var(--toki-blue); padding-left: 1.5rem; margin: 2rem 0; font-family: var(--font-display); color: var(--text-secondary); }
+    .article-content code { background: var(--toki-blue-pale); padding: 0.1rem 0.4rem; border-radius: 3px; font-size: 0.9em; font-family: monospace; }
+
+    .core-message { background: var(--toki-blue-pale); border-left: 4px solid var(--toki-blue); padding: 1.5rem; margin: 2rem 0; font-size: 0.95rem; line-height: 1.8; }
+    .key-point { background: linear-gradient(135deg, var(--toki-blue-pale) 0%, #fff 100%); border: 1px solid var(--accent-blue); border-radius: 8px; padding: 1.5rem; margin: 2rem 0; text-align: center; }
+    .key-point p { font-family: var(--font-display); font-size: 1.1rem; color: var(--toki-blue-dark); margin: 0; }
+
+    .cta-block { background: var(--toki-blue); color: #fff; border-radius: 12px; padding: 2rem; margin: 3rem 0; text-align: center; }
+    .cta-block p { color: rgba(255,255,255,0.9); margin-bottom: 1.5rem; font-size: 0.95rem; line-height: 1.8; }
+    .cta-block a { display: inline-block; background: #fff; color: var(--toki-blue); text-decoration: none; padding: 0.6rem 1.5rem; border-radius: 6px; font-weight: 600; font-size: 0.9rem; margin: 0.3rem; }
+    .cta-block a.secondary { background: transparent; color: #fff; border: 1px solid rgba(255,255,255,0.5); }
+    .cta-block a.secondary:hover { background: rgba(255,255,255,0.1); }
+
+    .article-footer { margin-top: 4rem; padding-top: 2rem; border-top: 1px solid var(--border); text-align: center; }
+    .article-footer p { font-size: 0.8rem; color: var(--text-muted); margin-bottom: 1rem; }
+    .article-footer a { color: var(--toki-blue); text-decoration: none; }
+
+    @media (max-width: 768px) {
+      .article-container { padding: 6rem 1.2rem 3rem; }
+      .article-header h1 { font-size: 1.5rem; }
+    }
+  </style>
+</head>
+<body>
+<nav class="article-nav">
+  <a href="essays-en.html" class="nav-brand">TokiStorage</a>
+  <div class="nav-right">
+    <span class="nav-label">ESSAY</span>
+    <a href="voice-becomes-memory.html" class="lang-switch">JA</a>
+  </div>
+</nav>
+
+<main class="article-container">
+  <header class="article-header">
+    <div class="article-category">TECHNOLOGY &amp; DESIGN</div>
+    <h1>The Day Voice Became Memory</h1>
+    <p class="article-subtitle">The morning after deleting 67 apps, I built one shortcut</p>
+  </header>
+
+  <article class="article-content">
+
+    <div class="core-message">The point: Adding a new tool and adding a new entrance to existing infrastructure are completely different acts. The first grows your dependencies. The second grows your infrastructure. I learned the difference the day I made my voice part of my own memory system.</div>
+
+    <h2>1. The Morning After 67 Deletions</h2>
+    <p>The day before, I deleted 67 apps from my phone. I stripped out everything built for consumption. Seven remained — tools for creating, recording, and preserving. Nothing else.</p>
+    <p>What surprised me was how light my hands felt the next morning. No sense of loss. Just a quiet impulse to build something.</p>
+    <p>So I built one shortcut.</p>
+
+    <h2>2. What the Shortcut Does</h2>
+    <p>The structure is simple. It takes voice input, converts it to text, and dispatches a GitHub Actions workflow. That's it.</p>
+    <blockquote>
+      Voice input → text capture<br>
+      → GitHub Actions dispatch (passes inbox_text)<br>
+      → saved to <code>tr/memory/inbox/</code> with timestamp
+    </blockquote>
+    <p>Press once. Speak. The memory is written. Morning ideas, passing observations, things I want to do today — spoken into the air and stored in my own infrastructure.</p>
+
+    <h2>3. What "Existing Infrastructure" Actually Means</h2>
+    <p>This shortcut didn't create anything new. It added one entrance to what already existed.</p>
+    <p>The memory repository was already there. The Actions engine was already running. The workflow to write files was already in place. All I did was make it callable by voice.</p>
+    <p>No new dependencies. No new service registrations. No new costs. The infrastructure I already owned became slightly more capable.</p>
+
+    <h2>4. The Real Cost of Adding Tools</h2>
+    <p>The app stores are full of things marketed as tools. When you start using them, it feels like gaining capability. But more precisely, you're adding a dependency.</p>
+    <p>What happens when that service shuts down? When it raises prices? When it changes its API? When it becomes impossible to export your data? Behind every convenience, a risk quietly attaches itself.</p>
+    <p>Dependencies compound. The more you add, the harder it becomes to move. Deleting 67 apps made me feel that weight for the first time — because it disappeared.</p>
+
+    <h2>5. The Design Philosophy of Growing Infrastructure</h2>
+    <p>Infrastructure investment works in the opposite direction: the more you use it, the stronger it gets.</p>
+    <p>Data accumulates in your own repository. Workflows sharpen with use. Memory builds up and remains accessible in future sessions. No cost. No external dependency to manage.</p>
+    <p>Infrastructure is a system that stays yours. Tools are borrowed. Infrastructure is grown. That distinction changes how you design everything.</p>
+
+    <h2>6. Why Voice Is the Natural Input</h2>
+    <p>Text input has friction. Open the keyboard. Tap. Convert. Correct. That friction is just enough to lose a thought.</p>
+    <p>Voice doesn't have that problem. You say what you're thinking. "Make soap." "Go deep on ninja farming." Words that rise while walking, while waking, while doing something else — they flow straight into the infrastructure's memory.</p>
+    <p>Reading those inbox notes the next morning, you see the shape of yesterday's mind. It's not a to-do list, not a diary. It's memory at the resolution of speech.</p>
+
+    <h2>7. Why the Morning Briefing Produces Insight</h2>
+    <p>I added inbox scanning to the morning briefing — not just reading, but analyzing: connections to tasks, urgency signals, patterns across the day's notes.</p>
+    <p>Something became clear. Yesterday's "I want to clean the room" connected naturally to this morning's impulse to start with the physical. A note saying "soap making" became a signal that a stalled task on the list was ready to move today.</p>
+    <p>Individual notes carry little meaning on their own. Reading the flow is what creates it. Infrastructure receives the voice, orders it in time, gives it context. That cycle becomes a scaffold for autonomous thinking.</p>
+
+    <h2>8. Every Entrance Grows the Infrastructure</h2>
+    <p>Adding more ways into your infrastructure is how the infrastructure grows.</p>
+    <p>Voice input. Photo capture. Chat commands. Whatever the path, it accumulates in the same place. Memory centralizes. Analysis deepens. The next action emerges from what came before.</p>
+    <p>Each new app you install sends a piece of yourself somewhere else. Over time your data scatters, and you lose track of who it belongs to. The alternative: more entrances into one infrastructure you own — that's what builds long-term autonomy.</p>
+
+    <div class="key-point"><p>Don't add dependencies. Grow your infrastructure. The day voice became memory, a line of thinking finally closed into a circle.</p></div>
+
+    <div class="cta-block">
+      <p>TokiStorage is a project to preserve voice, image, and text for 1,000 years — built on the philosophy of growing infrastructure rather than accumulating dependencies.</p>
+      <a href="https://tokistorage.github.io">Explore TokiStorage</a>
+      <a href="essays-en.html" class="secondary">Read all essays</a>
+    </div>
+
+  </article>
+
+  <footer class="article-footer">
+    <p id="essay-nav-links"></p>
+    <p>© TokiStorage. All rights reserved.</p>
+  </footer>
+</main>
+<script src="essay-nav.js"></script>
+<script src="essay-tts.js"></script>
+</body>
+</html>
