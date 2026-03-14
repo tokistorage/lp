@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" type="image/png" sizes="32x32" href="asset/favicon-32.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="asset/apple-touch-icon.png">
+    <title>By Morning, the Mail Has Already Arrived | TokiStorage</title>
+    <meta name="robots" content="index, follow">
+    <meta name="description" content="A design born from AI's single-session constraint. How GitHub Actions as asynchronous infrastructure makes morning briefings self-sufficient.">
+    <link rel="alternate" hreflang="ja" href="https://tokistorage.github.io/lp/morning-inbox-autonomous.html">
+    <link rel="alternate" hreflang="en" href="https://tokistorage.github.io/lp/morning-inbox-autonomous-en.html">
+    <link rel="alternate" hreflang="x-default" href="https://tokistorage.github.io/lp/morning-inbox-autonomous.html">
+    <style>
+        :root {
+            --toki-blue: #2563EB;
+            --toki-blue-dark: #1E40AF;
+            --toki-blue-pale: #EFF6FF;
+            --accent-blue: #60A5FA;
+            --bg-white: #FFFFFF;
+            --text-primary: #1E293B;
+            --text-secondary: #475569;
+            --text-muted: #94A3B8;
+            --border: #E2E8F0;
+            --font-display: Georgia, 'Times New Roman', serif;
+            --font-body: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        html { scroll-behavior: smooth; }
+        body { font-family: var(--font-body); font-weight: 400; background: var(--bg-white); color: var(--text-primary); line-height: 1.9; font-size: 16px; }
+
+        .article-nav { position: fixed; top: 0; left: 0; right: 0; z-index: 1000; background: rgba(255,255,255,0.95); backdrop-filter: blur(12px); border-bottom: 1px solid var(--border); padding: 0.6rem 1.2rem; display: flex; align-items: center; justify-content: space-between; gap: 1rem; }
+        .article-nav .nav-brand { font-family: var(--font-display); font-size: 0.9rem; font-weight: 600; color: var(--toki-blue); text-decoration: none; white-space: nowrap; }
+        .article-nav .nav-brand::before { content: ''; display: inline-block; width: 20px; height: 20px; background: url('asset/tokistorage-icon-512.png') no-repeat center / contain; vertical-align: -3px; margin-right: 5px; }
+        .article-nav .nav-right { display: flex; align-items: center; gap: 1rem; }
+        .article-nav .nav-label { font-size: 0.6rem; color: var(--text-muted); letter-spacing: 0.08em; }
+        .article-nav .lang-switch { font-size: 0.75rem; color: var(--toki-blue); text-decoration: none; padding: 0.3rem 0.6rem; border: 1px solid var(--toki-blue); border-radius: 4px; }
+        .article-nav .lang-switch:hover { background: var(--toki-blue); color: #fff; }
+
+        .article-container { max-width: 680px; margin: 0 auto; padding: 7rem 2rem 4rem; }
+        .article-header { margin-bottom: 3rem; padding-bottom: 2rem; border-bottom: 1px solid var(--border); }
+        .article-category { font-size: 0.7rem; color: var(--toki-blue); letter-spacing: 0.15em; margin-bottom: 1rem; text-transform: uppercase; }
+        .article-header h1 { font-family: var(--font-display); font-size: 1.8rem; font-weight: 700; line-height: 1.4; margin-bottom: 1.5rem; }
+        .article-subtitle { font-size: 0.95rem; color: var(--text-secondary); line-height: 1.8; }
+
+        .article-content h2 { font-family: var(--font-display); font-size: 1.25rem; font-weight: 600; margin: 3rem 0 1.5rem; padding-bottom: 0.5rem; border-bottom: 2px solid var(--toki-blue-pale); }
+        .article-content p { margin-bottom: 1.5rem; }
+        .article-content blockquote { border-left: 3px solid var(--toki-blue); padding-left: 1.5rem; margin: 2rem 0; font-family: var(--font-display); color: var(--text-secondary); line-height: 2; }
+        .article-content code { font-family: 'Menlo', 'Monaco', monospace; font-size: 0.85rem; background: #F1F5F9; padding: 0.1em 0.4em; border-radius: 3px; }
+
+        .core-message { background: var(--toki-blue-pale); border-left: 4px solid var(--toki-blue); padding: 1.5rem; margin: 2rem 0; font-size: 0.95rem; line-height: 1.8; }
+        .key-point { background: linear-gradient(135deg, var(--toki-blue-pale) 0%, #fff 100%); border: 1px solid var(--accent-blue); border-radius: 8px; padding: 1.5rem; margin: 2rem 0; text-align: center; }
+        .key-point p { font-family: var(--font-display); font-size: 1.1rem; color: var(--toki-blue-dark); margin: 0; }
+
+        .cta-block { background: var(--toki-blue); color: #fff; border-radius: 12px; padding: 2rem; margin: 3rem 0; text-align: center; }
+        .cta-block p { color: rgba(255,255,255,0.9); margin-bottom: 1.5rem; }
+        .cta-block a { display: inline-block; background: #fff; color: var(--toki-blue); padding: 0.6rem 1.5rem; border-radius: 6px; text-decoration: none; font-weight: 600; margin: 0.4rem; font-size: 0.9rem; }
+        .cta-block a.secondary { background: transparent; color: #fff; border: 1px solid rgba(255,255,255,0.6); }
+
+        .article-footer { margin-top: 4rem; padding-top: 2rem; border-top: 1px solid var(--border); text-align: center; }
+        .article-footer p { font-size: 0.8rem; color: var(--text-muted); margin-bottom: 1rem; }
+        .article-footer a { color: var(--toki-blue); text-decoration: none; }
+
+        @media (max-width: 768px) {
+            .article-container { padding: 6rem 1.2rem 3rem; }
+            .article-header h1 { font-size: 1.5rem; }
+            .article-nav .nav-label { display: none; }
+        }
+        @media print { .article-nav { display: none; } .article-container { padding-top: 2rem; } }
+    </style>
+</head>
+<body>
+
+<nav class="article-nav">
+    <a href="essays-en.html" class="nav-brand">TokiStorage</a>
+    <div class="nav-right">
+        <span class="nav-label">ESSAY</span>
+        <a href="morning-inbox-autonomous.html" class="lang-switch">JA</a>
+    </div>
+</nav>
+
+<main class="article-container">
+    <header class="article-header">
+        <div class="article-category">Technology &amp; Design</div>
+        <h1>By Morning, the Mail Has Already Arrived</h1>
+        <p class="article-subtitle">GitHub Actions as Asynchronous Infrastructure — A Design Born from AI's Constraints</p>
+    </header>
+
+    <article class="article-content">
+
+        <div class="core-message">The core idea: AI can't run as multiple parallel sessions. Rather than fighting that constraint, build infrastructure that works while AI sleeps. With GitHub Actions as an asynchronous agent, the morning briefing is already prepared before the first question is asked.</div>
+
+        <h2>1. It Started with a Single Observation</h2>
+
+        <p>Mid-morning, one simple sentence surfaced: "It's hard to run multiple AI sessions at once." A conversation with an AI lives in a single context. Open a new tab, start a fresh session, and everything built up before is gone. No memory carries over. Every session begins from scratch.</p>
+
+        <p>This isn't a flaw. It's a characteristic of how the system is designed. Accepting that distinction — flaw versus characteristic — is the first step. The second step is asking: given this characteristic, what should be built?</p>
+
+        <h2>2. The Hours When AI Is Present, and When It Isn't</h2>
+
+        <p>A human assistant, even while away from their desk, can answer calls, sort mail, and flag urgent messages with a sticky note. An AI cannot. When the session closes, presence closes with it.</p>
+
+        <p>The inversion, then, is the answer. Rather than filling the hours when AI is absent, build infrastructure that ensures everything is ready for the moment AI is present. Mail already retrieved. Project status already current. The moment a session opens, the full picture is there.</p>
+
+        <h2>3. GitHub Actions as a Sleepless Agent</h2>
+
+        <p>GitHub Actions is best known as a tool for testing and deploying code. But its essence is simpler: run specific processes at specific times, in the cloud. That's all.</p>
+
+        <p>Fetch mail via IMAP every morning at 7. Pull the latest project status. Save everything to a private repository. All of this completes while AI is dormant. By the time a session starts, today's information is already in place.</p>
+
+        <blockquote>
+        Every morning at 7:00 AM (local time)<br>
+        → GitHub Actions fires automatically<br>
+        → Retrieves mail from multiple accounts + project status<br>
+        → Saves to private repository<br>
+        → When AI starts, it simply reads what's already there
+        </blockquote>
+
+        <h2>4. Choosing a Protocol That Has Survived Forty Years</h2>
+
+        <p>For mail retrieval, the choice was deliberately old. IMAP was designed in 1988. It has been in continuous production use for nearly four decades. No SDK required. Python's standard library handles it. Nothing flashy.</p>
+
+        <p>New technology doesn't automatically produce better design. The goal was to include mail insights in a morning briefing. IMAP accomplishes that goal exactly, across multiple accounts, with readable logs when something goes wrong.</p>
+
+        <p>The right criterion for choosing a technology isn't novelty. It's fit for purpose.</p>
+
+        <h2>5. The Difference Between a Tool and Infrastructure</h2>
+
+        <p>A tool requires active operation. Infrastructure functions without being thought about. Nobody prepares the water supply before turning on a tap. The tap opens; water flows.</p>
+
+        <p>Designing AI as a tool means supplying context from scratch each session. Designing AI as part of infrastructure means the environment is ready when the session begins. That difference compounds.</p>
+
+        <p>No matter how many conversations happen today, mail is retrieved once. Project status updates itself each morning. The opening question shifts from "what's going on?" to "given what's going on, how should I move?" The starting point changes.</p>
+
+        <h2>6. A Private Repository as the Place Memory Lives</h2>
+
+        <p>AI has no memory across sessions. A file system does. Save today's inbox to a private repository, and it persists. Tomorrow's session can read today's mail. Last month's inbox is still there if it's ever needed.</p>
+
+        <p>This addresses the memory constraint, but it also accumulates something valuable over time. Which messages arrived at which moments. When projects accelerated or stalled. All of it becomes part of git history. The AI can change. The infrastructure remains.</p>
+
+        <h2>7. Designing a Morning That Starts at Zero Seconds</h2>
+
+        <p>The ideal state: when a briefing is requested, the answer already exists. Not "one moment, let me retrieve your mail" — but "you have three unread messages, one of which needs a response today." Instant, because the work was already done.</p>
+
+        <p>Framing this as mere convenience misses the point. The real value is eliminating information-gathering as a cost, which frees cognitive resources for judgment and action. The first question of the morning becomes not "what's happening?" but "what do I do?" That shift changes the quality of the whole day.</p>
+
+        <h2>8. Constraints Are Where Design Begins</h2>
+
+        <p>The observation — "it's hard to run multiple sessions" — could have ended as a complaint. Instead, it became a design input. Infrastructure that moves while AI is dormant. An environment that's ready the moment AI wakes. Memory that accumulates across sessions and survives any single AI instance.</p>
+
+        <p>Constraints don't obstruct good design. They make it necessary. Too much freedom produces too many choices, which produces paralysis. Constraints create the pressure that shapes something lasting. The things built within limits are often the things that last.</p>
+
+        <div class="key-point">
+            <p>Don't fight the constraint. Feed it into the design. The infrastructure that runs while AI sleeps determines the quality of what AI can do when it wakes.</p>
+        </div>
+
+        <div class="cta-block">
+            <p>TokiStorage is a project dedicated to preserving voices, images, and text for a thousand years — democratizing proof of existence. Design philosophy is shared openly through these essays.</p>
+            <a href="https://tokistorage.github.io">Learn about TokiStorage</a>
+            <a href="essays-en.html" class="secondary">Read all essays</a>
+        </div>
+
+    </article>
+
+    <footer class="article-footer">
+        <p id="essay-nav-links"></p>
+        <p>© TokiStorage. All rights reserved.</p>
+    </footer>
+</main>
+
+<script src="essay-nav.js"></script>
+<script src="essay-tts.js"></script>
+</body>
+</html>

@@ -221,7 +221,8 @@
     { id: 'claude-code-boundary', ja: '道具は消耗する、インフラは育つ', en: 'Tools Wear Out. Infrastructure Grows.', date: '2026-03-13' },
     { id: 'no-longer-asking', ja: '「すごくない？」と聞かなくなった', en: 'I Stopped Asking "Isn\'t This Amazing?"', date: '2026-03-13' },
     { id: 'output-policy-separation', ja: '経験と内省を分離せよ', en: 'Separate Experience from Reflection', date: '2026-03-13' },
-    { id: 'tools-became-unnecessary', ja: 'すべてのツールが要らなくなった朝', en: 'The Morning All the Tools Became Unnecessary', date: '2026-03-13' }
+    { id: 'tools-became-unnecessary', ja: 'すべてのツールが要らなくなった朝', en: 'The Morning All the Tools Became Unnecessary', date: '2026-03-13' },
+    { id: 'morning-inbox-autonomous', ja: '朝、メールはすでに届いている', en: 'By Morning, the Mail Has Already Arrived', date: '2026-03-14' }
   ];
 
   // ── Latest Articles (最新記事) ──
@@ -442,6 +443,7 @@
     'no-longer-asking': ['personality-emergence', 'scotoma-context', 'tool-to-personality', 'multi-account-agent', 'zero-cost-autonomy'],
     'output-policy-separation': ['no-longer-asking', 'scotoma-context', 'zero-cost-autonomy', 'tool-vs-infrastructure', 'break-and-grow'],
     'tools-became-unnecessary': ['output-policy-separation', 'zero-cost-autonomy', 'tool-vs-infrastructure', 'no-longer-asking', 'claude-code-boundary'],
+    'morning-inbox-autonomous': ['zero-cost-autonomy', 'claude-code-boundary', 'tool-vs-infrastructure', 'tools-became-unnecessary', 'multi-account-agent'],
     'break-and-grow':           ['zero-cost-autonomy', 'tool-vs-infrastructure', 'vibe-coding', 'primitive-edge', 'constraint-philosophy']
   };
 

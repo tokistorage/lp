@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" type="image/png" sizes="32x32" href="asset/favicon-32.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="asset/apple-touch-icon.png">
+    <title>朝、メールはすでに届いている | トキストレージ</title>
+    <meta name="robots" content="index, follow">
+    <meta name="description" content="AIが複数立ち上げられないという制約から生まれた設計思想。非同期インフラとしてのGitHub Actionsで、朝のブリーフィングをどう自律化したか。">
+    <link rel="alternate" hreflang="ja" href="https://tokistorage.github.io/lp/morning-inbox-autonomous.html">
+    <link rel="alternate" hreflang="en" href="https://tokistorage.github.io/lp/morning-inbox-autonomous-en.html">
+    <link rel="alternate" hreflang="x-default" href="https://tokistorage.github.io/lp/morning-inbox-autonomous.html">
+    <style>
+        :root {
+            --toki-blue: #2563EB;
+            --toki-blue-dark: #1E40AF;
+            --toki-blue-pale: #EFF6FF;
+            --accent-blue: #60A5FA;
+            --bg-white: #FFFFFF;
+            --text-primary: #1E293B;
+            --text-secondary: #475569;
+            --text-muted: #94A3B8;
+            --border: #E2E8F0;
+            --font-display: 'Hiragino Mincho ProN', 'Yu Mincho', serif;
+            --font-body: 'Hiragino Kaku Gothic ProN', 'Yu Gothic', 'Meiryo', sans-serif;
+        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        html { scroll-behavior: smooth; }
+        body { font-family: var(--font-body); font-weight: 400; background: var(--bg-white); color: var(--text-primary); line-height: 2; font-size: 16px; }
+
+        .article-nav { position: fixed; top: 0; left: 0; right: 0; z-index: 1000; background: rgba(255,255,255,0.95); backdrop-filter: blur(12px); border-bottom: 1px solid var(--border); padding: 0.6rem 1.2rem; display: flex; align-items: center; justify-content: space-between; gap: 1rem; }
+        .article-nav .nav-brand { font-family: var(--font-display); font-size: 0.9rem; font-weight: 600; color: var(--toki-blue); text-decoration: none; white-space: nowrap; }
+        .article-nav .nav-brand::before { content: ''; display: inline-block; width: 20px; height: 20px; background: url('asset/tokistorage-icon-512.png') no-repeat center / contain; vertical-align: -3px; margin-right: 5px; }
+        .article-nav .nav-right { display: flex; align-items: center; gap: 1rem; }
+        .article-nav .nav-label { font-size: 0.6rem; color: var(--text-muted); letter-spacing: 0.08em; }
+        .article-nav .lang-switch { font-size: 0.75rem; color: var(--toki-blue); text-decoration: none; padding: 0.3rem 0.6rem; border: 1px solid var(--toki-blue); border-radius: 4px; }
+        .article-nav .lang-switch:hover { background: var(--toki-blue); color: #fff; }
+
+        .article-container { max-width: 680px; margin: 0 auto; padding: 7rem 2rem 4rem; }
+        .article-header { margin-bottom: 3rem; padding-bottom: 2rem; border-bottom: 1px solid var(--border); }
+        .article-category { font-size: 0.7rem; color: var(--toki-blue); letter-spacing: 0.15em; margin-bottom: 1rem; }
+        .article-header h1 { font-family: var(--font-display); font-size: 1.8rem; font-weight: 700; line-height: 1.5; margin-bottom: 1.5rem; }
+        .article-subtitle { font-size: 0.95rem; color: var(--text-secondary); line-height: 1.9; }
+
+        .article-content h2 { font-family: var(--font-display); font-size: 1.3rem; font-weight: 600; margin: 3rem 0 1.5rem; padding-bottom: 0.5rem; border-bottom: 2px solid var(--toki-blue-pale); }
+        .article-content p { margin-bottom: 1.5rem; text-align: justify; }
+        .article-content blockquote { border-left: 3px solid var(--toki-blue); padding-left: 1.5rem; margin: 2rem 0; font-family: var(--font-display); color: var(--text-secondary); }
+        .article-content code { font-family: 'Menlo', 'Monaco', monospace; font-size: 0.85rem; background: #F1F5F9; padding: 0.1em 0.4em; border-radius: 3px; }
+
+        .core-message { background: var(--toki-blue-pale); border-left: 4px solid var(--toki-blue); padding: 1.5rem; margin: 2rem 0; font-size: 0.95rem; line-height: 1.8; }
+        .key-point { background: linear-gradient(135deg, var(--toki-blue-pale) 0%, #fff 100%); border: 1px solid var(--accent-blue); border-radius: 8px; padding: 1.5rem; margin: 2rem 0; text-align: center; }
+        .key-point p { font-family: var(--font-display); font-size: 1.1rem; color: var(--toki-blue-dark); margin: 0; }
+
+        .cta-block { background: var(--toki-blue); color: #fff; border-radius: 12px; padding: 2rem; margin: 3rem 0; text-align: center; }
+        .cta-block p { color: rgba(255,255,255,0.9); margin-bottom: 1.5rem; }
+        .cta-block a { display: inline-block; background: #fff; color: var(--toki-blue); padding: 0.6rem 1.5rem; border-radius: 6px; text-decoration: none; font-weight: 600; margin: 0.4rem; font-size: 0.9rem; }
+        .cta-block a.secondary { background: transparent; color: #fff; border: 1px solid rgba(255,255,255,0.6); }
+
+        .article-footer { margin-top: 4rem; padding-top: 2rem; border-top: 1px solid var(--border); text-align: center; }
+        .article-footer p { font-size: 0.8rem; color: var(--text-muted); margin-bottom: 1rem; }
+        .article-footer a { color: var(--toki-blue); text-decoration: none; }
+
+        @media (max-width: 768px) {
+            .article-container { padding: 6rem 1.2rem 3rem; }
+            .article-header h1 { font-size: 1.5rem; }
+            .article-nav .nav-label { display: none; }
+        }
+        @media print { .article-nav { display: none; } .article-container { padding-top: 2rem; } }
+    </style>
+</head>
+<body>
+
+<nav class="article-nav">
+    <a href="essays.html" class="nav-brand">トキストレージ</a>
+    <div class="nav-right">
+        <span class="nav-label">ESSAY</span>
+        <a href="morning-inbox-autonomous-en.html" class="lang-switch">EN</a>
+    </div>
+</nav>
+
+<main class="article-container">
+    <header class="article-header">
+        <div class="article-category">技術・設計</div>
+        <h1>朝、メールはすでに届いている</h1>
+        <p class="article-subtitle">非同期インフラとしてのGitHub Actions ── AIの制約から生まれた設計</p>
+    </header>
+
+    <article class="article-content">
+
+        <div class="core-message">この記事で言いたいこと：AIは複数同時に立ち上げられない。その制約を嘆くより、「AIが寝ている間に動くインフラ」を設計する方が正しい。GitHub Actionsを非同期エージェントとして使うことで、朝のブリーフィングはすでに準備されている状態を作れる。</div>
+
+        <h2>1. 「複数立ち上げにくいな」という一言から始まった</h2>
+
+        <p>ある朝、作業の途中でこんな言葉が出た。「複数立ち上げはしづらいんだろうな」。AIとの会話セッションは、原則として一つの文脈しか持てない。別のタブで新しい会話を始めれば、そこには記憶がない。直前まで積み上げたコンテキストは引き継がれず、毎回ゼロから始まる。</p>
+
+        <p>これはAIの欠陥ではなく、設計上の特性だ。だが「欠陥ではない」と理解することと、「では何をすべきか」を考えることは別の話だ。制約を受け入れた先に、新しい設計が生まれる。</p>
+
+        <h2>2. AIが「いる」時間と「いない」時間</h2>
+
+        <p>人間のアシスタントであれば、席を外している間も電話を取り、メールを仕分け、重要な連絡に付箋を貼っておいてくれる。AIにはそれができない。セッションが閉じれば、存在も閉じる。</p>
+
+        <p>ならば逆転させればいい。AIが「いない」時間を埋めるのではなく、AIが「いる」時間に最大限の価値を出せる状態を事前に整えるインフラを作る。メールはすでに取得済み。プロジェクトの状況はすでに整理済み。AIが起動した瞬間、すべての情報が揃っている。</p>
+
+        <h2>3. GitHub Actionsは「眠らないエージェント」だ</h2>
+
+        <p>GitHub Actionsは、コードのテストやデプロイのためのツールとして知られている。だが本質はもっとシンプルだ。「特定のタイミングで、特定の処理を、クラウド上で実行する」仕組みに過ぎない。</p>
+
+        <p>毎朝7時にIMAPでメールを取得する。プロジェクト管理ツールの最新状況を取得する。結果をプライベートリポジトリに保存する。これらは全て、AIが眠っている間に完了する。AIが目覚めた時——つまりセッションが始まった時——には、すでに今日の情報が揃っている。</p>
+
+        <blockquote>
+        毎朝 JST 7:00<br>
+        → GitHub Actions 自動起動<br>
+        → メール取得（複数アカウント）+ プロジェクト状況取得<br>
+        → プライベートリポジトリに保存<br>
+        → AIが起動したら既存データを読むだけ
+        </blockquote>
+
+        <h2>4. IMAPという枯れた技術の選択</h2>
+
+        <p>メール取得の実装に、あえて枯れた技術を選んだ。IMAPは1988年に設計されたプロトコルで、40年近く現役で使われている。派手さはない。SDKも不要だ。Pythonの標準ライブラリだけで動く。</p>
+
+        <p>新しい技術を使うことが設計の質を上げるわけではない。目的は「朝のブリーフィングにメールのインサイトを含める」こと。その目的に対して、IMAPは十分すぎるほど正確に機能する。複数アカウントにも対応できる。エラーが起きた時も、ログが読みやすい。</p>
+
+        <p>技術選択の基準は「新しさ」ではなく「目的への適合度」だ。</p>
+
+        <h2>5. 「道具」と「インフラ」の違い</h2>
+
+        <p>道具は、使う人が能動的に操作する。インフラは、使う人が意識しなくても機能し続ける。水道は使う前に準備しなくていい。蛇口を開けば水が出る。</p>
+
+        <p>AIを「道具として使う」設計では、毎回起動のたびに同じコンテキストを与え直す必要がある。AIを「インフラの一部として組み込む」設計では、AIが起動した時点で環境が整っている。この差は、積み重なると大きくなる。</p>
+
+        <p>今日何十回AIと会話しても、メールは一度しか取得されない。プロジェクトの状況は毎朝自動的に更新される。AIへの問いかけが「今日のメールを見て」から「今日のメールを読んだ上で、消防署への提案をどう組み立てるか」に変わる。</p>
+
+        <h2>6. プライベートリポジトリが「記憶の置き場」になる</h2>
+
+        <p>AIにはセッションをまたぐ記憶がない。だが、ファイルシステムには記憶がある。プライベートリポジトリに今日の受信箱を保存すれば、それは永続する。明日のセッションでも、先月の受信箱を参照できる。</p>
+
+        <p>これはAIの記憶制約への対処であると同時に、情報資産の蓄積でもある。どのメールがどの時期に届いたか。どのタイミングでプロジェクトが動いたか。それらが全てgitの履歴として残る。AIが変わっても、インフラは残る。</p>
+
+        <h2>7. 「ゼロ秒で始まる朝」を設計する</h2>
+
+        <p>ブリーフィングを頼んだ時、AIはすでに答えを持っている状態が理想だ。「少々お待ちください、今メールを取得します」ではなく、「今日の未読は3件です。うち1件は重要な返信です」と即答できる状態。</p>
+
+        <p>これを「便利な機能」として捉えるのは少し浅い。本質は、情報収集という作業コストをゼロに近づけることで、判断と実行に使える認知資源を増やすことだ。朝の最初の問いが「何が起きているか」ではなく「どう動くか」から始まる。その差は、一日の質を変える。</p>
+
+        <h2>8. 制約は設計の出発点である</h2>
+
+        <p>「複数立ち上げにくい」という制約を、問題として終わらせることもできた。だが、その制約を設計の出発点として受け取った時、新しいアーキテクチャが生まれた。AIが眠っている間に動くインフラ。AIが起きた瞬間に整っている環境。セッションをまたいで蓄積される記憶。</p>
+
+        <p>制約は創造の敵ではない。制約があるからこそ、設計に必然性が生まれる。自由すぎる環境では、何でもできるがゆえに何もしない選択が増える。制約の中でしか作れないものが、往々にして最も長く使われる。</p>
+
+        <div class="key-point">
+            <p>制約を嘆かず、制約を設計の入力にする。AIが眠っている間に動くインフラが、AIが起きた時の質を決める。</p>
+        </div>
+
+        <div class="cta-block">
+            <p>トキストレージは、声・画像・テキストを1000年保管する「存在証明の民主化」プロジェクトです。技術設計の思想をエッセイで公開しています。</p>
+            <a href="https://tokistorage.github.io">トキストレージを知る</a>
+            <a href="essays.html" class="secondary">すべてのエッセイを読む</a>
+        </div>
+
+    </article>
+
+    <footer class="article-footer">
+        <p id="essay-nav-links"></p>
+        <p>© TokiStorage. All rights reserved.</p>
+    </footer>
+</main>
+
+<script src="essay-nav.js"></script>
+<script src="essay-tts.js"></script>
+</body>
+</html>
