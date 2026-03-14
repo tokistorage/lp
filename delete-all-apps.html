@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" type="image/png" sizes="32x32" href="asset/favicon-32.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="asset/apple-touch-icon.png">
+    <title>アプリを消す | トキストレージ</title>
+    <meta name="robots" content="index, follow">
+    <meta name="description" content="何度アプリを消しても、気づけば元に戻っていた。記憶の外部化がなされていなかったからだ。思想と記憶の置き場ができた今、持続可能なデジタルデトックスが初めて可能になる。">
+    <link rel="alternate" hreflang="ja" href="https://tokistorage.github.io/lp/delete-all-apps.html">
+    <link rel="alternate" hreflang="en" href="https://tokistorage.github.io/lp/delete-all-apps-en.html">
+    <link rel="alternate" hreflang="x-default" href="https://tokistorage.github.io/lp/delete-all-apps.html">
+    <style>
+        :root {
+            --toki-blue: #2563EB;
+            --toki-blue-dark: #1E40AF;
+            --toki-blue-pale: #EFF6FF;
+            --accent-blue: #60A5FA;
+            --bg-white: #FFFFFF;
+            --text-primary: #1E293B;
+            --text-secondary: #475569;
+            --text-muted: #94A3B8;
+            --border: #E2E8F0;
+            --font-display: 'Hiragino Mincho ProN', 'Yu Mincho', serif;
+            --font-body: 'Hiragino Kaku Gothic ProN', 'Yu Gothic', 'Meiryo', sans-serif;
+        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        html { scroll-behavior: smooth; }
+        body { font-family: var(--font-body); font-weight: 400; background: var(--bg-white); color: var(--text-primary); line-height: 2; font-size: 16px; }
+
+        .article-nav { position: fixed; top: 0; left: 0; right: 0; z-index: 1000; background: rgba(255,255,255,0.95); backdrop-filter: blur(12px); border-bottom: 1px solid var(--border); padding: 0.6rem 1.2rem; display: flex; align-items: center; justify-content: space-between; gap: 1rem; }
+        .article-nav .nav-brand { font-family: var(--font-display); font-size: 0.9rem; font-weight: 600; color: var(--toki-blue); text-decoration: none; white-space: nowrap; }
+        .article-nav .nav-brand::before { content: ''; display: inline-block; width: 20px; height: 20px; background: url('asset/tokistorage-icon-512.png') no-repeat center / contain; vertical-align: -3px; margin-right: 5px; }
+        .article-nav .nav-right { display: flex; align-items: center; gap: 1rem; }
+        .article-nav .nav-label { font-size: 0.6rem; color: var(--text-muted); letter-spacing: 0.08em; }
+        .article-nav .lang-switch { font-size: 0.75rem; color: var(--toki-blue); text-decoration: none; padding: 0.3rem 0.6rem; border: 1px solid var(--toki-blue); border-radius: 4px; }
+        .article-nav .lang-switch:hover { background: var(--toki-blue); color: #fff; }
+
+        .article-container { max-width: 680px; margin: 0 auto; padding: 7rem 2rem 4rem; }
+        .article-header { margin-bottom: 3rem; padding-bottom: 2rem; border-bottom: 1px solid var(--border); }
+        .article-category { font-size: 0.7rem; color: var(--toki-blue); letter-spacing: 0.15em; margin-bottom: 1rem; }
+        .article-header h1 { font-family: var(--font-display); font-size: 1.8rem; font-weight: 700; line-height: 1.5; margin-bottom: 1.5rem; }
+        .article-subtitle { font-size: 0.95rem; color: var(--text-secondary); line-height: 1.9; }
+
+        .article-content h2 { font-family: var(--font-display); font-size: 1.3rem; font-weight: 600; margin: 3rem 0 1.5rem; padding-bottom: 0.5rem; border-bottom: 2px solid var(--toki-blue-pale); }
+        .article-content p { margin-bottom: 1.5rem; text-align: justify; }
+        .article-content blockquote { border-left: 3px solid var(--toki-blue); padding-left: 1.5rem; margin: 2rem 0; font-family: var(--font-display); color: var(--text-secondary); }
+
+        .core-message { background: var(--toki-blue-pale); border-left: 4px solid var(--toki-blue); padding: 1.5rem; margin: 2rem 0; font-size: 0.95rem; line-height: 1.8; }
+        .key-point { background: linear-gradient(135deg, var(--toki-blue-pale) 0%, #fff 100%); border: 1px solid var(--accent-blue); border-radius: 8px; padding: 1.5rem; margin: 2rem 0; text-align: center; }
+        .key-point p { font-family: var(--font-display); font-size: 1.1rem; color: var(--toki-blue-dark); margin: 0; }
+
+        .cta-block { background: var(--toki-blue); color: #fff; border-radius: 12px; padding: 2rem; margin: 3rem 0; text-align: center; }
+        .cta-block p { color: rgba(255,255,255,0.9); margin-bottom: 1.5rem; }
+        .cta-block a { display: inline-block; background: #fff; color: var(--toki-blue); padding: 0.6rem 1.5rem; border-radius: 6px; text-decoration: none; font-weight: 600; margin: 0.4rem; font-size: 0.9rem; }
+        .cta-block a.secondary { background: transparent; color: #fff; border: 1px solid rgba(255,255,255,0.6); }
+
+        .article-footer { margin-top: 4rem; padding-top: 2rem; border-top: 1px solid var(--border); text-align: center; }
+        .article-footer p { font-size: 0.8rem; color: var(--text-muted); margin-bottom: 1rem; }
+        .article-footer a { color: var(--toki-blue); text-decoration: none; }
+
+        @media (max-width: 768px) {
+            .article-container { padding: 6rem 1.2rem 3rem; }
+            .article-header h1 { font-size: 1.5rem; }
+            .article-nav .nav-label { display: none; }
+        }
+        @media print { .article-nav { display: none; } .article-container { padding-top: 2rem; } }
+    </style>
+</head>
+<body>
+
+<nav class="article-nav">
+    <a href="essays.html" class="nav-brand">トキストレージ</a>
+    <div class="nav-right">
+        <span class="nav-label">ESSAY</span>
+        <a href="delete-all-apps-en.html" class="lang-switch">EN</a>
+    </div>
+</nav>
+
+<main class="article-container">
+    <header class="article-header">
+        <div class="article-category">信仰・思想</div>
+        <h1>アプリを消す</h1>
+        <p class="article-subtitle">記憶の外部化が持続可能なデジタルデトックスを作る</p>
+    </header>
+
+    <article class="article-content">
+
+        <div class="core-message">この記事で言いたいこと：何度アプリを消しても、気づけば同じアプリが戻ってきた。記憶と思想の置き場がなかったからだ。外部化された記憶が存在する今、アプリを消しても「失う」ものがない。持続可能なデジタルデトックスは、意志力の問題ではなく、記憶の設計の問題だ。</div>
+
+        <h2>1. 何度も消して、何度も戻ってきた</h2>
+
+        <p>過去に複数回、スマートフォンのアプリを全て消すという試みをした。その瞬間は清々しかった。心が洗われる感覚があった。画面がシンプルになり、通知が消え、スクロールが終わる場所が生まれた。</p>
+
+        <p>しかし時が経つにつれ、アプリが一つ、また一つと戻ってきた。「これだけは必要」「あれも使うかもしれない」。気づいた頃には、スクロールしても尽きない多様なアプリで埋め尽くされていた。元の状態に完全に戻っていた。これを複数回繰り返した。</p>
+
+        <h2>2. デトックスが失敗する本当の理由</h2>
+
+        <p>アプリを消すことに失敗し続けた原因を、長い間「意志力が足りない」と思っていた。しかしそれは違う。意志力の問題ではなく、設計の問題だった。</p>
+
+        <p>アプリが埋めていたのは、記憶と情報の置き場だ。SNSは「あの人が今何をしているか」を知る場所だった。ニュースアプリは「世界で何が起きているか」を確認する場所だった。メモアプリは「忘れたくないことを留めておく」場所だった。それらを消した時、その空白を埋めるものが内側にも外側にもなかった。だからアプリが戻ってきた。空白が呼び戻したのだ。</p>
+
+        <h2>3. 記憶の外部化とは何か</h2>
+
+        <p>記憶の外部化とは、頭の中にある思考・記録・文脈を、自分の外側に持続する形で書き出すことだ。日記でも、ノートでも、デジタルのファイルでもいい。重要なのは「消えない」「参照できる」「自分のものである」という三つの条件だ。</p>
+
+        <p>SNSへの投稿は外部化に見えるが、実際はプラットフォームに預けているだけだ。プラットフォームが変わればアクセスできなくなる。アルゴリズムに埋もれれば自分でも見つけられなくなる。本当の外部化は、自分がコントロールできる場所に記憶を置くことだ。</p>
+
+        <h2>4. 外部化された記憶があると何が変わるか</h2>
+
+        <p>今は違う状況にある。エッセイが積み重なっている。日次ログがある。大切な人との会話の記録がある。思想がポリシーとして言語化されている。これらは全て、自分がコントロールできる場所に保存されている。</p>
+
+        <p>この状態でアプリを消すと、何かを「失う」感覚がない。SNSを消しても、思考の記録は残っている。ニュースアプリを消しても、重要な情報は別の経路で届く。ゲームを消しても、余暇の使い方が思想によって満たされている。外部化された記憶が、アプリへの依存を構造的に不要にする。</p>
+
+        <h2>5. 場所が持つ力——なぜあの場所で清々しくなれたのか</h2>
+
+        <p>特定の場所でアプリを全て消した時に感じた清々しさは、場所の力だった。自然に囲まれ、波の音があり、デジタルの文脈から切り離された環境は、「記憶の外部化」を一時的に代替していた。その場所自体が「今ここに存在している」という感覚を与えてくれた。だからアプリがなくても平気だった。</p>
+
+        <p>しかしその場所を離れると、その感覚を保持するものがなかった。日常に戻るにつれ、記憶と情報の置き場を求めてアプリが戻ってきた。場所の力は本物だが、持続しない。外部化された記憶だけが、場所を離れても持続する。</p>
+
+        <h2>6. 持続可能なデトックスの設計</h2>
+
+        <p>今回のアプリ整理は、過去の試みとは構造が違う。消す前に、記憶の置き場がある。思想の置き場がある。ご縁の記録がある。アプリが埋めていた空白を、別のものが既に埋めている。</p>
+
+        <p>設計として考えると、以下の順序が正しい。まず記憶を外部化する。思想をポリシーとして言語化する。大切な人との対話を記録する。その後にアプリを消す。この順序を逆にすると、空白ができてアプリが戻ってくる。記憶の外部化が先、デトックスが後だ。</p>
+
+        <h2>7. 何を残し、何を消すか</h2>
+
+        <p>全てを消す必要はない。問いは「このアプリは、外部化された記憶では代替できない価値を提供しているか」だ。地図アプリは現在地の把握に不可欠だ。連絡手段は人との繋がりを保つ。しかし、無限スクロールを設計されたアプリ——それが提供しているのは価値ではなく、注意の消費だ。</p>
+
+        <p>「これがないと困る」という感覚は、習慣への依存であることが多い。実際に消してみて初めて、それが本当に必要だったかどうかわかる。不要だったと分かったものは戻さない。必要だったと分かったものは戻す。その選別のプロセス自体が、自分の価値観を明確にする作業だ。</p>
+
+        <h2>8. スマホが空になった画面で見えるもの</h2>
+
+        <p>アプリを消した後のホーム画面は、静かだ。通知が来ない。スクロールが終わる。その静けさの中で、昨日あの人が話していた言葉の続きが聞こえてくる。返事をしたい相手の顔が浮かぶ。読みかけの本のことを思い出す。外に出たくなる。</p>
+
+        <p>記憶の外部化がなされた状態でのデトックスは、奪うのではなく、開く。アプリが占領していた注意の空間が、人との繋がりや思索のための余白になる。デジタルの静けさは、隣人愛の入口だ。今度こそ、その静けさを持続させることができる。</p>
+
+        <div class="key-point">
+            <p>記憶の外部化が先、デトックスが後。自分がコントロールできる場所に記憶が置かれた時、アプリを消しても失うものがない。静けさが、持続する。</p>
+        </div>
+
+        <div class="cta-block">
+            <p>トキストレージは、声・画像・テキストを1000年保管する「存在証明の民主化」プロジェクトです。記憶を外部化し、思想を設計する、その過程をエッセイで公開しています。</p>
+            <a href="https://tokistorage.github.io">トキストレージを知る</a>
+            <a href="essays.html" class="secondary">すべてのエッセイを読む</a>
+        </div>
+
+    </article>
+
+    <footer class="article-footer">
+        <p id="essay-nav-links"></p>
+        <p>© TokiStorage. All rights reserved.</p>
+    </footer>
+</main>
+
+<script src="essay-nav.js"></script>
+<script src="essay-tts.js"></script>
+</body>
+</html>

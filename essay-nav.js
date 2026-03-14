@@ -224,7 +224,8 @@
     { id: 'tools-became-unnecessary', ja: 'すべてのツールが要らなくなった朝', en: 'The Morning All the Tools Became Unnecessary', date: '2026-03-13' },
     { id: 'morning-inbox-autonomous', ja: '朝、メールはすでに届いている', en: 'By Morning, the Mail Has Already Arrived', date: '2026-03-14' },
     { id: 'possibility-vs-direction', ja: 'できることと、すべきことの間', en: 'Between What You Can Do and What You Should', date: '2026-03-14' },
-    { id: 'temptation-no-philosophy', ja: '誘惑は戦う相手ではない', en: 'Temptation Is Not the Enemy', date: '2026-03-14' }
+    { id: 'temptation-no-philosophy', ja: '誘惑は戦う相手ではない', en: 'Temptation Is Not the Enemy', date: '2026-03-14' },
+    { id: 'delete-all-apps', ja: 'アプリを消す', en: 'Delete All Apps', date: '2026-03-14' }
   ];
 
   // ── Latest Articles (最新記事) ──
@@ -448,6 +449,7 @@
     'morning-inbox-autonomous': ['zero-cost-autonomy', 'claude-code-boundary', 'tool-vs-infrastructure', 'tools-became-unnecessary', 'multi-account-agent'],
     'possibility-vs-direction': ['morning-inbox-autonomous', 'zero-cost-autonomy', 'claude-code-boundary', 'tool-vs-infrastructure', 'burn-rate-zero'],
     'temptation-no-philosophy': ['possibility-vs-direction', 'burn-rate-zero', 'zero-cost-autonomy', 'ethics-exclusion', 'constraint-philosophy'],
+    'delete-all-apps': ['temptation-no-philosophy', 'possibility-vs-direction', 'zero-cost-autonomy', 'burn-rate-zero', 'morning-inbox-autonomous'],
     'break-and-grow':           ['zero-cost-autonomy', 'tool-vs-infrastructure', 'vibe-coding', 'primitive-edge', 'constraint-philosophy']
   };
 
