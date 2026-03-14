@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" type="image/png" sizes="32x32" href="asset/favicon-32.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="asset/apple-touch-icon.png">
+    <title>Temptation Is Not the Enemy | TokiStorage</title>
+    <meta name="robots" content="index, follow">
+    <meta name="description" content="Temptation cannot be eliminated. But when philosophy comes first, temptation never becomes a question. This is not about willpower — it's about design.">
+    <link rel="alternate" hreflang="ja" href="https://tokistorage.github.io/lp/temptation-no-philosophy.html">
+    <link rel="alternate" hreflang="en" href="https://tokistorage.github.io/lp/temptation-no-philosophy-en.html">
+    <link rel="alternate" hreflang="x-default" href="https://tokistorage.github.io/lp/temptation-no-philosophy.html">
+    <style>
+        :root {
+            --toki-blue: #2563EB;
+            --toki-blue-dark: #1E40AF;
+            --toki-blue-pale: #EFF6FF;
+            --accent-blue: #60A5FA;
+            --bg-white: #FFFFFF;
+            --text-primary: #1E293B;
+            --text-secondary: #475569;
+            --text-muted: #94A3B8;
+            --border: #E2E8F0;
+            --font-display: Georgia, 'Times New Roman', serif;
+            --font-body: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        html { scroll-behavior: smooth; }
+        body { font-family: var(--font-body); font-weight: 400; background: var(--bg-white); color: var(--text-primary); line-height: 1.9; font-size: 16px; }
+
+        .article-nav { position: fixed; top: 0; left: 0; right: 0; z-index: 1000; background: rgba(255,255,255,0.95); backdrop-filter: blur(12px); border-bottom: 1px solid var(--border); padding: 0.6rem 1.2rem; display: flex; align-items: center; justify-content: space-between; gap: 1rem; }
+        .article-nav .nav-brand { font-family: var(--font-display); font-size: 0.9rem; font-weight: 600; color: var(--toki-blue); text-decoration: none; white-space: nowrap; }
+        .article-nav .nav-brand::before { content: ''; display: inline-block; width: 20px; height: 20px; background: url('asset/tokistorage-icon-512.png') no-repeat center / contain; vertical-align: -3px; margin-right: 5px; }
+        .article-nav .nav-right { display: flex; align-items: center; gap: 1rem; }
+        .article-nav .nav-label { font-size: 0.6rem; color: var(--text-muted); letter-spacing: 0.08em; }
+        .article-nav .lang-switch { font-size: 0.75rem; color: var(--toki-blue); text-decoration: none; padding: 0.3rem 0.6rem; border: 1px solid var(--toki-blue); border-radius: 4px; }
+        .article-nav .lang-switch:hover { background: var(--toki-blue); color: #fff; }
+
+        .article-container { max-width: 680px; margin: 0 auto; padding: 7rem 2rem 4rem; }
+        .article-header { margin-bottom: 3rem; padding-bottom: 2rem; border-bottom: 1px solid var(--border); }
+        .article-category { font-size: 0.7rem; color: var(--toki-blue); letter-spacing: 0.15em; margin-bottom: 1rem; text-transform: uppercase; }
+        .article-header h1 { font-family: var(--font-display); font-size: 1.8rem; font-weight: 700; line-height: 1.4; margin-bottom: 1.5rem; }
+        .article-subtitle { font-size: 0.95rem; color: var(--text-secondary); line-height: 1.8; }
+
+        .article-content h2 { font-family: var(--font-display); font-size: 1.25rem; font-weight: 600; margin: 3rem 0 1.5rem; padding-bottom: 0.5rem; border-bottom: 2px solid var(--toki-blue-pale); }
+        .article-content p { margin-bottom: 1.5rem; }
+        .article-content blockquote { border-left: 3px solid var(--toki-blue); padding-left: 1.5rem; margin: 2rem 0; font-family: var(--font-display); color: var(--text-secondary); line-height: 2; }
+
+        .core-message { background: var(--toki-blue-pale); border-left: 4px solid var(--toki-blue); padding: 1.5rem; margin: 2rem 0; font-size: 0.95rem; line-height: 1.8; }
+        .key-point { background: linear-gradient(135deg, var(--toki-blue-pale) 0%, #fff 100%); border: 1px solid var(--accent-blue); border-radius: 8px; padding: 1.5rem; margin: 2rem 0; text-align: center; }
+        .key-point p { font-family: var(--font-display); font-size: 1.1rem; color: var(--toki-blue-dark); margin: 0; }
+
+        .cta-block { background: var(--toki-blue); color: #fff; border-radius: 12px; padding: 2rem; margin: 3rem 0; text-align: center; }
+        .cta-block p { color: rgba(255,255,255,0.9); margin-bottom: 1.5rem; }
+        .cta-block a { display: inline-block; background: #fff; color: var(--toki-blue); padding: 0.6rem 1.5rem; border-radius: 6px; text-decoration: none; font-weight: 600; margin: 0.4rem; font-size: 0.9rem; }
+        .cta-block a.secondary { background: transparent; color: #fff; border: 1px solid rgba(255,255,255,0.6); }
+
+        .article-footer { margin-top: 4rem; padding-top: 2rem; border-top: 1px solid var(--border); text-align: center; }
+        .article-footer p { font-size: 0.8rem; color: var(--text-muted); margin-bottom: 1rem; }
+        .article-footer a { color: var(--toki-blue); text-decoration: none; }
+
+        @media (max-width: 768px) {
+            .article-container { padding: 6rem 1.2rem 3rem; }
+            .article-header h1 { font-size: 1.5rem; }
+            .article-nav .nav-label { display: none; }
+        }
+        @media print { .article-nav { display: none; } .article-container { padding-top: 2rem; } }
+    </style>
+</head>
+<body>
+
+<nav class="article-nav">
+    <a href="essays-en.html" class="nav-brand">TokiStorage</a>
+    <div class="nav-right">
+        <span class="nav-label">ESSAY</span>
+        <a href="temptation-no-philosophy.html" class="lang-switch">JA</a>
+    </div>
+</nav>
+
+<main class="article-container">
+    <header class="article-header">
+        <div class="article-category">Faith &amp; Philosophy</div>
+        <h1>Temptation Is Not the Enemy</h1>
+        <p class="article-subtitle">When Philosophy Comes First, Temptation Never Becomes a Question</p>
+    </header>
+
+    <article class="article-content">
+
+        <div class="core-message">The core idea: temptation cannot be eliminated. But when philosophy is clear, temptation never becomes a question. The goal is not to fight and overcome — it's to raise the density of your philosophy until temptation finds no vacancy. This is not a story about willpower. It's a story about design.</div>
+
+        <h2>1. How Temptation Arrives</h2>
+
+        <p>When a new technology becomes available, when financial pressure builds, when someone else's success becomes visible — temptation always appears to come from outside. But in truth, temptation is born in the moment an external stimulus meets something unresolved inside.</p>
+
+        <p>"This could also work." "That could be tried." "This approach would generate revenue faster." Temptation always arrives wearing a reasonable face. It's not irrational impulse — it presents itself as a well-grounded proposal. That's exactly why willpower alone is exhausting as a defense. The harder you fight, the more presence temptation takes on.</p>
+
+        <h2>2. Willpower Runs Out</h2>
+
+        <p>Continually facing temptation with "I won't" or "I'll resist" consumes cognitive resources. As psychological research has shown repeatedly, willpower is finite. Someone who makes strong decisions all morning will succumb to trivial temptations by evening.</p>
+
+        <p>A design that relies on willpower to overcome temptation is fundamentally fragile. No matter how firm the resolve, it fails when depleted. Building a system that requires a person to "keep fighting temptation" is a system that works against human cognitive structure.</p>
+
+        <h2>3. What Happens When Philosophy Comes First</h2>
+
+        <p>There was a moment when a policy was put into words: "Published once, won't touch it again, won't automate it." From that moment forward, when the same kind of temptation arrived, no question arose. No hesitation of "what should I do?" The answer already existed.</p>
+
+        <p>This wasn't willpower. It was the decision cost dropping to zero because philosophy came first. Temptation still arrives. But passing through the filter of philosophy, it's automatically classified as something not worth considering. Before any fight begins, temptation fails to become a question.</p>
+
+        <h2>4. The Power of Articulating a Policy</h2>
+
+        <p>To create a state where "philosophy comes first," articulation matters. Values that exist vaguely in the mind are easily destabilized in the face of temptation. But a principle that has been written down functions as external memory — something to refer back to when uncertain.</p>
+
+        <p>Writing a policy is also a letter to your future self. "When the same temptation arrives next time, this is how my past self decided." That record means the same question doesn't need to be thought through from zero each time. The accumulation of philosophy keeps reducing the cost of judgment.</p>
+
+        <h2>5. Temptation Is a Symptom of Philosophical Vacancy</h2>
+
+        <p>When temptation feels strong, there is always a philosophical vacancy behind it. The places where "what am I doing this for" becomes unclear are the places temptation enters. Put differently: in areas where philosophy has been clearly articulated, temptation has nowhere to stand.</p>
+
+        <p>When the temptation to monetize is strong, "why monetize, what is this project for" has become unstable. When the temptation toward platform dependency is strong, "what does autonomy mean, how is it different from dependency" has become vague. Temptation is not the cause — it's the symptom. The real question is the philosophical vacancy behind it.</p>
+
+        <h2>6. How to Fill the Vacancy</h2>
+
+        <p>What fills philosophical vacancy is not willpower — it's questions. "Does this align with my mission?" "Does this increase external dependency?" "Does this complete in one act, or does it generate ongoing management?" Continuing to hold these questions causes the vacancy to gradually articulate itself.</p>
+
+        <p>What matters is not producing answers continuously, but continuing to hold the questions. When an answer arrives, it becomes a policy. As policies accumulate, philosophical vacancies shrink. As vacancies shrink, the space where temptation can enter disappears.</p>
+
+        <h2>7. The Accumulation of "Won't Do" Builds Philosophy</h2>
+
+        <p>Philosophy is often thought of as a collection of things to do. But its outline actually emerges through the accumulation of things not done — what was not chosen, which temptations were passed, the trace of those decisions shapes the form of a philosophy.</p>
+
+        <p>A publishing platform was tried once, then left behind. Content sales automation was decided against. Subscription models were ruled out. This accumulation of "won't do" makes "what TokiStorage is" progressively sharper. Philosophy is not declared — it surfaces through the layering of choices.</p>
+
+        <h2>8. Temptation Arriving Is the Opportunity to Deepen Philosophy</h2>
+
+        <p>Whether temptation is seen as a threat or an opportunity changes what comes after. Temptation always points to a philosophical vacancy. So when temptation arrives, it's precisely the right moment to ask a question: "Why does this look like temptation?" "Where is the vacancy?" "What hasn't been articulated yet?"</p>
+
+        <p>Rather than fighting temptation and depleting, use it to deepen philosophy. Rather than fearing surrender to temptation, focus on converting it into a question. Through that repetition, philosophy gains density. Eventually, when temptation arrives, it doesn't even become a question. Without any battle, temptation disappears.</p>
+
+        <div class="key-point">
+            <p>Temptation is not the enemy — it's a guide pointing to where philosophy is thin. When philosophy comes first, temptation never becomes a question.</p>
+        </div>
+
+        <div class="cta-block">
+            <p>TokiStorage is a project dedicated to preserving voices, images, and text for a thousand years — democratizing proof of existence. The process of deriving design from philosophy is shared openly through these essays.</p>
+            <a href="https://tokistorage.github.io">Learn about TokiStorage</a>
+            <a href="essays-en.html" class="secondary">Read all essays</a>
+        </div>
+
+    </article>
+
+    <footer class="article-footer">
+        <p id="essay-nav-links"></p>
+        <p>© TokiStorage. All rights reserved.</p>
+    </footer>
+</main>
+
+<script src="essay-nav.js"></script>
+<script src="essay-tts.js"></script>
+</body>
+</html>

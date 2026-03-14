@@ -223,7 +223,8 @@
     { id: 'output-policy-separation', ja: '経験と内省を分離せよ', en: 'Separate Experience from Reflection', date: '2026-03-13' },
     { id: 'tools-became-unnecessary', ja: 'すべてのツールが要らなくなった朝', en: 'The Morning All the Tools Became Unnecessary', date: '2026-03-13' },
     { id: 'morning-inbox-autonomous', ja: '朝、メールはすでに届いている', en: 'By Morning, the Mail Has Already Arrived', date: '2026-03-14' },
-    { id: 'possibility-vs-direction', ja: 'できることと、すべきことの間', en: 'Between What You Can Do and What You Should', date: '2026-03-14' }
+    { id: 'possibility-vs-direction', ja: 'できることと、すべきことの間', en: 'Between What You Can Do and What You Should', date: '2026-03-14' },
+    { id: 'temptation-no-philosophy', ja: '誘惑は戦う相手ではない', en: 'Temptation Is Not the Enemy', date: '2026-03-14' }
   ];
 
   // ── Latest Articles (最新記事) ──
@@ -446,6 +447,7 @@
     'tools-became-unnecessary': ['output-policy-separation', 'zero-cost-autonomy', 'tool-vs-infrastructure', 'no-longer-asking', 'claude-code-boundary'],
     'morning-inbox-autonomous': ['zero-cost-autonomy', 'claude-code-boundary', 'tool-vs-infrastructure', 'tools-became-unnecessary', 'multi-account-agent'],
     'possibility-vs-direction': ['morning-inbox-autonomous', 'zero-cost-autonomy', 'claude-code-boundary', 'tool-vs-infrastructure', 'burn-rate-zero'],
+    'temptation-no-philosophy': ['possibility-vs-direction', 'burn-rate-zero', 'zero-cost-autonomy', 'ethics-exclusion', 'constraint-philosophy'],
     'break-and-grow':           ['zero-cost-autonomy', 'tool-vs-infrastructure', 'vibe-coding', 'primitive-edge', 'constraint-philosophy']
   };
 

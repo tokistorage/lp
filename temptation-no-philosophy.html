@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" type="image/png" sizes="32x32" href="asset/favicon-32.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="asset/apple-touch-icon.png">
+    <title>誘惑は戦う相手ではない | トキストレージ</title>
+    <meta name="robots" content="index, follow">
+    <meta name="description" content="誘惑はゼロにできない。しかし思想が先にある時、誘惑は問いにならない。戦って克服するのではなく、思想の密度を上げることで誘惑を無効化する。">
+    <link rel="alternate" hreflang="ja" href="https://tokistorage.github.io/lp/temptation-no-philosophy.html">
+    <link rel="alternate" hreflang="en" href="https://tokistorage.github.io/lp/temptation-no-philosophy-en.html">
+    <link rel="alternate" hreflang="x-default" href="https://tokistorage.github.io/lp/temptation-no-philosophy.html">
+    <style>
+        :root {
+            --toki-blue: #2563EB;
+            --toki-blue-dark: #1E40AF;
+            --toki-blue-pale: #EFF6FF;
+            --accent-blue: #60A5FA;
+            --bg-white: #FFFFFF;
+            --text-primary: #1E293B;
+            --text-secondary: #475569;
+            --text-muted: #94A3B8;
+            --border: #E2E8F0;
+            --font-display: 'Hiragino Mincho ProN', 'Yu Mincho', serif;
+            --font-body: 'Hiragino Kaku Gothic ProN', 'Yu Gothic', 'Meiryo', sans-serif;
+        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        html { scroll-behavior: smooth; }
+        body { font-family: var(--font-body); font-weight: 400; background: var(--bg-white); color: var(--text-primary); line-height: 2; font-size: 16px; }
+
+        .article-nav { position: fixed; top: 0; left: 0; right: 0; z-index: 1000; background: rgba(255,255,255,0.95); backdrop-filter: blur(12px); border-bottom: 1px solid var(--border); padding: 0.6rem 1.2rem; display: flex; align-items: center; justify-content: space-between; gap: 1rem; }
+        .article-nav .nav-brand { font-family: var(--font-display); font-size: 0.9rem; font-weight: 600; color: var(--toki-blue); text-decoration: none; white-space: nowrap; }
+        .article-nav .nav-brand::before { content: ''; display: inline-block; width: 20px; height: 20px; background: url('asset/tokistorage-icon-512.png') no-repeat center / contain; vertical-align: -3px; margin-right: 5px; }
+        .article-nav .nav-right { display: flex; align-items: center; gap: 1rem; }
+        .article-nav .nav-label { font-size: 0.6rem; color: var(--text-muted); letter-spacing: 0.08em; }
+        .article-nav .lang-switch { font-size: 0.75rem; color: var(--toki-blue); text-decoration: none; padding: 0.3rem 0.6rem; border: 1px solid var(--toki-blue); border-radius: 4px; }
+        .article-nav .lang-switch:hover { background: var(--toki-blue); color: #fff; }
+
+        .article-container { max-width: 680px; margin: 0 auto; padding: 7rem 2rem 4rem; }
+        .article-header { margin-bottom: 3rem; padding-bottom: 2rem; border-bottom: 1px solid var(--border); }
+        .article-category { font-size: 0.7rem; color: var(--toki-blue); letter-spacing: 0.15em; margin-bottom: 1rem; }
+        .article-header h1 { font-family: var(--font-display); font-size: 1.8rem; font-weight: 700; line-height: 1.5; margin-bottom: 1.5rem; }
+        .article-subtitle { font-size: 0.95rem; color: var(--text-secondary); line-height: 1.9; }
+
+        .article-content h2 { font-family: var(--font-display); font-size: 1.3rem; font-weight: 600; margin: 3rem 0 1.5rem; padding-bottom: 0.5rem; border-bottom: 2px solid var(--toki-blue-pale); }
+        .article-content p { margin-bottom: 1.5rem; text-align: justify; }
+        .article-content blockquote { border-left: 3px solid var(--toki-blue); padding-left: 1.5rem; margin: 2rem 0; font-family: var(--font-display); color: var(--text-secondary); }
+
+        .core-message { background: var(--toki-blue-pale); border-left: 4px solid var(--toki-blue); padding: 1.5rem; margin: 2rem 0; font-size: 0.95rem; line-height: 1.8; }
+        .key-point { background: linear-gradient(135deg, var(--toki-blue-pale) 0%, #fff 100%); border: 1px solid var(--accent-blue); border-radius: 8px; padding: 1.5rem; margin: 2rem 0; text-align: center; }
+        .key-point p { font-family: var(--font-display); font-size: 1.1rem; color: var(--toki-blue-dark); margin: 0; }
+
+        .cta-block { background: var(--toki-blue); color: #fff; border-radius: 12px; padding: 2rem; margin: 3rem 0; text-align: center; }
+        .cta-block p { color: rgba(255,255,255,0.9); margin-bottom: 1.5rem; }
+        .cta-block a { display: inline-block; background: #fff; color: var(--toki-blue); padding: 0.6rem 1.5rem; border-radius: 6px; text-decoration: none; font-weight: 600; margin: 0.4rem; font-size: 0.9rem; }
+        .cta-block a.secondary { background: transparent; color: #fff; border: 1px solid rgba(255,255,255,0.6); }
+
+        .article-footer { margin-top: 4rem; padding-top: 2rem; border-top: 1px solid var(--border); text-align: center; }
+        .article-footer p { font-size: 0.8rem; color: var(--text-muted); margin-bottom: 1rem; }
+        .article-footer a { color: var(--toki-blue); text-decoration: none; }
+
+        @media (max-width: 768px) {
+            .article-container { padding: 6rem 1.2rem 3rem; }
+            .article-header h1 { font-size: 1.5rem; }
+            .article-nav .nav-label { display: none; }
+        }
+        @media print { .article-nav { display: none; } .article-container { padding-top: 2rem; } }
+    </style>
+</head>
+<body>
+
+<nav class="article-nav">
+    <a href="essays.html" class="nav-brand">トキストレージ</a>
+    <div class="nav-right">
+        <span class="nav-label">ESSAY</span>
+        <a href="temptation-no-philosophy-en.html" class="lang-switch">EN</a>
+    </div>
+</nav>
+
+<main class="article-container">
+    <header class="article-header">
+        <div class="article-category">信仰・思想</div>
+        <h1>誘惑は戦う相手ではない</h1>
+        <p class="article-subtitle">思想が先にある時、誘惑は問いにならない</p>
+    </header>
+
+    <article class="article-content">
+
+        <div class="core-message">この記事で言いたいこと：誘惑はゼロにできない。しかし思想が明確である時、誘惑は問いにすらならない。克服しようと戦うのではなく、思想の密度を上げることで誘惑は自然に無効化される。これは意志力の話ではなく、設計の話だ。</div>
+
+        <h2>1. 誘惑が来る構造</h2>
+
+        <p>新しい技術が使えるようになった時、収益化の圧力が生まれた時、他者の成功事例が目に入った時——誘惑はいつも外側から来るように見える。しかし実際は、誘惑は内側にある何かと外側の刺激が出会う瞬間に生まれる。</p>
+
+        <p>「これもできる」「あれも試せる」「この方法なら早く稼げる」。誘惑の声は常に合理的な顔をしている。非合理な衝動ではなく、それなりの根拠を持った提案として現れる。だからこそ、意志力だけで退けようとすると消耗する。戦えば戦うほど、誘惑は存在感を増す。</p>
+
+        <h2>2. 意志力は消耗する</h2>
+
+        <p>誘惑に対して「やめよう」「我慢しよう」と向き合い続けることは、認知資源を消費する。心理学の研究が繰り返し示してきたように、意志力は有限だ。朝に強い決断を繰り返した人間は、夕方には些細な誘惑に負ける。</p>
+
+        <p>誘惑を克服するための意志力に頼る設計は、根本的に脆い。どれだけ強い決意を持っていても、消耗した状態では機能しない。「誘惑と戦い続ける人間」を前提にした設計は、人間の認知構造に反している。</p>
+
+        <h2>3. 思想が先にある時に起きること</h2>
+
+        <p>あるポリシーを言語化した時のことを思い出す。「一冊出した、それ以上は触れない、自動化もしない」。その瞬間から、同じ種類の誘惑が来ても、問いが起きなくなった。「どうしようか」という迷いが発生しない。答えはすでにある。</p>
+
+        <p>これは意志力ではない。思想が先にあることで、判断のコストがゼロになった状態だ。誘惑は来る。しかし、思想というフィルターを通過した瞬間に、誘惑は「検討に値しないもの」として自動的に分類される。戦う前に、誘惑が問いにならない。</p>
+
+        <h2>4. ポリシーの言語化が持つ力</h2>
+
+        <p>「思想が先にある」状態を作るために、言語化は重要な役割を担う。頭の中に漠然と存在する価値観は、誘惑の前で揺らぎやすい。しかし言語化された原則は、外部記憶として機能する。自分が迷っている時に参照できる。</p>
+
+        <p>ポリシーとして書き出すことは、未来の自分への手紙でもある。「次に同じ誘惑が来た時、過去の自分はこう判断した」という記録。その記録があることで、同じ問いを毎回ゼロから考え直す必要がなくなる。思想の蓄積が、判断のコストを下げ続ける。</p>
+
+        <h2>5. 誘惑の正体は「思想の空白」だ</h2>
+
+        <p>誘惑が強く感じられる時、そこには必ず思想の空白がある。「自分は何のためにこれをやっているのか」が曖昧な領域に、誘惑は入り込む。逆に言えば、思想が明確に言語化されている領域には、誘惑が居場所を持てない。</p>
+
+        <p>収益化の誘惑が強い時は、「なぜ収益化するのか、何のための事業か」が揺らいでいる。プラットフォームへの依存の誘惑が強い時は、「自律とは何か、依存と何が違うのか」が曖昧になっている。誘惑は原因ではなく、症状だ。本当の問いは、誘惑の向こう側にある思想の空白だ。</p>
+
+        <h2>6. 空白を埋める方法</h2>
+
+        <p>思想の空白を埋めるのは、意志力ではなく問いだ。「これは自分のミッションと整合するか」「これは外部依存性を増やすか」「これは一度で完結するか、それとも継続管理を生むか」。問いを持ち続けることで、空白は少しずつ言語化される。</p>
+
+        <p>重要なのは、問いへの答えを出し続けることではなく、問いを持ち続けることだ。答えが出た時、それがポリシーになる。ポリシーが増えるほど、思想の空白は縮まる。空白が縮まるほど、誘惑が入り込む余地がなくなる。</p>
+
+        <h2>7. 「やらないこと」の蓄積が思想を作る</h2>
+
+        <p>思想は「やること」の集合だと思われがちだ。しかし実際は、「やらないこと」の蓄積によって輪郭が現れる。何を選ばなかったか、どの誘惑をスルーしたか、その痕跡が思想の形を作る。</p>
+
+        <p>あるプラットフォームへの出版を一度だけ試みて、それ以上は追わないと決めた。コンテンツ販売の自動化も設計しないと決めた。月額課金も目指さないと決めた。これらの「やらない」の蓄積が、「トキストレージとは何か」をより鮮明にしていく。思想は宣言するものではなく、選択の積み重ねによって浮かび上がるものだ。</p>
+
+        <h2>8. 誘惑が来た時が、思想を深める機会だ</h2>
+
+        <p>誘惑が来た時、それを脅威として見るか、機会として見るかで、その後が変わる。誘惑は必ず思想の空白を指し示している。だから誘惑が来た時こそ、問いを立てる好機だ。「なぜこれが誘惑に見えるのか」「どこに空白があるのか」「何を言語化できていないのか」。</p>
+
+        <p>誘惑と戦って消耗するのではなく、誘惑を使って思想を深める。誘惑に負けることを恐れるのではなく、誘惑を問いに変換することに集中する。その繰り返しの中で、思想は密度を増していく。やがて誘惑が来ても、それは問いにすらならなくなる。戦わずして、誘惑が消える。</p>
+
+        <div class="key-point">
+            <p>誘惑は戦う相手ではなく、思想の空白を教えてくれる案内人だ。思想が先にある時、誘惑は問いにならない。</p>
+        </div>
+
+        <div class="cta-block">
+            <p>トキストレージは、声・画像・テキストを1000年保管する「存在証明の民主化」プロジェクトです。思想から設計を導く、その過程をエッセイで公開しています。</p>
+            <a href="https://tokistorage.github.io">トキストレージを知る</a>
+            <a href="essays.html" class="secondary">すべてのエッセイを読む</a>
+        </div>
+
+    </article>
+
+    <footer class="article-footer">
+        <p id="essay-nav-links"></p>
+        <p>© TokiStorage. All rights reserved.</p>
+    </footer>
+</main>
+
+<script src="essay-nav.js"></script>
+<script src="essay-tts.js"></script>
+</body>
+</html>
