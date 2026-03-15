@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" type="image/png" sizes="32x32" href="asset/favicon-32.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="asset/apple-touch-icon.png">
+    <title>自動化が壊れるとき | トキストレージ</title>
+    <meta name="robots" content="index, follow">
+    <meta name="description" content="外部依存と境界設計の実践記。Qiita自動公開の構築で何度も失敗しながら学んだこと。自動化が壊れる理由は、たいてい境界の外に制御権がある。">
+    <meta property="og:type" content="article">
+    <meta property="og:title" content="自動化が壊れるとき | トキストレージ">
+    <meta property="og:description" content="外部依存と境界設計の実践記。Qiita自動公開の構築で何度も失敗しながら学んだこと。自動化が壊れる理由は、たいてい境界の外に制御権がある。">
+    <meta property="og:url" content="https://tokistorage.github.io/lp/automation-breaks.html">
+    <meta property="og:site_name" content="トキストレージ">
+    <meta property="og:image" content="https://tokistorage.github.io/lp/asset/tokistorage-icon-512.png">
+    <meta property="og:image:width" content="512">
+    <meta property="og:image:height" content="512">
+    <meta name="twitter:card" content="summary">
+    <meta name="twitter:title" content="自動化が壊れるとき | トキストレージ">
+    <meta name="twitter:description" content="外部依存と境界設計の実践記。自動化が壊れる理由は、たいてい境界の外に制御権がある。">
+    <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Article",
+  "headline": "自動化が壊れるとき",
+  "description": "外部依存と境界設計の実践記",
+  "author": {"@type": "Person", "name": "佐藤卓也"},
+  "datePublished": "2026-03-15",
+  "publisher": {"@type": "Organization", "name": "TokiStorage", "url": "https://tokistorage.github.io/"}
+}
+    </script>
+    <link rel="canonical" href="https://tokistorage.github.io/lp/automation-breaks.html">
+    <link rel="alternate" hreflang="ja" href="https://tokistorage.github.io/lp/automation-breaks.html">
+    <link rel="alternate" hreflang="en" href="https://tokistorage.github.io/lp/automation-breaks-en.html">
+    <link rel="alternate" hreflang="x-default" href="https://tokistorage.github.io/lp/automation-breaks.html">
+    <style>
+        :root {
+            --toki-blue: #2563EB; --toki-blue-dark: #1E40AF; --toki-blue-pale: #EFF6FF;
+            --accent-blue: #60A5FA; --bg-white: #FFFFFF; --text-primary: #1E293B;
+            --text-secondary: #475569; --text-muted: #94A3B8; --border: #E2E8F0;
+            --font-display: 'Hiragino Mincho ProN', 'Yu Mincho', serif;
+            --font-body: 'Hiragino Kaku Gothic ProN', 'Yu Gothic', 'Meiryo', sans-serif;
+        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        html { scroll-behavior: smooth; }
+        body { font-family: var(--font-body); background: var(--bg-white); color: var(--text-primary); line-height: 2; font-size: 16px; }
+        .article-nav { position: fixed; top: 0; left: 0; right: 0; z-index: 1000; background: rgba(255,255,255,0.95); backdrop-filter: blur(12px); border-bottom: 1px solid var(--border); padding: 0.6rem 1.2rem; display: flex; align-items: center; justify-content: space-between; gap: 1rem; }
+        .article-nav .nav-brand { font-family: var(--font-display); font-size: 0.9rem; font-weight: 600; color: var(--toki-blue); text-decoration: none; white-space: nowrap; }
+        .article-nav .nav-brand::before { content: ''; display: inline-block; width: 20px; height: 20px; background: url('asset/tokistorage-icon-512.png') no-repeat center / contain; vertical-align: -3px; margin-right: 5px; }
+        .article-nav .nav-right { display: flex; align-items: center; gap: 1rem; }
+        .article-nav .nav-label { font-size: 0.6rem; color: var(--text-muted); letter-spacing: 0.08em; }
+        .article-nav .lang-switch { font-size: 0.75rem; color: var(--toki-blue); text-decoration: none; padding: 0.3rem 0.6rem; border: 1px solid var(--toki-blue); border-radius: 4px; }
+        .article-nav .lang-switch:hover { background: var(--toki-blue); color: #fff; }
+        .article-container { max-width: 680px; margin: 0 auto; padding: 7rem 2rem 4rem; }
+        .article-header { margin-bottom: 3rem; padding-bottom: 2rem; border-bottom: 1px solid var(--border); }
+        .article-category { font-size: 0.7rem; color: var(--toki-blue); letter-spacing: 0.15em; margin-bottom: 1rem; }
+        .article-header h1 { font-family: var(--font-display); font-size: 1.8rem; font-weight: 700; line-height: 1.5; margin-bottom: 1.5rem; }
+        .article-subtitle { font-size: 0.95rem; color: var(--text-secondary); line-height: 1.9; }
+        .article-content h2 { font-family: var(--font-display); font-size: 1.3rem; font-weight: 600; margin: 3rem 0 1.5rem; padding-bottom: 0.5rem; border-bottom: 2px solid var(--toki-blue-pale); }
+        .article-content p { margin-bottom: 1.5rem; text-align: justify; }
+        .article-content blockquote { border-left: 3px solid var(--toki-blue); padding-left: 1.5rem; margin: 2rem 0; font-family: var(--font-display); color: var(--text-secondary); line-height: 2; }
+        .article-content code { background: var(--toki-blue-pale); padding: 0.1em 0.4em; border-radius: 3px; font-size: 0.9em; font-family: 'SF Mono', 'Fira Code', monospace; }
+        .core-message { background: var(--toki-blue-pale); border-left: 4px solid var(--toki-blue); padding: 1.5rem; margin: 2rem 0; font-size: 0.95rem; line-height: 1.8; }
+        .key-point { background: linear-gradient(135deg, var(--toki-blue-pale) 0%, #fff 100%); border: 1px solid var(--accent-blue); border-radius: 8px; padding: 1.5rem; margin: 2rem 0; text-align: center; }
+        .key-point p { font-family: var(--font-display); font-size: 1.1rem; color: var(--toki-blue-dark); margin: 0; }
+        .cta-block { background: var(--toki-blue); color: #fff; border-radius: 12px; padding: 2rem; margin: 2rem 0; text-align: center; }
+        .cta-block p { color: rgba(255,255,255,0.9); margin-bottom: 1.5rem; font-size: 0.95rem; }
+        .cta-block a { display: inline-block; background: #fff; color: var(--toki-blue); text-decoration: none; padding: 0.6rem 1.5rem; border-radius: 6px; font-weight: 600; font-size: 0.9rem; margin: 0.3rem; }
+        .cta-block a.secondary { background: transparent; color: #fff; border: 1px solid rgba(255,255,255,0.5); }
+        .article-footer { margin-top: 4rem; padding-top: 2rem; border-top: 1px solid var(--border); text-align: center; }
+        .article-footer p { font-size: 0.8rem; color: var(--text-muted); margin-bottom: 1rem; }
+        .article-footer a { color: var(--toki-blue); text-decoration: none; }
+        @media (max-width: 768px) { .article-container { padding: 6rem 1.2rem 3rem; } .article-header h1 { font-size: 1.5rem; } .article-nav .nav-label { display: none; } }
+        @media print { .article-nav { display: none; } .article-container { padding-top: 2rem; } }
+    </style>
+</head>
+<body>
+
+<nav class="article-nav">
+    <a href="essays.html" class="nav-brand">トキストレージ</a>
+    <div class="nav-right">
+        <span class="nav-label">ESSAY</span>
+        <a href="automation-breaks-en.html" class="lang-switch">EN</a>
+    </div>
+</nav>
+
+<main class="article-container">
+    <header class="article-header">
+        <div class="article-category">技術・設計</div>
+        <h1>自動化が壊れるとき</h1>
+        <p class="article-subtitle">外部依存と境界設計の実践記</p>
+    </header>
+
+    <article class="article-content">
+
+        <div class="core-message">この記事で言いたいこと：自動化が壊れる理由は、たいてい「境界の外に制御権がある」からだ。外部サービスのAPI仕様、UIの変化、権限の設定——これらは自分でコントロールできない。自動化を長く動かすには、何を自分の境界の内側に置き、何を外側に置くかを設計する必要がある。</div>
+
+        <h2>1. 動いた。しかし翌日には壊れた</h2>
+
+        <p>自動化を作ったことがある人なら、この経験に覚えがあるはずだ。昨日まで動いていたものが、今日突然動かなくなる。エラーメッセージを読む。原因を探す。修正する。また動く。そして数週間後、また壊れる。</p>
+
+        <p>これは自動化の品質の問題ではない。構造の問題だ。</p>
+
+        <p>外部サービスのUIをスクレイピングして自動投稿していた時期がある。しばらくは動いた。しかしサービスがデザインを変えるたびに、スクリプトが壊れた。修正のたびに時間が消えた。「自動化のメンテナンス」という矛盾した作業が発生し続けた。</p>
+
+        <p>問題の本質は一つだった。制御権が自分の手になかった。</p>
+
+        <h2>2. 境界という概念</h2>
+
+        <p>ソフトウェア設計に「境界」という概念がある。システムの中で自分がコントロールできる領域と、そうでない領域を分ける線だ。</p>
+
+        <p>自分の境界の内側にあるもの——自分のコード、自分のデータ、自分のリポジトリ——は、自分の意思で変えられる。壊れたら直せる。仕様を変えたければ変えられる。</p>
+
+        <p>外側にあるもの——外部サービスのAPI、プラットフォームのUI、他社の認証システム——は、相手の都合で変わる。自分には止める手段がない。</p>
+
+        <p>自動化が長く動き続けるかどうかは、この境界の引き方で決まる。外側への依存が多いほど、壊れる頻度が上がる。</p>
+
+        <h2>3. Qiita自動公開で起きたこと</h2>
+
+        <p>技術記事の自動公開システムを構築しようとした日のことだ。GitHubにMarkdownをpushすると、自動でQiitaに記事が公開される仕組みを作ろうとした。</p>
+
+        <p>最初のエラーは `QiitaNotFoundError` だった。既存の記事IDが見つからないというエラーだ。原因を調べると、別のアカウントで管理されていた記事のIDがファイルに残っていた。IDを削除して再実行した。</p>
+
+        <p>次のエラーは `--all` オプションの誤解だった。全記事を公開するオプションのはずが、`ignorePublish: true` の設定を無視して全件処理しようとした。個別指定に切り替えた。</p>
+
+        <p>次は `'public/path/to/file.md' is not found`。Qiita CLIはパスではなくbasenameで指定する仕様だった。ドキュメントをよく読んでいなかった。</p>
+
+        <p>記事が公開されたと思ったら、同じ記事が十数本重複投稿されていた。pushのたびにActionsが走り、毎回新規投稿していたからだ。IDが書き戻されていなかった。</p>
+
+        <p>IDを書き戻そうとしたら `403 Forbidden`。ActionsのGITHUB_TOKENにwrite権限がなかった。</p>
+
+        <p>一つ直すたびに次の問題が出た。それぞれは小さなエラーだが、積み重なると半日が消える。</p>
+
+        <h2>4. 何が問題だったのか</h2>
+
+        <p>振り返ると、問題のパターンは明確だった。</p>
+
+        <p>第一に、外部サービスの仕様を正確に把握していなかった。`--all` の挙動、basenameの指定方法、IDの扱い——これらはQiitaとQiita CLIの仕様であり、自分の境界の外にある。外側の仕様を誤解したまま自動化を組むと、予期しない動作が起きる。</p>
+
+        <p>第二に、権限の設定が抜けていた。GitHub ActionsのGITHUB_TOKENはデフォルトでread-onlyだ。書き込みには明示的な設定が必要だが、それを見落としていた。権限もまた、自分が明示的に設定しなければならない境界の一部だ。</p>
+
+        <p>第三に、「べき等性」が設計されていなかった。同じ操作を何度実行しても同じ結果になる性質をべき等性という。記事の公開処理がべき等でなかったため、重複投稿が発生した。IDの有無でチェックするロジックを入れることで初めて解決した。</p>
+
+        <h2>5. 解決した設計</h2>
+
+        <p>最終的に動いた設計はシンプルだった。</p>
+
+        <blockquote>
+            記事ファイルに `id: null` が設定されている場合のみ新規投稿する<br>
+            投稿後にQiitaが発行したIDをファイルに書き戻してcommitする<br>
+            次回以降はIDがあるのでスキップされる
+        </blockquote>
+
+        <p>べき等性が確保された。何度pushしても、未公開の記事だけが公開される。IDが書き戻された記事は二度と重複しない。</p>
+
+        <p>この設計が動くようになって初めて、「自動化」と呼べるものになった。それまでは「壊れ続けるものを直し続けること」だった。</p>
+
+        <h2>6. 自動化の三つの条件</h2>
+
+        <p>この経験から、長く動き続ける自動化には三つの条件があると考えるようになった。</p>
+
+        <p>一つ目は「外部依存を最小化する」。外部サービスのAPIを使うのは避けられないが、依存する箇所を絞り込む。UIではなくAPIを使う。APIは変わりにくいが、UIは頻繁に変わる。</p>
+
+        <p>二つ目は「べき等性を設計する」。同じ操作を何度実行しても安全な設計にする。状態を確認してから操作する。「すでに存在するか」「すでに処理済みか」を必ずチェックする。</p>
+
+        <p>三つ目は「境界を明示する」。自分がコントロールできるものとできないものを明確に分ける。コントロールできないものへの依存は、失敗したときのフォールバックを用意する。</p>
+
+        <h2>7. 壊れることは情報だ</h2>
+
+        <p>自動化が壊れたとき、苛立ちを感じるのは自然なことだ。しかし壊れ方には情報がある。</p>
+
+        <p>どのエラーが出たか。どこで止まったか。どの前提が崩れたか。それらを読むと、自分の設計がどこで外部依存していたかが見える。壊れることは、境界の引き方が甘かった場所を教えてくれる。</p>
+
+        <p>今回の連続エラーは苦労だったが、結果として設計が堅牢になった。べき等性のチェック、IDの書き戻し、権限の明示的な設定——これらは最初から入れるべきだったが、壊れることで気づいた。</p>
+
+        <p>自動化の失敗は、次の自動化を強くする材料だ。</p>
+
+        <h2>8. 長く動かすということ</h2>
+
+        <p>1000年動き続けるシステムを考えるとき、自動化の堅牢性は避けて通れないテーマだ。外部サービスは消える。APIは変わる。プラットフォームは終了する。</p>
+
+        <p>だから境界を設計する。自分のデータは自分のリポジトリに置く。外部への依存は最小限にする。壊れたときに何が残るかを考えて作る。</p>
+
+        <p>自動化とは、人間が介在しなくても動き続ける仕組みだ。それが本当に動き続けるためには、壊れにくい境界と、壊れても回復できる設計が必要だ。</p>
+
+        <p>「pushしたら公開される」という一行の自動化の裏に、その設計がある。</p>
+
+        <div class="key-point"><p>自動化が壊れる理由は、たいてい境界の外に制御権がある。外側の依存を減らし、べき等性を設計し、境界を明示する。それが長く動き続ける自動化の条件だ。</p></div>
+
+        <div class="cta-block">
+            <p>トキストレージは、声・画像・テキストを1000年残すプロジェクトです。<br>長く動き続けるための設計思想を、保存の仕組みそのものに組み込んでいます。</p>
+            <a href="https://tokistorage.github.io">トキストレージを知る</a>
+            <a href="essays.html" class="secondary">すべてのエッセイを読む</a>
+        </div>
+
+    </article>
+
+    <footer class="article-footer">
+        <p id="essay-nav-links"></p>
+        <p>© TokiStorage. All rights reserved.</p>
+    </footer>
+</main>
+
+<script src="essay-nav.js"></script>
+<script src="essay-tts.js"></script>
+</body>
+</html>

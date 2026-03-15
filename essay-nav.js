@@ -233,7 +233,8 @@
     { id: 'async-thinking', ja: '先に考えておく', en: 'Think Ahead', date: '2026-03-15' },
     { id: 'refactoring-before-rot', ja: '構造が腐る前に', en: 'Before the Structure Rots', date: '2026-03-15' },
     { id: 'see-you-again-soon', ja: 'See you again soon.', en: 'See you again soon.', date: '2026-03-15' },
-    { id: 'content-ownership', ja: 'コンテンツを所有するということ', en: 'Owning Your Content', date: '2026-03-15' }
+    { id: 'content-ownership', ja: 'コンテンツを所有するということ', en: 'Owning Your Content', date: '2026-03-15' },
+    { id: 'automation-breaks', ja: '自動化が壊れるとき', en: 'When Automation Breaks', date: '2026-03-15' }
   ];
 
   // ── Latest Articles (最新記事) ──
@@ -466,6 +467,7 @@
     'refactoring-before-rot': ['async-thinking', 'no-single-point-of-failure', 'tool-vs-infrastructure', 'zero-cost-autonomy', 'break-and-grow'],
     'see-you-again-soon': ['gift-economy', 'immigrant-burial-ecosystem', 'scattered-ashes', 'wedding-partnership', 'embodied-oral'],
     'content-ownership': ['no-single-point-of-failure', 'tool-vs-infrastructure', 'zero-cost-autonomy', 'async-thinking', 'refactoring-before-rot'],
+    'automation-breaks': ['content-ownership', 'no-single-point-of-failure', 'refactoring-before-rot', 'async-thinking', 'zero-cost-autonomy'],
     'break-and-grow':           ['zero-cost-autonomy', 'tool-vs-infrastructure', 'vibe-coding', 'primitive-edge', 'constraint-philosophy']
   };
 

@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" type="image/png" sizes="32x32" href="asset/favicon-32.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="asset/apple-touch-icon.png">
+    <title>When Automation Breaks | TokiStorage</title>
+    <meta name="robots" content="index, follow">
+    <meta name="description" content="A field note on external dependency and boundary design. What a day of Qiita automation failures taught about where to draw the line between what you control and what you don't.">
+    <meta property="og:type" content="article">
+    <meta property="og:title" content="When Automation Breaks | TokiStorage">
+    <meta property="og:description" content="Automation breaks because control lives outside your boundary. A field note on external dependency and boundary design.">
+    <meta property="og:url" content="https://tokistorage.github.io/lp/automation-breaks-en.html">
+    <meta property="og:site_name" content="TokiStorage">
+    <meta property="og:image" content="https://tokistorage.github.io/lp/asset/tokistorage-icon-512.png">
+    <meta property="og:image:width" content="512">
+    <meta property="og:image:height" content="512">
+    <meta name="twitter:card" content="summary">
+    <meta name="twitter:title" content="When Automation Breaks | TokiStorage">
+    <meta name="twitter:description" content="Automation breaks because control lives outside your boundary. A field note on boundary design.">
+    <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Article",
+  "headline": "When Automation Breaks",
+  "description": "A field note on external dependency and boundary design",
+  "author": {"@type": "Person", "name": "Takuya Sato"},
+  "datePublished": "2026-03-15",
+  "publisher": {"@type": "Organization", "name": "TokiStorage", "url": "https://tokistorage.github.io/"}
+}
+    </script>
+    <link rel="canonical" href="https://tokistorage.github.io/lp/automation-breaks-en.html">
+    <link rel="alternate" hreflang="ja" href="https://tokistorage.github.io/lp/automation-breaks.html">
+    <link rel="alternate" hreflang="en" href="https://tokistorage.github.io/lp/automation-breaks-en.html">
+    <link rel="alternate" hreflang="x-default" href="https://tokistorage.github.io/lp/automation-breaks.html">
+    <style>
+        :root {
+            --toki-blue: #2563EB; --toki-blue-dark: #1E40AF; --toki-blue-pale: #EFF6FF;
+            --accent-blue: #60A5FA; --bg-white: #FFFFFF; --text-primary: #1E293B;
+            --text-secondary: #475569; --text-muted: #94A3B8; --border: #E2E8F0;
+            --font-display: Georgia, 'Times New Roman', serif;
+            --font-body: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        html { scroll-behavior: smooth; }
+        body { font-family: var(--font-body); background: var(--bg-white); color: var(--text-primary); line-height: 1.9; font-size: 16px; }
+        .article-nav { position: fixed; top: 0; left: 0; right: 0; z-index: 1000; background: rgba(255,255,255,0.95); backdrop-filter: blur(12px); border-bottom: 1px solid var(--border); padding: 0.6rem 1.2rem; display: flex; align-items: center; justify-content: space-between; gap: 1rem; }
+        .article-nav .nav-brand { font-family: var(--font-display); font-size: 0.9rem; font-weight: 600; color: var(--toki-blue); text-decoration: none; }
+        .article-nav .nav-brand::before { content: ''; display: inline-block; width: 20px; height: 20px; background: url('asset/tokistorage-icon-512.png') no-repeat center / contain; vertical-align: -3px; margin-right: 5px; }
+        .article-nav .nav-right { display: flex; align-items: center; gap: 1rem; }
+        .article-nav .nav-label { font-size: 0.6rem; color: var(--text-muted); letter-spacing: 0.08em; }
+        .article-nav .lang-switch { font-size: 0.75rem; color: var(--toki-blue); text-decoration: none; padding: 0.3rem 0.6rem; border: 1px solid var(--toki-blue); border-radius: 4px; }
+        .article-nav .lang-switch:hover { background: var(--toki-blue); color: #fff; }
+        .article-container { max-width: 680px; margin: 0 auto; padding: 7rem 2rem 4rem; }
+        .article-header { margin-bottom: 3rem; padding-bottom: 2rem; border-bottom: 1px solid var(--border); }
+        .article-category { font-size: 0.7rem; color: var(--toki-blue); letter-spacing: 0.15em; margin-bottom: 1rem; }
+        .article-header h1 { font-family: var(--font-display); font-size: 1.8rem; font-weight: 700; line-height: 1.4; margin-bottom: 1.5rem; }
+        .article-subtitle { font-size: 0.95rem; color: var(--text-secondary); line-height: 1.8; }
+        .article-content h2 { font-family: var(--font-display); font-size: 1.25rem; font-weight: 600; margin: 3rem 0 1.5rem; padding-bottom: 0.5rem; border-bottom: 2px solid var(--toki-blue-pale); }
+        .article-content p { margin-bottom: 1.5rem; }
+        .article-content blockquote { border-left: 3px solid var(--toki-blue); padding-left: 1.5rem; margin: 2rem 0; font-family: var(--font-display); color: var(--text-secondary); font-style: italic; line-height: 2; }
+        .article-content code { background: var(--toki-blue-pale); padding: 0.1em 0.4em; border-radius: 3px; font-size: 0.9em; }
+        .core-message { background: var(--toki-blue-pale); border-left: 4px solid var(--toki-blue); padding: 1.5rem; margin: 2rem 0; font-size: 0.95rem; line-height: 1.8; }
+        .key-point { background: linear-gradient(135deg, var(--toki-blue-pale) 0%, #fff 100%); border: 1px solid var(--accent-blue); border-radius: 8px; padding: 1.5rem; margin: 2rem 0; text-align: center; }
+        .key-point p { font-family: var(--font-display); font-size: 1.1rem; color: var(--toki-blue-dark); margin: 0; font-style: italic; }
+        .cta-block { background: var(--toki-blue); color: #fff; border-radius: 12px; padding: 2rem; margin: 2rem 0; text-align: center; }
+        .cta-block p { color: rgba(255,255,255,0.9); margin-bottom: 1.5rem; font-size: 0.95rem; }
+        .cta-block a { display: inline-block; background: #fff; color: var(--toki-blue); text-decoration: none; padding: 0.6rem 1.5rem; border-radius: 6px; font-weight: 600; font-size: 0.9rem; margin: 0.3rem; }
+        .cta-block a.secondary { background: transparent; color: #fff; border: 1px solid rgba(255,255,255,0.5); }
+        .article-footer { margin-top: 4rem; padding-top: 2rem; border-top: 1px solid var(--border); text-align: center; }
+        .article-footer p { font-size: 0.8rem; color: var(--text-muted); margin-bottom: 1rem; }
+        .article-footer a { color: var(--toki-blue); text-decoration: none; }
+        @media (max-width: 768px) { .article-container { padding: 6rem 1.2rem 3rem; } .article-header h1 { font-size: 1.5rem; } .article-nav .nav-label { display: none; } }
+        @media print { .article-nav { display: none; } .article-container { padding-top: 2rem; } }
+    </style>
+</head>
+<body>
+
+<nav class="article-nav">
+    <a href="essays-en.html" class="nav-brand">TokiStorage</a>
+    <div class="nav-right">
+        <span class="nav-label">ESSAY</span>
+        <a href="automation-breaks.html" class="lang-switch">JA</a>
+    </div>
+</nav>
+
+<main class="article-container">
+    <header class="article-header">
+        <div class="article-category">TECHNOLOGY &amp; DESIGN</div>
+        <h1>When Automation Breaks</h1>
+        <p class="article-subtitle">A field note on external dependency and boundary design</p>
+    </header>
+
+    <article class="article-content">
+
+        <div class="core-message">The point of this essay: automation breaks because control lives outside your boundary. External service APIs, platform UI changes, permission settings — these are not yours to control. For automation to keep running, you need to design what sits inside your boundary and what sits outside it.</div>
+
+        <h2>1. It worked. Then it broke the next day.</h2>
+
+        <p>Anyone who has built automation knows this experience. Something that worked yesterday suddenly stops working today. Read the error. Find the cause. Fix it. It works again. Then, a few weeks later, it breaks again.</p>
+
+        <p>This isn't a quality problem. It's a structural problem.</p>
+
+        <p>There was a period of scraping external service UIs to automate posting. It worked for a while. But every time a service redesigned its interface, the script broke. Every fix consumed time. A contradictory task called "automation maintenance" kept appearing.</p>
+
+        <p>The root of the problem was singular: control was not in hand.</p>
+
+        <h2>2. The concept of a boundary</h2>
+
+        <p>Software design has a concept called a boundary — the line separating what a system can control from what it cannot.</p>
+
+        <p>What sits inside your boundary — your code, your data, your repository — can be changed by your own will. When it breaks, you can fix it. When you want to change the specification, you can.</p>
+
+        <p>What sits outside — external service APIs, platform UI, other companies' authentication systems — changes on someone else's schedule. There is no way to stop it.</p>
+
+        <p>Whether automation keeps running depends on how this boundary is drawn. More external dependencies means more frequent breakage.</p>
+
+        <h2>3. What happened with Qiita auto-publishing</h2>
+
+        <p>The goal was a system where pushing Markdown to GitHub would automatically publish articles to Qiita. What followed was a series of cascading failures.</p>
+
+        <p>The first error was <code>QiitaNotFoundError</code> — article IDs from a different account remained in the files. IDs were cleared and the process restarted.</p>
+
+        <p>The next error came from misunderstanding the <code>--all</code> option, which ignored <code>ignorePublish: true</code> settings and attempted to process everything. Switching to individual specification was necessary.</p>
+
+        <p>Then: <code>'public/path/to/file.md' is not found</code>. The Qiita CLI expects a basename, not a path. The documentation hadn't been read carefully enough.</p>
+
+        <p>When articles finally published, the same article appeared a dozen times — because every push triggered Actions and each run created a new post. The ID was never being written back to the file.</p>
+
+        <p>Attempting to write the ID back produced <code>403 Forbidden</code>. The GITHUB_TOKEN in Actions didn't have write permissions by default.</p>
+
+        <p>Each fix uncovered the next problem. Each was small individually. Together, they consumed half a day.</p>
+
+        <h2>4. What actually went wrong</h2>
+
+        <p>Looking back, the failure pattern was clear.</p>
+
+        <p>First: the external service specifications weren't accurately understood. The behavior of <code>--all</code>, the basename requirement, the handling of IDs — these are Qiita and Qiita CLI specifications. They live outside the boundary. Building automation on misunderstood external specs produces unexpected behavior.</p>
+
+        <p>Second: permissions were overlooked. The GITHUB_TOKEN in Actions is read-only by default. Write access requires explicit configuration. Permissions are part of the boundary that must be explicitly set.</p>
+
+        <p>Third: idempotency wasn't designed in. Idempotency means running the same operation multiple times produces the same result. The publishing process wasn't idempotent, which caused duplicate posts. Checking for the presence of an ID before acting was what finally resolved it.</p>
+
+        <h2>5. The design that worked</h2>
+
+        <p>The design that finally held was simple.</p>
+
+        <blockquote>
+            Only post new articles where <code>id: null</code> is set in the file<br>
+            After posting, write the Qiita-assigned ID back to the file and commit<br>
+            On subsequent runs, the ID exists and the article is skipped
+        </blockquote>
+
+        <p>Idempotency was now guaranteed. No matter how many times a push happens, only unpublished articles get published. Articles with IDs written back will never duplicate.</p>
+
+        <p>Only when this design was running could it honestly be called automation. Before that, it was "continuously fixing things that keep breaking."</p>
+
+        <h2>6. Three conditions for lasting automation</h2>
+
+        <p>From this experience, three conditions for automation that keeps running became clear.</p>
+
+        <p>First: minimize external dependency. Using external service APIs is unavoidable, but limit where the dependency sits. Use APIs rather than UIs. APIs change slowly; UIs change constantly.</p>
+
+        <p>Second: design for idempotency. Make every operation safe to run multiple times. Check state before acting. Always verify "does this already exist?" and "has this already been processed?"</p>
+
+        <p>Third: make boundaries explicit. Clearly separate what you control from what you don't. For things outside your control, build fallbacks for when they change.</p>
+
+        <h2>7. Breaking is information</h2>
+
+        <p>When automation breaks, frustration is natural. But the way it breaks contains information.</p>
+
+        <p>Which error appeared. Where it stopped. Which assumption failed. Reading these reveals where the design was leaning on external dependencies. Breaking teaches you where the boundary was drawn too loosely.</p>
+
+        <p>The chain of failures that day was exhausting. But the design that emerged was more robust. Idempotency checks, ID write-back, explicit permission configuration — these should have been there from the start, but breaking is what made them visible.</p>
+
+        <p>Automation failures are material for stronger automation.</p>
+
+        <h2>8. What it means to keep running</h2>
+
+        <p>When thinking about systems that run for a thousand years, the robustness of automation is unavoidable. External services disappear. APIs change. Platforms shut down.</p>
+
+        <p>So boundaries are designed. Data lives in your own repository. External dependencies are minimized. The question of what remains when something breaks is built into the design from the start.</p>
+
+        <p>Automation is a mechanism that keeps running without human intervention. For it to actually keep running, it needs boundaries that don't break easily — and a design that recovers when they do.</p>
+
+        <p>Behind the single line "push and it publishes," that design lives.</p>
+
+        <div class="key-point"><p>Automation breaks because control lives outside the boundary. Reduce external dependencies, design for idempotency, make boundaries explicit. These are the conditions for automation that lasts.</p></div>
+
+        <div class="cta-block">
+            <p>TokiStorage is a project for preserving voice, image, and text for 1,000 years.<br>The design philosophy of lasting automation is built into the preservation system itself.</p>
+            <a href="https://tokistorage.github.io">Explore TokiStorage</a>
+            <a href="essays-en.html" class="secondary">Read all essays</a>
+        </div>
+
+    </article>
+
+    <footer class="article-footer">
+        <p id="essay-nav-links"></p>
+        <p>© TokiStorage. All rights reserved.</p>
+    </footer>
+</main>
+
+<script src="essay-nav.js"></script>
+<script src="essay-tts.js"></script>
+</body>
+</html>
