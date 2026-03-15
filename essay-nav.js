@@ -228,8 +228,8 @@
     { id: 'delete-all-apps', ja: 'アプリを消す', en: 'Delete All Apps', date: '2026-03-14' },
     { id: 'ai-infrastructure-connection', ja: 'インフラに接続できるか', en: 'Can It Connect to Infrastructure?', date: '2026-03-14' },
     { id: 'gap-between-outputs', ja: '聞き流していた時間', en: 'The Hours I Listened Without Hearing', date: '2026-03-14' },
-    { id: 'voice-becomes-memory', ja: '声が記憶になる日', en: 'The Day Voice Became Memory', date: '2026-03-14' }
-    { id: 'no-single-point-of-failure', ja: '単一障害点をなくす', en: 'No Single Point of Failure', date: '2026-03-15' },
+    { id: 'voice-becomes-memory', ja: '声が記憶になる日', en: 'The Day Voice Became Memory', date: '2026-03-14' },
+    { id: 'no-single-point-of-failure', ja: '単一障害点をなくす', en: 'No Single Point of Failure', date: '2026-03-15' }
   ];
 
   // ── Latest Articles (最新記事) ──
