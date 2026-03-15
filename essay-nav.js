@@ -230,7 +230,8 @@
     { id: 'gap-between-outputs', ja: '聞き流していた時間', en: 'The Hours I Listened Without Hearing', date: '2026-03-14' },
     { id: 'voice-becomes-memory', ja: '声が記憶になる日', en: 'The Day Voice Became Memory', date: '2026-03-14' },
     { id: 'no-single-point-of-failure', ja: '単一障害点をなくす', en: 'No Single Point of Failure', date: '2026-03-15' },
-    { id: 'async-thinking', ja: '先に考えておく', en: 'Think Ahead', date: '2026-03-15' }
+    { id: 'async-thinking', ja: '先に考えておく', en: 'Think Ahead', date: '2026-03-15' },
+    { id: 'refactoring-before-rot', ja: '構造が腐る前に', en: 'Before the Structure Rots', date: '2026-03-15' }
   ];
 
   // ── Latest Articles (最新記事) ──
@@ -460,6 +461,7 @@
     'voice-becomes-memory': ['delete-all-apps', 'zero-cost-autonomy', 'tool-vs-infrastructure', 'morning-inbox-autonomous', 'ai-infrastructure-connection'],
     'no-single-point-of-failure': ['tool-vs-infrastructure', 'zero-cost-autonomy', 'ai-infrastructure-connection', 'break-and-grow', 'voice-becomes-memory'],
     'async-thinking': ['no-single-point-of-failure', 'zero-cost-autonomy', 'tool-vs-infrastructure', 'voice-becomes-memory', 'break-and-grow'],
+    'refactoring-before-rot': ['async-thinking', 'no-single-point-of-failure', 'tool-vs-infrastructure', 'zero-cost-autonomy', 'break-and-grow'],
     'break-and-grow':           ['zero-cost-autonomy', 'tool-vs-infrastructure', 'vibe-coding', 'primitive-edge', 'constraint-philosophy']
   };
 

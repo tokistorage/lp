@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" type="image/png" sizes="32x32" href="asset/favicon-32.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="asset/apple-touch-icon.png">
+    <title>構造が腐る前に | トキストレージ</title>
+    <meta name="robots" content="index, follow">
+    <meta name="description" content="908行のYMLが184行になった日。モノリスを分解するタイミングと判断軸。コードもインフラも、腐り始める前に構造を直す。">
+    <meta property="og:type" content="article">
+    <meta property="og:title" content="構造が腐る前に | トキストレージ">
+    <meta property="og:description" content="908行のYMLが184行になった日。モノリスを分解するタイミングと判断軸。コードもインフラも、腐り始める前に構造を直す。">
+    <meta property="og:url" content="https://tokistorage.github.io/lp/refactoring-before-rot.html">
+    <meta property="og:site_name" content="トキストレージ">
+    <meta property="og:image" content="https://tokistorage.github.io/lp/asset/tokistorage-icon-512.png">
+    <meta property="og:image:width" content="512">
+    <meta property="og:image:height" content="512">
+    <meta name="twitter:card" content="summary">
+    <meta name="twitter:title" content="構造が腐る前に | トキストレージ">
+    <meta name="twitter:description" content="908行のYMLが184行になった日。モノリスを分解するタイミングと判断軸。">
+    <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Article",
+  "headline": "構造が腐る前に",
+  "description": "モノリスを分解する設計の判断軸",
+  "author": {"@type": "Person", "name": "佐藤卓也"},
+  "datePublished": "2026-03-15",
+  "publisher": {"@type": "Organization", "name": "TokiStorage", "url": "https://tokistorage.github.io/"}
+}
+    </script>
+    <link rel="canonical" href="https://tokistorage.github.io/lp/refactoring-before-rot.html">
+    <link rel="alternate" hreflang="ja" href="https://tokistorage.github.io/lp/refactoring-before-rot.html">
+    <link rel="alternate" hreflang="en" href="https://tokistorage.github.io/lp/refactoring-before-rot-en.html">
+    <link rel="alternate" hreflang="x-default" href="https://tokistorage.github.io/lp/refactoring-before-rot.html">
+    <style>
+        :root {
+            --toki-blue: #2563EB; --toki-blue-dark: #1E40AF; --toki-blue-pale: #EFF6FF;
+            --accent-blue: #60A5FA; --bg-white: #FFFFFF; --text-primary: #1E293B;
+            --text-secondary: #475569; --text-muted: #94A3B8; --border: #E2E8F0;
+            --font-display: 'Hiragino Mincho ProN', 'Yu Mincho', serif;
+            --font-body: 'Hiragino Kaku Gothic ProN', 'Yu Gothic', 'Meiryo', sans-serif;
+        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        html { scroll-behavior: smooth; }
+        body { font-family: var(--font-body); background: var(--bg-white); color: var(--text-primary); line-height: 2; font-size: 16px; }
+        .article-nav { position: fixed; top: 0; left: 0; right: 0; z-index: 1000; background: rgba(255,255,255,0.95); backdrop-filter: blur(12px); border-bottom: 1px solid var(--border); padding: 0.6rem 1.2rem; display: flex; align-items: center; justify-content: space-between; gap: 1rem; }
+        .article-nav .nav-brand { font-family: var(--font-display); font-size: 0.9rem; font-weight: 600; color: var(--toki-blue); text-decoration: none; white-space: nowrap; }
+        .article-nav .nav-brand::before { content: ''; display: inline-block; width: 20px; height: 20px; background: url('asset/tokistorage-icon-512.png') no-repeat center / contain; vertical-align: -3px; margin-right: 5px; }
+        .article-nav .nav-right { display: flex; align-items: center; gap: 1rem; }
+        .article-nav .nav-label { font-size: 0.6rem; color: var(--text-muted); letter-spacing: 0.08em; }
+        .article-nav .lang-switch { font-size: 0.75rem; color: var(--toki-blue); text-decoration: none; padding: 0.3rem 0.6rem; border: 1px solid var(--toki-blue); border-radius: 4px; }
+        .article-nav .lang-switch:hover { background: var(--toki-blue); color: #fff; }
+        .article-container { max-width: 680px; margin: 0 auto; padding: 7rem 2rem 4rem; }
+        .article-header { margin-bottom: 3rem; padding-bottom: 2rem; border-bottom: 1px solid var(--border); }
+        .article-category { font-size: 0.7rem; color: var(--toki-blue); letter-spacing: 0.15em; margin-bottom: 1rem; }
+        .article-header h1 { font-family: var(--font-display); font-size: 1.8rem; font-weight: 700; line-height: 1.5; margin-bottom: 1.5rem; }
+        .article-subtitle { font-size: 0.95rem; color: var(--text-secondary); line-height: 1.9; }
+        .article-content h2 { font-family: var(--font-display); font-size: 1.3rem; font-weight: 600; margin: 3rem 0 1.5rem; padding-bottom: 0.5rem; border-bottom: 2px solid var(--toki-blue-pale); }
+        .article-content p { margin-bottom: 1.5rem; text-align: justify; }
+        .article-content blockquote { border-left: 3px solid var(--toki-blue); padding-left: 1.5rem; margin: 2rem 0; font-family: var(--font-display); color: var(--text-secondary); }
+        .article-content code { background: var(--toki-blue-pale); padding: 0.1em 0.4em; border-radius: 3px; font-size: 0.9em; font-family: 'SF Mono', 'Fira Code', monospace; }
+        .core-message { background: var(--toki-blue-pale); border-left: 4px solid var(--toki-blue); padding: 1.5rem; margin: 2rem 0; font-size: 0.95rem; line-height: 1.8; }
+        .key-point { background: linear-gradient(135deg, var(--toki-blue-pale) 0%, #fff 100%); border: 1px solid var(--accent-blue); border-radius: 8px; padding: 1.5rem; margin: 2rem 0; text-align: center; }
+        .key-point p { font-family: var(--font-display); font-size: 1.1rem; color: var(--toki-blue-dark); margin: 0; }
+        .cta-block { background: var(--toki-blue); color: #fff; border-radius: 12px; padding: 2rem; margin: 2rem 0; text-align: center; }
+        .cta-block p { color: rgba(255,255,255,0.9); margin-bottom: 1.5rem; font-size: 0.95rem; }
+        .cta-block a { display: inline-block; background: #fff; color: var(--toki-blue); text-decoration: none; padding: 0.6rem 1.5rem; border-radius: 6px; font-weight: 600; font-size: 0.9rem; margin: 0.3rem; }
+        .cta-block a.secondary { background: transparent; color: #fff; border: 1px solid rgba(255,255,255,0.5); }
+        .article-footer { margin-top: 4rem; padding-top: 2rem; border-top: 1px solid var(--border); text-align: center; }
+        .article-footer p { font-size: 0.8rem; color: var(--text-muted); margin-bottom: 1rem; }
+        .article-footer a { color: var(--toki-blue); text-decoration: none; }
+        @media (max-width: 768px) { .article-container { padding: 6rem 1.2rem 3rem; } .article-header h1 { font-size: 1.5rem; } .article-nav .nav-label { display: none; } }
+        @media print { .article-nav { display: none; } .article-container { padding-top: 2rem; } }
+    </style>
+</head>
+<body>
+
+<nav class="article-nav">
+    <a href="essays.html" class="nav-brand">トキストレージ</a>
+    <div class="nav-right">
+        <span class="nav-label">ESSAY</span>
+        <a href="refactoring-before-rot-en.html" class="lang-switch">EN</a>
+    </div>
+</nav>
+
+<main class="article-container">
+    <header class="article-header">
+        <div class="article-category">技術・設計</div>
+        <h1>構造が腐る前に</h1>
+        <p class="article-subtitle">モノリスを分解する設計の判断軸</p>
+    </header>
+
+    <article class="article-content">
+
+        <div class="core-message">この記事で言いたいこと：コードは機能を追加するたびに少しずつ腐る。腐りきってから直すのは大手術になる。「これ以上追加する前に構造を直す」という判断を、早い段階で下すことがインフラを長持ちさせる。</div>
+
+        <h2>1. 908行のファイルを見て思ったこと</h2>
+
+        <p>あるとき、自動化ワークフローの設定ファイルを開いて、行数を数えた。908行あった。</p>
+
+        <p>最初は数十行だった。機能を追加するたびに少しずつ伸びていった。最初のうちは問題なかった。動いていた。便利だった。だがある日、新しい機能を追加しようとして気づいた。どこに何が書いてあるか、すぐにはわからない。</p>
+
+        <p>それが腐り始めのサインだった。</p>
+
+        <h2>2. モノリスの引力</h2>
+
+        <p>「モノリス」とは、すべてが一体化した構造のことだ。一つのファイルに、あるいは一つのシステムに、あらゆる機能が詰め込まれた状態を指す。</p>
+
+        <p>モノリスには強い引力がある。何かを追加するとき、既存のファイルに書き足す方が新しいファイルを作るより速い。動いているものを壊したくないから、既存の構造の中に収める。その積み重ねが、ファイルを肥大化させる。</p>
+
+        <p>最初の選択は正しい。小さいうちは一体化している方が見通しがいい。問題は、その判断を更新しないことだ。構造の見直しが必要なタイミングが来ているのに、「まだ動いているから」と放置する。それが腐敗の始まりだ。</p>
+
+        <h2>3. 腐敗の三つのサイン</h2>
+
+        <p>構造が腐り始めているかどうかは、いくつかのサインで判断できる。</p>
+
+        <p>一つ目は「どこに何があるかわからない」だ。ファイルを開いて、目当ての処理を探すのに時間がかかるようになったら、構造が複雑になりすぎている。</p>
+
+        <p>二つ目は「変えると壊れる気がする」だ。一部を修正するとき、他の部分への影響が読めなくて慎重になりすぎる。変更に対して臆病になっているなら、結合が強くなりすぎている。</p>
+
+        <p>三つ目は「新しいものを追加するのが億劫になる」だ。本来は楽しいはずの拡張が、既存の構造への配慮で重くなっている。この感覚が出てきたら、設計の見直しのタイミングだ。</p>
+
+        <h2>4. 分解の原則：一つのファイルに一つの責任</h2>
+
+        <p>リファクタリングで最初に考えることは、「何が一緒にある必要があるか」だ。</p>
+
+        <p>908行のファイルには、14個の異なるアクションが詰め込まれていた。プロジェクト管理、ファイル操作、メール送信、音声メモ記録。それぞれが独立した処理だった。なのに同じファイルに書かれていた。なぜなら、「一緒に実行されるから」という理由だけで。</p>
+
+        <p>「一緒に実行される」と「一緒にある必要がある」は別のことだ。実行タイミングが同じでも、責任が異なるものは分けていい。それぞれを独立したファイルに切り出した。</p>
+
+        <blockquote>
+            変更前: 設定ファイル1本（908行）に14アクションのPythonが混在<br>
+            変更後: 設定ファイル1本（184行）+ アクションごとの独立ファイル17本
+        </blockquote>
+
+        <p>設定ファイルは「何を実行するか」だけを書く場所になった。「どう実行するか」は個別ファイルに移した。役割が明確になると、読むのも直すのも速くなった。</p>
+
+        <h2>5. リファクタリングのコストという誤解</h2>
+
+        <p>「リファクタリングは時間がかかる」という認識は、半分正しく半分誤っている。</p>
+
+        <p>確かに、その瞬間は時間がかかる。動いているものを解体して、再構成する。テストして、確認する。その工数は実在する。</p>
+
+        <p>だが比較対象を間違えてはいけない。正しい比較は「リファクタリングにかかる時間」対「腐敗した構造の上に機能を追加し続けるコストの累積」だ。腐敗が進むほど、一つの変更にかかる時間が増える。バグが増える。理解するための時間が増える。その積み重ねは、リファクタリングの工数を遥かに超える。</p>
+
+        <p>早い段階で構造を直す方が、トータルのコストは安い。これはソフトウェア開発の古典的な知見だが、個人のインフラにも等しく当てはまる。</p>
+
+        <h2>6. 「これ以上追加する前に」という判断</h2>
+
+        <p>リファクタリングのタイミングを測る問いがある。「このまま次の機能を追加しようとしたとき、躊躇するか。」</p>
+
+        <p>躊躇するなら、それが合図だ。次を追加する前に、まず構造を直す。追加してから直すより、直してから追加する方がずっと楽だ。</p>
+
+        <p>実際、今回の分解は新しいアクションを追加しようとした瞬間に決断した。追加しようとして「この構造に入れたくない」と感じた。その感覚を信じた。機能追加を一時停止して、構造の修正を先行させた。</p>
+
+        <p>結果、新しいアクションは2行で追加できるようになった。ファイルを作り、設定に1行足すだけ。腐敗した構造の上なら、既存コードへの影響確認に時間を取られていたはずだ。</p>
+
+        <h2>7. 腐敗は意図しない選択の積み重ね</h2>
+
+        <p>構造が腐るのは、誰かが悪い設計を意図したからではない。それぞれの時点での最善の選択が、積み重なって腐敗を生む。</p>
+
+        <p>最初の10行は正しかった。50行になっても問題なかった。200行で少し気になり始め、500行で明らかに重くなった。900行を超えたとき、もう限界だった。だが各時点での判断は間違っていなかった。問題は、「そろそろ見直す必要がある」という判断を更新しなかったことだ。</p>
+
+        <p>インフラに限らず、組織も、習慣も、関係も、同じように腐敗する。意図しない選択の積み重ねが、ある時点で限界に達する。腐りきってから直すのは大手術だ。腐り始めに気づいて手を入れる方が、はるかに小さな作業で済む。</p>
+
+        <h2>8. 長く動かすための設計姿勢</h2>
+
+        <p>1000年動き続けるシステムを設計するとき、機能の追加よりも構造の維持が重要になる。どれだけ優れた機能も、読めないコードの上に積まれれば、いずれ誰も触れなくなる。</p>
+
+        <p>「構造が腐る前に直す」という姿勢は、技術的な話であると同時に、時間に対する姿勢でもある。短期的なスピードより、長期的な持続を選ぶ判断だ。</p>
+
+        <p>腐敗のサインを見逃さない。躊躇を感じたら立ち止まる。機能追加より構造修正を優先する場面を、意識的に作る。それが、長く動き続けるインフラを育てることになる。</p>
+
+        <div class="key-point"><p>腐りきってから直すのは大手術になる。「これ以上追加する前に」という判断が、インフラを長持ちさせる。</p></div>
+
+        <div class="cta-block">
+            <p>トキストレージは、声・画像・テキストを1000年残すプロジェクトです。<br>長く動き続けるための構造設計を、保存の仕組みそのものに組み込んでいます。</p>
+            <a href="https://tokistorage.github.io">トキストレージを知る</a>
+            <a href="essays.html" class="secondary">すべてのエッセイを読む</a>
+        </div>
+
+    </article>
+
+    <footer class="article-footer">
+        <p id="essay-nav-links"></p>
+        <p>© TokiStorage. All rights reserved.</p>
+    </footer>
+</main>
+
+<script src="essay-nav.js"></script>
+<script src="essay-tts.js"></script>
+</body>
+</html>

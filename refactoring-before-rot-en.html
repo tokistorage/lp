@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" type="image/png" sizes="32x32" href="asset/favicon-32.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="asset/apple-touch-icon.png">
+    <title>Before the Structure Rots | TokiStorage</title>
+    <meta name="robots" content="index, follow">
+    <meta name="description" content="The day a 908-line file became 184 lines. The judgment call for breaking apart a monolith. Code and infrastructure both rot — the key is catching it early.">
+    <meta property="og:type" content="article">
+    <meta property="og:title" content="Before the Structure Rots | TokiStorage">
+    <meta property="og:description" content="The day a 908-line file became 184 lines. The judgment call for breaking apart a monolith. Code and infrastructure both rot — the key is catching it early.">
+    <meta property="og:url" content="https://tokistorage.github.io/lp/refactoring-before-rot-en.html">
+    <meta property="og:site_name" content="TokiStorage">
+    <meta property="og:image" content="https://tokistorage.github.io/lp/asset/tokistorage-icon-512.png">
+    <meta property="og:image:width" content="512">
+    <meta property="og:image:height" content="512">
+    <meta name="twitter:card" content="summary">
+    <meta name="twitter:title" content="Before the Structure Rots | TokiStorage">
+    <meta name="twitter:description" content="The day a 908-line file became 184 lines. The judgment call for breaking apart a monolith.">
+    <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Article",
+  "headline": "Before the Structure Rots",
+  "description": "The design judgment call for decomposing a monolith",
+  "author": {"@type": "Person", "name": "Takuya Sato"},
+  "datePublished": "2026-03-15",
+  "publisher": {"@type": "Organization", "name": "TokiStorage", "url": "https://tokistorage.github.io/"}
+}
+    </script>
+    <link rel="canonical" href="https://tokistorage.github.io/lp/refactoring-before-rot-en.html">
+    <link rel="alternate" hreflang="ja" href="https://tokistorage.github.io/lp/refactoring-before-rot.html">
+    <link rel="alternate" hreflang="en" href="https://tokistorage.github.io/lp/refactoring-before-rot-en.html">
+    <link rel="alternate" hreflang="x-default" href="https://tokistorage.github.io/lp/refactoring-before-rot.html">
+    <style>
+        :root {
+            --toki-blue: #2563EB; --toki-blue-dark: #1E40AF; --toki-blue-pale: #EFF6FF;
+            --accent-blue: #60A5FA; --bg-white: #FFFFFF; --text-primary: #1E293B;
+            --text-secondary: #475569; --text-muted: #94A3B8; --border: #E2E8F0;
+            --font-display: Georgia, 'Times New Roman', serif;
+            --font-body: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        html { scroll-behavior: smooth; }
+        body { font-family: var(--font-body); background: var(--bg-white); color: var(--text-primary); line-height: 1.9; font-size: 16px; }
+        .article-nav { position: fixed; top: 0; left: 0; right: 0; z-index: 1000; background: rgba(255,255,255,0.95); backdrop-filter: blur(12px); border-bottom: 1px solid var(--border); padding: 0.6rem 1.2rem; display: flex; align-items: center; justify-content: space-between; gap: 1rem; }
+        .article-nav .nav-brand { font-family: var(--font-display); font-size: 0.9rem; font-weight: 600; color: var(--toki-blue); text-decoration: none; }
+        .article-nav .nav-brand::before { content: ''; display: inline-block; width: 20px; height: 20px; background: url('asset/tokistorage-icon-512.png') no-repeat center / contain; vertical-align: -3px; margin-right: 5px; }
+        .article-nav .nav-right { display: flex; align-items: center; gap: 1rem; }
+        .article-nav .nav-label { font-size: 0.6rem; color: var(--text-muted); letter-spacing: 0.08em; }
+        .article-nav .lang-switch { font-size: 0.75rem; color: var(--toki-blue); text-decoration: none; padding: 0.3rem 0.6rem; border: 1px solid var(--toki-blue); border-radius: 4px; }
+        .article-nav .lang-switch:hover { background: var(--toki-blue); color: #fff; }
+        .article-container { max-width: 680px; margin: 0 auto; padding: 7rem 2rem 4rem; }
+        .article-header { margin-bottom: 3rem; padding-bottom: 2rem; border-bottom: 1px solid var(--border); }
+        .article-category { font-size: 0.7rem; color: var(--toki-blue); letter-spacing: 0.15em; margin-bottom: 1rem; }
+        .article-header h1 { font-family: var(--font-display); font-size: 1.8rem; font-weight: 700; line-height: 1.4; margin-bottom: 1.5rem; }
+        .article-subtitle { font-size: 0.95rem; color: var(--text-secondary); line-height: 1.8; }
+        .article-content h2 { font-family: var(--font-display); font-size: 1.25rem; font-weight: 600; margin: 3rem 0 1.5rem; padding-bottom: 0.5rem; border-bottom: 2px solid var(--toki-blue-pale); }
+        .article-content p { margin-bottom: 1.5rem; }
+        .article-content blockquote { border-left: 3px solid var(--toki-blue); padding-left: 1.5rem; margin: 2rem 0; font-family: var(--font-display); color: var(--text-secondary); font-style: italic; }
+        .article-content code { background: var(--toki-blue-pale); padding: 0.1em 0.4em; border-radius: 3px; font-size: 0.9em; }
+        .core-message { background: var(--toki-blue-pale); border-left: 4px solid var(--toki-blue); padding: 1.5rem; margin: 2rem 0; font-size: 0.95rem; line-height: 1.8; }
+        .key-point { background: linear-gradient(135deg, var(--toki-blue-pale) 0%, #fff 100%); border: 1px solid var(--accent-blue); border-radius: 8px; padding: 1.5rem; margin: 2rem 0; text-align: center; }
+        .key-point p { font-family: var(--font-display); font-size: 1.1rem; color: var(--toki-blue-dark); margin: 0; font-style: italic; }
+        .cta-block { background: var(--toki-blue); color: #fff; border-radius: 12px; padding: 2rem; margin: 2rem 0; text-align: center; }
+        .cta-block p { color: rgba(255,255,255,0.9); margin-bottom: 1.5rem; font-size: 0.95rem; }
+        .cta-block a { display: inline-block; background: #fff; color: var(--toki-blue); text-decoration: none; padding: 0.6rem 1.5rem; border-radius: 6px; font-weight: 600; font-size: 0.9rem; margin: 0.3rem; }
+        .cta-block a.secondary { background: transparent; color: #fff; border: 1px solid rgba(255,255,255,0.5); }
+        .article-footer { margin-top: 4rem; padding-top: 2rem; border-top: 1px solid var(--border); text-align: center; }
+        .article-footer p { font-size: 0.8rem; color: var(--text-muted); margin-bottom: 1rem; }
+        .article-footer a { color: var(--toki-blue); text-decoration: none; }
+        @media (max-width: 768px) { .article-container { padding: 6rem 1.2rem 3rem; } .article-header h1 { font-size: 1.5rem; } .article-nav .nav-label { display: none; } }
+        @media print { .article-nav { display: none; } .article-container { padding-top: 2rem; } }
+    </style>
+</head>
+<body>
+
+<nav class="article-nav">
+    <a href="essays-en.html" class="nav-brand">TokiStorage</a>
+    <div class="nav-right">
+        <span class="nav-label">ESSAY</span>
+        <a href="refactoring-before-rot.html" class="lang-switch">JA</a>
+    </div>
+</nav>
+
+<main class="article-container">
+    <header class="article-header">
+        <div class="article-category">TECHNOLOGY &amp; DESIGN</div>
+        <h1>Before the Structure Rots</h1>
+        <p class="article-subtitle">The design judgment call for decomposing a monolith</p>
+    </header>
+
+    <article class="article-content">
+
+        <div class="core-message">The point of this essay: code rots a little with every feature added. Fixing it after it's fully rotten is major surgery. Making the call to fix the structure before adding more — and making it early — is what keeps infrastructure alive.</div>
+
+        <h2>1. Counting the lines</h2>
+
+        <p>One day I opened an automation workflow file and counted the lines. 908.</p>
+
+        <p>It had started at a few dozen. Every new feature added a little more. For a while, it wasn't a problem. It worked. It was useful. Then one day I tried to add something new and realized: I couldn't immediately tell where anything was.</p>
+
+        <p>That was the sign that rot had begun.</p>
+
+        <h2>2. The gravity of the monolith</h2>
+
+        <p>A monolith is a structure where everything has been consolidated into one place — one file, one system, everything packed together.</p>
+
+        <p>Monoliths have strong gravitational pull. When adding something new, it's faster to write into an existing file than to create a new one. To avoid breaking what already works, you fit the new thing inside the existing structure. That accumulation is what causes files to bloat.</p>
+
+        <p>The initial choice is usually correct. When things are small, a single consolidated structure is easier to read. The problem is not updating that judgment. The moment arrives when the structure needs rethinking — but "it's still working" keeps it in place. That's where decay begins.</p>
+
+        <h2>3. Three signs of structural rot</h2>
+
+        <p>There are a few signals that tell you a structure has started to decay.</p>
+
+        <p>The first is "I can't find what I'm looking for." When opening a file and scanning for a specific piece of logic takes time, the structure has grown too complex.</p>
+
+        <p>The second is "I'm afraid to change it." When editing one part and being uncertain about effects on other parts creates excessive caution, the coupling has grown too tight.</p>
+
+        <p>The third is "adding something new feels like a burden." When extending the system — which should feel generative — becomes heavy with concern for the existing structure, it's time for a redesign.</p>
+
+        <h2>4. The principle: one file, one responsibility</h2>
+
+        <p>The first question in refactoring is: what actually needs to be together?</p>
+
+        <p>The 908-line file contained 14 different actions — project management, file operations, email sending, voice memo recording. Each was an independent process. Yet they lived in the same file, for no reason other than being executed in the same context.</p>
+
+        <p>"Executed together" and "needs to be together" are different things. Even if the timing is the same, things with different responsibilities can be separated. Each action was moved to its own file.</p>
+
+        <blockquote>
+            Before: one configuration file (908 lines) with 14 Python scripts mixed in<br>
+            After: one configuration file (184 lines) + 17 independent action files
+        </blockquote>
+
+        <p>The configuration file became a place for one thing only: what to run. How to run it moved to individual files. With clear roles, reading and editing became fast.</p>
+
+        <h2>5. The misunderstood cost of refactoring</h2>
+
+        <p>The belief that "refactoring takes time" is half right and half wrong.</p>
+
+        <p>Yes, in the moment it takes time. Decomposing what works, reconstructing, testing, confirming. That work is real.</p>
+
+        <p>But the comparison is being made against the wrong thing. The right comparison is: time spent refactoring vs. the accumulated cost of continuing to add features on top of a rotting structure. As decay progresses, each change takes longer. Bugs increase. Time to understand the code increases. That accumulation far exceeds the cost of refactoring.</p>
+
+        <p>Fixing the structure early is cheaper overall. This is a classic insight from software development, and it applies equally to personal infrastructure.</p>
+
+        <h2>6. "Before adding more" as the decision point</h2>
+
+        <p>There's a useful question for timing a refactor: "If I try to add the next feature to this structure, will I hesitate?"</p>
+
+        <p>If the answer is yes, that's the signal. Fix the structure before adding the next thing. It's much easier to add after fixing than to fix after adding.</p>
+
+        <p>In practice, this refactoring was decided the moment a new action was about to be added. The feeling of "I don't want to put this into the current structure" arrived immediately. That feeling was trusted. Feature addition was paused. Structure repair came first.</p>
+
+        <p>Afterward, adding a new action took two steps: create a file, add one line to the configuration. On the rotting structure, it would have meant checking impacts on existing code throughout. The difference was substantial.</p>
+
+        <h2>7. Rot is the sum of well-intentioned choices</h2>
+
+        <p>Structural rot doesn't come from someone making a bad design decision. It comes from many individually reasonable decisions accumulating into something that no longer works.</p>
+
+        <p>The first ten lines were right. Fifty lines was fine. Two hundred started feeling heavy. Five hundred was clearly burdened. At nine hundred, it had reached its limit. But no single decision along the way was wrong. The problem was that the judgment "this needs rethinking" was never updated.</p>
+
+        <p>This pattern isn't limited to code. Organizations rot the same way. Habits. Relationships. Unintentional accumulation of reasonable choices eventually reaches a limit. Major surgery when it's fully rotten. Small maintenance when it's just beginning to turn.</p>
+
+        <h2>8. The design posture for long-running systems</h2>
+
+        <p>When designing a system meant to run for a thousand years, maintaining structure matters more than adding features. No matter how good the functionality, code that can't be read eventually becomes code no one will touch.</p>
+
+        <p>"Fix it before it rots" is a technical stance, but it's also a stance toward time. Choosing long-term sustainability over short-term speed.</p>
+
+        <p>Watch for the signs of decay. Stop when hesitation appears. Deliberately create moments where structure repair takes priority over feature addition. That is what grows infrastructure that lasts.</p>
+
+        <div class="key-point"><p>Fixing fully rotten structure is major surgery. The call to fix it before adding more is what keeps infrastructure alive.</p></div>
+
+        <div class="cta-block">
+            <p>TokiStorage is a project for preserving voice, image, and text for 1,000 years.<br>The principle of maintaining structure before it fails is built into the preservation system itself.</p>
+            <a href="https://tokistorage.github.io">Explore TokiStorage</a>
+            <a href="essays-en.html" class="secondary">Read all essays</a>
+        </div>
+
+    </article>
+
+    <footer class="article-footer">
+        <p id="essay-nav-links"></p>
+        <p>© TokiStorage. All rights reserved.</p>
+    </footer>
+</main>
+
+<script src="essay-nav.js"></script>
+<script src="essay-tts.js"></script>
+</body>
+</html>
