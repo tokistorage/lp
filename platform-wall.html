@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" type="image/png" sizes="32x32" href="asset/favicon-32.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="asset/apple-touch-icon.png">
+    <title>プラットフォームの壁 ── ゲーム機でサーバーを立てようとして、インフラの本質を見た | トキストレージ</title>
+    <meta name="robots" content="index, follow">
+    <meta name="description" content="ゲーム機でカスタムサーバーを立てようとして断念した。その体験が、自分が作ってきたインフラの設計思想を、はじめてくっきりと見せてくれた。">
+    <link rel="alternate" hreflang="ja" href="https://tokistorage.github.io/lp/platform-wall.html">
+    <link rel="alternate" hreflang="en" href="https://tokistorage.github.io/lp/platform-wall-en.html">
+    <link rel="alternate" hreflang="x-default" href="https://tokistorage.github.io/lp/platform-wall.html">
+    <style>
+        :root {
+            --toki-blue: #2563EB;
+            --toki-blue-dark: #1E40AF;
+            --toki-blue-pale: #EFF6FF;
+            --accent-blue: #60A5FA;
+            --bg-white: #FFFFFF;
+            --text-primary: #1E293B;
+            --text-secondary: #475569;
+            --text-muted: #94A3B8;
+            --border: #E2E8F0;
+            --font-display: 'Hiragino Mincho ProN', 'Yu Mincho', serif;
+            --font-body: 'Hiragino Kaku Gothic ProN', 'Yu Gothic', 'Meiryo', sans-serif;
+        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        html { scroll-behavior: smooth; }
+        body { font-family: var(--font-body); font-weight: 400; background: var(--bg-white); color: var(--text-primary); line-height: 2; font-size: 16px; }
+
+        .article-nav { position: fixed; top: 0; left: 0; right: 0; z-index: 1000; background: rgba(255,255,255,0.95); backdrop-filter: blur(12px); border-bottom: 1px solid var(--border); padding: 0.6rem 1.2rem; display: flex; align-items: center; justify-content: space-between; gap: 1rem; }
+        .article-nav .nav-brand { font-family: var(--font-display); font-size: 0.9rem; font-weight: 600; color: var(--toki-blue); text-decoration: none; white-space: nowrap; }
+        .article-nav .nav-brand::before { content: ''; display: inline-block; width: 20px; height: 20px; background: url('asset/tokistorage-icon-512.png') no-repeat center / contain; vertical-align: -3px; margin-right: 5px; }
+        .article-nav .nav-right { display: flex; align-items: center; gap: 1rem; }
+        .article-nav .nav-label { font-size: 0.6rem; color: var(--text-muted); letter-spacing: 0.08em; }
+        .article-nav .lang-switch { font-size: 0.75rem; color: var(--toki-blue); text-decoration: none; padding: 0.3rem 0.6rem; border: 1px solid var(--toki-blue); border-radius: 4px; }
+        .article-nav .lang-switch:hover { background: var(--toki-blue); color: #fff; }
+
+        .article-container { max-width: 680px; margin: 0 auto; padding: 7rem 2rem 4rem; }
+        .article-header { margin-bottom: 3rem; padding-bottom: 2rem; border-bottom: 1px solid var(--border); }
+        .article-category { font-size: 0.7rem; color: var(--toki-blue); letter-spacing: 0.15em; margin-bottom: 1rem; }
+        .article-header h1 { font-family: var(--font-display); font-size: 1.8rem; font-weight: 700; line-height: 1.5; margin-bottom: 1.5rem; }
+        .article-subtitle { font-size: 0.95rem; color: var(--text-secondary); line-height: 1.9; }
+
+        .article-content h2 { font-family: var(--font-display); font-size: 1.3rem; font-weight: 600; margin: 3rem 0 1.5rem; padding-bottom: 0.5rem; border-bottom: 2px solid var(--toki-blue-pale); }
+        .article-content p { margin-bottom: 1.5rem; text-align: justify; }
+        .article-content blockquote { border-left: 3px solid var(--toki-blue); padding-left: 1.5rem; margin: 2rem 0; font-family: var(--font-display); color: var(--text-secondary); }
+        .article-content code { background: #F1F5F9; padding: 0.1rem 0.4rem; border-radius: 3px; font-size: 0.88rem; font-family: 'Courier New', monospace; color: var(--toki-blue-dark); }
+
+        .core-message { background: var(--toki-blue-pale); border-left: 4px solid var(--toki-blue); padding: 1.5rem; margin: 2rem 0; font-size: 0.95rem; line-height: 1.8; }
+        .key-point { background: linear-gradient(135deg, var(--toki-blue-pale) 0%, #fff 100%); border: 1px solid var(--accent-blue); border-radius: 8px; padding: 1.5rem; margin: 2rem 0; text-align: center; }
+        .key-point p { font-family: var(--font-display); font-size: 1.1rem; color: var(--toki-blue-dark); margin: 0; }
+
+        .cta-block { background: var(--toki-blue); color: #fff; border-radius: 12px; padding: 2rem; margin: 3rem 0; text-align: center; }
+        .cta-block p { color: rgba(255,255,255,0.9); margin-bottom: 1.5rem; font-size: 0.95rem; }
+        .cta-block a { display: inline-block; background: #fff; color: var(--toki-blue); text-decoration: none; padding: 0.6rem 1.5rem; border-radius: 6px; font-size: 0.9rem; font-weight: 600; margin: 0.3rem; }
+        .cta-block a.secondary { background: transparent; color: #fff; border: 1px solid rgba(255,255,255,0.5); }
+        .cta-block a:hover { opacity: 0.9; }
+
+        .article-footer { margin-top: 4rem; padding-top: 2rem; border-top: 1px solid var(--border); text-align: center; }
+        .article-footer p { font-size: 0.8rem; color: var(--text-muted); margin-bottom: 1rem; }
+        .article-footer a { color: var(--toki-blue); text-decoration: none; }
+
+        @media (max-width: 768px) {
+            .article-container { padding: 6rem 1.2rem 3rem; }
+            .article-header h1 { font-size: 1.5rem; }
+            .article-nav .nav-label { display: none; }
+        }
+    </style>
+</head>
+<body>
+
+<nav class="article-nav">
+    <a href="essays.html" class="nav-brand">トキストレージ</a>
+    <div class="nav-right">
+        <span class="nav-label">ESSAY</span>
+        <a href="platform-wall-en.html" class="lang-switch">EN</a>
+    </div>
+</nav>
+
+<main class="article-container">
+    <header class="article-header">
+        <div class="article-category">技術・設計</div>
+        <h1>プラットフォームの壁<br>── ゲーム機でサーバーを立てようとして、インフラの本質を見た</h1>
+        <p class="article-subtitle">「できない」という体験は、設計の思想を正面から照らす。試みて、断念して、はじめて見えてくるものがある。</p>
+    </header>
+
+    <article class="article-content">
+
+        <div class="core-message">この記事で言いたいこと：ゲーム機でカスタムサーバーを立てようとして断念した。失敗に見えたその体験が、自分が作ってきたインフラの設計思想を、はじめてくっきりと照らし出してくれた。「閉じた設計」と「開いた設計」は、どちらも意図的な選択であり、どちらも正しい。ただし、その上で何を育てたいかで、選ぶべき場所は変わる。</div>
+
+        <h2>1. 試みたこと</h2>
+
+        <p>ある日、マインクラフトのカスタムサーバーをゲーム機上で動かせないか検証した。BDS（Bedrock Dedicated Server）を使って、自前のサーバーを立て、ゲーム機からそこに接続する構成だ。アイデアとしては単純で、技術的にも難しくなさそうに思えた。</p>
+
+        <p>しかし、試してみると壁に突き当たった。ゲーム機のネットワーク設定は深く閉じていて、DNSの変更ができない。外部サーバーへの接続は、プラットフォームが用意した公式の仕組み（Realm）を経由することが前提になっていた。BDSは存在するが、それはPC・スマホ・コンソール向けサーバーを「自分のネットワーク内で動かす」ためのもので、ゲーム機から任意のIPへ直接接続する、という使い方は想定されていない。</p>
+
+        <p>何度か試行錯誤したが、最終的に断念した。</p>
+
+        <h2>2. 「壁」の正体</h2>
+
+        <p>最初は「制限が多い」という感想だった。しかししばらく考えていると、その制限には明確な意図があることに気づいた。</p>
+
+        <p>ゲーム機は、子どもを含む何千万人ものユーザーが使うコンシューマーデバイスだ。DNS変更を自由にさせれば、悪意あるサーバーへの誘導が可能になる。外部サーバー接続をオープンにすれば、チートや不正改変の温床になる。プラットフォームが「閉じる」のは、ユーザーを保護するための設計判断だ。その壁は、セキュリティであり、サポート可能性であり、法的責任の境界でもある。</p>
+
+        <p>BDSは「ハック」ではない。公式に提供されたツールだ。しかしゲーム機からそこへ直接接続しようとする試みは、プラットフォームが想定した使い方の外側にある。想定外だから「悪い」のではなく、想定外だから「サポートされていない」。その区別は重要だ。</p>
+
+        <h2>3. もう一方の設計</h2>
+
+        <p>翻って、自分が構築してきた個人インフラを見る。</p>
+
+        <blockquote>
+Claude.ai<br>
+　↓ git push → public リポジトリの <code>agent/request.json</code><br>
+　↓ GitHub Actions 起動<br>
+　↓ api.github.com → プロジェクト管理・ファイル操作<br>
+　↓ git push → private リポジトリ（記憶・成果物）<br>
+Claude.ai ← git pull → 結果取得・分析
+        </blockquote>
+
+        <p>このアーキテクチャの核心は、<code>github.com</code>（git通信）は通るが <code>api.github.com</code>（REST API）は直接叩けない、という非対称性にある。その制約を所与として受け入れ、「public リポジトリをActionsの橋として使う」という迂回路を設計した。</p>
+
+        <p>これはハックか。ある意味ではそうだ。GitHub Actionsは CI/CD ツールとして設計されたもので、個人エージェントの非同期インフラとして使うのは想定ユースケースの外側かもしれない。しかし、規約の範囲内にある。公開されたAPIを使い、公開されたトークン権限を使い、公開されたサービスの仕組みの中で動いている。グレーゾーンではなく、ホワイトゾーンの中でのクリエイティブな利用だ。</p>
+
+        <h2>4. 「想定内」と「想定外」の間</h2>
+
+        <p>ゲーム機のBDS試みが断念になったのは、プラットフォームが「想定外として閉じた」領域に触れたからだ。一方、GitHub Actionsを個人インフラに使うのが成立しているのは、プラットフォームが「想定外だが閉じていない」領域を使っているからだ。</p>
+
+        <p>この差は、プラットフォームの設計思想の差でもある。</p>
+
+        <p>ゲーム機は「守る」ために閉じる。ターゲットユーザーが幅広く、脆弱な利用者を守る責任がある。その設計は正しい。一方、開発者向けプラットフォームは「育てる」ために開く。想定外の使い方を許容することで、エコシステムが広がり、プラットフォーム自体の価値が上がる。どちらも意図的な設計であり、どちらにも合理性がある。</p>
+
+        <h2>5. 「育つ」インフラの条件</h2>
+
+        <p>個人が長期的に使えるインフラを設計しようとするとき、「開いているかどうか」は決定的な条件になる。</p>
+
+        <p>閉じたプラットフォームの上に構築したシステムは、プラットフォームの判断によって一瞬で壊れる。仕様変更、サービス終了、ポリシー改訂。それはプラットフォームの権利であり、ユーザーはそれを受け入れるしかない。SaaSに業務の核心を乗せるリスクは、ここにある。</p>
+
+        <p>一方、オープンなプロトコルとオープンなインターフェースの上に構築されたシステムは、特定の事業者の都合に左右されにくい。gitはプロトコルだ。HTMLはプロトコルだ。どの実装が消えても、プロトコル自体は残る。その上に記憶を積み上げていくことに、1000年スケールの耐久性を期待できる。</p>
+
+        <h2>6. 断念という検証の価値</h2>
+
+        <p>「試みて断念した」体験は、失敗ではない。むしろ、最も解像度の高い設計検証だ。</p>
+
+        <p>文章で「ゲーム機はネットワークが閉じている」と読んでも、それは知識に過ぎない。実際にDNS設定の項目が存在しないことを確認し、接続が届かないことを試し、プラットフォームの構造の輪郭を手で触れることで、はじめて「閉じている」の意味が身体に入る。</p>
+
+        <p>そしてその「閉じている」という感触が、自分が使っているインフラの「開いている」という性質を、対比として照らし出してくれた。試みなければ、この対比は生まれなかった。</p>
+
+        <p>ただ、ここで一つの問いが生まれる。この体験が「検証の価値」になったのは、なぜか。</p>
+
+        <p>答えは単純だ。記憶するインフラがあったからだ。断念した体験を言語化し、対比として構造化し、次の設計判断に接続できる場所があったから、その試みは徒労に終わらなかった。もしこのインフラがなければ、BDSの検証は「うまくいかなかった話」として消えていた。気づきはあったかもしれないが、蓄積にはならなかった。</p>
+
+        <p>逆に言えば、記憶するインフラを持った瞬間から、すべての試みに検証価値が生まれる。成功も失敗も、前進も断念も、全部が素材になる。「やってみる」ことのコストが下がり、「やらない理由」が一つ減る。これは認識論的な変化だ。世界の見え方が変わる。</p>
+
+        <h2>7. どちらを選ぶか、という問い</h2>
+
+        <p>「閉じたプラットフォーム」と「開いたプラットフォーム」、どちらが優れているかという話ではない。目的が違う。</p>
+
+        <p>遊びたいなら、閉じたプラットフォームは快適だ。難しい設定は不要で、すぐに体験が始まる。安全で、サポートがあり、更新が届く。ゲーム機のマインクラフトは、その体験として完成されている。</p>
+
+        <p>育てたいなら、開いたプラットフォームが必要だ。設定は面倒で、知識が要り、壊れたときは自分で直す。しかしその代わりに、自分の判断で構造を変えられる。記憶を蓄積できる。誰かの都合で消えない。</p>
+
+        <p>自分が構築しているのは後者だ。声・画像・テキストを、物理・国家・デジタルの三層で長期保管する——その使命に対して、「誰かが管理する閉じた箱」は選べない。</p>
+
+        <h2>8. 開かれていることが、育つということだ</h2>
+
+        <p>ゲーム機でのBDS断念は、数時間の検証で終わった。しかしその体験が残したものは、抽象的な設計原則を具体的な感触に変えてくれた何かだ。</p>
+
+        <p>閉じた箱の中ではできないことがある。それを確認するたびに、自分が選んだ設計の理由が、また少し深くなる。開かれていることは、制約が少ないということではない。開かれていることは、自分の判断で育てられる、ということだ。</p>
+
+        <div class="key-point"><p>記憶するインフラを持った瞬間から、すべての試みに検証価値が生まれる。断念でさえ、哲学の純度を上げる素材になる。</p></div>
+
+        <div class="cta-block">
+            <p>トキストレージは、声・画像・テキストを物理・国家・デジタルの三層で長期保管するプロジェクトです。開かれたプロトコルの上に、1000年スケールの記憶インフラを構築しています。</p>
+            <a href="https://tokistorage.github.io">トキストレージを知る</a>
+            <a href="essays.html" class="secondary">すべてのエッセイを読む</a>
+        </div>
+
+    </article>
+
+    <footer class="article-footer">
+        <p id="essay-nav-links"></p>
+        <p style="font-size: 0.75rem; color: var(--text-muted);">&copy; TokiStorage. All rights reserved.</p>
+    </footer>
+
+</main>
+
+<script src="essay-nav.js"></script>
+<script src="essay-tts.js"></script>
+</body>
+</html>

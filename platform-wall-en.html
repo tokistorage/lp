@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" type="image/png" sizes="32x32" href="asset/favicon-32.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="asset/apple-touch-icon.png">
+    <title>The Platform Wall ── What Failing to Run a Server on a Game Console Taught Me About Infrastructure | TokiStorage</title>
+    <meta name="robots" content="index, follow">
+    <meta name="description" content="I tried to run a custom server on a game console and gave up. That failure gave me the clearest view yet of what my own infrastructure is actually built on.">
+    <link rel="alternate" hreflang="ja" href="https://tokistorage.github.io/lp/platform-wall.html">
+    <link rel="alternate" hreflang="en" href="https://tokistorage.github.io/lp/platform-wall-en.html">
+    <link rel="alternate" hreflang="x-default" href="https://tokistorage.github.io/lp/platform-wall.html">
+    <style>
+        :root {
+            --toki-blue: #2563EB;
+            --toki-blue-dark: #1E40AF;
+            --toki-blue-pale: #EFF6FF;
+            --accent-blue: #60A5FA;
+            --bg-white: #FFFFFF;
+            --text-primary: #1E293B;
+            --text-secondary: #475569;
+            --text-muted: #94A3B8;
+            --border: #E2E8F0;
+            --font-display: Georgia, 'Times New Roman', serif;
+            --font-body: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        html { scroll-behavior: smooth; }
+        body { font-family: var(--font-body); font-weight: 400; background: var(--bg-white); color: var(--text-primary); line-height: 1.9; font-size: 16px; }
+
+        .article-nav { position: fixed; top: 0; left: 0; right: 0; z-index: 1000; background: rgba(255,255,255,0.95); backdrop-filter: blur(12px); border-bottom: 1px solid var(--border); padding: 0.6rem 1.2rem; display: flex; align-items: center; justify-content: space-between; gap: 1rem; }
+        .article-nav .nav-brand { font-family: var(--font-display); font-size: 0.9rem; font-weight: 600; color: var(--toki-blue); text-decoration: none; white-space: nowrap; }
+        .article-nav .nav-brand::before { content: ''; display: inline-block; width: 20px; height: 20px; background: url('asset/tokistorage-icon-512.png') no-repeat center / contain; vertical-align: -3px; margin-right: 5px; }
+        .article-nav .nav-right { display: flex; align-items: center; gap: 1rem; }
+        .article-nav .nav-label { font-size: 0.6rem; color: var(--text-muted); letter-spacing: 0.08em; }
+        .article-nav .lang-switch { font-size: 0.75rem; color: var(--toki-blue); text-decoration: none; padding: 0.3rem 0.6rem; border: 1px solid var(--toki-blue); border-radius: 4px; }
+        .article-nav .lang-switch:hover { background: var(--toki-blue); color: #fff; }
+
+        .article-container { max-width: 680px; margin: 0 auto; padding: 7rem 2rem 4rem; }
+        .article-header { margin-bottom: 3rem; padding-bottom: 2rem; border-bottom: 1px solid var(--border); }
+        .article-category { font-size: 0.7rem; color: var(--toki-blue); letter-spacing: 0.15em; margin-bottom: 1rem; }
+        .article-header h1 { font-family: var(--font-display); font-size: 1.8rem; font-weight: 700; line-height: 1.4; margin-bottom: 1.5rem; }
+        .article-subtitle { font-size: 0.95rem; color: var(--text-secondary); line-height: 1.8; }
+
+        .article-content h2 { font-family: var(--font-display); font-size: 1.3rem; font-weight: 600; margin: 3rem 0 1.5rem; padding-bottom: 0.5rem; border-bottom: 2px solid var(--toki-blue-pale); }
+        .article-content p { margin-bottom: 1.5rem; }
+        .article-content blockquote { border-left: 3px solid var(--toki-blue); padding-left: 1.5rem; margin: 2rem 0; font-family: var(--font-display); color: var(--text-secondary); }
+        .article-content code { background: #F1F5F9; padding: 0.1rem 0.4rem; border-radius: 3px; font-size: 0.88rem; font-family: 'Courier New', monospace; color: var(--toki-blue-dark); }
+
+        .core-message { background: var(--toki-blue-pale); border-left: 4px solid var(--toki-blue); padding: 1.5rem; margin: 2rem 0; font-size: 0.95rem; line-height: 1.8; }
+        .key-point { background: linear-gradient(135deg, var(--toki-blue-pale) 0%, #fff 100%); border: 1px solid var(--accent-blue); border-radius: 8px; padding: 1.5rem; margin: 2rem 0; text-align: center; }
+        .key-point p { font-family: var(--font-display); font-size: 1.1rem; color: var(--toki-blue-dark); margin: 0; }
+
+        .cta-block { background: var(--toki-blue); color: #fff; border-radius: 12px; padding: 2rem; margin: 3rem 0; text-align: center; }
+        .cta-block p { color: rgba(255,255,255,0.9); margin-bottom: 1.5rem; font-size: 0.95rem; }
+        .cta-block a { display: inline-block; background: #fff; color: var(--toki-blue); text-decoration: none; padding: 0.6rem 1.5rem; border-radius: 6px; font-size: 0.9rem; font-weight: 600; margin: 0.3rem; }
+        .cta-block a.secondary { background: transparent; color: #fff; border: 1px solid rgba(255,255,255,0.5); }
+        .cta-block a:hover { opacity: 0.9; }
+
+        .article-footer { margin-top: 4rem; padding-top: 2rem; border-top: 1px solid var(--border); text-align: center; }
+        .article-footer p { font-size: 0.8rem; color: var(--text-muted); margin-bottom: 1rem; }
+        .article-footer a { color: var(--toki-blue); text-decoration: none; }
+
+        @media (max-width: 768px) {
+            .article-container { padding: 6rem 1.2rem 3rem; }
+            .article-header h1 { font-size: 1.5rem; }
+            .article-nav .nav-label { display: none; }
+        }
+    </style>
+</head>
+<body>
+
+<nav class="article-nav">
+    <a href="essays-en.html" class="nav-brand">TokiStorage</a>
+    <div class="nav-right">
+        <span class="nav-label">ESSAY</span>
+        <a href="platform-wall.html" class="lang-switch">JA</a>
+    </div>
+</nav>
+
+<main class="article-container">
+    <header class="article-header">
+        <div class="article-category">TECHNOLOGY &amp; DESIGN</div>
+        <h1>The Platform Wall<br>── What Failing to Run a Server on a Game Console Taught Me About Infrastructure</h1>
+        <p class="article-subtitle">Sometimes a dead end is the clearest map you'll ever get. I tried, I failed, and for the first time I saw exactly what my infrastructure is built on.</p>
+    </header>
+
+    <article class="article-content">
+
+        <div class="core-message">The point of this essay: I tried to run a custom Minecraft server on a game console and gave up. What looked like a failed experiment turned out to be the sharpest lens I've found for understanding my own infrastructure's design philosophy. "Closed" and "open" are both intentional choices—and both can be right. The question is what you're trying to grow.</div>
+
+        <h2>1. What I Tried</h2>
+
+        <p>I spent some time testing whether I could run a Bedrock Dedicated Server (BDS) through a game console. The idea was simple: spin up a custom server, point the console at it, and connect. It didn't seem complicated on paper.</p>
+
+        <p>But the walls appeared quickly. The console's network settings are locked down. DNS is not configurable. Connections to external servers are expected to go through the platform's own official channel. BDS exists, but it's designed for running servers within a local or self-managed network—not for pointing a console directly at an arbitrary IP. After a few rounds of trial and error, I gave up.</p>
+
+        <h2>2. What the Wall Actually Is</h2>
+
+        <p>My first instinct was to feel frustrated by the restrictions. But when I sat with it, the restrictions made sense. A game console serves tens of millions of users, including children. Letting users freely change DNS would open a vector for redirecting traffic to malicious servers. Allowing open external server connections would make cheat distribution trivial. The platform closes these doors because it has to—to protect users, to constrain its support scope, to define the edges of its legal liability.</p>
+
+        <p>BDS itself isn't a hack. It's an officially released tool. But trying to connect a console directly to it sits outside the platform's intended use case. Not "wrong"—just unsupported. That distinction matters.</p>
+
+        <h2>3. The Other Design</h2>
+
+        <p>Then I looked at the personal infrastructure I've been building.</p>
+
+        <blockquote>
+Claude.ai<br>
+　↓ git push → <code>agent/request.json</code> in a public repo<br>
+　↓ GitHub Actions triggers<br>
+　↓ api.github.com → project management, file writes<br>
+　↓ git push → private repo (memory, outputs)<br>
+Claude.ai ← git pull → read results
+        </blockquote>
+
+        <p>The core insight behind this architecture was an asymmetry: <code>github.com</code> (git transport) is reachable, but <code>api.github.com</code> (REST API) isn't directly accessible from Claude's environment. Rather than fighting that constraint, the design accepts it and routes around it—using a public repo as an Actions bridge to do the heavy lifting asynchronously.</p>
+
+        <p>Is this a hack? In one sense, yes. GitHub Actions was built for CI/CD, not for personal async agent infrastructure. But it operates entirely within the terms of service. Public APIs, documented token scopes, standard service features. It's creative use of an open platform—not gray-area exploitation.</p>
+
+        <h2>4. The Space Between Intended and Unsupported</h2>
+
+        <p>The console BDS attempt failed because it touched territory the platform deliberately closed. The GitHub Actions approach works because it uses territory the platform left open—even if no one originally anticipated this particular use.</p>
+
+        <p>This difference reflects a deeper difference in design philosophy between the two platforms.</p>
+
+        <p>The console closes things to protect. Its user base is wide, and protecting vulnerable users is part of the contract. That's a sound design. Developer-facing platforms tend to open things to expand. Allowing unexpected use cases grows the ecosystem, which grows the platform's own value. Neither is wrong. They're optimized for different goals.</p>
+
+        <h2>5. What "Open" Makes Possible</h2>
+
+        <p>When you're designing infrastructure you want to last, openness is a load-bearing condition.</p>
+
+        <p>Build on a closed platform, and your system lives at the platform's discretion. Policy changes, API deprecations, service shutdowns—these are the platform's right to make, and you have no recourse. The risk of putting critical workflows on SaaS is exactly this: the floor can move without warning.</p>
+
+        <p>Build on open protocols, and the situation changes. Git is a protocol. HTML is a protocol. Any given implementation can disappear, but the protocol persists. Memory built on top of open protocols has a shot at surviving on a longer timescale—decades, maybe longer. That's the bet TokiStorage is making.</p>
+
+        <h2>6. The Value of a Dead End</h2>
+
+        <p>Trying something and giving up is not the same as failing. It's a different kind of result—one with higher resolution.</p>
+
+        <p>I could have read "game consoles lock down their networking" and understood it abstractly. But there's a different kind of knowing that comes from looking for a DNS setting that isn't there, from watching a connection attempt fail, from tracing the exact shape of the wall with your hands. That knowledge is physical. It stays.</p>
+
+        <p>And that physical understanding of what "closed" means made the "open" nature of my own infrastructure legible in a way it hadn't been before. You need the contrast to see clearly.</p>
+
+        <p>But here's the question worth asking: why did this particular dead end become something valuable, rather than just forgotten?</p>
+
+        <p>Because there was infrastructure to remember it. The ability to articulate the experience, structure it as a contrast, and connect it to future design decisions—that's what kept it from being wasted effort. Without that infrastructure, the BDS experiment would have dissolved into "a thing that didn't work." Maybe a vague intuition would have remained. But not accumulation.</p>
+
+        <p>Which means: the moment you have infrastructure that remembers, every attempt gains potential value. Success and failure, progress and abandonment—all of it becomes material. The cost of trying drops. The reasons not to try get fewer. That's an epistemological shift. The world looks different when nothing you do has to be wasted.</p>
+
+        <h2>7. Which One to Choose</h2>
+
+        <p>This isn't an argument that open is better than closed. They solve different problems.</p>
+
+        <p>If you want to play, closed platforms are excellent. No configuration required, experience starts immediately, updates arrive automatically, support exists. As a game, the console version of Minecraft is complete.</p>
+
+        <p>If you want to build something that grows, you need an open platform. Configuration is harder. You need to know what you're doing. When it breaks, you fix it yourself. But in return, you control the structure. You accumulate memory. Nothing disappears because of someone else's business decision.</p>
+
+        <p>The infrastructure I'm building has to be the second kind. Preserving voices, images, and text across physical, national, and digital layers for the long term—that goal is incompatible with handing the foundation to someone else.</p>
+
+        <h2>8. Open Means You Can Grow It</h2>
+
+        <p>The BDS experiment wrapped up in a few hours. But what it left behind was something rarer: a concrete experience that turned an abstract design principle into something I could feel.</p>
+
+        <p>Every time I run into something a closed system won't let me do, the reasons behind my own design become a little clearer. Openness isn't freedom from constraints. It's the ability to decide, over time, what the thing becomes.</p>
+
+        <div class="key-point"><p>The moment you have infrastructure that remembers, every attempt gains value. Even abandonment becomes material that sharpens the philosophy.</p></div>
+
+        <div class="cta-block">
+            <p>TokiStorage is a project to preserve voices, images, and text across physical, national, and digital layers for the long term—built on open protocols designed to last.</p>
+            <a href="https://tokistorage.github.io">Learn about TokiStorage</a>
+            <a href="essays-en.html" class="secondary">Read all essays</a>
+        </div>
+
+    </article>
+
+    <footer class="article-footer">
+        <p id="essay-nav-links"></p>
+        <p style="font-size: 0.75rem; color: var(--text-muted);">&copy; TokiStorage. All rights reserved.</p>
+    </footer>
+
+</main>
+
+<script src="essay-nav.js"></script>
+<script src="essay-tts.js"></script>
+</body>
+</html>
