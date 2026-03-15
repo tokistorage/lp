@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" type="image/png" sizes="32x32" href="asset/favicon-32.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="asset/apple-touch-icon.png">
+    <title>先に考えておく | トキストレージ</title>
+    <meta name="robots" content="index, follow">
+    <meta name="description" content="非同期設計がAIの応答速度を変える。毎朝6時に仕込んだニュースが、7時のブリーフィングを軽くする。重い処理と軽い処理の分離という古典的な知恵のAI版。">
+    <meta property="og:type" content="article">
+    <meta property="og:title" content="先に考えておく | トキストレージ">
+    <meta property="og:description" content="非同期設計がAIの応答速度を変える。毎朝6時に仕込んだニュースが、7時のブリーフィングを軽くする。重い処理と軽い処理の分離という古典的な知恵のAI版。">
+    <meta property="og:url" content="https://tokistorage.github.io/lp/async-thinking.html">
+    <meta property="og:site_name" content="トキストレージ">
+    <meta property="og:image" content="https://tokistorage.github.io/lp/asset/tokistorage-icon-512.png">
+    <meta property="og:image:width" content="512">
+    <meta property="og:image:height" content="512">
+    <meta name="twitter:card" content="summary">
+    <meta name="twitter:title" content="先に考えておく | トキストレージ">
+    <meta name="twitter:description" content="非同期設計がAIの応答速度を変える。毎朝6時に仕込んだニュースが、7時のブリーフィングを軽くする。">
+    <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Article",
+  "headline": "先に考えておく",
+  "description": "非同期設計がAIの応答速度を変える",
+  "author": {"@type": "Person", "name": "佐藤卓也"},
+  "datePublished": "2026-03-15",
+  "publisher": {"@type": "Organization", "name": "TokiStorage", "url": "https://tokistorage.github.io/"}
+}
+    </script>
+    <link rel="canonical" href="https://tokistorage.github.io/lp/async-thinking.html">
+    <link rel="alternate" hreflang="ja" href="https://tokistorage.github.io/lp/async-thinking.html">
+    <link rel="alternate" hreflang="en" href="https://tokistorage.github.io/lp/async-thinking-en.html">
+    <link rel="alternate" hreflang="x-default" href="https://tokistorage.github.io/lp/async-thinking.html">
+    <style>
+        :root {
+            --toki-blue: #2563EB; --toki-blue-dark: #1E40AF; --toki-blue-pale: #EFF6FF;
+            --accent-blue: #60A5FA; --bg-white: #FFFFFF; --text-primary: #1E293B;
+            --text-secondary: #475569; --text-muted: #94A3B8; --border: #E2E8F0;
+            --font-display: 'Hiragino Mincho ProN', 'Yu Mincho', serif;
+            --font-body: 'Hiragino Kaku Gothic ProN', 'Yu Gothic', 'Meiryo', sans-serif;
+        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        html { scroll-behavior: smooth; }
+        body { font-family: var(--font-body); background: var(--bg-white); color: var(--text-primary); line-height: 2; font-size: 16px; }
+        .article-nav { position: fixed; top: 0; left: 0; right: 0; z-index: 1000; background: rgba(255,255,255,0.95); backdrop-filter: blur(12px); border-bottom: 1px solid var(--border); padding: 0.6rem 1.2rem; display: flex; align-items: center; justify-content: space-between; gap: 1rem; }
+        .article-nav .nav-brand { font-family: var(--font-display); font-size: 0.9rem; font-weight: 600; color: var(--toki-blue); text-decoration: none; white-space: nowrap; }
+        .article-nav .nav-brand::before { content: ''; display: inline-block; width: 20px; height: 20px; background: url('asset/tokistorage-icon-512.png') no-repeat center / contain; vertical-align: -3px; margin-right: 5px; }
+        .article-nav .nav-right { display: flex; align-items: center; gap: 1rem; }
+        .article-nav .nav-label { font-size: 0.6rem; color: var(--text-muted); letter-spacing: 0.08em; }
+        .article-nav .lang-switch { font-size: 0.75rem; color: var(--toki-blue); text-decoration: none; padding: 0.3rem 0.6rem; border: 1px solid var(--toki-blue); border-radius: 4px; }
+        .article-nav .lang-switch:hover { background: var(--toki-blue); color: #fff; }
+        .article-container { max-width: 680px; margin: 0 auto; padding: 7rem 2rem 4rem; }
+        .article-header { margin-bottom: 3rem; padding-bottom: 2rem; border-bottom: 1px solid var(--border); }
+        .article-category { font-size: 0.7rem; color: var(--toki-blue); letter-spacing: 0.15em; margin-bottom: 1rem; }
+        .article-header h1 { font-family: var(--font-display); font-size: 1.8rem; font-weight: 700; line-height: 1.5; margin-bottom: 1.5rem; }
+        .article-subtitle { font-size: 0.95rem; color: var(--text-secondary); line-height: 1.9; }
+        .article-content h2 { font-family: var(--font-display); font-size: 1.3rem; font-weight: 600; margin: 3rem 0 1.5rem; padding-bottom: 0.5rem; border-bottom: 2px solid var(--toki-blue-pale); }
+        .article-content p { margin-bottom: 1.5rem; text-align: justify; }
+        .article-content blockquote { border-left: 3px solid var(--toki-blue); padding-left: 1.5rem; margin: 2rem 0; font-family: var(--font-display); color: var(--text-secondary); }
+        .article-content code { background: var(--toki-blue-pale); padding: 0.1em 0.4em; border-radius: 3px; font-size: 0.9em; font-family: 'SF Mono', 'Fira Code', monospace; }
+        .core-message { background: var(--toki-blue-pale); border-left: 4px solid var(--toki-blue); padding: 1.5rem; margin: 2rem 0; font-size: 0.95rem; line-height: 1.8; }
+        .key-point { background: linear-gradient(135deg, var(--toki-blue-pale) 0%, #fff 100%); border: 1px solid var(--accent-blue); border-radius: 8px; padding: 1.5rem; margin: 2rem 0; text-align: center; }
+        .key-point p { font-family: var(--font-display); font-size: 1.1rem; color: var(--toki-blue-dark); margin: 0; }
+        .cta-block { background: var(--toki-blue); color: #fff; border-radius: 12px; padding: 2rem; margin: 2rem 0; text-align: center; }
+        .cta-block p { color: rgba(255,255,255,0.9); margin-bottom: 1.5rem; font-size: 0.95rem; }
+        .cta-block a { display: inline-block; background: #fff; color: var(--toki-blue); text-decoration: none; padding: 0.6rem 1.5rem; border-radius: 6px; font-weight: 600; font-size: 0.9rem; margin: 0.3rem; }
+        .cta-block a.secondary { background: transparent; color: #fff; border: 1px solid rgba(255,255,255,0.5); }
+        .article-footer { margin-top: 4rem; padding-top: 2rem; border-top: 1px solid var(--border); text-align: center; }
+        .article-footer p { font-size: 0.8rem; color: var(--text-muted); margin-bottom: 1rem; }
+        .article-footer a { color: var(--toki-blue); text-decoration: none; }
+        @media (max-width: 768px) { .article-container { padding: 6rem 1.2rem 3rem; } .article-header h1 { font-size: 1.5rem; } .article-nav .nav-label { display: none; } }
+        @media print { .article-nav { display: none; } .article-container { padding-top: 2rem; } }
+    </style>
+</head>
+<body>
+
+<nav class="article-nav">
+    <a href="essays.html" class="nav-brand">トキストレージ</a>
+    <div class="nav-right">
+        <span class="nav-label">ESSAY</span>
+        <a href="async-thinking-en.html" class="lang-switch">EN</a>
+    </div>
+</nav>
+
+<main class="article-container">
+    <header class="article-header">
+        <div class="article-category">技術・設計</div>
+        <h1>先に考えておく</h1>
+        <p class="article-subtitle">非同期設計がAIの応答速度を変える</p>
+    </header>
+
+    <article class="article-content">
+
+        <div class="core-message">この記事で言いたいこと：AIに「今すぐ調べて答えて」と頼むより、「朝のうちに調べておいて」と仕込む方が速く、安く、安定している。重い処理と軽い処理を分離するという古典的な設計思想は、AI時代にこそ威力を発揮する。</div>
+
+        <h2>1. 「今すぐ」の重さに気づいた瞬間</h2>
+
+        <p>朝のブリーフィングを自動化したとき、最初の設計はシンプルだった。「おはよう」と言うたびに、AIがプロジェクトの状況を確認し、インボックスを読み、ニュースを調べて、まとめて返す。一度のリクエストで全部やる。</p>
+
+        <p>動いた。便利だった。ただ、少し遅かった。ニュース取得だけで十数秒かかる。毎朝それを待つのは悪くないが、何かが引っかかった。</p>
+
+        <p>引っかかりの正体はすぐわかった。ニュースは昨日と今日の間に起きたことだ。6時に調べても7時に調べても、大差ない。なのになぜ、ブリーフィングを呼び出すたびに調べるのか。</p>
+
+        <h2>2. 同期と非同期という古い知恵</h2>
+
+        <p>コンピュータサイエンスに「同期処理」と「非同期処理」という概念がある。同期とは、ある処理が終わるまで次に進まないこと。非同期とは、重い処理を先に投げておいて、結果だけを後で受け取ること。</p>
+
+        <p>Webサービスの世界ではこれが当たり前になっている。画像の変換処理をリクエストと同時にやらず、夜間バッチで済ませる。検索インデックスをアクセスのたびに再構築せず、あらかじめ用意しておく。重い処理は「先にやっておく」。軽い処理だけをリアルタイムに回す。</p>
+
+        <p>この知恵は何十年も前からある。新しくない。だがAIを日常業務に組み込み始めた今、同じ問いが改めて立ち上がってくる。「この処理は、今すぐやる必要があるか。」</p>
+
+        <h2>3. ニュースを「仕込む」という発想</h2>
+
+        <p>設計を変えた。ニュース取得を、ブリーフィングから切り離した。</p>
+
+        <blockquote>
+            毎朝6時（自動）<br>
+            　→ ニュース取得（web検索 + AI要約）<br>
+            　→ 結果をファイルに保存<br>
+            <br>
+            朝、好きな時間に「おはよう」<br>
+            　→ ブリーフィング生成<br>
+            　→ 保存済みニュースを読むだけ
+        </blockquote>
+
+        <p>ニュース取得は重い。大きなモデルを呼び、ウェブを検索し、要約する。だが一日に一度でいい。ブリーフィングは軽くなった。ファイルを読むだけだから、ほぼ瞬時に答えが返る。</p>
+
+        <p>コストも下がった。ニュース取得は高性能モデルを使うが一日一回。ブリーフィングは何度呼んでも安い。同じ品質の出力を、より少ないリソースで得られるようになった。</p>
+
+        <h2>4. 「今すぐ」が正当化される条件</h2>
+
+        <p>もちろん、リアルタイムが必要な処理もある。株価、速報、今まさに動いているシステムのステータス。これらは「先に仕込む」ことができない。鮮度がすべての情報は、同期処理が正しい。</p>
+
+        <p>問うべきは、「この情報は、今この瞬間に取得しなければ意味が失われるか」だ。</p>
+
+        <p>朝のニュースは、数時間の誤差では価値が変わらない。プロジェクトのタスク状況は、前日夜から変化していない可能性が高い。声メモのインサイトは、昨晩入力されたものだ。これらはすべて「先にやっておける」処理だ。</p>
+
+        <p>リアルタイム性を要求するのは、実は思い込みのことが多い。設計を問い直すと、意外に多くの処理が「事前計算」に移せる。</p>
+
+        <h2>5. 人間の思考にも同じ構造がある</h2>
+
+        <p>この設計思想は、AIやコンピュータだけの話ではない。人間の思考にも同じ構造がある。</p>
+
+        <p>優れた意思決定者は、決断の瞬間に情報を集めない。会議の前夜に資料を読み込み、朝の通勤中に考え、問いを整理しておく。いざ議論が始まるとき、頭の中にはすでに「仕込まれた思考」がある。場の空気に流されず、速く、的確に動ける。</p>
+
+        <p>「先に考えておく」ことの価値は、速さだけではない。軽い頭で判断できることにある。重い情報収集の最中に判断するより、収集が終わった後に判断する方が、はるかに質が高い。処理の分離は、思考の質を上げる。</p>
+
+        <h2>6. スケジューラーという縁の下</h2>
+
+        <p>この設計を実現するには、「誰も見ていない時間に動くもの」が必要だ。技術的にはスケジューラーと呼ばれる仕組みで、指定した時刻に自動でタスクを起動する。</p>
+
+        <p>毎朝6時に静かに動き、ニュースを取得し、ファイルに保存して、また眠る。誰にも頼まれていないが、誰かが起きてくる前に準備を整えている。縁の下の力持ちだ。</p>
+
+        <p>個人のインフラにも、こういう「誰も見ていない時間に動くもの」を設計できる時代になった。クラウドのスケジューラーは無料で使える。夜中に走らせても電気代は発生しない。人間が眠っている間に、システムが考えておいてくれる。</p>
+
+        <h2>7. 分離することで生まれる自由</h2>
+
+        <p>処理を分離すると、それぞれが独立して進化できるようになる。</p>
+
+        <p>ニュース取得の精度を上げたければ、取得部分だけを改善すればいい。ブリーフィングの表示を変えたければ、表示部分だけを触ればいい。どちらを変えても、もう一方には影響しない。疎結合と呼ばれる設計の強みだ。</p>
+
+        <p>一体化していたときは、何かを変えると全体が壊れるリスクがあった。分離してからは、小さく試して、小さく直せるようになった。システムが育てやすくなった。</p>
+
+        <h2>8. 問いを変えると設計が変わる</h2>
+
+        <p>「どうすれば速くなるか」という問いより、「これは今すぐやる必要があるか」という問いの方が本質的だ。前者は最適化の問いで、後者は設計の問いだ。</p>
+
+        <p>AIを業務に組み込む人が増えるにつれ、同じ問いがあちこちで立ち上がるはずだ。毎回調べさせているこの処理は、本当にリアルタイムが必要か。毎回生成させているこのコンテンツは、事前に用意できないか。</p>
+
+        <p>問いを変えると、設計が変わる。設計が変わると、コストが下がり、速度が上がり、システムがシンプルになる。そしてシンプルなシステムは、長く動き続ける。</p>
+
+        <div class="key-point"><p>「今すぐ」は思い込みのことが多い。先に考えておく設計が、AIを道具から習慣に変える。</p></div>
+
+        <div class="cta-block">
+            <p>トキストレージは、声・画像・テキストを1000年残すプロジェクトです。<br>長く動き続けるための設計思想を、保存の仕組みそのものに組み込んでいます。</p>
+            <a href="https://tokistorage.github.io">トキストレージを知る</a>
+            <a href="essays.html" class="secondary">すべてのエッセイを読む</a>
+        </div>
+
+    </article>
+
+    <footer class="article-footer">
+        <p id="essay-nav-links"></p>
+        <p>© TokiStorage. All rights reserved.</p>
+    </footer>
+</main>
+
+<script src="essay-nav.js"></script>
+<script src="essay-tts.js"></script>
+</body>
+</html>

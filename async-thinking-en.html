@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" type="image/png" sizes="32x32" href="asset/favicon-32.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="asset/apple-touch-icon.png">
+    <title>Think Ahead | TokiStorage</title>
+    <meta name="robots" content="index, follow">
+    <meta name="description" content="How async design changes AI response speed. News gathered at 6am makes the 7am briefing instant. The classic wisdom of separating heavy and light processes, now applied to AI.">
+    <meta property="og:type" content="article">
+    <meta property="og:title" content="Think Ahead | TokiStorage">
+    <meta property="og:description" content="How async design changes AI response speed. News gathered at 6am makes the 7am briefing instant.">
+    <meta property="og:url" content="https://tokistorage.github.io/lp/async-thinking-en.html">
+    <meta property="og:site_name" content="TokiStorage">
+    <meta property="og:image" content="https://tokistorage.github.io/lp/asset/tokistorage-icon-512.png">
+    <meta property="og:image:width" content="512">
+    <meta property="og:image:height" content="512">
+    <meta name="twitter:card" content="summary">
+    <meta name="twitter:title" content="Think Ahead | TokiStorage">
+    <meta name="twitter:description" content="How async design changes AI response speed. News gathered at 6am makes the 7am briefing instant.">
+    <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Article",
+  "headline": "Think Ahead",
+  "description": "How async design changes AI response speed",
+  "author": {"@type": "Person", "name": "Takuya Sato"},
+  "datePublished": "2026-03-15",
+  "publisher": {"@type": "Organization", "name": "TokiStorage", "url": "https://tokistorage.github.io/"}
+}
+    </script>
+    <link rel="canonical" href="https://tokistorage.github.io/lp/async-thinking-en.html">
+    <link rel="alternate" hreflang="ja" href="https://tokistorage.github.io/lp/async-thinking.html">
+    <link rel="alternate" hreflang="en" href="https://tokistorage.github.io/lp/async-thinking-en.html">
+    <link rel="alternate" hreflang="x-default" href="https://tokistorage.github.io/lp/async-thinking.html">
+    <style>
+        :root {
+            --toki-blue: #2563EB; --toki-blue-dark: #1E40AF; --toki-blue-pale: #EFF6FF;
+            --accent-blue: #60A5FA; --bg-white: #FFFFFF; --text-primary: #1E293B;
+            --text-secondary: #475569; --text-muted: #94A3B8; --border: #E2E8F0;
+            --font-display: Georgia, 'Times New Roman', serif;
+            --font-body: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        html { scroll-behavior: smooth; }
+        body { font-family: var(--font-body); background: var(--bg-white); color: var(--text-primary); line-height: 1.9; font-size: 16px; }
+        .article-nav { position: fixed; top: 0; left: 0; right: 0; z-index: 1000; background: rgba(255,255,255,0.95); backdrop-filter: blur(12px); border-bottom: 1px solid var(--border); padding: 0.6rem 1.2rem; display: flex; align-items: center; justify-content: space-between; gap: 1rem; }
+        .article-nav .nav-brand { font-family: var(--font-display); font-size: 0.9rem; font-weight: 600; color: var(--toki-blue); text-decoration: none; }
+        .article-nav .nav-brand::before { content: ''; display: inline-block; width: 20px; height: 20px; background: url('asset/tokistorage-icon-512.png') no-repeat center / contain; vertical-align: -3px; margin-right: 5px; }
+        .article-nav .nav-right { display: flex; align-items: center; gap: 1rem; }
+        .article-nav .nav-label { font-size: 0.6rem; color: var(--text-muted); letter-spacing: 0.08em; }
+        .article-nav .lang-switch { font-size: 0.75rem; color: var(--toki-blue); text-decoration: none; padding: 0.3rem 0.6rem; border: 1px solid var(--toki-blue); border-radius: 4px; }
+        .article-nav .lang-switch:hover { background: var(--toki-blue); color: #fff; }
+        .article-container { max-width: 680px; margin: 0 auto; padding: 7rem 2rem 4rem; }
+        .article-header { margin-bottom: 3rem; padding-bottom: 2rem; border-bottom: 1px solid var(--border); }
+        .article-category { font-size: 0.7rem; color: var(--toki-blue); letter-spacing: 0.15em; margin-bottom: 1rem; }
+        .article-header h1 { font-family: var(--font-display); font-size: 1.8rem; font-weight: 700; line-height: 1.4; margin-bottom: 1.5rem; }
+        .article-subtitle { font-size: 0.95rem; color: var(--text-secondary); line-height: 1.8; }
+        .article-content h2 { font-family: var(--font-display); font-size: 1.25rem; font-weight: 600; margin: 3rem 0 1.5rem; padding-bottom: 0.5rem; border-bottom: 2px solid var(--toki-blue-pale); }
+        .article-content p { margin-bottom: 1.5rem; }
+        .article-content blockquote { border-left: 3px solid var(--toki-blue); padding-left: 1.5rem; margin: 2rem 0; font-family: var(--font-display); color: var(--text-secondary); font-style: italic; }
+        .article-content code { background: var(--toki-blue-pale); padding: 0.1em 0.4em; border-radius: 3px; font-size: 0.9em; }
+        .core-message { background: var(--toki-blue-pale); border-left: 4px solid var(--toki-blue); padding: 1.5rem; margin: 2rem 0; font-size: 0.95rem; line-height: 1.8; }
+        .key-point { background: linear-gradient(135deg, var(--toki-blue-pale) 0%, #fff 100%); border: 1px solid var(--accent-blue); border-radius: 8px; padding: 1.5rem; margin: 2rem 0; text-align: center; }
+        .key-point p { font-family: var(--font-display); font-size: 1.1rem; color: var(--toki-blue-dark); margin: 0; font-style: italic; }
+        .cta-block { background: var(--toki-blue); color: #fff; border-radius: 12px; padding: 2rem; margin: 2rem 0; text-align: center; }
+        .cta-block p { color: rgba(255,255,255,0.9); margin-bottom: 1.5rem; font-size: 0.95rem; }
+        .cta-block a { display: inline-block; background: #fff; color: var(--toki-blue); text-decoration: none; padding: 0.6rem 1.5rem; border-radius: 6px; font-weight: 600; font-size: 0.9rem; margin: 0.3rem; }
+        .cta-block a.secondary { background: transparent; color: #fff; border: 1px solid rgba(255,255,255,0.5); }
+        .article-footer { margin-top: 4rem; padding-top: 2rem; border-top: 1px solid var(--border); text-align: center; }
+        .article-footer p { font-size: 0.8rem; color: var(--text-muted); margin-bottom: 1rem; }
+        .article-footer a { color: var(--toki-blue); text-decoration: none; }
+        @media (max-width: 768px) { .article-container { padding: 6rem 1.2rem 3rem; } .article-header h1 { font-size: 1.5rem; } .article-nav .nav-label { display: none; } }
+        @media print { .article-nav { display: none; } .article-container { padding-top: 2rem; } }
+    </style>
+</head>
+<body>
+
+<nav class="article-nav">
+    <a href="essays-en.html" class="nav-brand">TokiStorage</a>
+    <div class="nav-right">
+        <span class="nav-label">ESSAY</span>
+        <a href="async-thinking.html" class="lang-switch">JA</a>
+    </div>
+</nav>
+
+<main class="article-container">
+    <header class="article-header">
+        <div class="article-category">TECHNOLOGY &amp; DESIGN</div>
+        <h1>Think Ahead</h1>
+        <p class="article-subtitle">How async design changes AI response speed</p>
+    </header>
+
+    <article class="article-content">
+
+        <div class="core-message">The point of this essay: asking AI to "look it up right now" is slower, more expensive, and less stable than asking it to "prepare this by morning." The classic design wisdom of separating heavy and light processes is more powerful than ever in the age of AI.</div>
+
+        <h2>1. The moment I noticed the weight of "right now"</h2>
+
+        <p>When I first automated my morning briefing, the design was simple: say "good morning," and the AI would check the project board, read the inbox, search for news, and return a summary. One request, everything at once.</p>
+
+        <p>It worked. It was useful. But it was a little slow. News retrieval alone took over ten seconds. Waiting for that every morning was fine — but something nagged at me.</p>
+
+        <p>The source of that nagging became clear quickly. News is what happened between yesterday and today. Whether I fetch it at 6am or 7am makes no real difference. So why was the system searching the web every single time I asked for a briefing?</p>
+
+        <h2>2. An old idea: synchronous and asynchronous</h2>
+
+        <p>Computer science has a pair of concepts called synchronous and asynchronous processing. Synchronous means waiting for one task to finish before moving on. Asynchronous means offloading a heavy task in advance, then collecting only the results when needed.</p>
+
+        <p>This is standard practice in web services. Image conversion doesn't run at request time — it runs in nightly batches. Search indexes aren't rebuilt on every access — they're prepared in advance. Heavy work is done ahead of time. Only the light work runs in real time.</p>
+
+        <p>This wisdom is decades old. What's new is asking the same question about AI: does this process need to happen right now?</p>
+
+        <h2>3. The idea of "pre-loading" the news</h2>
+
+        <p>I changed the design. I separated news retrieval from the briefing itself.</p>
+
+        <blockquote>
+            Every morning at 6am (automated)<br>
+            &nbsp;&nbsp;→ Fetch news (web search + AI summary)<br>
+            &nbsp;&nbsp;→ Save result to file<br>
+            <br>
+            Whenever I say "good morning"<br>
+            &nbsp;&nbsp;→ Generate briefing<br>
+            &nbsp;&nbsp;→ Read the saved news file (no API call)
+        </blockquote>
+
+        <p>News retrieval is heavy. It calls a large model, searches the web, summarizes results. But it only needs to happen once a day. The briefing became light — reading a file takes almost no time. The response became nearly instant.</p>
+
+        <p>Costs dropped too. News retrieval uses a capable model but runs once. The briefing can be called as many times as needed at low cost. Same quality output, fewer resources consumed.</p>
+
+        <h2>4. When "right now" is actually justified</h2>
+
+        <p>Some processes genuinely need real-time data. Stock prices. Breaking news. The live status of a running system. These can't be pre-loaded — their value is entirely in freshness.</p>
+
+        <p>The question to ask is: "If I gathered this information a few hours ago, would it lose its value?"</p>
+
+        <p>Morning news — not really. Project task status — unlikely to have changed overnight. Voice memo insights — entered the previous evening. All of these are processes that can be done in advance.</p>
+
+        <p>The demand for real-time is often an assumption rather than a requirement. When you question the design, many processes turn out to be candidates for pre-computation.</p>
+
+        <h2>5. Human thinking has the same structure</h2>
+
+        <p>This design principle isn't unique to AI or computers. Human thinking works the same way.</p>
+
+        <p>Skilled decision-makers don't gather information in the moment of decision. They read the materials the night before, think through the implications during the morning commute, and arrive at the meeting with pre-loaded thinking already in place. When the discussion starts, they move quickly and clearly — not because they're reacting faster, but because the heavy work was already done.</p>
+
+        <p>The value of thinking ahead isn't only speed. It's the clarity that comes from a lighter cognitive load at the moment of action. Deciding while information is still being collected is harder than deciding after it's been absorbed. Separating the processes raises the quality of judgment.</p>
+
+        <h2>6. The scheduler working in the background</h2>
+
+        <p>To realize this design, you need something that works while no one is watching. In technical terms, a scheduler — a mechanism that triggers tasks at specified times.</p>
+
+        <p>Every morning at 6am, it quietly starts, fetches the news, saves the file, and goes back to sleep. No one asked it to. No one is watching. But by the time anyone wakes up, the preparation is already done.</p>
+
+        <p>Personal infrastructure can now include this kind of "work that happens while you sleep." Cloud schedulers are free. Running them overnight costs nothing. The system thinks ahead so you don't have to.</p>
+
+        <h2>7. Separation creates freedom</h2>
+
+        <p>When processes are separated, each one can evolve independently.</p>
+
+        <p>To improve news quality, only the retrieval component needs to change. To adjust how the briefing looks, only the display component needs to change. Neither affects the other. This is what loosely coupled design enables.</p>
+
+        <p>When everything was combined, changing one thing risked breaking everything. After separation, changes became small and safe. The system became easier to grow.</p>
+
+        <h2>8. Changing the question changes the design</h2>
+
+        <p>"How do we make this faster?" is an optimization question. "Does this need to happen right now?" is a design question. The second one cuts deeper.</p>
+
+        <p>As more people bring AI into their daily work, the same question will keep surfacing. Is this process I'm running in real time actually time-sensitive? Could this content I'm generating on demand be prepared in advance?</p>
+
+        <p>Changing the question changes the design. Changing the design reduces cost, increases speed, and simplifies the system. And simple systems are the ones that keep running.</p>
+
+        <div class="key-point"><p>"Right now" is often an assumption. Thinking ahead is what turns AI from a tool into a habit.</p></div>
+
+        <div class="cta-block">
+            <p>TokiStorage is a project for preserving voice, image, and text for 1,000 years.<br>The design principle of thinking ahead is built into the preservation system itself.</p>
+            <a href="https://tokistorage.github.io">Explore TokiStorage</a>
+            <a href="essays-en.html" class="secondary">Read all essays</a>
+        </div>
+
+    </article>
+
+    <footer class="article-footer">
+        <p id="essay-nav-links"></p>
+        <p>© TokiStorage. All rights reserved.</p>
+    </footer>
+</main>
+
+<script src="essay-nav.js"></script>
+<script src="essay-tts.js"></script>
+</body>
+</html>
