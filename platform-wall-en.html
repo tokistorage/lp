@@ -94,11 +94,13 @@
 
         <p>I spent some time testing whether I could run a Bedrock Dedicated Server (BDS) through a game console. The idea was simple: spin up a custom server, point the console at it, and connect. It didn't seem complicated on paper.</p>
 
-        <p>But the walls appeared quickly. The console's network settings are locked down. DNS is not configurable. Connections to external servers are expected to go through the platform's own official channel. BDS exists, but it's designed for running servers within a local or self-managed network—not for pointing a console directly at an arbitrary IP. After a few rounds of trial and error, I gave up.</p>
+        <p>But the walls appeared quickly. On the Switch side, DNS settings are actually accessible—you can set preferred and alternate DNS. Pointing it at the BDS server's IP wasn't a problem at the network level. But even with the server running on the same local network, Minecraft never recognized it as a server. No matter what I tried, I couldn't get to a playable state. The OS-level settings went through fine; the block was at the game application layer. After a few rounds of trial and error, I gave up.</p>
 
         <h2>2. What the Wall Actually Is</h2>
 
-        <p>My first instinct was to feel frustrated by the restrictions. But when I sat with it, the restrictions made sense. A game console serves tens of millions of users, including children. Letting users freely change DNS would open a vector for redirecting traffic to malicious servers. Allowing open external server connections would make cheat distribution trivial. The platform closes these doors because it has to—to protect users, to constrain its support scope, to define the edges of its legal liability.</p>
+        <p>My first instinct was to feel frustrated by the restrictions. But when I sat with it, they made sense. The Switch's network settings aren't locked—DNS is configurable at the OS level. But the game application itself doesn't complete the connection. That's where the real wall is: not at the network layer, but at the application layer. The platform controls what Minecraft connects to, and the answer is Realm. Everything else—even a BDS on the same local network—is outside the intended path.</p>
+
+        <p>A game console serves tens of millions of users, including children. Controlling server connections at the application layer keeps cheat distribution and malicious servers out of reach for most users. The platform closes this door because it has to—to protect users, to constrain its support scope, to define the edges of its legal liability.</p>
 
         <p>BDS itself isn't a hack. It's an officially released tool. But trying to connect a console directly to it sits outside the platform's intended use case. Not "wrong"—just unsupported. That distinction matters.</p>
 
