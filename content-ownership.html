@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" type="image/png" sizes="32x32" href="asset/favicon-32.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="asset/apple-touch-icon.png">
+    <title>コンテンツを所有するということ | トキストレージ</title>
+    <meta name="robots" content="index, follow">
+    <meta name="description" content="なぜZennを選ぶのか。GitHubにコンテンツを置き、プラットフォームにレンダリングさせる設計思想。書いたものが消えない場所を、自分で作る。">
+    <meta property="og:type" content="article">
+    <meta property="og:title" content="コンテンツを所有するということ | トキストレージ">
+    <meta property="og:description" content="なぜZennを選ぶのか。GitHubにコンテンツを置き、プラットフォームにレンダリングさせる設計思想。書いたものが消えない場所を、自分で作る。">
+    <meta property="og:url" content="https://tokistorage.github.io/lp/content-ownership.html">
+    <meta property="og:site_name" content="トキストレージ">
+    <meta property="og:image" content="https://tokistorage.github.io/lp/asset/tokistorage-icon-512.png">
+    <meta property="og:image:width" content="512">
+    <meta property="og:image:height" content="512">
+    <meta name="twitter:card" content="summary">
+    <meta name="twitter:title" content="コンテンツを所有するということ | トキストレージ">
+    <meta name="twitter:description" content="なぜZennを選ぶのか。GitHubにコンテンツを置き、プラットフォームにレンダリングさせる設計思想。">
+    <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Article",
+  "headline": "コンテンツを所有するということ",
+  "description": "なぜZennを選ぶのか",
+  "author": {"@type": "Person", "name": "佐藤卓也"},
+  "datePublished": "2026-03-15",
+  "publisher": {"@type": "Organization", "name": "TokiStorage", "url": "https://tokistorage.github.io/"}
+}
+    </script>
+    <link rel="canonical" href="https://tokistorage.github.io/lp/content-ownership.html">
+    <link rel="alternate" hreflang="ja" href="https://tokistorage.github.io/lp/content-ownership.html">
+    <link rel="alternate" hreflang="en" href="https://tokistorage.github.io/lp/content-ownership-en.html">
+    <link rel="alternate" hreflang="x-default" href="https://tokistorage.github.io/lp/content-ownership.html">
+    <style>
+        :root {
+            --toki-blue: #2563EB; --toki-blue-dark: #1E40AF; --toki-blue-pale: #EFF6FF;
+            --accent-blue: #60A5FA; --bg-white: #FFFFFF; --text-primary: #1E293B;
+            --text-secondary: #475569; --text-muted: #94A3B8; --border: #E2E8F0;
+            --font-display: 'Hiragino Mincho ProN', 'Yu Mincho', serif;
+            --font-body: 'Hiragino Kaku Gothic ProN', 'Yu Gothic', 'Meiryo', sans-serif;
+        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        html { scroll-behavior: smooth; }
+        body { font-family: var(--font-body); background: var(--bg-white); color: var(--text-primary); line-height: 2; font-size: 16px; }
+        .article-nav { position: fixed; top: 0; left: 0; right: 0; z-index: 1000; background: rgba(255,255,255,0.95); backdrop-filter: blur(12px); border-bottom: 1px solid var(--border); padding: 0.6rem 1.2rem; display: flex; align-items: center; justify-content: space-between; gap: 1rem; }
+        .article-nav .nav-brand { font-family: var(--font-display); font-size: 0.9rem; font-weight: 600; color: var(--toki-blue); text-decoration: none; white-space: nowrap; }
+        .article-nav .nav-brand::before { content: ''; display: inline-block; width: 20px; height: 20px; background: url('asset/tokistorage-icon-512.png') no-repeat center / contain; vertical-align: -3px; margin-right: 5px; }
+        .article-nav .nav-right { display: flex; align-items: center; gap: 1rem; }
+        .article-nav .nav-label { font-size: 0.6rem; color: var(--text-muted); letter-spacing: 0.08em; }
+        .article-nav .lang-switch { font-size: 0.75rem; color: var(--toki-blue); text-decoration: none; padding: 0.3rem 0.6rem; border: 1px solid var(--toki-blue); border-radius: 4px; }
+        .article-nav .lang-switch:hover { background: var(--toki-blue); color: #fff; }
+        .article-container { max-width: 680px; margin: 0 auto; padding: 7rem 2rem 4rem; }
+        .article-header { margin-bottom: 3rem; padding-bottom: 2rem; border-bottom: 1px solid var(--border); }
+        .article-category { font-size: 0.7rem; color: var(--toki-blue); letter-spacing: 0.15em; margin-bottom: 1rem; }
+        .article-header h1 { font-family: var(--font-display); font-size: 1.8rem; font-weight: 700; line-height: 1.5; margin-bottom: 1.5rem; }
+        .article-subtitle { font-size: 0.95rem; color: var(--text-secondary); line-height: 1.9; }
+        .article-content h2 { font-family: var(--font-display); font-size: 1.3rem; font-weight: 600; margin: 3rem 0 1.5rem; padding-bottom: 0.5rem; border-bottom: 2px solid var(--toki-blue-pale); }
+        .article-content p { margin-bottom: 1.5rem; text-align: justify; }
+        .article-content blockquote { border-left: 3px solid var(--toki-blue); padding-left: 1.5rem; margin: 2rem 0; font-family: var(--font-display); color: var(--text-secondary); }
+        .article-content code { background: var(--toki-blue-pale); padding: 0.1em 0.4em; border-radius: 3px; font-size: 0.9em; font-family: 'SF Mono', 'Fira Code', monospace; }
+        .core-message { background: var(--toki-blue-pale); border-left: 4px solid var(--toki-blue); padding: 1.5rem; margin: 2rem 0; font-size: 0.95rem; line-height: 1.8; }
+        .key-point { background: linear-gradient(135deg, var(--toki-blue-pale) 0%, #fff 100%); border: 1px solid var(--accent-blue); border-radius: 8px; padding: 1.5rem; margin: 2rem 0; text-align: center; }
+        .key-point p { font-family: var(--font-display); font-size: 1.1rem; color: var(--toki-blue-dark); margin: 0; }
+        .cta-block { background: var(--toki-blue); color: #fff; border-radius: 12px; padding: 2rem; margin: 2rem 0; text-align: center; }
+        .cta-block p { color: rgba(255,255,255,0.9); margin-bottom: 1.5rem; font-size: 0.95rem; }
+        .cta-block a { display: inline-block; background: #fff; color: var(--toki-blue); text-decoration: none; padding: 0.6rem 1.5rem; border-radius: 6px; font-weight: 600; font-size: 0.9rem; margin: 0.3rem; }
+        .cta-block a.secondary { background: transparent; color: #fff; border: 1px solid rgba(255,255,255,0.5); }
+        .article-footer { margin-top: 4rem; padding-top: 2rem; border-top: 1px solid var(--border); text-align: center; }
+        .article-footer p { font-size: 0.8rem; color: var(--text-muted); margin-bottom: 1rem; }
+        .article-footer a { color: var(--toki-blue); text-decoration: none; }
+        @media (max-width: 768px) { .article-container { padding: 6rem 1.2rem 3rem; } .article-header h1 { font-size: 1.5rem; } .article-nav .nav-label { display: none; } }
+        @media print { .article-nav { display: none; } .article-container { padding-top: 2rem; } }
+    </style>
+</head>
+<body>
+
+<nav class="article-nav">
+    <a href="essays.html" class="nav-brand">トキストレージ</a>
+    <div class="nav-right">
+        <span class="nav-label">ESSAY</span>
+        <a href="content-ownership-en.html" class="lang-switch">EN</a>
+    </div>
+</nav>
+
+<main class="article-container">
+    <header class="article-header">
+        <div class="article-category">技術・設計</div>
+        <h1>コンテンツを所有するということ</h1>
+        <p class="article-subtitle">なぜZennを選ぶのか</p>
+    </header>
+
+    <article class="article-content">
+
+        <div class="core-message">この記事で言いたいこと：多くの人が「プラットフォームにコンテンツを預けている」と気づいていない。書いたものが自分のものであり続けるには、データの置き場所を設計する必要がある。プラットフォームはレンダリングする場所であって、所有する場所ではない。</div>
+
+        <h2>1. あのサービスが消えたら、何が残るか</h2>
+
+        <p>長年使っていたブログサービスが終了した、という経験を持つ人は少なくない。書いた記事は消え、積み上げたコンテンツは跡形もなくなる。バックアップを取っていた人だけが、何かを持ち出せた。</p>
+
+        <p>SNSのアカウントが突然凍結されることもある。何年もかけて育てたフォロワーと、投稿のすべてが、一夜にして失われる。</p>
+
+        <p>これらは事故ではなく、構造的な問題だ。「プラットフォームの中にコンテンツを置く」という設計を選んだ時点で、その依存は始まっている。</p>
+
+        <h2>2. 所有と利用の違い</h2>
+
+        <p>「自分のコンテンツ」と言うとき、何を指しているか。</p>
+
+        <p>多くの場合、それは「あのサービスの中にある自分のページ」だ。アクセスできる。編集できる。公開できる。しかし、サービスが終了すればアクセスできなくなる。プラットフォームのルールが変われば、表示方法が変わる。アカウントが停止されれば、すべてを失う。</p>
+
+        <p>これは所有ではなく、利用だ。より正確には、賃借だ。家賃を払い続ける限り住めるが、大家の都合で出ていかなければならないことがある。</p>
+
+        <p>本当の意味でコンテンツを所有するとは、そのデータが自分の管理下にあることだ。サービスが消えても、データは残る。プラットフォームが変わっても、内容は変わらない。</p>
+
+        <h2>3. GitHubという地盤</h2>
+
+        <p>コンテンツの置き場所として、Gitリポジトリは優れた選択肢だ。</p>
+
+        <p>Markdownファイルは、どんな環境でも開ける。テキストエディタ、ターミナル、ブラウザ——ソフトウェアを選ばない。20年後も、おそらく読める。フォーマットとして枯れている。</p>
+
+        <p>GitHubはそのリポジトリをホストするサービスだが、重要なのはGitHub自体ではなく、その下にあるGitだ。GitHubが消えても、リポジトリはローカルに残る。別のホスティングサービスに移せる。分散して複数箇所に置ける。</p>
+
+        <blockquote>
+            コンテンツ（Markdown）→ 自分のGitリポジトリ<br>
+            　↓<br>
+            レンダリング → プラットフォーム（Zenn、GitHub Pages、その他）
+        </blockquote>
+
+        <p>この構造が成立するとき、プラットフォームは「表示する場所」になる。消えても、別の場所で表示すればいい。コンテンツそのものは失われない。</p>
+
+        <h2>4. Zennという選択の理由</h2>
+
+        <p>技術系の発信に、Zennを使っている。その理由はシンプルだ。</p>
+
+        <p>Zennは「GitHubリポジトリのMarkdownを記事として公開する」設計になっている。コンテンツはGitHubにある。Zennはそれを読んで、整形して、表示しているだけだ。</p>
+
+        <p>つまり、Zennが消えても記事は消えない。GitHubリポジトリは手元に残り、別のサービスで公開し直せる。Zennのルールが変わっても、Markdownファイルは変わらない。フォーマットに縛られない。</p>
+
+        <p>これは他の多くのプラットフォームとは根本的に異なる設計だ。コンテンツをサービスの中に閉じ込めず、外部のリポジトリを参照する。その一点が、依存関係を大きく変える。</p>
+
+        <h2>5. 外部依存性という概念</h2>
+
+        <p>ソフトウェア設計に「外部依存性」という概念がある。システムが外部のコンポーネントにどれだけ依存しているかを表す。依存が多いほど、外部の変化がシステムに影響を与えやすい。</p>
+
+        <p>コンテンツ発信にも同じ概念が当てはまる。</p>
+
+        <p>特定のサービスにしか存在しないコンテンツは、外部依存性が高い。サービスの仕様変更、価格改定、サービス終了——すべてが直接的なリスクになる。</p>
+
+        <p>自分のリポジトリに存在し、プラットフォームは表示する場所に過ぎないコンテンツは、外部依存性が低い。プラットフォームが変わっても、コンテンツは影響を受けない。</p>
+
+        <h2>6. 声メモ・エッセイ・技術記事の統一設計</h2>
+
+        <p>この発想を徹底すると、コンテンツ発信全体の設計が変わる。</p>
+
+        <p>声でメモしたものは、プライベートなGitリポジトリに蓄積される。エッセイはGitHubでホストされたサイトに置く。技術記事はZennがGitHubから読み込む。すべてのコンテンツが、自分の管理下にあるGitリポジトリに存在している。</p>
+
+        <p>プラットフォームはその上に乗るレイヤーだ。使いやすければ使う。使いにくくなったら乗り換える。コンテンツはどこにも縛られていない。</p>
+
+        <p>これは「道具は消耗する、インフラは育つ」という考え方の、コンテンツ版だ。プラットフォームは道具であり、消耗する。データは自分のインフラであり、育つ。</p>
+
+        <h2>7. ベンダーロックインとの戦い</h2>
+
+        <p>「ベンダーロックイン」という言葉がある。特定のベンダーの製品やサービスに依存し、他に移行しにくくなった状態だ。クラウドサービスでよく議論される概念だが、コンテンツ発信にも同じ問題がある。</p>
+
+        <p>独自フォーマットで書かれたコンテンツは、そのサービス以外では読めない。エクスポート機能があっても、完全な再現は難しいことが多い。長年積み上げたコンテンツが、特定のサービスに縛られていく。</p>
+
+        <p>標準的なフォーマット（Markdown）で書き、バージョン管理システム（Git）で管理し、オープンなホスティング（GitHub）に置く。これはベンダーロックインに対する、設計レベルの抵抗だ。</p>
+
+        <h2>8. 1000年残すための土台</h2>
+
+        <p>トキストレージは「1000年残す」という使命を掲げている。1000年先を考えたとき、今存在するどのプラットフォームも存在しないだろう。会社が消え、サービスが終わり、フォーマットが廃れる。</p>
+
+        <p>だからこそ、コンテンツをプラットフォームから独立させることが重要になる。データを自分で持つ。フォーマットを標準的なものにする。複数の場所に分散して保存する。</p>
+
+        <p>これは1000年という極端なタイムスパンを前提にした話だが、10年先を考えても同じことが言える。今使っているサービスが10年後も存在するかどうかは、誰にも分からない。</p>
+
+        <p>「書いたものが消えない場所」を、自分で設計する。それがコンテンツを所有するということだ。</p>
+
+        <div class="key-point"><p>プラットフォームはレンダリングする場所であって、所有する場所ではない。データが自分の管理下にある限り、どのサービスが消えても、コンテンツは残る。</p></div>
+
+        <div class="cta-block">
+            <p>トキストレージは、声・画像・テキストを1000年残すプロジェクトです。<br>コンテンツの所有権という問いに、正面から向き合っています。</p>
+            <a href="https://tokistorage.github.io">トキストレージを知る</a>
+            <a href="essays.html" class="secondary">すべてのエッセイを読む</a>
+        </div>
+
+    </article>
+
+    <footer class="article-footer">
+        <p id="essay-nav-links"></p>
+        <p>© TokiStorage. All rights reserved.</p>
+    </footer>
+</main>
+
+<script src="essay-nav.js"></script>
+<script src="essay-tts.js"></script>
+</body>
+</html>

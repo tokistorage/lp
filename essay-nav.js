@@ -232,7 +232,8 @@
     { id: 'no-single-point-of-failure', ja: '単一障害点をなくす', en: 'No Single Point of Failure', date: '2026-03-15' },
     { id: 'async-thinking', ja: '先に考えておく', en: 'Think Ahead', date: '2026-03-15' },
     { id: 'refactoring-before-rot', ja: '構造が腐る前に', en: 'Before the Structure Rots', date: '2026-03-15' },
-    { id: 'see-you-again-soon', ja: 'See you again soon.', en: 'See you again soon.', date: '2026-03-15' }
+    { id: 'see-you-again-soon', ja: 'See you again soon.', en: 'See you again soon.', date: '2026-03-15' },
+    { id: 'content-ownership', ja: 'コンテンツを所有するということ', en: 'Owning Your Content', date: '2026-03-15' }
   ];
 
   // ── Latest Articles (最新記事) ──
@@ -464,6 +465,7 @@
     'async-thinking': ['no-single-point-of-failure', 'zero-cost-autonomy', 'tool-vs-infrastructure', 'voice-becomes-memory', 'break-and-grow'],
     'refactoring-before-rot': ['async-thinking', 'no-single-point-of-failure', 'tool-vs-infrastructure', 'zero-cost-autonomy', 'break-and-grow'],
     'see-you-again-soon': ['gift-economy', 'immigrant-burial-ecosystem', 'scattered-ashes', 'wedding-partnership', 'embodied-oral'],
+    'content-ownership': ['no-single-point-of-failure', 'tool-vs-infrastructure', 'zero-cost-autonomy', 'async-thinking', 'refactoring-before-rot'],
     'break-and-grow':           ['zero-cost-autonomy', 'tool-vs-infrastructure', 'vibe-coding', 'primitive-edge', 'constraint-philosophy']
   };
 
