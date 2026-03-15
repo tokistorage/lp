@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" type="image/png" sizes="32x32" href="asset/favicon-32.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="asset/apple-touch-icon.png">
+    <title>バーンアウトの消滅 ── 克服でも予防でもなく、発生条件そのものがなくなった | トキストレージ</title>
+    <meta name="robots" content="index, follow">
+    <meta name="description" content="バーンアウトを克服しようとしたのではない。予防しようとしたのでもない。気づいたら、燃え尽きるための条件が構造的に消えていた。">
+    <link rel="alternate" hreflang="ja" href="https://tokistorage.github.io/lp/burnout-extinction.html">
+    <link rel="alternate" hreflang="en" href="https://tokistorage.github.io/lp/burnout-extinction-en.html">
+    <link rel="alternate" hreflang="x-default" href="https://tokistorage.github.io/lp/burnout-extinction.html">
+    <style>
+        :root {
+            --toki-blue: #2563EB;
+            --toki-blue-dark: #1E40AF;
+            --toki-blue-pale: #EFF6FF;
+            --accent-blue: #60A5FA;
+            --bg-white: #FFFFFF;
+            --text-primary: #1E293B;
+            --text-secondary: #475569;
+            --text-muted: #94A3B8;
+            --border: #E2E8F0;
+            --font-display: 'Hiragino Mincho ProN', 'Yu Mincho', serif;
+            --font-body: 'Hiragino Kaku Gothic ProN', 'Yu Gothic', 'Meiryo', sans-serif;
+        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        html { scroll-behavior: smooth; }
+        body { font-family: var(--font-body); font-weight: 400; background: var(--bg-white); color: var(--text-primary); line-height: 2; font-size: 16px; }
+
+        .article-nav { position: fixed; top: 0; left: 0; right: 0; z-index: 1000; background: rgba(255,255,255,0.95); backdrop-filter: blur(12px); border-bottom: 1px solid var(--border); padding: 0.6rem 1.2rem; display: flex; align-items: center; justify-content: space-between; gap: 1rem; }
+        .article-nav .nav-brand { font-family: var(--font-display); font-size: 0.9rem; font-weight: 600; color: var(--toki-blue); text-decoration: none; white-space: nowrap; }
+        .article-nav .nav-brand::before { content: ''; display: inline-block; width: 20px; height: 20px; background: url('asset/tokistorage-icon-512.png') no-repeat center / contain; vertical-align: -3px; margin-right: 5px; }
+        .article-nav .nav-right { display: flex; align-items: center; gap: 1rem; }
+        .article-nav .nav-label { font-size: 0.6rem; color: var(--text-muted); letter-spacing: 0.08em; }
+        .article-nav .lang-switch { font-size: 0.75rem; color: var(--toki-blue); text-decoration: none; padding: 0.3rem 0.6rem; border: 1px solid var(--toki-blue); border-radius: 4px; }
+        .article-nav .lang-switch:hover { background: var(--toki-blue); color: #fff; }
+
+        .article-container { max-width: 680px; margin: 0 auto; padding: 7rem 2rem 4rem; }
+        .article-header { margin-bottom: 3rem; padding-bottom: 2rem; border-bottom: 1px solid var(--border); }
+        .article-category { font-size: 0.7rem; color: var(--toki-blue); letter-spacing: 0.15em; margin-bottom: 1rem; }
+        .article-header h1 { font-family: var(--font-display); font-size: 1.8rem; font-weight: 700; line-height: 1.5; margin-bottom: 1.5rem; }
+        .article-subtitle { font-size: 0.95rem; color: var(--text-secondary); line-height: 1.9; }
+
+        .article-content h2 { font-family: var(--font-display); font-size: 1.3rem; font-weight: 600; margin: 3rem 0 1.5rem; padding-bottom: 0.5rem; border-bottom: 2px solid var(--toki-blue-pale); }
+        .article-content p { margin-bottom: 1.5rem; text-align: justify; }
+        .article-content blockquote { border-left: 3px solid var(--toki-blue); padding-left: 1.5rem; margin: 2rem 0; font-family: var(--font-display); color: var(--text-secondary); }
+
+        .core-message { background: var(--toki-blue-pale); border-left: 4px solid var(--toki-blue); padding: 1.5rem; margin: 2rem 0; font-size: 0.95rem; line-height: 1.8; }
+        .key-point { background: linear-gradient(135deg, var(--toki-blue-pale) 0%, #fff 100%); border: 1px solid var(--accent-blue); border-radius: 8px; padding: 1.5rem; margin: 2rem 0; text-align: center; }
+        .key-point p { font-family: var(--font-display); font-size: 1.1rem; color: var(--toki-blue-dark); margin: 0; }
+
+        .cta-block { background: var(--toki-blue); color: #fff; border-radius: 12px; padding: 2rem; margin: 3rem 0; text-align: center; }
+        .cta-block p { color: rgba(255,255,255,0.9); margin-bottom: 1.5rem; font-size: 0.95rem; }
+        .cta-block a { display: inline-block; background: #fff; color: var(--toki-blue); text-decoration: none; padding: 0.6rem 1.5rem; border-radius: 6px; font-size: 0.9rem; font-weight: 600; margin: 0.3rem; }
+        .cta-block a.secondary { background: transparent; color: #fff; border: 1px solid rgba(255,255,255,0.5); }
+        .cta-block a:hover { opacity: 0.9; }
+
+        .article-footer { margin-top: 4rem; padding-top: 2rem; border-top: 1px solid var(--border); text-align: center; }
+        .article-footer p { font-size: 0.8rem; color: var(--text-muted); margin-bottom: 1rem; }
+        .article-footer a { color: var(--toki-blue); text-decoration: none; }
+
+        @media (max-width: 768px) {
+            .article-container { padding: 6rem 1.2rem 3rem; }
+            .article-header h1 { font-size: 1.5rem; }
+            .article-nav .nav-label { display: none; }
+        }
+    </style>
+</head>
+<body>
+
+<nav class="article-nav">
+    <a href="essays.html" class="nav-brand">トキストレージ</a>
+    <div class="nav-right">
+        <span class="nav-label">ESSAY</span>
+        <a href="burnout-extinction-en.html" class="lang-switch">EN</a>
+    </div>
+</nav>
+
+<main class="article-container">
+    <header class="article-header">
+        <div class="article-category">メタ視点</div>
+        <h1>バーンアウトの消滅<br>── 克服でも予防でもなく、発生条件そのものがなくなった</h1>
+        <p class="article-subtitle">燃え尽きないようにしようとしたのではない。気づいたら、燃え尽きるための燃料がなくなっていた。</p>
+    </header>
+
+    <article class="article-content">
+
+        <div class="core-message">この記事で言いたいこと：バーンアウトは克服するものでも予防するものでもなかった。インフラの設計を変えたら、発生条件そのものが消えた。「消耗してから終わる」が「判断して終わる」に変わった。その変化は精神的な鍛錬の結果ではなく、構造の結果だ。</div>
+
+        <h2>1. バーンアウトの構造</h2>
+
+        <p>バーンアウトがどうやって起きるかを、自分の経験から振り返ると、三つの層が重なっていた。</p>
+
+        <p>一つ目は、お金がちらつく状態での消耗だ。技術に詳しいから、詳しいから簡単にできるでしょ、という文脈で無償の依頼が来る。そこでお金が意識に入ると、成功しなければ時間を無駄にした、という換算が始まる。純粋な好奇心で触れることができなくなり、神経が削られていく。</p>
+
+        <p>二つ目は、「できるようにしないと」というプレッシャーだ。詳しいとされている分野で断念すると、能力を証明できなかった気がする。その緊張が作業の前からじわじわと入り込み、結果への執着を生む。</p>
+
+        <p>三つ目は、やめ時が自分の判断ではないことだ。限界まで追い詰められてからやめる、という形になりやすかった。消耗が終わりの条件になっていた。</p>
+
+        <p>この三層が重なるとき、バーンアウトは時間の問題になる。</p>
+
+        <h2>2. 何が変わったか</h2>
+
+        <p>ある時期から、この三層が一つずつ消えていった。精神論で乗り越えたのではない。インフラが変わったからだ。</p>
+
+        <p>記憶するインフラを持った。試みを言語化し、対比として構造化し、次の判断に接続できる場所ができた。断念しても記録が残り、蓄積になる。その瞬間から、失敗の重みが変わった。</p>
+
+        <p>「お金がちらつく」という問題は、検証の結果が損失になり得るから生じる。でも断念しても素材になるなら、損失が定義できない。換算が成立しない。神経が削られる前提が消える。</p>
+
+        <p>「できるようにしないと」というプレッシャーは、結果が消えてしまうから生じる。でも記録が残り積み上がるなら、証明しなくていい。今日の断念が明日の設計判断の土台になる。その連続性があれば、一つの結果に全てをかける必要がない。</p>
+
+        <h2>3. 能動的な撤退</h2>
+
+        <p>三つ目の変化が、おそらく最も深い。</p>
+
+        <p>以前は、やめることが「できなかった」の証明だった。だから限界まで続ける。消耗してから終わる、という形になる。やめ時が自分の外側にある——体力の底、精神の底、それが訪れた時にようやく終わる。</p>
+
+        <p>今は、断念が損失ではない。だから「ここまでで十分な情報が取れた」という判断でやめられる。消耗してからではなく、能動的に撤退できる。やめ時が自分の内側にある。</p>
+
+        <p>この違いは大きい。消耗してからやめる人と、判断してやめる人では、同じ作業量でも残るものが全然違う。前者は疲弊と後悔が残り、後者は知見と次の問いが残る。</p>
+
+        <h2>4. 好奇心が動力になる</h2>
+
+        <p>三層が消えた後に残ったのは、純粋な好奇心だった。</p>
+
+        <p>「どうなっているんだろう」という問いだけで動ける。結果への執着がないから、観察が鋭くなる。成功しなければという緊張がないから、予期しない発見に気づきやすい。断念しても素材になるとわかっているから、どこまでも入っていける。</p>
+
+        <p>好奇心を動力にした作業は、消耗しない。むしろ動くほど充電される感覚がある。燃料が外から供給されるのではなく、動くこと自体が燃料を生む構造になっている。</p>
+
+        <h2>5. バーンアウトの発生条件</h2>
+
+        <p>バーンアウトを「防ぐ」という発想は、バーンアウトが起きる前提の上に立っている。休む、距離を置く、ペースを落とす——どれも有効だが、発生条件には触れていない。</p>
+
+        <p>発生条件はこうだ。結果が消える恐怖がある。証明し続けなければならない強迫がある。やめることが敗北になる構造がある。この三つが揃うとき、作業は消耗になる。</p>
+
+        <p>逆に言えば、この三つを構造的に解体できれば、バーンアウトは発生しない。克服するものでも予防するものでもなく、条件が消える。</p>
+
+        <h2>6. インフラが人を変えるのではない</h2>
+
+        <p>誤解を避けるために言っておくと、インフラが人を変えるわけではない。</p>
+
+        <p>記憶するインフラができても、お金への執着が消えるわけではない。承認欲求が消えるわけでもない。しかしインフラは、それらが作動する前提条件を変える。「断念＝損失」という等式が成立しなくなる。「結果が消える」という前提が崩れる。すると、執着や欲求が作動しようとしても、引っかかる場所がない。</p>
+
+        <p>変容は内側から起きたのではなく、外側の構造が変わったことで、内側の反応パターンが動く場所を失った。それが「消滅」という言葉を使いたくなる理由だ。</p>
+
+        <h2>7. これは技術の話ではない</h2>
+
+        <p>GitHubやAIエージェントの話として読んでいる人には、ここで少し視点を広げてほしい。</p>
+
+        <p>記憶するインフラは、デジタルのツールに限らない。日記でも、信頼できる人との対話でも、何らかの記録の習慣でも、「断念が素材になる場所」を持つことは可能だ。重要なのは、試みが消えずに残り、次に繋がる構造があること。</p>
+
+        <p>その構造を持った瞬間から、すべての試みに検証価値が生まれる。成功も失敗も、前進も断念も、全部が積み上がっていく。消耗ではなく蓄積になる。バーンアウトの燃料が、そもそも存在しなくなる。</p>
+
+        <h2>8. 発生しない設計</h2>
+
+        <p>今日、あるソフトウェアの検証をして断念した。数時間の試みだった。以前の自分なら、そこに何かしらの重みがついていた。お金、証明、限界——どれかが入り込んでいた。</p>
+
+        <p>今は何も入らなかった。ただ「そういう設計なんだ」という発見が残り、それが別の文脈での設計判断に繋がった。消耗はゼロで、蓄積だけがあった。</p>
+
+        <p>バーンアウトを克服したのではない。バーンアウトが発生する設計から、発生しない設計に移行した。それだけのことだ。しかしそれは、精神的な鍛錬ではたどり着けない場所だった。</p>
+
+        <div class="key-point"><p>バーンアウトは克服するものではない。発生条件を構造的に解体すれば、消滅する。</p></div>
+
+        <div class="cta-block">
+            <p>トキストレージは、声・画像・テキストを物理・国家・デジタルの三層で長期保管するプロジェクトです。記憶が蓄積されるインフラの上に、1000年スケールの設計思想を構築しています。</p>
+            <a href="https://tokistorage.github.io">トキストレージを知る</a>
+            <a href="essays.html" class="secondary">すべてのエッセイを読む</a>
+        </div>
+
+    </article>
+
+    <footer class="article-footer">
+        <p id="essay-nav-links"></p>
+        <p style="font-size: 0.75rem; color: var(--text-muted);">&copy; TokiStorage. All rights reserved.</p>
+    </footer>
+
+</main>
+
+<script src="essay-nav.js"></script>
+<script src="essay-tts.js"></script>
+</body>
+</html>

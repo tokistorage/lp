@@ -235,7 +235,8 @@
     { id: 'see-you-again-soon', ja: 'See you again soon.', en: 'See you again soon.', date: '2026-03-15' },
     { id: 'content-ownership', ja: 'コンテンツを所有するということ', en: 'Owning Your Content', date: '2026-03-15' },
     { id: 'automation-breaks', ja: '自動化が壊れるとき', en: 'When Automation Breaks', date: '2026-03-15' },
-    { id: 'platform-wall', ja: 'プラットフォームの壁', en: 'The Platform Wall', date: '2026-03-16' }
+    { id: 'platform-wall', ja: 'プラットフォームの壁', en: 'The Platform Wall', date: '2026-03-16' },
+    { id: 'burnout-extinction', ja: 'バーンアウトの消滅', en: 'The Extinction of Burnout', date: '2026-03-16' }
   ];
 
   // ── Latest Articles (最新記事) ──
@@ -470,6 +471,7 @@
     'content-ownership': ['no-single-point-of-failure', 'tool-vs-infrastructure', 'zero-cost-autonomy', 'async-thinking', 'refactoring-before-rot'],
     'automation-breaks': ['content-ownership', 'no-single-point-of-failure', 'refactoring-before-rot', 'async-thinking', 'zero-cost-autonomy'],
     'platform-wall': ['zero-cost-autonomy', 'tool-vs-infrastructure', 'break-and-grow', 'constraint-philosophy', 'automation-breaks'],
+    'burnout-extinction': ['platform-wall', 'burn-rate-zero', 'zero-cost-autonomy', 'break-and-grow', 'constraint-philosophy'],
     'break-and-grow':           ['zero-cost-autonomy', 'tool-vs-infrastructure', 'vibe-coding', 'primitive-edge', 'constraint-philosophy']
   };
 
