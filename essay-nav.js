@@ -238,7 +238,8 @@
     { id: 'platform-wall', ja: 'プラットフォームの壁', en: 'The Platform Wall', date: '2026-03-16' },
     { id: 'burnout-extinction', ja: 'バーンアウトの消滅', en: 'The Extinction of Burnout', date: '2026-03-16' },
     { id: 'beyond-consumer-education', ja: '不足を満たす消費者をやめる日', en: 'The Day I Stopped Being a Consumer of Education', date: '2026-03-16' },
-    { id: 'relational-capital-flow', ja: '関係資本の還流', en: 'The Flow of Relational Capital', date: '2026-03-16' }
+    { id: 'relational-capital-flow', ja: '関係資本の還流', en: 'The Flow of Relational Capital', date: '2026-03-16' },
+    { id: 'reluctant-farewell', ja: '離れたくない、という感情から始まった', en: 'It Started With Not Wanting to Leave', date: '2026-03-17' }
   ];
 
   // ── Latest Articles (最新記事) ──
@@ -476,6 +477,7 @@
     'burnout-extinction': ['platform-wall', 'burn-rate-zero', 'zero-cost-autonomy', 'break-and-grow', 'constraint-philosophy'],
     'beyond-consumer-education': ['education', 'early-education', 'transformation-journey', 'backcasting', 'burnout-extinction'],
     'relational-capital-flow': ['gift-economy', 'sanpoyoshi', 'burn-rate-zero', 'existentialism', 'beyond-consumer-education'],
+    'reluctant-farewell': ['relational-capital-flow', 'gift-economy', 'existentialism', 'immigrant-burial-ecosystem', 'beyond-consumer-education'],
     'break-and-grow':           ['zero-cost-autonomy', 'tool-vs-infrastructure', 'vibe-coding', 'primitive-edge', 'constraint-philosophy']
   };
 
