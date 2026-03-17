@@ -1,0 +1,465 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" type="image/png" sizes="32x32" href="asset/favicon-32.png">
+    <title>行政DXブローシャ（印刷版）| トキストレージ</title>
+    <style>
+        :root {
+            --toki-blue: #2563EB;
+            --toki-blue-pale: #EFF6FF;
+            --toki-navy: #1E3A5F;
+            --toki-navy-pale: #EEF3FA;
+            --bg-white: #FFFFFF;
+            --text-primary: #1E293B;
+            --text-secondary: #475569;
+            --text-muted: #94A3B8;
+            --border: #D1DCE8;
+            --font-display: 'Hiragino Mincho ProN', 'Yu Mincho', serif;
+            --font-body: 'Hiragino Kaku Gothic ProN', 'Yu Gothic', 'Meiryo', sans-serif;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            font-family: var(--font-body);
+            background: #fff;
+            color: var(--text-primary);
+            font-size: 13px;
+            line-height: 1.6;
+            -webkit-print-color-adjust: exact;
+            print-color-adjust: exact;
+        }
+
+        /* ── Screen preview ── */
+        .page {
+            width: 277mm;
+            min-height: 190mm;
+            margin: 20px auto;
+            padding: 10mm 11mm;
+            background: #fff;
+            box-shadow: 0 2px 20px rgba(0,0,0,0.12);
+        }
+
+        /* ── Header ── */
+        .hd {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding-bottom: 4mm;
+            border-bottom: 1.5px solid var(--toki-navy);
+            margin-bottom: 4mm;
+        }
+        .hd-left { display: flex; align-items: center; gap: 6px; }
+        .hd-left img { width: 22px; height: 22px; }
+        .hd-name {
+            font-family: var(--font-display);
+            font-size: 13.5px;
+            font-weight: 700;
+            color: var(--text-primary);
+        }
+        .hd-sub {
+            font-size: 8px;
+            color: var(--text-muted);
+            line-height: 1.6;
+            margin-top: 1px;
+        }
+        .hd-right { text-align: right; }
+        .hd-badge {
+            display: inline-block;
+            padding: 2px 8px;
+            background: var(--toki-navy);
+            color: #fff;
+            border-radius: 3px;
+            font-size: 8px;
+            letter-spacing: 0.08em;
+            font-weight: 600;
+        }
+        .hd-ndl {
+            font-size: 7.5px;
+            color: var(--text-muted);
+            margin-top: 3px;
+        }
+
+        /* ── Tagline ── */
+        .tagline {
+            text-align: center;
+            margin-bottom: 4.5mm;
+        }
+        .tagline h1 {
+            font-family: var(--font-display);
+            font-size: 16.5px;
+            font-weight: 700;
+            color: var(--toki-navy);
+            letter-spacing: -0.01em;
+            margin-bottom: 2.5mm;
+        }
+        .tagline .intro {
+            font-size: 8.5px;
+            color: var(--text-secondary);
+            line-height: 1.75;
+            max-width: 220mm;
+            margin: 0 auto 1.5mm;
+            text-align: left;
+        }
+        .tagline .intro strong { color: var(--text-primary); font-weight: 600; }
+
+        /* ── 2-col body ── */
+        .body-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 7mm;
+            align-items: start;
+        }
+
+        /* Section heading */
+        .sh {
+            display: flex;
+            align-items: center;
+            gap: 4px;
+            margin-bottom: 2.5mm;
+        }
+        .sh::before {
+            content: '';
+            width: 2.5px;
+            height: 10px;
+            background: var(--toki-navy);
+            border-radius: 2px;
+            flex-shrink: 0;
+        }
+        .sh h2 {
+            font-family: var(--font-display);
+            font-size: 9px;
+            font-weight: 700;
+            color: var(--text-primary);
+        }
+
+        /* Walls */
+        .walls-stack { display: flex; flex-direction: column; gap: 1.8mm; margin-bottom: 4mm; }
+        .wall-card {
+            display: flex;
+            align-items: flex-start;
+            gap: 5px;
+            background: var(--bg-white);
+            border: 1px solid var(--border);
+            border-radius: 5px;
+            padding: 3mm 3.5mm;
+        }
+        .wall-icon { font-size: 11px; flex-shrink: 0; line-height: 1; margin-top: 1px; }
+        .wall-name { font-family: var(--font-display); font-weight: 700; color: var(--toki-navy); font-size: 8.5px; margin-bottom: 1px; }
+        .wall-desc { font-size: 7.8px; color: var(--text-secondary); line-height: 1.55; }
+
+        /* Support box */
+        .support-box {
+            background: var(--toki-navy-pale);
+            border: 1px solid #c7d9f0;
+            border-radius: 6px;
+            padding: 3mm 3.5mm;
+            margin-bottom: 4mm;
+        }
+        .support-box ul { list-style: none; padding: 0; }
+        .support-box li {
+            font-size: 7.8px;
+            color: var(--text-primary);
+            padding: 1.5mm 0;
+            border-bottom: 1px solid #d4e4f5;
+            line-height: 1.55;
+            display: flex;
+            gap: 4px;
+            align-items: baseline;
+        }
+        .support-box li:last-child { border-bottom: none; padding-bottom: 0; }
+        .support-box li::before { content: '→'; color: var(--toki-blue); font-weight: 700; flex-shrink: 0; font-size: 8px; }
+
+        /* Usecase bullets */
+        .usecase-bullets { list-style: none; padding: 0; margin-bottom: 4mm; }
+        .usecase-bullets li {
+            font-size: 7.8px;
+            color: var(--text-primary);
+            padding: 1.3mm 0;
+            border-bottom: 1px solid var(--border);
+            line-height: 1.55;
+        }
+        .usecase-bullets li:last-child { border-bottom: none; }
+        .uc-label {
+            display: inline-block;
+            font-weight: 700;
+            color: var(--toki-navy);
+            font-size: 7.5px;
+            margin-right: 3px;
+            white-space: nowrap;
+        }
+
+        /* Layers */
+        .layers-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 2mm; }
+        .layer-card {
+            background: var(--toki-blue-pale);
+            border: 1px solid var(--border);
+            border-radius: 5px;
+            padding: 2.5mm 2mm;
+            text-align: center;
+        }
+        .layer-name { font-family: var(--font-display); font-weight: 700; color: var(--toki-blue); font-size: 8px; margin-bottom: 1px; }
+        .layer-sub { font-size: 7px; font-weight: 600; color: var(--text-primary); margin-bottom: 1.5px; }
+        .layer-desc { font-size: 6.8px; color: var(--text-secondary); line-height: 1.5; }
+
+        /* Flow list */
+        .flow-list { list-style: none; padding: 0; margin-bottom: 3mm; counter-reset: flow; }
+        .flow-list li {
+            counter-increment: flow;
+            display: flex;
+            gap: 4px;
+            align-items: baseline;
+            font-size: 7.8px;
+            color: var(--text-primary);
+            padding: 1.5mm 0;
+            border-bottom: 1px solid var(--border);
+            line-height: 1.55;
+        }
+        .flow-list li:last-child { border-bottom: none; }
+        .flow-list li::before {
+            content: counter(flow);
+            background: var(--toki-navy);
+            color: #fff;
+            font-size: 6.5px;
+            font-weight: 700;
+            min-width: 13px;
+            height: 13px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+        }
+        .fl-title { font-weight: 700; color: var(--toki-navy); margin-right: 2px; }
+
+        /* Note box */
+        .note-box {
+            background: var(--bg-white);
+            border-left: 2.5px solid var(--toki-navy);
+            border-radius: 0 5px 5px 0;
+            padding: 2.5mm 3mm;
+            margin-bottom: 3mm;
+            font-size: 7.8px;
+            color: var(--text-secondary);
+            line-height: 1.65;
+        }
+
+        /* Contact */
+        .contact {
+            padding-top: 2.5mm;
+            border-top: 1px solid var(--border);
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-end;
+            gap: 4mm;
+        }
+        .contact-name {
+            font-family: var(--font-display);
+            font-size: 9px;
+            font-weight: 600;
+            color: var(--text-primary);
+            margin-bottom: 1.5px;
+        }
+        .contact-sub {
+            font-size: 6.8px;
+            color: var(--text-muted);
+            margin-bottom: 2px;
+        }
+        .contact p { font-size: 7.5px; color: var(--text-secondary); line-height: 1.65; }
+        .contact a { color: var(--toki-blue); text-decoration: none; }
+        .contact-qr { text-align: center; flex-shrink: 0; }
+        .contact-qr img { width: 60px; height: 60px; display: block; }
+        .contact-qr p { font-size: 7px; color: var(--text-primary); font-weight: 500; margin-top: 2px; }
+
+        /* Screen-only UI */
+        .screen-only {
+            max-width: 300mm;
+            margin: 0 auto;
+            padding: 12px 20px;
+            background: #f1f5f9;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 12px;
+        }
+        .screen-only p { font-size: 13px; color: #475569; }
+        .btn-print {
+            display: inline-block;
+            padding: 8px 20px;
+            background: var(--toki-navy);
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            font-size: 13px;
+            cursor: pointer;
+            text-decoration: none;
+        }
+        .btn-print:hover { background: #163354; }
+        .btn-back {
+            display: inline-block;
+            padding: 8px 16px;
+            color: var(--toki-navy);
+            border: 1px solid var(--toki-navy);
+            border-radius: 5px;
+            font-size: 13px;
+            cursor: pointer;
+            text-decoration: none;
+            background: #fff;
+        }
+
+        /* Print */
+        @media print {
+            body { margin: 0; }
+            .screen-only { display: none; }
+            .page {
+                width: 100%;
+                min-height: auto;
+                margin: 0;
+                padding: 9mm 10mm;
+                box-shadow: none;
+            }
+        }
+        @page { size: A4 landscape; margin: 0; }
+    </style>
+</head>
+<body>
+
+<div class="screen-only">
+    <p>🖨️ A4横（297×210mm）印刷専用レイアウト</p>
+    <div style="display:flex;gap:8px;">
+        <a href="brochure-government-dx.html" class="btn-back">← WEB版に戻る</a>
+        <button class="btn-print" onclick="window.print()">印刷する</button>
+    </div>
+</div>
+
+<div class="page">
+
+    <!-- Header -->
+    <div class="hd">
+        <div class="hd-left">
+            <img src="asset/tokistorage-icon-512.png" alt="">
+            <div>
+                <div class="hd-name">TokiStorage ／ トキストレージ</div>
+                <div class="hd-sub">Voice Preservation for 1,000 Years</div>
+            </div>
+        </div>
+        <div class="hd-right">
+            <div class="hd-badge">行政 DX 支援</div>
+            <div class="hd-ndl">国立国会図書館収蔵事業 ／ 伊勢神宮式年遷宮奉賛 ／ 比叡山延暦寺不滅の法灯奉賛</div>
+        </div>
+    </div>
+
+    <!-- Tagline -->
+    <div class="tagline">
+        <h1>先進的すぎる、はいつか「当たり前」になる。</h1>
+        <p class="intro"><strong>公文書は残る。でも「どう生きたか」は残らない。</strong>トキストレージは、声・顔・ことばを物理・国家・デジタルの三層で保管し、行政記録に「人の記憶」を加える新しいインフラです。国立国会図書館収蔵事業として稼働中。QRコード1枚から、今日から導入できます。</p>
+        <p class="intro">「アイデアはいい。でも効果が測れない、予算が組めない、法整備も要る。」——その声を、私たちは何度も聞いてきました。三つの壁を、一緒に越えます。</p>
+    </div>
+
+    <!-- 2-col body -->
+    <div class="body-grid">
+
+        <!-- LEFT -->
+        <div>
+            <div class="sh"><h2>行政DXの三つの壁</h2></div>
+            <div class="walls-stack">
+                <div class="wall-card">
+                    <span class="wall-icon">📊</span>
+                    <div>
+                        <div class="wall-name">①　効果の定量化</div>
+                        <div class="wall-desc">「便利そう」だけでは稟議が通らない。保存年数・閲覧回数・人件費削減・防災価値を数字で示す必要がある。</div>
+                    </div>
+                </div>
+                <div class="wall-card">
+                    <span class="wall-icon">📋</span>
+                    <div>
+                        <div class="wall-name">②　予算編成</div>
+                        <div class="wall-desc">単年度予算と複数年保管の構造的な乖離。補助金・交付金の活用可能性と費用対効果の説明資料が必要になる。</div>
+                    </div>
+                </div>
+                <div class="wall-card">
+                    <span class="wall-icon">⚖️</span>
+                    <div>
+                        <div class="wall-name">③　法整備・規制</div>
+                        <div class="wall-desc">個人情報保護法・公文書管理法・著作権——既存制度との整合性確認と、必要に応じた条例・要綱の整備が求められる。</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="sh"><h2>行政向けユースケース（例）</h2></div>
+            <ul class="usecase-bullets">
+                <li><span class="uc-label">消防・防災</span>消防音楽隊の演奏・殉職者への追悼メッセージ・避難訓練の記録をQRで永続保管。碑やパネルにQRを付与することで、いつでも「声」が蘇る。</li>
+                <li><span class="uc-label">文化財・教育</span>石碑・建造物・伝統芸能の音声を三層保管。国立国会図書館収蔵で国家記録に昇格。物理劣化後も完全再現が可能。</li>
+                <li><span class="uc-label">首長室・議会</span>就任挨拶・施政方針演説をQRで庁舎に掲示。100年後の市民が同じ声を聞ける、まちの記憶インフラ。</li>
+                <li><span class="uc-label">広報・移住促進</span>語り部・移住者の声と顔をQRに。観光案内板やふるさと納税ページに組み込み、「生きた情報」として届ける。</li>
+                <li><span class="uc-label">福祉・高齢者支援</span>住民の「人生の声」をQRに残す公的支援事業。家族への贈り物であり、地域の記憶として100年後に残る。</li>
+            </ul>
+
+            <div class="sh"><h2>三層分散保管アーキテクチャ</h2></div>
+            <div class="layers-grid">
+                <div class="layer-card">
+                    <div class="layer-name">物理層</div>
+                    <div class="layer-sub">石英ガラス・UVラミネート</div>
+                    <div class="layer-desc">手元に実物が残る<br>石英1000年・UV更新可<br>佐渡島・マウイ島に分散</div>
+                </div>
+                <div class="layer-card">
+                    <div class="layer-name">国家層</div>
+                    <div class="layer-sub">国立国会図書館</div>
+                    <div class="layer-desc">国家が保証する永続性<br>国会図書館法による永久保存<br>収集確認済・音声も対象</div>
+                </div>
+                <div class="layer-card">
+                    <div class="layer-name">民間層</div>
+                    <div class="layer-sub">GitHub</div>
+                    <div class="layer-desc">世界中からいつでも閲覧<br>無料公開基盤で永続管理<br>追加料金・維持費なし</div>
+                </div>
+            </div>
+        </div><!-- /left -->
+
+        <!-- RIGHT -->
+        <div>
+            <div class="sh"><h2>三つの壁すべてに、伴奏支援します。</h2></div>
+            <div class="support-box">
+                <ul>
+                    <li>① への対応——保存年数・閲覧回数・人件費削減・観光・防災価値を事前に試算、稟議資料として可視化</li>
+                    <li>② への対応——補助金・交付金の調査、議会説明資料・仕様書・見積書のひな形をともに作成</li>
+                    <li>③ への対応——個人情報・著作権・公文書管理法との適合確認、条例・要綱整備の論点提示</li>
+                    <li>まず小さく始める——PoC（小規模実証）で住民・議員が体験。「先進的すぎる」が「やってみよう」に変わります</li>
+                </ul>
+            </div>
+
+            <div class="sh"><h2>伴奏支援のステップ</h2></div>
+            <ol class="flow-list">
+                <li><span class="fl-title">ヒアリング・現状整理</span>「何を残したいか」「どんな壁があるか」を聞かせてください。この日から費用はゼロ、リスクもゼロです。</li>
+                <li><span class="fl-title">期待効果の試算・資料化</span>保存年数・コスト削減・活用シナリオを数値で整理。議会説明・稟議に使える資料をともに作ります。</li>
+                <li><span class="fl-title">PoC検討合意書の締結</span>1枚・双方サイン・費用負担はトキストレージ。この合意書が「動いている案件」として庁内で扱われるようになります。</li>
+                <li><span class="fl-title">PoC（小規模実証）</span>1件・1イベントから実証。住民・議員が実際に体験することで、予算化への理解が生まれます。</li>
+                <li><span class="fl-title">予算化・本格導入</span>補助金・交付金の活用を含め、次年度予算計上を支援。法的論点の整理も並走します。</li>
+            </ol>
+
+            <div class="note-box">
+                導入費用ゼロ。PoC費用はトキストレージが負担。「話してみる」だけで、一緒に動き始められます。
+            </div>
+
+            <div class="contact">
+                <div>
+                    <div class="contact-name">TokiStorage ／ トキストレージ</div>
+                    <div class="contact-sub">国立国会図書館収蔵事業 ／ 個人事業開業届出済</div>
+                    <p>代表：佐藤卓也　〒279-0014 千葉県浦安市明海2-11-13</p>
+                    <p><a href="https://tokistorage.github.io/lp/">tokistorage.github.io/lp/</a>　<a href="mailto:tokistorage1000@gmail.com">tokistorage1000@gmail.com</a></p>
+                </div>
+                <div class="contact-qr">
+                    <img src="asset/qr-contact.png" alt="お問い合わせ">
+                    <p>導入相談</p>
+                </div>
+            </div>
+        </div><!-- /right -->
+
+    </div><!-- /body-grid -->
+
+</div><!-- /page -->
+
+<script src="tracker.js" defer></script>
+</body>
+</html>
