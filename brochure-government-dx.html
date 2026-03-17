@@ -19,627 +19,158 @@
             --text-secondary: #475569;
             --text-muted: #94A3B8;
             --border: #E2E8F0;
-            --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.05);
-            --shadow-md: 0 4px 16px rgba(0, 0, 0, 0.06);
             --font-display: 'Hiragino Mincho ProN', 'Yu Mincho', serif;
             --font-body: 'Hiragino Kaku Gothic ProN', 'Yu Gothic', 'Meiryo', sans-serif;
         }
-
         * { margin: 0; padding: 0; box-sizing: border-box; }
         html { scroll-behavior: smooth; }
+        body { font-family: var(--font-body); background: var(--bg-page); color: var(--text-primary); line-height: 1.8; font-size: 16px; }
 
-        body {
-            font-family: var(--font-body);
-            font-weight: 400;
-            background: var(--bg-page);
-            color: var(--text-primary);
-            line-height: 1.8;
-            font-size: 16px;
-        }
-
-        /* Navigation */
-        .br-nav {
-            position: fixed;
-            top: 0; left: 0; right: 0;
-            z-index: 1000;
-            background: rgba(255,255,255,0.95);
-            backdrop-filter: blur(12px);
-            border-bottom: 1px solid var(--border);
-            padding: 0.6rem 1.2rem;
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-        }
-        .br-nav .nav-brand {
-            font-family: var(--font-display);
-            font-size: 0.9rem;
-            font-weight: 600;
-            color: var(--toki-blue);
-            text-decoration: none;
-            display: flex;
-            align-items: center;
-            gap: 6px;
-        }
+        /* Nav */
+        .br-nav { position: fixed; top: 0; left: 0; right: 0; z-index: 1000; background: rgba(255,255,255,0.95); backdrop-filter: blur(12px); border-bottom: 1px solid var(--border); padding: 0.6rem 1.2rem; display: flex; align-items: center; justify-content: space-between; }
+        .br-nav .nav-brand { font-family: var(--font-display); font-size: 0.9rem; font-weight: 600; color: var(--toki-blue); text-decoration: none; display: flex; align-items: center; gap: 6px; }
         .br-nav .nav-brand img { width: 22px; height: 22px; }
-        .br-nav .nav-right {
-            display: flex;
-            align-items: center;
-            gap: 1rem;
-        }
-        .br-nav .nav-label {
-            font-size: 0.6rem;
-            color: var(--text-muted);
-            letter-spacing: 0.08em;
-        }
-        .br-nav .nav-back {
-            font-size: 0.75rem;
-            color: var(--toki-blue);
-            text-decoration: none;
-            padding: 0.3rem 0.6rem;
-            border: 1px solid var(--toki-blue);
-            border-radius: 4px;
-        }
+        .br-nav .nav-right { display: flex; align-items: center; gap: 1rem; }
+        .br-nav .nav-label { font-size: 0.6rem; color: var(--text-muted); letter-spacing: 0.08em; }
+        .br-nav .nav-back { font-size: 0.75rem; color: var(--toki-blue); text-decoration: none; padding: 0.3rem 0.6rem; border: 1px solid var(--toki-blue); border-radius: 4px; }
         .br-nav .nav-back:hover { background: var(--toki-blue); color: #fff; }
 
-        /* Main content */
-        .brochure {
-            max-width: 720px;
-            margin: 0 auto;
-            padding: 5rem 1.5rem 2rem;
-        }
+        /* Wrapper */
+        .brochure { max-width: 760px; margin: 0 auto; padding: 5rem 2rem 3rem; }
 
         /* Header */
-        .br-header {
-            text-align: center;
-            margin-bottom: 1.5rem;
-            padding-bottom: 1.25rem;
-            border-bottom: 1px solid var(--border);
-        }
-        .br-header .company {
-            font-family: var(--font-display);
-            font-size: 1.5rem;
-            font-weight: 700;
-            color: var(--text-primary);
-            margin-bottom: 0.2rem;
-        }
-        .br-header .sub {
-            font-size: 0.82rem;
-            color: var(--text-muted);
-        }
-        .br-header .badge {
-            display: inline-block;
-            margin-top: 0.5rem;
-            padding: 0.2rem 0.75rem;
-            background: var(--toki-navy-pale);
-            border: 1px solid #c7d9f0;
-            border-radius: 20px;
-            font-size: 0.72rem;
-            color: var(--toki-navy);
-            letter-spacing: 0.06em;
-        }
+        .br-header { text-align: center; margin-bottom: 1.75rem; padding-bottom: 1.25rem; border-bottom: 1px solid var(--border); }
+        .br-header .company { font-family: var(--font-display); font-size: 1.5rem; font-weight: 700; color: var(--text-primary); margin-bottom: 0.25rem; }
+        .br-header .sub { font-size: 0.8rem; color: var(--text-muted); }
+        .br-header .badge { display: inline-block; margin-top: 0.5rem; padding: 0.2rem 0.9rem; background: var(--toki-navy-pale); border: 1px solid #c7d9f0; border-radius: 20px; font-size: 0.72rem; color: var(--toki-navy); letter-spacing: 0.06em; }
 
         /* Tagline */
-        .tagline {
-            text-align: center;
-            margin-bottom: 1.5rem;
-        }
-        .tagline h1 {
-            font-family: var(--font-display);
-            font-size: 1.7rem;
-            font-weight: 700;
-            color: var(--toki-navy);
-            margin-bottom: 0.5rem;
-            line-height: 1.5;
-        }
-        .tagline .hook {
-            font-family: var(--font-display);
-            font-size: 1.0rem;
-            color: var(--text-primary);
-            margin-bottom: 0.5rem;
-        }
-        .tagline .hook-sub {
-            font-size: 0.9rem;
-            color: var(--text-secondary);
-            max-width: 620px;
-            margin: 0 auto;
-            line-height: 1.85;
-            text-align: left;
-        }
+        .tagline { text-align: center; margin-bottom: 2rem; }
+        .tagline h1 { font-family: var(--font-display); font-size: 1.8rem; font-weight: 700; color: var(--toki-navy); margin-bottom: 1rem; line-height: 1.4; }
+        .tagline .intro { font-size: 0.92rem; color: var(--text-secondary); max-width: 640px; margin: 0 auto 0.75rem; line-height: 1.9; text-align: left; }
+        .tagline .intro strong { color: var(--text-primary); font-weight: 600; }
 
         /* Section heading */
-        .section-heading {
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
-            margin: 2rem 0 0.75rem;
-        }
-        .section-heading::before {
-            content: '';
-            width: 3px;
-            height: 1.2rem;
-            background: var(--toki-navy);
-            border-radius: 2px;
-            flex-shrink: 0;
-        }
-        .section-heading h2 {
-            font-family: var(--font-display);
-            font-size: 1.1rem;
-            font-weight: 600;
-            color: var(--text-primary);
-        }
+        .section-heading { display: flex; align-items: center; gap: 0.5rem; margin: 0 0 0.85rem; }
+        .section-heading::before { content: ''; width: 3px; height: 1.15rem; background: var(--toki-navy); border-radius: 2px; flex-shrink: 0; }
+        .section-heading h2 { font-family: var(--font-display); font-size: 1.05rem; font-weight: 600; color: var(--text-primary); }
 
-        /* What is TokiStorage */
-        .what-box {
-            background: var(--toki-navy);
-            border-radius: 8px;
-            padding: 1rem 1.4rem;
-            margin-bottom: 1.25rem;
-        }
-        .what-box .what-lead {
-            font-family: var(--font-display);
-            font-size: 1.0rem;
-            font-weight: 700;
-            color: #fff;
-            margin-bottom: 0.4rem;
-        }
-        .what-box .what-desc {
-            font-size: 0.87rem;
-            color: rgba(255,255,255,0.85);
-            line-height: 1.75;
-        }
+        /* Mid band */
+        .mid-band { display: grid; grid-template-columns: 1fr 1fr; gap: 1.75rem; margin-bottom: 2rem; align-items: start; }
+        .walls-stack { display: flex; flex-direction: column; gap: 0.65rem; }
+        .wall-card { display: flex; align-items: flex-start; gap: 0.75rem; background: var(--bg-white); border: 1px solid var(--border); border-radius: 8px; padding: 0.85rem 1rem; }
+        .wall-card .wall-icon { font-size: 1.25rem; flex-shrink: 0; line-height: 1; margin-top: 0.1rem; }
+        .wall-card .wall-name { font-family: var(--font-display); font-weight: 700; color: var(--toki-navy); font-size: 0.9rem; margin-bottom: 0.2rem; }
+        .wall-card .wall-desc { font-size: 0.82rem; color: var(--text-secondary); line-height: 1.65; }
+        .support-box { background: var(--toki-navy-pale); border: 1px solid #c7d9f0; border-radius: 10px; padding: 1.1rem 1.3rem; }
+        .support-box ul { list-style: none; padding: 0; }
+        .support-box li { font-size: 0.88rem; color: var(--text-primary); padding: 0.35rem 0; border-bottom: 1px solid #d4e4f5; line-height: 1.65; display: flex; gap: 0.5rem; align-items: baseline; }
+        .support-box li:last-child { border-bottom: none; padding-bottom: 0; }
+        .support-box li::before { content: '→'; color: var(--toki-blue); font-weight: 700; flex-shrink: 0; }
 
-        /* Walls + Support side by side */
-        .walls-support-grid {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 1.25rem;
-            margin-bottom: 1rem;
-            align-items: start;
-        }
-        .walls-col .section-heading,
-        .support-col .section-heading { margin-top: 0; }
-        .walls-stack {
-            display: flex;
-            flex-direction: column;
-            gap: 0.5rem;
-        }
-        .wall-card {
-            display: flex;
-            align-items: flex-start;
-            gap: 0.6rem;
-            background: var(--bg-white);
-            border: 1px solid var(--border);
-            border-radius: 8px;
-            padding: 0.75rem 0.9rem;
-            text-align: left;
-        }
-        .wall-card .wall-icon { font-size: 1.2rem; flex-shrink: 0; margin-top: 0.1rem; }
-        .wall-card .wall-name {
-            font-family: var(--font-display);
-            font-weight: 700;
-            color: var(--toki-navy);
-            font-size: 0.9rem;
-            margin-bottom: 0.2rem;
-        }
-        .wall-card .wall-desc {
-            font-size: 0.82rem;
-            color: var(--text-secondary);
-            line-height: 1.65;
-        }
-        @media screen and (max-width: 600px) {
-            .walls-support-grid { grid-template-columns: 1fr; }
-        }
-
-        /* Three walls (legacy grid - unused now) */
-        .walls-grid {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 0.75rem;
-            margin-bottom: 0.25rem;
-        }
-        .wall-card {
-            background: var(--bg-white);
-            border: 1px solid var(--border);
-            border-radius: 10px;
-            padding: 1rem 0.85rem 0.85rem;
-            text-align: center;
-            position: relative;
-        }
-        .wall-card .wall-icon {
-            font-size: 1.5rem;
-            margin-bottom: 0.3rem;
-            display: block;
-        }
-        .wall-card .wall-name {
-            font-family: var(--font-display);
-            font-weight: 700;
-            color: var(--toki-navy);
-            font-size: 0.92rem;
-            margin-bottom: 0.3rem;
-        }
-        .wall-card .wall-desc {
-            font-size: 0.76rem;
-            color: var(--text-secondary);
-            line-height: 1.6;
-        }
-        .wall-arrow {
-            text-align: center;
-            font-size: 1.2rem;
-            color: var(--toki-blue);
-            margin: 0.5rem 0 0.25rem;
-        }
-
-        /* Support box */
-        .support-box {
-            background: var(--toki-navy-pale);
-            border: 1px solid #c7d9f0;
-            border-radius: 10px;
-            padding: 1.1rem 1.4rem;
-            margin-bottom: 0.5rem;
-        }
-        .support-box .support-lead {
-            font-family: var(--font-display);
-            font-size: 1.0rem;
-            font-weight: 600;
-            color: var(--toki-navy);
-            margin-bottom: 0.5rem;
-        }
-        .support-box ul {
-            list-style: none;
-            padding: 0;
-        }
-        .support-box li {
-            font-size: 0.87rem;
-            color: var(--text-primary);
-            padding: 0.18rem 0;
-            display: flex;
-            align-items: baseline;
-            gap: 0.5rem;
-        }
-        .support-box li::before {
-            content: '→';
-            color: var(--toki-blue);
-            font-weight: bold;
-            flex-shrink: 0;
-        }
-
-        /* Usecases */
-        .usecase-grid {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 0.75rem;
-            margin-bottom: 0.25rem;
-        }
-        .usecase-card {
-            background: var(--bg-white);
-            border: 1px solid var(--border);
-            border-radius: 8px;
-            padding: 0.9rem 1rem;
-        }
-        .usecase-card .uc-dept {
-            font-size: 0.7rem;
-            color: var(--toki-blue);
-            letter-spacing: 0.08em;
-            margin-bottom: 0.2rem;
-        }
-        .usecase-card .uc-title {
-            font-family: var(--font-display);
-            font-size: 0.9rem;
-            font-weight: 600;
-            color: var(--text-primary);
-            margin-bottom: 0.3rem;
-        }
-        .usecase-card .uc-desc {
-            font-size: 0.77rem;
-            color: var(--text-secondary);
-            line-height: 1.65;
-        }
-
-        /* Three layers */
-        .layers-grid {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 0.75rem;
-            margin-bottom: 0.25rem;
-        }
-        .layer-card {
-            background: var(--toki-blue-pale);
-            border: 1px solid var(--border);
-            border-radius: 10px;
-            padding: 1.0rem 0.85rem;
-            text-align: center;
-        }
-        .layer-card .layer-name {
-            font-family: var(--font-display);
-            font-weight: 600;
-            color: var(--toki-blue);
-            font-size: 0.92rem;
-            margin-bottom: 0.25rem;
-        }
-        .layer-card .layer-sub {
-            font-weight: 500;
-            font-size: 0.78rem;
-            color: var(--text-primary);
-            margin-bottom: 0.25rem;
-        }
-        .layer-card .layer-desc {
-            font-size: 0.73rem;
-            color: var(--text-secondary);
-            line-height: 1.55;
-        }
-
-        /* Usecase bullets */
-        .usecase-bullets {
-            list-style: none;
-            padding: 0;
-            margin-bottom: 0.25rem;
-        }
-        .usecase-bullets li {
-            font-size: 0.87rem;
-            color: var(--text-primary);
-            padding: 0.3rem 0;
-            border-bottom: 1px solid var(--border);
-            line-height: 1.65;
-        }
+        /* Lower band */
+        .lower-band { display: grid; grid-template-columns: 1fr 1fr; gap: 1.75rem; align-items: start; }
+        .usecase-bullets { list-style: none; padding: 0; margin-bottom: 1.5rem; }
+        .usecase-bullets li { font-size: 0.87rem; color: var(--text-primary); padding: 0.35rem 0; border-bottom: 1px solid var(--border); line-height: 1.7; }
         .usecase-bullets li:last-child { border-bottom: none; }
-        .usecase-bullets .uc-label {
-            display: inline-block;
-            font-weight: 600;
-            color: var(--toki-navy);
-            font-size: 0.78rem;
-            margin-right: 0.4rem;
-            white-space: nowrap;
-        }
+        .uc-label { display: inline-block; font-weight: 700; color: var(--toki-navy); font-size: 0.78rem; margin-right: 0.45rem; white-space: nowrap; }
+        .layers-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 0.65rem; }
+        .layer-card { background: var(--toki-blue-pale); border: 1px solid var(--border); border-radius: 8px; padding: 0.85rem 0.7rem; text-align: center; }
+        .layer-card .layer-name { font-family: var(--font-display); font-weight: 700; color: var(--toki-blue); font-size: 0.9rem; margin-bottom: 0.2rem; }
+        .layer-card .layer-sub { font-size: 0.75rem; font-weight: 600; color: var(--text-primary); margin-bottom: 0.25rem; }
+        .layer-card .layer-desc { font-size: 0.72rem; color: var(--text-secondary); line-height: 1.55; }
 
         /* Flow list */
-        .flow-list {
-            list-style: none;
-            padding: 0;
-            margin-bottom: 0.25rem;
-            counter-reset: flow-counter;
-        }
-        .flow-list li {
-            counter-increment: flow-counter;
-            display: flex;
-            gap: 0.6rem;
-            align-items: baseline;
-            font-size: 0.87rem;
-            color: var(--text-primary);
-            padding: 0.3rem 0;
-            border-bottom: 1px solid var(--border);
-            line-height: 1.65;
-        }
+        .flow-list { list-style: none; padding: 0; margin-bottom: 1.25rem; counter-reset: flow; }
+        .flow-list li { counter-increment: flow; display: flex; gap: 0.65rem; align-items: baseline; font-size: 0.87rem; color: var(--text-primary); padding: 0.35rem 0; border-bottom: 1px solid var(--border); line-height: 1.7; }
         .flow-list li:last-child { border-bottom: none; }
-        .flow-list li::before {
-            content: counter(flow-counter);
-            background: var(--toki-navy);
-            color: #fff;
-            font-size: 0.68rem;
-            font-weight: 700;
-            width: 1.35rem;
-            height: 1.35rem;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            flex-shrink: 0;
-            margin-top: 0.1rem;
-        }
-        .flow-list .fl-title {
-            font-weight: 600;
-            color: var(--toki-navy);
-            margin-right: 0.3rem;
-        }
+        .flow-list li::before { content: counter(flow); background: var(--toki-navy); color: #fff; font-size: 0.68rem; font-weight: 700; min-width: 1.4rem; height: 1.4rem; border-radius: 50%; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+        .fl-title { font-weight: 700; color: var(--toki-navy); margin-right: 0.3rem; }
 
         /* Note box */
-        .note-box {
-            background: var(--bg-white);
-            border-left: 3px solid var(--toki-navy);
-            border-radius: 0 8px 8px 0;
-            padding: 0.75rem 1.1rem;
-            margin-bottom: 0.5rem;
-            font-size: 0.85rem;
-            color: var(--text-secondary);
-            line-height: 1.75;
-        }
+        .note-box { background: var(--bg-white); border-left: 3px solid var(--toki-navy); border-radius: 0 8px 8px 0; padding: 0.75rem 1rem; margin-bottom: 1.25rem; font-size: 0.85rem; color: var(--text-secondary); line-height: 1.75; }
 
         /* Contact */
-        .contact-section {
-            margin-top: 1.75rem;
-            padding-top: 1.25rem;
-            border-top: 1px solid var(--border);
-            display: flex;
-            justify-content: space-between;
-            align-items: flex-start;
-            gap: 2rem;
-        }
-        .contact-info .contact-name {
-            font-family: var(--font-display);
-            font-size: 1.05rem;
-            font-weight: 600;
-            color: var(--text-primary);
-            margin-bottom: 0.3rem;
-        }
-        .contact-info p {
-            font-size: 0.83rem;
-            color: var(--text-secondary);
-            line-height: 1.75;
-        }
-        .contact-info a {
-            color: var(--toki-blue);
-            text-decoration: none;
-        }
+        .contact-section { padding-top: 1rem; border-top: 1px solid var(--border); display: flex; justify-content: space-between; align-items: flex-start; gap: 1.5rem; }
+        .contact-info .contact-name { font-family: var(--font-display); font-size: 1rem; font-weight: 600; color: var(--text-primary); margin-bottom: 0.25rem; }
+        .contact-info p { font-size: 0.82rem; color: var(--text-secondary); line-height: 1.75; }
+        .contact-info a { color: var(--toki-blue); text-decoration: none; }
         .contact-info a:hover { text-decoration: underline; }
 
         /* PDF download */
-        .pdf-download {
-            text-align: center;
-            margin-top: 1.75rem;
-            padding: 1.25rem;
-            background: var(--toki-navy-pale);
-            border-radius: 10px;
-        }
-        .pdf-download .pdf-title {
-            font-size: 0.85rem;
-            color: var(--text-secondary);
-            margin-bottom: 0.75rem;
-        }
-        .pdf-buttons {
-            display: flex;
-            justify-content: center;
-            gap: 0.75rem;
-            flex-wrap: wrap;
-        }
-        .pdf-buttons a {
-            display: inline-block;
-            padding: 0.55rem 1.4rem;
-            border-radius: 6px;
-            font-size: 0.88rem;
-            font-weight: 500;
-            text-decoration: none;
-            cursor: pointer;
-        }
-        .pdf-buttons .btn-primary {
-            background: var(--toki-navy);
-            color: #fff;
-        }
-        .pdf-buttons .btn-primary:hover { background: #163354; }
-        .pdf-buttons .btn-other {
-            background: #fff;
-            color: var(--toki-navy);
-            border: 1px solid var(--toki-navy);
-        }
-        .pdf-buttons .btn-other:hover { background: var(--toki-navy-pale); }
+        .pdf-download { text-align: center; margin-top: 2.5rem; padding: 1.25rem; background: var(--toki-navy-pale); border-radius: 10px; }
+        .pdf-download .pdf-title { font-size: 0.85rem; color: var(--text-secondary); margin-bottom: 0.75rem; }
+        .pdf-buttons { display: flex; justify-content: center; gap: 0.75rem; flex-wrap: wrap; }
+        .pdf-buttons a { display: inline-block; padding: 0.55rem 1.4rem; border-radius: 6px; font-size: 0.88rem; font-weight: 500; text-decoration: none; cursor: pointer; }
+        .btn-primary { background: var(--toki-navy); color: #fff; }
+        .btn-primary:hover { background: #163354; }
+        .btn-other { background: #fff; color: var(--toki-navy); border: 1px solid var(--toki-navy); }
+        .btn-other:hover { background: var(--toki-navy-pale); }
 
         /* Footer */
-        .br-footer {
-            text-align: center;
-            margin-top: 1.75rem;
-            padding: 1.25rem 0;
-            font-size: 0.78rem;
-            color: var(--text-muted);
-        }
-        .br-footer a {
-            color: var(--toki-blue);
-            text-decoration: none;
-            margin: 0 0.5rem;
-        }
+        .br-footer { text-align: center; margin-top: 1.75rem; padding: 1.25rem 0; font-size: 0.78rem; color: var(--text-muted); }
+        .br-footer a { color: var(--toki-blue); text-decoration: none; margin: 0 0.5rem; }
         .br-footer a:hover { text-decoration: underline; }
 
-        /* Print-lower: screen = stacked, print = 2-col grid */
-        .print-lower {
-            display: flex;
-            flex-direction: column;
-        }
-        .col-left, .col-right { width: 100%; }
-        /* usecase-list = same as usecase-grid on screen */
-        .usecase-list {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 0.75rem;
-            margin-bottom: 0.25rem;
-        }
-        @media screen and (max-width: 600px) {
-            .usecase-list { grid-template-columns: 1fr; }
-        }
+        .print-only { display: none; }
 
-        @media screen and (max-width: 600px) {
-            .walls-grid { grid-template-columns: 1fr; }
-            .usecase-grid { grid-template-columns: 1fr; }
+        @media screen and (max-width: 640px) {
+            .mid-band, .lower-band { grid-template-columns: 1fr; }
             .layers-grid { grid-template-columns: 1fr; }
-            .contact-section { flex-direction: column; }
-            .tagline h1 { font-size: 1.35rem; }
-            .br-header .company { font-size: 1.25rem; }
+            .tagline h1 { font-size: 1.4rem; }
         }
 
-        /* Portrait print */
+        /* Print */
         @media print {
             .br-nav, .pdf-download, .br-footer { display: none; }
             .brochure { padding: 0; max-width: 100%; }
-            body {
-                background: white;
-                line-height: 1.35;
-                font-size: 11.5px;
-                -webkit-print-color-adjust: exact;
-                print-color-adjust: exact;
-                --text-secondary: #334155;
-                --text-muted: #64748B;
-            }
-            .br-header { margin-bottom: 0.2rem; padding-bottom: 0.2rem; }
-            .br-header .company { font-size: 1.1rem; }
-            .br-header .sub { font-size: 0.6rem; }
-            .br-header .badge { padding: 0.1rem 0.5rem; font-size: 0.6rem; margin-top: 0.2rem; }
-            .tagline { margin-bottom: 0.25rem; }
-            .tagline h1 { font-size: 1.05rem; margin-bottom: 0.1rem; line-height: 1.35; }
-            .tagline .hook { font-size: 0.75rem; margin-bottom: 0.08rem; }
-            .tagline .hook-sub { font-size: 0.68rem; line-height: 1.45; }
-            .section-heading { margin: 0.3rem 0 0.15rem; }
-            .section-heading h2 { font-size: 0.82rem; }
-            .walls-support-grid { gap: 0.5rem; margin-bottom: 0.3rem; }
-            .walls-stack { gap: 0.2rem; }
-            .wall-card { padding: 0.3rem 0.45rem; border-radius: 5px; gap: 0.4rem; }
-            .wall-card .wall-icon { font-size: 0.85rem; }
-            .wall-card .wall-name { font-size: 0.7rem; margin-bottom: 0.08rem; }
-            .wall-card .wall-desc { font-size: 0.62rem; line-height: 1.3; }
-            .what-box { padding: 0.45rem 0.8rem; margin-bottom: 0.3rem; border-radius: 6px; }
-            .what-box .what-lead { font-size: 0.8rem; margin-bottom: 0.15rem; }
-            .what-box .what-desc { font-size: 0.64rem; line-height: 1.5; }
-            .wall-card { padding: 0.3rem 0.35rem; border-radius: 5px; }
-            .wall-card .wall-icon { font-size: 0.9rem; margin-bottom: 0.05rem; }
-            .wall-card .wall-name { font-size: 0.72rem; margin-bottom: 0.1rem; }
-            .wall-card .wall-desc { font-size: 0.62rem; line-height: 1.3; }
-            .wall-arrow { margin: 0.12rem 0 0.08rem; font-size: 0.85rem; }
-            .support-box { padding: 0.35rem 0.65rem; margin-bottom: 0.15rem; }
-            .support-box .support-lead { font-size: 0.76rem; margin-bottom: 0.15rem; }
-            .support-box li { font-size: 0.64rem; padding: 0.02rem 0; line-height: 1.3; }
-            .usecase-grid { gap: 0.25rem; margin-bottom: 0.15rem; grid-template-columns: repeat(3, 1fr); }
-            .usecase-card { padding: 0.35rem 0.45rem; }
-            .usecase-card .uc-dept { font-size: 0.58rem; }
-            .usecase-card .uc-title { font-size: 0.72rem; margin-bottom: 0.1rem; }
-            .usecase-card .uc-desc { font-size: 0.62rem; line-height: 1.3; }
-            .layers-grid { gap: 0.25rem; margin-bottom: 0.15rem; }
-            .layer-card { padding: 0.35rem 0.3rem; }
-            .layer-card .layer-name { font-size: 0.75rem; margin-bottom: 0.1rem; }
-            .layer-card .layer-sub { font-size: 0.63rem; margin-bottom: 0.1rem; }
-            .layer-card .layer-desc { font-size: 0.6rem; line-height: 1.3; }
-            .usecase-bullets { margin-bottom: 0.15rem; }
-            .usecase-bullets li { font-size: 0.62rem; padding: 0.12rem 0; line-height: 1.3; }
-            .usecase-bullets .uc-label { font-size: 0.6rem; }
-            .flow-list { margin-bottom: 0.15rem; }
-            .flow-list li { font-size: 0.62rem; padding: 0.12rem 0; line-height: 1.3; gap: 0.35rem; }
-            .flow-list li::before { width: 1rem; height: 1rem; font-size: 0.55rem; }
-            .flow-list .fl-title { font-size: 0.62rem; }
-            .note-box { padding: 0.25rem 0.6rem; font-size: 0.62rem; line-height: 1.4; margin-top: 0.3rem; margin-bottom: 0.2rem; }
-            .contact-section { margin-top: 0.35rem; padding-top: 0.3rem; flex-direction: row; align-items: flex-end; gap: 0.75rem; }
-            .contact-info .contact-name { font-size: 0.76rem; }
-            .contact-info p { font-size: 0.62rem; line-height: 1.4; }
+            body { background: white; line-height: 1.32; font-size: 10.5px; -webkit-print-color-adjust: exact; print-color-adjust: exact; --text-secondary: #334155; }
+            .br-header { margin-bottom: 0.2rem; padding-bottom: 0.18rem; }
+            .br-header .company { font-size: 1rem; }
+            .br-header .sub { font-size: 0.58rem; }
+            .br-header .badge { font-size: 0.58rem; padding: 0.06rem 0.45rem; margin-top: 0.12rem; }
+            .tagline { margin-bottom: 0.3rem; }
+            .tagline h1 { font-size: 1rem; margin-bottom: 0.25rem; }
+            .tagline .intro { font-size: 0.62rem; line-height: 1.48; margin-bottom: 0.18rem; max-width: 100%; }
+            .section-heading { margin-bottom: 0.2rem; }
+            .section-heading h2 { font-size: 0.75rem; }
+            .mid-band { gap: 0.55rem; margin-bottom: 0.35rem; }
+            .walls-stack { gap: 0.18rem; }
+            .wall-card { padding: 0.25rem 0.38rem; border-radius: 4px; gap: 0.3rem; }
+            .wall-card .wall-icon { font-size: 0.82rem; }
+            .wall-card .wall-name { font-size: 0.65rem; margin-bottom: 0.04rem; }
+            .wall-card .wall-desc { font-size: 0.6rem; line-height: 1.28; }
+            .support-box { padding: 0.3rem 0.55rem; }
+            .support-box li { font-size: 0.6rem; padding: 0.1rem 0; line-height: 1.28; gap: 0.28rem; }
+            .lower-band { gap: 0.55rem; }
+            .usecase-bullets li { font-size: 0.6rem; padding: 0.08rem 0; line-height: 1.28; }
+            .uc-label { font-size: 0.58rem; margin-right: 0.3rem; }
+            .usecase-bullets { margin-bottom: 0.3rem; }
+            .layers-grid { gap: 0.18rem; }
+            .layer-card { padding: 0.28rem 0.22rem; border-radius: 4px; }
+            .layer-card .layer-name { font-size: 0.68rem; margin-bottom: 0.06rem; }
+            .layer-card .layer-sub { font-size: 0.58rem; margin-bottom: 0.06rem; }
+            .layer-card .layer-desc { font-size: 0.56rem; line-height: 1.28; }
+            .flow-list li { font-size: 0.6rem; padding: 0.08rem 0; line-height: 1.28; gap: 0.28rem; }
+            .flow-list li::before { min-width: 1rem; height: 1rem; font-size: 0.52rem; }
+            .fl-title { font-size: 0.6rem; }
+            .flow-list { margin-bottom: 0.25rem; }
+            .note-box { padding: 0.22rem 0.5rem; font-size: 0.58rem; line-height: 1.38; margin-bottom: 0.25rem; }
+            .contact-section { padding-top: 0.28rem; gap: 0.6rem; }
+            .contact-info .contact-name { font-size: 0.72rem; }
+            .contact-info p { font-size: 0.58rem; line-height: 1.42; }
             .print-only { display: block; }
-
-            /* 2-col explicit grid for lower half */
-            .print-lower {
-                display: grid;
-                grid-template-columns: 1fr 1fr;
-                gap: 5mm;
-                margin-top: 0.35rem;
-                align-items: start;
-            }
-            .col-left, .col-right { width: 100%; }
-            .print-only { display: block; }
-
-        /* Landscape print - grid already handles 2-col, just set page size */
+        }
     </style>
-    <style id="portrait-page-style">
-        @page { size: A4; margin: 9mm 11mm; }
-    </style>
-    <style id="landscape-page-style" media="not all">
-        @page { size: A4 landscape; margin: 8mm 10mm; }
-    </style>
+    <style id="portrait-page-style">@page { size: A4; margin: 9mm 11mm; }</style>
+    <style id="landscape-page-style" media="not all">@page { size: A4 landscape; margin: 8mm 10mm; }</style>
     <meta property="og:type" content="article">
     <meta property="og:title" content="行政DXブローシャ | トキストレージ">
     <meta property="og:description" content="行政DXの三つの壁——効果の定量化・予算編成・法整備——を伴奏支援するトキストレージ。">
     <meta property="og:url" content="https://tokistorage.github.io/lp/brochure-government-dx.html">
     <meta property="og:site_name" content="トキストレージ">
     <meta name="twitter:card" content="summary">
+    <meta property="og:image" content="https://tokistorage.github.io/lp/asset/tokistorage-icon-512.png">
     <link rel="alternate" hreflang="ja" href="https://tokistorage.github.io/lp/brochure-government-dx.html">
     <link rel="canonical" href="https://tokistorage.github.io/lp/brochure-government-dx.html">
 </head>
@@ -663,118 +194,118 @@
             TokiStorage ／ トキストレージ
         </div>
         <div class="sub">Voice Preservation for 1,000 Years</div>
-        <div class="sub" style="font-size: 0.65rem; margin-top: 0.15rem; color: var(--text-secondary);">国立国会図書館収蔵事業 ／ 伊勢神宮式年遷宮奉賛 ／ 比叡山延暦寺不滅の法灯奉賛</div>
+        <div class="sub" style="font-size:0.65rem;margin-top:0.15rem;color:var(--text-secondary);">国立国会図書館収蔵事業 ／ 伊勢神宮式年遷宮奉賛 ／ 比叡山延暦寺不滅の法灯奉賛</div>
         <span class="badge">行政 DX 支援</span>
     </div>
 
     <div class="tagline">
         <h1>先進的すぎる、はいつか「当たり前」になる。</h1>
-        <p class="hook-sub">公文書は残る。でも「どう生きたか」は残らない。<br>トキストレージは、声・顔・ことばを物理・国家・デジタルの三層で保管し、行政記録に「人の記憶」を加える新しいインフラです。国立国会図書館収蔵事業として稼働中。QRコード1枚から、今日から導入できます。</p>
-        <p class="hook-sub" style="margin-top:0.6rem;">「アイデアはいい。でも効果が測れない、予算が組めない、法整備も要る。」<br>その声を、私たちは何度も聞いてきました。三つの壁を、一緒に越えます。</p>
+        <p class="intro"><strong>公文書は残る。でも「どう生きたか」は残らない。</strong><br>
+        トキストレージは、声・顔・ことばを物理・国家・デジタルの三層で保管し、行政記録に「人の記憶」を加える新しいインフラです。国立国会図書館収蔵事業として稼働中。QRコード1枚から、今日から導入できます。</p>
+        <p class="intro">「アイデアはいい。でも効果が測れない、予算が組めない、法整備も要る。」<br>
+        その声を、私たちは何度も聞いてきました。三つの壁を、一緒に越えます。</p>
     </div>
 
-    <!-- Three Walls + Support: 2-col -->
-    <div class="walls-support-grid">
-      <div class="walls-col">
-        <div class="section-heading"><h2>行政DXの三つの壁</h2></div>
-        <div class="walls-stack">
-            <div class="wall-card">
-                <span class="wall-icon">📊</span>
-                <div class="wall-name">①　効果の定量化</div>
-                <div class="wall-desc">「便利そう」だけでは稟議が通らない。保存年数・閲覧回数・人件費削減・防災価値を数字で示す必要がある。</div>
-            </div>
-            <div class="wall-card">
-                <span class="wall-icon">📋</span>
-                <div class="wall-name">②　予算編成</div>
-                <div class="wall-desc">単年度予算と複数年保管の構造的な乖離。補助金・交付金の活用可能性と費用対効果の説明資料が必要になる。</div>
-            </div>
-            <div class="wall-card">
-                <span class="wall-icon">⚖️</span>
-                <div class="wall-name">③　法整備・規制</div>
-                <div class="wall-desc">個人情報保護法・公文書管理法・著作権——既存制度との整合性確認と、必要に応じた条例・要綱の整備が求められる。</div>
+    <!-- Mid band: walls | support -->
+    <div class="mid-band">
+        <div class="walls-col">
+            <div class="section-heading"><h2>行政DXの三つの壁</h2></div>
+            <div class="walls-stack">
+                <div class="wall-card">
+                    <span class="wall-icon">📊</span>
+                    <div class="wall-body">
+                        <div class="wall-name">①　効果の定量化</div>
+                        <div class="wall-desc">「便利そう」だけでは稟議が通らない。保存年数・閲覧回数・人件費削減・防災価値を数字で示す必要がある。</div>
+                    </div>
+                </div>
+                <div class="wall-card">
+                    <span class="wall-icon">📋</span>
+                    <div class="wall-body">
+                        <div class="wall-name">②　予算編成</div>
+                        <div class="wall-desc">単年度予算と複数年保管の構造的な乖離。補助金・交付金の活用可能性と費用対効果の説明資料が必要になる。</div>
+                    </div>
+                </div>
+                <div class="wall-card">
+                    <span class="wall-icon">⚖️</span>
+                    <div class="wall-body">
+                        <div class="wall-name">③　法整備・規制</div>
+                        <div class="wall-desc">個人情報保護法・公文書管理法・著作権——既存制度との整合性確認と、必要に応じた条例・要綱の整備が求められる。</div>
+                    </div>
+                </div>
             </div>
         </div>
-      </div>
-      <div class="support-col">
-        <div class="section-heading"><h2>三つの壁すべてに、伴奏支援します。</h2></div>
-        <div class="support-box">
-            <ul>
-                <li>① への対応——保存年数・閲覧回数・人件費削減・観光・防災価値を事前に試算、稟議資料として可視化</li>
-                <li>② への対応——補助金・交付金の調査、議会説明資料・仕様書・見積書のひな形をともに作成</li>
-                <li>③ への対応——個人情報・著作権・公文書管理法との適合確認、条例・要綱整備の論点提示</li>
-                <li>まず小さく始める——PoC（小規模実証）で住民・議員が体験。「先進的すぎる」が「やってみよう」に変わります</li>
+        <div class="support-col">
+            <div class="section-heading"><h2>三つの壁すべてに、伴奏支援します。</h2></div>
+            <div class="support-box">
+                <ul>
+                    <li>① への対応——保存年数・閲覧回数・人件費削減・観光・防災価値を事前に試算、稟議資料として可視化</li>
+                    <li>② への対応——補助金・交付金の調査、議会説明資料・仕様書・見積書のひな形をともに作成</li>
+                    <li>③ への対応——個人情報・著作権・公文書管理法との適合確認、条例・要綱整備の論点提示</li>
+                    <li>まず小さく始める——PoC（小規模実証）で住民・議員が体験。「先進的すぎる」が「やってみよう」に変わります</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <!-- Lower band: usecases+layers | steps+contact -->
+    <div class="lower-band">
+        <div class="col-left">
+            <div class="section-heading"><h2>行政向けユースケース（例）</h2></div>
+            <ul class="usecase-bullets">
+                <li><span class="uc-label">消防・防災</span>消防音楽隊の演奏・殉職者への追悼メッセージ・避難訓練の記録をQRで永続保管。碑やパネルにQRを付与することで、いつでも「声」が蘇る。</li>
+                <li><span class="uc-label">文化財・教育</span>石碑・建造物・伝統芸能の音声を三層保管。国立国会図書館収蔵で国家記録に昇格。物理劣化後も完全再現が可能。</li>
+                <li><span class="uc-label">首長室・議会</span>就任挨拶・施政方針演説をQRで庁舎に掲示。100年後の市民が同じ声を聞ける、まちの記憶インフラ。</li>
+                <li><span class="uc-label">広報・移住促進</span>語り部・移住者の声と顔をQRに。観光案内板やふるさと納税ページに組み込み、「生きた情報」として届ける。</li>
+                <li><span class="uc-label">福祉・高齢者支援</span>住民の「人生の声」をQRに残す公的支援事業。家族への贈り物であり、地域の記憶として100年後に残る。</li>
             </ul>
+            <div class="section-heading"><h2>三層分散保管アーキテクチャ</h2></div>
+            <div class="layers-grid">
+                <div class="layer-card">
+                    <div class="layer-name">物理層</div>
+                    <div class="layer-sub">石英ガラス・UVラミネート</div>
+                    <div class="layer-desc">手元に実物が残る<br>石英1000年・UV更新可<br>佐渡島・マウイ島に分散</div>
+                </div>
+                <div class="layer-card">
+                    <div class="layer-name">国家層</div>
+                    <div class="layer-sub">国立国会図書館</div>
+                    <div class="layer-desc">国家が保証する永続性<br>国会図書館法による永久保存<br>収集確認済・音声も対象</div>
+                </div>
+                <div class="layer-card">
+                    <div class="layer-name">民間層</div>
+                    <div class="layer-sub">GitHub</div>
+                    <div class="layer-desc">世界中からいつでも閲覧<br>無料公開基盤で永続管理<br>追加料金・維持費なし</div>
+                </div>
+            </div>
         </div>
-      </div>
+        <div class="col-right">
+            <div class="section-heading"><h2>伴奏支援のステップ</h2></div>
+            <ol class="flow-list">
+                <li><span class="fl-title">ヒアリング・現状整理</span>「何を残したいか」「どんな壁があるか」を聞かせてください。この日から費用はゼロ、リスクもゼロです。</li>
+                <li><span class="fl-title">期待効果の試算・資料化</span>保存年数・コスト削減・活用シナリオを数値で整理。議会説明・稟議に使える資料をともに作ります。</li>
+                <li><span class="fl-title">PoC検討合意書の締結</span>1枚・双方サイン・費用負担はトキストレージ。この合意書が「動いている案件」として庁内で扱われるようになります。</li>
+                <li><span class="fl-title">PoC（小規模実証）</span>1件・1イベントから実証。住民・議員が実際に体験することで、予算化への理解が生まれます。</li>
+                <li><span class="fl-title">予算化・本格導入</span>補助金・交付金の活用を含め、次年度予算計上を支援。法的論点の整理も並走します。</li>
+            </ol>
+            <div class="note-box">
+                導入費用ゼロ。PoC費用はトキストレージが負担。<br>
+                「話してみる」だけで、一緒に動き始められます。
+            </div>
+            <div class="contact-section">
+                <div class="contact-info">
+                    <div class="contact-name">TokiStorage ／ トキストレージ</div>
+                    <p style="font-size:0.7rem;color:var(--text-secondary);margin:0.15rem 0 0.3rem;">国立国会図書館収蔵事業 ／ 個人事業開業届出済</p>
+                    <p>代表：佐藤卓也</p>
+                    <p>〒279-0014 千葉県浦安市明海2-11-13</p>
+                    <p><a href="https://tokistorage.github.io/lp/">tokistorage.github.io/lp/</a></p>
+                    <p><a href="mailto:tokistorage1000@gmail.com">tokistorage1000@gmail.com</a></p>
+                </div>
+                <div class="print-only" style="text-align:center;flex-shrink:0;">
+                    <img src="asset/qr-contact.png" alt="お問い合わせ" style="width:80px;height:80px;">
+                    <p style="font-size:0.7rem;font-weight:500;margin-top:0.15rem;color:var(--text-primary);">導入相談</p>
+                </div>
+            </div>
+        </div>
     </div>
-
-    <!-- Print 2-col layout wrapper -->
-    <div class="print-lower">
-
-      <!-- LEFT COLUMN -->
-      <div class="col-left">
-        <div class="section-heading"><h2>行政向けユースケース（例）</h2></div>
-        <ul class="usecase-bullets">
-            <li><span class="uc-label">消防・防災</span>消防音楽隊の演奏・殉職者への追悼メッセージ・避難訓練の記録をQRで永続保管。碑やパネルにQRを付与することで、いつでも「声」が蘇る。</li>
-            <li><span class="uc-label">文化財・教育</span>石碑・建造物・伝統芸能の音声を三層保管。国立国会図書館収蔵で国家記録に昇格。物理的な劣化後も完全再現が可能。</li>
-            <li><span class="uc-label">首長室・議会</span>就任挨拶・施政方針演説をQRで庁舎に掲示。100年後の市民が同じ声を聞ける、まちの記憶インフラ。</li>
-            <li><span class="uc-label">広報・移住促進</span>語り部・移住者の声と顔をQRに。観光案内板やふるさと納税ページに組み込み、「生きた情報」として届ける。</li>
-            <li><span class="uc-label">福祉・高齢者支援</span>住民の「人生の声」をQRに残す公的支援事業。家族への贈り物であり、地域の記憶として100年後に残る。</li>
-        </ul>
-
-        <div class="section-heading" style="margin-top:0.75rem;"><h2>三層分散保管アーキテクチャ</h2></div>
-        <div class="layers-grid">
-            <div class="layer-card">
-                <div class="layer-name">物理層</div>
-                <div class="layer-sub">石英ガラス・UVラミネート</div>
-                <div class="layer-desc">手元に実物が残る<br>石英1000年・UV更新可<br>佐渡島・マウイ島に分散</div>
-            </div>
-            <div class="layer-card">
-                <div class="layer-name">国家層</div>
-                <div class="layer-sub">国立国会図書館</div>
-                <div class="layer-desc">国家が保証する永続性<br>国会図書館法による永久保存<br>収集確認済・音声も対象</div>
-            </div>
-            <div class="layer-card">
-                <div class="layer-name">民間層</div>
-                <div class="layer-sub">GitHub</div>
-                <div class="layer-desc">世界中からいつでも閲覧<br>無料公開基盤で永続管理<br>追加料金・維持費なし</div>
-            </div>
-        </div>
-      </div><!-- /.col-left -->
-
-      <!-- RIGHT COLUMN -->
-      <div class="col-right">
-        <div class="section-heading"><h2>伴奏支援のステップ</h2></div>
-        <ol class="flow-list">
-            <li><span class="fl-title">ヒアリング・現状整理</span>「何を残したいか」「どんな壁があるか」を聞かせてください。この日から費用はゼロ、リスクもゼロです。</li>
-            <li><span class="fl-title">期待効果の試算・資料化</span>保存年数・コスト削減・活用シナリオを数値で整理。議会説明・稟議に使える資料をともに作ります。</li>
-            <li><span class="fl-title">PoC検討合意書の締結</span>1枚・双方サイン・費用負担はトキストレージ。この合意書が「動いている案件」として庁内で扱われるようになります。</li>
-            <li><span class="fl-title">PoC（小規模実証）</span>1件・1イベントから実証。住民・議員が実際に体験することで、予算化への理解が生まれます。</li>
-            <li><span class="fl-title">予算化・本格導入</span>補助金・交付金の活用を含め、次年度予算計上を支援。法的論点の整理も並走します。</li>
-        </ol>
-
-        <div class="note-box" style="margin-top:0.6rem;">
-            導入費用ゼロ。PoC費用はトキストレージが負担。<br>
-            「話してみる」だけで、一緒に動き始められます。
-        </div>
-
-        <div class="contact-section">
-            <div class="contact-info">
-                <div class="contact-name">TokiStorage ／ トキストレージ</div>
-                <p style="font-size: 0.7rem; color: var(--text-secondary); margin: 0.15rem 0 0.25rem;">国立国会図書館収蔵事業 ／ 個人事業開業届出済</p>
-                <p>代表：佐藤卓也</p>
-                <p>〒279-0014 千葉県浦安市明海2-11-13</p>
-                <p><a href="https://tokistorage.github.io/lp/">tokistorage.github.io/lp/</a></p>
-                <p><a href="mailto:tokistorage1000@gmail.com">tokistorage1000@gmail.com</a></p>
-            </div>
-            <div class="print-only" style="text-align:center; flex-shrink:0;">
-                <img src="asset/qr-contact.png" alt="お問い合わせフォームへのQRコード" style="width:80px;height:80px;">
-                <p style="font-size:0.7rem;font-weight:500;margin-top:0.15rem;color:var(--text-primary);">導入相談</p>
-            </div>
-        </div>
-      </div><!-- /.col-right -->
-
-    </div><!-- /.print-lower -->
 
     <div class="pdf-download">
         <p class="pdf-title">印刷用A4ブローシャ（PDF）</p>
@@ -785,15 +316,13 @@
     </div>
 
     <footer class="br-footer">
-        <p style="font-family: Georgia, 'Times New Roman', serif; font-size: 0.8rem; color: #94A3B8; font-style: italic; margin-bottom: 0.8rem;">
-            「先進的すぎる」は、誰かが最初に歩んだ道がある。
-        </p>
+        <p style="font-family:Georgia,serif;font-size:0.8rem;color:#94A3B8;font-style:italic;margin-bottom:0.8rem;">「先進的すぎる」は、誰かが最初に歩んだ道がある。</p>
         <p>
             <a href="brochure.html">← ブローシャ一覧</a>
             <a href="government-proposal.html">行政提案書</a>
             <a href="index.html">トップページ</a>
         </p>
-        <p style="margin-top: 0.75rem;">&copy; TokiStorage. All rights reserved.</p>
+        <p style="margin-top:0.75rem;">&copy; TokiStorage. All rights reserved.</p>
     </footer>
 
 </main>
