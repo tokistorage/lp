@@ -17,6 +17,13 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
 
+      - name: Cache apt packages
+        uses: actions/cache@v4
+        id: cache-apt
+        with:
+          path: /var/cache/apt/archives
+          key: ${{ runner.os }}-apt-chromium-fonts
+
       - name: Install Chromium and Japanese fonts
         run: |
           sudo apt-get update -qq
