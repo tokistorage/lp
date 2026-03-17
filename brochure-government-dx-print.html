@@ -328,12 +328,18 @@
 
 <div class="screen-only">
     <p>🖨️ A4横（297×210mm）印刷専用レイアウト</p>
-    <div style="display:flex;gap:8px;">
+    <div style="display:flex;gap:8px;align-items:center;">
         <a href="brochure-government-dx.html" class="btn-back">← WEB版に戻る</a>
-        <a href="asset/brochure-government-dx.pdf" download class="btn-print">⬇ PDFダウンロード</a>
-        <button class="btn-print" style="background:#475569;" onclick="window.print()">🖨 印刷する</button>
+        <a id="btn-download" href="asset/brochure-government-dx.pdf" download class="btn-print" style="display:none;">⬇ PDFダウンロード</a>
+        <button class="btn-print" onclick="window.print()">🖨 印刷する</button>
     </div>
 </div>
+<script>
+// PDFが存在するか確認してダウンロードボタンを表示
+fetch('asset/brochure-government-dx.pdf', { method: 'HEAD' })
+  .then(r => { if (r.ok) document.getElementById('btn-download').style.display = 'inline-block'; })
+  .catch(() => {});
+</script>
 
 <div class="page">
 
