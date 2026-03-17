@@ -20,6 +20,9 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
 
+      - name: Install puppeteer locally
+        run: npm install puppeteer --prefix /tmp/pdf
+
       - name: Serve HTML locally
         run: |
           npx http-server . -p 8080 --silent &
@@ -28,7 +31,7 @@ jobs:
       - name: Generate PDF
         run: |
           node - << 'EOF'
-          const puppeteer = require('puppeteer');
+          const puppeteer = require('/tmp/pdf/node_modules/puppeteer');
           const fs = require('fs');
 
           (async () => {
