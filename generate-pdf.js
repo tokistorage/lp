@@ -143,6 +143,13 @@ async function generatePDF(page, url, outDir, filename, opts) {
         marginTop: 0, marginBottom: 0, marginLeft: 0, marginRight: 0,
     });
 
+    // Government DX brochure
+    await generatePDF(page, BASE + '/brochure-government-dx-print.html', 'asset', 'brochure-government-dx.pdf', {
+        landscape: true,
+        paperWidth: 11.69, paperHeight: 8.27,
+        marginTop: 0, marginBottom: 0, marginLeft: 0, marginRight: 0,
+    });
+
     await browser.close();
-    console.log('Done — 20 PDFs generated');
+    console.log('Done — 21 PDFs generated');
 })();
