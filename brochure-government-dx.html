@@ -305,31 +305,56 @@
             line-height: 1.55;
         }
 
-        /* Flow / Process */
-        .flow-box {
-            background: var(--bg-white);
-            border: 1px solid var(--border);
-            border-radius: 10px;
-            padding: 1rem 1.3rem;
-            margin-bottom: 0.5rem;
+        /* Usecase bullets */
+        .usecase-bullets {
+            list-style: none;
+            padding: 0;
+            margin-bottom: 0.25rem;
         }
-        .flow-steps {
+        .usecase-bullets li {
+            font-size: 0.87rem;
+            color: var(--text-primary);
+            padding: 0.3rem 0;
+            border-bottom: 1px solid var(--border);
+            line-height: 1.65;
+        }
+        .usecase-bullets li:last-child { border-bottom: none; }
+        .usecase-bullets .uc-label {
+            display: inline-block;
+            font-weight: 600;
+            color: var(--toki-navy);
+            font-size: 0.78rem;
+            margin-right: 0.4rem;
+            white-space: nowrap;
+        }
+
+        /* Flow list */
+        .flow-list {
+            list-style: none;
+            padding: 0;
+            margin-bottom: 0.25rem;
+            counter-reset: flow-counter;
+        }
+        .flow-list li {
+            counter-increment: flow-counter;
             display: flex;
-            flex-direction: column;
-            gap: 0.4rem;
+            gap: 0.6rem;
+            align-items: baseline;
+            font-size: 0.87rem;
+            color: var(--text-primary);
+            padding: 0.3rem 0;
+            border-bottom: 1px solid var(--border);
+            line-height: 1.65;
         }
-        .flow-step {
-            display: flex;
-            align-items: flex-start;
-            gap: 0.75rem;
-        }
-        .flow-step .step-num {
+        .flow-list li:last-child { border-bottom: none; }
+        .flow-list li::before {
+            content: counter(flow-counter);
             background: var(--toki-navy);
             color: #fff;
-            font-size: 0.72rem;
-            font-weight: 600;
-            width: 1.4rem;
-            height: 1.4rem;
+            font-size: 0.68rem;
+            font-weight: 700;
+            width: 1.35rem;
+            height: 1.35rem;
             border-radius: 50%;
             display: flex;
             align-items: center;
@@ -337,21 +362,10 @@
             flex-shrink: 0;
             margin-top: 0.1rem;
         }
-        .flow-step .step-body .step-title {
-            font-size: 0.88rem;
+        .flow-list .fl-title {
             font-weight: 600;
-            color: var(--text-primary);
-        }
-        .flow-step .step-body .step-desc {
-            font-size: 0.78rem;
-            color: var(--text-secondary);
-            line-height: 1.55;
-        }
-        .flow-connector {
-            margin-left: 0.66rem;
-            width: 2px;
-            height: 0.4rem;
-            background: var(--border);
+            color: var(--toki-navy);
+            margin-right: 0.3rem;
         }
 
         /* Note box */
@@ -517,13 +531,11 @@
             .layer-card .layer-name { font-size: 0.8rem; margin-bottom: 0.15rem; }
             .layer-card .layer-sub { font-size: 0.68rem; margin-bottom: 0.15rem; }
             .layer-card .layer-desc { font-size: 0.63rem; line-height: 1.35; }
-            .note-box { padding: 0.3rem 0.7rem; font-size: 0.65rem; line-height: 1.45; margin-bottom: 0.25rem; }
-            .flow-box { padding: 0.35rem 0.65rem; margin-bottom: 0.2rem; }
-            .flow-step { gap: 0.5rem; }
-            .flow-step .step-num { width: 1.1rem; height: 1.1rem; font-size: 0.6rem; }
-            .flow-step .step-body .step-title { font-size: 0.72rem; }
-            .flow-step .step-body .step-desc { font-size: 0.63rem; line-height: 1.32; }
-            .flow-connector { height: 0.2rem; margin-left: 0.54rem; }
+            .usecase-bullets li { font-size: 0.65rem; padding: 0.18rem 0; line-height: 1.35; }
+            .usecase-bullets .uc-label { font-size: 0.63rem; }
+            .flow-list li { font-size: 0.65rem; padding: 0.18rem 0; line-height: 1.35; gap: 0.4rem; }
+            .flow-list li::before { width: 1.1rem; height: 1.1rem; font-size: 0.58rem; }
+            .flow-list .fl-title { font-size: 0.65rem; }
             .contact-section { margin-top: 0.5rem; padding-top: 0.45rem; flex-direction: row; align-items: flex-end; gap: 1.5rem; }
             .contact-info .contact-name { font-size: 0.82rem; }
             .contact-info p { font-size: 0.68rem; line-height: 1.5; }
@@ -590,13 +602,9 @@
     </div>
 
     <div class="tagline">
-        <h1>先進的すぎる、は<br>いつか「当たり前」になる。</h1>
+        <h1>先進的すぎる、はいつか「当たり前」になる。</h1>
         <p class="hook">行政DXには、技術より先に越えるべき壁がある。</p>
-        <p class="hook-sub">
-            「アイデアはいい。でも効果が測れない、予算が組めない、法整備も要る。」<br>
-            その声に、私たちは寄り添います。<br>
-            道具を売るのではなく、前に進む過程を一緒に歩む——それがトキストレージのスタンスです。
-        </p>
+        <p class="hook-sub">「効果が測れない、予算が組めない、法整備も要る。」——その三つの壁を、一緒に越えます。</p>
     </div>
 
     <!-- Three Walls -->
@@ -605,17 +613,17 @@
         <div class="wall-card">
             <span class="wall-icon">📊</span>
             <div class="wall-name">①　効果の定量化</div>
-            <div class="wall-desc">「便利そう」だけでは稟議が通らない。住民への価値・コスト削減・保存年数を数字で示す必要がある。</div>
+            <div class="wall-desc">住民価値・コスト削減・保存年数を数字で示さないと稟議が通らない。</div>
         </div>
         <div class="wall-card">
             <span class="wall-icon">📋</span>
             <div class="wall-name">②　予算編成</div>
-            <div class="wall-desc">単年度予算と複数年保管の乖離。補助金・交付金の活用可能性、費用対効果の説明資料が求められる。</div>
+            <div class="wall-desc">単年度予算と複数年保管の乖離。補助金活用と費用対効果の説明資料が必要。</div>
         </div>
         <div class="wall-card">
             <span class="wall-icon">⚖️</span>
             <div class="wall-name">③　法整備・規制</div>
-            <div class="wall-desc">個人情報保護法、公文書管理法、著作権——既存の法制度との整合性確認と、必要なら条例・要綱の整備。</div>
+            <div class="wall-desc">個人情報保護法・公文書管理法・著作権との整合性確認と条例・要綱の整備。</div>
         </div>
     </div>
     <div class="wall-arrow">↓</div>
@@ -637,25 +645,13 @@
       <!-- LEFT COLUMN -->
       <div class="col-left">
         <div class="section-heading"><h2>行政向けユースケース（例）</h2></div>
-        <div class="usecase-list">
-            <div class="usecase-card">
-                <div class="uc-dept">消防・防災</div>
-                <div class="uc-title">訓練・式典の音声記録</div>
-                <div class="uc-desc">消防音楽隊の演奏、殉職者への追悼メッセージ、避難訓練の記録をQRで永続保管。パネルや碑にQRを付与することで、いつでも「声」が蘇る。</div>
-            </div>
-            <div class="usecase-card">
-                <div class="uc-dept">文化財・教育委員会</div>
-                <div class="uc-title">文化財の音声・碑文デジタル保存</div>
-                <div class="uc-desc">石碑・建造物・伝統芸能の音声を三層保管。国立国会図書館への収蔵で「国家記録」に昇格。物理劣化後も再現可能。</div>
-            </div>
-            <div class="usecase-card">
-                <div class="uc-dept">首長室・広報</div>
-                <div class="uc-title">首長メッセージ・語り部の肉声保管</div>
-                <div class="uc-desc">就任挨拶・施政方針演説をQRで庁舎に掲示。地域の語り部の声と顔を観光案内板や移住促進パンフに組み込み、「生きた情報」として届ける。</div>
-            </div>
-        </div>
+        <ul class="usecase-bullets">
+            <li><span class="uc-label">消防・防災</span>訓練・式典の音声記録、殉職者への追悼メッセージをQRで永続保管。碑やパネルから「声」が蘇る。</li>
+            <li><span class="uc-label">文化財・教育</span>石碑・伝統芸能の音声を三層保管。国立国会図書館収蔵で国家記録に昇格、物理劣化後も再現可能。</li>
+            <li><span class="uc-label">首長室・広報</span>施政方針演説・語り部の声をQRで庁舎掲示。観光案内板や移住促進パンフに組み込み、生きた情報として届ける。</li>
+        </ul>
 
-        <div class="section-heading" style="margin-top:1.25rem;"><h2>三層分散保管アーキテクチャ</h2></div>
+        <div class="section-heading" style="margin-top:1rem;"><h2>三層分散保管アーキテクチャ</h2></div>
         <div class="layers-grid">
             <div class="layer-card">
                 <div class="layer-name">物理層</div>
@@ -678,41 +674,12 @@
       <!-- RIGHT COLUMN -->
       <div class="col-right">
         <div class="section-heading"><h2>伴奏支援のステップ</h2></div>
-        <div class="flow-box">
-            <div class="flow-steps">
-                <div class="flow-step">
-                    <div class="step-num">1</div>
-                    <div class="step-body">
-                        <div class="step-title">ヒアリング・現状整理</div>
-                        <div class="step-desc">「何を残したいか」「どんな壁があるか」を聞かせてください。費用ゼロで始められます。</div>
-                    </div>
-                </div>
-                <div class="flow-connector"></div>
-                <div class="flow-step">
-                    <div class="step-num">2</div>
-                    <div class="step-body">
-                        <div class="step-title">期待効果の試算・資料化</div>
-                        <div class="step-desc">保存年数・コスト削減・活用シナリオを数値で整理。議会説明・稟議に使える資料を共同作成します。</div>
-                    </div>
-                </div>
-                <div class="flow-connector"></div>
-                <div class="flow-step">
-                    <div class="step-num">3</div>
-                    <div class="step-body">
-                        <div class="step-title">PoC（小規模実証）</div>
-                        <div class="step-desc">1件・1イベントから実証。住民・議員が体験することで、予算化への理解が生まれます。</div>
-                    </div>
-                </div>
-                <div class="flow-connector"></div>
-                <div class="flow-step">
-                    <div class="step-num">4</div>
-                    <div class="step-body">
-                        <div class="step-title">予算化・本格導入</div>
-                        <div class="step-desc">補助金・交付金の活用を含め、次年度予算計上を支援。法的論点の整理も並走します。</div>
-                    </div>
-                </div>
-            </div>
-        </div>
+        <ol class="flow-list">
+            <li><span class="fl-title">ヒアリング・現状整理</span>「何を残したいか」「どんな壁があるか」を聞かせてください。費用ゼロで始められます。</li>
+            <li><span class="fl-title">期待効果の試算・資料化</span>保存年数・コスト削減・活用シナリオを数値で整理。議会説明・稟議に使える資料を共同作成します。</li>
+            <li><span class="fl-title">PoC（小規模実証）</span>1件・1イベントから実証。住民・議員が体験することで、予算化への理解が生まれます。</li>
+            <li><span class="fl-title">予算化・本格導入</span>補助金・交付金の活用を含め、次年度予算計上を支援。法的論点の整理も並走します。</li>
+        </ol>
 
         <div class="note-box" style="margin-top:0.75rem;">
             導入費用ゼロ、PoC はトキストレージが費用負担。まず「話してみる」ことから。
