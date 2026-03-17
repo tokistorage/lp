@@ -449,8 +449,22 @@
         }
         .br-footer a:hover { text-decoration: underline; }
 
-        /* Print only */
-        .print-only { display: none; }
+        /* Print-lower: screen = stacked, print = 2-col grid */
+        .print-lower {
+            display: flex;
+            flex-direction: column;
+        }
+        .col-left, .col-right { width: 100%; }
+        /* usecase-list = same as usecase-grid on screen */
+        .usecase-list {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 0.75rem;
+            margin-bottom: 0.25rem;
+        }
+        @media screen and (max-width: 600px) {
+            .usecase-list { grid-template-columns: 1fr; }
+        }
 
         @media screen and (max-width: 600px) {
             .walls-grid { grid-template-columns: 1fr; }
@@ -515,56 +529,26 @@
             .contact-info p { font-size: 0.68rem; line-height: 1.5; }
             .print-only { display: block; }
 
-            /* Landscape: 2-column layout */
+            /* 2-col explicit grid for lower half */
             .print-lower {
-                columns: 2;
-                column-gap: 6mm;
-                margin-top: 0.4rem;
+                display: grid;
+                grid-template-columns: 1fr 1fr;
+                gap: 5mm;
+                margin-top: 0.35rem;
+                align-items: start;
             }
-            .print-lower .section-heading,
-            .print-lower .usecase-grid,
-            .print-lower .layers-grid,
-            .print-lower .flow-box,
-            .print-lower .note-box,
-            .print-lower .contact-section {
-                break-inside: avoid;
-            }
-            .print-lower .contact-section {
-                column-span: all;
-            }
-            .print-lower .layers-section-break {
-                break-before: column;
-            }
-        }
+            .col-left, .col-right { width: 100%; }
+            .usecase-list { grid-template-columns: 1fr; gap: 0.25rem; margin-bottom: 0.2rem; }
+            .usecase-card { padding: 0.35rem 0.45rem; }
+            .usecase-card .uc-dept { font-size: 0.58rem; }
+            .usecase-card .uc-title { font-size: 0.72rem; margin-bottom: 0.1rem; }
+            .usecase-card .uc-desc { font-size: 0.62rem; line-height: 1.32; }
+            .contact-section { margin-top: 0.4rem; padding-top: 0.35rem; flex-direction: row; align-items: flex-end; gap: 0.75rem; }
+            .contact-info .contact-name { font-size: 0.8rem; }
+            .contact-info p { font-size: 0.65rem; line-height: 1.45; }
+            .print-only { display: block; }
 
-        /* Landscape print */
-        @media print {
-            body.landscape-mode {
-                line-height: 1.28;
-                font-size: 11px;
-            }
-            body.landscape-mode .brochure {
-                -webkit-column-count: 2;
-                column-count: 2;
-                -webkit-column-gap: 9mm;
-                column-gap: 9mm;
-                width: 100%;
-            }
-            body.landscape-mode .print-lower { display: contents; }
-            body.landscape-mode .br-header,
-            body.landscape-mode .tagline { column-span: all; }
-            body.landscape-mode .section-heading,
-            body.landscape-mode .walls-grid,
-            body.landscape-mode .support-box,
-            body.landscape-mode .usecase-grid,
-            body.landscape-mode .layers-grid,
-            body.landscape-mode .flow-box,
-            body.landscape-mode .note-box,
-            body.landscape-mode .contact-section { break-inside: avoid; }
-            body.landscape-mode .contact-section { column-span: none; }
-            body.landscape-mode .layers-section-break { break-before: column; }
-            body.landscape-mode .usecase-grid { grid-template-columns: 1fr; }
-        }
+        /* Landscape print - grid already handles 2-col, just set page size */
     </style>
     <style id="portrait-page-style">
         @page { size: A4; margin: 9mm 11mm; }
@@ -647,103 +631,109 @@
         </ul>
     </div>
 
-    <!-- Usecases -->
+    <!-- Print 2-col layout wrapper -->
     <div class="print-lower">
-    <div class="section-heading"><h2>行政向けユースケース（例）</h2></div>
-    <div class="usecase-grid">
-        <div class="usecase-card">
-            <div class="uc-dept">消防・防災</div>
-            <div class="uc-title">訓練・式典の音声記録</div>
-            <div class="uc-desc">消防音楽隊の演奏、殉職者への追悼メッセージ、避難訓練の記録をQRで永続保管。パネルや碑にQRを付与することで、いつでも「声」が蘇る。</div>
-        </div>
-        <div class="usecase-card">
-            <div class="uc-dept">文化財・教育委員会</div>
-            <div class="uc-title">文化財の音声・碑文デジタル保存</div>
-            <div class="uc-desc">石碑・建造物・伝統芸能の音声を三層保管。国立国会図書館への収蔵で「国家記録」に昇格。物理劣化後も再現可能。</div>
-        </div>
-        <div class="usecase-card">
-            <div class="uc-dept">首長室・広報</div>
-            <div class="uc-title">首長メッセージ・語り部の肉声保管</div>
-            <div class="uc-desc">就任挨拶・施政方針演説をQRで庁舎に掲示。地域の語り部の声と顔を観光案内板や移住促進パンフに組み込み、「生きた情報」として届ける。</div>
-        </div>
-    </div>
 
-    <!-- Architecture -->
-    <div class="section-heading layers-section-break"><h2>三層分散保管アーキテクチャ</h2></div>
-    <div class="layers-grid">
-        <div class="layer-card">
-            <div class="layer-name">物理層</div>
-            <div class="layer-sub">石英ガラス・UVラミネート</div>
-            <div class="layer-desc">記録が手元の実物に<br>石英1000年・UV更新可<br>佐渡島・マウイ島に分散</div>
-        </div>
-        <div class="layer-card">
-            <div class="layer-name">国家層</div>
-            <div class="layer-sub">国立国会図書館</div>
-            <div class="layer-desc">国会図書館法による<br>永久保存（収集確認済）<br>音声も国家保管</div>
-        </div>
-        <div class="layer-card">
-            <div class="layer-name">民間層</div>
-            <div class="layer-sub">GitHub</div>
-            <div class="layer-desc">無料公開基盤で永続管理<br>追加料金・維持費なし<br>世界中からいつでも閲覧</div>
-        </div>
-    </div>
-
-    <!-- Flow -->
-    <div class="section-heading"><h2>伴奏支援のステップ</h2></div>
-    <div class="flow-box">
-        <div class="flow-steps">
-            <div class="flow-step">
-                <div class="step-num">1</div>
-                <div class="step-body">
-                    <div class="step-title">ヒアリング・現状整理</div>
-                    <div class="step-desc">「何を残したいか」「どんな壁があるか」を聞かせてください。費用ゼロで始められます。</div>
-                </div>
+      <!-- LEFT COLUMN -->
+      <div class="col-left">
+        <div class="section-heading"><h2>行政向けユースケース（例）</h2></div>
+        <div class="usecase-list">
+            <div class="usecase-card">
+                <div class="uc-dept">消防・防災</div>
+                <div class="uc-title">訓練・式典の音声記録</div>
+                <div class="uc-desc">消防音楽隊の演奏、殉職者への追悼メッセージ、避難訓練の記録をQRで永続保管。パネルや碑にQRを付与することで、いつでも「声」が蘇る。</div>
             </div>
-            <div class="flow-connector"></div>
-            <div class="flow-step">
-                <div class="step-num">2</div>
-                <div class="step-body">
-                    <div class="step-title">期待効果の試算・資料化</div>
-                    <div class="step-desc">保存年数・コスト削減・活用シナリオを数値で整理。議会説明・稟議に使える資料を共同作成します。</div>
-                </div>
+            <div class="usecase-card">
+                <div class="uc-dept">文化財・教育委員会</div>
+                <div class="uc-title">文化財の音声・碑文デジタル保存</div>
+                <div class="uc-desc">石碑・建造物・伝統芸能の音声を三層保管。国立国会図書館への収蔵で「国家記録」に昇格。物理劣化後も再現可能。</div>
             </div>
-            <div class="flow-connector"></div>
-            <div class="flow-step">
-                <div class="step-num">3</div>
-                <div class="step-body">
-                    <div class="step-title">PoC（小規模実証）</div>
-                    <div class="step-desc">1件・1イベントから実証。住民・議員が体験することで、予算化への理解が生まれます。</div>
-                </div>
-            </div>
-            <div class="flow-connector"></div>
-            <div class="flow-step">
-                <div class="step-num">4</div>
-                <div class="step-body">
-                    <div class="step-title">予算化・本格導入</div>
-                    <div class="step-desc">補助金・交付金の活用を含め、次年度予算計上を支援。法的論点の整理も並走します。</div>
-                </div>
+            <div class="usecase-card">
+                <div class="uc-dept">首長室・広報</div>
+                <div class="uc-title">首長メッセージ・語り部の肉声保管</div>
+                <div class="uc-desc">就任挨拶・施政方針演説をQRで庁舎に掲示。地域の語り部の声と顔を観光案内板や移住促進パンフに組み込み、「生きた情報」として届ける。</div>
             </div>
         </div>
-    </div>
 
-    <div class="note-box">
-        導入費用ゼロ、PoC はトキストレージが費用負担。まず「話してみる」ことから。
-    </div>
+        <div class="section-heading" style="margin-top:1.25rem;"><h2>三層分散保管アーキテクチャ</h2></div>
+        <div class="layers-grid">
+            <div class="layer-card">
+                <div class="layer-name">物理層</div>
+                <div class="layer-sub">石英ガラス・UVラミネート</div>
+                <div class="layer-desc">石英1000年・UV更新可<br>佐渡島・マウイ島に分散</div>
+            </div>
+            <div class="layer-card">
+                <div class="layer-name">国家層</div>
+                <div class="layer-sub">国立国会図書館</div>
+                <div class="layer-desc">国会図書館法による<br>永久保存（収集確認済）</div>
+            </div>
+            <div class="layer-card">
+                <div class="layer-name">民間層</div>
+                <div class="layer-sub">GitHub</div>
+                <div class="layer-desc">無料公開基盤で永続管理<br>追加料金・維持費なし</div>
+            </div>
+        </div>
+      </div><!-- /.col-left -->
 
-    <div class="contact-section">
-        <div class="contact-info">
-            <div class="contact-name">TokiStorage ／ トキストレージ</div>
-            <p style="font-size: 0.7rem; color: var(--text-secondary); margin: 0.15rem 0 0.35rem;">国立国会図書館収蔵事業 ／ 個人事業開業届出済</p>
-            <p>代表：佐藤卓也</p>
-            <p>〒279-0014 千葉県浦安市明海2-11-13</p>
-            <p><a href="https://tokistorage.github.io/lp/">tokistorage.github.io/lp/</a></p>
-            <p><a href="mailto:tokistorage1000@gmail.com">tokistorage1000@gmail.com</a></p>
+      <!-- RIGHT COLUMN -->
+      <div class="col-right">
+        <div class="section-heading"><h2>伴奏支援のステップ</h2></div>
+        <div class="flow-box">
+            <div class="flow-steps">
+                <div class="flow-step">
+                    <div class="step-num">1</div>
+                    <div class="step-body">
+                        <div class="step-title">ヒアリング・現状整理</div>
+                        <div class="step-desc">「何を残したいか」「どんな壁があるか」を聞かせてください。費用ゼロで始められます。</div>
+                    </div>
+                </div>
+                <div class="flow-connector"></div>
+                <div class="flow-step">
+                    <div class="step-num">2</div>
+                    <div class="step-body">
+                        <div class="step-title">期待効果の試算・資料化</div>
+                        <div class="step-desc">保存年数・コスト削減・活用シナリオを数値で整理。議会説明・稟議に使える資料を共同作成します。</div>
+                    </div>
+                </div>
+                <div class="flow-connector"></div>
+                <div class="flow-step">
+                    <div class="step-num">3</div>
+                    <div class="step-body">
+                        <div class="step-title">PoC（小規模実証）</div>
+                        <div class="step-desc">1件・1イベントから実証。住民・議員が体験することで、予算化への理解が生まれます。</div>
+                    </div>
+                </div>
+                <div class="flow-connector"></div>
+                <div class="flow-step">
+                    <div class="step-num">4</div>
+                    <div class="step-body">
+                        <div class="step-title">予算化・本格導入</div>
+                        <div class="step-desc">補助金・交付金の活用を含め、次年度予算計上を支援。法的論点の整理も並走します。</div>
+                    </div>
+                </div>
+            </div>
         </div>
-        <div class="print-only" style="text-align:center; flex-shrink:0;">
-            <img src="asset/qr-contact.png" alt="お問い合わせフォームへのQRコード" style="width:100px;height:100px;">
-            <p style="font-size:0.78rem;font-weight:500;margin-top:0.2rem;color:var(--text-primary);">導入相談・お問い合わせ</p>
+
+        <div class="note-box" style="margin-top:0.75rem;">
+            導入費用ゼロ、PoC はトキストレージが費用負担。まず「話してみる」ことから。
         </div>
-    </div>
+
+        <div class="contact-section">
+            <div class="contact-info">
+                <div class="contact-name">TokiStorage ／ トキストレージ</div>
+                <p style="font-size: 0.7rem; color: var(--text-secondary); margin: 0.15rem 0 0.25rem;">国立国会図書館収蔵事業 ／ 個人事業開業届出済</p>
+                <p>代表：佐藤卓也</p>
+                <p>〒279-0014 千葉県浦安市明海2-11-13</p>
+                <p><a href="https://tokistorage.github.io/lp/">tokistorage.github.io/lp/</a></p>
+                <p><a href="mailto:tokistorage1000@gmail.com">tokistorage1000@gmail.com</a></p>
+            </div>
+            <div class="print-only" style="text-align:center; flex-shrink:0;">
+                <img src="asset/qr-contact.png" alt="お問い合わせフォームへのQRコード" style="width:80px;height:80px;">
+                <p style="font-size:0.7rem;font-weight:500;margin-top:0.15rem;color:var(--text-primary);">導入相談</p>
+            </div>
+        </div>
+      </div><!-- /.col-right -->
+
     </div><!-- /.print-lower -->
 
     <div class="pdf-download">
