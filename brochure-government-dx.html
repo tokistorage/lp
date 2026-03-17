@@ -1,0 +1,810 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" type="image/png" sizes="32x32" href="asset/favicon-32.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="asset/apple-touch-icon.png">
+    <title>行政DXブローシャ | トキストレージ</title>
+    <meta name="description" content="行政DXの三つの壁——効果の定量化・予算編成・法整備——を伴奏支援するトキストレージの行政向けブローシャ。">
+    <style>
+        :root {
+            --toki-blue: #2563EB;
+            --toki-blue-pale: #EFF6FF;
+            --toki-navy: #1E3A5F;
+            --toki-navy-pale: #EEF3FA;
+            --bg-white: #FFFFFF;
+            --bg-page: #F8FAFC;
+            --text-primary: #1E293B;
+            --text-secondary: #475569;
+            --text-muted: #94A3B8;
+            --border: #E2E8F0;
+            --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.05);
+            --shadow-md: 0 4px 16px rgba(0, 0, 0, 0.06);
+            --font-display: 'Hiragino Mincho ProN', 'Yu Mincho', serif;
+            --font-body: 'Hiragino Kaku Gothic ProN', 'Yu Gothic', 'Meiryo', sans-serif;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        html { scroll-behavior: smooth; }
+
+        body {
+            font-family: var(--font-body);
+            font-weight: 400;
+            background: var(--bg-page);
+            color: var(--text-primary);
+            line-height: 1.8;
+            font-size: 16px;
+        }
+
+        /* Navigation */
+        .br-nav {
+            position: fixed;
+            top: 0; left: 0; right: 0;
+            z-index: 1000;
+            background: rgba(255,255,255,0.95);
+            backdrop-filter: blur(12px);
+            border-bottom: 1px solid var(--border);
+            padding: 0.6rem 1.2rem;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+        .br-nav .nav-brand {
+            font-family: var(--font-display);
+            font-size: 0.9rem;
+            font-weight: 600;
+            color: var(--toki-blue);
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+        .br-nav .nav-brand img { width: 22px; height: 22px; }
+        .br-nav .nav-right {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+        .br-nav .nav-label {
+            font-size: 0.6rem;
+            color: var(--text-muted);
+            letter-spacing: 0.08em;
+        }
+        .br-nav .nav-back {
+            font-size: 0.75rem;
+            color: var(--toki-blue);
+            text-decoration: none;
+            padding: 0.3rem 0.6rem;
+            border: 1px solid var(--toki-blue);
+            border-radius: 4px;
+        }
+        .br-nav .nav-back:hover { background: var(--toki-blue); color: #fff; }
+
+        /* Main content */
+        .brochure {
+            max-width: 720px;
+            margin: 0 auto;
+            padding: 5rem 1.5rem 2rem;
+        }
+
+        /* Header */
+        .br-header {
+            text-align: center;
+            margin-bottom: 1.5rem;
+            padding-bottom: 1.25rem;
+            border-bottom: 1px solid var(--border);
+        }
+        .br-header .company {
+            font-family: var(--font-display);
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--text-primary);
+            margin-bottom: 0.2rem;
+        }
+        .br-header .sub {
+            font-size: 0.82rem;
+            color: var(--text-muted);
+        }
+        .br-header .badge {
+            display: inline-block;
+            margin-top: 0.5rem;
+            padding: 0.2rem 0.75rem;
+            background: var(--toki-navy-pale);
+            border: 1px solid #c7d9f0;
+            border-radius: 20px;
+            font-size: 0.72rem;
+            color: var(--toki-navy);
+            letter-spacing: 0.06em;
+        }
+
+        /* Tagline */
+        .tagline {
+            text-align: center;
+            margin-bottom: 1.5rem;
+        }
+        .tagline h1 {
+            font-family: var(--font-display);
+            font-size: 1.7rem;
+            font-weight: 700;
+            color: var(--toki-navy);
+            margin-bottom: 0.5rem;
+            line-height: 1.5;
+        }
+        .tagline .hook {
+            font-family: var(--font-display);
+            font-size: 1.0rem;
+            color: var(--text-primary);
+            margin-bottom: 0.5rem;
+        }
+        .tagline .hook-sub {
+            font-size: 0.88rem;
+            color: var(--text-secondary);
+            max-width: 580px;
+            margin: 0 auto;
+            line-height: 1.85;
+        }
+
+        /* Section heading */
+        .section-heading {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            margin: 2rem 0 0.75rem;
+        }
+        .section-heading::before {
+            content: '';
+            width: 3px;
+            height: 1.2rem;
+            background: var(--toki-navy);
+            border-radius: 2px;
+            flex-shrink: 0;
+        }
+        .section-heading h2 {
+            font-family: var(--font-display);
+            font-size: 1.1rem;
+            font-weight: 600;
+            color: var(--text-primary);
+        }
+
+        /* Three walls */
+        .walls-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 0.75rem;
+            margin-bottom: 0.25rem;
+        }
+        .wall-card {
+            background: var(--bg-white);
+            border: 1px solid var(--border);
+            border-radius: 10px;
+            padding: 1rem 0.85rem 0.85rem;
+            text-align: center;
+            position: relative;
+        }
+        .wall-card .wall-icon {
+            font-size: 1.5rem;
+            margin-bottom: 0.3rem;
+            display: block;
+        }
+        .wall-card .wall-name {
+            font-family: var(--font-display);
+            font-weight: 700;
+            color: var(--toki-navy);
+            font-size: 0.92rem;
+            margin-bottom: 0.3rem;
+        }
+        .wall-card .wall-desc {
+            font-size: 0.76rem;
+            color: var(--text-secondary);
+            line-height: 1.6;
+        }
+        .wall-arrow {
+            text-align: center;
+            font-size: 1.2rem;
+            color: var(--toki-blue);
+            margin: 0.5rem 0 0.25rem;
+        }
+
+        /* Support box */
+        .support-box {
+            background: var(--toki-navy-pale);
+            border: 1px solid #c7d9f0;
+            border-radius: 10px;
+            padding: 1.1rem 1.4rem;
+            margin-bottom: 0.5rem;
+        }
+        .support-box .support-lead {
+            font-family: var(--font-display);
+            font-size: 1.0rem;
+            font-weight: 600;
+            color: var(--toki-navy);
+            margin-bottom: 0.5rem;
+        }
+        .support-box ul {
+            list-style: none;
+            padding: 0;
+        }
+        .support-box li {
+            font-size: 0.87rem;
+            color: var(--text-primary);
+            padding: 0.18rem 0;
+            display: flex;
+            align-items: baseline;
+            gap: 0.5rem;
+        }
+        .support-box li::before {
+            content: '→';
+            color: var(--toki-blue);
+            font-weight: bold;
+            flex-shrink: 0;
+        }
+
+        /* Usecases */
+        .usecase-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 0.75rem;
+            margin-bottom: 0.25rem;
+        }
+        .usecase-card {
+            background: var(--bg-white);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            padding: 0.9rem 1rem;
+        }
+        .usecase-card .uc-dept {
+            font-size: 0.7rem;
+            color: var(--toki-blue);
+            letter-spacing: 0.08em;
+            margin-bottom: 0.2rem;
+        }
+        .usecase-card .uc-title {
+            font-family: var(--font-display);
+            font-size: 0.9rem;
+            font-weight: 600;
+            color: var(--text-primary);
+            margin-bottom: 0.3rem;
+        }
+        .usecase-card .uc-desc {
+            font-size: 0.77rem;
+            color: var(--text-secondary);
+            line-height: 1.65;
+        }
+
+        /* Three layers */
+        .layers-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 0.75rem;
+            margin-bottom: 0.25rem;
+        }
+        .layer-card {
+            background: var(--toki-blue-pale);
+            border: 1px solid var(--border);
+            border-radius: 10px;
+            padding: 1.0rem 0.85rem;
+            text-align: center;
+        }
+        .layer-card .layer-name {
+            font-family: var(--font-display);
+            font-weight: 600;
+            color: var(--toki-blue);
+            font-size: 0.92rem;
+            margin-bottom: 0.25rem;
+        }
+        .layer-card .layer-sub {
+            font-weight: 500;
+            font-size: 0.78rem;
+            color: var(--text-primary);
+            margin-bottom: 0.25rem;
+        }
+        .layer-card .layer-desc {
+            font-size: 0.73rem;
+            color: var(--text-secondary);
+            line-height: 1.55;
+        }
+
+        /* Flow / Process */
+        .flow-box {
+            background: var(--bg-white);
+            border: 1px solid var(--border);
+            border-radius: 10px;
+            padding: 1rem 1.3rem;
+            margin-bottom: 0.5rem;
+        }
+        .flow-steps {
+            display: flex;
+            flex-direction: column;
+            gap: 0.4rem;
+        }
+        .flow-step {
+            display: flex;
+            align-items: flex-start;
+            gap: 0.75rem;
+        }
+        .flow-step .step-num {
+            background: var(--toki-navy);
+            color: #fff;
+            font-size: 0.72rem;
+            font-weight: 600;
+            width: 1.4rem;
+            height: 1.4rem;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+            margin-top: 0.1rem;
+        }
+        .flow-step .step-body .step-title {
+            font-size: 0.88rem;
+            font-weight: 600;
+            color: var(--text-primary);
+        }
+        .flow-step .step-body .step-desc {
+            font-size: 0.78rem;
+            color: var(--text-secondary);
+            line-height: 1.55;
+        }
+        .flow-connector {
+            margin-left: 0.66rem;
+            width: 2px;
+            height: 0.4rem;
+            background: var(--border);
+        }
+
+        /* Note box */
+        .note-box {
+            background: var(--bg-white);
+            border-left: 3px solid var(--toki-navy);
+            border-radius: 0 8px 8px 0;
+            padding: 0.75rem 1.1rem;
+            margin-bottom: 0.5rem;
+            font-size: 0.85rem;
+            color: var(--text-secondary);
+            line-height: 1.75;
+        }
+
+        /* Contact */
+        .contact-section {
+            margin-top: 1.75rem;
+            padding-top: 1.25rem;
+            border-top: 1px solid var(--border);
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            gap: 2rem;
+        }
+        .contact-info .contact-name {
+            font-family: var(--font-display);
+            font-size: 1.05rem;
+            font-weight: 600;
+            color: var(--text-primary);
+            margin-bottom: 0.3rem;
+        }
+        .contact-info p {
+            font-size: 0.83rem;
+            color: var(--text-secondary);
+            line-height: 1.75;
+        }
+        .contact-info a {
+            color: var(--toki-blue);
+            text-decoration: none;
+        }
+        .contact-info a:hover { text-decoration: underline; }
+
+        /* PDF download */
+        .pdf-download {
+            text-align: center;
+            margin-top: 1.75rem;
+            padding: 1.25rem;
+            background: var(--toki-navy-pale);
+            border-radius: 10px;
+        }
+        .pdf-download .pdf-title {
+            font-size: 0.85rem;
+            color: var(--text-secondary);
+            margin-bottom: 0.75rem;
+        }
+        .pdf-buttons {
+            display: flex;
+            justify-content: center;
+            gap: 0.75rem;
+            flex-wrap: wrap;
+        }
+        .pdf-buttons a {
+            display: inline-block;
+            padding: 0.55rem 1.4rem;
+            border-radius: 6px;
+            font-size: 0.88rem;
+            font-weight: 500;
+            text-decoration: none;
+            cursor: pointer;
+        }
+        .pdf-buttons .btn-primary {
+            background: var(--toki-navy);
+            color: #fff;
+        }
+        .pdf-buttons .btn-primary:hover { background: #163354; }
+        .pdf-buttons .btn-other {
+            background: #fff;
+            color: var(--toki-navy);
+            border: 1px solid var(--toki-navy);
+        }
+        .pdf-buttons .btn-other:hover { background: var(--toki-navy-pale); }
+
+        /* Footer */
+        .br-footer {
+            text-align: center;
+            margin-top: 1.75rem;
+            padding: 1.25rem 0;
+            font-size: 0.78rem;
+            color: var(--text-muted);
+        }
+        .br-footer a {
+            color: var(--toki-blue);
+            text-decoration: none;
+            margin: 0 0.5rem;
+        }
+        .br-footer a:hover { text-decoration: underline; }
+
+        /* Print only */
+        .print-only { display: none; }
+
+        @media screen and (max-width: 600px) {
+            .walls-grid { grid-template-columns: 1fr; }
+            .usecase-grid { grid-template-columns: 1fr; }
+            .layers-grid { grid-template-columns: 1fr; }
+            .contact-section { flex-direction: column; }
+            .tagline h1 { font-size: 1.35rem; }
+            .br-header .company { font-size: 1.25rem; }
+        }
+
+        /* Portrait print */
+        @media print {
+            .br-nav, .pdf-download, .br-footer { display: none; }
+            .brochure { padding: 0; max-width: 100%; }
+            body {
+                background: white;
+                line-height: 1.45;
+                font-size: 12.5px;
+                -webkit-print-color-adjust: exact;
+                print-color-adjust: exact;
+                --text-secondary: #334155;
+                --text-muted: #64748B;
+            }
+            .br-header { margin-bottom: 0.4rem; padding-bottom: 0.3rem; }
+            .br-header .company { font-size: 1.3rem; }
+            .tagline { margin-bottom: 0.4rem; }
+            .tagline h1 { font-size: 1.3rem; margin-bottom: 0.2rem; }
+            .tagline .hook { font-size: 0.92rem; margin-bottom: 0.15rem; }
+            .tagline .hook-sub { font-size: 0.78rem; }
+            .section-heading { margin: 0.5rem 0 0.3rem; }
+            .section-heading h2 { font-size: 0.95rem; }
+            .walls-grid { gap: 0.4rem; margin-bottom: 0.2rem; }
+            .wall-card { padding: 0.5rem 0.45rem; border-radius: 6px; }
+            .wall-card .wall-icon { font-size: 1.1rem; margin-bottom: 0.15rem; }
+            .wall-card .wall-name { font-size: 0.85rem; }
+            .wall-card .wall-desc { font-size: 0.7rem; line-height: 1.4; }
+            .wall-arrow { margin: 0.25rem 0 0.15rem; font-size: 1rem; }
+            .support-box { padding: 0.6rem 0.9rem; margin-bottom: 0.3rem; }
+            .support-box .support-lead { font-size: 0.9rem; margin-bottom: 0.3rem; }
+            .support-box li { font-size: 0.78rem; padding: 0.08rem 0; line-height: 1.4; }
+            .usecase-grid { gap: 0.4rem; margin-bottom: 0.3rem; }
+            .usecase-card { padding: 0.5rem 0.6rem; }
+            .usecase-card .uc-dept { font-size: 0.63rem; }
+            .usecase-card .uc-title { font-size: 0.82rem; }
+            .usecase-card .uc-desc { font-size: 0.7rem; line-height: 1.4; }
+            .layers-grid { gap: 0.35rem; margin-bottom: 0.25rem; }
+            .layer-card { padding: 0.45rem 0.4rem; }
+            .layer-card .layer-name { font-size: 0.86rem; }
+            .layer-card .layer-sub { font-size: 0.73rem; }
+            .layer-card .layer-desc { font-size: 0.68rem; line-height: 1.38; }
+            .flow-box { padding: 0.5rem 0.75rem; margin-bottom: 0.3rem; }
+            .flow-step .step-num { width: 1.2rem; height: 1.2rem; font-size: 0.65rem; }
+            .flow-step .step-body .step-title { font-size: 0.8rem; }
+            .flow-step .step-body .step-desc { font-size: 0.7rem; line-height: 1.38; }
+            .flow-connector { height: 0.25rem; }
+            .note-box { padding: 0.5rem 0.8rem; font-size: 0.76rem; }
+            .contact-section { margin-top: 0.8rem; padding-top: 0.6rem; flex-direction: row; align-items: flex-end; gap: 1.5rem; }
+            .contact-info .contact-name { font-size: 0.88rem; }
+            .contact-info p { font-size: 0.76rem; line-height: 1.5; }
+            .print-only { display: block; }
+
+            /* 2-column layout for lower section */
+            .print-lower {
+                columns: 2;
+                column-gap: 7mm;
+                margin-top: 0.5rem;
+            }
+            .print-lower .section-heading,
+            .print-lower .usecase-grid,
+            .print-lower .layers-grid,
+            .print-lower .flow-box,
+            .print-lower .note-box,
+            .print-lower .contact-section {
+                break-inside: avoid;
+            }
+            .print-lower .contact-section {
+                column-span: all;
+            }
+            .print-lower .layers-section-break {
+                break-before: column;
+            }
+        }
+
+        /* Landscape print */
+        @media print {
+            body.landscape-mode {
+                line-height: 1.3;
+                font-size: 11.5px;
+            }
+            body.landscape-mode .brochure {
+                -webkit-column-count: 2;
+                column-count: 2;
+                -webkit-column-gap: 10mm;
+                column-gap: 10mm;
+                width: 100%;
+            }
+            body.landscape-mode .print-lower {
+                display: contents;
+            }
+            body.landscape-mode .br-header,
+            body.landscape-mode .tagline {
+                column-span: all;
+            }
+            body.landscape-mode .section-heading,
+            body.landscape-mode .walls-grid,
+            body.landscape-mode .support-box,
+            body.landscape-mode .usecase-grid,
+            body.landscape-mode .layers-grid,
+            body.landscape-mode .flow-box,
+            body.landscape-mode .note-box,
+            body.landscape-mode .contact-section {
+                break-inside: avoid;
+            }
+            body.landscape-mode .contact-section {
+                column-span: none;
+            }
+            body.landscape-mode .layers-section-break {
+                break-before: column;
+            }
+        }
+    </style>
+    <style id="portrait-page-style">
+        @page { size: A4; margin: 9mm 11mm; }
+    </style>
+    <style id="landscape-page-style" media="not all">
+        @page { size: A4 landscape; margin: 8mm 10mm; }
+    </style>
+    <meta property="og:type" content="article">
+    <meta property="og:title" content="行政DXブローシャ | トキストレージ">
+    <meta property="og:description" content="行政DXの三つの壁——効果の定量化・予算編成・法整備——を伴奏支援するトキストレージ。">
+    <meta property="og:url" content="https://tokistorage.github.io/lp/brochure-government-dx.html">
+    <meta property="og:site_name" content="トキストレージ">
+    <meta name="twitter:card" content="summary">
+    <link rel="alternate" hreflang="ja" href="https://tokistorage.github.io/lp/brochure-government-dx.html">
+    <link rel="canonical" href="https://tokistorage.github.io/lp/brochure-government-dx.html">
+</head>
+<body>
+
+<nav class="br-nav">
+    <a href="index.html" class="nav-brand">
+        <img src="asset/tokistorage-icon-512.png" alt="">トキストレージ
+    </a>
+    <div class="nav-right">
+        <span class="nav-label">GOVERNMENT DX</span>
+        <a href="brochure.html" class="nav-back">← ブローシャ一覧</a>
+    </div>
+</nav>
+
+<main class="brochure">
+
+    <div class="br-header">
+        <div class="company">
+            <img src="asset/tokistorage-icon-512.png" alt="TokiStorage" width="26" height="26" style="vertical-align:-4px;margin-right:7px;">
+            TokiStorage ／ トキストレージ
+        </div>
+        <div class="sub">Voice Preservation for 1,000 Years</div>
+        <div class="sub" style="font-size: 0.65rem; margin-top: 0.15rem; color: var(--text-secondary);">国立国会図書館収蔵事業 ／ 伊勢神宮式年遷宮奉賛 ／ 比叡山延暦寺不滅の法灯奉賛</div>
+        <span class="badge">行政 DX 支援</span>
+    </div>
+
+    <div class="tagline">
+        <h1>先進的すぎる、は<br>いつか「当たり前」になる。</h1>
+        <p class="hook">行政DXには、技術より先に越えるべき壁がある。</p>
+        <p class="hook-sub">
+            「アイデアはいい。でも効果が測れない、予算が組めない、法整備も要る。」<br>
+            その声に、私たちは寄り添います。<br>
+            道具を売るのではなく、前に進む過程を一緒に歩む——それがトキストレージのスタンスです。
+        </p>
+    </div>
+
+    <!-- Three Walls -->
+    <div class="section-heading"><h2>行政DXの三つの壁</h2></div>
+    <div class="walls-grid">
+        <div class="wall-card">
+            <span class="wall-icon">📊</span>
+            <div class="wall-name">①　効果の定量化</div>
+            <div class="wall-desc">「便利そう」だけでは稟議が通らない。住民への価値・コスト削減・保存年数を数字で示す必要がある。</div>
+        </div>
+        <div class="wall-card">
+            <span class="wall-icon">📋</span>
+            <div class="wall-name">②　予算編成</div>
+            <div class="wall-desc">単年度予算と複数年保管の乖離。補助金・交付金の活用可能性、費用対効果の説明資料が求められる。</div>
+        </div>
+        <div class="wall-card">
+            <span class="wall-icon">⚖️</span>
+            <div class="wall-name">③　法整備・規制</div>
+            <div class="wall-desc">個人情報保護法、公文書管理法、著作権——既存の法制度との整合性確認と、必要なら条例・要綱の整備。</div>
+        </div>
+    </div>
+    <div class="wall-arrow">↓</div>
+
+    <!-- Support -->
+    <div class="support-box">
+        <div class="support-lead">三つの壁すべてに、伴奏支援します。</div>
+        <ul>
+            <li>期待効果の試算——保存年数・閲覧回数・人件費削減・観光・防災価値を事前に可視化</li>
+            <li>予算化サポート——補助金・交付金の調査、議会説明資料・仕様書・見積書のひな形提供</li>
+            <li>法的論点の整理——個人情報・著作権・公文書管理法との適合確認、条例整備の論点提示</li>
+            <li>PoC（小規模実証）から始める——リスクゼロで体験、住民・議員への説明材料を獲得</li>
+        </ul>
+    </div>
+
+    <!-- Usecases -->
+    <div class="print-lower">
+    <div class="section-heading"><h2>行政向けユースケース（例）</h2></div>
+    <div class="usecase-grid">
+        <div class="usecase-card">
+            <div class="uc-dept">消防・防災</div>
+            <div class="uc-title">訓練・式典の音声・映像記録</div>
+            <div class="uc-desc">消防音楽隊の演奏、殉職者への追悼メッセージ、避難訓練の記録をQRで永続保管。パネルや碑にQRを付与することで、いつでも「声」が蘇る。</div>
+        </div>
+        <div class="usecase-card">
+            <div class="uc-dept">文化財・教育委員会</div>
+            <div class="uc-title">文化財の音声・碑文デジタル保存</div>
+            <div class="uc-desc">石碑・建造物・伝統芸能の音声を三層保管。国立国会図書館への収蔵で「国家記録」に昇格。物理劣化後も再現可能。</div>
+        </div>
+        <div class="usecase-card">
+            <div class="uc-dept">広報・シティプロモーション</div>
+            <div class="uc-title">語り部・移住者の肉声アーカイブ</div>
+            <div class="uc-desc">地域の魅力を語る住民の声・顔をQRに。観光案内板、移住促進パンフ、ふるさと納税ページに組み込み、「生きた情報」として届ける。</div>
+        </div>
+        <div class="usecase-card">
+            <div class="uc-dept">首長室・議会</div>
+            <div class="uc-title">首長メッセージ・議会記録の長期保管</div>
+            <div class="uc-desc">就任挨拶、施政方針演説、記念式典のスピーチをQRで庁舎に掲示。100年後の市民が同じ声を聞ける、まちの記憶インフラ。</div>
+        </div>
+        <div class="usecase-card">
+            <div class="uc-dept">福祉・高齢者支援</div>
+            <div class="uc-title">介護施設・終末期の声の保管支援</div>
+            <div class="uc-desc">住民の「人生の声」をQRに残す公的支援事業。家族への贈り物であり、地域の記憶でもある。補助金・事業化の先行事例として展開可能。</div>
+        </div>
+        <div class="usecase-card">
+            <div class="uc-dept">移住・定住促進</div>
+            <div class="uc-title">移住者の「出発の声」保管プログラム</div>
+            <div class="uc-desc">移住を決意した瞬間のメッセージをQRに保管。移住後5年・10年後に聞き返す体験が、「ここに来てよかった」という感情を固定する。</div>
+        </div>
+    </div>
+
+    <!-- Architecture -->
+    <div class="section-heading layers-section-break"><h2>三層分散保管アーキテクチャ</h2></div>
+    <div class="layers-grid">
+        <div class="layer-card">
+            <div class="layer-name">物理層</div>
+            <div class="layer-sub">石英ガラス・UVラミネート</div>
+            <div class="layer-desc">記録が手元の実物に<br>石英1000年・UV更新可<br>佐渡島・マウイ島に分散</div>
+        </div>
+        <div class="layer-card">
+            <div class="layer-name">国家層</div>
+            <div class="layer-sub">国立国会図書館</div>
+            <div class="layer-desc">国会図書館法による<br>永久保存（収集確認済）<br>音声も国家保管</div>
+        </div>
+        <div class="layer-card">
+            <div class="layer-name">民間層</div>
+            <div class="layer-sub">GitHub</div>
+            <div class="layer-desc">無料公開基盤で永続管理<br>追加料金・維持費なし<br>世界中からいつでも閲覧</div>
+        </div>
+    </div>
+
+    <!-- Flow -->
+    <div class="section-heading"><h2>伴奏支援のステップ</h2></div>
+    <div class="flow-box">
+        <div class="flow-steps">
+            <div class="flow-step">
+                <div class="step-num">1</div>
+                <div class="step-body">
+                    <div class="step-title">ヒアリング・現状整理</div>
+                    <div class="step-desc">「何を残したいか」「どんな壁があるか」を聞かせてください。費用ゼロ、ゼロリスクで始められます。</div>
+                </div>
+            </div>
+            <div class="flow-connector"></div>
+            <div class="flow-step">
+                <div class="step-num">2</div>
+                <div class="step-body">
+                    <div class="step-title">期待効果の試算・資料化</div>
+                    <div class="step-desc">保存年数・コスト・活用シナリオを数値で整理。議会説明・稟議に使える資料を共同作成します。</div>
+                </div>
+            </div>
+            <div class="flow-connector"></div>
+            <div class="flow-step">
+                <div class="step-num">3</div>
+                <div class="step-body">
+                    <div class="step-title">PoC（小規模実証）</div>
+                    <div class="step-desc">1件・1イベントから実証。住民・議員が実際に体験することで、予算化への理解が生まれます。</div>
+                </div>
+            </div>
+            <div class="flow-connector"></div>
+            <div class="flow-step">
+                <div class="step-num">4</div>
+                <div class="step-body">
+                    <div class="step-title">予算化・本格導入</div>
+                    <div class="step-desc">補助金・交付金の活用を含め、次年度予算計上を支援。法的論点の整理も並走します。</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="note-box">
+        導入費用は一切かかりません。PoC段階ではトキストレージが費用を負担します。<br>
+        まず「話してみる」ことから始めてください。一緒に考えます。
+    </div>
+
+    <div class="contact-section">
+        <div class="contact-info">
+            <div class="contact-name">TokiStorage ／ トキストレージ</div>
+            <p style="font-size: 0.7rem; color: var(--text-secondary); margin: 0.15rem 0 0.35rem;">国立国会図書館収蔵事業 ／ 個人事業開業届出済</p>
+            <p>代表：佐藤卓也</p>
+            <p>〒279-0014 千葉県浦安市明海2-11-13</p>
+            <p><a href="https://tokistorage.github.io/lp/">tokistorage.github.io/lp/</a></p>
+            <p><a href="mailto:tokistorage1000@gmail.com">tokistorage1000@gmail.com</a></p>
+        </div>
+        <div class="print-only" style="text-align:center; flex-shrink:0;">
+            <img src="asset/qr-contact.png" alt="お問い合わせフォームへのQRコード" style="width:100px;height:100px;">
+            <p style="font-size:0.78rem;font-weight:500;margin-top:0.2rem;color:var(--text-primary);">導入相談・お問い合わせ</p>
+        </div>
+    </div>
+    </div><!-- /.print-lower -->
+
+    <div class="pdf-download">
+        <p class="pdf-title">印刷用A4ブローシャ（PDF）</p>
+        <div class="pdf-buttons">
+            <a href="#" onclick="printLandscape()" class="btn-primary">A4横版 印刷</a>
+            <a href="#" onclick="window.print()" class="btn-other">A4縦版 印刷</a>
+        </div>
+    </div>
+
+    <footer class="br-footer">
+        <p style="font-family: Georgia, 'Times New Roman', serif; font-size: 0.8rem; color: #94A3B8; font-style: italic; margin-bottom: 0.8rem;">
+            「先進的すぎる」は、誰かが最初に歩んだ道がある。
+        </p>
+        <p>
+            <a href="brochure.html">← ブローシャ一覧</a>
+            <a href="government-proposal.html">行政提案書</a>
+            <a href="index.html">トップページ</a>
+        </p>
+        <p style="margin-top: 0.75rem;">&copy; TokiStorage. All rights reserved.</p>
+    </footer>
+
+</main>
+
+<script>
+function printLandscape() {
+    document.body.classList.add('landscape-mode');
+    document.getElementById('landscape-page-style').media = 'all';
+    document.getElementById('portrait-page-style').media = 'not all';
+    setTimeout(function() {
+        window.print();
+        setTimeout(function() {
+            document.body.classList.remove('landscape-mode');
+            document.getElementById('landscape-page-style').media = 'not all';
+            document.getElementById('portrait-page-style').media = 'all';
+        }, 1000);
+    }, 300);
+}
+</script>
+<script src="tracker.js" defer></script>
+</body>
+</html>
