@@ -1,0 +1,74 @@
+name: Generate Government DX Brochure PDF
+
+on:
+  push:
+    paths:
+      - 'brochure-government-dx-print.html'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  generate-pdf:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Install Chromium
+        run: |
+          sudo apt-get update -qq
+          sudo apt-get install -y chromium-browser
+
+      - name: Install Node dependencies
+        run: |
+          npm install puppeteer-core
+
+      - name: Serve HTML locally
+        run: |
+          npx http-server . -p 8080 --silent &
+          sleep 2
+
+      - name: Generate PDF
+        run: |
+          node - << 'EOF'
+          const puppeteer = require('puppeteer-core');
+          const fs = require('fs');
+
+          (async () => {
+            const browser = await puppeteer.launch({
+              executablePath: '/usr/bin/chromium-browser',
+              headless: true,
+              args: ['--no-sandbox', '--disable-setuid-sandbox']
+            });
+            const page = await browser.newPage();
+            await page.goto('http://localhost:8080/brochure-government-dx-print.html', {
+              waitUntil: 'networkidle0',
+              timeout: 30000
+            });
+            const pdf = await page.pdf({
+              landscape: true,
+              width: '297mm',
+              height: '210mm',
+              printBackground: true,
+              margin: { top: 0, bottom: 0, left: 0, right: 0 }
+            });
+            fs.mkdirSync('asset', { recursive: true });
+            fs.writeFileSync('asset/brochure-government-dx.pdf', pdf);
+            console.log('PDF generated:', fs.statSync('asset/brochure-government-dx.pdf').size, 'bytes');
+            await browser.close();
+          })();
+          EOF
+
+      - name: Commit and push PDF
+        run: |
+          git config user.email "tokistorage1000@gmail.com"
+          git config user.name "TokiStorage Actions"
+          git add asset/brochure-government-dx.pdf
+          git diff --staged --quiet && echo "No changes" || \
+            git commit -m "Auto-generate government DX brochure PDF [skip ci]" && \
+            git push
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
