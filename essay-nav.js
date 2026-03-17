@@ -240,7 +240,8 @@
     { id: 'beyond-consumer-education', ja: '不足を満たす消費者をやめる日', en: 'The Day I Stopped Being a Consumer of Education', date: '2026-03-16' },
     { id: 'relational-capital-flow', ja: '関係資本の還流', en: 'The Flow of Relational Capital', date: '2026-03-16' },
     { id: 'reluctant-farewell', ja: '離れたくない、という感情から始まった', en: 'It Started With Not Wanting to Leave', date: '2026-03-17' },
-    { id: 'proof-of-presence', ja: '娘と参加したイベントで声を残した', en: 'I Was There With My Daughter', date: '2026-03-17' }
+    { id: 'proof-of-presence', ja: '娘と参加したイベントで声を残した', en: 'I Was There With My Daughter', date: '2026-03-17' },
+    { id: 'record-as-infrastructure', ja: '記録は衣食住と同じインフラだ', en: 'Records Are Infrastructure, Like Food and Shelter', date: '2026-03-17' }
   ];
 
   // ── Latest Articles (最新記事) ──
@@ -480,6 +481,7 @@
     'relational-capital-flow': ['gift-economy', 'sanpoyoshi', 'burn-rate-zero', 'existentialism', 'beyond-consumer-education'],
     'reluctant-farewell': ['relational-capital-flow', 'gift-economy', 'existentialism', 'immigrant-burial-ecosystem', 'beyond-consumer-education'],
     'proof-of-presence': ['reluctant-farewell', 'fire-music', 'stakeholder-awareness', 'zero-cost-autonomy', 'why-essays'],
+    'record-as-infrastructure': ['proof-of-presence', 'fire-music', 'no-single-point-of-failure', 'offline-freedom', 'independence'],
     'break-and-grow':           ['zero-cost-autonomy', 'tool-vs-infrastructure', 'vibe-coding', 'primitive-edge', 'constraint-philosophy']
   };
 

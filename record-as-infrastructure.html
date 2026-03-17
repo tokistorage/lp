@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" type="image/png" sizes="32x32" href="asset/favicon-32.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="asset/apple-touch-icon.png">
+    <title>記録は衣食住と同じインフラだ ── インターネットが止まった島で、それでも残せるものがある | トキストレージ</title>
+    <meta name="robots" content="index, follow">
+    <meta name="description" content="電気が途絶え、道路が断絶し、空港が閉鎖された。そういう状況でも、記録を残すことができる仕組みがある。クラウドにはできない所業だ。">
+    <link rel="alternate" hreflang="ja" href="https://tokistorage.github.io/lp/record-as-infrastructure.html">
+    <link rel="alternate" hreflang="en" href="https://tokistorage.github.io/lp/record-as-infrastructure-en.html">
+    <link rel="alternate" hreflang="x-default" href="https://tokistorage.github.io/lp/record-as-infrastructure.html">
+    <meta property="og:title" content="記録は衣食住と同じインフラだ ── インターネットが止まった島で、それでも残せるものがある | トキストレージ">
+    <meta property="og:description" content="電気が途絶え、道路が断絶し、空港が閉鎖された。そういう状況でも、記録を残すことができる仕組みがある。">
+    <meta property="og:type" content="article">
+    <meta property="og:url" content="https://tokistorage.github.io/lp/record-as-infrastructure.html">
+    <meta name="twitter:card" content="summary">
+    <style>
+        :root {
+            --toki-blue: #2563EB; --toki-blue-dark: #1E40AF; --toki-blue-pale: #EFF6FF;
+            --accent-blue: #60A5FA; --bg-white: #FFFFFF; --text-primary: #1E293B;
+            --text-secondary: #475569; --text-muted: #94A3B8; --border: #E2E8F0;
+            --font-display: 'Hiragino Mincho ProN', 'Yu Mincho', serif;
+            --font-body: 'Hiragino Kaku Gothic ProN', 'Yu Gothic', 'Meiryo', sans-serif;
+        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        html { scroll-behavior: smooth; }
+        body { font-family: var(--font-body); font-weight: 400; background: var(--bg-white); color: var(--text-primary); line-height: 2; font-size: 16px; }
+        .article-nav { position: fixed; top: 0; left: 0; right: 0; z-index: 1000; background: rgba(255,255,255,0.95); backdrop-filter: blur(12px); border-bottom: 1px solid var(--border); padding: 0.6rem 1.2rem; display: flex; align-items: center; justify-content: space-between; gap: 1rem; }
+        .article-nav .nav-brand { font-family: var(--font-display); font-size: 0.9rem; font-weight: 600; color: var(--toki-blue); text-decoration: none; white-space: nowrap; }
+        .article-nav .nav-brand::before { content: ''; display: inline-block; width: 20px; height: 20px; background: url('asset/tokistorage-icon-512.png') no-repeat center / contain; vertical-align: -3px; margin-right: 5px; }
+        .article-nav .nav-right { display: flex; align-items: center; gap: 1rem; }
+        .article-nav .nav-label { font-size: 0.6rem; color: var(--text-muted); letter-spacing: 0.08em; }
+        .article-nav .lang-switch { font-size: 0.75rem; color: var(--toki-blue); text-decoration: none; padding: 0.3rem 0.6rem; border: 1px solid var(--toki-blue); border-radius: 4px; }
+        .article-nav .lang-switch:hover { background: var(--toki-blue); color: #fff; }
+        .article-container { max-width: 680px; margin: 0 auto; padding: 7rem 2rem 4rem; }
+        .article-header { margin-bottom: 3rem; padding-bottom: 2rem; border-bottom: 1px solid var(--border); }
+        .article-category { font-size: 0.7rem; color: var(--toki-blue); letter-spacing: 0.15em; margin-bottom: 1rem; }
+        .article-header h1 { font-family: var(--font-display); font-size: 1.8rem; font-weight: 700; line-height: 1.5; margin-bottom: 1.5rem; }
+        .article-subtitle { font-size: 0.95rem; color: var(--text-secondary); line-height: 1.9; }
+        .article-content h2 { font-family: var(--font-display); font-size: 1.3rem; font-weight: 600; margin: 3rem 0 1.5rem; padding-bottom: 0.5rem; border-bottom: 2px solid var(--toki-blue-pale); }
+        .article-content p { margin-bottom: 1.5rem; text-align: justify; }
+        .article-content blockquote { border-left: 3px solid var(--toki-blue); padding-left: 1.5rem; margin: 2rem 0; font-family: var(--font-display); color: var(--text-secondary); line-height: 2.2; }
+        .core-message { background: var(--toki-blue-pale); border-left: 4px solid var(--toki-blue); padding: 1.5rem; margin: 2rem 0; font-size: 0.95rem; line-height: 1.8; }
+        .key-point { background: linear-gradient(135deg, var(--toki-blue-pale) 0%, #fff 100%); border: 1px solid var(--accent-blue); border-radius: 8px; padding: 1.5rem; margin: 2rem 0; text-align: center; }
+        .key-point p { font-family: var(--font-display); font-size: 1.1rem; color: var(--toki-blue-dark); margin: 0; }
+        .cta-block { background: var(--toki-blue); color: #fff; border-radius: 12px; padding: 2rem; margin: 3rem 0; text-align: center; }
+        .cta-block p { color: rgba(255,255,255,0.9); margin-bottom: 1.5rem; font-size: 0.95rem; }
+        .cta-block a { display: inline-block; background: #fff; color: var(--toki-blue); text-decoration: none; padding: 0.7rem 1.5rem; border-radius: 6px; font-weight: 600; font-size: 0.9rem; margin: 0.3rem; }
+        .cta-block a.secondary { background: transparent; color: #fff; border: 1px solid rgba(255,255,255,0.6); }
+        .cta-block a:hover { opacity: 0.85; }
+        .article-footer { margin-top: 4rem; padding-top: 2rem; border-top: 1px solid var(--border); text-align: center; }
+        .article-footer p { font-size: 0.8rem; color: var(--text-muted); margin-bottom: 1rem; }
+        .article-footer a { color: var(--toki-blue); text-decoration: none; }
+        @media (max-width: 768px) { .article-container { padding: 6rem 1.2rem 3rem; } .article-header h1 { font-size: 1.5rem; } .article-nav .nav-label { display: none; } }
+        @media print { .article-nav { display: none; } .article-container { padding-top: 2rem; } }
+    </style>
+</head>
+<body>
+
+<nav class="article-nav">
+    <a href="essays.html" class="nav-brand">トキストレージ</a>
+    <div class="nav-right">
+        <span class="nav-label">ESSAY</span>
+        <a href="record-as-infrastructure-en.html" class="lang-switch">EN</a>
+    </div>
+</nav>
+
+<main class="article-container">
+    <header class="article-header">
+        <div class="article-category">自然・宇宙</div>
+        <h1>記録は衣食住と同じインフラだ<br>── インターネットが止まった島で、それでも残せるものがある</h1>
+        <p class="article-subtitle">
+            電気が途絶え、道路が断絶し、空港が閉鎖された。
+            そういう状況でも、記録を残すことができる仕組みがある。
+            衣食住に加えて、記録というインフラを再考する時が来ている。
+        </p>
+    </header>
+
+    <article class="article-content">
+
+        <div class="core-message">この記事で言いたいこと：インフラが崩壊した状況でも、スマートフォンとソーラーバッテリーがあれば記録を残せる仕組みがある。クラウドにはできない所業だ。記録は衣食住と同じインフラだ。日頃から触っておくことが、万が一の備えになる。その構造を社会に組み込んでいきたい。</div>
+
+        <h2>1. 島のインフラが止まった</h2>
+        <p>ハワイの島々が嵐に見舞われた。SNSには悲惨な映像が流れた。電気が途絶えた。道路が断絶した。空港が閉鎖された。文字通りインフラが崩壊したような状況が、一時的に生じた。</p>
+        <p>復旧も完全には数日ではいかないエリアがあるだろう。島という地理的な条件が、孤立の深さを決める。外から支援が届くまでの間、そこにいる人たちは自分たちで生き延びるしかない。</p>
+        <p>こういう映像を見るたびに、人は防災について考える。食料、水、医療。しかし多くの場合、そこで思考が止まる。記録については、考えない。</p>
+
+        <h2>2. クラウドは止まる</h2>
+        <p>現代の記録のほとんどは、クラウドに依存している。写真はクラウドに自動バックアップされる。メモはクラウドアプリに保存される。音声はストリーミングサービスから届く。インターネットがあることを前提に、記録の仕組みが設計されている。</p>
+        <p>インターネットが止まった瞬間、その全てにアクセスできなくなる。記録を残すこともできなくなる。電気が止まれば充電もできなくなる。クラウドストレージは、インフラが正常に機能していることを前提にしたサービスだ。</p>
+        <p>嵐の中で、何が起きたかを記録したい。家族に声を残したい。この状況を言葉にして残しておきたい。その欲求は、インフラが崩壊した時にこそ高まる。しかし道具がない。</p>
+
+        <h2>3. ソーラーバッテリーとQRコードがあれば</h2>
+        <p>tokistorageの仕組みは、この状況でも機能する。スマートフォンにソーラーバッテリーを繋げば、インターネットに繋がらなくても記録を残すことができる。QRコードにデータが直接入るからだ。クラウドを経由しない。サーバーに依存しない。</p>
+        <blockquote>
+            電気が止まっても → ソーラーで充電できる<br>
+            インターネットが止まっても → QRコードにオフラインで記録できる<br>
+            道路が断絶しても → 手元の紙に刻まれたデータは残る<br>
+            空港が閉鎖されても → その記録はいつか外に出られる
+        </blockquote>
+        <p>これはクラウドストレージにはできない所業だ。インフラの崩壊を前提に設計されているから、インフラが崩壊した時に力を発揮する。</p>
+
+        <h2>4. 便利に流れることの代償</h2>
+        <p>インフラが崩壊するような事態は、頻繁には起きない。だからこそ、人は便利な方に流れる。クラウドは簡単だ。スマートフォンのアプリは使いやすい。わざわざQRコードに音声を記録しようとする人は少ない。</p>
+        <p>しかし防災の本質は、滅多に起きないことへの備えだ。毎日火事が起きるから消火器を置くのではない。滅多に起きないから、平時に備える。その備えが、いざという時に機能する。</p>
+        <p>記録についても同じ構造が当てはまる。普段から使っていない道具は、有事に使えない。操作に慣れていなければ、パニックの中で使えない。日頃から触っておくことが、万が一の備えになる。</p>
+
+        <h2>5. 衣食住に、記録を加える</h2>
+        <p>防災の文脈では、衣食住が語られる。食料の備蓄、水の確保、避難場所の把握。これらは身体の生存を支えるインフラだ。</p>
+        <p>しかし人間は、身体だけで生きているのではない。何が起きたのか。その時何を考えたのか。どういう気持ちを抱いていたのか。それを残したいという欲求が、人間にはある。記録は精神の生存を支えるインフラだ。</p>
+        <p>嵐の中で家族に声を残した記録が、後世に残る。インフラが崩壊した時代の一市民が何を感じていたかが、1000年後の人に届く。記録というインフラが衣食住と並んで語られる日が来てほしい。</p>
+
+        <h2>6. 防災・予防の文脈で日頃から</h2>
+        <p>tokistorageを防災の文脈で捉え直すとき、消防本部との相性が見えてくる。消防の訓練思想は「平時に備えるから有事に動ける」だ。TokiQRを日頃から使う習慣が、そのまま災害への備えになる。</p>
+        <p>消防音楽隊のイベントで声を残す。地域の記録をQRコードに刻む。そういった平時の積み重ねが、インフラが止まった時の記録能力を維持する。道具に慣れているから、パニックの中でも使える。</p>
+        <p>防災訓練に記録の訓練を加える。避難経路を確認するのと同じように、記録の道具を確認する。その発想を、社会に組み込んでいきたい。</p>
+
+        <h2>7. ハワイとtokistorageの因縁</h2>
+        <p>tokistorageが生まれたきっかけの一つは、ハワイにあった。ラハイナの火災で全てを失ったお寺で、名前だけが刻まれた墓を見た。その人が残したかったものが、残せなかった痛みを感じた。それが、記録を残す仕組みを作ろうという動機になった。</p>
+        <p>今またハワイで、インフラが崩壊するような事態が起きている。縁のある人たちがその島にいる。彼らの安否を気にかけながら、tokistorageが目指してきたものの意味を、改めて感じている。</p>
+        <p>嵐が過ぎた後、人々は復旧していく。電気が戻り、道路が開き、空港が再開する。その過程で何を感じたか、何を考えたか。それを残す道具が手元にあるかどうかで、後世に伝わるものが変わる。</p>
+
+        <h2>8. 記録インフラを再考する構造を</h2>
+        <p>一人一人が個別に気づくのを待つのではなく、構造的に記録というインフラを再考する機会を作っていきたい。防災訓練、消防のイベント、地域の集まり。そういった場所で、記録の道具に触れる機会を作る。</p>
+        <p>衣食住に加えて、記録。その発想が当たり前になる日を目指している。インフラが崩壊しても機能する記録の仕組みが、日常に溶け込んでいる状態。それがtokistorageの最終的なビジョンだ。</p>
+        <p>ハワイの嵐が教えてくれた。インフラはいつでも止まりうる。だから、止まっても機能する仕組みを、止まる前から使い慣れておく必要がある。記録は衣食住と同じインフラだ。</p>
+
+        <div class="key-point"><p>インフラが崩壊した時にこそ、残したいものがある。だから平時から備える。</p></div>
+
+        <div class="cta-block">
+            <p>トキストレージは、インターネットがなくても機能する記録インフラです。声・画像・テキストを、1000年残す。</p>
+            <a href="https://tokistorage.github.io">トキストレージを知る</a>
+            <a href="essays.html" class="secondary">すべてのエッセイを読む</a>
+        </div>
+
+    </article>
+
+    <footer class="article-footer">
+        <p id="essay-nav-links"></p>
+        <p>© TokiStorage. All rights reserved.</p>
+    </footer>
+</main>
+
+<script src="essay-nav.js"></script>
+<script src="essay-tts.js"></script>
+</body>
+</html>
