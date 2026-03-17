@@ -17,10 +17,14 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
 
-      - name: Install Chromium
+      - name: Install Chromium and Japanese fonts
         run: |
           sudo apt-get update -qq
-          sudo apt-get install -y chromium-browser
+          sudo apt-get install -y chromium-browser \
+            fonts-noto-cjk \
+            fonts-ipafont-gothic \
+            fonts-ipafont-mincho
+          fc-cache -fv
 
       - name: Install Node dependencies
         run: |
