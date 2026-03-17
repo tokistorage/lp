@@ -12,37 +12,13 @@ permissions:
 jobs:
   generate-pdf:
     runs-on: ubuntu-latest
+    container:
+      image: ghcr.io/puppeteer/puppeteer:latest
+      options: --user root
 
     steps:
       - name: Checkout
         uses: actions/checkout@v4
-
-      - name: Cache apt packages
-        uses: actions/cache@v4
-        id: cache-apt
-        with:
-          path: /var/cache/apt/archives
-          key: ${{ runner.os }}-apt-chromium-fonts
-
-      - name: Install Chromium and Japanese fonts
-        run: |
-          sudo apt-get update -qq
-          sudo apt-get install -y chromium-browser \
-            fonts-noto-cjk \
-            fonts-ipafont-gothic \
-            fonts-ipafont-mincho
-          fc-cache -fv
-
-      - name: Cache node_modules
-        uses: actions/cache@v4
-        id: cache-npm
-        with:
-          path: node_modules
-          key: ${{ runner.os }}-node-puppeteer-core
-
-      - name: Install Node dependencies
-        if: steps.cache-npm.outputs.cache-hit != 'true'
-        run: npm install puppeteer-core
 
       - name: Serve HTML locally
         run: |
@@ -52,12 +28,11 @@ jobs:
       - name: Generate PDF
         run: |
           node - << 'EOF'
-          const puppeteer = require('puppeteer-core');
+          const puppeteer = require('puppeteer');
           const fs = require('fs');
 
           (async () => {
             const browser = await puppeteer.launch({
-              executablePath: '/usr/bin/chromium-browser',
               headless: true,
               args: ['--no-sandbox', '--disable-setuid-sandbox']
             });
