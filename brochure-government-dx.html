@@ -188,7 +188,48 @@
             line-height: 1.75;
         }
 
-        /* Three walls */
+        /* Walls + Support side by side */
+        .walls-support-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1.25rem;
+            margin-bottom: 1rem;
+            align-items: start;
+        }
+        .walls-stack {
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+        }
+        .wall-card {
+            display: flex;
+            align-items: flex-start;
+            gap: 0.6rem;
+            background: var(--bg-white);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            padding: 0.75rem 0.9rem;
+            text-align: left;
+        }
+        .wall-card .wall-icon { font-size: 1.2rem; flex-shrink: 0; margin-top: 0.1rem; }
+        .wall-card .wall-name {
+            font-family: var(--font-display);
+            font-weight: 700;
+            color: var(--toki-navy);
+            font-size: 0.9rem;
+            margin-bottom: 0.2rem;
+        }
+        .wall-card .wall-desc {
+            font-size: 0.82rem;
+            color: var(--text-secondary);
+            line-height: 1.65;
+        }
+        .support-col .section-heading { margin-top: 0; }
+        @media screen and (max-width: 600px) {
+            .walls-support-grid { grid-template-columns: 1fr; }
+        }
+
+        /* Three walls (legacy grid - unused now) */
         .walls-grid {
             display: grid;
             grid-template-columns: repeat(3, 1fr);
@@ -533,10 +574,15 @@
             .tagline .hook-sub { font-size: 0.68rem; line-height: 1.45; }
             .section-heading { margin: 0.3rem 0 0.15rem; }
             .section-heading h2 { font-size: 0.82rem; }
+            .walls-support-grid { gap: 0.5rem; margin-bottom: 0.3rem; }
+            .walls-stack { gap: 0.2rem; }
+            .wall-card { padding: 0.3rem 0.45rem; border-radius: 5px; gap: 0.4rem; }
+            .wall-card .wall-icon { font-size: 0.85rem; }
+            .wall-card .wall-name { font-size: 0.7rem; margin-bottom: 0.08rem; }
+            .wall-card .wall-desc { font-size: 0.62rem; line-height: 1.3; }
             .what-box { padding: 0.45rem 0.8rem; margin-bottom: 0.3rem; border-radius: 6px; }
             .what-box .what-lead { font-size: 0.8rem; margin-bottom: 0.15rem; }
             .what-box .what-desc { font-size: 0.64rem; line-height: 1.5; }
-            .walls-grid { gap: 0.25rem; margin-bottom: 0.1rem; }
             .wall-card { padding: 0.3rem 0.35rem; border-radius: 5px; }
             .wall-card .wall-icon { font-size: 0.9rem; margin-bottom: 0.05rem; }
             .wall-card .wall-name { font-size: 0.72rem; margin-bottom: 0.1rem; }
@@ -626,36 +672,39 @@
         <p class="hook-sub" style="margin-top:0.6rem;">「アイデアはいい。でも効果が測れない、予算が組めない、法整備も要る。」<br>その声を、私たちは何度も聞いてきました。三つの壁を、一緒に越えます。</p>
     </div>
 
-    <!-- Three Walls -->
-    <div class="section-heading"><h2>行政DXの三つの壁</h2></div>
-    <div class="walls-grid">
-        <div class="wall-card">
-            <span class="wall-icon">📊</span>
-            <div class="wall-name">①　効果の定量化</div>
-            <div class="wall-desc">「便利そう」だけでは稟議が通らない。保存年数・閲覧回数・人件費削減・防災価値を数字で示す必要がある。</div>
+    <!-- Three Walls + Support: 2-col -->
+    <div class="walls-support-grid">
+      <div class="walls-col">
+        <div class="section-heading"><h2>行政DXの三つの壁</h2></div>
+        <div class="walls-stack">
+            <div class="wall-card">
+                <span class="wall-icon">📊</span>
+                <div class="wall-name">①　効果の定量化</div>
+                <div class="wall-desc">「便利そう」だけでは稟議が通らない。保存年数・閲覧回数・人件費削減・防災価値を数字で示す必要がある。</div>
+            </div>
+            <div class="wall-card">
+                <span class="wall-icon">📋</span>
+                <div class="wall-name">②　予算編成</div>
+                <div class="wall-desc">単年度予算と複数年保管の構造的な乖離。補助金・交付金の活用可能性と費用対効果の説明資料が必要になる。</div>
+            </div>
+            <div class="wall-card">
+                <span class="wall-icon">⚖️</span>
+                <div class="wall-name">③　法整備・規制</div>
+                <div class="wall-desc">個人情報保護法・公文書管理法・著作権——既存制度との整合性確認と、必要に応じた条例・要綱の整備が求められる。</div>
+            </div>
         </div>
-        <div class="wall-card">
-            <span class="wall-icon">📋</span>
-            <div class="wall-name">②　予算編成</div>
-            <div class="wall-desc">単年度予算と複数年保管の構造的な乖離。補助金・交付金の活用可能性と費用対効果の説明資料が必要になる。</div>
+      </div>
+      <div class="support-col">
+        <div class="section-heading"><h2>三つの壁すべてに、伴奏支援します。</h2></div>
+        <div class="support-box">
+            <ul>
+                <li>① への対応——保存年数・閲覧回数・人件費削減・観光・防災価値を事前に試算、稟議資料として可視化</li>
+                <li>② への対応——補助金・交付金の調査、議会説明資料・仕様書・見積書のひな形をともに作成</li>
+                <li>③ への対応——個人情報・著作権・公文書管理法との適合確認、条例・要綱整備の論点提示</li>
+                <li>まず小さく始める——PoC（小規模実証）で住民・議員が体験。「先進的すぎる」が「やってみよう」に変わります</li>
+            </ul>
         </div>
-        <div class="wall-card">
-            <span class="wall-icon">⚖️</span>
-            <div class="wall-name">③　法整備・規制</div>
-            <div class="wall-desc">個人情報保護法・公文書管理法・著作権——既存制度との整合性確認と、必要に応じた条例・要綱の整備が求められる。</div>
-        </div>
-    </div>
-    <div class="wall-arrow">↓</div>
-
-    <!-- Support -->
-    <div class="support-box">
-        <div class="support-lead">三つの壁すべてに、伴奏支援します。</div>
-        <ul>
-            <li>① への対応——保存年数・閲覧回数・人件費削減・観光・防災価値を事前に試算、稟議資料として可視化</li>
-            <li>② への対応——補助金・交付金の調査、議会説明資料・仕様書・見積書のひな形をともに作成</li>
-            <li>③ への対応——個人情報・著作権・公文書管理法との適合確認、条例・要綱整備の論点提示</li>
-            <li>まず小さく始める——PoC（小規模実証）で住民・議員が体験。「先進的すぎる」が「やってみよう」に変わります</li>
-        </ul>
+      </div>
     </div>
 
     <!-- Print 2-col layout wrapper -->
