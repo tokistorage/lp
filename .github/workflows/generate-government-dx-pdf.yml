@@ -3,7 +3,7 @@ name: Generate Government DX Brochure PDF
 on:
   push:
     paths:
-      - 'brochure-government-dx-print.html'
+      - 'brochure-government-dx.html'
   workflow_dispatch:
 
 permissions:
@@ -40,7 +40,7 @@ jobs:
               args: ['--no-sandbox', '--disable-setuid-sandbox']
             });
             const page = await browser.newPage();
-            await page.goto('http://localhost:8080/brochure-government-dx-print.html', {
+            await page.goto('http://localhost:8080/brochure-government-dx.html', {
               waitUntil: 'networkidle0',
               timeout: 30000
             });
