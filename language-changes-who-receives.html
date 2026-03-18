@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" type="image/png" sizes="32x32" href="asset/favicon-32.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="asset/apple-touch-icon.png">
+    <title>言葉が変わると、誰に届くかが変わる | トキストレージ</title>
+    <meta name="robots" content="index, follow">
+    <meta name="description" content="相手目線で書くとは、相手の内側にある言葉を探すことだ">
+    <style>
+        :root { --toki-blue: #2563EB; --toki-blue-dark: #1E40AF; --toki-blue-pale: #EFF6FF; --accent-blue: #60A5FA; --bg-white: #FFFFFF; --text-primary: #1E293B; --text-secondary: #475569; --text-muted: #94A3B8; --border: #E2E8F0; --font-display: 'Hiragino Mincho ProN', 'Yu Mincho', serif; --font-body: 'Hiragino Kaku Gothic ProN', 'Yu Gothic', 'Meiryo', sans-serif; }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        html { scroll-behavior: smooth; }
+        body { font-family: var(--font-body); font-weight: 400; background: var(--bg-white); color: var(--text-primary); line-height: 2; font-size: 16px; }
+        .article-nav { position: fixed; top: 0; left: 0; right: 0; z-index: 1000; background: rgba(255,255,255,0.95); backdrop-filter: blur(12px); border-bottom: 1px solid var(--border); padding: 0.6rem 1.2rem; display: flex; align-items: center; justify-content: space-between; gap: 1rem; }
+        .article-nav .nav-brand { font-family: var(--font-display); font-size: 0.9rem; font-weight: 600; color: var(--toki-blue); text-decoration: none; white-space: nowrap; }
+        .article-nav .nav-brand::before { content: ''; display: inline-block; width: 20px; height: 20px; background: url('asset/tokistorage-icon-512.png') no-repeat center / contain; vertical-align: -3px; margin-right: 5px; }
+        .article-nav .nav-right { display: flex; align-items: center; gap: 1rem; }
+        .article-nav .nav-label { font-size: 0.6rem; color: var(--text-muted); letter-spacing: 0.08em; }
+        .article-nav .lang-switch { font-size: 0.75rem; color: var(--toki-blue); text-decoration: none; padding: 0.3rem 0.6rem; border: 1px solid var(--toki-blue); border-radius: 4px; }
+        .article-nav .lang-switch:hover { background: var(--toki-blue); color: #fff; }
+        .article-container { max-width: 680px; margin: 0 auto; padding: 7rem 2rem 4rem; }
+        .article-header { margin-bottom: 3rem; padding-bottom: 2rem; border-bottom: 1px solid var(--border); }
+        .article-category { font-size: 0.7rem; color: var(--toki-blue); letter-spacing: 0.15em; margin-bottom: 1rem; }
+        .article-header h1 { font-family: var(--font-display); font-size: 1.8rem; font-weight: 700; line-height: 1.5; margin-bottom: 1.5rem; }
+        .article-subtitle { font-size: 0.95rem; color: var(--text-secondary); line-height: 1.9; }
+        .article-content h2 { font-family: var(--font-display); font-size: 1.3rem; font-weight: 600; margin: 3rem 0 1.5rem; padding-bottom: 0.5rem; border-bottom: 2px solid var(--toki-blue-pale); }
+        .article-content p { margin-bottom: 1.5rem; text-align: justify; }
+        .article-content blockquote { border-left: 3px solid var(--toki-blue); padding-left: 1.5rem; margin: 2rem 0; font-family: var(--font-display); color: var(--text-secondary); }
+        .core-message { background: var(--toki-blue-pale); border-left: 4px solid var(--toki-blue); padding: 1.5rem; margin: 2rem 0; font-size: 0.95rem; line-height: 1.8; }
+        .key-point { background: linear-gradient(135deg, var(--toki-blue-pale) 0%, #fff 100%); border: 1px solid var(--accent-blue); border-radius: 8px; padding: 1.5rem; margin: 2rem 0; text-align: center; }
+        .key-point p { font-family: var(--font-display); font-size: 1.1rem; color: var(--toki-blue-dark); margin: 0; }
+        .cta-block { background: var(--toki-blue-pale); border-radius: 12px; padding: 2rem; margin: 3rem 0; text-align: center; }
+        .cta-block p { margin-bottom: 1.5rem; color: var(--text-secondary); }
+        .cta-block a { display: inline-block; padding: 0.75rem 1.5rem; background: var(--toki-blue); color: #fff; text-decoration: none; border-radius: 6px; margin: 0.3rem; font-size: 0.9rem; }
+        .cta-block a.secondary { background: transparent; color: var(--toki-blue); border: 1px solid var(--toki-blue); }
+        .article-footer { margin-top: 4rem; padding-top: 2rem; border-top: 1px solid var(--border); text-align: center; }
+        .article-footer p { font-size: 0.8rem; color: var(--text-muted); margin-bottom: 1rem; }
+        .article-footer a { color: var(--toki-blue); text-decoration: none; }
+        @media (max-width: 768px) { .article-container { padding: 6rem 1.2rem 3rem; } .article-header h1 { font-size: 1.5rem; } }
+        @media print { .article-nav { display: none; } .article-container { padding-top: 2rem; } }
+    </style>
+    <meta property="og:type" content="article">
+    <meta property="og:title" content="言葉が変わると、誰に届くかが変わる | トキストレージ">
+    <meta property="og:description" content="相手目線で書くとは、相手の内側にある言葉を探すことだ">
+    <meta property="og:url" content="https://tokistorage.github.io/lp/language-changes-who-receives.html">
+    <meta property="og:site_name" content="トキストレージ">
+    <meta name="twitter:card" content="summary">
+    <meta property="og:image" content="https://tokistorage.github.io/lp/asset/tokistorage-icon-512.png">
+    <link rel="alternate" hreflang="ja" href="https://tokistorage.github.io/lp/language-changes-who-receives.html">
+    <link rel="alternate" hreflang="en" href="https://tokistorage.github.io/lp/language-changes-who-receives-en.html">
+    <link rel="alternate" hreflang="x-default" href="https://tokistorage.github.io/lp/language-changes-who-receives.html">
+    <link rel="canonical" href="https://tokistorage.github.io/lp/language-changes-who-receives.html">
+</head>
+<body>
+<nav class="article-nav">
+    <a href="essays.html" class="nav-brand">トキストレージ</a>
+    <div class="nav-right">
+        <span class="nav-label">ESSAY</span>
+        <a href="language-changes-who-receives-en.html" class="lang-switch">EN</a>
+    </div>
+</nav>
+<main class="article-container">
+    <header class="article-header">
+        <div class="article-category">ESSAY &mdash; 技術・設計</div>
+        <h1>言葉が変わると、誰に届くかが変わる</h1>
+        <p class="article-subtitle">相手目線で書くとは、相手の内側にある言葉を探すことだ</p>
+    </header>
+    <article class="article-content">
+<div class="core-message">この記事で言いたいこと：言葉が変わると、誰に届くかが変わる。相手目線で書くとは、相手の外側に立つことではなく、相手の内側にある言葉を探すことだ。</div>
+
+<h2>1. 「先進的すぎる」という言葉</h2>
+
+<p>ある行政機関の担当者と話した。実際にQRコードをかざしてもらい、声が蘇る体験をしてもらった。相手は「アイデアはすごくいいと思う」と言った。そして続けた。「先進的すぎて、今すぐは難しい」と。</p>
+
+<p>その言葉を持ち帰って、ブローシャを作った。タイトルはこうだった。「先進的すぎる、はいつか『当たり前』になる。」</p>
+
+<p>書いた直後に気づいた。これは焦りを煽っている。「あなたが先進的すぎると思っているのは間違いだ」と、相手の判断を外から否定している。担当者が読んだとき、なんとなく責められているように感じるかもしれない。</p>
+
+<p>タイトルを変えた。「今日残した声が、100年後のまちの記憶になる。」</p>
+
+<p>同じ内容を伝えているのに、受け取る側の感覚がまるで違う。前者は「お前が遅れている」という告発だ。後者は「あなたが今日やることが、未来につながる」という招待だ。</p>
+
+<h2>2. 「公文書は残る。でも」という喧嘩</h2>
+
+<p>ブローシャの冒頭にこう書いていた。「公文書は残る。でも『どう生きたか』は残らない。」</p>
+
+<p>書いた直後に違和感があった。行政の担当者が読んだとき、何を感じるか。「公文書を積み上げてきた自分たちの仕事が否定されている」と感じるかもしれない。対話の入口でそれをやってしまうと、その後の言葉が入らなくなる。</p>
+
+<p>書き直した。「声・顔・ことばを物理・国家・デジタルの三層で保管する、存在証明のインフラです。」</p>
+
+<p>公文書と戦うのではなく、公文書が守ってきたものの隣に並ぶ。それだけで、言葉の立ち位置が変わった。</p>
+
+<h2>3. 「補助金・交付金」という他人の言語</h2>
+
+<p>伴奏支援の内容を書いていて、こう書いた。「補助金・交付金の調査、議会説明資料の提供」</p>
+
+<p>しばらくして気づいた。消防本部や市役所のような行政機関は、補助金や交付金を「受け取る側」ではない。彼らは「予算を要求する側」だ。補助金という言語は、NPOや民間企業が行政から受け取るときに使うものだ。</p>
+
+<p>行政の担当者が実際に直面しているのは、予算要求であり、査定であり、議会での承認だ。「補助金を調べましょう」という言葉は、相手の現実と噛み合っていない。</p>
+
+<p>書き直した。「予算要求・費用対効果の説明資料をともに作成。議会答弁にも使える資料を整えます。」</p>
+
+<p>言葉が一つ変わるだけで、「この人はわかってくれている」という感触が生まれる。逆に言えば、一つ間違えるだけで「この人は外の人だ」という距離が生まれる。</p>
+
+<h2>4. 担当者のモノローグ</h2>
+
+<p>三つの壁の説明を書き直すとき、一つの問いを立てた。「担当者は今、何を独り言で言っているか？」</p>
+
+<p>効果の定量化について、当初はこう書いていた。「『便利そう』だけでは稟議が通らない。保存年数・閲覧回数・人件費削減を数字で示す必要がある。」これは外からの観察だ。</p>
+
+<p>担当者の内側にある言葉はこうだ。「ユースケースは思い浮かぶ、やってみたい。でも稟議を通すには数字が必要だ。効果をどう定量化すればいい？」</p>
+
+<p>法整備についても同じだ。「個人情報保護法・公文書管理法との整合性確認」という法律家の言葉より、「前例がないと、法的な論点を整理するだけでも時間がかかる」という担当者の言葉の方が、はるかに刺さる。同じことを言っているのに、片方は「課題の説明」で、もう片方は「一緒に悩んでいる」になる。</p>
+
+<h2>5. 具体性は、誰の具体性か</h2>
+
+<p>ユースケースも同じ問題を抱えていた。当初はこう書いていた。「文化財・教育——石碑・建造物・伝統芸能の音声を三層保管。国立国会図書館収蔵で国家記録に昇格。物理劣化後も完全再現が可能。」</p>
+
+<p>これは技術的な説明としては正確だが、担当者が「自分ごと」として読めない。</p>
+
+<p>書き直した。「石碑の碑文、無形文化財の実演、郷土芸能の音声をQRに。解説板にQRを貼るだけで、劣化した碑の前に立った人がその声と映像を受け取れる。」</p>
+
+<p>「劣化した碑の前に立った人」という場面が入ることで、担当者は自分の担当エリアの石碑を思い浮かべる。具体性は、こちらが持ち込むものではなく、相手の頭の中に映像が浮かぶかどうかで決まる。</p>
+
+<h2>6. 「前例がない」という孤独</h2>
+
+<p>このブローシャを作る原点にあるのは、国際ボランティアで出会った「無名氏」と刻まれた墓石だ。名前すら残らなかった人がいる。全ての人に、生前・死後を問わず記録を残す機会を作りたい——その想いから始まった。</p>
+
+<p>行政の担当者が「前例がない」と感じる孤独は、その問いと繋がっている。誰かが最初にやらなければ、前例は生まれない。「前例がない」を一人で抱えなくていい、という言葉をブローシャの中に入れたのは、そのためだ。</p>
+
+<p>無名氏の墓石と、行政担当者の「前例がない」という言葉は、同じ根を持っている。記録されなかったことへの、静かな抵抗だ。</p>
+
+<h2>7. 相手目線とは、相手の内側に入ること</h2>
+
+<p>「相手目線で書く」という言葉はよく使われる。でも実際には、相手の立場から外側を観察する「立ち位置の変更」で終わることが多い。</p>
+
+<p>本当の相手目線は、もう一段深い。相手が今この瞬間、頭の中で何を言っているか。どんな言葉で自分の状況を理解しているか。何に不安を感じていて、何に安心を感じるか。</p>
+
+<p>それを探るには、相手の日常に入る必要がある。担当者が動く組織の論理、使う言語、感じる孤独——そこまで降りていかないと、相手の内側の言葉には届かない。今回のブローシャでいえば、担当者が「面白いと思った話を形にして前に進める最初の一歩」を必要としていることに気づいたのは、実際に面談してその言葉を聞いたからだ。</p>
+
+<h2>8. 言葉が変わると、誰に届くかが変わる</h2>
+
+<p>タイトルを変えた。冒頭の一文を変えた。箇条書きの言語を変えた。内容は変わっていない。でも、誰に届くかが変わった。</p>
+
+<p>「先進的すぎる」という言葉は、先進性に自信がある人に届く。「今日残した声が」という言葉は、今日何かを始めようとしている人に届く。前者は相手を動かす前に立ちはだかり、後者は相手の背中を押す。</p>
+
+<p>言葉はそれ自体が設計だ。誰に届くかを設計し、どんな感情を起こすかを設計し、どんな行動につながるかを設計する。その設計を怠ると、どんなに良い内容でも、届くべき人に届かない。</p>
+
+<div class="key-point"><p>相手の内側にある言葉を探すこと。それが、届く言葉を書くための唯一の方法だ。</p></div>
+
+<div class="cta-block">
+<p>トキストレージは、声・顔・ことばを1000年先に届けるプロジェクトです。</p>
+<a href="https://tokistorage.github.io/lp/">トキストレージを知る</a>
+<a href="essays.html" class="secondary">すべてのエッセイを読む</a>
+</div>
+    </article>
+    <footer class="article-footer">
+        <p id="essay-nav-links"></p>
+        <p style="font-size: 0.75rem; color: var(--text-muted);">&copy; TokiStorage. All rights reserved.</p>
+    </footer>
+</main>
+<script src="essay-nav.js?v=20260318"></script>
+<script src="essay-tts.js"></script>
+</body>
+</html>
