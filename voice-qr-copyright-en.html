@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" type="image/png" sizes="32x32" href="asset/favicon-32.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="asset/apple-touch-icon.png">
+    <title>Where Does Voice QR Fit in Copyright Law? | TokiStorage</title>
+    <meta name="robots" content="index, follow">
+    <meta name="description" content="Technology that encodes audio directly into QR codes without a server may fall outside copyright law's main categories — reproduction, public transmission, and distribution. Here's why.">
+    <link rel="alternate" hreflang="ja" href="https://tokistorage.github.io/lp/voice-qr-copyright.html">
+    <link rel="alternate" hreflang="en" href="https://tokistorage.github.io/lp/voice-qr-copyright-en.html">
+    <link rel="alternate" hreflang="x-default" href="https://tokistorage.github.io/lp/voice-qr-copyright.html">
+    <style>
+        :root {
+            --toki-blue: #2563EB;
+            --toki-blue-dark: #1E40AF;
+            --toki-blue-pale: #EFF6FF;
+            --accent-blue: #60A5FA;
+            --bg-white: #FFFFFF;
+            --text-primary: #1E293B;
+            --text-secondary: #475569;
+            --text-muted: #94A3B8;
+            --border: #E2E8F0;
+            --font-display: Georgia, 'Times New Roman', serif;
+            --font-body: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        html { scroll-behavior: smooth; }
+        body { font-family: var(--font-body); font-weight: 400; background: var(--bg-white); color: var(--text-primary); line-height: 1.9; font-size: 16px; }
+
+        .article-nav { position: fixed; top: 0; left: 0; right: 0; z-index: 1000; background: rgba(255,255,255,0.95); backdrop-filter: blur(12px); border-bottom: 1px solid var(--border); padding: 0.6rem 1.2rem; display: flex; align-items: center; justify-content: space-between; gap: 1rem; }
+        .article-nav .nav-brand { font-family: var(--font-display); font-size: 0.9rem; font-weight: 600; color: var(--toki-blue); text-decoration: none; white-space: nowrap; }
+        .article-nav .nav-brand::before { content: ''; display: inline-block; width: 20px; height: 20px; background: url('asset/tokistorage-icon-512.png') no-repeat center / contain; vertical-align: -3px; margin-right: 5px; }
+        .article-nav .nav-right { display: flex; align-items: center; gap: 1rem; }
+        .article-nav .nav-label { font-size: 0.6rem; color: var(--text-muted); letter-spacing: 0.08em; }
+        .article-nav .lang-switch { font-size: 0.75rem; color: var(--toki-blue); text-decoration: none; padding: 0.3rem 0.6rem; border: 1px solid var(--toki-blue); border-radius: 4px; }
+        .article-nav .lang-switch:hover { background: var(--toki-blue); color: #fff; }
+
+        .article-container { max-width: 680px; margin: 0 auto; padding: 7rem 2rem 4rem; }
+        .article-header { margin-bottom: 3rem; padding-bottom: 2rem; border-bottom: 1px solid var(--border); }
+        .article-category { font-size: 0.7rem; color: var(--toki-blue); letter-spacing: 0.15em; margin-bottom: 1rem; }
+        .article-header h1 { font-family: var(--font-display); font-size: 1.8rem; font-weight: 700; line-height: 1.4; margin-bottom: 1.5rem; }
+        .article-subtitle { font-size: 0.95rem; color: var(--text-secondary); line-height: 1.8; }
+
+        .article-content h2 { font-family: var(--font-display); font-size: 1.3rem; font-weight: 600; margin: 3rem 0 1.5rem; padding-bottom: 0.5rem; border-bottom: 2px solid var(--toki-blue-pale); }
+        .article-content p { margin-bottom: 1.5rem; }
+        .article-content blockquote { border-left: 3px solid var(--toki-blue); padding-left: 1.5rem; margin: 2rem 0; font-family: var(--font-display); color: var(--text-secondary); font-style: italic; }
+        .article-content ul { margin: 1.5rem 0; padding-left: 1.5rem; }
+        .article-content li { margin-bottom: 0.75rem; }
+        .article-content table { width: 100%; border-collapse: collapse; margin: 2rem 0; font-size: 0.9rem; }
+        .article-content th { background: var(--toki-blue-pale); color: var(--toki-blue-dark); padding: 0.6rem 1rem; text-align: left; font-weight: 600; border: 1px solid var(--border); }
+        .article-content td { padding: 0.6rem 1rem; border: 1px solid var(--border); vertical-align: top; }
+        .article-content tr:nth-child(even) td { background: #f8fafc; }
+
+        .core-message { background: var(--toki-blue-pale); border-left: 4px solid var(--toki-blue); padding: 1.5rem; margin: 2rem 0; font-size: 0.95rem; line-height: 1.8; }
+        .key-point { background: linear-gradient(135deg, var(--toki-blue-pale) 0%, #fff 100%); border: 1px solid var(--accent-blue); border-radius: 8px; padding: 1.5rem; margin: 2rem 0; text-align: center; }
+        .key-point p { font-family: var(--font-display); font-size: 1.1rem; color: var(--toki-blue-dark); margin: 0; font-style: italic; }
+
+        .cta-block { background: var(--toki-blue); color: #fff; border-radius: 12px; padding: 2rem; margin: 3rem 0; text-align: center; }
+        .cta-block p { color: rgba(255,255,255,0.9); margin-bottom: 1.5rem; line-height: 1.8; }
+        .cta-block a { display: inline-block; background: #fff; color: var(--toki-blue); padding: 0.6rem 1.4rem; border-radius: 6px; text-decoration: none; font-weight: 600; margin: 0.3rem; font-size: 0.9rem; }
+        .cta-block a.secondary { background: transparent; color: rgba(255,255,255,0.85); border: 1px solid rgba(255,255,255,0.4); }
+        .cta-block a:hover { opacity: 0.9; }
+
+        .article-footer { margin-top: 4rem; padding-top: 2rem; border-top: 1px solid var(--border); text-align: center; }
+        .article-footer p { font-size: 0.8rem; color: var(--text-muted); margin-bottom: 1rem; }
+        .article-footer a { color: var(--toki-blue); text-decoration: none; }
+        .article-footer a:hover { text-decoration: underline; }
+
+        .disclaimer { font-size: 0.8rem; color: var(--text-muted); border-top: 1px solid var(--border); padding-top: 1rem; margin-top: 2rem; font-style: italic; }
+
+        @media (max-width: 768px) {
+            .article-container { padding: 6rem 1.2rem 3rem; }
+            .article-header h1 { font-size: 1.5rem; }
+            .article-nav .nav-label { display: none; }
+            .article-content table { font-size: 0.8rem; }
+            .article-content th, .article-content td { padding: 0.4rem 0.6rem; }
+        }
+        @media print { .article-nav { display: none; } .article-container { padding-top: 2rem; } }
+    </style>
+</head>
+<body>
+
+<nav class="article-nav">
+    <a href="essays-en.html" class="nav-brand">TokiStorage</a>
+    <div class="nav-right">
+        <span class="nav-label">ESSAY</span>
+        <a href="voice-qr-copyright.html" class="lang-switch">JA</a>
+    </div>
+</nav>
+
+<main class="article-container">
+    <header class="article-header">
+        <div class="article-category">TECHNOLOGY &amp; DESIGN</div>
+        <h1>Where Does Voice QR Fit in Copyright Law?</h1>
+        <p class="article-subtitle">A legal analysis of TokiQR technology — how serverless design, offline operation, and active decoding combine to place this technology outside copyright law's main categories.</p>
+    </header>
+
+    <article class="article-content">
+
+        <div class="core-message">The core argument: technology that encodes audio, images, or text directly into QR codes — without a server, without transmission — likely falls outside copyright law's three main prohibitions: reproduction, public transmission, and distribution. This isn't accidental. It follows directly from how the technology is designed.</div>
+
+        <h2>1. Framing the Question</h2>
+
+        <p>A technology has emerged that encodes audio, images, and text directly into QR codes, enabling storage and playback without any server infrastructure. This essay examines where — if anywhere — such technology falls within copyright law.</p>
+
+        <p>The short answer: <strong>it likely falls outside the main categories of copyright restriction entirely</strong>.</p>
+
+        <p>Legal analysis usually begins by asking what something matches. This case is different. The conclusion that accumulates here is one of consistent non-match — and that pattern reveals something important about the gap between how technology evolves and how law responds to it.</p>
+
+        <h2>2. Does Encoding Constitute "Reproduction"?</h2>
+
+        <p>Copyright law defines reproduction broadly — as any method of making a tangible copy of a work, including recording and photography. The question is whether encoding audio into a QR code meets that definition.</p>
+
+        <p>When audio is encoded into a QR code, the result is a two-dimensional pattern of pixels. In that form, the audio is not perceptible as music. A reader and decoding software must intervene before it becomes sound again. The QR code itself bears no resemblance — in form or expression — to the original work.</p>
+
+        <p>Legal scholarship generally requires that reproduction produce a perceptible fixation of the original expression. Whether encrypted or transformed data satisfies that standard is genuinely unsettled. At minimum, the structure is quite different from the paradigmatic cases: recording onto tape, photographing a painting, printing a text.</p>
+
+        <blockquote>
+            The transformed data is something else — not the work itself.<br>
+            The requirement of perceptible fixation is where the analysis turns.
+        </blockquote>
+
+        <h2>3. Does It Involve "Public Transmission"?</h2>
+
+        <p>Copyright law grants rights holders control over transmitting their works to the public — the legal foundation for streaming, broadcasting, and web distribution. The critical question is whether voice QR constitutes such a transmission.</p>
+
+        <p>The technology is serverless by design. Nothing is transmitted. Reading a QR code is an active, volitional act by the person holding the camera. There is no sender pushing data outward.</p>
+
+        <p>This is structurally unlike streaming or file distribution, where the rights holder's work is delivered to recipients. Here, no delivery occurs. A transmission with no transmitter is not legally a transmission.</p>
+
+        <h2>4. Does It Constitute "Distribution"?</h2>
+
+        <p>Distribution rights — in their strongest form — apply specifically to film works. For general audio and music, the question is whether providing access to something constitutes "transferring or lending copies to the public."</p>
+
+        <p>A QR code printed on a flyer or mounted on a wall is not obviously a transfer or lending of a copy. Existing in a readable state is different from actively delivering copies. Posting a sign is not the same as handing something out — and the law has historically treated them differently.</p>
+
+        <h2>5. Non-Commercial Performance Exemptions</h2>
+
+        <p>Even if some copyright category were found to apply, most legal systems include exemptions for non-commercial public performance. These typically require: no profit motive, no admission fee, and no payment to performers.</p>
+
+        <p>Community orchestras, school bands, local choirs — performances of this kind routinely qualify. Where the underlying performance is lawful, encoding that performance into a QR code for community preservation purposes faces no obvious additional legal obstacle, given that the three main categories above likely don't apply.</p>
+
+        <h2>6. The Structure of the Analysis</h2>
+
+        <p>Setting the analysis out as a table makes the pattern clear.</p>
+
+        <table>
+            <thead>
+                <tr>
+                    <th>Legal Category</th>
+                    <th>Assessment</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>Reproduction right</td>
+                    <td>Applicability uncertain</td>
+                </tr>
+                <tr>
+                    <td>Public transmission right</td>
+                    <td>Not applicable — serverless design</td>
+                </tr>
+                <tr>
+                    <td>Distribution right</td>
+                    <td>Not applicable — film works only</td>
+                </tr>
+                <tr>
+                    <td>Public performance</td>
+                    <td>Non-commercial exemption may apply</td>
+                </tr>
+                <tr>
+                    <td>Commercial intent</td>
+                    <td>Absent in typical use cases</td>
+                </tr>
+            </tbody>
+        </table>
+
+        <p>Every category resolves toward either non-applicability or exemption. This is not a design accident. It follows necessarily from three features: no server, no transmission, and active decoding by the recipient.</p>
+
+        <h2>7. What Remains Uncertain</h2>
+
+        <p>This analysis depends on several assumptions worth stating clearly.</p>
+
+        <p><strong>No precedent exists.</strong> Courts have not yet ruled on voice QR technology directly. Future interpretation — by courts or legislators — could reach different conclusions.</p>
+
+        <p><strong>Master recording rights are separate.</strong> Beyond composition copyrights managed by collection societies, record labels and content holders hold master recording rights independently. This essay analyzes the case of recording a live performance, which is distinct from copying an existing commercial recording.</p>
+
+        <p><strong>Commercial use changes the analysis.</strong> Everything here assumes non-commercial, individual or community-scale use. Commercial deployment or mass distribution would require separate legal analysis.</p>
+
+        <h2>8. The Territory Law Hasn't Mapped Yet</h2>
+
+        <p>Copyright law was built around 20th-century technologies: vinyl records, radio broadcasts, physical distribution. Voice QR is none of these things. It sends no data, owns no server, and becomes audible only through deliberate action by the person holding a device.</p>
+
+        <p>The better framing is not that this technology is "outside the law" — it's that the law hasn't yet described this territory. The gap exists because technology moved faster than legislation, and the existing categories were written for a world that didn't anticipate serverless audio.</p>
+
+        <p>Until the law catches up, the practical foundation for legitimacy is design integrity and responsible use. Voice QR raises questions not just about copyright statutes, but about what it means to record — and preserve — human experience at all.</p>
+
+        <div class="key-point"><p>When technology outpaces law, the integrity of the design becomes the basis for social legitimacy.</p></div>
+
+        <div class="cta-block">
+            <p>TokiStorage is a project exploring personal infrastructure for preserving voice, images, and text across a thousand years — serverless, offline-first, and zero-cost by design.</p>
+            <a href="https://tokistorage.github.io">Learn about TokiStorage</a>
+            <a href="essays-en.html" class="secondary">Read all essays</a>
+        </div>
+
+        <p class="disclaimer">This essay does not constitute legal advice. It is an analysis of copyright law interpretation. For specific situations, consult a qualified attorney.</p>
+
+    </article>
+
+    <footer class="article-footer">
+        <p id="essay-nav-links"></p>
+        <p style="font-size: 0.75rem; color: var(--text-muted);">&copy; TokiStorage. All rights reserved.</p>
+    </footer>
+
+</main>
+
+<script src="essay-nav.js"></script>
+<script src="essay-tts.js"></script>
+</body>
+</html>

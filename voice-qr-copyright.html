@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" type="image/png" sizes="32x32" href="asset/favicon-32.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="asset/apple-touch-icon.png">
+    <title>音声QRコードは著作権法のどこに該当するか | トキストレージ</title>
+    <meta name="robots" content="index, follow">
+    <meta name="description" content="音声・画像・テキストをサーバーなしでQRコードに直接エンコードする技術は、著作権法上の複製・公衆送信・頒布のいずれにも正面から該当しない可能性が高い。その理由を法的に検討する。">
+    <link rel="alternate" hreflang="ja" href="https://tokistorage.github.io/lp/voice-qr-copyright.html">
+    <link rel="alternate" hreflang="en" href="https://tokistorage.github.io/lp/voice-qr-copyright-en.html">
+    <link rel="alternate" hreflang="x-default" href="https://tokistorage.github.io/lp/voice-qr-copyright.html">
+    <style>
+        :root {
+            --toki-blue: #2563EB;
+            --toki-blue-dark: #1E40AF;
+            --toki-blue-pale: #EFF6FF;
+            --accent-blue: #60A5FA;
+            --bg-white: #FFFFFF;
+            --text-primary: #1E293B;
+            --text-secondary: #475569;
+            --text-muted: #94A3B8;
+            --border: #E2E8F0;
+            --font-display: 'Hiragino Mincho ProN', 'Yu Mincho', serif;
+            --font-body: 'Hiragino Kaku Gothic ProN', 'Yu Gothic', 'Meiryo', sans-serif;
+        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        html { scroll-behavior: smooth; }
+        body { font-family: var(--font-body); font-weight: 400; background: var(--bg-white); color: var(--text-primary); line-height: 2; font-size: 16px; }
+
+        .article-nav { position: fixed; top: 0; left: 0; right: 0; z-index: 1000; background: rgba(255,255,255,0.95); backdrop-filter: blur(12px); border-bottom: 1px solid var(--border); padding: 0.6rem 1.2rem; display: flex; align-items: center; justify-content: space-between; gap: 1rem; }
+        .article-nav .nav-brand { font-family: var(--font-display); font-size: 0.9rem; font-weight: 600; color: var(--toki-blue); text-decoration: none; white-space: nowrap; }
+        .article-nav .nav-brand::before { content: ''; display: inline-block; width: 20px; height: 20px; background: url('asset/tokistorage-icon-512.png') no-repeat center / contain; vertical-align: -3px; margin-right: 5px; }
+        .article-nav .nav-right { display: flex; align-items: center; gap: 1rem; }
+        .article-nav .nav-label { font-size: 0.6rem; color: var(--text-muted); letter-spacing: 0.08em; }
+        .article-nav .lang-switch { font-size: 0.75rem; color: var(--toki-blue); text-decoration: none; padding: 0.3rem 0.6rem; border: 1px solid var(--toki-blue); border-radius: 4px; }
+        .article-nav .lang-switch:hover { background: var(--toki-blue); color: #fff; }
+
+        .article-container { max-width: 680px; margin: 0 auto; padding: 7rem 2rem 4rem; }
+        .article-header { margin-bottom: 3rem; padding-bottom: 2rem; border-bottom: 1px solid var(--border); }
+        .article-category { font-size: 0.7rem; color: var(--toki-blue); letter-spacing: 0.15em; margin-bottom: 1rem; }
+        .article-header h1 { font-family: var(--font-display); font-size: 1.8rem; font-weight: 700; line-height: 1.5; margin-bottom: 1.5rem; }
+        .article-subtitle { font-size: 0.95rem; color: var(--text-secondary); line-height: 1.9; }
+
+        .article-content h2 { font-family: var(--font-display); font-size: 1.3rem; font-weight: 600; margin: 3rem 0 1.5rem; padding-bottom: 0.5rem; border-bottom: 2px solid var(--toki-blue-pale); }
+        .article-content h3 { font-family: var(--font-display); font-size: 1.1rem; font-weight: 600; margin: 2rem 0 1rem; color: var(--toki-blue-dark); }
+        .article-content p { margin-bottom: 1.5rem; text-align: justify; }
+        .article-content blockquote { border-left: 3px solid var(--toki-blue); padding-left: 1.5rem; margin: 2rem 0; font-family: var(--font-display); color: var(--text-secondary); }
+        .article-content ul { margin: 1.5rem 0; padding-left: 1.5rem; }
+        .article-content li { margin-bottom: 0.75rem; }
+        .article-content table { width: 100%; border-collapse: collapse; margin: 2rem 0; font-size: 0.9rem; }
+        .article-content th { background: var(--toki-blue-pale); color: var(--toki-blue-dark); padding: 0.6rem 1rem; text-align: left; font-weight: 600; border: 1px solid var(--border); }
+        .article-content td { padding: 0.6rem 1rem; border: 1px solid var(--border); vertical-align: top; }
+        .article-content tr:nth-child(even) td { background: #f8fafc; }
+
+        .core-message { background: var(--toki-blue-pale); border-left: 4px solid var(--toki-blue); padding: 1.5rem; margin: 2rem 0; font-size: 0.95rem; line-height: 1.8; }
+        .key-point { background: linear-gradient(135deg, var(--toki-blue-pale) 0%, #fff 100%); border: 1px solid var(--accent-blue); border-radius: 8px; padding: 1.5rem; margin: 2rem 0; text-align: center; }
+        .key-point p { font-family: var(--font-display); font-size: 1.1rem; color: var(--toki-blue-dark); margin: 0; }
+
+        .cta-block { background: var(--toki-blue); color: #fff; border-radius: 12px; padding: 2rem; margin: 3rem 0; text-align: center; }
+        .cta-block p { color: rgba(255,255,255,0.9); margin-bottom: 1.5rem; line-height: 1.8; }
+        .cta-block a { display: inline-block; background: #fff; color: var(--toki-blue); padding: 0.6rem 1.4rem; border-radius: 6px; text-decoration: none; font-weight: 600; margin: 0.3rem; font-size: 0.9rem; }
+        .cta-block a.secondary { background: transparent; color: rgba(255,255,255,0.85); border: 1px solid rgba(255,255,255,0.4); }
+        .cta-block a:hover { opacity: 0.9; }
+
+        .article-footer { margin-top: 4rem; padding-top: 2rem; border-top: 1px solid var(--border); text-align: center; }
+        .article-footer p { font-size: 0.8rem; color: var(--text-muted); margin-bottom: 1rem; }
+        .article-footer a { color: var(--toki-blue); text-decoration: none; }
+        .article-footer a:hover { text-decoration: underline; }
+
+        .disclaimer { font-size: 0.8rem; color: var(--text-muted); border-top: 1px solid var(--border); padding-top: 1rem; margin-top: 2rem; font-style: italic; }
+
+        @media (max-width: 768px) {
+            .article-container { padding: 6rem 1.2rem 3rem; }
+            .article-header h1 { font-size: 1.5rem; }
+            .article-nav .nav-label { display: none; }
+            .article-content table { font-size: 0.8rem; }
+            .article-content th, .article-content td { padding: 0.4rem 0.6rem; }
+        }
+        @media print { .article-nav { display: none; } .article-container { padding-top: 2rem; } }
+    </style>
+</head>
+<body>
+
+<nav class="article-nav">
+    <a href="essays.html" class="nav-brand">トキストレージ</a>
+    <div class="nav-right">
+        <span class="nav-label">ESSAY</span>
+        <a href="voice-qr-copyright-en.html" class="lang-switch">EN</a>
+    </div>
+</nav>
+
+<main class="article-container">
+    <header class="article-header">
+        <div class="article-category">技術・設計</div>
+        <h1>音声QRコードは著作権法のどこに該当するか</h1>
+        <p class="article-subtitle">TokiQR技術をめぐる法的考察 ── サーバーレス・オフライン・能動的読み取りという三つの特性が、既存の規制類型をすり抜ける構造を生んでいる。</p>
+    </header>
+
+    <article class="article-content">
+
+        <div class="core-message">この記事で言いたいこと：音声・画像・テキストをサーバーなしでQRコードに直接エンコードする技術は、著作権法上の「複製」「公衆送信」「頒布」のいずれにも正面から該当しない可能性が高い。これは設計上の偶然ではなく、技術的特性から必然的に導かれる構造だ。</div>
+
+        <h2>1. 問いを立てる前に</h2>
+
+        <p>音声・画像・テキストをQRコードに直接エンコードし、サーバーを介さずに保存・再生する技術が登場している。この技術が著作権法上のいかなる行為類型に該当するかを検討する。</p>
+
+        <p>結論を先に述べれば、<strong>現行の著作権法の主要な規制類型のいずれにも、正面から該当しない可能性が高い</strong>。</p>
+
+        <p>法的考察は往々にして「どこに該当するか」を探すことから始まる。だが今回の問いはやや異なる。「該当しない」という結論が積み上がるとき、それは技術の設計と法体系の非同期を示している。その構造を丁寧に見ていく。</p>
+
+        <h2>2. 「複製」に該当するか</h2>
+
+        <p>著作権法第2条第1項第15号は、「複製」を「印刷、写真、複写、録音、録画その他の方法により有形的に再製すること」と定義する。</p>
+
+        <p>音声QRへのエンコードは、音声データを二次元のパターンに変換する処理だ。この状態において、音楽として人間が知覚できる形では存在しない。読み取り装置とデコードソフトウェアが介在して初めて音として再現される。QRコードそのものは、音楽的表現と同一・類似の形態をとらない。</p>
+
+        <p>「有形的に再製すること」の意味について、通説は著作物の表現を知覚可能な形で固定することを要求する。暗号化・変換されたデータが「再製」に当たるかは、現行法の解釈上、必ずしも自明ではない。少なくとも、録音・録画のような典型的な複製とは構造が異なる。</p>
+
+        <blockquote>
+            変換されたデータは「別の何か」であって、元の著作物ではない。<br>
+            知覚可能な形での固定、という要件が鍵になる。
+        </blockquote>
+
+        <h2>3. 「公衆送信」に該当するか</h2>
+
+        <p>著作権法第23条が規律する公衆送信権は、著作物を「公衆に向けて送信する」行為を対象とする。ストリーミング、ファイル配信、ウェブ掲載がその典型だ。</p>
+
+        <p>音声QRはサーバーが存在しない設計をとる。データの送信が発生しない。QRコードを読み取る行為は、受信者側の能動的なアクションであり、送信者側からデータを「送り出す」行為がそもそも存在しない。</p>
+
+        <p>ストリーミングやファイル配信と異なり、送信の主体が不在だ。これは公衆送信権の射程外と解するのが自然である。送る人がいない送信は、法的に「送信」とは呼べない。</p>
+
+        <h2>4. 「頒布」に該当するか</h2>
+
+        <p>著作権法第26条の頒布権は、映画の著作物に関するものであり、一般的な楽曲・音声には直接適用されない。また頒布とは「有償・無償を問わず、複製物を公衆に譲渡し、または貸与すること」を指す。</p>
+
+        <p>QRコードが印刷物等に掲載されている状態は、複製物を「譲渡」または「貸与」しているとは言い難い。読み取り可能な状態で存在することと、積極的に配布することは、行為態様として区別される。郵便受けにチラシを投函するのと、街角に掲示板を立てるのとでは、法的な性格が異なる。</p>
+
+        <h2>5. 著作権法第38条との関係</h2>
+
+        <p>仮に何らかの著作権行為類型に該当するとしても、著作権法第38条第1項は以下の条件を満たす場合に著作権者の許諾なく上演・演奏等を認めている。</p>
+
+        <ul>
+            <li>営利を目的としないこと</li>
+            <li>聴衆・観衆から料金を受けないこと</li>
+            <li>実演家等に報酬が支払われないこと</li>
+        </ul>
+
+        <p>地域の合唱団や消防音楽隊による演奏は、多くの場合この要件を充足する。演奏行為自体が適法である場合、その演奏を音声QRに変換・保管する行為についても、前述の通り複製・公衆送信・頒布のいずれにも正面から該当しないとすれば、法的問題は生じないと考えられる。</p>
+
+        <h2>6. 積み上げの構造</h2>
+
+        <p>各論点を整理すると、こうなる。</p>
+
+        <table>
+            <thead>
+                <tr>
+                    <th>論点</th>
+                    <th>検討結果</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>複製権（§21）</td>
+                    <td>該当性に疑義あり</td>
+                </tr>
+                <tr>
+                    <td>公衆送信権（§23）</td>
+                    <td>非該当（サーバーレス設計）</td>
+                </tr>
+                <tr>
+                    <td>頒布権（§26）</td>
+                    <td>非該当（映画以外に不適用）</td>
+                </tr>
+                <tr>
+                    <td>上演・演奏行為</td>
+                    <td>§38条で免除される場合あり</td>
+                </tr>
+                <tr>
+                    <td>営利性</td>
+                    <td>典型的ユースケースでは非営利</td>
+                </tr>
+            </tbody>
+        </table>
+
+        <p>各論点がいずれも「非該当」または「免除」方向に収束する。これは設計上の偶然ではなく、サーバーレス・オフライン・能動的読み取りという技術的特性から必然的に導かれる構造だ。</p>
+
+        <h2>7. 残された論点と留保</h2>
+
+        <p>本稿の考察はいくつかの前提に依存している。</p>
+
+        <p><strong>判例の不在。</strong>音声QRの著作権法上の位置づけについて、現時点で直接の判例は存在しない。将来的に裁判所または立法が異なる解釈を示す可能性は排除できない。</p>
+
+        <p><strong>原盤権・版権の問題。</strong>著作権管理団体が管理する著作権とは別に、レコード会社・コンテンツホルダーが有する原盤権・版権は別途存在する。ただし本稿が検討したのは「演奏を記録する」場合であり、原盤（コンテンツホルダー自身の録音）を複製する場合とは区別される。</p>
+
+        <p><strong>利用目的・規模の逸脱。</strong>本稿の考察は非営利・個人・地域コミュニティレベルのユースケースを前提とする。商業利用・大規模配布は別途検討を要する。</p>
+
+        <h2>8. 法がまだ想定していない領域</h2>
+
+        <p>著作権法は、録音・放送・配信という20世紀的な技術を前提として設計されている。音声QRは、これらのいずれでもない。データを送らず、サーバーを持たず、能動的な読み取りによってのみ再生される構造は、既存の規制類型が想定していなかった形態だ。</p>
+
+        <p>「法の外にある」というより、「法がまだ想定していない領域にある」と表現するのが正確だろう。この空白は、技術の設計思想と法体系の非同期から生まれている。</p>
+
+        <p>技術は常に法より先に走る。法が追いつくまでの間、設計の誠実さと利用の節度が、社会的な正当性の根拠になる。音声QRが問うているのは、著作権法の条文だけでなく、記録という行為の本質的な意味だ。</p>
+
+        <div class="key-point"><p>技術が法より先に走るとき、設計の誠実さが社会的正当性の根拠になる。</p></div>
+
+        <div class="cta-block">
+            <p>トキストレージは、声・画像・テキストを1000年残すための個人インフラを探求するプロジェクトです。サーバーレス・オフライン・ゼロコストという設計思想が、法的な考察にも影響を与えます。</p>
+            <a href="https://tokistorage.github.io">トキストレージを知る</a>
+            <a href="essays.html" class="secondary">すべてのエッセイを読む</a>
+        </div>
+
+        <p class="disclaimer">本稿は法的助言を構成するものではなく、著作権法の解釈に関する考察です。個別の事案については専門家への相談を推奨します。</p>
+
+    </article>
+
+    <footer class="article-footer">
+        <p id="essay-nav-links"></p>
+        <p style="font-size: 0.75rem; color: var(--text-muted);">&copy; TokiStorage. All rights reserved.</p>
+    </footer>
+
+</main>
+
+<script src="essay-nav.js"></script>
+<script src="essay-tts.js"></script>
+</body>
+</html>
