@@ -244,7 +244,8 @@
     { id: 'record-as-infrastructure', ja: '記録は衣食住と同じインフラだ', en: 'Records Are Infrastructure, Like Food and Shelter', date: '2026-03-17' },
     { id: 'language-changes-who-receives', ja: '言葉が変わると、誰に届くかが変わる', en: 'When the Words Change, Who Receives Them Changes', date: '2026-03-18' },
     { id: 'exit-from-financial-system', ja: '金融システムから降りる日', en: 'The Day I Step Off the Financial System', date: '2026-03-18' },
-    { id: 'voice-qr-copyright', ja: '音声QRコードは著作権法のどこに該当するか', en: 'Where Does Voice QR Fit in Copyright Law?', date: '2026-03-18' }
+    { id: 'voice-qr-copyright', ja: '音声QRコードは著作権法のどこに該当するか', en: 'Where Does Voice QR Fit in Copyright Law?', date: '2026-03-18' },
+    { id: 'where-is-the-grave-keeper', ja: '墓守はどこにいるか', en: 'Where Is the Grave-Keeper', date: '2026-03-18' }
   ];
 
   // ── Latest Articles (最新記事) ──
@@ -488,6 +489,7 @@
     'break-and-grow':           ['zero-cost-autonomy', 'tool-vs-infrastructure', 'vibe-coding', 'primitive-edge', 'constraint-philosophy'],
     'language-changes-who-receives': ['brochure-essay', 'government', 'record-as-infrastructure', 'platform-wall', 'voice-becomes-memory'],
     'exit-from-financial-system':    ['burnout-extinction', 'zero-cost-autonomy', 'tool-vs-infrastructure', 'burn-rate-zero', 'reluctant-farewell'],
+    'where-is-the-grave-keeper':     ['voice-becomes-memory', 'record-as-infrastructure', 'exit-from-financial-system', 'millennium-navigation', 'ceremony'],
     'voice-qr-copyright':            ['no-external-deps', 'patent-departure', 'offline-freedom', 'qualification-boundary', 'tool-vs-infrastructure']
   };
 
