@@ -1,0 +1,76 @@
+name: Generate Offer Brochure PDF
+
+on:
+  push:
+    paths:
+      - 'brochure-offer.html'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  generate-pdf:
+    runs-on: ubuntu-latest
+    container:
+      image: ghcr.io/puppeteer/puppeteer:latest
+      options: --user root
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Install puppeteer locally
+        run: npm install puppeteer --prefix /tmp/pdf
+
+      - name: Serve HTML locally
+        run: |
+          npx http-server . -p 8080 --silent &
+          sleep 2
+
+      - name: Generate PDF
+        run: |
+          node - << 'EOF'
+          const puppeteer = require('/tmp/pdf/node_modules/puppeteer');
+          const fs = require('fs');
+
+          (async () => {
+            const browser = await puppeteer.launch({
+              headless: true,
+              args: ['--no-sandbox', '--disable-setuid-sandbox']
+            });
+            const page = await browser.newPage();
+            await page.goto('http://localhost:8080/brochure-offer.html', {
+              waitUntil: 'networkidle0',
+              timeout: 30000
+            });
+            const pdf = await page.pdf({
+              format: 'A4',
+              printBackground: true,
+              margin: { top: 0, bottom: 0, left: 0, right: 0 }
+            });
+            fs.mkdirSync('asset', { recursive: true });
+            fs.writeFileSync('asset/brochure-offer.pdf', pdf);
+            console.log('PDF generated:', fs.statSync('asset/brochure-offer.pdf').size, 'bytes');
+            await browser.close();
+          })();
+          EOF
+
+      - name: Commit and push PDF
+        run: |
+          git config --global --add safe.directory /__w/lp/lp
+          git config user.email "tokistorage1000@gmail.com"
+          git config user.name "TokiStorage Actions"
+          git add asset/brochure-offer.pdf
+          if git diff --staged --quiet; then
+            echo "No changes to commit"
+          else
+            git stash
+            git pull --rebase origin main
+            git stash pop
+            git add asset/brochure-offer.pdf
+            git commit -m "Auto-generate offer brochure PDF [skip ci]"
+            git push
+          fi
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
