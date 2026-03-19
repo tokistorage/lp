@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" type="image/png" sizes="32x32" href="asset/favicon-32.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="asset/apple-touch-icon.png">
+    <title>I Built Push Notification Infrastructure for Free | TokiStorage</title>
+    <meta name="robots" content="index, follow">
+    <meta name="description" content="Replacing SaaS worth hundreds of thousands a year with GitHub and Cloudflare. A design record of push notification architecture that costs $0 even at 70,000-organization scale.">
+    <link rel="alternate" hreflang="ja" href="https://tokistorage.github.io/lp/push-notification-zero-cost.html">
+    <link rel="alternate" hreflang="en" href="https://tokistorage.github.io/lp/push-notification-zero-cost-en.html">
+    <link rel="alternate" hreflang="x-default" href="https://tokistorage.github.io/lp/push-notification-zero-cost.html">
+    <style>
+        :root {
+            --toki-blue: #2563EB; --toki-blue-dark: #1E40AF; --toki-blue-pale: #EFF6FF;
+            --accent-blue: #60A5FA; --bg-white: #FFFFFF; --text-primary: #1E293B;
+            --text-secondary: #475569; --text-muted: #94A3B8; --border: #E2E8F0;
+            --font-display: Georgia, 'Times New Roman', serif;
+            --font-body: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: var(--font-body); background: var(--bg-white); color: var(--text-primary); line-height: 2; font-size: 16px; }
+        .article-nav { position: fixed; top: 0; left: 0; right: 0; z-index: 1000; background: rgba(255,255,255,0.95); backdrop-filter: blur(12px); border-bottom: 1px solid var(--border); padding: 0.6rem 1.2rem; display: flex; align-items: center; justify-content: space-between; gap: 1rem; }
+        .article-nav .nav-brand { font-family: var(--font-display); font-size: 0.9rem; font-weight: 600; color: var(--toki-blue); text-decoration: none; white-space: nowrap; }
+        .article-nav .nav-brand::before { content: ''; display: inline-block; width: 20px; height: 20px; background: url('asset/tokistorage-icon-512.png') no-repeat center / contain; vertical-align: -3px; margin-right: 5px; }
+        .article-nav .nav-right { display: flex; align-items: center; gap: 1rem; }
+        .article-nav .nav-label { font-size: 0.6rem; color: var(--text-muted); letter-spacing: 0.08em; }
+        .article-nav .lang-switch { font-size: 0.75rem; color: var(--toki-blue); text-decoration: none; padding: 0.3rem 0.6rem; border: 1px solid var(--toki-blue); border-radius: 4px; }
+        .article-container { max-width: 680px; margin: 0 auto; padding: 7rem 2rem 4rem; }
+        .article-header { margin-bottom: 3rem; padding-bottom: 2rem; border-bottom: 1px solid var(--border); }
+        .article-category { font-size: 0.7rem; color: var(--toki-blue); letter-spacing: 0.15em; margin-bottom: 1rem; }
+        .article-header h1 { font-family: var(--font-display); font-size: 1.8rem; font-weight: 700; line-height: 1.4; margin-bottom: 1.5rem; }
+        .article-subtitle { font-size: 0.95rem; color: var(--text-secondary); line-height: 1.9; }
+        .article-content h2 { font-family: var(--font-display); font-size: 1.3rem; font-weight: 600; margin: 3rem 0 1.5rem; padding-bottom: 0.5rem; border-bottom: 2px solid var(--toki-blue-pale); }
+        .article-content p { margin-bottom: 1.5rem; }
+        .article-content blockquote { border-left: 3px solid var(--toki-blue); padding-left: 1.5rem; margin: 2rem 0; font-family: var(--font-display); color: var(--text-secondary); }
+        .article-content code { font-family: monospace; font-size: 0.9em; background: #f1f5f9; padding: 0.1em 0.4em; border-radius: 3px; }
+        .core-message { background: var(--toki-blue-pale); border-left: 4px solid var(--toki-blue); padding: 1.5rem; margin: 2rem 0; font-size: 0.95rem; line-height: 1.8; }
+        .key-point { background: linear-gradient(135deg, var(--toki-blue-pale) 0%, #fff 100%); border: 1px solid var(--accent-blue); border-radius: 8px; padding: 1.5rem; margin: 2rem 0; text-align: center; }
+        .key-point p { font-family: var(--font-display); font-size: 1.05rem; color: var(--toki-blue-dark); margin: 0; }
+        .cta-block { background: var(--toki-blue); color: #fff; border-radius: 12px; padding: 2rem; margin: 3rem 0; text-align: center; }
+        .cta-block p { color: rgba(255,255,255,0.9); margin-bottom: 1.5rem; font-size: 0.95rem; }
+        .cta-block a { display: inline-block; padding: 0.75rem 1.5rem; background: #fff; color: var(--toki-blue); border-radius: 6px; text-decoration: none; font-weight: 600; font-size: 0.9rem; margin: 0.3rem; }
+        .cta-block a.secondary { background: transparent; color: #fff; border: 1px solid rgba(255,255,255,0.5); }
+        .article-footer { margin-top: 4rem; padding-top: 2rem; border-top: 1px solid var(--border); font-size: 0.85rem; color: var(--text-muted); }
+    </style>
+</head>
+<body>
+<nav class="article-nav">
+    <a href="essays-en.html" class="nav-brand">TokiStorage</a>
+    <div class="nav-right">
+        <span class="nav-label">ESSAY</span>
+        <a href="push-notification-zero-cost.html" class="lang-switch">JA</a>
+    </div>
+</nav>
+
+<main class="article-container">
+    <header class="article-header">
+        <div class="article-category">TECHNOLOGY &amp; DESIGN</div>
+        <h1>I Built Push Notification Infrastructure for Free</h1>
+        <p class="article-subtitle">Replacing SaaS worth hundreds of thousands a year with GitHub and Cloudflare</p>
+    </header>
+
+    <article class="article-content">
+        <div class="core-message">The point of this essay: push notifications are something you can build, not just rent. An architecture that delivers to 70,000 organizations for $0 is achievable by combining existing infrastructure. The monthly SaaS fee is the price you pay to avoid designing it yourself. If you can design, you don't need to pay.</div>
+
+        <h2>1. I Laughed at the Pricing Page</h2>
+        <p>I was adding push notifications to a PWA when I opened the pricing page of a popular push notification service. The free tier capped at 10,000 users. Beyond that, it was tens of thousands of yen per month, scaling into the hundreds of thousands for larger audiences. Annualized, that's millions of yen. The enterprise plan just said "contact us."</p>
+        <p>I laughed because I already knew how push notifications work. The Web Push API built into modern browsers is a free, open protocol. Google and Apple relay the messages at no charge to the sender. All you need is a VAPID key pair. The fees on these services aren't for the notifications — they're for the management UI, dashboards, and support layered on top.</p>
+
+        <h2>2. Break It Down to the Essentials</h2>
+        <p>Running push notifications yourself requires exactly three things: somewhere to store subscriptions, a process to send them, and an endpoint to receive new subscribers.</p>
+        <blockquote>
+            Subscription storage → private GitHub repository (JSON files)<br>
+            Sending → GitHub Actions + web-push npm library<br>
+            Endpoint → Cloudflare Worker (authenticated)
+        </blockquote>
+        <p>All of it is existing infrastructure. Cloudflare Worker's free tier handles 100,000 requests per day. GitHub Actions on a public repository has no execution time limit. web-push is an open-source npm package. The cost is zero across the board.</p>
+
+        <h2>3. The Queue Design Was the Key</h2>
+        <p>A naive approach — commit to GitHub every time a user registers — would bottleneck under concurrent registrations. Git pushes are sequential.</p>
+        <p>The solution is a queue. The Worker commits each incoming subscription to a <code>queue/</code> directory in a private repository and responds immediately. The morning send job flushes the queue into <code>subscriptions/</code> before sending.</p>
+        <blockquote>
+            Registration: Worker → queue/{uid}.json (instant response)<br>
+            Send time: queue/ → subscriptions/ flush → send to all
+        </blockquote>
+        <p>Registration and delivery are fully decoupled. A spike in registrations doesn't slow down delivery. A long send job doesn't affect new registrations.</p>
+
+        <h2>4. Parallelism Removes the Scale Ceiling</h2>
+        <p>Sending sequentially to 100,000 users takes about 14 hours — well over GitHub Actions' 6-hour job limit. The practical ceiling was around 40,000 users.</p>
+        <p>Matrix strategy solves this. Split subscriptions into 36 shards by the leading character of the UID, run all 36 in parallel.</p>
+        <blockquote>
+            matrix: shard: [0–9, a–z]<br>
+            Each shard runs independently → 36 parallel jobs<br>
+            Total time = time for one shard (~20 minutes)
+        </blockquote>
+        <p>At 36x parallelism, 3.6 million users complete within 6 hours. Public repository Actions runs for free. The cost stays at zero.</p>
+
+        <h2>5. What Are You Actually Paying For?</h2>
+        <p>I priced out push notification services at the scale of a 70,000-organization industry group. Major platforms ran from hundreds of thousands to millions of yen per year. Enterprise-tier platforms exceeded tens of millions annually.</p>
+        <p>What is that money buying? A polished admin interface. Flexible segmentation. Support SLAs. Those things have genuine value. But if your use case is sending the same message to everyone every morning, none of them matter.</p>
+        <p>SaaS pricing is the cost of not having to design it yourself. If you can design it, you don't need to buy that option.</p>
+
+        <h2>6. Cloudflare Worker as the Bridge</h2>
+        <p>The one challenge in this architecture is that writing to a private GitHub repository requires a PAT — and embedding a PAT in browser-side JavaScript exposes it to anyone who reads the source.</p>
+        <p>The Cloudflare Worker bridges that gap. The PWA sends a subscription to the Worker. The Worker authenticates with a WEBHOOK_SECRET, then uses the PAT to commit to the repository. The PAT never leaves Cloudflare's server side. The browser only ever knows the shared secret.</p>
+        <p>Users need only the shared secret. The PAT stays invisible. The Worker runs for free within its daily limit. The design is complete.</p>
+
+        <h2>7. The Morning the Notification Arrived</h2>
+        <p>Implementation started at 5 AM. Four hours later, the first push notification arrived on an iPhone. There were plenty of errors along the way — authentication mismatches, cached old code, YAML syntax failures. Each one got resolved.</p>
+        <p>The satisfaction wasn't just that it worked. It was that it cost nothing. No one's billing system recorded the usage. No external server was keeping the lights on. My repository, my keys, my code — running quietly on infrastructure I own.</p>
+
+        <h2>8. Infrastructure Grows. Tools Wear Out.</h2>
+        <p>Tools wear out with use. Rented infrastructure gets more expensive with use. Infrastructure you built yourself grows with use — deeper understanding, cleaner design, the ability to fix things yourself when they break.</p>
+        <p>What this build confirmed is the habit of asking "can I build this?" before reaching for a pricing page. Most things can be built. The reason they aren't isn't inability — it's that the pricing page comes first.</p>
+
+        <div class="key-point"><p>If you can pay the design cost, you don't need the monthly SaaS fee. Infrastructure grows. Tools wear out.</p></div>
+
+        <div class="cta-block">
+            <p>TokiStorage is a project building infrastructure to preserve voices, images, and text for 1,000 years. All design records are published openly.</p>
+            <a href="https://tokistorage.github.io">Explore TokiStorage</a>
+            <a href="essays-en.html" class="secondary">Read all essays</a>
+        </div>
+    </article>
+
+    <footer class="article-footer">
+        <p id="essay-nav-links"></p>
+        <p>© TokiStorage. All rights reserved.</p>
+    </footer>
+</main>
+<script src="essay-nav.js"></script>
+<script src="essay-tts.js"></script>
+</body>
+</html>

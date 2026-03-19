@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" type="image/png" sizes="32x32" href="asset/favicon-32.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="asset/apple-touch-icon.png">
+    <title>通知インフラをゼロ円で作った | トキストレージ</title>
+    <meta name="robots" content="index, follow">
+    <meta name="description" content="年間数百万円のSaaSを、GitHubとCloudflareで置き換えた。73,000社に届けても$0のプッシュ通知アーキテクチャの設計記録。">
+    <link rel="alternate" hreflang="ja" href="https://tokistorage.github.io/lp/push-notification-zero-cost.html">
+    <link rel="alternate" hreflang="en" href="https://tokistorage.github.io/lp/push-notification-zero-cost-en.html">
+    <link rel="alternate" hreflang="x-default" href="https://tokistorage.github.io/lp/push-notification-zero-cost.html">
+    <style>
+        :root {
+            --toki-blue: #2563EB;
+            --toki-blue-dark: #1E40AF;
+            --toki-blue-pale: #EFF6FF;
+            --accent-blue: #60A5FA;
+            --bg-white: #FFFFFF;
+            --text-primary: #1E293B;
+            --text-secondary: #475569;
+            --text-muted: #94A3B8;
+            --border: #E2E8F0;
+            --font-display: 'Hiragino Mincho ProN', 'Yu Mincho', serif;
+            --font-body: 'Hiragino Kaku Gothic ProN', 'Yu Gothic', 'Meiryo', sans-serif;
+        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        html { scroll-behavior: smooth; }
+        body { font-family: var(--font-body); font-weight: 400; background: var(--bg-white); color: var(--text-primary); line-height: 2; font-size: 16px; }
+
+        .article-nav { position: fixed; top: 0; left: 0; right: 0; z-index: 1000; background: rgba(255,255,255,0.95); backdrop-filter: blur(12px); border-bottom: 1px solid var(--border); padding: 0.6rem 1.2rem; display: flex; align-items: center; justify-content: space-between; gap: 1rem; }
+        .article-nav .nav-brand { font-family: var(--font-display); font-size: 0.9rem; font-weight: 600; color: var(--toki-blue); text-decoration: none; white-space: nowrap; }
+        .article-nav .nav-brand::before { content: ''; display: inline-block; width: 20px; height: 20px; background: url('asset/tokistorage-icon-512.png') no-repeat center / contain; vertical-align: -3px; margin-right: 5px; }
+        .article-nav .nav-right { display: flex; align-items: center; gap: 1rem; }
+        .article-nav .nav-label { font-size: 0.6rem; color: var(--text-muted); letter-spacing: 0.08em; }
+        .article-nav .lang-switch { font-size: 0.75rem; color: var(--toki-blue); text-decoration: none; padding: 0.3rem 0.6rem; border: 1px solid var(--toki-blue); border-radius: 4px; }
+        .article-nav .lang-switch:hover { background: var(--toki-blue); color: #fff; }
+
+        .article-container { max-width: 680px; margin: 0 auto; padding: 7rem 2rem 4rem; }
+        .article-header { margin-bottom: 3rem; padding-bottom: 2rem; border-bottom: 1px solid var(--border); }
+        .article-category { font-size: 0.7rem; color: var(--toki-blue); letter-spacing: 0.15em; margin-bottom: 1rem; }
+        .article-header h1 { font-family: var(--font-display); font-size: 1.8rem; font-weight: 700; line-height: 1.5; margin-bottom: 1.5rem; }
+        .article-subtitle { font-size: 0.95rem; color: var(--text-secondary); line-height: 1.9; }
+
+        .article-content h2 { font-family: var(--font-display); font-size: 1.3rem; font-weight: 600; margin: 3rem 0 1.5rem; padding-bottom: 0.5rem; border-bottom: 2px solid var(--toki-blue-pale); }
+        .article-content p { margin-bottom: 1.5rem; text-align: justify; }
+        .article-content blockquote { border-left: 3px solid var(--toki-blue); padding-left: 1.5rem; margin: 2rem 0; font-family: var(--font-display); color: var(--text-secondary); }
+        .article-content code { font-family: monospace; font-size: 0.9em; background: #f1f5f9; padding: 0.1em 0.4em; border-radius: 3px; }
+
+        .core-message { background: var(--toki-blue-pale); border-left: 4px solid var(--toki-blue); padding: 1.5rem; margin: 2rem 0; font-size: 0.95rem; line-height: 1.8; }
+        .key-point { background: linear-gradient(135deg, var(--toki-blue-pale) 0%, #fff 100%); border: 1px solid var(--accent-blue); border-radius: 8px; padding: 1.5rem; margin: 2rem 0; text-align: center; }
+        .key-point p { font-family: var(--font-display); font-size: 1.05rem; color: var(--toki-blue-dark); margin: 0; }
+
+        .cta-block { background: var(--toki-blue); color: #fff; border-radius: 12px; padding: 2rem; margin: 3rem 0; text-align: center; }
+        .cta-block p { color: rgba(255,255,255,0.9); margin-bottom: 1.5rem; font-size: 0.95rem; }
+        .cta-block a { display: inline-block; padding: 0.75rem 1.5rem; background: #fff; color: var(--toki-blue); border-radius: 6px; text-decoration: none; font-weight: 600; font-size: 0.9rem; margin: 0.3rem; }
+        .cta-block a.secondary { background: transparent; color: #fff; border: 1px solid rgba(255,255,255,0.5); }
+
+        .article-footer { margin-top: 4rem; padding-top: 2rem; border-top: 1px solid var(--border); font-size: 0.85rem; color: var(--text-muted); }
+        .article-footer p { margin-bottom: 0.5rem; }
+    </style>
+</head>
+<body>
+<nav class="article-nav">
+    <a href="essays.html" class="nav-brand">トキストレージ</a>
+    <div class="nav-right">
+        <span class="nav-label">ESSAY</span>
+        <a href="push-notification-zero-cost-en.html" class="lang-switch">EN</a>
+    </div>
+</nav>
+
+<main class="article-container">
+    <header class="article-header">
+        <div class="article-category">技術・設計</div>
+        <h1>通知インフラをゼロ円で作った</h1>
+        <p class="article-subtitle">年間数百万円のSaaSを、GitHubとCloudflareで置き換えた設計</p>
+    </header>
+
+    <article class="article-content">
+        <div class="core-message">この記事で言いたいこと：プッシュ通知は「借りるもの」ではなく「作れるもの」だ。7万社規模に届けても$0のアーキテクチャは、既存のインフラを組み合わせるだけで成立する。SaaSの月額料金は、設計コストの代替として支払われている。設計できるなら、払う必要はない。</div>
+
+        <h2>1. 見積もりを見て笑った</h2>
+        <p>あるPWAにプッシュ通知を実装しようとして、市販のプッシュ通知サービスの料金ページを開いた。無料枠は1万ユーザーまで。それを超えると月額数万円から、規模によっては数十万円になる。年換算すると数百万円。エンタープライズ向けのプランは「お問い合わせください」で価格すら書いていない。</p>
+        <p>笑ったのは、プッシュ通知の仕組みを知っていたからだ。ブラウザとスマートフォンが持つWeb Push APIは、もともと無料のプロトコルだ。GoogleやAppleのサーバーが中継を担い、送信者はVAPIDという鍵ペアを持つだけでいい。料金が発生するのは、サービスがその上に乗せている「管理UI」「ダッシュボード」「サポート」に対してだ。通知そのものは、ただ届くだけだ。</p>
+
+        <h2>2. 必要なものを分解する</h2>
+        <p>プッシュ通知を自前で動かすために必要なものは、実は3つしかない。サブスクリプションの保管場所、送信処理、そして受け口だ。</p>
+        <blockquote>
+            サブスクリプション保管 → プライベートリポジトリ（JSON）<br>
+            送信処理 → GitHub Actions + web-pushライブラリ<br>
+            受け口 → Cloudflare Worker（認証付きエンドポイント）
+        </blockquote>
+        <p>どれも既存のインフラだ。新しいサービスは何も必要ない。Cloudflare Workerの無料枠は1日10万リクエスト。GitHub ActionsはパブリックリポジトリであればCI実行時間が無制限だ。web-pushはnpmパッケージで、使用料はゼロ。</p>
+
+        <h2>3. キュー設計が肝だった</h2>
+        <p>単純に「ユーザーが登録したらGitHubにコミットする」設計では、同時登録が集中したときに詰まる。gitのpushは逐次処理だからだ。</p>
+        <p>解決策はキューだ。Workerが受け取ったサブスクリプションをプライベートリポジトリの<code>queue/</code>ディレクトリにコミットし、毎朝の送信バッチがそれを<code>subscriptions/</code>にフラッシュしてから送信する。</p>
+        <blockquote>
+            登録時：Worker → queue/{uid}.json にコミット（即レスポンス）<br>
+            送信時：queue/ → subscriptions/ にフラッシュ → 全員に送信
+        </blockquote>
+        <p>ユーザーは登録と同時に完了を受け取れる。cloneの重さは非同期バッチに吸収される。登録と送信が完全に分離されるため、どちらかが詰まってももう一方には影響しない。</p>
+
+        <h2>4. 並列化で規模の上限を突破する</h2>
+        <p>1ジョブで順番に送ると、10万人で14時間かかる計算になる。GitHub Actionsの1ジョブ上限は6時間だ。このままでは4万人が現実的な上限だった。</p>
+        <p>解決はmatrix戦略による並列化だ。UIDの文字を使って36シャードに分割し、36並列で同時送信する。</p>
+        <blockquote>
+            matrix: shard: [0,1,2,...,9,a,b,...,z]<br>
+            各シャードが独立して起動 → 36並列で送信<br>
+            全体の処理時間 = 1シャードの時間（約20分）
+        </blockquote>
+        <p>36並列なら360万人でも6時間以内に完了する。パブリックリポジトリのActionsは無制限なので、追加コストはゼロのままだ。</p>
+
+        <h2>5. SaaSの価格は何に対して払っているか</h2>
+        <p>7万社規模のユーザーベースを持つ業界団体を想定して、各サービスの料金を調べた。大手プッシュ通知サービスは年間数百万円から。エンタープライズ向けのプラットフォームになると年間数千万円を超える。</p>
+        <p>その差額は何に対して払われているのか。管理画面の使いやすさ、セグメント配信の柔軟性、サポート対応、SLA保証。それらは確かに価値がある。だが、毎朝同じメッセージを全員に届けるだけであれば、それらは不要だ。</p>
+        <p>SaaSの料金は「設計しなくていい権利」の対価だ。設計できるなら、その権利を買う必要はない。</p>
+
+        <h2>6. Cloudflare Workerが橋になった</h2>
+        <p>このアーキテクチャで唯一の課題は、PWAからプライベートリポジトリへの書き込みにGitHub PATが必要なことだ。PATをブラウザのJSに埋め込めば、誰でも読み取れてしまう。</p>
+        <p>Cloudflare Workerがその橋を担う。PWAはWorkerにサブスクリプションを送る。WorkerはWEBHOOK_SECRETで認証し、PATを使ってリポジトリにコミットする。PATはCloudflareのサーバーサイドに閉じていて、ブラウザには一切露出しない。</p>
+        <p>ユーザーは合言葉（WEBHOOK_SECRET）だけ知っていればよく、PATは知らなくていい。Workerは1日10万リクエストまで無料で動く。これで設計が完結した。</p>
+
+        <h2>7. 実装の朝、通知が届いた</h2>
+        <p>朝5時に実装を始め、4時間後にiPhoneへ最初のプッシュ通知が届いた。エラーは多かった。認証のズレ、キャッシュの壁、YAMLの構文ミス。それでも1つずつ潰して、最終的に動いた。</p>
+        <p>感動したのは通知が届いた瞬間だけではない。月額ゼロ円でそれが動いていることへの感触だ。誰かの請求書に自分の使用量が記録されていない。誰かのサーバーに依存していない。自分のリポジトリに、自分の鍵で、自分のコードが動いている。</p>
+
+        <h2>8. インフラは育つ、SaaSは消耗する</h2>
+        <p>道具は使うほど消耗する。借りたインフラは使うほど請求が増える。自分で作ったインフラは使うほど育つ。コードの理解が深まり、設計が洗練され、問題が起きたときに自分で直せる。</p>
+        <p>プッシュ通知の実装を通じて改めて確認したのは、「作れるかどうか」を問い続ける姿勢だ。多くのものは、実は作れる。作れないのではなく、作る前にSaaSの価格ページを見てしまうからだ。</p>
+
+        <div class="key-point"><p>設計コストを払えるなら、SaaSの月額は不要だ。インフラは育つ。道具は消耗する。</p></div>
+
+        <div class="cta-block">
+            <p>トキストレージは、声・画像・テキストを1000年残すインフラを目指すプロジェクトです。設計の記録もすべて公開しています。</p>
+            <a href="https://tokistorage.github.io">トキストレージを知る</a>
+            <a href="essays.html" class="secondary">すべてのエッセイを読む</a>
+        </div>
+    </article>
+
+    <footer class="article-footer">
+        <p id="essay-nav-links"></p>
+        <p>© TokiStorage. All rights reserved.</p>
+    </footer>
+</main>
+<script src="essay-nav.js"></script>
+<script src="essay-tts.js"></script>
+</body>
+</html>
