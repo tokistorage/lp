@@ -246,7 +246,8 @@
     { id: 'exit-from-financial-system', ja: '金融システムから降りる日', en: 'The Day I Step Off the Financial System', date: '2026-03-18' },
     { id: 'voice-qr-copyright', ja: '音声QRコードは著作権法のどこに該当するか', en: 'Where Does Voice QR Fit in Copyright Law?', date: '2026-03-18' },
     { id: 'where-is-the-grave-keeper', ja: '墓守はどこにいるか', en: 'Where Is the Grave-Keeper', date: '2026-03-19' },
-    { id: 'exit-from-oil-dependency', ja: '石油依存から降りる日', en: 'The Day I Step Off Oil', date: '2026-03-19' }
+    { id: 'exit-from-oil-dependency', ja: '石油依存から降りる日', en: 'The Day I Step Off Oil', date: '2026-03-19' },
+    { id: 'purpose-boundary', ja: '目的に生きる境界線', en: 'The Boundary of Living with Purpose', date: '2026-03-19' }
   ];
 
   // ── Latest Articles (最新記事) ──
@@ -492,6 +493,7 @@
     'exit-from-financial-system':    ['burnout-extinction', 'zero-cost-autonomy', 'tool-vs-infrastructure', 'burn-rate-zero', 'reluctant-farewell'],
     'where-is-the-grave-keeper':     ['voice-becomes-memory', 'record-as-infrastructure', 'exit-from-financial-system', 'millennium-navigation', 'ceremony'],
     'exit-from-oil-dependency':      ['exit-from-financial-system', 'record-as-infrastructure', 'zero-cost-autonomy', 'tool-vs-infrastructure', 'platform-wall'],
+    'purpose-boundary':              ['boundary', 'integrity', 'evaluation-outside', 'zero-cost-autonomy', 'burn-rate-zero'],
     'voice-qr-copyright':            ['no-external-deps', 'patent-departure', 'offline-freedom', 'qualification-boundary', 'tool-vs-infrastructure']
   };
 
