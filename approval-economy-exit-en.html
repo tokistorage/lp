@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" type="image/png" sizes="32x32" href="asset/favicon-32.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="asset/apple-touch-icon.png">
+    <title>The Day I Left the Approval Economy | TokiStorage</title>
+    <meta name="robots" content="index, follow">
+    <meta name="description" content="Some relationships run on approval as currency — gifts given, then debts claimed. The day that currency lost its value, I learned to simply leave.">
+    <link rel="alternate" hreflang="ja" href="https://tokistorage.github.io/lp/approval-economy-exit.html">
+    <link rel="alternate" hreflang="en" href="https://tokistorage.github.io/lp/approval-economy-exit-en.html">
+    <link rel="alternate" hreflang="x-default" href="https://tokistorage.github.io/lp/approval-economy-exit.html">
+    <style>
+        :root {
+            --toki-blue: #2563EB;
+            --toki-blue-dark: #1E40AF;
+            --toki-blue-pale: #EFF6FF;
+            --accent-blue: #60A5FA;
+            --bg-white: #FFFFFF;
+            --text-primary: #1E293B;
+            --text-secondary: #475569;
+            --text-muted: #94A3B8;
+            --border: #E2E8F0;
+            --font-display: Georgia, 'Times New Roman', serif;
+            --font-body: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        html { scroll-behavior: smooth; }
+        body { font-family: var(--font-body); font-weight: 400; background: var(--bg-white); color: var(--text-primary); line-height: 2; font-size: 16px; }
+
+        .article-nav { position: fixed; top: 0; left: 0; right: 0; z-index: 1000; background: rgba(255,255,255,0.95); backdrop-filter: blur(12px); border-bottom: 1px solid var(--border); padding: 0.6rem 1.2rem; display: flex; align-items: center; justify-content: space-between; gap: 1rem; }
+        .article-nav .nav-brand { font-family: var(--font-display); font-size: 0.9rem; font-weight: 600; color: var(--toki-blue); text-decoration: none; white-space: nowrap; }
+        .article-nav .nav-brand::before { content: ''; display: inline-block; width: 20px; height: 20px; background: url('asset/tokistorage-icon-512.png') no-repeat center / contain; vertical-align: -3px; margin-right: 5px; }
+        .article-nav .nav-right { display: flex; align-items: center; gap: 1rem; }
+        .article-nav .nav-label { font-size: 0.6rem; color: var(--text-muted); letter-spacing: 0.08em; }
+        .article-nav .lang-switch { font-size: 0.75rem; color: var(--toki-blue); text-decoration: none; padding: 0.3rem 0.6rem; border: 1px solid var(--toki-blue); border-radius: 4px; }
+        .article-nav .lang-switch:hover { background: var(--toki-blue); color: #fff; }
+
+        .article-container { max-width: 680px; margin: 0 auto; padding: 7rem 2rem 4rem; }
+        .article-header { margin-bottom: 3rem; padding-bottom: 2rem; border-bottom: 1px solid var(--border); }
+        .article-category { font-size: 0.7rem; color: var(--toki-blue); letter-spacing: 0.15em; margin-bottom: 1rem; }
+        .article-header h1 { font-family: var(--font-display); font-size: 1.8rem; font-weight: 700; line-height: 1.5; margin-bottom: 1.5rem; }
+        .article-subtitle { font-size: 0.95rem; color: var(--text-secondary); line-height: 1.9; }
+
+        .article-content h2 { font-family: var(--font-display); font-size: 1.3rem; font-weight: 600; margin: 3rem 0 1.5rem; padding-bottom: 0.5rem; border-bottom: 2px solid var(--toki-blue-pale); }
+        .article-content p { margin-bottom: 1.5rem; text-align: left; }
+        .article-content blockquote { border-left: 3px solid var(--toki-blue); padding-left: 1.5rem; margin: 2rem 0; font-family: var(--font-display); color: var(--text-secondary); font-style: italic; }
+
+        .core-message { background: var(--toki-blue-pale); border-left: 4px solid var(--toki-blue); padding: 1.5rem; margin: 2rem 0; font-size: 0.95rem; line-height: 1.8; }
+        .key-point { background: linear-gradient(135deg, var(--toki-blue-pale) 0%, #fff 100%); border: 1px solid var(--accent-blue); border-radius: 8px; padding: 1.5rem; margin: 2rem 0; text-align: center; }
+        .key-point p { font-family: var(--font-display); font-size: 1.1rem; color: var(--toki-blue-dark); margin: 0; font-style: italic; }
+
+        .cta-block { background: var(--toki-blue-pale); border-radius: 12px; padding: 2rem; margin: 3rem 0; text-align: center; }
+        .cta-block p { color: var(--text-secondary); margin-bottom: 1.5rem; font-size: 0.95rem; }
+        .cta-block a { display: inline-block; background: var(--toki-blue); color: #fff; text-decoration: none; padding: 0.7rem 1.8rem; border-radius: 6px; font-size: 0.9rem; margin: 0.3rem; }
+        .cta-block a.secondary { background: transparent; color: var(--toki-blue); border: 1px solid var(--toki-blue); }
+
+        .article-footer { margin-top: 4rem; padding-top: 2rem; border-top: 1px solid var(--border); text-align: center; }
+        .article-footer p { font-size: 0.8rem; color: var(--text-muted); margin-bottom: 1rem; }
+        .article-footer a { color: var(--toki-blue); text-decoration: none; }
+
+        @media (max-width: 768px) {
+            .article-container { padding: 6rem 1.2rem 3rem; }
+            .article-header h1 { font-size: 1.5rem; }
+            .article-nav .nav-label { display: none; }
+        }
+        @media print { .article-nav { display: none; } .article-container { padding-top: 2rem; } }
+    </style>
+</head>
+<body>
+
+<nav class="article-nav">
+    <a href="essays-en.html" class="nav-brand">TokiStorage</a>
+    <div class="nav-right">
+        <span class="nav-label">ESSAY</span>
+        <a href="approval-economy-exit.html" class="lang-switch">JA</a>
+    </div>
+</nav>
+
+<main class="article-container">
+    <header class="article-header">
+        <div class="article-category">LIFE MILESTONES</div>
+        <h1>The Day I Left the Approval Economy</h1>
+        <p class="article-subtitle">How I stopped needing approval — and finally learned to simply leave</p>
+    </header>
+
+    <article class="article-content">
+
+        <div class="core-message">The point of this essay: Some relationships operate on approval as currency — kindness extended, then debts quietly claimed. When that currency lost its value inside me, I didn't need to fight or argue. I could simply leave. Not out of anger. Out of clarity.</div>
+
+        <h2>1. What Happened That Night</h2>
+        <p>It had been a long, productive day. A property had been cleaned, decluttered, and prepared for showing. The whole family had pitched in. There was a kind of tired satisfaction in the air when we sat down together for dinner.</p>
+        <p>The first half of the meal was warm. People acknowledged the effort. An offer of financial support came across the table. Then, moments later, came the words: "You should slow down. You don't need to work so hard."</p>
+        <p>I left the group chat. I said, "I'm stepping out because a boundary was crossed," and went quiet.</p>
+
+        <h2>2. What an Approval Economy Is</h2>
+        <p>An approval economy is a relationship structure in which approval, gratitude, and obligation circulate as currency. Giving gifts, offering help, showing concern — these may all be genuine. But when they're followed by an implicit invoice — "and so I'd like you to do this" — the relationship has become an economy.</p>
+        <p>The recipient is placed, without realizing it, in debt. The repayment isn't financial. It's behavioral: slow down, dial back, be more ordinary, stop reaching so far. What sounds like concern is, structurally, a creditor's demand.</p>
+
+        <h2>3. Why It Takes So Long to See</h2>
+        <p>The difficulty is that the currency is invisible. If it were cash, everyone would recognize the transaction. But when it comes wrapped in the language of love and worry, it's hard to name. And the people sending it often don't recognize it as an economy either — they may genuinely care. The intent can be kind and the structure still extractive.</p>
+        <p>I didn't see it for a long time because I was still inside the economy. When approval matters to you, you live by its rules without questioning them. The moment it stops mattering, the whole structure becomes legible.</p>
+
+        <h2>4. When the Currency Stops Working</h2>
+        <p>At some point, I stopped needing external approval to feel certain about my direction. This wasn't a decision I made. It was a shift that happened — the kind that comes after enough time spent building something based on internal criteria rather than outside validation.</p>
+        <p>Once the currency no longer circulates inside you, the economy can't function. Obligations offered don't register as debts. Invoices arrive but generate no urgency. This isn't coldness. It's just that two people are operating in different economic systems. The exchange rate is zero.</p>
+        <blockquote>
+            You can't collect a debt from someone who doesn't recognize the currency.<br>
+            It's not stubbornness. It's that the economy simply doesn't apply to them.
+        </blockquote>
+
+        <h2>5. When the Pattern Becomes Visible</h2>
+        <p>That night, I saw it clearly: offer of support → warmth → request for behavioral change. The sequence was familiar. I'd seen it many times before. But this time, there was no emotional charge. Just recognition.</p>
+        <p>When you can see a pattern, you can choose whether to play. As long as you're emotionally inside the game, your options are limited — comply or resist. But once you can observe the pattern from outside, a third option opens: quietly opt out.</p>
+
+        <h2>6. Leaving as a Response</h2>
+        <p>"I'm stepping out because a boundary was crossed." I said it, and left. The people around me were unsettled. That reaction was predictable too. When a trading partner suddenly says "I don't accept that currency," confusion follows naturally.</p>
+        <p>Leaving isn't rejection. It's non-participation. I wasn't denying anyone's existence or worth. I was simply declining to follow rules I no longer agreed to. I still drove everyone home. I still did what I was responsible for. I just chose not to share the same air for the night — a physical distance that matched an internal one.</p>
+        <p>When your actions are consistent with what you've said, no explanation is required.</p>
+
+        <h2>7. The Exhaustion of an Unchanged Structure</h2>
+        <p>There was weariness that night. But it wasn't directed at any person — it was directed at the structure itself. The same pattern, with the same blind spots, unchanged over years. Not because of malice. Because changing a lifelong economic system is genuinely hard, perhaps impossible without wanting to.</p>
+        <p>When you stop expecting change, something shifts. Weariness and clarity can coexist. You stop spending energy on the gap between who someone is and who you wish they'd be. You just work with what's actually there.</p>
+
+        <h2>8. Living Outside the Approval Economy</h2>
+        <p>Leaving the approval economy doesn't mean choosing isolation. It means operating in a different one — where your actions are evaluated by internal standards rather than the reactions of others. Where "calm down" isn't a valid invoice. Where the question of whether to proceed comes from inside, not outside.</p>
+        <p>The clearer your internal criteria, the less power external currency holds. When you know what you're building and why, approval becomes neither necessary nor threatening.</p>
+        <p>That night, I sat in my car while others slept inside. It wasn't uncomfortable. It was quiet. There's a particular kind of stillness that comes from being exactly where you chose to be.</p>
+
+        <div class="key-point"><p>When approval loses its hold over you, you don't need to fight to protect your boundaries.<br>You can simply leave — quietly, clearly, and without regret.</p></div>
+
+        <div class="cta-block">
+            <p>TokiStorage is a project dedicated to democratizing proof of existence — preserving voice, image, and text across physical, national, and digital layers for the long term.</p>
+            <a href="https://tokistorage.github.io">Explore TokiStorage</a>
+            <a href="essays-en.html" class="secondary">Read all essays</a>
+        </div>
+
+    </article>
+
+    <footer class="article-footer">
+        <p id="essay-nav-links"></p>
+        <p style="font-size: 0.75rem; color: var(--text-muted);">&copy; TokiStorage. All rights reserved.</p>
+    </footer>
+
+</main>
+
+<script src="essay-nav.js"></script>
+<script src="essay-tts.js"></script>
+</body>
+</html>

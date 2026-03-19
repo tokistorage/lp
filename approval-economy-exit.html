@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" type="image/png" sizes="32x32" href="asset/favicon-32.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="asset/apple-touch-icon.png">
+    <title>承認経済から抜けた日 | トキストレージ</title>
+    <meta name="robots" content="index, follow">
+    <meta name="description" content="恩を着せて活動を制限しようとする関係がある。それが「承認経済」だと気づいたとき、人は初めて退席することができる。">
+    <link rel="alternate" hreflang="ja" href="https://tokistorage.github.io/lp/approval-economy-exit.html">
+    <link rel="alternate" hreflang="en" href="https://tokistorage.github.io/lp/approval-economy-exit-en.html">
+    <link rel="alternate" hreflang="x-default" href="https://tokistorage.github.io/lp/approval-economy-exit.html">
+    <style>
+        :root {
+            --toki-blue: #2563EB;
+            --toki-blue-dark: #1E40AF;
+            --toki-blue-pale: #EFF6FF;
+            --accent-blue: #60A5FA;
+            --bg-white: #FFFFFF;
+            --text-primary: #1E293B;
+            --text-secondary: #475569;
+            --text-muted: #94A3B8;
+            --border: #E2E8F0;
+            --font-display: 'Hiragino Mincho ProN', 'Yu Mincho', serif;
+            --font-body: 'Hiragino Kaku Gothic ProN', 'Yu Gothic', 'Meiryo', sans-serif;
+        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        html { scroll-behavior: smooth; }
+        body { font-family: var(--font-body); font-weight: 400; background: var(--bg-white); color: var(--text-primary); line-height: 2; font-size: 16px; }
+
+        .article-nav { position: fixed; top: 0; left: 0; right: 0; z-index: 1000; background: rgba(255,255,255,0.95); backdrop-filter: blur(12px); border-bottom: 1px solid var(--border); padding: 0.6rem 1.2rem; display: flex; align-items: center; justify-content: space-between; gap: 1rem; }
+        .article-nav .nav-brand { font-family: var(--font-display); font-size: 0.9rem; font-weight: 600; color: var(--toki-blue); text-decoration: none; white-space: nowrap; }
+        .article-nav .nav-brand::before { content: ''; display: inline-block; width: 20px; height: 20px; background: url('asset/tokistorage-icon-512.png') no-repeat center / contain; vertical-align: -3px; margin-right: 5px; }
+        .article-nav .nav-right { display: flex; align-items: center; gap: 1rem; }
+        .article-nav .nav-label { font-size: 0.6rem; color: var(--text-muted); letter-spacing: 0.08em; }
+        .article-nav .lang-switch { font-size: 0.75rem; color: var(--toki-blue); text-decoration: none; padding: 0.3rem 0.6rem; border: 1px solid var(--toki-blue); border-radius: 4px; }
+        .article-nav .lang-switch:hover { background: var(--toki-blue); color: #fff; }
+
+        .article-container { max-width: 680px; margin: 0 auto; padding: 7rem 2rem 4rem; }
+        .article-header { margin-bottom: 3rem; padding-bottom: 2rem; border-bottom: 1px solid var(--border); }
+        .article-category { font-size: 0.7rem; color: var(--toki-blue); letter-spacing: 0.15em; margin-bottom: 1rem; }
+        .article-header h1 { font-family: var(--font-display); font-size: 1.8rem; font-weight: 700; line-height: 1.5; margin-bottom: 1.5rem; }
+        .article-subtitle { font-size: 0.95rem; color: var(--text-secondary); line-height: 1.9; }
+
+        .article-content h2 { font-family: var(--font-display); font-size: 1.3rem; font-weight: 600; margin: 3rem 0 1.5rem; padding-bottom: 0.5rem; border-bottom: 2px solid var(--toki-blue-pale); }
+        .article-content p { margin-bottom: 1.5rem; text-align: justify; }
+        .article-content blockquote { border-left: 3px solid var(--toki-blue); padding-left: 1.5rem; margin: 2rem 0; font-family: var(--font-display); color: var(--text-secondary); }
+
+        .core-message { background: var(--toki-blue-pale); border-left: 4px solid var(--toki-blue); padding: 1.5rem; margin: 2rem 0; font-size: 0.95rem; line-height: 1.8; }
+        .key-point { background: linear-gradient(135deg, var(--toki-blue-pale) 0%, #fff 100%); border: 1px solid var(--accent-blue); border-radius: 8px; padding: 1.5rem; margin: 2rem 0; text-align: center; }
+        .key-point p { font-family: var(--font-display); font-size: 1.1rem; color: var(--toki-blue-dark); margin: 0; }
+
+        .cta-block { background: var(--toki-blue-pale); border-radius: 12px; padding: 2rem; margin: 3rem 0; text-align: center; }
+        .cta-block p { color: var(--text-secondary); margin-bottom: 1.5rem; font-size: 0.95rem; }
+        .cta-block a { display: inline-block; background: var(--toki-blue); color: #fff; text-decoration: none; padding: 0.7rem 1.8rem; border-radius: 6px; font-size: 0.9rem; margin: 0.3rem; }
+        .cta-block a.secondary { background: transparent; color: var(--toki-blue); border: 1px solid var(--toki-blue); }
+
+        .article-footer { margin-top: 4rem; padding-top: 2rem; border-top: 1px solid var(--border); text-align: center; }
+        .article-footer p { font-size: 0.8rem; color: var(--text-muted); margin-bottom: 1rem; }
+        .article-footer a { color: var(--toki-blue); text-decoration: none; }
+
+        @media (max-width: 768px) {
+            .article-container { padding: 6rem 1.2rem 3rem; }
+            .article-header h1 { font-size: 1.5rem; }
+            .article-nav .nav-label { display: none; }
+        }
+        @media print { .article-nav { display: none; } .article-container { padding-top: 2rem; } }
+    </style>
+</head>
+<body>
+
+<nav class="article-nav">
+    <a href="essays.html" class="nav-brand">トキストレージ</a>
+    <div class="nav-right">
+        <span class="nav-label">ESSAY</span>
+        <a href="approval-economy-exit-en.html" class="lang-switch">EN</a>
+    </div>
+</nav>
+
+<main class="article-container">
+    <header class="article-header">
+        <div class="article-category">人生の節目</div>
+        <h1>承認経済から抜けた日</h1>
+        <p class="article-subtitle">恩を着せられても動じなくなるまで</p>
+    </header>
+
+    <article class="article-content">
+
+        <div class="core-message">この記事で言いたいこと：「恩を着せて活動を制限する」という構造は、承認を通貨として流通させる経済圏だ。その通貨が自分の中で無効化されたとき、人は初めて静かに退席できる。怒りではなく、明晰さによって。</div>
+
+        <h2>1. その夜、何が起きたか</h2>
+        <p>準備が整った夜だった。家族で清掃し、廃棄し、整理して、ある物件を内見できる状態に仕上げた。疲労の中にある種の達成感があり、食事に出かけた。家族全員が揃っていた。</p>
+        <p>前半は和やかだった。お互いの労をねぎらう言葉が交わされ、金銭的な支援の申し出もあった。しかしその直後、「落ち着いたらどうだ」「仕事もそんなに一生懸命しなくていい」という言葉がやってきた。</p>
+        <p>私はその場でグループを退室し、「境界を侵害したので抜けます」と告げて沈黙した。</p>
+
+        <h2>2. 承認経済とは何か</h2>
+        <p>承認経済とは、承認・感謝・恩を通貨として流通させる人間関係の構造だ。贈り物をする、助ける、気にかける——それ自体は善意かもしれない。しかしその後に「だからこそ、あなたにはこうしてほしい」という請求書が届くとき、その関係は経済になっている。</p>
+        <p>支援を受けた側は、知らず知らずのうちに「負債を抱えた状態」に置かれる。返済の手段は金銭ではなく、活動の制限、方針の変更、あるいは存在の縮小だ。「落ち着く」こと、「頑張りすぎない」こと、「もっと普通に」生きること——それらは一見、相手からの心配のように見える。しかし実質は、債権者からの返済要求だ。</p>
+
+        <h2>3. なぜ長い間気づかなかったのか</h2>
+        <p>承認経済が厄介なのは、通貨が目に見えないことだ。現金のやり取りであれば誰でも「取引」だと認識できる。しかし「心配してくれている」「大切に思っているから言っている」という形を取るとき、それは愛情の言語で包まれた経済行為になる。</p>
+        <p>さらに難しいのは、送り手側が自分の行為を経済だと認識していない場合が多いことだ。本当に心配しているのかもしれない。善意は本物かもしれない。それでも、その善意が「返済を求める構造」を持っている限り、受け取る側には負債が発生する。</p>
+        <p>長い間それを「愛情」と読み続けていたのは、自分もその通貨に価値を認めていたからだ。承認に価値を置いているとき、人は承認経済の中で生きることを選ぶ。</p>
+
+        <h2>4. 通貨が無効化される瞬間</h2>
+        <p>ある時点から、承認そのものへの関心が消えた。正確には、外部からの承認が自分の行動を変える力を持たなくなった。これは反抗ではない。冷淡さでもない。ただ、その通貨が自分の中で流通しなくなった、という変化だ。</p>
+        <p>通貨が無効化されると、経済は成立しない。恩を着せられても、負債の感覚が生まれない。請求書を受け取っても、支払う義務を感じない。これは冷たさではなく、別の経済圏で生きているということだ。</p>
+        <blockquote>
+            承認を必要としない人間に、承認を通貨として渡しても何も起きない。<br>
+            経済圏が異なるから、取引が成立しないのだ。
+        </blockquote>
+
+        <h2>5. パターンが見えるということ</h2>
+        <p>その夜、「ああ、またこのパターンだ」と思った瞬間があった。支援の申し出 → 感謝の雰囲気 → 活動制限の要求、という流れが、手に取るようにわかった。怒りはなかった。むしろ、妙な明晰さがあった。</p>
+        <p>パターンが見えるということは、そのゲームのルールを理解したということだ。ルールを理解した人間は、ゲームに参加するかどうかを選択できる。感情的に巻き込まれているうちは、選択の余地がない。怒るか、従うか、の二択しかない。しかし明晰さがあれば、第三の選択肢——静かに退席する——が生まれる。</p>
+
+        <h2>6. 退席という返答</h2>
+        <p>「境界を侵害したので抜けます」と言って、席を立った。周囲は慌てた。しかし私には、その慌てさえも予測の範囲内だった。混乱は、こちらが経済圏を離脱したことへの反応だ。取引相手が突然「その通貨は受け取れません」と言い出したのだから、困惑するのは当然だ。</p>
+        <p>退席は拒絶ではない。ゲームへの不参加だ。相手の存在を否定しているのではなく、そのゲームのルールに従わないと決めているだけだ。送迎はした。責任は果たした。ただ、同じ空気を吸わないという物理的な距離を選んだ。</p>
+        <p>行動の一貫性がある限り、説明は不要だと思っている。宣言したことを宣言通りにした。それだけだ。</p>
+
+        <h2>7. 欠落と変わらない構図</h2>
+        <p>うんざりする、という感情があった。しかしそれは相手への怒りではなく、構図そのものへの疲弊だった。欠落している——つまり、その承認経済の構造に気づいていない、あるいは気づいていても変えられない——状態が続いている。そしてそれは、おそらく今後も変わらない。</p>
+        <p>変わることを期待しなくなったとき、うんざりと明晰さは共存できる。相手を変えようとするのをやめたとき、自分の行動だけに集中できる。これは諦めではない。現実の解像度が上がった状態だ。</p>
+
+        <h2>8. 承認経済の外で生きること</h2>
+        <p>承認経済の外で生きるとは、孤独を選ぶことではない。別の経済圏を持つことだ。自分の行動が、外部の承認ではなく内部の基準によって評価される経済圏。そこでは、誰かに「落ち着け」と言われても、それは取引にならない。</p>
+        <p>内部基準とは何か。自分が何を大切にしているか、どこへ向かっているか、という問いへの答えだ。それが明確であるほど、外部からの通貨は価値を持たなくなる。目的が自律的であるとき、承認は必要条件ではなくなる。</p>
+        <p>その夜、家族が家の中で眠る中、車の中にいた。不快ではなかった。静かだった。自分の基準で選んだ場所にいることの、あの独特の静けさがあった。</p>
+
+        <div class="key-point"><p>承認を必要としなくなったとき、人は初めて静かに退席できる。<br>怒りでも諦めでもなく、ただ別の経済圏で生きているから。</p></div>
+
+        <div class="cta-block">
+            <p>トキストレージは、存在証明の民主化を目指すプロジェクトです。声・画像・テキストを、物理・国家・デジタルの三層で長期保管します。</p>
+            <a href="https://tokistorage.github.io">トキストレージを知る</a>
+            <a href="essays.html" class="secondary">すべてのエッセイを読む</a>
+        </div>
+
+    </article>
+
+    <footer class="article-footer">
+        <p id="essay-nav-links"></p>
+        <p style="font-size: 0.75rem; color: var(--text-muted);">&copy; TokiStorage. All rights reserved.</p>
+    </footer>
+
+</main>
+
+<script src="essay-nav.js"></script>
+<script src="essay-tts.js"></script>
+</body>
+</html>
