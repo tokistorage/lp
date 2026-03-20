@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" type="image/png" sizes="32x32" href="asset/favicon-32.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="asset/apple-touch-icon.png">
+    <title>Hello Briefing ── The Minimal Design for Getting Words Into Your Body | TokiStorage</title>
+    <meta name="robots" content="index, follow">
+    <meta name="description" content="I built a morning recitation tool in a single day. Say a phrase aloud, record it, listen back tomorrow. On the minimal design that turns knowledge into habit.">
+    <link rel="alternate" hreflang="ja" href="https://tokistorage.github.io/lp/hello-briefing-minimal-design.html">
+    <link rel="alternate" hreflang="en" href="https://tokistorage.github.io/lp/hello-briefing-minimal-design-en.html">
+    <link rel="alternate" hreflang="x-default" href="https://tokistorage.github.io/lp/hello-briefing-minimal-design.html">
+    <style>
+        :root {
+            --toki-blue: #2563EB; --toki-blue-dark: #1E40AF; --toki-blue-pale: #EFF6FF;
+            --accent-blue: #60A5FA; --bg-white: #FFFFFF; --text-primary: #1E293B;
+            --text-secondary: #475569; --text-muted: #94A3B8; --border: #E2E8F0;
+            --font-display: Georgia, 'Times New Roman', serif;
+            --font-body: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: var(--font-body); background: var(--bg-white); color: var(--text-primary); line-height: 2; font-size: 16px; }
+        .article-nav { position: fixed; top: 0; left: 0; right: 0; z-index: 1000; background: rgba(255,255,255,0.95); backdrop-filter: blur(12px); border-bottom: 1px solid var(--border); padding: 0.6rem 1.2rem; display: flex; align-items: center; justify-content: space-between; gap: 1rem; }
+        .article-nav .nav-brand { font-family: var(--font-display); font-size: 0.9rem; font-weight: 600; color: var(--toki-blue); text-decoration: none; }
+        .article-nav .nav-brand::before { content: ''; display: inline-block; width: 20px; height: 20px; background: url('asset/tokistorage-icon-512.png') no-repeat center / contain; vertical-align: -3px; margin-right: 5px; }
+        .article-nav .nav-right { display: flex; align-items: center; gap: 1rem; }
+        .article-nav .nav-label { font-size: 0.6rem; color: var(--text-muted); letter-spacing: 0.08em; }
+        .article-nav .lang-switch { font-size: 0.75rem; color: var(--toki-blue); text-decoration: none; padding: 0.3rem 0.6rem; border: 1px solid var(--toki-blue); border-radius: 4px; }
+        .article-container { max-width: 680px; margin: 0 auto; padding: 7rem 2rem 4rem; }
+        .article-header { margin-bottom: 3rem; padding-bottom: 2rem; border-bottom: 1px solid var(--border); }
+        .article-category { font-size: 0.7rem; color: var(--toki-blue); letter-spacing: 0.15em; margin-bottom: 1rem; }
+        .article-header h1 { font-family: var(--font-display); font-size: 1.8rem; font-weight: 700; line-height: 1.4; margin-bottom: 1.5rem; }
+        .article-subtitle { font-size: 0.95rem; color: var(--text-secondary); line-height: 1.9; }
+        .article-content h2 { font-family: var(--font-display); font-size: 1.3rem; font-weight: 600; margin: 3rem 0 1.5rem; padding-bottom: 0.5rem; border-bottom: 2px solid var(--toki-blue-pale); }
+        .article-content p { margin-bottom: 1.5rem; }
+        .article-content blockquote { border-left: 3px solid var(--toki-blue); padding-left: 1.5rem; margin: 2rem 0; font-family: var(--font-display); color: var(--text-secondary); }
+        .core-message { background: var(--toki-blue-pale); border-left: 4px solid var(--toki-blue); padding: 1.5rem; margin: 2rem 0; font-size: 0.95rem; line-height: 1.8; }
+        .key-point { background: linear-gradient(135deg, var(--toki-blue-pale) 0%, #fff 100%); border: 1px solid var(--accent-blue); border-radius: 8px; padding: 1.5rem; margin: 2rem 0; text-align: center; }
+        .key-point p { font-family: var(--font-display); font-size: 1.1rem; color: var(--toki-blue-dark); margin: 0; }
+        .cta-block { background: var(--toki-blue); color: #fff; border-radius: 8px; padding: 2rem; margin: 2rem 0; text-align: center; }
+        .cta-block p { color: rgba(255,255,255,0.9); margin-bottom: 1.5rem; font-size: 0.95rem; }
+        .cta-block a { display: inline-block; background: #fff; color: var(--toki-blue); font-weight: 600; text-decoration: none; padding: 0.6rem 1.5rem; border-radius: 4px; font-size: 0.9rem; margin: 0.3rem; }
+        .cta-block a.secondary { background: transparent; color: #fff; border: 1px solid rgba(255,255,255,0.6); }
+        .article-footer { margin-top: 4rem; padding-top: 2rem; border-top: 1px solid var(--border); text-align: center; }
+        .article-footer p { font-size: 0.8rem; color: var(--text-muted); margin-bottom: 1rem; }
+        .article-footer a { color: var(--toki-blue); text-decoration: none; }
+        @media (max-width: 768px) { .article-container { padding: 6rem 1.2rem 3rem; } .article-header h1 { font-size: 1.5rem; } }
+    </style>
+</head>
+<body>
+<nav class="article-nav">
+    <a href="essays-en.html" class="nav-brand">TokiStorage</a>
+    <div class="nav-right">
+        <span class="nav-label">ESSAY</span>
+        <a href="hello-briefing-minimal-design.html" class="lang-switch">JA</a>
+    </div>
+</nav>
+<main class="article-container">
+    <header class="article-header">
+        <div class="article-category">Technology &amp; Design</div>
+        <h1>Hello Briefing<br>── The Minimal Design for Getting Words Into Your Body</h1>
+        <p class="article-subtitle">Reading a book doesn't change you. Saying the words aloud, recording them, and hearing yourself back the next morning — that's where something shifts. I built a morning recitation tool in a single day.</p>
+    </header>
+    <article class="article-content">
+
+        <div class="core-message">The point: turning knowledge into behavior requires a system for repetition. Putting books on a shelf isn't enough. Say the words, record them, listen back tomorrow morning. I built the minimal design for that loop in one day — and brought it to a gathering of business leaders.</div>
+
+        <h2>1. Books Just Sit There</h2>
+        <p>At an early-morning study group, I noticed something. Many of the participants owned the same book. Sticky notes, underlines, careful handling — signs of investment. But when asked to speak about what they'd read, most couldn't quite find the words. The maxims they'd marked were still somewhere on the page, not yet inside them.</p>
+        <p>This isn't a memory problem. It's a structural one. Reading alone doesn't change a person. You need to say it aloud, repeat it, use it in a real moment. A book on the shelf is not so different from a book that was never opened.</p>
+
+        <h2>2. What Recitation Actually Does</h2>
+        <p>Recitation means passing words through your own voice. Silent reading receives information through the eyes. Speaking aloud activates mouth, ears, and mind simultaneously. And when you listen back to a recording of yourself, your voice arrives from the outside — a different circuit than either reading or speaking alone.</p>
+        <p>Output strengthens retention. But what I was after went beyond that. When you say something aloud, you meet friction. The parts that don't come smoothly are exactly the parts you don't yet understand. Recitation is also measurement.</p>
+
+        <h2>3. Why an App</h2>
+        <p>I'd tried flashcard apps and memorization tools. But they're designed around testing — right answers, wrong answers, weak spots to target. That has its place. But what the morning study group needed was different.</p>
+        <p>What was needed: a flow of choosing today's phrase, saying it in your own voice, and leaving a note about what you noticed. Not a test. A ritual. Not evaluation. A habit. Something simple enough to open every morning. I decided it could be built in a day.</p>
+
+        <h2>4. The Choice to Build in a Day</h2>
+        <p>The idea arrived around 5 a.m. By mid-morning, it was running as a PWA. Register a phrase. Display today's phrase. Record and log. Leave a note. That's all. Nothing extra.</p>
+        <p>The design question was singular: does this work as a morning ritual? Slow to load, too many steps, a complicated screen — any one of those and it won't last. Mobile-first, four tabs, and on the home screen: just today's phrase and a record button.</p>
+        <blockquote>
+            Register a phrase<br>
+            Choose today's phrase (rotating, selected, or random)<br>
+            Say it aloud and record<br>
+            Write down what you noticed<br>
+            Open it again tomorrow morning
+        </blockquote>
+
+        <h2>5. Why Recording Matters</h2>
+        <p>I hesitated about including recording. It adds complexity. But I kept it, for one reason: listening to yourself speak tells you not whether you said it, but how you said it.</p>
+        <p>A voice recording holds information that a text note doesn't. Fluency, pauses, where the energy goes. Listening back, you observe your own understanding from the outside. That's qualitatively different from re-reading something you wrote.</p>
+
+        <h2>6. PWA, Not App Store</h2>
+        <p>I didn't publish it to any app store. A PWA — a Progressive Web App — means sharing a URL is enough. A few reasons for this.</p>
+        <p>Friction removal: the step of installing an app is enough to lose some people who might have tried it. Open a URL and you're in. Update freedom: no review process means an improvement noticed today can reach users today. I made over a dozen refinements in a single afternoon. And offline capability: no network needed. The phrases you've saved and the recordings you've made stay on your device. No Wi-Fi at the venue, no problem.</p>
+
+        <h2>7. The Context of a Business Study Group</h2>
+        <p>The group I brought this to meets early every week — business owners and managers, gathering before the workday begins to study the words of those who came before. The structure of the problem was clear: plenty of encounters with good ideas, no system for making them stick.</p>
+        <p>Books are bought. Passages are marked. And then the cycle ends. Hello Briefing is a tool for the habit that starts after that ending. I don't need to introduce it as an AI tool. "An app for recording your morning recitation" is enough.</p>
+
+        <h2>8. The Power of Minimal Design</h2>
+        <p>The goal was something usable the next morning after being built. The feature set is small. But small is the point. No explanation needed. Nowhere to get lost. Every morning you open it, the same things are in the same places.</p>
+        <p>Research on habit formation consistently shows that the simpler the trigger, the higher the continuation rate. Complex tools stop being used. Minimal design is design for continuation. Getting words into your body takes time. The tool has to be something you'll still be using when that time arrives.</p>
+
+        <div class="key-point"><p>Knowledge doesn't enter the body at the moment of reading — it arrives after the accumulated mornings of saying it aloud.</p></div>
+
+        <div class="cta-block">
+            <p>TokiStorage is a project to preserve voice, image, and text across physical, national, and digital layers for a thousand years.</p>
+            <a href="https://tokistorage.github.io">Learn about TokiStorage</a>
+            <a href="essays-en.html" class="secondary">Read all essays</a>
+        </div>
+
+    </article>
+    <footer class="article-footer">
+        <p id="essay-nav-links"></p>
+        <p>© TokiStorage. All rights reserved.</p>
+    </footer>
+</main>
+<script src="essay-nav.js"></script>
+<script src="essay-tts.js"></script>
+</body>
+</html>

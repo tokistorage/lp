@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" type="image/png" sizes="32x32" href="asset/favicon-32.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="asset/apple-touch-icon.png">
+    <title>Hello Briefing ── 言葉を体に入れるための、最小設計 | トキストレージ</title>
+    <meta name="robots" content="index, follow">
+    <meta name="description" content="朝の復唱ツールを一日で作った。格言を声に出し、録音し、翌朝また聞く。知識を行動に変えるための最小設計について。">
+    <link rel="alternate" hreflang="ja" href="https://tokistorage.github.io/lp/hello-briefing-minimal-design.html">
+    <link rel="alternate" hreflang="en" href="https://tokistorage.github.io/lp/hello-briefing-minimal-design-en.html">
+    <link rel="alternate" hreflang="x-default" href="https://tokistorage.github.io/lp/hello-briefing-minimal-design.html">
+    <style>
+        :root {
+            --toki-blue: #2563EB;
+            --toki-blue-dark: #1E40AF;
+            --toki-blue-pale: #EFF6FF;
+            --accent-blue: #60A5FA;
+            --bg-white: #FFFFFF;
+            --text-primary: #1E293B;
+            --text-secondary: #475569;
+            --text-muted: #94A3B8;
+            --border: #E2E8F0;
+            --font-display: 'Hiragino Mincho ProN', 'Yu Mincho', serif;
+            --font-body: 'Hiragino Kaku Gothic ProN', 'Yu Gothic', 'Meiryo', sans-serif;
+        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        html { scroll-behavior: smooth; }
+        body { font-family: var(--font-body); font-weight: 400; background: var(--bg-white); color: var(--text-primary); line-height: 2; font-size: 16px; }
+        .article-nav { position: fixed; top: 0; left: 0; right: 0; z-index: 1000; background: rgba(255,255,255,0.95); backdrop-filter: blur(12px); border-bottom: 1px solid var(--border); padding: 0.6rem 1.2rem; display: flex; align-items: center; justify-content: space-between; gap: 1rem; }
+        .article-nav .nav-brand { font-family: var(--font-display); font-size: 0.9rem; font-weight: 600; color: var(--toki-blue); text-decoration: none; white-space: nowrap; }
+        .article-nav .nav-brand::before { content: ''; display: inline-block; width: 20px; height: 20px; background: url('asset/tokistorage-icon-512.png') no-repeat center / contain; vertical-align: -3px; margin-right: 5px; }
+        .article-nav .nav-right { display: flex; align-items: center; gap: 1rem; }
+        .article-nav .nav-label { font-size: 0.6rem; color: var(--text-muted); letter-spacing: 0.08em; }
+        .article-nav .lang-switch { font-size: 0.75rem; color: var(--toki-blue); text-decoration: none; padding: 0.3rem 0.6rem; border: 1px solid var(--toki-blue); border-radius: 4px; }
+        .article-nav .lang-switch:hover { background: var(--toki-blue); color: #fff; }
+        .article-container { max-width: 680px; margin: 0 auto; padding: 7rem 2rem 4rem; }
+        .article-header { margin-bottom: 3rem; padding-bottom: 2rem; border-bottom: 1px solid var(--border); }
+        .article-category { font-size: 0.7rem; color: var(--toki-blue); letter-spacing: 0.15em; margin-bottom: 1rem; }
+        .article-header h1 { font-family: var(--font-display); font-size: 1.8rem; font-weight: 700; line-height: 1.5; margin-bottom: 1.5rem; }
+        .article-subtitle { font-size: 0.95rem; color: var(--text-secondary); line-height: 1.9; }
+        .article-content h2 { font-family: var(--font-display); font-size: 1.3rem; font-weight: 600; margin: 3rem 0 1.5rem; padding-bottom: 0.5rem; border-bottom: 2px solid var(--toki-blue-pale); }
+        .article-content p { margin-bottom: 1.5rem; text-align: justify; }
+        .article-content blockquote { border-left: 3px solid var(--toki-blue); padding-left: 1.5rem; margin: 2rem 0; font-family: var(--font-display); color: var(--text-secondary); }
+        .core-message { background: var(--toki-blue-pale); border-left: 4px solid var(--toki-blue); padding: 1.5rem; margin: 2rem 0; font-size: 0.95rem; line-height: 1.8; }
+        .key-point { background: linear-gradient(135deg, var(--toki-blue-pale) 0%, #fff 100%); border: 1px solid var(--accent-blue); border-radius: 8px; padding: 1.5rem; margin: 2rem 0; text-align: center; }
+        .key-point p { font-family: var(--font-display); font-size: 1.1rem; color: var(--toki-blue-dark); margin: 0; }
+        .cta-block { background: var(--toki-blue); color: #fff; border-radius: 8px; padding: 2rem; margin: 2rem 0; text-align: center; }
+        .cta-block p { color: rgba(255,255,255,0.9); margin-bottom: 1.5rem; font-size: 0.95rem; }
+        .cta-block a { display: inline-block; background: #fff; color: var(--toki-blue); font-weight: 600; text-decoration: none; padding: 0.6rem 1.5rem; border-radius: 4px; font-size: 0.9rem; margin: 0.3rem; }
+        .cta-block a.secondary { background: transparent; color: #fff; border: 1px solid rgba(255,255,255,0.6); }
+        .article-footer { margin-top: 4rem; padding-top: 2rem; border-top: 1px solid var(--border); text-align: center; }
+        .article-footer p { font-size: 0.8rem; color: var(--text-muted); margin-bottom: 1rem; }
+        .article-footer a { color: var(--toki-blue); text-decoration: none; }
+        @media (max-width: 768px) { .article-container { padding: 6rem 1.2rem 3rem; } .article-header h1 { font-size: 1.5rem; } }
+    </style>
+</head>
+<body>
+<nav class="article-nav">
+    <a href="essays.html" class="nav-brand">トキストレージ</a>
+    <div class="nav-right">
+        <span class="nav-label">ESSAY</span>
+        <a href="hello-briefing-minimal-design-en.html" class="lang-switch">EN</a>
+    </div>
+</nav>
+<main class="article-container">
+    <header class="article-header">
+        <div class="article-category">技術・設計</div>
+        <h1>Hello Briefing<br>── 言葉を体に入れるための、最小設計</h1>
+        <p class="article-subtitle">本は読んだだけでは変わらない。声に出して、繰り返して、はじめて体に入る。朝の復唱ツールを一日で作った。</p>
+    </header>
+    <article class="article-content">
+
+        <div class="core-message">この記事で言いたいこと：知識を行動に変えるには「繰り返す仕組み」が要る。本棚に並べるだけでは足りない。声に出し、録音し、翌朝また聞く。その最小設計を一日で作り、朝の勉強会に持っていった。</div>
+
+        <h2>1. 本は持っているだけになる</h2>
+        <p>ある朝の勉強会で気づいたことがある。参加者の多くが同じ本を持っていた。付箋が貼られ、線が引かれ、大切に扱われているのがわかる。しかし話を聞くと、内容をほとんど言葉にできない人が多かった。読んだはずの格言を、自分の言葉で語れなかった。</p>
+        <p>これは記憶力の問題ではない。構造の問題だ。人は読んだだけでは変わらない。声に出して、繰り返して、実際の場面で使って、はじめて体に入る。本棚に並んだ本は、読まれていない本と大差ない。</p>
+
+        <h2>2. 復唱という行為の設計</h2>
+        <p>復唱とは何か。それは言葉を自分の声に通す作業だ。黙読は目から情報を受け取るだけだが、声に出すとき、人は口・耳・脳を同時に使う。さらに録音して聞き直すとき、自分の声が「外側から」耳に届く。これは黙読とも、音読とも、また別の回路を使っている。</p>
+        <p>脳科学的に言えば、アウトプットは記憶の定着を強化する。しかし私が求めたのはそれだけではなかった。声に出すことで、言葉との「摩擦」が生まれる。すらすら言えない部分が、理解できていない部分だとわかる。復唱は測定でもある。</p>
+
+        <h2>3. なぜアプリが必要だったか</h2>
+        <p>既存のフラッシュカードアプリや暗記ツールは試した。しかしどれも「テスト」の文脈で設計されていた。正解・不正解を判定し、弱点を洗い出す。それはそれで価値があるが、朝の勉強会で必要なのは違うものだった。</p>
+        <p>必要だったのは「今日の一言を、自分の声で復唱し、気づきを残す」という流れだ。テストではなく、儀式。評価ではなく、習慣。シンプルに、毎朝使える道具が要った。そしてそれは、一日で作れると判断した。</p>
+
+        <h2>4. 一日で作るという選択</h2>
+        <p>朝5時に着想し、午前中にPWAとして動く形にした。言葉の登録、今日の言葉の表示、録音して記録、気づきのメモ。それだけだ。余計なものは入れなかった。</p>
+        <p>設計の核心は「毎朝の儀式として成立するか」という一点だった。起動が遅い、操作が多い、画面が複雑——そのどれかがあれば、継続しない。モバイルファーストで、ナビゲーションは4タブ、ホーム画面には「今日の言葉」と「録音して記録」だけを置いた。</p>
+        <blockquote>
+            言葉を登録する<br>
+            今日の言葉を選ぶ（日替わり・指定・ランダム）<br>
+            声に出して録音する<br>
+            気づきをメモする<br>
+            翌朝、また開く
+        </blockquote>
+
+        <h2>5. 録音という設計判断</h2>
+        <p>録音機能を入れるかどうか、少し迷った。複雑になるからだ。しかし入れることにした。理由は一つ。自分の声を聞き返すことで、「言えたかどうか」ではなく「どう言えたか」がわかるからだ。</p>
+        <p>声のログは、テキストのメモとは別の情報を持っている。流暢さ、間の取り方、力の入り方。録音を聞き返すとき、人は自分の理解度を「外側から」観察できる。これは書いたメモを読み返すのとは質が違う。</p>
+
+        <h2>6. PWAという選択の意味</h2>
+        <p>アプリストアには出さなかった。PWA（プログレッシブウェブアプリ）として、URLを共有するだけで使えるようにした。理由はいくつかある。</p>
+        <p>一つは摩擦の排除だ。インストールの手間があると、試してみようという人の一部が離れる。URLを開けばすぐ使えるほうが、広がりやすい。もう一つは更新の自由だ。ストアの審査を経ずに、今日気づいた改善を今日届けられる。実際、一日のうちに十数回の改善を重ねた。</p>
+        <p>そしてオフライン動作。ネットワークがなくても、登録した言葉と録音は端末に残る。勉強会の会場でWi-Fiがなくても、朝の儀式は途切れない。</p>
+
+        <h2>7. 倫理法人会という文脈</h2>
+        <p>このツールを持っていった先は、経営者が集まる朝の勉強会だ。毎週決まった時間に集まり、先人の言葉を学ぶ。そこには「学びの定着」という課題が構造的に存在していた。</p>
+        <p>良い言葉に出会う機会はある。しかしそれを体に入れる仕組みがない。本を買い、付箋を貼り、それで終わる。Hello Briefingは、その「終わり」の後に始まる習慣のための道具だ。経営者に向けて「AIツール」として紹介する必要はない。「毎朝の復唱を、声で記録するアプリです」——それで十分だ。</p>
+
+        <h2>8. 最小設計が持つ力</h2>
+        <p>一日で作り、翌朝使い始められるものを目指した。結果として、機能は少ない。しかし少ないことが力になっている。使い方を説明しなくていい。迷う場所がない。毎朝開くたびに、同じ場所に同じものがある。</p>
+        <p>習慣化の研究では、行動のトリガーを単純にするほど継続率が上がると言われる。複雑なアプリは使われなくなる。最小設計は、継続のための設計でもある。言葉を体に入れるには時間がかかる。だからこそ、道具は長く使われなければならない。</p>
+
+        <div class="key-point"><p>知識は読んだ瞬間ではなく、声に出し続けた朝の積み重ねの先に、体に入る。</p></div>
+
+        <div class="cta-block">
+            <p>トキストレージは、声・画像・テキストを物理・国家・デジタルの三層で残すプロジェクトです。</p>
+            <a href="https://tokistorage.github.io">トキストレージを知る</a>
+            <a href="essays.html" class="secondary">すべてのエッセイを読む</a>
+        </div>
+
+    </article>
+    <footer class="article-footer">
+        <p id="essay-nav-links"></p>
+        <p>© TokiStorage. All rights reserved.</p>
+    </footer>
+</main>
+<script src="essay-nav.js"></script>
+<script src="essay-tts.js"></script>
+</body>
+</html>
