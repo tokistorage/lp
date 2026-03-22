@@ -250,7 +250,8 @@
     { id: 'purpose-boundary', ja: '目的に生きる境界線', en: 'The Boundary of Living with Purpose', date: '2026-03-19' },
     { id: 'approval-economy-exit', ja: '承認経済から抜けた日', en: 'The Day I Left the Approval Economy', date: '2026-03-19' },
     { id: 'push-notification-zero-cost', ja: '通知インフラをゼロ円で作った', en: 'I Built Push Notification Infrastructure for Free', date: '2026-03-20' },
-    { id: 'hello-briefing-minimal-design', ja: 'Hello Briefing ── 言葉を体に入れるための、最小設計', en: 'Hello Briefing ── The Minimal Design for Getting Words Into Your Body', date: '2026-03-20' }
+    { id: 'hello-briefing-minimal-design', ja: 'Hello Briefing ── 言葉を体に入れるための、最小設計', en: 'Hello Briefing ── The Minimal Design for Getting Words Into Your Body', date: '2026-03-20' },
+    { id: 'honobinos-strategy', ja: 'ホンビノス戦略 ── 競合しない場所に入ることで、世界まで届く道が開く', en: 'The Honobinos Strategy ── Entering the Space No One Fights Over Opens a Path to the World', date: '2026-03-22' }
   ];
 
   // ── Latest Articles (最新記事) ──
@@ -499,6 +500,7 @@
     'purpose-boundary':              ['boundary', 'integrity', 'evaluation-outside', 'zero-cost-autonomy', 'burn-rate-zero'],
     'push-notification-zero-cost':   ['zero-cost-autonomy', 'tool-vs-infrastructure', 'burn-rate-zero', 'vibe-coding', 'no-single-point-of-failure'],
     'hello-briefing-minimal-design':   ['push-notification-zero-cost', 'zero-cost-autonomy', 'tool-vs-infrastructure', 'vibe-coding-secrets', 'pwa-not-appstore'],
+    'honobinos-strategy':              ['hello-briefing-minimal-design', 'push-notification-zero-cost', 'tool-vs-infrastructure', 'zero-cost-autonomy', 'burn-rate-zero'],
     'approval-economy-exit':         ['purpose-boundary', 'boundary', 'evaluation-outside', 'integrity', 'exit-from-financial-system'],
     'voice-qr-copyright':            ['no-external-deps', 'patent-departure', 'offline-freedom', 'qualification-boundary', 'tool-vs-infrastructure']
   };
