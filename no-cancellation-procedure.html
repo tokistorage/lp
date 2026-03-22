@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" type="image/png" sizes="32x32" href="asset/favicon-32.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="asset/apple-touch-icon.png">
+    <title>解約手順を書いたら、書くことがなかった | トキストレージ</title>
+    <meta name="robots" content="index, follow">
+    <meta name="description" content="FAQに「解約手順」を書こうとしたら、書くことがほぼなかった。個人情報を取らない設計が、解約という概念ごと消していた。">
+    <link rel="alternate" hreflang="ja" href="https://tokistorage.github.io/lp/no-cancellation-procedure.html">
+    <link rel="alternate" hreflang="en" href="https://tokistorage.github.io/lp/no-cancellation-procedure-en.html">
+    <link rel="alternate" hreflang="x-default" href="https://tokistorage.github.io/lp/no-cancellation-procedure.html">
+    <style>
+        :root {
+            --toki-blue: #2563EB;
+            --toki-blue-dark: #1E40AF;
+            --toki-blue-pale: #EFF6FF;
+            --accent-blue: #60A5FA;
+            --bg-white: #FFFFFF;
+            --text-primary: #1E293B;
+            --text-secondary: #475569;
+            --text-muted: #94A3B8;
+            --border: #E2E8F0;
+            --font-display: 'Hiragino Mincho ProN', 'Yu Mincho', serif;
+            --font-body: 'Hiragino Kaku Gothic ProN', 'Yu Gothic', 'Meiryo', sans-serif;
+        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        html { scroll-behavior: smooth; }
+        body { font-family: var(--font-body); font-weight: 400; background: var(--bg-white); color: var(--text-primary); line-height: 2; font-size: 16px; }
+
+        .article-nav { position: fixed; top: 0; left: 0; right: 0; z-index: 1000; background: rgba(255,255,255,0.95); backdrop-filter: blur(12px); border-bottom: 1px solid var(--border); padding: 0.6rem 1.2rem; display: flex; align-items: center; justify-content: space-between; gap: 1rem; }
+        .article-nav .nav-brand { font-family: var(--font-display); font-size: 0.9rem; font-weight: 600; color: var(--toki-blue); text-decoration: none; white-space: nowrap; }
+        .article-nav .nav-brand::before { content: ''; display: inline-block; width: 20px; height: 20px; background: url('asset/tokistorage-icon-512.png') no-repeat center / contain; vertical-align: -3px; margin-right: 5px; }
+        .article-nav .nav-right { display: flex; align-items: center; gap: 1rem; }
+        .article-nav .nav-label { font-size: 0.6rem; color: var(--text-muted); letter-spacing: 0.08em; }
+        .article-nav .lang-switch { font-size: 0.75rem; color: var(--toki-blue); text-decoration: none; padding: 0.3rem 0.6rem; border: 1px solid var(--toki-blue); border-radius: 4px; }
+        .article-nav .lang-switch:hover { background: var(--toki-blue); color: #fff; }
+
+        .article-container { max-width: 680px; margin: 0 auto; padding: 7rem 2rem 4rem; }
+        .article-header { margin-bottom: 3rem; padding-bottom: 2rem; border-bottom: 1px solid var(--border); }
+        .article-category { font-size: 0.7rem; color: var(--toki-blue); letter-spacing: 0.15em; margin-bottom: 1rem; }
+        .article-header h1 { font-family: var(--font-display); font-size: 1.8rem; font-weight: 700; line-height: 1.5; margin-bottom: 1.5rem; }
+        .article-subtitle { font-size: 0.95rem; color: var(--text-secondary); line-height: 1.9; }
+
+        .article-content h2 { font-family: var(--font-display); font-size: 1.3rem; font-weight: 600; margin: 3rem 0 1.5rem; padding-bottom: 0.5rem; border-bottom: 2px solid var(--toki-blue-pale); }
+        .article-content p { margin-bottom: 1.5rem; text-align: justify; }
+        .article-content blockquote { border-left: 3px solid var(--toki-blue); padding-left: 1.5rem; margin: 2rem 0; font-family: var(--font-display); color: var(--text-secondary); }
+        .article-content code { background: var(--toki-blue-pale); padding: 0.1em 0.4em; border-radius: 3px; font-size: 0.9em; }
+
+        .core-message { background: var(--toki-blue-pale); border-left: 4px solid var(--toki-blue); padding: 1.5rem; margin: 2rem 0; font-size: 0.95rem; line-height: 1.8; }
+        .key-point { background: linear-gradient(135deg, var(--toki-blue-pale) 0%, #fff 100%); border: 1px solid var(--accent-blue); border-radius: 8px; padding: 1.5rem; margin: 2rem 0; text-align: center; }
+        .key-point p { font-family: var(--font-display); font-size: 1.1rem; color: var(--toki-blue-dark); margin: 0; }
+
+        .cta-block { background: var(--toki-blue-pale); border-radius: 8px; padding: 2rem; margin: 2rem 0; text-align: center; }
+        .cta-block p { margin-bottom: 1rem; font-size: 0.95rem; color: var(--text-secondary); }
+        .cta-block a { display: inline-block; margin: 0.4rem; padding: 0.6rem 1.4rem; border-radius: 4px; font-size: 0.9rem; text-decoration: none; }
+        .cta-block a:first-of-type { background: var(--toki-blue); color: #fff; }
+        .cta-block a.secondary { border: 1px solid var(--toki-blue); color: var(--toki-blue); }
+
+        .article-footer { margin-top: 4rem; padding-top: 2rem; border-top: 1px solid var(--border); text-align: center; }
+        .article-footer p { font-size: 0.8rem; color: var(--text-muted); margin-bottom: 1rem; }
+        .article-footer a { color: var(--toki-blue); text-decoration: none; }
+
+        @media (max-width: 768px) {
+            .article-container { padding: 6rem 1.2rem 3rem; }
+            .article-header h1 { font-size: 1.5rem; }
+            .article-nav .nav-label { display: none; }
+        }
+        @media print { .article-nav { display: none; } .article-container { padding-top: 2rem; } }
+    </style>
+</head>
+<body>
+
+<nav class="article-nav">
+    <a href="essays.html" class="nav-brand">トキストレージ</a>
+    <div class="nav-right">
+        <span class="nav-label">ESSAY</span>
+        <a href="no-cancellation-procedure-en.html" class="lang-switch">EN</a>
+    </div>
+</nav>
+
+<main class="article-container">
+    <header class="article-header">
+        <div class="article-category">技術・設計</div>
+        <h1>解約手順を書いたら、書くことがなかった ── 個人情報を取らない設計が消した、もう一つのコスト</h1>
+        <p class="article-subtitle">FAQに解約の手順を書こうとした。気づいたら、書けることがほとんどなかった。設計思想は、こういう形で姿を現す。</p>
+    </header>
+
+    <article class="article-content">
+
+        <div class="core-message">この記事で言いたいこと：個人情報を取らない設計は、プライバシー保護だけが目的ではない。解約という概念ごと消えるという副産物が、ユーザーにもサービス提供者にも隠れたコストを削る。設計の純度は、FAQの短さに現れる。</div>
+
+        <h2>1. FAQを書こうとして、止まった</h2>
+        <p>チーム向けのアプリにFAQを追加しようとした。「解約・返金はできますか？」という質問項目は既にあった。そこに「利用をやめるときの手順」を書き足そうと思って、キーボードに手を置いた。</p>
+        <p>しばらく、止まった。</p>
+        <p>書くことが、なかった。</p>
+        <p>結局、書いた内容はこうだ。ブラウザのキャッシュを消すか、ブックマークから削除する。管理者は設定ファイルを空にするか削除する。連絡不要。サーバー側にデータはない。</p>
+        <p>それだけだった。</p>
+
+        <h2>2. 普通の解約がどれだけ重いか</h2>
+        <p>一般的なSaaSの解約フローを思い浮かべてほしい。アカウントにログインして、設定画面を探して、解約ボタンを見つけて、理由を選んで、確認メールを受け取って、場合によっては引き止めのオファーを断って、やっと完了する。</p>
+        <p>データの取り扱いについても説明が必要だ。退会後〇日間はデータを保持します、完全削除をご希望の場合は別途申請を、といった文章が続く。</p>
+        <p>これはサービス提供者にとってもコストだ。解約フローの設計、メールの自動送信、データ削除のバッチ処理、問い合わせ対応。すべてに開発工数と運用コストがかかる。</p>
+
+        <h2>3. なぜ書くことがなかったのか</h2>
+        <p>このアプリがなぜ解約手順を必要としないかというと、そもそもサーバーに何も預けていないからだ。</p>
+        <p>音声の録音も、日々のメモも、閲覧履歴も、すべて各自のスマートフォンの中にしかない。外部サーバーに送信される個人情報がない。アカウントが存在しない。したがって、削除すべきアカウントデータもない。</p>
+        <p>管理者が配信する設定ファイルは確かに存在するが、それは会社の言葉を定義したものであって、個人を特定する情報ではない。そのファイルを消せば、アプリとしての機能も自然に終わる。</p>
+
+        <h2>4. 設計の純度がFAQの長さに出る</h2>
+        <p>プロダクトのFAQは、そのサービスの複雑さの鏡だと思う。解約フローが長ければ、それだけ多くのデータを持ち、多くの手続きが絡み合っているということだ。</p>
+        <p>逆に、FAQが短いプロダクトは、設計がシンプルだということを意味している。シンプルな設計は、意図して削ぎ落とした結果である場合と、最初から余計なものを持たなかった場合とがある。</p>
+        <p>このアプリの場合は後者だ。個人情報を取らないという原則を最初から持っていた。その結果として、解約という概念が設計の外側に落ちた。意図して解約をシンプルにしたのではなく、解約が不要な構造になっていた。</p>
+
+        <h2>5. 「取らない」ことの複利</h2>
+        <p>個人情報を取らない設計の利点として、よく挙げられるのはプライバシーへの配慮だ。ユーザーが安心して使える、情報漏洩のリスクがない、GDPRやその他の規制への対応コストが減る。</p>
+        <p>だがそれだけではなかった。解約フローが消える。カスタマーサポートの一角が消える。データ保持ポリシーのドキュメントが不要になる。退会後のデータ削除バッチが要らない。FAQの一項目が、三行で書ける。</p>
+        <p>取らないという選択は、取らないことそのものの価値だけでなく、取った後に発生するはずだったすべてのコストを消す。これは複利に似ている。最初の選択が、下流のコストを連鎖的に削っていく。</p>
+
+        <h2>6. ユーザーにとっての解放</h2>
+        <p>解約手順が存在しないということは、ユーザー側から見ても解放だ。</p>
+        <p>使わなくなったサービスのアカウントが、どこかのサーバーに残り続けるという感覚は、現代人に特有の小さな不安として積み重なっている。メールアドレスが残っている、パスワードがどこかに保存されている、自分の行動履歴がデータとして存在し続けている。</p>
+        <p>ブラウザのキャッシュを消せば終わる、というのはその不安を持たせないということだ。始めるときと終わるときの非対称性がない。入口と出口が同じ重さしかない。</p>
+
+        <h2>7. 書けなかったことが、設計の証明だった</h2>
+        <p>FAQを書こうとして止まった瞬間は、設計思想が可視化された瞬間だった。</p>
+        <p>思想は普段、コードの中に、構造の中に、見えない形で存在している。それが「書くことがない」という形で表面に出てきたとき、設計の純度を確認できた気がした。</p>
+        <p>余計なものを持たなかった結果、余計な説明が不要になった。それだけのことだ。だが、そのシンプルさに辿り着くまでには、最初から取らないという選択が必要だった。後から削ることは、最初から持たないことより、ずっと難しい。</p>
+
+        <div class="key-point"><p>個人情報を取らない設計は、プライバシー保護だけでなく、解約という概念ごと消す。FAQの短さが、設計の純度を証明する。</p></div>
+
+        <div class="cta-block">
+            <p>トキストレージは、声・画像・テキストを1000年保管する「存在証明の民主化」を目指すプロジェクトです。</p>
+            <a href="https://tokistorage.github.io">トキストレージを知る</a>
+            <a href="essays.html" class="secondary">すべてのエッセイを読む</a>
+        </div>
+
+    </article>
+
+    <footer class="article-footer">
+        <p id="essay-nav-links"></p>
+        <p style="font-size: 0.75rem; color: var(--text-muted);">&copy; TokiStorage. All rights reserved.</p>
+    </footer>
+
+</main>
+
+<script src="essay-nav.js"></script>
+<script src="essay-tts.js"></script>
+</body>
+</html>

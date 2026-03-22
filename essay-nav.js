@@ -252,7 +252,8 @@
     { id: 'push-notification-zero-cost', ja: '通知インフラをゼロ円で作った', en: 'I Built Push Notification Infrastructure for Free', date: '2026-03-20' },
     { id: 'hello-briefing-minimal-design', ja: 'Hello Briefing ── 言葉を体に入れるための、最小設計', en: 'Hello Briefing ── The Minimal Design for Getting Words Into Your Body', date: '2026-03-20' },
     { id: 'honobinos-strategy', ja: 'ホンビノス戦略 ── 競合しない場所に入ることで、世界まで届く道が開く', en: 'The Honobinos Strategy ── Entering the Space No One Fights Over Opens a Path to the World', date: '2026-03-22' },
-    { id: 'same-voice-different-roots', ja: '同じ声、違う根 ── AIエージェントを生んだ二つの文脈', en: 'Same Voice, Different Roots ── The Two Contexts That Gave Birth to AI Agents', date: '2026-03-23' }
+    { id: 'same-voice-different-roots', ja: '同じ声、違う根 ── AIエージェントを生んだ二つの文脈', en: 'Same Voice, Different Roots ── The Two Contexts That Gave Birth to AI Agents', date: '2026-03-23' },
+    { id: 'no-cancellation-procedure', ja: '解約手順を書いたら、書くことがなかった ── 個人情報を取らない設計が消した、もう一つのコスト', en: 'I Tried to Write Cancellation Instructions and Had Nothing to Write ── The Hidden Cost That a Zero-Data Design Erased', date: '2026-03-23' }
   ];
 
   // ── Latest Articles (最新記事) ──
@@ -503,6 +504,7 @@
     'hello-briefing-minimal-design':   ['push-notification-zero-cost', 'zero-cost-autonomy', 'tool-vs-infrastructure', 'vibe-coding-secrets', 'pwa-not-appstore'],
     'honobinos-strategy':              ['hello-briefing-minimal-design', 'push-notification-zero-cost', 'tool-vs-infrastructure', 'zero-cost-autonomy', 'burn-rate-zero'],
     'same-voice-different-roots':      ['zero-cost-autonomy', 'tool-vs-infrastructure', 'hello-briefing-minimal-design', 'voice-becomes-memory', 'burn-rate-zero'],
+    'no-cancellation-procedure':       ['zero-personal-data', 'content-ownership', 'tool-vs-infrastructure', 'zero-cost-autonomy', 'ownership'],
     'approval-economy-exit':         ['purpose-boundary', 'boundary', 'evaluation-outside', 'integrity', 'exit-from-financial-system'],
     'voice-qr-copyright':            ['no-external-deps', 'patent-departure', 'offline-freedom', 'qualification-boundary', 'tool-vs-infrastructure']
   };
