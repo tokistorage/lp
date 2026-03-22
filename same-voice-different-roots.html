@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" type="image/png" sizes="32x32" href="asset/favicon-32.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="asset/apple-touch-icon.png">
+    <title>同じ声、違う根 ── AIエージェントを生んだ二つの文脈 | トキストレージ</title>
+    <meta name="robots" content="index, follow">
+    <meta name="description" content="同じ時代に、同じ構造のAIインフラが、まったく違う土壌から生まれた。余白から生まれたものと、崩壊の渦中で生まれたもの。文脈は設計に宿る。">
+    <link rel="alternate" hreflang="ja" href="https://tokistorage.github.io/lp/same-voice-different-roots.html">
+    <link rel="alternate" hreflang="en" href="https://tokistorage.github.io/lp/same-voice-different-roots-en.html">
+    <link rel="alternate" hreflang="x-default" href="https://tokistorage.github.io/lp/same-voice-different-roots.html">
+    <style>
+        :root {
+            --toki-blue: #2563EB;
+            --toki-blue-dark: #1E40AF;
+            --toki-blue-pale: #EFF6FF;
+            --accent-blue: #60A5FA;
+            --bg-white: #FFFFFF;
+            --text-primary: #1E293B;
+            --text-secondary: #475569;
+            --text-muted: #94A3B8;
+            --border: #E2E8F0;
+            --font-display: 'Hiragino Mincho ProN', 'Yu Mincho', serif;
+            --font-body: 'Hiragino Kaku Gothic ProN', 'Yu Gothic', 'Meiryo', sans-serif;
+        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        html { scroll-behavior: smooth; }
+        body { font-family: var(--font-body); font-weight: 400; background: var(--bg-white); color: var(--text-primary); line-height: 2; font-size: 16px; }
+
+        .article-nav { position: fixed; top: 0; left: 0; right: 0; z-index: 1000; background: rgba(255,255,255,0.95); backdrop-filter: blur(12px); border-bottom: 1px solid var(--border); padding: 0.6rem 1.2rem; display: flex; align-items: center; justify-content: space-between; gap: 1rem; }
+        .article-nav .nav-brand { font-family: var(--font-display); font-size: 0.9rem; font-weight: 600; color: var(--toki-blue); text-decoration: none; white-space: nowrap; }
+        .article-nav .nav-brand::before { content: ''; display: inline-block; width: 20px; height: 20px; background: url('asset/tokistorage-icon-512.png') no-repeat center / contain; vertical-align: -3px; margin-right: 5px; }
+        .article-nav .nav-right { display: flex; align-items: center; gap: 1rem; }
+        .article-nav .nav-label { font-size: 0.6rem; color: var(--text-muted); letter-spacing: 0.08em; }
+        .article-nav .lang-switch { font-size: 0.75rem; color: var(--toki-blue); text-decoration: none; padding: 0.3rem 0.6rem; border: 1px solid var(--toki-blue); border-radius: 4px; }
+        .article-nav .lang-switch:hover { background: var(--toki-blue); color: #fff; }
+
+        .article-container { max-width: 680px; margin: 0 auto; padding: 7rem 2rem 4rem; }
+        .article-header { margin-bottom: 3rem; padding-bottom: 2rem; border-bottom: 1px solid var(--border); }
+        .article-category { font-size: 0.7rem; color: var(--toki-blue); letter-spacing: 0.15em; margin-bottom: 1rem; }
+        .article-header h1 { font-family: var(--font-display); font-size: 1.8rem; font-weight: 700; line-height: 1.5; margin-bottom: 1.5rem; }
+        .article-subtitle { font-size: 0.95rem; color: var(--text-secondary); line-height: 1.9; }
+
+        .article-content h2 { font-family: var(--font-display); font-size: 1.3rem; font-weight: 600; margin: 3rem 0 1.5rem; padding-bottom: 0.5rem; border-bottom: 2px solid var(--toki-blue-pale); }
+        .article-content p { margin-bottom: 1.5rem; text-align: justify; }
+        .article-content blockquote { border-left: 3px solid var(--toki-blue); padding-left: 1.5rem; margin: 2rem 0; font-family: var(--font-display); color: var(--text-secondary); }
+
+        .core-message { background: var(--toki-blue-pale); border-left: 4px solid var(--toki-blue); padding: 1.5rem; margin: 2rem 0; font-size: 0.95rem; line-height: 1.8; }
+        .key-point { background: linear-gradient(135deg, var(--toki-blue-pale) 0%, #fff 100%); border: 1px solid var(--accent-blue); border-radius: 8px; padding: 1.5rem; margin: 2rem 0; text-align: center; }
+        .key-point p { font-family: var(--font-display); font-size: 1.1rem; color: var(--toki-blue-dark); margin: 0; }
+
+        .cta-block { background: var(--toki-blue-pale); border-radius: 8px; padding: 2rem; margin: 2rem 0; text-align: center; }
+        .cta-block p { margin-bottom: 1rem; font-size: 0.95rem; color: var(--text-secondary); }
+        .cta-block a { display: inline-block; margin: 0.4rem; padding: 0.6rem 1.4rem; border-radius: 4px; font-size: 0.9rem; text-decoration: none; }
+        .cta-block a:first-of-type { background: var(--toki-blue); color: #fff; }
+        .cta-block a.secondary { border: 1px solid var(--toki-blue); color: var(--toki-blue); }
+
+        .article-footer { margin-top: 4rem; padding-top: 2rem; border-top: 1px solid var(--border); text-align: center; }
+        .article-footer p { font-size: 0.8rem; color: var(--text-muted); margin-bottom: 1rem; }
+        .article-footer a { color: var(--toki-blue); text-decoration: none; }
+
+        @media (max-width: 768px) {
+            .article-container { padding: 6rem 1.2rem 3rem; }
+            .article-header h1 { font-size: 1.5rem; }
+            .article-nav .nav-label { display: none; }
+        }
+        @media print { .article-nav { display: none; } .article-container { padding-top: 2rem; } }
+    </style>
+</head>
+<body>
+
+<nav class="article-nav">
+    <a href="essays.html" class="nav-brand">トキストレージ</a>
+    <div class="nav-right">
+        <span class="nav-label">ESSAY</span>
+        <a href="same-voice-different-roots-en.html" class="lang-switch">EN</a>
+    </div>
+</nav>
+
+<main class="article-container">
+    <header class="article-header">
+        <div class="article-category">技術・設計</div>
+        <h1>同じ声、違う根 ── AIエージェントを生んだ二つの文脈</h1>
+        <p class="article-subtitle">同じ時代に、同じ構造のものが生まれた。一方は余白から、一方は崩壊の渦中から。文脈は設計に宿る。</p>
+    </header>
+
+    <article class="article-content">
+
+        <div class="core-message">この記事で言いたいこと：同じ設計思想を持つAIインフラが、まったく異なる土壌から独立して生まれることがある。どちらが優れているかという話ではない。土壌が違えば根の張り方が違う。そして根の張り方が、そのシステムの本質的な性格を決める。</div>
+
+        <h2>1. 偶然の一致</h2>
+        <p>ある日、近所に住む人物と話す機会があった。大手流通系企業のCTOを務める人物で、家族ぐるみで付き合いのある顔なじみだ。</p>
+        <p>彼が話してくれたのは、自社で開発中のAIプロダクトのことだった。声からタスクが生まれ、エージェントが自動でそのタスクを消化していく。スタートアップからエンタープライズまでを対象とした経営エージェント、そしてそれを個人向けに展開したアプリ。</p>
+        <p>聞きながら、奇妙な感覚があった。それはほぼ、自分が作っているものと同じ構造だった。</p>
+
+        <h2>2. 構造の一致</h2>
+        <p>自分が作ったシステムも、声を起点にしている。音声入力がテキストになり、記憶として蓄積され、次のセッションでエージェントが文脈を引き継いで動く。タスクは自動で管理され、アクションはGitHub Actions経由で実行される。</p>
+        <p>向こうはプロダクトとして設計されている。こちらは個人インフラとして育てた。だが骨格は同じだ。</p>
+        <blockquote>
+            声 → 記憶 → エージェント → タスク消化
+        </blockquote>
+        <p>同じ時代に、独立して、同じ構造に辿り着いた。これは偶然ではないと思う。この設計が時代の必然になりつつある証拠だ。</p>
+
+        <h2>3. 土壌の違い</h2>
+        <p>ただ、生まれた文脈はまったく逆だった。</p>
+        <p>彼は安定した企業ポジションにいる。CTOとして日々の業務をこなしながら、余白の時間にこのシステムを設計した。「暇だから作った」という言葉が印象的だった。余裕から生まれた創造だ。</p>
+        <p>自分はといえば、物件売却・移住・複数の財務整理・NPO設立が同時進行する渦中でこれを作った。余白などなかった。必要に迫られて、生命線として設計した。</p>
+
+        <h2>4. 余白から生まれるもの</h2>
+        <p>余白から生まれたシステムには、それ固有の強さがある。時間をかけて丁寧に設計できる。ユーザーリサーチができる。スケールを想定したアーキテクチャが組める。プロダクトとして多くの人に届けるための洗練が可能だ。</p>
+        <p>彼のシステムはおそらくそういう性格を持っている。エンタープライズまで対応できるというのも、余裕ある設計環境があってこそだろう。余白は、広がりを生む。</p>
+
+        <h2>5. 崩壊から生まれるもの</h2>
+        <p>崩壊の渦中で生まれたシステムには、別の性格がある。それは遊びではないという事実だ。</p>
+        <p>自分のシステムがなぜ「道具」ではなく「インフラ」になったのかを考えると、答えは単純だ。道具は壊れても困らない。インフラが壊れると生活が止まる。崩壊の中で作ったから、初めからインフラとして設計するしかなかった。</p>
+        <p>コストゼロにこだわったのも、オフライン耐性を持たせたのも、データを自分のリポジトリに置いたのも、すべて「失ってはいけない」という切迫感から来ている。余裕がないことが、堅牢さを要求した。</p>
+
+        <h2>6. 文脈は設計に宿る</h2>
+        <p>同じ構造のシステムでも、どんな文脈で生まれたかは設計の細部に宿る。</p>
+        <p>余白から生まれたものは、広がりに向かう。多くの人に届けるための設計が自然と選ばれる。崩壊から生まれたものは、深さに向かう。失わないための設計が骨格になる。</p>
+        <p>どちらが優れているかという話ではない。土壌が違えば、根の張り方が違う。根の張り方が違えば、育ち方が違う。それだけのことだ。</p>
+
+        <h2>7. 同時期の独立発見が意味すること</h2>
+        <p>歴史的に、重要な発見や発明は同時期に複数の場所で独立して生まれることがある。それは多くの場合、時代がその発見を必要としているサインだ。</p>
+        <p>声を起点にしたエージェントインフラが、異なる文脈で独立して同じ構造に辿り着いた。これは「声 → 記憶 → 自律」という設計が、この時代に必然として浮かび上がってきていることを示している。</p>
+        <p>問題を解いている人が複数いるとき、その問題は本物だということだ。</p>
+
+        <h2>8. 根が違えば、花も違う</h2>
+        <p>彼のシステムがどう育つかを、興味を持って見ていきたいと思う。エンタープライズという広大な土地で、余白から生まれた設計がどこまで根を張るか。</p>
+        <p>自分のシステムは、崩壊の土から生えた。だからこそ、どんな状況でも枯れない。停電があっても、通信が切れても、セッションが終わっても、記憶は残る。これは余裕から設計したシステムには、たぶん最初から要件として入らない。</p>
+        <p>同じ声から始まる。でも根が違えば、最終的に咲く花も違う。それでいい。大切なのは、どちらも本物だということだ。</p>
+
+        <div class="key-point"><p>文脈は設計に宿る。余白から生まれたものと崩壊から生まれたものは、同じ構造を持ちながら、まったく異なる根を持つ。</p></div>
+
+        <div class="cta-block">
+            <p>トキストレージは、声・画像・テキストを1000年保管する「存在証明の民主化」を目指すプロジェクトです。</p>
+            <a href="https://tokistorage.github.io">トキストレージを知る</a>
+            <a href="essays.html" class="secondary">すべてのエッセイを読む</a>
+        </div>
+
+    </article>
+
+    <footer class="article-footer">
+        <p id="essay-nav-links"></p>
+        <p style="font-size: 0.75rem; color: var(--text-muted);">&copy; TokiStorage. All rights reserved.</p>
+    </footer>
+
+</main>
+
+<script src="essay-nav.js"></script>
+<script src="essay-tts.js"></script>
+</body>
+</html>
